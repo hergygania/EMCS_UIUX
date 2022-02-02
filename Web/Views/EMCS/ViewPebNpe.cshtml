@@ -411,6 +411,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Date & Time Submit NPE to Custom Office</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    @Html.EditorFor(m => m.NpePeb.NpeDateSubmitToCustomOffice, new { htmlAttributes = new { @class = "form-control date", @id = "NpeDateSubmitToCustomOffice", @readonly = "readonly", @placeholder = "Date", @name = "NpeDateSubmitToCustomOffice" } })
+                                    @*<input type="text" class="form-control date" id="NpeDate" autocomplete="off" name="NpeDate" required placeholder="Date">*@
+                                    <div class="input-group-addon cal">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-lg-4 col-xs-4">No Pen</label>
                                 <div class="input-group col-lg-8 col-xs-8">
                                     @Html.TextBoxFor(m => m.NpePeb.RegistrationNumber, new { @class = "form-control", @id = "RegistrationNumber", @placeholder = "Registration Number", @name = "RegistrationNumber" })

@@ -11,12 +11,17 @@ namespace App.Service.EMCS
 {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     /// <summary> Services Proses Shipment inbound.</summary>                
 =======
     /// <summary>
     /// Services Proses Shipment inbound.</summary>                
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+    /// <summary> Services Proses Shipment inbound.</summary>                
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     public class SvcCargoItem
     {
         public const string CacheName = "App.EMCS.SvcCargoItem";
@@ -33,6 +38,7 @@ namespace App.Service.EMCS
             }
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         public static List<SpCargoItemDetail> GetDataByCargoId(List<long> ids)
         {
@@ -55,6 +61,18 @@ namespace App.Service.EMCS
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static List<SpCargoItemDetail> GetDataByCargoId(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + id + "'";
+                var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
+                return data;
+            }
+        }
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static long Insert(CargoItem item, long itemId, string dml)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))

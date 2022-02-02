@@ -14,11 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Web</RootNamespace>
     <AssemblyName>App.Web</AssemblyName>
-<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-=======
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
->>>>>>> 639d8d0 (Intial commit)
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44304</IISExpressSSLPort>
@@ -32,10 +28,7 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
-<<<<<<< HEAD
     <TargetFrameworkProfile />
-=======
->>>>>>> 639d8d0 (Intial commit)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,12 +81,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
     </Reference>
-=======
->>>>>>> 639d8d0 (Intial commit)
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -112,13 +102,19 @@
       <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
       <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
     </Reference>
@@ -228,9 +224,13 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Reference Include="WindowsBase" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Reference Include="WindowsBase" />
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthorizeAccess.cs" />
@@ -6827,12 +6827,16 @@
     <Content Include="Scripts\TreeMenu.js" />
     <Content Include="Scripts\validator.min.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="SQL Scripts\SQL 25 May 2022.txt" />
     <Content Include="SQL Scripts\SQL.txt" />
     <Content Include="SQL Scripts\SQL_19-05.txt" />
     <Content Include="SQL Scripts\SQL_20-05.txt" />
     <Content Include="Upload\EMCS\Cargo\10262\DocCargo-10262.png" />
     <Content Include="Upload\EMCS\Cargo\10263\DocCargo-10263.png" />
+=======
+    <Content Include="SQL Scripts\SQL.txt" />
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
     <Content Include="Upload\EMCS\GoodsReceive\21\DocCargo-21.png" />
     <Content Include="Upload\EMCS\GoodsReceive\22\DocCargo-22.png" />
@@ -7340,9 +7344,12 @@
     <Content Include="Views\Post\DashboardMockUp.cshtml" />
     <Content Include="Views\Post\ModalComment.cshtml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <Content Include="Views\DTS\NewFreight.cshtml" />
     <Content Include="Views\ChangeLog\Index.cshtml" />
     <Content Include="Views\KPIDashboard\Index.cshtml" />

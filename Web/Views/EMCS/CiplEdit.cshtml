@@ -1,9 +1,6 @@
 ﻿@{
     ViewBag.Title = "Commercial Invoice Packing List Edit";
-<<<<<<< HEAD
     Layout = "~/Views/EMCS/_Layout.cshtml";
-=======
->>>>>>> 639d8d0 (Intial commit)
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
@@ -40,10 +37,7 @@
         line-height: 15px !important;
     }
 </style>
-<<<<<<< HEAD
 <input type="hidden" id="idcipl" value="@ViewBag.Id" />
-=======
->>>>>>> 639d8d0 (Intial commit)
 @Html.Partial("~/Views/EMCS/CiplFormTemplate.cshtml")
 
 @section scripts
@@ -55,7 +49,6 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplEdit.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")"></script>
-<<<<<<< HEAD
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplApprove.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
     <script>
@@ -86,10 +79,6 @@
 
     </script>
     <script>
-=======
-    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
-    <script>
->>>>>>> 639d8d0 (Intial commit)
         var optionsConsignee = {
             url: myApp.fullPath + "EMCS/GetConsigneeHistory",
             listLocation: "data",
@@ -121,9 +110,29 @@
         $("#consigneeNameCipl").easyAutocomplete(optionsConsignee);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        //var optionsUOMHistory = {
+        //    url: myApp.fullPath + "EMCS/GetUOMHistory",
+        //    listLocation: "data",
+        //    list: {
+        //        match: {
+        //            enabled: true
+        //        },
+        //        onChooseEvent: function () {
+        //            console.log(this);
+        //            var value = $("#UomItemCipl").getSelectedItemData();
+        //        }
+        //    },
+        //    theme: "plate-dark"
+        //};
+
+        //$("#UomItemCipl").easyAutocomplete(optionsUOMHistory);
+       
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         var optionsNotify = {
             url: myApp.fullPath + "EMCS/GetConsigneeHistory",
             listLocation: "data",

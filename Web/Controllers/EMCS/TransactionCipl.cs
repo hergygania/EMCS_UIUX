@@ -9,6 +9,7 @@ using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using App.Web.Helper;
 using App.Web.Models;
 using App.Data.Domain;
@@ -16,6 +17,9 @@ using App.Data.Domain.EMCS;
 using System.ComponentModel;
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Web.Helper;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -115,7 +119,8 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CiplEdit(long id)
         {
             var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId))
+            string userRoles = User.Identity.GetUserRoles();
+           if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId) || userRoles.Contains("EMCSImex"))
             {
                 ApplicationTitle();
                 ViewBag.AllowRead = AuthorizeAcces.AllowRead;
@@ -139,6 +144,9 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadedi");
             ViewBag.QrCodeUrlEDI = strQrCodeUrlEDI;
             TempData["QrCodeUrlEDI"] = strQrCodeUrlEDI;
@@ -151,8 +159,11 @@ namespace App.Web.Controllers.EMCS
             ViewBag.QrCodeUrlPL = strQrCodeUrlPL;
             TempData["QrCodeUrlPL"] = strQrCodeUrlPL;
             TempData.Peek("QrCodeUrlPL");
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
@@ -626,9 +637,13 @@ namespace App.Web.Controllers.EMCS
             var exportremarks = Service.EMCS.MasterParameter.GetParamByGroup("ExportRemarks");
             var paymentterms = Service.EMCS.MasterParameter.GetSelectList2("PaymentTerms");
 <<<<<<< HEAD
+<<<<<<< HEAD
             var uomtypes = Service.EMCS.MasterParameter.GetParamByGroup("UOMType");
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            var uomtypes = Service.EMCS.MasterParameter.GetParamByGroup("UOMType");
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             var incoterms = Service.EMCS.MasterIncoterms.GetList(crit);
             var packagingtype = Service.EMCS.MasterParameter.GetSelectList("PackagingType");
 
@@ -636,15 +651,20 @@ namespace App.Web.Controllers.EMCS
             var freightpayment = Service.EMCS.MasterParameter.GetSelectList("FreightPayment");
             var forwader = Service.EMCS.MasterParameter.GetSelectList("Forwader");
 <<<<<<< HEAD
+<<<<<<< HEAD
             var type = Service.EMCS.SvcCipl.GetTypeSelectList();
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            var type = Service.EMCS.SvcCipl.GetTypeSelectList();
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             var country = Service.EMCS.SvcCipl.GetCountryList();
             var branch = Service.EMCS.SvcCipl.GetBranchList();
             var kurs = Service.EMCS.SvcCipl.GetLastestKurs();
             var currency = Service.EMCS.SvcCipl.GetCurrencyCipl();
             var categoryreference = Service.EMCS.SvcCipl.GetCategoryReferencet("CategoryReference");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference, type }, JsonRequestBehavior.AllowGet);
         }
@@ -839,6 +859,9 @@ namespace App.Web.Controllers.EMCS
         }
 =======
             return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference }, JsonRequestBehavior.AllowGet);
+=======
+            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference,type }, JsonRequestBehavior.AllowGet);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         }
 
 >>>>>>> 639d8d0 (Intial commit)
@@ -1081,6 +1104,7 @@ namespace App.Web.Controllers.EMCS
 
             var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             return Json(data, JsonRequestBehavior.AllowGet);
 =======
@@ -1088,6 +1112,9 @@ namespace App.Web.Controllers.EMCS
             jsonResult.MaxJsonLength = int.MaxValue;
             return jsonResult;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            return Json(data, JsonRequestBehavior.AllowGet);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         }
 
         [HttpPost]
@@ -1176,13 +1203,19 @@ namespace App.Web.Controllers.EMCS
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         //public JsonResult GetUOMHistory(string term)
         //{
         //    var data = Service.EMCS.SvcCipl.GetUOMHistory(term);
         //    return Json(new { data }, JsonRequestBehavior.AllowGet);
         //}
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
         public ActionResult CiplApproveReviseDimension(long id)
         {

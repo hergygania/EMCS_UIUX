@@ -9,20 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Service</RootNamespace>
     <AssemblyName>App.Service</AssemblyName>
-<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-=======
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
->>>>>>> 639d8d0 (Intial commit)
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-<<<<<<< HEAD
     <TargetFrameworkProfile />
-=======
->>>>>>> 639d8d0 (Intial commit)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -144,10 +137,7 @@
     <Compile Include="DTS\DeliveryInstructionUnit.cs" />
     <Compile Include="DTS\DeliveryRequisitionStatus.cs" />
     <Compile Include="DTS\DeliveryRequisitionUnit.cs" />
-<<<<<<< HEAD
     <Compile Include="DTS\DeliveryRequisition_Reroute.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
     <Compile Include="DTS\ExportToPDF.cs" />
     <Compile Include="DTS\InboundEviz.cs" />
     <Compile Include="DTS\MasterDistrict.cs" />
@@ -176,9 +166,13 @@
     <Compile Include="EMCS\SvcCargoItem.cs" />
     <Compile Include="EMCS\SvcDelegation.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <Compile Include="EMCS\SvcShippingInstruction.cs" />
     <Compile Include="EMCS\SvcContainer.cs" />
     <Compile Include="EMCS\SvcGeneral.cs" />

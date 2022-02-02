@@ -7,10 +7,7 @@ using System.Data.SqlClient;
 using App.Data.Domain.EMCS;
 using System.Dynamic;
 using System.Text.RegularExpressions;
-<<<<<<< HEAD
 using App.Data.Domain;
-=======
->>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Service.EMCS
 {
@@ -37,17 +34,10 @@ namespace App.Service.EMCS
                 {
                     ConsigneeName = Regex.Replace(filter.ConsigneeName, @"[^0-9a-zA-Z.]+", "");
                 }
-<<<<<<< HEAD
 
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
 
-=======
-              
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                
->>>>>>> 639d8d0 (Intial commit)
                 parameterList.Add(new SqlParameter("@ConsigneeName", ConsigneeName ?? ""));
                 parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
 
@@ -398,6 +388,7 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
                 parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
 <<<<<<< HEAD
+<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
                 parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
 
@@ -410,6 +401,13 @@ namespace App.Service.EMCS
                 // ReSharper disable once CoVariantArrayConversion
                 var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email", parameters).ToList();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type", parameters).ToList();
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return data;
             }
         }
@@ -680,9 +678,10 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@FaxNumber", forwader.FaxNumber ?? ""));
                 parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
                 parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
+                parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email", parameters);
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type", parameters);
                 return 1;
             }
         }
@@ -1381,6 +1380,9 @@ namespace App.Service.EMCS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static List<string> GetUOMHistory(string term)
         {
             using (var db = new Data.EmcsContext())
@@ -1391,8 +1393,11 @@ namespace App.Service.EMCS
             }
         }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static List<CiplItemReviseData> GetCiplItemReviseGetById(long id)
         {
             using (var db = new Data.EmcsContext())
@@ -1612,7 +1617,28 @@ namespace App.Service.EMCS
           
             return rowname;
         }
+<<<<<<< HEAD
       
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+        public static List<Data.Domain.EMCS.SelectItem2> GetTypeSelectList()
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.Type
+                    .OrderBy(i => i.Id)
+                    .Skip(0).Take(100)
+                    .Select(i => new
+                    {
+                        id = i.Id,
+                        text = i.Name
+                    }).ToList();
+
+                return data.Select(i => new Data.Domain.EMCS.SelectItem2 { Id = i.text, Text = i.text }).ToList();
+            }
+        }
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

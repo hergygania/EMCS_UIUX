@@ -18,9 +18,13 @@ using Spire.Xls;
 using System.IO;
 using App.Web.App_Start;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using App.Web.Helper;
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Web.Helper;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -298,12 +302,18 @@ namespace App.Web.Controllers.EMCS
             GoodReceiveModel data = InitGoodReceive(id);
             ApplicationTitle();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             string strQrCodeUrlGR = Common.GenerateQrCode(id, "DownloadRg");
             ViewBag.QrCodeUrlGR = strQrCodeUrlGR;
             TempData["QrCodeUrlGR"] = strQrCodeUrlGR;
             TempData.Peek("QrCodeUrlGR");
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("rg", id);
             data.DetailGr = Service.EMCS.DocumentStreamGenerator.GetGrDetailData(id);
             data.YesNo = YesNoList();

@@ -34,11 +34,7 @@ namespace App.Web
                     }
 
                     var UserRole = (from p in db.UserAccess_Role
-<<<<<<< HEAD
                                     where p.UserID == UserName
-=======
-                                    where p.UserID == UserName 
->>>>>>> 639d8d0 (Intial commit)
                                     select p).ToList();
 
                     bool IsAdmin = false;
@@ -50,15 +46,9 @@ namespace App.Web
                     int row = 0;
                     sb.Clear();
                     sb = new StringBuilder();
-<<<<<<< HEAD
                     foreach (var q in UserRole)
                     {
 
-=======
-                     foreach (var q in UserRole)
-                    {
-                        
->>>>>>> 639d8d0 (Intial commit)
                         if (UserRole != null)
                             RoleID = Convert.ToInt32(q.RoleID);
                         if (IsAdmin == false)
@@ -67,7 +57,6 @@ namespace App.Web
                             {
                                 if (row == 0)
                                 {
-<<<<<<< HEAD
                                     CreateHTMLMenu(CreateDataMenu(RoleID, 1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
                                 }
                                 else
@@ -84,24 +73,6 @@ namespace App.Web
                         row++;
                     }
 
-=======
-                                    CreateHTMLMenu(CreateDataMenu(RoleID,1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
-                                }
-                                else
-                                {
-                                    CreateHTMLMenu(CreateDataMenu(RoleID,0).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
-                                }
-                                
-                            }
-                        }                        
-                        else
-                        {
-                            CreateHTMLMenu(CreateDataMenu(RoleID,1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
-                        }
-                        row++;
-                    }
-                       
->>>>>>> 639d8d0 (Intial commit)
 
                     menuHTML = sb.ToString();
 
@@ -142,7 +113,11 @@ namespace App.Web
 =======
 
             baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            //baseUrl = string.Format("{0}://{1}:{2}{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, appUrl);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
             foreach (var menu in Menus)
             {

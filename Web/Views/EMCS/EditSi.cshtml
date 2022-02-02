@@ -17,11 +17,7 @@
         font-weight: bold;
     }
 </style>
-<<<<<<< HEAD
 <input type="hidden" name="formType" id="formType" value="ShippingInstructions" />
-=======
-
->>>>>>> 639d8d0 (Intial commit)
 <div class="col-md-12 slideRight">
     @Html.Partial("~/Views/EMCS/Wizard.cshtml")
 </div>
@@ -41,12 +37,9 @@
             <li role="presentation">
                 <a style="z-index:2" href="#documents" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
             </li>
-<<<<<<< HEAD
             <li role="presentation">
                 <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
             </li>
-=======
->>>>>>> 639d8d0 (Intial commit)
         </ul>
         <!-- Tab panes -->
         <div class="tab-content tabs-custom">
@@ -95,19 +88,11 @@
                                         </div>
                                     </div>
                                     @*<div class="form-group">
-<<<<<<< HEAD
                                     <label class="col-sm-4">Kppbc</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
                                     </div>
                                 </div>*@
-=======
-                                            <label class="col-sm-4">Kppbc</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
-                                            </div>
-                                        </div>*@
->>>>>>> 639d8d0 (Intial commit)
                                 </div>
                                 <div class="col-lg-4 col-xs-12">
                                     <div class="form-group">
@@ -171,6 +156,7 @@
                                             </div>
                                         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         @*<div class="form-group">
                                         <label class="col-sm-4">Type</label>
                                         <div class="col-sm-8">
@@ -183,6 +169,18 @@
                                     </div>*@
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Type</label>
+                                            <div class="col-sm-8">
+                                                <select class="js-example-basic-single" name="Type" id="Type">
+                                                    <option value="NonPJT">Non PJT</option>
+                                                    <option value="PJT">PJT</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                                     </form>
                                 </div>
                             </fieldset>
@@ -972,11 +970,15 @@
                 type: "POST",
                 data: data,
 <<<<<<< HEAD
+<<<<<<< HEAD
                 success: function (resp) {                   
 =======
                 success: function (resp) {
                     debugger;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                success: function (resp) {                   
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     location.href = "/EMCS/CargoList";
                 }
             });
@@ -1017,6 +1019,7 @@
                         var DocumentRequired = $("#SiDocumentRequired").val();
                         var PicBlAwb = $('#PicBlAwb').val();
 <<<<<<< HEAD
+<<<<<<< HEAD
                         var Type = $('#Type').val();
 
                         var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
@@ -1024,6 +1027,11 @@
 
                         var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb };
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                        var Type = $('#Type').val();
+
+                        var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         ApproveCargo(data);
                     }
                     return false;

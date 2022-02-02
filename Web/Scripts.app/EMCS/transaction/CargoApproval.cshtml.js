@@ -1,8 +1,4 @@
 ﻿var visible = false;
-<<<<<<< HEAD
-
-=======
->>>>>>> 639d8d0 (Intial commit)
 if (CargoTypeName === "Full Container Load") {
     visible = true;
 }
@@ -25,10 +21,6 @@ getTotalData();
 
 
 function ReviseProblem(Status, IdRequest, Notes, statusName) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 639d8d0 (Intial commit)
     $.ajax({
         url: myApp.fullPath + "EMCS/CargoApprove",
         type: "Post",
@@ -209,11 +201,7 @@ var tableCargoForm = [
         align: 'right',
         formatter: currencyFormatter,
         sortable: true
-<<<<<<< HEAD
     }, {
-=======
-    },  {
->>>>>>> 639d8d0 (Intial commit)
         field: "newweight",
         title: "New Weight",
         colspan: 2,
@@ -362,7 +350,6 @@ function ApproveCargo(obj) {
             }
         },
         success: function (resp) {
-<<<<<<< HEAD
             Swal.fire({
                 title: 'Submit!',
                 text: 'Data Confirmed Successfully',
@@ -372,9 +359,6 @@ function ApproveCargo(obj) {
                     location.href = "/EMCS/CargoList";
                 }
             });
-=======
-            location.href = "/EMCS/CargoList";
->>>>>>> 639d8d0 (Intial commit)
         }
     });
 }
@@ -385,10 +369,14 @@ $("#btnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
 <<<<<<< HEAD
+<<<<<<< HEAD
         text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
 =======
         text: 'Do you want to continue ?',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

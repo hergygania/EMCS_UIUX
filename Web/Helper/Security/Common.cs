@@ -1,9 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using QRCoder;
 using System;
 =======
 ﻿using System;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+﻿using QRCoder;
+using System;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 using System.Configuration;
 using System.Drawing;
 using System.IO;
@@ -17,6 +22,9 @@ namespace App.Web.Helper
     public class Common
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static string GenerateQrCode(long IdCipl, string doc)
         {
 
@@ -45,20 +53,53 @@ namespace App.Web.Helper
 
                 }
 
+<<<<<<< HEAD
+=======
+
+                //switch (doc)
+                //{
+                //    case "downloadedi":
+                //        ViewBag.QrCodeUrlEDI = imgDataURL;
+                //        TempData["QrCodeUrlEDI"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlEDI");
+                //        break;
+                //    case "downloadInvoice":
+                //        ViewBag.QrCodeUrlInvoice = imgDataURL;
+                //        TempData["QrCodeUrlInvoice"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlInvoice");
+                //        break;
+                //    case "DownloadPl":
+                //        ViewBag.QrCodeUrlPL = imgDataURL;
+                //        TempData["QrCodeUrlPL"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlPL");
+                //        break;
+
+                //    default:
+                //        break;
+                //}
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return imgDataURL;
             }
             catch (Exception ex)
             {
 
+<<<<<<< HEAD
                 throw ex;
+=======
+                throw;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             }
 
 
 
 
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static string UploadFile(HttpPostedFileBase file, string appName)
         {
 

@@ -50,9 +50,13 @@ function load_data() {
         $('.btnAddItem').prop("disabled", false);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     $('#jenisBarangCipl').on('change', function () {
         GetReferenceNo();
 
@@ -67,17 +71,25 @@ function load_data() {
 
         $("#exportCipl option[value='Non Sales - Exhibition (Temporary)']").remove();
 <<<<<<< HEAD
+<<<<<<< HEAD
      
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+     
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         if ($(this).val() === 'CATERPILLAR SPAREPARTS') { // Spareparts
             $('#divReferenceNo, .div-idCustomerCipl').show();
             $('.tableItemSpareparts, .categoryspareparts').show();
             $('#forwaderCipl').val('CKB').trigger('change.select2').prop('disabled', false);
 <<<<<<< HEAD
+<<<<<<< HEAD
           
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+          
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             //$('#forwaderAttentionCipl, #divCkbBranchCipl, #forwaderAddressCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderEmailCipl').show("slow");
             $('.forwaderAttentionCipl, .divCkbBranchCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderEmailCipl, .forwaderCompanyCipl, .forwaderForwadingCipl').show("slow");
         } else {
@@ -437,10 +449,14 @@ function load_data() {
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
 =======
                 $('#UomItemCipl').val(row.UnitUom);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -460,6 +476,7 @@ function load_data() {
                 $('#CcrItemCipl, #JcodeItemCipl, #IdCustomerItemCipl').prop('disabled', false);
                 $('#PartItemCipl, #UnitItemCipl').prop('disabled', false);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
@@ -470,6 +487,11 @@ function load_data() {
                 $('#QuantityItemCipl').val(row.Quantity);
                 $('#UomItemCipl').val(row.UnitUom);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+                $('#NameItemCipl').val(row.Name);
+                $('#QuantityItemCipl').val(row.Quantity);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -509,10 +531,14 @@ function load_data() {
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
 =======
                 $('#UomItemCipl').val(row.UnitUom);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#SnItemCipl').val(row.Sn);
                 $('#JcodeItemCipl').val(row.JCode);
@@ -1622,9 +1648,13 @@ $('#btnAddReference').on('click', function (e) {
     var Unit = ValidateAddReference();
     if (Unit) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        debugger;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -2216,6 +2246,9 @@ function removeSingleAttributeDuplicates(array, key) {
     return result;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function removeSingleAttributeDuplicatesNew(array, key,key2) {
     let lookup = {};
     let result = [];
@@ -2228,8 +2261,11 @@ function removeSingleAttributeDuplicatesNew(array, key,key2) {
     }
     return result;
 }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function removeDoubleAttributeDuplicates(array) {
     jsonObject = array.map(JSON.stringify);
     uniqueSet = new Set(jsonObject);
@@ -2266,10 +2302,14 @@ function SumReferenceItem() {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
 =======
             CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2281,10 +2321,19 @@ function SumReferenceItem() {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             CountJCode = getUniqueNumberOfCollies(data).length;;
 =======
             CountJCode = removeSingleAttributeDuplicates(data, 'CaseNumber').length;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            debugger;
+            var UniqueCaseNumber = removeSingleAttributeDuplicates(data, 'CaseNumber');
+            var UniqueType = removeSingleAttributeDuplicates(data, 'Type');
+            var Uniqueitems = UniqueCaseNumber.push(UniqueType);
+                /* UniqueCaseNumber.length == 1 && UniqueType.length == 1 ? 1 : UniqueCaseNumber.length + UniqueType.length - 1;*/
+            CountJCode = Uniqueitems - 1;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2409,8 +2458,13 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
     $('#ExtendedItemCipl').val(formatCurrency(ExtendedValue, ".", ",", 2));
 })
 <<<<<<< HEAD
+<<<<<<< HEAD
 function GetDestinationPort() {
     var country = $("#consigneeCountryCipl").val();
+=======
+function GetDestinationPort() {
+    var country = $("#countryCipl").val();
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
    
         $('#destinationCipl').select2({
             placeholder: "Select Destination Port",
@@ -2442,9 +2496,12 @@ function GetDestinationPort() {
 
     
 }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function GetReferenceNo() {
     var Category = GetCategoryUsed();
     var item = {
@@ -2529,15 +2586,24 @@ function GetReferenceNo() {
             dataType: 'json',
             data: function (params) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                
                 return {
                    
                     Name: params.term
 
 =======
+=======
+               
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return {
+                   
                     Name: params.term
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 };
             },
             success: function (data, response) {
@@ -2555,6 +2621,7 @@ function GetReferenceNo() {
         }
     })
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     
@@ -2585,6 +2652,10 @@ function GetReferenceNo() {
     })
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    
+    
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     $('#CkbBranchCipl').select2({
         placeholder: 'Select CKB Branch',
         width: "100%",
@@ -2647,9 +2718,13 @@ function get_used_table_cipl_item() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function UpdateQuantityReference(Data, Status) {
     var Item = Data;
     $.ajax({
@@ -2960,10 +3035,14 @@ $('#btnSubmitCipl').on('click', function (event) {
                 Swal.fire({
                     title: "Confirmation",
 <<<<<<< HEAD
+<<<<<<< HEAD
                     text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
 =======
                     text: "Are you sure want to submit this data?",
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -3060,10 +3139,14 @@ function post_insert_cipl(status) {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
 <<<<<<< HEAD
+<<<<<<< HEAD
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            Type: $('#typeCipl').val(),
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -3190,6 +3273,7 @@ function RequestForChangeCIPL(formdata,status) {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
+<<<<<<< HEAD
             ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
@@ -3367,6 +3451,8 @@ function post_update_cipl(status) {
             ExportShipmentType: $('#ExportShipmentType').val(),
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),

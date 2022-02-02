@@ -6,10 +6,14 @@
         public string CreateDate { get; set; }
         public string ReferenceNo { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string Category { get; set; }
         public string CategoriItem { get; set; }
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public string Category { get; set; }
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public string Area { get; set; }
         public string FullArea { get; set; }
         public string RequestorName { get; set; }

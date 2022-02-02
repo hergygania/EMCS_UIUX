@@ -27,7 +27,6 @@ window.operateEvents = {
             }
             return false;
         });
-<<<<<<< HEAD
     },
     'click .editDocument': function (e, value, row, index) {
         
@@ -44,8 +43,6 @@ window.operateEvents = {
         
         $('#IdDocumentUpload').val(row.Id);
         //$(".uploadRecord").attr('href', '/EMCS/CiplDocumentUpload/' + row.Id).trigger('click');
-=======
->>>>>>> 639d8d0 (Intial commit)
     }
 };
 
@@ -55,7 +52,6 @@ window.operateEventRight = {
     },
     'click .showDocument': function (e, value, row) {
         $(".PreviewFile").attr('href', '/EMCS/PreviewGrItem?Id=' + row.Id).trigger('click');
-<<<<<<< HEAD
     },
     'click .downloaddoc': function (e, value, row) {
         
@@ -63,8 +59,6 @@ window.operateEventRight = {
     },
     'click .showDocumentdoc': function (e, value, row) {
         document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + row.Id + '/' + row.Filename;
-=======
->>>>>>> 639d8d0 (Intial commit)
     }
 };
 
@@ -128,10 +122,7 @@ var columns = [
 
     }];
 
-<<<<<<< HEAD
 Dropzone.autoDiscover = false;
-=======
->>>>>>> 639d8d0 (Intial commit)
 $(function () {
 
     $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
@@ -269,10 +260,14 @@ $("#BtnSubmit").on("click", function (e) {
             Swal.fire({
                 title: 'Confirmation',
 <<<<<<< HEAD
+<<<<<<< HEAD
                 text: 'By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
 =======
                 text: 'Are you sure want to submit data?',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                text: 'By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',

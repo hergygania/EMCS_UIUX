@@ -12,6 +12,7 @@ using NPOI.SS.UserModel;
 using System.Data;
 using App.Domain;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using Newtonsoft.Json;
 using App.Web.Helper;
@@ -19,6 +20,11 @@ using App.Web.App_Start;
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Data.Domain.EMCS;
+using Newtonsoft.Json;
+using App.Web.Helper;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -66,10 +72,14 @@ namespace App.Web.Controllers.EMCS
             return null;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public CargoModel InitModelCargo(long id)
         {
             var detail = new CargoModel();
@@ -100,6 +110,9 @@ namespace App.Web.Controllers.EMCS
             if (typeDoc == "Invoice")
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
                 if (qrCodeInvoiceValue == null)
                 {
@@ -107,13 +120,19 @@ namespace App.Web.Controllers.EMCS
                     qrCodeInvoiceValue = strQrCodeUrlInvoice;
                 }
                 ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
             }
             else if (typeDoc == "Pl")
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 var qrCodelPLValue = TempData["QrCodeUrlPL"];
                 if (qrCodelPLValue == null)
                 {
@@ -121,13 +140,19 @@ namespace App.Web.Controllers.EMCS
                     qrCodelPLValue = strQrCodeUrlPL;
                 }
                 ViewBag.QrCodeUrlPL = qrCodelPLValue;
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
             }
             else if (typeDoc == "Rg")
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
                 if (qrCodeUrlGRValue == null)
                 {
@@ -135,8 +160,11 @@ namespace App.Web.Controllers.EMCS
                     qrCodeUrlGRValue = strQrCodeUrlGR;
                 }
                 ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
             }
             else if (typeDoc == "Cargo")
@@ -167,8 +195,19 @@ namespace App.Web.Controllers.EMCS
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargo);
             }
             else
+<<<<<<< HEAD
             {
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            {               
+                var qrCodeValue = TempData["QrCodeUrlEDI"];
+                if(qrCodeValue == null)
+                {
+                    string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
+                    qrCodeValue = strQrCodeUrlEDI;
+                }
+                ViewBag.QrCodeUrlEDI = qrCodeValue;
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
             }
 
@@ -431,6 +470,7 @@ namespace App.Web.Controllers.EMCS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         public FileResult DownloadCIPLItem(long id)
         {
@@ -439,6 +479,11 @@ namespace App.Web.Controllers.EMCS
         public FileResult DownloadCIPLItem(long id)
         {           
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+        public FileResult DownloadCIPLItem(long id)
+        {
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             try
             {
                 var data = Service.EMCS.DocumentStreamGenerator.GetStreamCiplItem(id);
@@ -476,10 +521,14 @@ namespace App.Web.Controllers.EMCS
             return View();
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
         
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         private void ExecuteCommand(string command)
         {
             try
@@ -533,6 +582,7 @@ namespace App.Web.Controllers.EMCS
 
         [HttpPost]
 <<<<<<< HEAD
+<<<<<<< HEAD
         public JsonResult UploadCIPLItem(long idCIPL, string idReference, string refCIPL, string ciplFormModelFormData)
         {
             try
@@ -549,13 +599,27 @@ namespace App.Web.Controllers.EMCS
                     return GetFileNameCIPLItem(idCIPL, idReference, refCIPL, objCiplFormModel);
 =======
         public JsonResult UploadCIPLItem(long idCIPL,string idReference,string refCIPL)
+=======
+        public JsonResult UploadCIPLItem(long idCIPL, string idReference, string refCIPL, string ciplFormModelFormData)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         {
             try
             {
+                CiplFormModel objCiplFormModel = new CiplFormModel();
+                if (idCIPL == 0)
+                {
+                    objCiplFormModel = JsonConvert.DeserializeObject<CiplFormModel>(ciplFormModelFormData);
+
+                }
+
                 if (UploadFile("CIPLItem", "TemplateCatepillarSparePart"))
                 {
+<<<<<<< HEAD
                     return GetFileNameCIPLItem(idCIPL, idReference, refCIPL);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    return GetFileNameCIPLItem(idCIPL, idReference, refCIPL, objCiplFormModel);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 }
                 else
                 {
@@ -569,10 +633,14 @@ namespace App.Web.Controllers.EMCS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference, string refCIPL, CiplFormModel objCiplFormModel)
 =======
         public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference,string refCIPL)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference, string refCIPL, CiplFormModel objCiplFormModel)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         {
             try
             {
@@ -587,6 +655,7 @@ namespace App.Web.Controllers.EMCS
                     {
                         xssf = new XSSFWorkbook(file);
                         sheet = xssf.GetSheet("CIPLItem");
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                         var tuple = CheckFileData(sheet, refCIPL, idReference);
@@ -609,24 +678,46 @@ namespace App.Web.Controllers.EMCS
                                 return Json(new { idCIPL = idCIPL, status = true, msg = "Upload file successfully" });
 =======
                         
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         var tuple = CheckFileData(sheet, refCIPL, idReference);
-                        if (tuple.Item2 =="success")
+                        if (tuple.Item2 == "success")
                         {
+                            if (idCIPL == 0)
+                            {
+                                objCiplFormModel.Data.ReferenceNo = idReference;
+                                var data = Service.EMCS.SvcCipl.InsertCipl(objCiplFormModel.Forwader, objCiplFormModel.Data, "I", "Draft");
+                                if (data != null)
+                                {
+                                    idCIPL = data.Select(x => x.Id).First();
+                                }
+
+                            }
                             if (GetCIPLItemDataTable(sheet, idCIPL, idReference))
                             {
                                 ViewBag.crudMode = "I";
+<<<<<<< HEAD
                                 return Json(new { status = true, msg = "Upload file successfully" });
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+                                return Json(new { idCIPL = idCIPL, status = true, msg = "Upload file successfully" });
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                             }
                             return Json(new { status = true, msg = "Upload file successfully" });
                         }
                         else
                         {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             return Json(new { status = false, msg = tuple.Item1 });
 =======
                             return Json(new { status = false, msg = tuple.Item1});
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                            return Json(new { status = false, msg = tuple.Item1 });
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         }
                     }
                     else
@@ -661,6 +752,7 @@ namespace App.Web.Controllers.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public Tuple<string, string> CheckFileData(ISheet sheet, string refCIPL, string idReference)
         {
 
@@ -671,6 +763,12 @@ namespace App.Web.Controllers.EMCS
 
             var tuple = new Tuple<string, string>("","");
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public Tuple<string, string> CheckFileData(ISheet sheet, string refCIPL, string idReference)
+        {
+
+            var tuple = new Tuple<string, string>("", "");
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             for (var i = 1; i <= sheet.LastRowNum; i++)
             {
                 if (sheet.GetRow(i) != null)
@@ -702,19 +800,27 @@ namespace App.Web.Controllers.EMCS
                         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
                       
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         if (tuple.Item2 != "success")
                         {
                             break;
                         }
 <<<<<<< HEAD
+<<<<<<< HEAD
                     }
 =======
                     }                 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    }
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 }
                 if (tuple.Item2 != "success")
                 {
@@ -726,16 +832,21 @@ namespace App.Web.Controllers.EMCS
 
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum, string refCIPL)
 =======
         public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum,string refCIPL)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum, string refCIPL)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         {
             string message = "";
             string value = "";
             string messagedesc = "";
             try
             {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
@@ -751,6 +862,15 @@ namespace App.Web.Controllers.EMCS
                     value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
                     if (cellNum == 0 )
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+                if (sheet.GetRow(numRow).GetCell(cellNum) != null)
+                {
+                    //value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
+                    //Note : above condition is not working for string cell value if cell value is null
+                    value = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
+                    if (cellNum == 0)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     {
                         if (!refCIPL.Contains(value))
                         {
@@ -772,10 +892,14 @@ namespace App.Web.Controllers.EMCS
                     {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                         if (isDecimal(value))
 =======
                         if (isDecimal(value))                        
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                        if (isDecimal(value))
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         {
                             message = "success";
                             messagedesc = "";
@@ -787,6 +911,7 @@ namespace App.Web.Controllers.EMCS
                             messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " not decimal value";
                         }
 <<<<<<< HEAD
+<<<<<<< HEAD
                     }
                 }
                 else
@@ -797,6 +922,12 @@ namespace App.Web.Controllers.EMCS
                 else
                 {                   
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    }
+                }
+                else
+                {
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     if (cellNum == 10)
                     {
                         message = "failed";
@@ -807,6 +938,7 @@ namespace App.Web.Controllers.EMCS
                         message = "success";
                         messagedesc = "";
 <<<<<<< HEAD
+<<<<<<< HEAD
                     }
                 }
 
@@ -815,6 +947,11 @@ namespace App.Web.Controllers.EMCS
                 }
              
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    }
+                }
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             }
             catch (Exception e)
             {
@@ -840,6 +977,7 @@ namespace App.Web.Controllers.EMCS
         public string GetCellName(int cell)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
 
@@ -848,6 +986,11 @@ namespace App.Web.Controllers.EMCS
             string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
             
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+            string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             return coloum;
         }
 
@@ -859,10 +1002,14 @@ namespace App.Web.Controllers.EMCS
             string value = "";
             try
 <<<<<<< HEAD
+<<<<<<< HEAD
             {
 =======
             {              
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            {
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
                     value = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue.ToString();
@@ -871,10 +1018,14 @@ namespace App.Web.Controllers.EMCS
                 }
                 else
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {
 =======
                 {                 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                {
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     message = "failed";
                     messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " Empty";
                 }
@@ -960,10 +1111,14 @@ namespace App.Web.Controllers.EMCS
                 dt.Columns.Add("IdParent");
                 dt.Columns.Add("SIBNumber");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 dt.Columns.Add("WONumber");
 =======
                 dt.Columns.Add("WONumber"); 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                dt.Columns.Add("WONumber");
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 dt.Columns.Add("Claim");
                 dt.Columns.Add("ASNNumber");
 
@@ -973,10 +1128,14 @@ namespace App.Web.Controllers.EMCS
                     if (sheet.GetRow(i) != null)
                     {
 <<<<<<< HEAD
+<<<<<<< HEAD
                         dr = AddDataRow(dt, sheet, i, idCIPL, idReference);
 =======
                         dr = AddDataRow(dt, sheet, i, idCIPL,idReference);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                        dr = AddDataRow(dt, sheet, i, idCIPL, idReference);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     }
                 }
 
@@ -994,10 +1153,14 @@ namespace App.Web.Controllers.EMCS
             catch (Exception ex)
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
                 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return false;
             }
         }
@@ -1048,12 +1211,17 @@ namespace App.Web.Controllers.EMCS
         {
             DataRow dataRow = dt.NewRow();
 <<<<<<< HEAD
+<<<<<<< HEAD
             var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference);
             var Refno = GetStringVal(sheet, i, 0, 0);
 =======
             var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference); 
             var Refno = GetStringVal(sheet, i, 0, 0);  
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference);
+            var Refno = GetStringVal(sheet, i, 0, 0);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             dataRow["Id"] = i;
             dataRow["IdCipl"] = idCIPL;
             dataRow["IdReference"] = idReferenceCIPL;
@@ -1072,10 +1240,14 @@ namespace App.Web.Controllers.EMCS
             dataRow["Quantity"] = GetDecVal(sheet, i, 2, 0);
             dataRow["UnitPrice"] = GetStringVal(sheet, i, 7, 0);
 <<<<<<< HEAD
+<<<<<<< HEAD
             dataRow["ExtendedValue"] = GetStringVal(sheet, i, 8, 0);
 =======
             dataRow["ExtendedValue"] = GetStringVal(sheet, i,8, 0);          
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            dataRow["ExtendedValue"] = GetStringVal(sheet, i, 8, 0);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             dataRow["Length"] = GetStringVal(sheet, i, 13, 0);
             dataRow["Width"] = GetStringVal(sheet, i, 14, 0);
             dataRow["Height"] = GetStringVal(sheet, i, 15, 0);
@@ -1120,10 +1292,14 @@ namespace App.Web.Controllers.EMCS
 
                 string val;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 val = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
 =======
                 val = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                val = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return val;
             }
             catch (Exception ex)
@@ -1136,12 +1312,16 @@ namespace App.Web.Controllers.EMCS
             try
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 double val = 0;
                 //val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
                     val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
                 }
+<<<<<<< HEAD
 
                 return val;
             }
@@ -1154,15 +1334,25 @@ namespace App.Web.Controllers.EMCS
             }
             catch (Exception )
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+                return val;
+            }
+            catch (Exception)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             {
                 return 0;
             }
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
      
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

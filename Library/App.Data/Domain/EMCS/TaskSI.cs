@@ -19,9 +19,13 @@
         public string UpdateBy { get; set; }
         public bool IsDelete { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string ExportType { get; set; }
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public string ExportType { get; set; }
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
     }
 }
