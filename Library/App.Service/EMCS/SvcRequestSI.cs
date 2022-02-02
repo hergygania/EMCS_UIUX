@@ -34,10 +34,10 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
                 parameterList.Add(new SqlParameter("@UpdateDate", ""));
                 parameterList.Add(new SqlParameter("@IsDelete", false));
-
+                parameterList.Add(new SqlParameter("@ExportType", item.ExportType ?? ""));
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete", parameters).FirstOrDefault();
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete,@ExportType", parameters).FirstOrDefault();
 
                 var Status = "Submit";
                 var actionBy = SiteConfiguration.UserName;

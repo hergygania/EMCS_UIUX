@@ -163,6 +163,7 @@
     <Compile Include="EMCS\SvcBlAwb.cs" />
     <Compile Include="EMCS\SvcCargoItem.cs" />
     <Compile Include="EMCS\SvcDelegation.cs" />
+    <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
     <Compile Include="EMCS\SvcShippingInstruction.cs" />
     <Compile Include="EMCS\SvcContainer.cs" />
     <Compile Include="EMCS\SvcGeneral.cs" />

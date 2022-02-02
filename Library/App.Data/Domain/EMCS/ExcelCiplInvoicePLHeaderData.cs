@@ -5,6 +5,7 @@
         public string CiplNo { get; set; }
         public string CreateDate { get; set; }
         public string ReferenceNo { get; set; }
+        public string Category { get; set; }
         public string Area { get; set; }
         public string FullArea { get; set; }
         public string RequestorName { get; set; }

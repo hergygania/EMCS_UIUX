@@ -77,6 +77,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Date & Time Submit NPE to Custom Office</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.NpeDateSubmitToCustomOffice, new { @class = "form-control date", @id = "NpeDateSubmitToCustomOffice", @placeholder = "Date", @name = "NpeDateSubmitToCustomOffice" })
+                                        @*<input type="text" class="form-control date" id="NpeDate" autocomplete="off" name="NpeDate" required placeholder="Date">*@
+                                        <div class="input-group-addon cal">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-lg-4 col-xs-4">No Pen</label>
                                     <div class="input-group col-lg-8 col-xs-8">
                                         @Html.TextBoxFor(m => m.NpePeb.RegistrationNumber, new { @class = "form-control", @id = "RegistrationNumber", @placeholder = "Registration Number", @name = "RegistrationNumber" })
@@ -293,7 +303,7 @@
         $("#btnApproveNpePeb").on("click", function () {
             Swal.fire({
                 title: 'Approve Confirmation',
-                text: 'Do you want to continue ?',
+                text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?', text: 'Do you want to continue ?',
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',

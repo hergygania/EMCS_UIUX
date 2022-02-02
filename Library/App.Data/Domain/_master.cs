@@ -98,5 +98,8 @@ namespace App.Data
         public virtual DbSet<CustomerOrderSummary> CustomerOrderSummary { get; set; }
         public virtual DbSet<CustomerPOSummary> CustomerPOSummary { get; set; }
         public virtual DbSet<StagingPartsMapping> StagingPartsMapping { get; set; }
+
+        public virtual DbSet<RequestForChange> RequestForChange { get; set; }
+        public virtual DbSet<RFCItem> RFCItem { get; set; }
     }
 }

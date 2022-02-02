@@ -79,6 +79,23 @@
 
         $("#consigneeNameCipl").easyAutocomplete(optionsConsignee);
 
+        //var optionsUOMHistory = {
+        //    url: myApp.fullPath + "EMCS/GetUOMHistory",
+        //    listLocation: "data",
+        //    list: {
+        //        match: {
+        //            enabled: true
+        //        },
+        //        onChooseEvent: function () {
+        //            console.log(this);
+        //            var value = $("#UomItemCipl").getSelectedItemData();
+        //        }
+        //    },
+        //    theme: "plate-dark"
+        //};
+
+        //$("#UomItemCipl").easyAutocomplete(optionsUOMHistory);
+       
         var optionsNotify = {
             url: myApp.fullPath + "EMCS/GetConsigneeHistory",
             listLocation: "data",

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QRCoder;
+using System;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
@@ -11,6 +12,69 @@ namespace App.Web.Helper
 {
     public class Common
     {
+        public static string GenerateQrCode(long IdCipl, string doc)
+        {
+
+            try
+            {
+                // invoice = downloadInvoice
+                //PL =DownloadPl
+
+                string url = HttpContext.Current.Request.Url.AbsoluteUri;
+                Uri url1 = new Uri(url);
+                string host = url1.GetLeftPart(UriPartial.Authority);
+
+                string docUrl = host + "/download/" + doc + "/" + IdCipl;
+                string imgDataURL = string.Empty;
+                QRCodeGenerator ObjQr = new QRCodeGenerator();
+                QRCodeData qrCodeData = ObjQr.CreateQrCode(docUrl, QRCodeGenerator.ECCLevel.Q);
+                Bitmap bitMap = new QRCode(qrCodeData).GetGraphic(20);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    byte[] byteImage = ms.ToArray();
+                    //Convert byte arry to base64string   
+                    string imreBase64Data = Convert.ToBase64String(byteImage);
+                    imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+                    //Passing image data in viewbag to view  
+
+                }
+
+
+                //switch (doc)
+                //{
+                //    case "downloadedi":
+                //        ViewBag.QrCodeUrlEDI = imgDataURL;
+                //        TempData["QrCodeUrlEDI"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlEDI");
+                //        break;
+                //    case "downloadInvoice":
+                //        ViewBag.QrCodeUrlInvoice = imgDataURL;
+                //        TempData["QrCodeUrlInvoice"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlInvoice");
+                //        break;
+                //    case "DownloadPl":
+                //        ViewBag.QrCodeUrlPL = imgDataURL;
+                //        TempData["QrCodeUrlPL"] = imgDataURL;
+                //        TempData.Peek("QrCodeUrlPL");
+                //        break;
+
+                //    default:
+                //        break;
+                //}
+
+                return imgDataURL;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+
+
+        }
         public static string UploadFile(HttpPostedFileBase file, string appName)
         {
 

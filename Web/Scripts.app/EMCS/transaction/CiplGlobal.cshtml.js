@@ -49,6 +49,7 @@ function load_data() {
     if ($('#refCipl') !== null) {
         $('.btnAddItem').prop("disabled", false);
     }
+    
     $('#jenisBarangCipl').on('change', function () {
         GetReferenceNo();
 
@@ -62,10 +63,12 @@ function load_data() {
         $('.tableItem, .div-idCustomerCipl').show();
 
         $("#exportCipl option[value='Non Sales - Exhibition (Temporary)']").remove();
+     
         if ($(this).val() === 'CATERPILLAR SPAREPARTS') { // Spareparts
             $('#divReferenceNo, .div-idCustomerCipl').show();
             $('.tableItemSpareparts, .categoryspareparts').show();
             $('#forwaderCipl').val('CKB').trigger('change.select2').prop('disabled', false);
+          
             //$('#forwaderAttentionCipl, #divCkbBranchCipl, #forwaderAddressCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderEmailCipl').show("slow");
             $('.forwaderAttentionCipl, .divCkbBranchCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderEmailCipl, .forwaderCompanyCipl, .forwaderForwadingCipl').show("slow");
         } else {
@@ -409,7 +412,7 @@ function load_data() {
                 $('#IdItem').val(row.Id);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(row.UnitUom);
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -428,11 +431,9 @@ function load_data() {
                 $('#SnItemCipl').prop('disabled', true);
                 $('#CcrItemCipl, #JcodeItemCipl, #IdCustomerItemCipl').prop('disabled', false);
                 $('#PartItemCipl, #UnitItemCipl').prop('disabled', false);
-
-                $('#IdItem').val(row.Id);
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(row.UnitUom);
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -467,7 +468,7 @@ function load_data() {
                 $('#ReferenceItemCipl').val(row.ReferenceNo);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(row.UnitUom);
+                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#SnItemCipl').val(row.Sn);
                 $('#JcodeItemCipl').val(row.JCode);
@@ -1566,6 +1567,7 @@ $('#btnAddReference').on('click', function (e) {
     var UnitName = $('#NameItemCipl').valid();
     var Unit = ValidateAddReference();
     if (Unit) {
+        debugger;
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -2156,6 +2158,18 @@ function removeSingleAttributeDuplicates(array, key) {
     }
     return result;
 }
+function removeSingleAttributeDuplicatesNew(array, key,key2) {
+    let lookup = {};
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
+        if (!lookup[array[i][key]] && !lookup[array[i][key2]]) {
+            lookup[array[i][key]] = true;
+            lookup[array[i][key2]] = true;
+            result.push(array[i]);
+        }
+    }
+    return result;
+}
 function removeDoubleAttributeDuplicates(array) {
     jsonObject = array.map(JSON.stringify);
     uniqueSet = new Set(jsonObject);
@@ -2177,7 +2191,7 @@ function SumReferenceItem() {
     if (Category === 'SIB') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length;
+            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2188,7 +2202,12 @@ function SumReferenceItem() {
     } else if (Category === 'PRA' || Category === 'REMAN') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-            CountJCode = removeSingleAttributeDuplicates(data, 'CaseNumber').length;
+            debugger;
+            var UniqueCaseNumber = removeSingleAttributeDuplicates(data, 'CaseNumber');
+            var UniqueType = removeSingleAttributeDuplicates(data, 'Type');
+            var Uniqueitems = UniqueCaseNumber.push(UniqueType);
+                /* UniqueCaseNumber.length == 1 && UniqueType.length == 1 ? 1 : UniqueCaseNumber.length + UniqueType.length - 1;*/
+            CountJCode = Uniqueitems - 1;
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2312,7 +2331,39 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
     var ExtendedValue = UnitPrice * Quantity;
     $('#ExtendedItemCipl').val(formatCurrency(ExtendedValue, ".", ",", 2));
 })
+function GetDestinationPort() {
+    var country = $("#countryCipl").val();
+   
+        $('#destinationCipl').select2({
+            placeholder: "Select Destination Port",
+            ajax: {
+                url: "/emcs/GetPortData",
+                dataType: 'json',
+                data: function (params) {
 
+                    return {
+                        Country: country,
+                        Name: params.term
+
+                    };
+                },
+                success: function (data, response) {
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data.data, function (item) {
+                            return {
+                                text: item.Text,
+                                id: item.Id
+                            }
+                        })
+                    }
+                }
+            }
+        })
+
+    
+}
 function GetReferenceNo() {
     var Category = GetCategoryUsed();
     var item = {
@@ -2396,8 +2447,11 @@ function GetReferenceNo() {
             url: "/emcs/GetLocalPortData",
             dataType: 'json',
             data: function (params) {
+               
                 return {
+                   
                     Name: params.term
+
                 };
             },
             success: function (data, response) {
@@ -2415,31 +2469,8 @@ function GetReferenceNo() {
         }
     })
 
-    $('#destinationCipl').select2({
-        placeholder: "Select Destination Port",
-        ajax: {
-            url: "/emcs/GetPortData",
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    Name: params.term
-                };
-            },
-            success: function (data, response) {
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data.data, function (item) {
-                        return {
-                            text: item.Text,
-                            id: item.Id
-                        }
-                    })
-                }
-            }
-        }
-    })
-
+    
+    
     $('#CkbBranchCipl').select2({
         placeholder: 'Select CKB Branch',
         width: "100%",
@@ -2494,6 +2525,7 @@ function get_used_table_cipl_item() {
     }
     return table;
 }
+
 
 function UpdateQuantityReference(Data, Status) {
     var Item = Data;
@@ -2804,7 +2836,7 @@ $('#btnSubmitCipl').on('click', function (event) {
             } else {
                 Swal.fire({
                     title: "Confirmation",
-                    text: "Are you sure want to submit this data?",
+                    text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -2900,6 +2932,7 @@ function post_insert_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
+            Type: $('#typeCipl').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -3019,6 +3052,7 @@ function post_update_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
+            Type: $('#typeCipl').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),

@@ -97,6 +97,11 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
     </Reference>
@@ -187,6 +192,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthorizeAccess.cs" />
@@ -6432,6 +6438,7 @@
     <Content Include="Scripts\tinymce\utils\validate.js" />
     <Content Include="Scripts\TreeMenu.js" />
     <Content Include="Scripts\validator.min.js" />
+    <Content Include="SQL Scripts\SQL.txt" />
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
     <Content Include="Upload\EMCS\GR\2\DO.0612190002FG10004xxxxxx.png" />
     <Content Include="Upload\EMCS\GR\3\DO.0612190003FGTesting.jpeg" />
@@ -6927,7 +6934,6 @@
     <Content Include="Views\Post\ModalFormCKB.cshtml" />
     <Content Include="Views\Post\DashboardMockUp.cshtml" />
     <Content Include="Views\Post\ModalComment.cshtml" />
-  
     <Content Include="Views\DTS\NewFreight.cshtml" />
     <Content Include="Views\ChangeLog\Index.cshtml" />
     <Content Include="Views\KPIDashboard\Index.cshtml" />

@@ -143,6 +143,7 @@ namespace App.Service.Master
         {
             using (var db = new Data.EfDbContext())
             {
+                //var item = await db.UserAccesses.Where(c => c.UserID == userId).SingleOrDefaultAsync();
                 var item = await db.UserAccesses.Where(c => c.UserID == userId).SingleOrDefaultAsync();
                 if (item != null)
                 {

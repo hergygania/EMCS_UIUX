@@ -10,8 +10,8 @@ using App.Data.Domain.EMCS;
 namespace App.Service.EMCS
 {
 
-    /// <summary>
-    /// Services Proses Shipment inbound.</summary>                
+
+    /// <summary> Services Proses Shipment inbound.</summary>                
     public class SvcCargoItem
     {
         public const string CacheName = "App.EMCS.SvcCargoItem";
@@ -24,6 +24,16 @@ namespace App.Service.EMCS
             {
                 var sql = "EXEC [sp_get_cargo_item_data] @Id='" + id + "'";
                 var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).FirstOrDefault();
+                return data;
+            }
+        }
+
+        public static List<SpCargoItemDetail> GetDataByCargoId(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + id + "'";
+                var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
                 return data;
             }
         }

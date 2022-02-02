@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -79,6 +79,7 @@
     <Compile Include="Domain\EMCS\CiplDocumentInsert.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Domain\EMCS\CiplDocumentModel.cs" />
     <Compile Include="Domain\EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -98,21 +99,21 @@
     <Compile Include="Domain\EMCS\SuperiorListFilter.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    
-    
-    
+    <Compile Include="Domain\EMCS\Type.cs" />
     <Compile Include="Domain\POST\BsTablePagingResult.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotDbModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotFormModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotListView.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotTableListModel.cs" />
-	<Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\Employee.cs" />
     <Compile Include="Domain\POST\MtMappingUserBranch.cs" />
     <Compile Include="Domain\POST\PaginationParamEbupot.cs" />
     <Compile Include="Domain\POST\TotalSla.cs" />
     <Compile Include="Domain\POST\TrAttachment.cs" />
-   <Compile Include="Domain\KPIDashboard\KPIDashboardModels.cs" />
+    <Compile Include="Domain\KPIDashboard\KPIDashboardModels.cs" />
     <Compile Include="Domain\POST\TrItemPartialQty.cs" />
+    <Compile Include="Domain\RequestForChange.cs" />
+    <Compile Include="Domain\RFCItem.cs" />
     <Compile Include="Extensions\DbTransaction.cs" />
     <Compile Include="Domain\CAT\BO.cs" />
     <Compile Include="Domain\CAT\CustomerDBS.cs" />
