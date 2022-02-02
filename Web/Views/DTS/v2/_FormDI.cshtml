@@ -1,0 +1,477 @@
+﻿@{
+    ViewBag.Title = "Create Outbound Shipment";
+}
+
+@using System.Web.Mvc 
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .error {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+    label.error {
+        border: none;
+        display: none !important;
+    }
+
+    .btn-form {
+        width: 100px;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Delivery Instruction Form</h4>
+</div>
+<div class="modal-body">
+    <form class="form" id="formRequest">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="box box-warning" style="margin-bottom: 0px;">
+                    <div class="box-header">
+                        <h3 class="box-title">REQUESTOR INFO</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="ReqID" class="control-label col-md-4 col-xs-12">REQUESTOR NAME</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="hidden" type="hidden" name="ID" id="ID" placeholder="ID" value="0" />
+                                        <input class="hidden" type="hidden" id="formType" name="formType" placeholder="Form Type" value="I" />
+                                        <input type="hidden" id="CustName" name="CustName" />
+                                        <input type="hidden" id="Sales1Name" name="Sales1Name" />
+                                        <input type="hidden" id="Sales2Name" name="Sales2Name" />
+                                        <input id="RequestID" type="hidden" name="RequestorID" value="@(ViewBag.userID)" class="hidden" />
+                                        <input id="RequestName" name="RequestorName" readonly value="@(ViewBag.userFullName)" class="form-control" />
+                                        <div for="RequestID" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Origin" class="control-label col-md-4 col-xs-12">REQUESTOR HP*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input type="text" id="RequestorHp" name="RequestorHp"
+                                               class="form-control form-control-tel"
+                                               required
+                                               maxlength="13"
+                                               placeholder="Nomor HP pemohon pengirim unit" value="@(ViewBag.userPhone)" />
+                                        <div for="RequestorHp" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sales1ID" class="control-label col-md-4 col-xs-12">SALES 1 NAME*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <select id="Sales1ID" required name="Sales1ID" class="form-control"></select>
+                                        <div for="Sales1ID" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sales1Hp" class="control-label col-md-4 col-xs-12">SALES 1 HP*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input type="text" id="Sales1Hp" value="" name="Sales1Hp"
+                                               class="form-control form-control-tel"
+                                               required
+                                               maxlength="13"
+                                               placeholder="Nomor HP Sales yang meminta pengiriman" />
+                                        <div for="Sales1Hp" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sales2ID" class="control-label col-md-4 col-xs-12">SALES 2 NAME</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <select id="Sales2ID" name="Sales2ID" class="form-control"></select>
+                                        <div for="Sales2ID" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Sales2Hp" class="control-label col-md-4 col-xs-12">SALES 2 HP</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input type="text" id="Sales2Hp" value="" name="Sales2Hp"
+                                               class="form-control form-control-tel"
+                                               maxlength="13"
+                                               placeholder="Nomor HP Sales yang menerima unit" />
+                                        <div for="Sales2Hp" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">CUSTOMER & DESTINATION INFO</h4>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseCustomerInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="form-group">
+                                    <label for="CustID" class="control-label col-md-4 col-xs-12">CUSTOMER NAME</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <select id="CustID" name="CustID" class="form-control"></select>
+                                        @*<div for="CustID" class="error">This field is required</div>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vendorname" class="control-label col-md-4 col-xs-12"><input type="checkbox" id="chkvendor" name="vendorname" /> VENDOR NAME</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="form-control" id="vendorname" name="vendorname" required placeholder="Nama Vendor" />
+                                        <div for="PicName" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PicName" class="control-label col-md-4 col-xs-12">PIC NAME*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="form-control" id="PicName" name="PicName" required placeholder="Nama PIC/penerima unit" />
+                                        <div for="PicName" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PicHP" class="control-label col-md-4 col-xs-12">PIC HP*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input type="text" name="PicHP" id="PicHP"
+                                               class="form-control form-control-tel"
+                                               required
+                                               maxlength="13"
+                                               placeholder="Nomor HP PIC/penerima unit" />
+                                        <div for="PicHP" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CustAddress" class="control-label col-md-4 col-xs-12">
+                                        DESTINATION*
+                                    </label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <textarea name="CustAddress" id="CustAddress" class="form-control" required placeholder="Alamat tujuan /penerima unit" style="height: 109px;"></textarea>
+                                        <label>*Lengkapi alamat dengan alamat site </label>
+                                        <div for="CustAddress" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label for="Kecamatan" class="control-label col-md-4 col-xs-12">SUB-DISTRICT*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="form-control" id="Kecamatan" name="Kecamatan" required placeholder="Nama Kecamatan Tujuan" />
+                                        <div for="Kecamatan" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Kabupaten" class="control-label col-md-4 col-xs-12">DISTRICT*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="form-control" id="Kabupaten" name="Kabupaten" required placeholder="Nama Kabupaten Tujuan" />
+                                        <div for="Kabupaten" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Province" class="control-label col-md-4 col-xs-12">PROVINCE*</label>
+                                    <div class="input-group col-md-8 col-xs-12">
+                                        <input class="form-control" id="Province" name="Province" required placeholder="Nama Provinsi Tujuan" />
+                                        <div for="Province" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">MATERIAL INFO</h4>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseMaterialInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="Origin" class="control-label col-md-1 col-xs-12">ORIGIN *</label>
+                                    <div class="input-group col-md-4 col-xs-12">
+                                        <input class="form-control" id="Origin" name="Origin" required placeholder="Origin" />
+                                        <div for="Origin" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div id="toolbarUnit" class="toolbarUnit">
+                                        <button class="btn btn-success" type="button" id="btnAddUnit">
+                                            <i class="fa fa-plus-circle"></i> New
+                                        </button>
+                                    </div>
+                                    <table id="tableDeliveryInstructionUnit" data-toolbar=".toolbarUnit" class="table table-bordered"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">TERM INFO</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseTermInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="SupportingOfDelivery" class="control-label">SUPPORTING OF ELIVERY*</label>
+                                    <div class="radio">
+                                        <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" id="Unloadingbycustomer" required value="UNLOADING BY CUSTOMER" type="radio" /> UNLOADING BY CUSTOMER</label><br />
+                                        <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="UNLOADING BY PTTU" type="radio" /> UNLOADING BY PTTU</label><br />
+                                        <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="UNLOADING BY VENDOR" type="radio" /> UNLOADING BY VENDOR</label><br />
+                                        <label>
+                                            <input name="SupportingOfDelivery" class="SupportingOfDelivery"
+                                                   required value="CRANE/FORKLIFT" type="radio" /> CRANE/FORKLIFT
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" id="SODCrane_Forklift" class="form-control"
+                                                       placeholder="CAPACITY" readonly>
+                                                <span class="input-group-addon">/ TON</span>
+                                            </div>
+                                        </label><br />
+                                        <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="ESCORTED BY MECHANIC" type="radio" /> ESCORTED BY MECHANIC</label><br />
+                                        @* <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="OTHERS" type="radio" /> OTHERS <input type="text" id="SODOthers"  style="border:1px solid!important" class="form-control" placeholder="OTHERS" readonly></label><br />*@
+                                    </div>
+                                    <div for="SupportingOfDelivery" class="error">This field is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Incoterm" class="control-label">
+                                        TRANSPORTATION SERVICE ARRANGEMENT*
+                                    </label>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" class="Incoterm" required name="Incoterm" id="FOT" value="FOT ( ON TRUCT EXCLUDE UNLOADING )" /> ON TRUCK ( EXCLUDE UNLOADING UNITS AT DESTINATION )</label><br />
+                                        <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" id="FOB" value="FOB ( ON BOARD INCLUDE LOADING & UNLOADING )" /> ON BOARD ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK & LOADING TO VESSEL/CARRIER )</label><br />
+                                        <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" id="ONGROUND" value="ON GROUND ( INCLUDE UNLOADING )" /> ON GROUND ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK TO GROUND AT DESTINATION )</label><br />
+                                        @*<label><input type="radio" class="Incoterm" required name="Incoterm" value="FAS ( FREE ALONGSIDE SHIP)" /> FAS ( FREE ALONGSIDE SHIP)</label><br />*@
+                                        <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" id="ONTOCONTAINER" value="ONTO CONTAINER ( INCLUDE LOADING & UNLOADING )" /> ONTO CONTAINER ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK AND LOADING TO CONTAINER )</label><br />
+                                        <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" id="on_pondation" value="ON PONDATION ( INCLUDE LOADING & UNLOADING )" /> ON PONDATION ( INCLUDE LIFTING TOOLS & OPERATOR UNLOADING UNITS FROM TRUCK AND LOADING ON PONDATION )</label><br />
+                                        @*<label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" id="INCTOTHER" value="OTHERS" /> <input type="text"  style="border:1px solid!important" id="INCTOthers" class="form-control" placeholder="OTHERS" readonly></label><br />*@
+                                    </div>
+                                    <div for="Incoterm" class="error">This field is required</div>
+                                </div>
+                            </div>                          
+                        </div>
+                        <div class="row hidden">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="SendEmailToCkb" class="control-label">MAIl CKB</label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="SendEmailToCkb" value="true" type="checkbox" /> MAIL TO CKB
+                                        </label><br />
+                                    </div>
+                                    <div for="SendEmailToCkb" class="error">This field is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">LEAD TIME INFO</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseLeadTimeInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="ModaTransport" id="ModaTransport" class="control-label">MODA TRANSPORT*</label>
+                                    <div class="radio">
+                                        <label class="col-md-4 col-xs-12"><input name="ModaTransport" value="SEA" type="radio" /> SEA FREIGHT </label>
+                                        <label class="col-md-4 col-xs-12"><input name="ModaTransport" value="LAND" type="radio" /> INLAND FREIGHT </label>
+                                        <label><input name="ModaTransport" value="AIR" type="radio" /> AIR FREIGHT</label>
+                                    </div>
+                                    <div for="ModaTransport" class="error">This field is required</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ExpectedDeliveryDate" class="control-label col-md-5 col-xs-12">ESTIMATE TIME DEPARTURE</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <input class="form-control date" name="ExpectedDeliveryDate" id="ExpectedDeliveryDate" required placeholder="Estimate Time Departure" />
+                                       
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PromisedDeliveryDate" class="control-label col-md-5 col-xs-12">ESTIMATE TIME ARRIVAL </label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <input class="form-control date" name="PromisedDeliveryDate" id="PromisedDeliveryDate" required placeholder="Estimate Time Arrival" />
+                                      
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PickUpPlanDate" class="control-label col-md-5 col-xs-12">PICK UP PLAN DATE*</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <input class="form-control date" name="PickUpPlanDate" id="PickUpPlanDate" required placeholder="Pick Up Plan Date" />
+                                        <div for="PickUpPlanDate" class="error">This field is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">OTHER INFO</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseLeadTimeInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="Remarks" class="control-label col-md-5 col-xs-12">REMARKS</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <textarea name="Remarks" id="Remarks" class="form-control" placeholder="Remarks"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ChargeofAccount" class="control-label col-md-5 col-xs-12">CHARGE OF ACCOUNT</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <textarea name="ChargeofAccount" id="ChargeofAccount" class="form-control" placeholder="Charge Of Account"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ForwarderName" class="control-label col-md-5 col-xs-12">Forwarder Name</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <textarea name="ForwarderName" id="ForwarderName" class="form-control" disabled placeholder="Forwarder Name"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="section-approval-note" hidden>
+                                    <label for="ApprovalNote" class="control-label col-md-5 col-xs-12">NOTE</label>
+                                    <div class="input-group col-md-7 col-xs-12">
+                                        <textarea name="ApprovalNote" id="ApprovalNote" class="form-control" disabled placeholder="Note"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 SDOC-container">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">SUPPORTING DOCUMENT</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" id="btnCollapseTermInfo" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row upload">
+                            <div class="col-md-12 upload">
+                                <div class="form-group upload">
+                                    <input id="SDOC" name="SDOC" type="file" class="file"
+                                           data-browse-on-zone-click="false"
+                                           data-show-preview="false"
+                                           data-show-upload="false"
+                                           data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                           data-show-caption="true"
+                                           data-msg-placeholder="Select {files} for upload..." />
+                                </div>
+                                <div class="form-group upload">
+                                    <input id="SDOC1" name="SDOC1" type="file" class="file"
+                                           data-browse-on-zone-click="false"
+                                           data-show-preview="false"
+                                           data-show-upload="false"
+                                           data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                           data-show-caption="true"
+                                           data-msg-placeholder="Select {files} for upload..." />
+                                </div>
+                                <div class="form-group upload">
+                                    <input id="SDOC2" name="SDOC2" type="file" class="file"
+                                           data-browse-on-zone-click="false"
+                                           data-show-preview="false"
+                                           data-show-upload="false"
+                                           data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                           data-show-caption="true"
+                                           data-msg-placeholder="Select {files} for upload..." />
+                                    <label>*JPG/DOC/PDF/XLS (MAX 1MB/FILE)</label>
+                                </div>
+                            </div>
+                            <div for="SDOC" class="error">This field is required</div>
+                        </div>
+                        <div class="row preview">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input id="SDOCPreview" name="SDOCPreview" type="file" />
+                                </div>
+                            </div>
+                            <div for="SDOCPreview" class="error">This field is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="btn-action">
+        @if (ViewBag.ViewMode == "REQUESTOR")
+        {
+            <button name="SaveAsDraft" class="btn-form btn btn-default action-form" hidden><i class="fa fa-save"></i> Save as Draft</button>
+            <button name="SaveAsRevised" class="btn-form btn btn-primary action-form" hidden><i class="fa fa-check-circle-o"></i> Revised</button>
+            <button name="SubmitForm" class="btn-form btn btn-success action-form" hidden><i class="fa fa-paper-plane"></i> Submit</button>
+        }
+        @if (ViewBag.ViewMode == "APPROVER")
+        {
+            <button id="Reject" name="Reject" class="processForm btn-form btn btn-danger" type="button"><i class="fa fa-times"></i> Reject</button>
+            <button id="Revise" name="Revise" class="processForm btn-form btn btn-info" type="button"><i class="fa fa-reply"></i> Revise</button>
+            <button id="Approve" name="Approve" class="processForm btn-form btn btn-primary" type="button"><i class="fa fa-cog"></i> Approve</button>
+        }
+        <button name="Cancel" class="btn-form btn btn-warning action-form" hidden><i class="fa fa-arrow-left"></i> Close</button>
+    </div>
+</div>
+@section scripts
+{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  
+}

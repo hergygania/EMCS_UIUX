@@ -1,0 +1,17 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "country": "Vietnam",
+      "markup": "3%"
+    },
+    {
+      "country": "Indonesia",
+      "markup": "5%"
+    },
+    {
+      "country": "Thailand",
+      "markup": "5%"
+    }
+  ]
+}

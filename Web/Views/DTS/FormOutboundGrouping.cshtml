@@ -1,0 +1,315 @@
+﻿<div class="col-md-12" id="OutboundDetailTrue" style="display:none;">
+    <div class="row">
+        <div class="col-md-8 box-custom">
+            <div class="box">
+                <div class="box-header with-border">
+                    <span class="box-title">Outbound Detail</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <div id="IDOutbound" hidden></div>
+                                    <label for="ajuNo" class="col-md-4 col-xs-12 control-label">DA <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="DANo" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="msoNo" class="col-md-4 col-xs-12 control-label">DI No <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="DINo" class="control-label DetailView"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="msoNo" class="col-md-4 col-xs-12 control-label">DI Date <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="DIDate" class="control-label DetailView"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Origin <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="Origin" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Destination <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="Destination" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Delivery Contact <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="DeliveryName" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Shipment Moda <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="Moda" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Moda Transport <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="UnitModa" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-custom">
+                <div class="box-header with-border">
+                    <span class="box-title">Fleet Detail</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                @{
+                                    if (ViewBag.AllowUpdate)
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Police No <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="NoPol">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Driver Name<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="DriverName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Phone No<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="HPInlandFreight">
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Police No <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="NoPol" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Driver Name <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="DriverName" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Phone No <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="HPInlandFreight" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                @{
+                                    if (ViewBag.AllowUpdate)
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Vessel Name <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="VesselName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Consignee Name <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="PIC">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Phone No <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="HPSealandFreight">
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Vessel Name <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="VesselName" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Consignee Name <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="PIC" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Phone No <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="HPSealandFreight" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-custom">
+                <div class="box-header with-border">
+                    <span class="box-title">Lead Time</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">ETD <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="ETD" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">ATD <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="ATD" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">ETA <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="ETA" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">ATA <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="ATA" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 box-custom">
+            <div class="box">
+                <div class="box-header with-border">
+                    <span class="box-title">Product Info</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Model <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="Model" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Serial Number <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="SerialNumber" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-md-4 col-xs-12 control-label">Unit Type <span class="hidden-xs pull-right">: </span></label>
+                                    <div class="col-md-8 col-xs-12">
+                                        <label id="UnitType" class="control-label DetailView">-</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-custom">
+                <div class="box-header with-border">
+                    <span class="box-title">Status Info</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                @{
+                                    if (ViewBag.AllowUpdate)
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Status <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="Status">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Position <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="Position">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Notes <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8">
+                                                <textarea type="text" class="form-control" id="Remarks" placeholder="" rows="5" cols="5"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">&nbsp;</div>
+                                            <div class="col-md-8">
+                                                <button class="btn btn-success" type="button" onclick="saveRemark()"><i class="fa fa-save"></i> Update</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Status <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="Status" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Position <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label id="Position" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-md-4 col-xs-12 control-label">Notes <span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8">
+                                                <label id="Remarks" class="control-label DetailView">-</label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

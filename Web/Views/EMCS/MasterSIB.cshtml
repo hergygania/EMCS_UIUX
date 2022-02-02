@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Master SIB";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+
+<div class="row">
+    @{
+        if (ViewBag.AllowCreate)
+        {
+            <div class="col-md-12">
+                <div class="box box-warning">
+                    <div class="box-body">
+                        @Html.Partial("~/Views/EMCS/UploadSIB.cshtml")
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="hidden" id="FormUploadSIB"></div>
+        }
+    }
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4" role="form">
+                        @{
+                            @*if (ViewBag.AllowCreate)
+                            {
+                                <button id="AddSIB" type="submit" class="btn btn-sm btn-success" title="Create New SIB Manually">Add New <i class="fa fa-plus-circle"></i></button>
+                            }*@
+                        }
+                        <a href="/EMCS/DownloadSIB" id="DownloadSIB" class="btn btn-sm btn-default" title="Download SIB Data">Export to Excel <i class="fa fa-file-excel"></i></a>
+                    </div>
+                </div>
+                <table id="tableSIB" data-toolbar=".toolbar" class="table table-bordered"></table>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+        </div>
+    </div>
+</div>
+
+<a data-modal="" href="/EMCS/MasterSIBEdit/1" class="editRecord" style="display:none;">
+    <i class="fa fa-edit"></i> Update SIB
+</a>
+
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/SIBList.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}
+
+

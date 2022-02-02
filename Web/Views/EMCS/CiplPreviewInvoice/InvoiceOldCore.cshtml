@@ -1,0 +1,43 @@
+﻿<table class="table-data">
+    <tr>
+        <th class="text_center text_bold border_bottom" style="height:2.5em;width:10%">Case Number</th>
+        <th class="text_center text_bold border_bottom" style="width:7%">Item No.</th>
+        <th class="text_center text_bold border_bottom" style="width:13%">Name</th>
+        <th class="text_center text_bold border_bottom" style="width:7%">Quantity</th>
+        <th class="text_center text_bold border_bottom" style="width:10%">Part Number</th>
+        <th class="text_center text_bold border_bottom" style="width:10%">J-Code</th>
+        <th class="text_center text_bold border_bottom" style="width:10%">CCR</th>
+        <th class="text_center text_bold border_bottom" style="width:10%">Type</th>
+        <th class="text_center text_bold border_bottom" style="width:12%">Unit Price</th>
+        <th class="text_center text_bold border_bottom" style="width:16%">Extended Value</th>
+    </tr>
+    @foreach (var item in Model.TemplateDetail)
+    {
+        <tr>
+            <td class="tabledata_spacing text_right">@item.CaseNumber</td>
+            <td class="tabledata_spacing text_center">@item.ItemNo</td>
+            <td class="tabledata_spacing">@item.Name</td>
+            <td class="tabledata_spacing text_right">@item.Quantity</td>
+            <td class="tabledata_spacing">@item.PartNumber</td>
+            <td class="tabledata_spacing">@item.JCode</td>
+            <td class="tabledata_spacing">@item.Ccr</td>
+            <td class="tabledata_spacing">@item.Type</td>
+            <td class="tabledata_spacing text_right">@item.UnitPrice</td>
+            <td class="tabledata_spacing text_right">@item.ExtendedValue</td>
+        </tr>
+    }
+    @{
+        if (Model.TemplateDetail.Count <= 2)
+        {
+            int dummy = 5;
+            for (int no = 1; no <= dummy; no++)
+            {
+                <tr><td colspan="10" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                if (no == 5)
+                {
+                    <tr><td colspan="10" class="border_top">&nbsp;</td></tr>
+                }
+            }
+        }
+    }
+</table>

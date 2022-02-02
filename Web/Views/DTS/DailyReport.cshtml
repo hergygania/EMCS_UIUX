@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Daily Report";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Report Filter</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="OutboundFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Serial Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="SerialNumber" placeholder="Serial Number" id="SerialNumber" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">DA Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="DA" placeholder="Delivery Advice" id="DANumber" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">DI Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="DI" placeholder="Delivery Instruction" id="DINumber" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Moda</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="Moda" placeholder="Moda" id="FilterModa" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Unit Type</label>
+                                <div class="col-md-9 pull-right">
+                                    <input type="text" class="form-control pull-right" name="UnitType" placeholder="Unit Type" id="FilterUnitType" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Model</label>
+                                <div class="col-md-9 pull-right">
+                                    <input type="text" class="form-control" name="Model" placeholder="Model" id="FilterModel" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-right">Status</label>
+                                <div class="col-md-9 pull-right">
+                                    <input type="text" class="form-control" name="Status" placeholder="Status" id="FilterStatus" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Position</label>
+                                <div class="col-md-9 pull-right">
+                                    <input type="text" class="form-control" name="Position" placeholder="Position" id="FilterPosition" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-md-4 pull-right">
+                            <button class="pull-right btn btn-primary" onclick="showList()" id="BtnFilter"><i class="fa fa-search"></i> Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="table-responsive">
+            <div id="toolbar" class="col-md-2 toolbarBtn">
+                <div class="row">
+                    <button class="btn btn-success" type="button" id="btnExportOutbound"><i class="fa fa-file-excel-o"></i> Download to Excel</button>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive" id="tableDailyReport" style="width:100%;"></table>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/DailyReport.cshtml.js")"></script>
+}
+

@@ -1,0 +1,92 @@
+﻿@model App.Web.Models.ReportFilterDeliveryTrackingStatusView
+@{ViewBag.Title = "Shipment Volume Report";}
+<style type="text/css">
+    .select2-selection__choice {
+        white-space: normal !important;
+    }
+</style>
+
+<script type="text/javascript">var baseUrl = "@ViewBag.baseUrl";</script>
+<script type="text/javascript" src="~/Scripts.app/Report/DeliveryTrackingStatus.cshtml.js"></script>
+
+<div class="col-lg-12">
+    <!-- FILTER KOLOM KIRI - START -->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Moda</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.ModaList, new SelectList(Model.ModaList, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Origin</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.OriginList, new SelectList(Model.OriginList, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Destination</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.DestinationList, new SelectList(Model.DestinationList, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Status</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.StatusList, new SelectList(Model.StatusList, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Unit Type</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.UnitTypeList, new SelectList(Model.UnitTypeList, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+            </div>
+        </div>
+        <!-- FILTER KOLOM KIRI - END -->
+    </div>
+    <!-- FILTER KOLOM KIRI - END -->
+    <!-- FILTER KOLOM KANAN - START -->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">ATD</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="ATD" type="text" class="form-control date" />
+                <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">ATA</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="ATA" type="text" class="form-control date" />
+                <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">No. DA</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input type="text" name="NODA" id="NODA" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <!-- FILTER KOLOM KANAN - END -->
+</div>
+
+<!-- BUTTON FILTER - START -->
+<div class="col-lg-12" style="text-align:right;padding-right:30px;">
+    <button id="btnFilter" type="button" class="btn btn-success" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+    <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+</div>
+<!-- BUTTON FILTER - END -->
+<!-- INIT HIGHCHART - START -->
+<div class="col-lg-12" style="padding-top:15px; margin-bottom: 15px;">
+    <div class="col-lg-12">
+        <div id="chart"></div>
+    </div>
+</div>
+<!-- INIT HIGHCHART - END -->

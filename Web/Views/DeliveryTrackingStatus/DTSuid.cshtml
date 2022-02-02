@@ -1,0 +1,74 @@
+﻿@model  App.Data.Domain.DeliveryTrackingStatus
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Update Detail Page</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- Default input -->
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">PIC Driver</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.PICDriver, new { @class = "PICDriver form-control required", placeholder = "PIC Driver" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Vendor Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.VendorName, new { @class = "VendorName form-control required", placeholder = "Vendor Name" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Operating Plan</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.OperatingPlan, new { @class = "OperatingPlan form-control required", placeholder = "Operating Plan" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Cost Delivery</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Cost, new { @class = "Cost form-control required", placeholder = "Cost" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-3 col-xs-12">Remarks</label>
+                    <div class="input-group col-lg-9 col-xs-12">
+                        @Html.TextAreaFor(m => m.Remarks, new { @class = "Remarks form-control", row = 3 })
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.ID)
+                @Html.HiddenFor(m => m.NODI)
+            </div>
+            <!-- Default input -->
+        </div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" id="Update"><i class="fa fa-save"></i> Update</button>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

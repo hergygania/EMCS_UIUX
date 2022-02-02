@@ -1,0 +1,317 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <style type="text/css">
+        .btn-box-tool {
+            padding: 5px;
+            font-size: 12px;
+            background: transparent;
+            color: #97a0b3;
+            box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.15) !important;
+        }
+    </style>
+    @Styles.Render("~/Content/css");
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Styles.Render("~/Content/css2");
+    }
+    else
+    {
+
+    }
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AppScript")
+</head>
+<body class="skin-black">
+    <header class="header">
+        <a href="./" class="logo">
+            <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:175px;" />
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="pull-right built-for-it">
+                @*<img src="~/Images/built.png" />*@
+            </div>
+        </nav>
+        <div id="pisProgress" class="progress" style="display: none">
+            <div id="pisProgressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                <span id="lblPisProgressBar" class="sr-only">0%</span>
+            </div>
+        </div>
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        @*@if(User.Identity.IsAuthenticated)
+            {*@
+        <div id="aass" class="xxx left-side invis" style="width:350px;">
+            <div id="menu-content-neo" class="sidebar iin" style="background-color:#000000;">
+                <div class="menu-enhance">
+                    @*@if(userType == "ext-part")
+                        {
+                            @Html.Partial("_Menu.ext.part")
+                        }
+                        else if(userType == "ext-imex")
+                        {
+                            @Html.Partial("_Menu.ext.imex")
+                        }
+                        else*@
+                    @*if(userType == "internal")
+                        {*@
+                    @Html.Partial("_Menu")
+                    @*}*@
+                </div>
+            </div>
+            <div id="menu-container-neo"></div>
+        </div>
+        @*}*@
+
+        <aside class="new-right-side right-side">
+            <section class="content-header">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a id="triger-menu" href="javascript:void(0);" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" onclick="return alert('Please log-in ..!')">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                }
+
+                <h1>Supply Chain Information System</h1>
+
+                <ol class="breadcrumb">
+                    @if (userType == "internal")
+                    {
+                        <li><a href="@Url.Content("~/")"><i class="@(ViewBag.Title == "Quick" || ViewBag.Title == "Advanced" ? "fas fa-tachometer-alt mr-2" : "fa fa-dashboard")"></i>Home</a></li>
+                        <li class="active">@ViewBag.Title</li>
+                        <text>&nbsp;&nbsp;|&nbsp;&nbsp;</text>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (userType == "internal")
+                        {
+                            <a href="javascript:void(0)" class="dropdown-toggle disabled" id="users" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>
+                                <span class="">@userName</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>
+                                <span class="">@userName</span>
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                </li>
+                            </ul>
+                        }
+
+
+                        @*<a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                <i class="fa fa-user fa-lg"></i>
+                <span class="">@userName</span>
+                <span class="caret"></span>
+            </a>*@
+
+                        @*<ul class="dropdown-menu pull-right" role="menu">*@
+                        @*<li>
+                <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+            </li>*@
+                        @*<li>
+                <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+            </li>*@
+                        @*</ul>*@
+
+                        @*<span class="">&nbsp;&nbsp;|&nbsp;&nbsp;</span>*@
+                        @*<a href="#" onclick="return loadingPage('/sign-out')" style="color:red"><i class="fa fa-sign-out fa-lg"></i> Log Off</a>*@
+                    }
+                    else
+                    {
+                        @*<a href="@Url.Action("SignIn", "account", new { area = "" })"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>*@
+                        <a href="#" onclick="return loadingPage('/sign-in')"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>
+                    }
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section>
+        </aside>
+    </div>
+
+    <!-- modal placeholder content -->
+    <div id='myModalPlace' class='modal fade'>
+        <div class="modal-dialog modal-lg">
+            <div id="myModalContent" class="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        var myApp = {};
+        myApp.root = '@(Url.Content("~/"))';
+        myApp.fullPath = 'http://' + document.location.host + myApp.root;
+        myApp.firstMonth = '@DateTime.Today.AddMonths(-1).ToString("dd MMM yyyy")';
+        myApp.lastMonth = '@DateTime.Today.ToString("dd MMM yyyy")';
+        myApp.controller = '@controllerName';
+        myApp.isAdmin = '@isAdmin';
+        myApp.isReadOnly = '@isReadOnly';
+
+        $(function () {
+            loadingPage = function (url) {
+                $('html, body').addClass('wait');
+                $('.content').empty();
+                $('.box-title').text('');
+                $('.content').html('<div style="text-align:center;margin-top:5%;"><img class="loadingImg" src="/Content/images/ajax-loading.gif"/>&nbsp;...Loading...</div>')
+                $('.content').css('color', 'red');
+                location.replace(url);
+            }
+        });
+
+        (function addXhrProgressEvent($) {
+            var originalXhr = $.ajaxSettings.xhr;
+
+            $.ajaxSetup({
+                progress: $.noop,
+                xhr: function () {
+                    var xhr = originalXhr(), that = this;
+                    if (xhr) {
+                        if (typeof xhr.addEventListener == "function") {
+                            xhr.addEventListener("progress", function (event) {
+                                that.progress(event);
+                                if (that.global) {
+                                    var event = $.Event('ajaxProgress', event);
+                                    event.type = 'ajaxProgress';
+                                    $(document).trigger(event, [xhr]);
+                                }
+                            }, false);
+                        }
+                    }
+                    return xhr;
+                }
+            });
+        })(jQuery);
+    </script>
+
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Scripts.Render("~/bundles/js", "~/bundles/bootstrap");
+        @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+    }
+    <style type="text/css">
+        .fixed-table-body {
+            max-height: 577px;
+            overflow-y: auto;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            if (myApp.isReadOnly == 'true') {
+                $('#btnCreate').hide();
+                $('#btnCreateShipment').hide();
+                $(".table").bootstrapTable('hideColumn', 'action');
+                $("button:contains('New')").hide();
+                $("button:contains('Create')").hide();
+                $("button:contains('Upload')").hide();
+                $("a:contains('Upload')").hide();
+                $("a:contains('Template')").hide();
+
+                $(".dropdown-menu input").on('click', function () {
+                    $(".table").bootstrapTable('hideColumn', 'action');
+                });
+            } else if (myApp.isAdmin == 'false') {
+                $(".table").bootstrapTable('hideColumn', 'update');
+            }
+
+            window.pisProgress = $("#pisProgress");
+            window.pisProgressBar = function (value, show) {
+                if (value != undefined && show) {
+                    pisProgress.fadeIn();
+                    $('.progress-bar').text(value + '%');
+                    $('.progress-bar').css('width', value + '%').attr('aria-valuenow', value);
+                } else {
+                    pisProgress.fadeOut();
+                    setTimeout(function () {
+                        $('.progress-bar').text('0%');
+                        $('.progress-bar').css('width', '0%').attr('aria-valuenow', '0');
+                    }, 1000);
+                }
+            }
+
+            $(".box-body").collapse('show');
+            $('.box .box-header .box-tools [data-widget="collapse"]').click(function () {
+                var currentIconClass = $(this).find("i").attr("class");
+
+                if (currentIconClass === "fa fa-minus") {
+                    $(this).find("i").removeClass("fa fa-minus");
+                    $(this).find("i").addClass("fa fa-plus");
+                    $(this).parent().parent().next(".box-body").collapse('hide');
+                } else {
+                    $(this).find("i").removeClass("fa fa-plus");
+                    $(this).find("i").addClass("fa fa-minus");
+                    $(this).parent().parent().next(".box-body").collapse('show');
+                }
+
+                setInterval(function () {
+                    try {
+                        $('.modal').modal('handleUpdate');
+                    } catch (e) {
+
+                    }
+                }, 100)
+            });
+        });
+    </script>
+
+    @RenderSection("soVetting", required: false)
+
+</body>
+</html>

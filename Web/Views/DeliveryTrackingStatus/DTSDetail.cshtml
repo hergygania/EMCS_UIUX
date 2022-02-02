@@ -1,0 +1,161 @@
+﻿@model App.Data.Domain.V_DTS
+@{
+    string message = ViewBag.Message + "";
+}
+
+<form role="form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">NODA</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.NODA, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Origin</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.Origin, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Batch ID</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.BatchNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-3 col-xs-3">Origin Address</label>
+                            <div class="input-group col-lg-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.OriginAddress, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Operating Plan</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.OperatingPlan, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-3 col-xs-3">Cost Delivery</label>
+                            <div class="input-group col-lg-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.CostDelivery, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Remarks</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @readonly = "readonly", row = 3, cols = 60 })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">NODI</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.NODI, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Destination</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.Destination, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">SO Number</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.SalesOrderNumber, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-3 col-xs-3">Destination Address</label>
+                            <div class="input-group col-lg-9 col-xs-9">
+                                @Html.TextBoxFor(m => m.DestinationAddress, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">PIC Driver</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.PICDriver, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Vendor Name</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Route</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            @Html.TextBoxFor(m => m.Route, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12">
+                <button type="button" class="btn btn-danger" onclick="showHeader()" style=""><i class="fa fa-mail-reply"></i> Back</button>
+                @{
+                    if (Model.Type == "DTS")
+                    {
+                        <button type="button" class="btn btn-success" onclick="updateDTS(@Model.ID)" style="width:150px;">
+                            <i class="fa fa-pencil-square-o"></i> Update
+                        </button>
+                    }
+                }
+            </div>
+
+            <div class="col-lg-12">
+                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                <table class="table table-bordered table2excel" id="tableDetailDTS" style="table-layout:fixed;" data-show-export="true"
+                       data-toolbar="#filter-bar" data-toggle="table" data-show-toggle="true" data-show-columns="true" data-show-filter="true"></table>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<!-- modal placeholder-->
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width: 70%;">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        window.V_DTS = {
+            ID : @Model.ID,
+            NODI : '@Model.NODI',
+            NODA :'@Model.NODA',
+            Origin :'@Model.Origin',
+            Destination :'@Model.Destination',
+            ETD :'@Model.ETD',
+            ATD :'@Model.ATD',
+            ETA :'@Model.ETA',
+            ATA :'@Model.ATA',
+            Status :'@Model.Status',
+            Type :'@Model.Type',
+            SalesOrderNumber :'@Model.SalesOrderNumber',
+            BatchNumber :'@Model.BatchNumber',
+            OriginAddress :'@Model.OriginAddress',
+            OperatingPlan :'@Model.OperatingPlan',
+            Cost :'@Model.Cost',
+            Remarks :escape($("#Remarks").val()),
+            DestinationAddress :'@Model.DestinationAddress',
+            PICDriver :'@Model.PICDriver',
+            VendorName :'@Model.VendorName',
+            Route :'@Model.Route'
+        }
+    });
+</script>

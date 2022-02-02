@@ -1,0 +1,31 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "id": 1,
+      "inv": "E.53100119017",
+      "cipl": "E.260218047FG",
+      "branch": "Head Office",
+      "consignee": "Caterpillar USA",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "USA Port",
+      "status": "Draft",
+      "date": "28-Nov-18"
+    },
+    {
+      "id": 2,
+      "inv": "E.53100119016",
+      "cipl": "E.260218046FG",
+      "branch": "Head Office",
+      "consignee": "Caterpillar USA",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "USA Port",
+      "status": "Waiting for Revision",
+      "date": "11-Dec-18"
+    }
+  ]
+}

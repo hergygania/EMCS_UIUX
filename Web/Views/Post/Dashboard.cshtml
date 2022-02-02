@@ -1,0 +1,591 @@
+﻿@{
+    Layout = "~/Views/Post/_Layout.cshtml";
+    var Group = ViewBag.GroupID; //19 sales
+    ViewBag.Title = "Dashboard";
+}
+<input id="GroupID" value="@Group" style="display:none;">
+
+@section styles{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+        svg.highcharts-root {
+            font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        .gradient-45deg-light-blue-cyan {
+            background: #0288d1;
+            background: -webkit-linear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: -moz- oldlinear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: -o-linear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: linear-gradient(45deg, #0288d1, #26c6da) !important;
+        }
+
+            .gradient-45deg-light-blue-cyan.gradient-shadow {
+                -webkit-box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+                box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+            }
+
+        .border-abu {
+            border-top: 5px solid #ada8a8;
+        }
+
+        .border-kuning {
+            border-top: 5px solid #ffd800;
+        }
+
+        .border-merah {
+            border-top: 5px solid #ff0000;
+        }
+
+        .border-hijau {
+            border-top: 5px solid #2ffb20;
+        }
+
+        .card-footer {
+            line-height: 38px;
+        }
+
+        .bg-abu {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-abu.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-kuning {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-kuning.png");
+            background-position-y: bottom;
+            background-size: 100% 50px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-merah {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-merah.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-hijau {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-hijau.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .content-count {
+            font-size: 30px;
+        }
+
+        .label {
+            padding: 1.2em .6em .3em;
+            font-size: 90%;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .card-counter {
+            box-shadow: 2px 2px 10px #DADADA;
+            margin: 5px;
+            padding: 20px 10px;
+            background-color: #fff;
+            height: 100px;
+            border-radius: 5px;
+            transition: .3s linear all;
+        }
+
+            .card-counter:hover {
+                box-shadow: 4px 4px 20px #DADADA;
+                transition: .3s linear all;
+            }
+
+            .card-counter.primary {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.trak {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.danger {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.success {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.info {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter i {
+                font-size: 5em;
+                opacity: 0.8;
+            }
+
+            .card-counter .count-numbers {
+                position: absolute;
+                right: 35px;
+                top: 20px;
+                font-size: 32px;
+                display: block;
+            }
+
+            .card-counter .count-name {
+                position: absolute;
+                right: 35px;
+                top: 65px;
+                font-style: italic;
+                text-transform: capitalize;
+                opacity: 0.8;
+                display: block;
+                font-size: 18px;
+            }
+
+
+        .card {
+            position: relative !important;
+            margin: .5rem 0 1rem 0 !important;
+            -webkit-transition: -webkit-box-shadow .25s !important;
+            -moz-transition: box-shadow .25s !important;
+            -o-transition: box-shadow .25s !important;
+            transition: -webkit-box-shadow .25s !important;
+            transition: box-shadow .25s !important;
+            transition: box-shadow .25s, -webkit-box-shadow .25s !important;
+            border-radius: 2px !important;
+            background-color: #fff !important;
+        }
+
+        .padding-4 {
+            padding: 4% !important;
+        }
+
+        .center, .center-align {
+            text-align: center;
+        }
+
+        .min-height-100 {
+            min-height: 100px !important;
+        }
+    </style>
+}
+
+
+<div class="align-middle row" style="margin-top:70px;">
+    <!--<div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="year5VendorDelay" onchange="InitChartTopVendorDelay()"></select>
+                            <select id="month5VendorDelay" style="display:none"></select>
+                            <select id="day5VendorDelay" style="display:none"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container1" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    @*<div class="col-md-6 card">
+            <p></p>
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <select class="form-control input-sm" id="year5VendorDelay" onchange="InitChartTopVendorDelay()"></select>
+                        <select id="month5VendorDelay" style="display:none"></select>
+                        <select id="day5VendorDelay" style="display:none"></select>
+                    </div>
+                </div>
+            </form>
+            <div class="">
+                <div id="container1" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+            </div>
+        </div>*@
+
+
+    <!-- <div class="col-md-6">
+         <div class="row">
+             <div class="col-md-6">
+                 <div class="card min-height-100 animate fadeLeft border-abu bg-abu">
+                     <div class="col-md-12 center-align card-footer">
+                         <div class="col-md-12 center-align">
+                             <label>POD is not BAST yet</label>
+                         </div>
+                         <div class="col-md-12 center-align">
+                             <label class="mb-0 content-count" id="CountPODNotBAST">0</label>
+                         </div>
+                         <label class="no-margin">&nbsp;</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-6">
+                 <div class="card min-height-100 animate fadeLeft border-kuning bg-kuning">
+                     <div class="col-md-12 center-align card-footer">
+                         <div class="col-md-12 center-align">
+                             <label>BAST is not GR yet</label>
+                         </div>
+                         <div class="col-md-12 center-align">
+                             <label class="mb-0 content-count" id="CountBASTNotGR">0</label>
+                         </div>
+                         <label class="no-margin">&nbsp;</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-6">
+                 <div class="card min-height-100 animate fadeLeft border-merah bg-merah">
+                     <div class="col-md-12 center-align card-footer">
+                         <div class="col-md-12 center-align">
+                             <label>GR is not Invoice yet</label>
+                         </div>
+                         <div class="col-md-12 center-align">
+                             <label class="mb-0 content-count" id="CountGRNotInvoice">0</label>
+                         </div>
+                         <label class="no-margin">&nbsp;</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-6">
+                 <div class="card min-height-100 animate fadeLeft border-hijau bg-hijau">
+                     <div class="col-md-12 center-align card-footer">
+                         <div class="col-md-12 center-align">
+                             <label>Invoice is not Payment yet</label>
+                         </div>
+                         <div class="col-md-12 center-align">
+                             <label class="mb-0 content-count" id="CountInvoiceNotPayment">0</label>
+                         </div>
+                         <label class="no-margin">&nbsp;</label>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>-->
+
+</div>
+
+<div class="row">
+    <!--<div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="year5PODelay" onchange="InitChartTopPODelay()"></select>
+                            <select id="month5Delay" style="display:none"></select>
+                            <select id="day5PODelay" style="display:none"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container3" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            Type
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-control input-sm btn-primary" id="ddlFilterTypeIntrnl" onchange="PageLoadActiveEmp()">
+                                <option value="monthly">Monthly</option>
+                                <option value="period">Period</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            :
+                        </div>
+                        <div class="col-auto" id="yearfromEmp">
+                            <select class="form-control input-sm" id="yearEmpActiveFromIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthfromEmp">
+                            <select class="form-control input-sm" id="monthEmpActiveFromIntrnl"></select>
+                            <select id="dayVendorActiceFromIntrnl" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparateEmpPeriod">
+                            to
+                        </div>
+                        <div class="col-auto" id="yeartoEmp">
+                            <select class="form-control input-sm" id="yearEmpActiveToIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthtoEmp">
+                            <select class="form-control input-sm" id="monthEmpActiveToIntrnl"></select>
+                            <select id="dayVendorActiceToIntrnl" style="display:none"></select>
+                        </div>
+
+                        <div class="col-auto" id="yearemp">
+                            <select class="form-control input-sm" id="yearEmpActiveIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthemp">
+                            <select class="form-control input-sm" id="monthEmpActiveIntrnl"></select>
+                            <select id="dayVendorActiceIntrnl" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparateEmp">
+                            <button type="button" class="btn btn-primary" onclick="InitChartActiveEmployee()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container5" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalHitrateEmployee">Employee Hit Rate</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            Type
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-control input-sm btn-primary" id="ddlFilterType" onchange="PageLoadActiveVendor()">
+                                <option value="monthly">Monthly</option>
+                                <option value="period">Period</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            :
+                        </div>
+                        <div class="col-auto" id="yearfrom">
+                            <select class="form-control input-sm" id="yearVendorActiceFrom"></select>
+                        </div>
+                        <div class="col-auto" id="monthfrom">
+                            <select class="form-control input-sm" id="monthVendorActiceFrom"></select>
+                            <select id="dayVendorActiceFrom" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparate">
+                            to
+                        </div>
+                        <div class="col-auto" id="yearto">
+                            <select class="form-control input-sm" id="yearVendorActiceTo"></select>
+                        </div>
+                        <div class="col-auto" id="monthto">
+                            <select class="form-control input-sm" id="monthVendorActiceTo"></select>
+                            <select id="dayVendorActiceTo" style="display:none"></select>
+                        </div>
+
+                        @*<div class="col-auto" id="yearact">
+                                <select class="form-control input-sm" id="yearVendorActice" onchange="InitChartActiveVendor()"></select>
+                            </div>
+                            <div class="col-auto" id="monthact">
+                                <select class="form-control input-sm" id="monthVendorActice" onchange="InitChartActiveVendor()"></select>
+                                <select id="dayVendorActice" style="display:none"></select>
+                            </div>*@
+
+                        <div class="col-auto" id="yearact">
+                            <select class="form-control input-sm" id="yearVendorActice"></select>
+                        </div>
+                        <div class="col-auto" id="monthact">
+                            <select class="form-control input-sm" id="monthVendorActice"></select>
+                            <select id="dayVendorActice" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparate">
+                            <button type="button" class="btn btn-primary" onclick="InitChartActiveVendorNewVerse()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container2" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalHitrateVendor">Vendor Hit Rate</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+</div>
+
+
+<div id="modalHitrateVendor" class="modal fade" role="document">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Vendor Hit Rate</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <div id="containerMdlHitVendor" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                @*<table id="tablevendorhitrate" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>*@
+                <br />
+                <table class="table table-striped table-hover table-bordered">
+                    <thead style="border-top: solid; border-color:silver;">
+                        <tr>
+                            <th class="center" style="width:4%">No</th>
+                            <th class="center">Vendor Name</th>
+                            <th class="center">Hit Count</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="vendorhitrate"></tbody>
+                </table>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalHitrateEmployee" class="modal fade" role="document">
+    <div class="modal-dialog modal-lg">
+
+        Modal content
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Employee Hit Rate</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <div id="containerMdlHitEmployee" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                <br />
+                <table class="table table-striped table-hover table-bordered">
+                    <thead style="border-top: solid; border-color:silver;">
+                        <tr>
+                            <th class="center" style="width:4%">No</th>
+                            <th class="center">Employee Name</th>
+                            <th class="center">Hit Count</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="employeehitrate"></tbody>
+                </table>
+                <hr />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <!--<div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            Type
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-control input-sm btn-primary" id="ddlFilterTypeIntrnl" onchange="PageLoadActiveEmp()">
+                                <option value="monthly">Monthly</option>
+                                <option value="period">Period</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            :
+                        </div>
+                        <div class="col-auto" id="yearfromEmp">
+                            <select class="form-control input-sm" id="yearEmpActiveFromIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthfromEmp">
+                            <select class="form-control input-sm" id="monthEmpActiveFromIntrnl"></select>
+                            <select id="dayVendorActiceFromIntrnl" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparateEmpPeriod">
+                            to
+                        </div>
+                        <div class="col-auto" id="yeartoEmp">
+                            <select class="form-control input-sm" id="yearEmpActiveToIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthtoEmp">
+                            <select class="form-control input-sm" id="monthEmpActiveToIntrnl"></select>
+                            <select id="dayVendorActiceToIntrnl" style="display:none"></select>
+                        </div>
+
+                        <div class="col-auto" id="yearemp">
+                            <select class="form-control input-sm" id="yearEmpActiveIntrnl"></select>
+                        </div>
+                        <div class="col-auto" id="monthemp">
+                            <select class="form-control input-sm" id="monthEmpActiveIntrnl"></select>
+                            <select id="dayVendorActiceIntrnl" style="display:none"></select>
+                        </div>
+                        <div class="col-auto" id="yearseparateEmp">
+                            <button type="button" class="btn btn-primary" onclick="InitChartActiveEmployee()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container5" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+
+@*<div class="row">
+        <div class="col-8">col-8</div>
+        <div class="col-4">col-4</div>
+    </div>*@
+
+@section Scripts{
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartjs/chart.min.js"></script>
+    <script src="~/Scripts.app/POST/chartjs-plugin-datalabels.min.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist.min.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist-plugin-tooltip.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist-plugin-fill-donut.min.js"></script>
+    <script src="~/Scripts.app/POST/Dashboard.js"></script>
+    <script>
+        $("#add_request").removeClass("gradient-45deg-light-blue-cyan");
+        $("#add_request").addClass("gradient-45deg-amber-amber");
+
+        $(".nav-link").on("click", function () {
+            setTimeout(function () {
+                chart1.setSize(null);
+                chart2.setSize(null);
+                chart3.setSize(null);
+                chart4.setSize(null);
+            }, 400);
+        })
+
+
+
+        function SearchReadyToPay() {
+            window.location.href = baseUrl + '/Request?Dashboard=readytopay';
+        }
+        function SearchProccessing() {
+            window.location.href = baseUrl + '/Request?Dashboard=processing';
+        }
+        function SearchNewRequest() {
+            window.location.href = baseUrl + '/Request?Dashboard=newrequest';
+        }
+        function SearchCompleted() {
+            window.location.href = baseUrl + '/Request?Dashboard=complete';
+        }
+    </script>
+}

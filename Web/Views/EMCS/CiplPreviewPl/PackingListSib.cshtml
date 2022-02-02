@@ -1,0 +1,68 @@
+﻿<table class="table-document">
+    <tr>
+        <td style="height:20px;width:240px;" class="border_left border_top border_right text_bold">Description of Goods :</td>
+        <td style="height:20px"></td>
+    </tr>
+</table>
+     
+<table border="0" class="table-data">
+    <thead>
+        <tr>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="height:2.5em;width:10%">Case Number</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:5%">No.</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">Name</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:5%">Quantity</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">Part Number</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">SIB Number</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">WO Number</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:8%">J-Code</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:7%">Type</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" colspan="3" style="width:15%">Dimension (In CM)</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">VOLUME (M3)</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">Nett Weight (Kgs)</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" rowspan="2" style="width:10%">Gross Weight (Kgs)</th>
+        </tr>
+        <tr>
+            <th class="text_center text_bold tabledata_spacing border_bottom" style="width:5%;background-color:white">Length</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" style="width:5%;background-color:white">Width</th>
+            <th class="text_center text_bold tabledata_spacing border_bottom" style="width:5%;background-color:white">Height</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.TemplateDetail)
+        {
+            <tr>
+                <td class="tabledata_spacing pl-pl-8 text_right">@item.CaseNumber</td>
+                <td class="tabledata_spacing pl-pl-8 text_center">@item.ItemNo</td>
+                <td class="tabledata_spacing pl-pl-8">@item.Name</td>
+                <td class="tabledata_spacing pl-pl-8 text_right">@item.Quantity</td>
+                <td class="tabledata_spacing pl-pl-8 text_left">@item.PartNumber</td>
+                <td class="tabledata_spacing pl-pl-8 text_left">@item.SibNumber</td>
+                <td class="tabledata_spacing pl-pl-8 text_left">@item.WoNumber</td>
+                <td class="tabledata_spacing pl-pl-8 ">@item.JCode</td>
+                <td class="tabledata_spacing pl-pl-8 ">@item.Type</td>
+                <td class="tabledata_spacing text_right">@((item.Length == "0.00") ? "" : item.Length)</td>
+                <td class="tabledata_spacing text_right">@((item.Width == "0.00") ? "" : item.Width)</td>
+                <td class="tabledata_spacing text_right">@((item.Height == "0.00") ? "" : item.Height)</td>
+                <td class="tabledata_spacing text_right">@((item.Volume == "0.000000") ? "" : item.Volume)</td>
+                <td class="tabledata_spacing text_right">@((item.NetWeight == "0.00") ? "" : item.NetWeight)</td>
+                <td class="tabledata_spacing text_right">@((item.GrossWeight == "0.00") ? "" : item.GrossWeight)</td>
+            </tr>
+        }
+        @{
+            if (Model.TemplateDetail.Count <= 2)
+            {
+                int dummy = 5;
+                for (int no = 1; no <= dummy; no++)
+                {
+                    <tr><td colspan="15" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                    if (no == 5)
+                    {
+                        <tr><td colspan="15" class="border_top">&nbsp;</td></tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

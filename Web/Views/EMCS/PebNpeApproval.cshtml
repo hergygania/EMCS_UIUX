@@ -1,0 +1,424 @@
+﻿@model  App.Web.Models.EMCS.PebNpeModel
+@{
+    ViewBag.Title = "Approve PEB NPE";
+    ViewBag.TypeReq = "NpePeb";
+    ViewBag.IdReq = Model.NpePeb.IdCl;
+    ViewBag.IdStep = Model.Request.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+<style>
+    .help-block {
+        color: #a94442;
+        display: inline;
+        font-weight: bolder;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <form id="FormUploadNpePeb">
+            <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#tab-npepeb-approve" aria-controls="home" role="tab" data-toggle="tab">NPE / PEB</a></li>
+                    <li role="presentation">
+                        <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
+                    </li>
+                    <li role="presentation">
+                        <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+                    </li>
+                </ul>
+                <div class="tab-content tabs-custom">
+                    <div role="tabpanel" class="tab-pane active" id="tab-npepeb-approve">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4">ID</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        <input type="text" class="form-control" id="CargoID" name="CargoID" value="@Model.Data.Id" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4">ID NPE / PEB</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Id, new { @class = "form-control disabled", @id = "IdNpePeb" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">No Aju PEB</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.AjuNumber, new { @class = "form-control", @id = "AjuNumber", @readonly = "readonly", @placeholder = "Format : xxxxxx-xxxxxx-xxxxxxxx-xxxxxx", @name = "AjuNo" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4" id="cc_num">Date & Time Aju</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.AjuDate, new { @class = "form-control date", @id = "AjuDate", @readonly = "readonly", @placeholder = "Date", @name = "AjuDate" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">NPE Number</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.NpeNumber, new { @class = "form-control", @id = "NpeNumber", @readonly = "readonly", @placeholder = "NPE Number", @name = "NpeNumber" })
+                                        @*<input type="text" class="form-control" id="NpeNumber" autocomplete="off" name="NpeNumber" required placeholder="NPE Number">*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Date & Time NPE</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.NpeDate, new { @class = "form-control date", @id = "NpeDate", @readonly = "readonly", @placeholder = "Date", @name = "NpeDate" })
+                                        @*<input type="text" class="form-control date" id="NpeDate" autocomplete="off" name="NpeDate" required placeholder="Date">*@
+                                        <div class="input-group-addon cal">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">No Pen</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.RegistrationNumber, new { @class = "form-control", @id = "RegistrationNumber", @placeholder = "Registration Number", @name = "RegistrationNumber" })
+                                        @*<input type="text" class="form-control" id="NpeNumber" autocomplete="off" name="NpeNumber" required placeholder="NPE Number">*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">NPWP</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Npwp, new { @class = "form-control", @id = "NpeNpwp", @readonly = "readonly", @placeholder = "Npwp", @name = "NpeNpwp", Value = "020258737" })
+                                        @*<input type="text" class="form-control" id="NpeNpwp" autocomplete="off" name="NpeNpwp" required placeholder="NPWP" value="020258737" disabled>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Receiver Name DHE BI</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.ReceiverName, new { @class = "form-control", @id = "NpeReceiver", @readonly = "readonly", @placeholder = "Receiver", @name = "NpeReceiver", Value = "TRAKINDO UTAMA" })
+                                        @*<input type="text" class="form-control" id="NpeReceiver" autocomplete="off" name="NpeReceiver" required placeholder="Receiver Name" value="TRAKINDO UTAMA" disabled>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Customs Office Code</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.PassPabeanOffice, new { @class = "form-control required hide", @id = "GetPasswordPabean", @placeholder = "Password Pabean Office", @name = "GetPasswordPabean" })
+                                        <select class="select2" id="NpePass" name="NpePass" required disabled></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Customs Office Address</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextAreaFor(m => m.NpePeb.DescriptionPassword, new { @class = "form-control", @id = "NpeDescPass", @readonly = "readonly", @placeholder = "Customs Office Address", @name = "NpeDescPass" })
+                                        @*<textarea type="text" class="form-control" id="NpeDescPass" autocomplete="off" name="NpeDescPass" required placeholder="Description Password"></textarea>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">DHE Value</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Dhe, new { @class = "form-control formatCurrency", @id = "NpeDHE", @readonly = "readonly", @placeholder = "DHE Score", @name = "NpeDHE" })
+                                        @*<input type="text" class="form-control decimal" id="NpeDHE" autocomplete="off" name="NpeDHE" required placeholder="DHE Score">*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">PEB / FOB Value</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.PebFob, new { @class = "form-control formatCurrency", @id = "NpeFob", @readonly = "readonly", @placeholder = "PEB / FOB Score", @name = "NpeFob" })
+                                        @*<input type="text" class="form-control decimal" id="NpeFob" autocomplete="off" name="NpeFob" required placeholder="PEB / FOB Score">*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Type of Currency (Valuta)</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Valuta, new { @class = "form-control required hide", @id = "GetNpeValuta", @placeholder = "Valuta", @name = "GetNpeValuta" })
+                                        <select class="select2" id="NpeValuta" name="NpeValuta" required disabled></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Temporary Storage</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.WarehouseLocation, new { @class = "form-control", @id = "NpeWarehouse", @readonly = "readonly", @placeholder = "Warehouse Location", @name = "NpeWarehouse" })
+                                        @*<input type="text" class="form-control" id="NpeWarehouse" autocomplete="off" name="NpeWarehouse" required placeholder="Warehouse" />*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Freight Payment</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.FreightPayment, new { @class = "form-control formatCurrency", @id = "NpeFreightPayment", @readonly = "readonly", @placeholder = "Freight Payment", @name = "NpeFreightPayment" })
+                                        @*<input type="text" class="form-control decimal" id="NpeFreightPayment" autocomplete="off" name="NpeFreightPayment" required placeholder="Freight Payment" />*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Insurance Amount</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.InsuranceAmount, new { @class = "form-control formatCurrency", @id = "NpeInsuranceAmount", @readonly = "readonly", @placeholder = "Insurance Amount", @name = "NpeInsuranceAmount" })
+                                        @*<input type="text" class="form-control decimal" id="NpeInsuranceAmount" autocomplete="off" name="NpeInsuranceAmount" required placeholder="Insurance Amount" />*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Currency Rate NDPBM/NDPBK</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Rate, new { @class = "form-control formatCurrency", @id = "NpeRate", @readonly = "readonly", @placeholder = "Rate", @name = "NpeRate" })
+                                        @*<input type="text" class="form-control decimal" id="NpeRate" autocomplete="off" name="NpeRate" required placeholder="Rate" />*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">PEB / NPE Document</label>
+
+                                    <div class="radio">
+                                        <label>
+                                            @*<input class="flagCompleteDoc" type="radio" name="flagCompleteDoc" value="true">Ya*@
+                                            @Html.RadioButtonFor(m => m.NpePeb.DocumentComplete, "true", new { @class = "flagCompleteDoc required", Name = "flagCompleteDoc" }) Ya
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            @*<input class="flagCompleteDoc" type="radio" name="flagCompleteDoc" value="false">Tidak*@
+                                            @Html.RadioButtonFor(m => m.NpePeb.DocumentComplete, "false", new { @class = "flagCompleteDoc required", Name = "flagCompleteDoc" }) Tidak
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4 required">Draft PEB</label>
+                                    <div class="radio">
+                                        <label>
+                                            @*<input class="flagCompleteDoc" type="radio" name="flagCompleteDoc" value="true">Ya*@
+                                            @Html.RadioButtonFor(m => m.NpePeb.DraftPeb, "true", new { @class = "flagDraftPeb required", Name = "flagDraftPeb" }) Ya
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            @*<input class="flagCompleteDoc" type="radio" name="flagCompleteDoc" value="false">Tidak*@
+                                            @Html.RadioButtonFor(m => m.NpePeb.DraftPeb, "false", new { @class = "flagDraftPeb required", Name = "flagDraftPeb" }) Tidak
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <table style="width:100%" border="0" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="height:40px;vertical-align:middle;text-align:center;width:80%">Name</th>
+                                            <th style="height:40px;vertical-align:middle;text-align:center;width:20%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="trCompleteDoc">
+                                            <td>
+                                                <div class="form-group div-mandatory">
+                                                    <label class="control-label" id="label-document-SK"><strong>PEB / NPE Document</strong></label>
+                                                    <input type="text" class="hide" name="UrlDocumentCOMPLETEDOCUMENT" id="url-document-COMPLETEDOCUMENT" required />
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-default btn-xs preview-document" id="preview-document-COMPLETEDOCUMENT" type="button" data-toggle="tooltip" title="View Document!"><i class="fa fa-search"></i></button>
+                                                <a href="#" class="btn btn-success btn-xs DownloadDocument" id="download-document-COMPLETEDOCUMENT" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="fa fa-download"></i></a>
+                                                <div id="previews">
+                                                    <div id="template" class="template file-row dz-image-preview">
+                                                        <div>
+                                                            <p class="name" data-dz-name=""></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr id="trDraftPeb">
+                                            <td>
+                                                <div class="form-group div-mandatory">
+                                                    <label class="control-label" id="label-document-SK"><strong>Draft Peb</strong></label>
+                                                    <input type="text" class="hide" name="UrlDocumentDRAFTPEB" id="url-document-DRAFTPEB" required />
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-default btn-xs preview-document" id="preview-document-DRAFTPEB" type="button" data-toggle="tooltip" title="View Document!"><i class="fa fa-search"></i></button>
+                                                <a href="#" class="btn btn-success btn-xs DownloadDocument" id="download-document-DRAFTPEB" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="fa fa-download"></i></a>
+                                                <div id="previews">
+                                                    <div id="template" class="template file-row dz-image-preview">
+                                                        <div>
+                                                            <p class="name" data-dz-name=""></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <iframe title="Document Show" id="DocumentShow" src="" style="width:100%;height:550px;"></iframe>
+                            </div>
+                        </div>
+                        <div class="box-footer text-right">
+                            <a href="~/EMCS/MyTask" class="btn btn-default" style="min-width:120px;"><i class="fa fa-chevron-left"></i>&nbsp;Back</a>
+                            <button type="button" class="btn btn-success" id="btnApproveNpePeb" style="min-width:120px;"><i class="fa fa-paper-plane"></i> Approve</button>
+                            <button id="btnRevise" type="button" class="btn btn-warning" value="Revise" style="min-width:120px;"><i class="fa fa-edit"></i>&nbsp;Revise</button>
+                            <button type="button" class="btn btn-danger" id="btnReject" style="min-width:120px;"><i class="fa fa-times"></i> Reject</button>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="history">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                                <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="problemhistory">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@Html.Partial("Modal.FormProblem")
+
+@section scripts{
+    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/PebNpe.cshtml.js")"></script>
+    <script>
+
+        $("#btnApproveNpePeb").on("click", function () {
+            Swal.fire({
+                title: 'Approve Confirmation',
+                text: 'Do you want to continue ?',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Approve!',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showCloseButton: true
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        input: 'textarea',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        inputPlaceholder: 'Type your notes here...',
+                        inputAttributes: {
+                            'aria-label': 'Type your notes here'
+                        },
+                        showCancelButton: false
+                    }).then((result) => {
+                        var Notes = result.value;
+                        var Status = "Approve";
+                        var Id = $('#CargoID').val();
+                        var data = { Notes: Notes, Status: Status, Id: Id };
+                        ApproveNpePeb(data);
+                    });
+                }
+                return false;
+            });
+        });
+
+        function ApproveNpePeb(obj) {
+            $.ajax({
+                url: "/EMCS/NpePebApproval",
+                type: "POST",
+                data: {
+                    Id: obj.Id,
+                    Status: obj.Status,
+                    Notes: obj.Notes,
+                    Detail: obj
+                },
+                success: function (resp) {
+                    Swal.fire({
+                        title: 'Approve!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success'
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                }
+            });
+        }
+
+        $("#YesReviseBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Revise";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        function ReviseProblem(Status, IdRequest, Notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/NpePebApproval",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: Status,
+                    Id: IdRequest,
+                    Notes: Notes
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success',
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+        }
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function (resp) {
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+            return status;
+        }
+
+        $("#YesRejectBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Reject";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+
+
+    </script>
+}

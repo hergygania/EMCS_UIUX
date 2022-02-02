@@ -1,0 +1,101 @@
+﻿
+
+@{
+    ViewBag.Title = "Tax Audit Purpose";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="form-horizontal toolbar">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4 pull-right">
+                                <div class="form-group">
+                                    <label class="col-md-3">Start Period</label>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                @*<input id="inp-start-date" type="text" class="form-control" name="email" placeholder="Start Period">*@
+                                                <input class="form-control date required" id="inp-start-date" name="inp-start-date" placeholder="Start Period" style="background:white;" value="@DateTime.Now.ToString("01 Jan yyyy")">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4 pull-right">
+                                <div class="form-group">
+                                    <label class="col-md-3" style="text-align: left;">End Period</label>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input class="form-control date required" id="inp-end-date" name="inp-end-date" placeholder="End Period" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4 pull-right">
+                                <div class="form-group text-right">
+                                    <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-warningt" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped" data-toolbar=".toolbar" id="tbl-tax-audit"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalUploadPreview' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">Filename</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="Filename" name="Filename">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/TaxAuditPurpose.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

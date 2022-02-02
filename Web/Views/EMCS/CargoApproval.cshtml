@@ -1,0 +1,659 @@
+﻿@model  App.Web.Models.EMCS.CargoModel
+@{
+    ViewBag.Title = "Cargo View";
+    ViewBag.TypeReq = "Cargo";
+    ViewBag.Id = Model.Data.Id.ToString();
+    ViewBag.IdReq = Model.Data.Id;
+    ViewBag.IdStep = Model.DataRequest.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+
+@*<div class="row">*@
+<div class="col-md-12">
+    @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+</div>
+<div class="col-md-12">
+    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Cargo List</a>
+            </li>
+            <li role="presentation">
+                <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Cargo History</a>
+            </li>
+            <li role="presentation">
+                <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+            </li>
+            @if (Model.TemplateHeader != null)
+            {
+                <li role="presentation">
+                    <a style="z-index:7;" href="#template" aria-controls="profile" role="tab" data-toggle="tab">Cargo Preview</a>
+                </li>
+            }
+            <li role="presentation">
+                <a style="z-index:2" href="#documents" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content tabs-custom">
+            <div role="tabpanel" class="tab-pane active" id="invoice">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-horizontal">
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Cl No</label>
+                                        <div class="col-sm-8">
+                                            <input type="hidden" class="form-control" id="CargoID" name="CargoID" disabled value="@Model.Data.Id">
+                                            <input type="text" class="form-control" id="noCl" name="noCl" disabled value="@Model.Data.ClNo">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Date</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="dateCl" name="dateCl" value="@Model.Data.CreateDate.ToString("dd MMM yyyy")" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Prepared By</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="preparedCl" name="preparedCl" value="@Model.Data.PreparedBy" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Consignee</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="consigneeCl" name="consigneeCl" value="@Model.Data.Consignee" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Notify Party</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@Model.Data.NotifyParty" disabled>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label class="col-sm-4">Kppbc</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Export Type</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="exportType" name="exportType" value="@Model.Data.ExportType" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Category</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="category" name="category" value="@Model.Data.Category" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Incoterms</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="incoterms" name="incoterms" value="@Model.Data.IncotermsDesc" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Shipping Method</label>
+                                        <div class="col-sm-8 col-xs-8">
+                                            <input type="text" name="ShippingMethod" class="form-control" value="@Model.Data.ShippingMethod" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Cargo Type</label>
+                                        <div class="col-sm-8 col-xs-8">
+                                            <input type="text" name="ShippingMethod" class="form-control" value="@Model.Data.CargoTypeName" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Referrence</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" id="Referrence" name="Referrence" disabled rows="2" cols="2">@Model.Data.RefEdo</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend style="display: none;">&nbsp;</legend>
+                                <div class="col-md-12">
+                                    <table class="table table-bordered" id="tableCargoView" style="width: 100%;"></table>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Total Packages</label>
+                                        <div class="col-sm-8">
+                                            @*<input type="text" class="form-control text-right" id="topackCl" name="topackCl" value="" disabled>*@
+                                            <input type="text" class="form-control text-right" id="topackCll" name="topackCll" value="@Model.TemplateHeader.TotalCaseNumber" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Total Net Weight</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control text-right" id="tonetwegCl" name="togroswegCl" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Total Gross Weight</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control text-right" id="togroswegCl" name="togroswegCl" value="" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Total Volume</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control text-right" id="tovolumeCl" name="tovolumeCl" value="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4">Stuffing Date (Started)</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="startstufCl" name="startstufCl" value="@Model.Data.StuffingDateStarted.Value.ToString("dd MMM yyyy")" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Stuffing Date (Finished)</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="finishstufCl" name="finishstufCl" value="@Model.Data.StuffingDateFinished.Value.ToString("dd MMM yyyy")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Vessel / Flight Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="veselCl" name="veselCl" value="@Model.Data.VesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Vessel / Flight No</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageVesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Connecting Vessel / Flight Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="connectveselCl" name="connectveselCl" value="@Model.Data.ConnectingVesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Connecting Vessel / Flight No</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageConnectingVessel" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    @*<div class="form-group">
+                                            <label class="col-sm-4">ETA</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="eta" name="eta" value="@Model.data.ETA.Value.ToString("dd MMM yyyy")" disabled>
+                                            </div>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Liner</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="linerCl" name="linerCl" value="@Model.Data.Liner" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Flight / Sailing Schedule</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="flightCl" name="flightCl" value="@(Model.Data.SailingSchedule.HasValue ? Model.Data.SailingSchedule.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Arrival Schedule</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="arrivalCl" name="arrivalCl" value="@Model.Data.ArrivalDestination.Value.ToString("dd MMM yyyy")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Booking Number</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="booknumCl" name="booknumCl" value="@Model.Data.BookingNumber" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Booking Date</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="bookdateCl" name="bookdateCl" value="@(Model.Data.BookingDate.HasValue ? Model.Data.BookingDate.Value.ToString("dd MMM yyyy") : "")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Port of Loading</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="portloadCl" name="portloadCl" value="@Model.Data.PortOfLoading" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Port of Discharge / Destination</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="portDiscCl" name="portDiscCl" value="@Model.Data.PortOfDestination" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="box-footer">
+                            <div class="row" style="text-align:right;margin-top:5em">
+                                <div class="col-md-12">
+                                    <a href="~/EMCS/CargoList" class="btn btn-default" style="width:120px;"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back</a>
+                                    <button type="button" id="btnApprove" style="width:120px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Approve</button>
+                                    <button type="button" id="btnRevise" style="width:120px;" class="btn btn-warning"><i class="fa fa-pencil"></i>&nbsp;Need Revise</button>
+                                    <button type="button" id="BtnReject" style="width:120px;" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="history">
+                <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                        <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                        <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="problemhistory">
+                <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                        <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="documents">
+                <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                        <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+            @if (Model.TemplateHeader != null)
+            {
+                <div class="tab-pane" id="template">
+                    <div class="row" style="margin-top:15px;margin-bottom:10px;padding-left:153px">
+                        <div class="col-md-12">
+                            <a class="btn btn-info" href="~/download/downloadcargo/@Model.Data.Id"><i class="fa fa-file-pdf-o"></i> Export CL</a>
+                        </div>
+                    </div>
+                    <div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
+                        <div style="padding-left:4px;padding-right:4px">
+                            <table class="table-document">
+                                <tr>
+                                    <td style="width:3%"></td>
+                                    <td style="width:9%"></td>
+                                    <td style="width:4%"></td>
+                                    <td style="width:10%"></td>
+                                    <td style="width:12%"></td>
+                                    <td style="width:7%"></td>
+                                    <td style="width:8%"></td>
+                                    <td style="width:11%"></td>
+                                    <td style="width:13%"></td>
+                                    <td style="width:1%"></td>
+                                    <td style="width:10%"></td>
+                                    <td style="width:1%"></td>
+                                    <td style="width:11%"></td>
+                                </tr>
+                                <tr style="height:20px">
+                                    <td colspan="13">
+                                        <img alt="trakindo logo" src="~/Images/trakindo_logo.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td colspan="13" style="height:10px"></td></tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="5">PT. TRAKINDO UTAMA</td>
+                                    <td colspan="5" rowspan="2" class="border_left border_top border_right border_bottom">
+                                        <span class="text_bold">CARGO LIST</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="5">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="5">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
+                                    <td class="border_left">Number</td>
+                                    <td>:</td>
+                                    <td colspan="3" class="border_right text_bold text_docno">@(Model.TemplateHeader != null ? Model.TemplateHeader.ClNo : "-")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td colspan="5">INDONESIA - 12560</td>
+                                    <td class="border_left">Date</td>
+                                    <td>:</td>
+                                    <td colspan="3" class="border_right text_bold">@Model.Data.CreateDate.ToString("dd MMM yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td>Tel.</td>
+                                    <td colspan="4">: (62-21) 29976620</td>
+                                    <td class="border_bottom border_left">Reference</td>
+                                    <td class="border_bottom">:</td>
+                                    <td colspan="3" class="border_bottom border_right text_bold">@(Model.TemplateHeader != null ? Model.TemplateHeader.Reference : "-")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td>Fax.</td>
+                                    <td colspan="4">: (62-21) 29976612</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr><td colspan="13" style="height:20px"></td></tr>
+                                <tr>
+                                    <td colspan="6" style="height:15px" class="border_left border_top border_right border_bottom text_bold">SHIPPER'S NAME & ADDRESS</td>
+                                    <td colspan="7" class="border_right"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left text_bold">PT. TRAKINDO UTAMA</td>
+                                    <td colspan="4"></td>
+                                    <td colspan="3" class="border_right text_right text_bold">PREPARED BY :</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                                    <td colspan="4"></td>
+                                    <td colspan="3" style="text-align:right" class="border_right text_bold">PT. Trakindo Utama</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan </td>
+                                    <td colspan="4"></td>
+                                    <td colspan="3" class="border_right text_right">@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorName : "-")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left">INDONESIA - 12560</td>
+                                    <td colspan="4"></td>
+                                    <td colspan="3" class="border_right text_right"><u>@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorEmail : "-")</u></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="border_left border_bottom">Tel. (+62-21) 29976620 | Fax. (+62-21) 29976612 | www.trakindo.co.id</td>
+                                    <td colspan="3" class="border_bottom border_right"></td>
+                                </tr>
+                                <tr><td colspan="13" style="height:20px"></td></tr>
+                                <tr>
+                                    <td colspan="6" style="height:15px" class="border_left border_top border_right border_bottom text_bold">CONSIGNEE'S NAME & ADDRESS</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="5" class="border_left border_top border_right border_bottom text_bold">NOTIFY PARTY'S NAME & ADDRESS</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left text_bold">@Model.TemplateHeader.ConsigneeName</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="5" class="border_right text_bold">@Model.TemplateHeader.NotifyName</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left">@Model.TemplateHeader.ConsigneeAddress</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="5" class="border_right">@Model.TemplateHeader.NotifyAddress</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left">@Model.TemplateHeader.ConsigneePic</td>
+                                    <td colspan="2"></td>
+                                    <td colspan="5" class="border_right">@Model.TemplateHeader.NotifyEmail</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border_left border_bottom">@Model.TemplateHeader.ConsigneeEmail</td>
+                                    <td colspan="2" class="border_bottom"></td>
+                                    <td colspan="5" class="border_right border_bottom">@Model.TemplateHeader.NotifyEmail</td>
+                                </tr>
+                                <tr style="height:10px">
+                                    <td colspan="6"></td>
+                                    <td colspan="7"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height:15px" class="border_left border_top border_right text_bold">CONTAINER CONTENTS LIST</td>
+                                    <td colspan="7"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="13">
+                                        @{
+                                            if (Model.Data.CargoType == "FCL")
+                                            {
+                                                <table border="1" class="table-data">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:3%;height:2em">NO</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CONTAINER NUMBER</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:7%">SEAL #</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CONTAINER TYPE</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">NUMBER & KIND OF PACKAGES</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CASE NUMBER</th>
+                                                            <th class="text_center text_bold tabledata_spacing" colspan="2" style="width:10%">REFERENCE</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CARGO DESCRIPTION</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">NET WEIGHT</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">GROSS WEIGHT</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="text_center text_bold tabledata_spacing" style="width:10%;background-color:white">EDI Number #</th>
+                                                            <th class="text_center text_bold tabledata_spacing" style="width:10%;background-color:white">IN BOUND-DA #</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        @foreach (var item in Model.TemplateDetail)
+                                                        {
+
+                                                            <tr>
+                                                                <td class="tabledata_spacing text_right">@item.ItemNo</td>
+                                                                <td class="tabledata_spacing">@item.ContainerNumber</td>
+                                                                <td class="tabledata_spacing">@item.SealNumber</td>
+                                                                <td class="tabledata_spacing">@item.ContainerType</td>
+                                                                <td class="tabledata_spacing">@item.TotalCaseNumber</td>
+                                                                <td class="tabledata_spacing">@item.CaseNumber</td>
+                                                                <td class="tabledata_spacing">@item.Do</td>
+                                                                <td class="tabledata_spacing">@item.InBoundDa</td>
+                                                                <td class="tabledata_spacing">@item.Description</td>
+                                                                <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
+                                                                <td class="tabledata_spacing text_right">@item.GrossWeight</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table border="1" class="table-data">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:3%;height:2em">NO</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">NUMBER & KIND OF PACKAGES</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CASE NUMBER</th>
+                                                            <th class="text_center text_bold tabledata_spacing" colspan="2" style="width:10%">REFERENCE</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">CARGO DESCRIPTION</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">NET WEIGHT</th>
+                                                            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">GROSS WEIGHT</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="text_center text_bold tabledata_spacing" style="width:10%;background-color:white">EDI Number #</th>
+                                                            <th class="text_center text_bold tabledata_spacing" style="width:10%;background-color:white">IN BOUND-DA #</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.TemplateDetail)
+                                                        {
+                                                            <tr>
+                                                                <td class="tabledata_spacing text_right">@item.ItemNo</td>
+                                                                <td class="tabledata_spacing text_right">@item.TotalCaseNumber</td>
+                                                                <td class="tabledata_spacing">@item.CaseNumber</td>
+                                                                <td class="tabledata_spacing">@item.Do</td>
+                                                                <td class="tabledata_spacing">@item.InBoundDa</td>
+                                                                <td class="tabledata_spacing">@item.Description</td>
+                                                                <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
+                                                                <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.GrossWeight)</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        }
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="13" style="height:10px"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td colspan="3">TOTAL PACKAGES</td>
+                                    <td>:</td>
+                                    <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td colspan="3">TOTAL NET WEIGHT (KGS)</td>
+                                    <td>:</td>
+                                    <td class="text_bold text_right">@Model.TemplateHeader.TotalNetWeight</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td colspan="3">TOTAL GROSS WEIGHT (KGS)</td>
+                                    <td>:</td>
+                                    <td class="text_bold text_right">@Model.TemplateHeader.TotalGrossWeight</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td colspan="3">TOTAL VOLUME (M3)</td>
+                                    <td>:</td>
+                                    <td class="text_bold text_right">@Model.TemplateHeader.TotalVolume</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height:10px"></td>
+                                    <td colspan="7"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height:15px" class="border_left border_top border_right text_bold">REMARKS</td>
+                                    <td colspan="7"></td>
+                                </tr>
+                                <tr><td colspan="13" style="height:10px" class="border_left border_top border_right"></td></tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Terms of Delivery Export</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.IncoTerms</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Stuffing date (started)</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateStarted</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Stuffing date (finish)</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateFinished</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Vessel / Flight</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.VesselFlight</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Connecting Vessel</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.ConnectingVesselFlight</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Port Of Loading</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.LoadingPort</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Port Of Discharge/ Destination</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.DestinationPort</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Flight / Sailling Schedule</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.SailingSchedule</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Estimation Time of Arrival</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Eta</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Booking number</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingNumber</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Booking date</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingDate</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="height:15px" class="border_left">Liner</td>
+                                    <td>:</td>
+                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Liner</td>
+                                </tr>
+                                <tr><td colspan="13" style="height:10px" class="border_left border_bottom border_right"></td></tr>
+                                <tr><td colspan="13" style="height:10px"></td></tr>
+                                <tr><td colspan="13" class="tableda">This is an electronic document, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@*</div>*@
+
+@Html.Partial("Modal.FormProblem")
+
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@Styles.Render("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")
+@Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+<script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+<script>
+    var wizardState = "@ViewBag.WizardData.Progress";
+    var CargoTypeName = "@Model.Data.CargoTypeName";
+
+    var spacing = 0;
+    if ('@Model.TemplateDetail.Count' < 25)
+        spacing = ((250 / 20) - '@Model.TemplateDetail.Count') * 20;
+    $('.spacing').css("height", spacing + 'px');
+</script>
+@section scripts
+{
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoApproval.cshtml.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

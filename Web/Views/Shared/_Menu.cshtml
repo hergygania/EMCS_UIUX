@@ -1,0 +1,61 @@
+﻿@using App.Web
+@*@{
+    bool isAdmin = false;
+    bool isMaster = false;   
+    try
+    {
+        isAdmin = User.IsInRole("Administrator");
+        isMaster = User.IsInRole("Master");
+    }
+    catch { }
+}*@
+<ul id="menu-cont" class="sidebar-menu iin" style="position:relative;width:350px;">
+    <li class="header">MAIN NAVIGATION</li>
+    @*<li class="treeview active"><a href="/"><i class="fa fa-home"></i>Home</a></li>*@
+    @{
+        MvcMenuHelpers obj = new MvcMenuHelpers();
+    }
+    @obj.Menu("treeview");
+
+    <li id="logout">
+        <a href="javascript:void(0);" onclick="return loadingPage('/sign-out')"><i class="fa fa-sign-out"></i><span>Log Off</span></a>
+    </li>
+</ul>
+
+
+
+
+@*<ul id="menu-cont" class="sidebar-menu iin" style="position:relative;width:260px;">
+    <li><a href='index.html'><i class="fa fa-home"></i> <span>Home</span></a>
+    </li>
+    <li class="treeview">
+            <a href="javascript:void(0);">
+                                                                            <i class="fa fa-table"></i>
+                                                                            <span>Tables</span>
+                                                                            <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                                                                            <li><a href="page/table/simple_table.html"><i class="fa fa-angle-double-right"></i> Simple Table</a>
+                                                                            </li>
+                                                                            <li><a href="page/table/bootstrap_table.html"><i class="fa fa-angle-double-right"></i> Bootstrap Table</a>
+                                                                            </li>
+            </ul>
+    </li>
+    <li class="treeview">
+            <a href="javascript:void(0);">
+                                                                            <i class="fa fa-desktop"></i>
+                                                                            <span>UI Element</span>
+                                                                            <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                                                                            <li><a href="page/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a>
+                                                                            </li>
+            </ul>
+    </li>
+    </ul>*@
+
+<script type="text/javascript">
+    //$(function () {
+    //	$.AdminLTE.tree('.sidebar');
+    //});
+</script>

@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+    ViewBag.Title = "Report Delivery Requisition";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+    var allowRead = "@(ViewBag.AllowRead)";
+</script>
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+    .pagination .page-pre .page-link,
+    .pagination .page-next .page-link{
+        padding: 0 12px !important;
+    }
+    .modal { overflow: auto !important; }
+</style>
+
+<div class="box box-warning">
+    <div class="box-header" style="margin-top: 20px;">
+        <div class="col-md-12">
+            <div class="col-md-4 pull-right" id="mySearch" style="padding-right:2px">
+                <div class="input-group">
+                    <select id="filter-activity" class="form-control" style="height: 30px;">
+                        <option value="">ALL</option>
+                        <option value="DR CREATION">DR CREATION</option>
+                        <option value="PREPARATION">PREPARATION</option>
+                        <option value="PICK UP">PICK UP</option>
+                        <option value="INTRANSIT">INTRANSIT</option>
+                        <option value="POD">POD</option>
+                        <option value="REJECTED">REJECTED</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning" id="BtnFilter" style="color:black;">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="toolbar">
+                    <button class="btn btn-success" type="button" id="btnExportDR">
+                        <i class="fa fa-file-excel-o"></i> Download to Excel
+                    </button>
+                </div>
+                <table id="tableDeliveryRequisition" data-toolbar=".toolbar" class="table table-striped"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/adminlte.js"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/v2/ReportDeliveryRequisition.cshtml.js")"></script>
+
+}
+

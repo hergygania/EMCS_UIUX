@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Delivery In Full & On Time";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div id="parent">
+                <form role="form">
+                    <div class="box-body">
+                        <div class="row">
+
+
+
+                            <div id="AdvancePage">
+                                <div class="col-lg-12">
+                                    <!-- FILTER KOLOM KIRI - START -->
+                                    <div class="col-lg-6" style="padding-left:120px !important;">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Moda</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Origin</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Destination</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Status</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Unit Type</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <!-- FILTER KOLOM KIRI - END -->
+                                    </div>
+
+                                    <!-- FILTER KOLOM KANAN - START -->
+                                    <div class="col-lg-6" style="padding-left:100px !important;">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETD</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    <input id="Actual_Arrival_Date" type="text" class="form-control date" />
+                                                    <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ATD</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    <input id="Actual_Departure_Date" type="text" class="form-control date" />
+                                                    <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETA</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    <input id="Actual_Arrival_Date" type="text" class="form-control date" />
+                                                    <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ATA</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    <input id="Actual_Arrival_Date" type="text" class="form-control date" />
+                                                    <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">No DA</label>
+                                            <div class="input-group col-lg-6 col-xs-5">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- FILTER KOLOM KANAN - END -->
+                                </div>
+
+                                <div class="col-lg-12" style="text-align:right;padding-right:166px;">
+                                    <button id="btnFilter" type="button" class="btn btn-success" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+                                    <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <hr>
+                                <center>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div class="progress">
+                    <div class="progress-bar"></div>
+                </div>
+
+                <div id="status"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

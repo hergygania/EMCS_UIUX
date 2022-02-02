@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Kurs";
+}
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="toolbar">
+                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                        <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                    </div>
+                </div>
+                <table id="tableKurs" data-toolbar=".toolbar" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Kurs.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}
+
+

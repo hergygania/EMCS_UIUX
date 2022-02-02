@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Commercial Invoice Packing List Form";
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/dropzone.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.css")
+@Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.themes.css")
+<style>
+    .error {
+        color: red;
+        border-color: red;
+    }
+
+    label .input-validation-error {
+        border: none;
+        display: none !important;
+    }
+
+    .select2-container {
+        width: 100% !important;
+    }
+
+    .easy-autocomplete {
+        width: 100% !important;
+    }
+
+    .form-group .control-label[required]:after {
+        content: " *";
+        color: red;
+    }
+
+    .tab-content .tab-pane {
+        line-height: 15px !important;
+    }
+    /*.mt-4 {
+        margin-top: 0px !important;
+    }*/
+
+</style>
+
+@Html.Partial("~/Views/EMCS/CiplFormTemplate.cshtml")
+
+@section scripts
+{
+    <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplForm.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    <script>
+        var optionsConsignee = {
+            url: myApp.fullPath + "EMCS/GetConsigneeHistory",
+            listLocation: "data",
+            getValue: "ConsigneeName",
+            template: {
+                type: "ConsigneeName",
+                fields: {
+                    description: "email"
+                }
+            },
+            list: {
+                match: {
+                    enabled: true
+                }
+                , onChooseEvent: function () {
+                    console.log(this);
+                    var value = $("#consigneeNameCipl").getSelectedItemData();
+                    $("#consigneeAddressCipl").val(value.ConsigneeAddress);
+                    $("#consigneeCountryCipl").val(value.ConsigneeCountry);
+                    $("#consigneeTelpCipl").val(value.ConsigneeTelephone);
+                    $("#consigneeFaxCipl").val(value.ConsigneeFax);
+                    $("#consigneePicCipl").val(value.ConsigneePic);
+                    $("#consigneeEmailCipl").val(value.ConsigneeEmail);
+                }
+            },
+            theme: "plate-dark"
+        };
+
+        $("#consigneeNameCipl").easyAutocomplete(optionsConsignee);
+
+        var optionsNotify = {
+            url: myApp.fullPath + "EMCS/GetConsigneeHistory",
+            listLocation: "data",
+            getValue: "ConsigneeName",
+            template: {
+                type: "ConsigneeName",
+                fields: {
+                    description: "email"
+                }
+            },
+            list: {
+                match: {
+                    enabled: true
+                }
+                , onChooseEvent: function () {
+                    console.log(this);
+                    var value = $("#notifyNameCipl").getSelectedItemData();
+                    $("#notifyAddressCipl").val(value.ConsigneeAddress);
+                    $("#notifyCountryCipl").val(value.ConsigneeCountry);
+                    $("#notifyTelpCipl").val(value.ConsigneeTelephone);
+                    $("#notifyFaxCipl").val(value.ConsigneeFax);
+                    $("#notifyPicCipl").val(value.ConsigneePic);
+                    $("#notifyEmailCipl").val(value.ConsigneeEmail);
+                }
+            },
+            theme: "plate-dark"
+        };
+
+        $("#notifyNameCipl").easyAutocomplete(optionsNotify);
+    </script>
+}

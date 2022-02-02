@@ -1,0 +1,96 @@
+﻿@*@model App.Web.Models.FilterDTS*@
+@model App.Web.Models.ReportFilterDTS 
+<div class="col-lg-12">
+    <!-- FILTER KOLOM KIRI - START -->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Serial Number</label>
+            <div class="inline">
+                <div class="input-group col-lg-8 col-xs-8">
+                    <input type="text" class="form-control inputSN Active" />
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Origin</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.OriginID, new SelectList(Model.Origin, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Est. Departure</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="Est_Departure_Date" type="text" class="form-control pull-right daterange" readonly="readonly" style="background-color: #ffffff" />
+                <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Est. Arrival</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="Est_Arrival_Date" type="text" class="form-control pull-right daterange" readonly="readonly" style="background-color: #ffffff" />
+                <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Outbound Delivery</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input type="text" id="OutBoundDelivery" class="form-control" />
+            </div>
+        </div>
+        <!-- FILTER KOLOM KIRI - END -->
+    </div>
+
+    <!-- FILTER KOLOM KANAN - START -->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Sales Order Number</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input type="text" id="SalesOrderNumber" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Model</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input type="text" id="model" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Destination</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                @Html.DropDownListFor(m => m.DestinationID, new SelectList(Model.Destination, "id", "text"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Actual Departure</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="Actual_Departure_Date" type="text" class="form-control pull-right daterange" readonly="readonly" style="background-color: #ffffff" />
+                <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Actual Arrival</label>
+            <div class="input-group col-lg-8 col-xs-8">
+                <input id="Actual_Arrival_Date" type="text" class="form-control pull-right daterange" readonly="readonly" style="background-color: #ffffff" />
+                <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- FILTER KOLOM KANAN - END -->
+
+    <div class="col-lg-12">
+        <div class="pull-right">
+            <button id="btnFilter" type="button" class="btn btn-success btnFilter" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+            <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts.app/DeliveryTrackingStatus/FilterDTS.js"></script>

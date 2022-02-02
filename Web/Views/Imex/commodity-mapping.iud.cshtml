@@ -1,0 +1,129 @@
+@model App.Data.Domain.CommodityMapping
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title" id="myModalLabel"><i class="fa fa-list"></i> @title Commodity Mapping</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="row">
+
+			<div class="col-lg-6">
+
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Commodity</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<select class="js-states form-control" id="CommodityID" name="CommodityID" style="width: 95%;">
+							<option value="@Model.CommodityID">@Model.CommodityCap</option>
+						</select>
+						<div>@Html.ValidationMessageFor(m => m.CommodityID)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">HS Code</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<select class="js-states form-control" id="HSId" name="HSId" style="width: 95%;">
+							<option value="@Model.HSId">@Model.HSCodeCap</option>
+						</select>
+						<div>@Html.ValidationMessageFor(m => m.HSId)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Status</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+							<option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+							<option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+						</select>
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<div class="col-lg-12">
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<div style="float:right;margin-right:15px">
+			@if(mode == "I")
+			{
+				<button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Save</button>
+			}
+			else if(mode == "U")
+			{
+				<button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Update</button>
+			}
+			else
+			{
+				<button type="submit" class="btn btn-danger" style="width:125px;"><i class="fa fa-trash-o"></i> Delete</button>
+			}
+            <button type="button" class="btn btn-default" data-dismiss="modal" style="width:125px;"><i class="fa fa-times-circle"></i> Cancel</button>
+			<span id="progress" class="text-center" style="display: none;">
+				<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+				Wait..
+			</span>
+		</div>
+
+
+	</div>
+	<input type="hidden" name="MappingID" value="@Model.MappingID" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+}
+
+<script>
+	var mode = '@mode';
+	if (mode == 'I') $("#Status").attr('readonly', 'readonly');
+
+	var $tableHist = $('#tblHist');
+
+	$(function () {
+		enableLink(false);
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		helpers.buildDropdown('/Picker/GetCommodityImex', $('#CommodityID'), true, "select commodity");
+
+		var hscode_iud = new mySelect2({
+			id: 'HSId',
+			url: '/Picker/Select2HsName',
+			minimumInputLength: 1
+		}).load();
+
+		
+
+		$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+
+		$(".downloadExceldtl").click(function () {
+			$(".table2excelDet").table2excel({
+				exclude: ".noExl",
+				name: "Excel Document Name",
+				filename: "partMapping.xls"
+			});
+		});
+
+		$("#mySearch").insertBefore($("[name=refresh]"))
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+</script>

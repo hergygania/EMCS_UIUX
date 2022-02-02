@@ -1,0 +1,449 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Dashboard.css?id=" + DateTime.Now.ToString("yyyyMMddhhmmtt"))
+
+<style>
+    .wrapper {
+        min-height: 100% !important;
+    }
+
+    thead th {
+        text-align: left !important;
+    }
+
+    thead td {
+        text-align: left !important;
+    }
+
+    thead th, thead td {
+        color: rgb(255, 192, 0);
+    }
+
+    .ml9 {
+        font-size: 12px;
+    }
+
+        .ml9 .letter, .ml9 .letter1, .ml9 .letter2, .ml9 .letter3, .ml9 .letter4, .ml9 .letter5, .ml9 .letter6 {
+            transform-origin: 50% 100%;
+            display: inline-block;
+            line-height: 1em;
+        }
+
+    .select2-dropdown--below {
+        z-index: 2300 !important;
+    }
+</style>
+
+<div class="row" style="margin-bottom:20px !important;">
+
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+
+        <div class="box info-box">
+            <div class="box-icon info-box-icon color-1 icon-blue" style="transform: rotate(-40deg); font-size: 35px !important;"><span>&#9992;</span></div>
+            <div class="box-content info-box-content">
+                <span class="box-text info-box-text span-title-export-today" style="display: contents;">
+                    Export Today
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-export-today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-export-today">
+                        <ul class="dropdown-menu keep-open" id="open-export-today">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-export-type" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-export-type" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-export-type" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider-export-today">
+                    <div class="" id="array-export-today"></div>
+                    <div class="dropdown-hover" id="dropdown-export-today">
+                        <span class="info-box-number"><span class="number-export-today" style="font-size:23px;"></span> <span class="span-export-today" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-export-today"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12 content-dash-0" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-2 icon-green"><i class="fa fa-balance-scale"></i></span>
+            <div class="info-box-content">
+                <span class="box-text info-box-text span-title-net-weight" style="display: contents;">
+                    Total Weight
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-total-net-weight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-net-weight">
+                        <ul class="dropdown-menu keep-open" id="open-total-net-weight">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-net-weight" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-net-weight" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-net-weight" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider-net-weight">
+                    <div class="dropdown-hover" id="dropdown-net-weight">
+                        <span class="info-box-number"><span class="number-net-weight" style="font-size:23px;"></span> <span class="span-net-weight" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-net-weight"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-3 icon-yellow"><i class="fa fa-line-chart"></i></span>
+            <div class="info-box-content">
+                <span class="box-text info-box-text span-title-exchange-rate" style="display: contents;">
+                    Exchange Rate Today
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-exchange-rate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-exchange-rate">
+                        <ul class="dropdown-menu keep-open" id="open-exchange-rate">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-exchange-rate" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-exchange-rate" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-exchange-rate" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider">
+                    <div class="dropdown-hover" id="dropdown-exchange-rate">
+                        <span class="info-box-number"><span class="number-exchange-rate" style="font-size:23px;"></span> <span class="span-exchange-rate" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-exchange-rate"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-4 icon-red"><i class="fa fa-usd"></i></span>
+            <div class="box-content info-box-content">
+                <span class="box-text info-box-text span-title-export-value" style="display: contents;">
+                    Export Value
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-total-value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-export-value">
+                        <ul class="dropdown-menu keep-open" id="open-total-value">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control year" id="date1-export-value" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-export-value" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-total-export" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider-export-value">
+                    <div class="dropdown-hover" id="dropdown-export-value">
+                        <span class="info-box-number"><span class="number-export-value" style="font-size:23px;"></span> <span class="span-export-value" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-export-value"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-8 content-dash-1 col-sm-12 col-xs-12 pull-left">
+        <div class="box" style="height: 483px;">
+            <div class="dashboardhighcharts" style="padding-bottom: 50px; margin-bottom: 10px;">
+                <div class="box-header" style="padding: 10px;">
+
+                </div>
+                <div class="box-body" style="padding: 0px;">
+                    <div id="container-map" style="overflow: no-content !important;"></div>
+                    <div style="padding: 10px;">
+                        <div class="box-tools pull-left">
+                            <button class="btn btn-warning btn-md s-btn-active" style="z-index:0;" id="btn-branch-container-map">Branch</button>
+                            <button class="btn btn-warning btn-md" style="z-index:0;" id="btn-port-container-map">Port</button>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <div class="dropdown pull-right" style="padding: 5px 0 0 5px !important;">
+                                <i class="fa fa-filter pull-right dropdown-toggle fa-lg" type="button" id="i-total-value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                                <form class="form-horizontal" id="form-export-value">
+                                    <ul class="dropdown-menu keep-open" id="open-total-value">
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;" class="">
+                                            <div class="input-group col-lg-12 col-xs-12">
+                                                <select id="Area"></select>
+                                            </div>
+                                        </li>
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                            <div class="input-group col-lg-12 col-xs-12">
+                                                <input type="text" class="form-control" id="Category" name="dateCipl" value="Branch" disabled>
+                                            </div>
+                                        </li>
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                            <button type="submit" class="btn btn-success btn-sm" id="BtnFilterDashboard" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="dashboardTv">
+                <iframe title="TV" style="width:100%;height:600px;text-align:center;" id="iframe-tv" frameborder="0" allowfullscreen="true" name="video_play" scrolling="no"></iframe>
+            </div>
+            <div class="dashboardTrakindoTv">
+                <iframe title="Trakindo TV" style="width:100%;height:600px;text-align:center;" id="iframe-trakindo-tv" frameborder="0" allowfullscreen="true" name="video_play" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 content-dash-2 pull-right text-center">
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Parts</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-parts"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Machine</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-machine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Engine</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-engine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Forklift</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-forklift"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 content-dash-3 pull-right">
+        <div class="box box-warning" style="margin-bottom: 10px; padding-bottom: 5px;" id="div-export-cycle-steps">
+            <div class="box-body" style="padding-bottom: 0px;" id="slider-cycle-step">
+                <div class="dropdown-hover-hidden">
+                    <span class="info-box-number span-cycle-step">
+                        <ul class="info-box-number" id="div-progress-bar-cycle"></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 content-dash-4 col-sm-12 col-xs-12 pull-left">
+        <div class="box" style="height:65px;">
+            <div class="box-footer">
+                <div class="btn btn-modal btn-outstanding-npe">
+                    <div style="font-size: 19px !important;" id="p-oustanding">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 content-dash-5 pull-right col-xs-12 text-center" id="counting-dashboard">
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-outstanding">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text">Outstanding</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-problem">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text" style="font-size: 12px !important">Total Problem</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-visit">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text" style="font-size: 12px !important">Hit Rate</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span> Visit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <section class="demo-section-box" style="background-color: #fafafa;">
+        <div class="section-container" style="z-index: 1030">
+            <div class="demo-box">
+                <!-- DEMO6 HTML STARTS HERE *-->
+                <!-- *********************** -->
+                <div class="breaking-news-ticker" id="newsTicker1">
+                    <div class="bn-label" id="jam"></div>
+                    <div class="bn-news">
+                        <ul id="ul-news"></ul>
+                    </div>
+                </div>
+                <div class="container-icon">
+                    <div class="menu-toggle">
+                        <span class="fa fa-plus"></span>
+                    </div>
+                    <div class="menu-line">
+                        <div class="btn-app btn-tv btn-non-active" title="TV NEWS">
+                            <div class="fa fa-tv" tooltip="TV"></div>
+                        </div>
+                        <div class="btn-app btn-paint btn-non-active" title="DARK MODE">
+                            <div class="fa fa-paint-brush"></div>
+                        </div>
+                        <div class="btn-app btn-menu btn-non-active" title="FULL SCREEN">
+                            <div class="fa fa-indent"></div>
+                        </div>
+                        <div class="btn-app btn-video-trakindo btn-non-active" title="TRAKINDO VIDEO">
+                            <div class="fa fa-video-camera"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *********************** -->
+                <!-- DEMO6 HTML END HERE *** -->
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/breaking-news-ticker.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/proj4.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/no-data-to-display.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-more.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/map.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/data.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/id-all.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/circliful/jquery.circliful.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/anime/anime.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Dashboard.cshtml.js?id="+DateTime.Now.ToString("yyyyMMddhhmmtt"))"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/typing/jquery.typer.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    <script>
+        document.addEventListener("keydown", e => {
+            if (e.key == "F11") e.preventDefault();
+        });
+
+        $(document).ready(function () {
+            //var selectors = [".span-title-export-today", ".span-title-net-weight", ".span-title-exchange-rate", ".span-title-export-value"];
+            function resize_news() {
+                $(".bn-news").css("left", "120px");
+            }
+
+            setTimeout(function () {
+                resize_news();
+            }, 700)
+
+            $(document).on("resize", function () {
+                resize_news();
+            })
+        });
+
+    </script>
+}

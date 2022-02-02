@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>App.Service</RootNamespace>
+    <AssemblyName>App.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Web\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="App.Framework">
+      <HintPath>..\..\packages\_dll\App.Framework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNet.Highcharts">
+      <HintPath>..\..\packages\Highcharts\DotNet.Highcharts.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\packages\NPOI.2.2.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\packages\NPOI.2.2.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Common">
+      <HintPath>..\..\packages\Spire.XLS-FE\Bin\NET4.0\Spire.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.5.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Spire.XLS-FE\Bin\NET4.0\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=3.6.230.55040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Spire.XLS-FE\Bin\NET4.0\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=7.9.0.55040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Spire.XLS-FE\Bin\NET4.0\Spire.XLS.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CAT\BO.cs" />
+    <Compile Include="CAT\ForecastAccuracyDetailList.cs" />
+    <Compile Include="CAT\ForecastAccuracySummaryList.cs" />
+    <Compile Include="CAT\ImportExcel.cs" />
+    <Compile Include="CAT\InventoryAllocation.cs" />
+    <Compile Include="CAT\InventoryList.cs" />
+    <Compile Include="CAT\InventoryTrackingDelivery.cs" />
+    <Compile Include="CAT\InventoryTrackingStatus.cs" />
+    <Compile Include="CAT\InventoryTrackingStatusCMS.cs" />
+    <Compile Include="CAT\Master\MasterCustomer.cs" />
+    <Compile Include="CAT\Master\MasterCustomerDetail.cs" />
+    <Compile Include="CAT\Master\MasterJobCode.cs" />
+    <Compile Include="CAT\Master\MasterJobLocation.cs" />
+    <Compile Include="CAT\Master\MasterSection.cs" />
+    <Compile Include="CAT\Master\MasterSOS.cs" />
+    <Compile Include="CAT\Master\MasterStore.cs" />
+    <Compile Include="CAT\OWSS.cs" />
+    <Compile Include="CAT\Report\RptOutstandingOldCoreDetailList.cs" />
+    <Compile Include="CAT\Report\RptOutstandingOldCoreSummaryList.cs" />
+    <Compile Include="CAT\Report\RptPiecePartOrderDetailList.cs" />
+    <Compile Include="CAT\Report\RptPiecePartOrderSummaryList.cs" />
+    <Compile Include="CAT\Report\RptSummaryPEXList.cs" />
+    <Compile Include="CAT\Staging.cs" />
+    <Compile Include="DeliveryTrackingStatus\ImportDTS.cs" />
+    <Compile Include="DeliveryTrackingStatus\MasterDTS.cs" />
+    <Compile Include="DeliveryTrackingStatus\ReadDataDTSFromExcel.cs" />
+    <Compile Include="DeliveryTrackingStatus\ReportDIFOT.cs" />
+    <Compile Include="DeliveryTrackingStatus\PageDTS.cs" />
+    <Compile Include="DTS\CategoryCode.cs" />
+    <Compile Include="DTS\DeliveryInstruction.cs" />
+    <Compile Include="DTS\DeliveryInstructionUnit.cs" />
+    <Compile Include="DTS\DeliveryRequisitionStatus.cs" />
+    <Compile Include="DTS\DeliveryRequisitionUnit.cs" />
+    <Compile Include="DTS\ExportToPDF.cs" />
+    <Compile Include="DTS\InboundEviz.cs" />
+    <Compile Include="DTS\MasterDistrict.cs" />
+    <Compile Include="DTS\MasterProvince.cs" />
+    <Compile Include="DTS\MasterSubDistrict.cs" />
+    <Compile Include="EMCS\Dashboard.cs" />
+    <Compile Include="EMCS\MasterCIPLItem.cs" />
+    <Compile Include="EMCS\MasterSuperior.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="EMCS\SvcExcelFormatter.cs" />
+    <Compile Include="EMCS\MasterAreaUserCKB.cs" />
+    <Compile Include="EMCS\MasterParameter.cs" />
+    <Compile Include="EMCS\MasterDepartment.cs" />
+    <Compile Include="EMCS\MasterFlowNext.cs" />
+    <Compile Include="EMCS\MasterFlowStatus.cs" />
+    <Compile Include="EMCS\MasterFlowStep.cs" />
+    <Compile Include="EMCS\MasterFlow.cs" />
+    <Compile Include="EMCS\MasterKppbc.cs" />
+    <Compile Include="EMCS\MasterSIB.cs" />
+    <Compile Include="EMCS\MasterUserCKB.cs" />
+    <Compile Include="EMCS\DocumentStreamGenerator.cs" />
+    <Compile Include="EMCS\MasterVendor.cs" />
+    <Compile Include="EMCS\MasterVideo.cs" />
+    <Compile Include="EMCS\SvcBlAwb.cs" />
+    <Compile Include="EMCS\SvcCargoItem.cs" />
+    <Compile Include="EMCS\SvcDelegation.cs" />
+    <Compile Include="EMCS\SvcShippingInstruction.cs" />
+    <Compile Include="EMCS\SvcContainer.cs" />
+    <Compile Include="EMCS\SvcGeneral.cs" />
+    <Compile Include="EMCS\SvcMasterAirSeaPort.cs" />
+    <Compile Include="EMCS\SvcNotificationQueue.cs" />
+    <Compile Include="EMCS\SvcNpePeb.cs" />
+    <Compile Include="EMCS\SvcProblemHistory.cs" />
+    <Compile Include="EMCS\SvcGoodsReceiveItem.cs" />
+    <Compile Include="EMCS\SvcGoodsReceive.cs" />
+    <Compile Include="EMCS\SvcRAchievement.cs" />
+    <Compile Include="EMCS\SvcRDetailsTracking.cs" />
+    <Compile Include="EMCS\SvcRDheBI.cs" />
+    <Compile Include="EMCS\SvcRegulation.cs" />
+    <Compile Include="EMCS\SvcRequestSI.cs" />
+    <Compile Include="EMCS\SvcRequestCl.cs" />
+    <Compile Include="EMCS\SvcRequestGr.cs" />
+    <Compile Include="EMCS\SvcRequestCipl.cs" />
+    <Compile Include="EMCS\MasterKurs.cs" />
+    <Compile Include="EMCS\SvcCargo.cs" />
+    <Compile Include="EMCS\SvcFlowNext.cs" />
+    <Compile Include="EMCS\SvcCipl.cs" />
+    <Compile Include="EMCS\MasterRegulation.cs" />
+    <Compile Include="EMCS\MasterRunningText.cs" />
+    <Compile Include="EMCS\MasterIncoterms.cs" />
+    <Compile Include="EMCS\MasterCountry.cs" />
+    <Compile Include="EMCS\MasterArea.cs" />
+    <Compile Include="EMCS\MasterBanner.cs" />
+    <Compile Include="EMCS\MasterCustomer.cs" />
+    <Compile Include="DTS\FreightCalculator.cs" />
+    <Compile Include="DTS\MasterCustomers.cs" />
+    <Compile Include="DTS\MasterUsers.cs" />
+    <Compile Include="DTS\DeliveryRequisition.cs" />
+    <Compile Include="DTS\ShipmentInboundDetail.cs" />
+    <Compile Include="DTS\ShipmentInbound.cs" />
+    <Compile Include="DTS\ShipmentOutbound.cs" />
+    <Compile Include="EMCS\MasterProblem.cs" />
+    <Compile Include="EMCS\MasterUsers.cs" />
+    <Compile Include="EMCS\SvcRExportActivity.cs" />
+    <Compile Include="EMCS\SvcRExportProblem.cs" />
+    <Compile Include="EMCS\SvcRExportTransaction.cs" />
+    <Compile Include="EMCS\SvcROutstandingCipl.cs" />
+    <Compile Include="EMCS\SvcRPTTUBranch.cs" />
+    <Compile Include="EMCS\SvcRSailingEstimation.cs" />
+    <Compile Include="EMCS\SvcRTaxAudit.cs" />
+    <Compile Include="EMCS\SvcTotalCipl.cs" />
+    <Compile Include="EMCS\SvcUserLog.cs" />
+    <Compile Include="EMCS\SvcWizard.cs" />
+    <Compile Include="FreightCost\ExporttoPDF.cs" />
+    <Compile Include="FreightCost\FreightCost.cs" />
+    <Compile Include="FreightCost\ImportFreight.cs" />
+    <Compile Include="FreightCost\MasterInboundRateImport.cs" />
+    <Compile Include="FreightCost\MasterModaOfConditionTruckingRateImport.cs" />
+    <Compile Include="FreightCost\MasterRateImport.cs" />
+    <Compile Include="FreightCost\MasterSurchargeImport.cs" />
+    <Compile Include="ImexVetting\ManualVetting.cs" />
+    <Compile Include="ImexVetting\ReadDataManualVetting.cs" />
+    <Compile Include="Imex\ChangeLogBLL.cs" />
+    <Compile Include="Imex\CommodityMapping.cs" />
+    <Compile Include="Imex\KPIDashboardBLL.cs" />
+    <Compile Include="Imex\LicenseManagementHS.cs" />
+    <Compile Include="Imex\ReadDataLicenseFromExcel.cs" />
+    <Compile Include="Imex\ReadDataPartsMapingFromExcel.cs" />
+    <Compile Include="Imex\ReadDataRMFromExcel.cs" />
+    <Compile Include="Imex\TeamProfiles.cs" />
+    <Compile Include="Imex\ReturToVendor.cs" />
+    <Compile Include="Imex\ShippingData.cs" />
+    <Compile Include="ImexVetting\SurveyDetail.cs" />
+    <Compile Include="ImexVetting\SurveyDocument.cs" />
+    <Compile Include="ImexVetting\ShipmentDocument.cs" />
+    <Compile Include="ImexVetting\ShipmentManifestDetail.cs" />
+    <Compile Include="ImexVetting\ShipmentManifest.cs" />
+    <Compile Include="ImexVetting\Shipment.cs" />
+    <Compile Include="ImexVetting\PartsOrderDetails.cs" />
+    <Compile Include="ImexVetting\PartsOrderCase.cs" />
+    <Compile Include="ImexVetting\PartsOrder.cs" />
+    <Compile Include="ImexVetting\ReadyToShip.cs" />
+    <Compile Include="ImexVetting\Survey.cs" />
+    <Compile Include="Imex\LicenseManagement.cs" />
+    <Compile Include="Imex\HsRegulation.cs" />
+    <Compile Include="Imex\RegulationManagement.detail.cs" />
+    <Compile Include="Imex\RegulationManagement.cs" />
+    <Compile Include="Imex\PartsMapping.cs" />
+    <Compile Include="Master\AirPorts.cs" />
+    <Compile Include="Master\ImportDeliveryTrackingStatus.cs" />
+    <Compile Include="POST\Dashboard.cs" />
+    <Compile Include="POST\Ebupot.cs" />
+    <Compile Include="POST\IntegrasiEproc.cs" />
+    <Compile Include="POST\MasterMappingUser.cs" />
+    <Compile Include="POST\Report.cs" />
+    <Compile Include="POST\QuickSearch.cs" />
+    <Compile Include="POST\MtVendor.cs" />
+    <Compile Include="POST\PaginationParam.cs" />
+    <Compile Include="POST\AdvanceSearch.cs" />
+    <Compile Include="POST\Comment.cs" />
+    <Compile Include="POST\_Global.cs" />
+    <Compile Include="POST\Transaction.cs" />
+    <Compile Include="POST\PO.cs" />
+    <Compile Include="POST\STGBusinessArea.cs" />
+    <Compile Include="POST\StParameter.cs" />
+    <Compile Include="SOVetting\CKBDeliveryStatus.cs" />
+    <Compile Include="SOVetting\CustomerOrderSummary.cs" />
+    <Compile Include="SOVetting\CustomerPOSummary.cs" />
+    <Compile Include="SOVetting\DpsSoSourceItem .cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Master\MasterAgreementTypePO.cs" />
+    <Compile Include="Master\MasterCommodityType.cs" />
+    <Compile Include="Master\MasterInvoiceType.cs" />
+    <Compile Include="Master\MasterModelType.cs" />
+    <Compile Include="Master\MasterOrderClass.cs" />
+    <Compile Include="Master\MasterOrderProfile.cs" />
+    <Compile Include="Master\MasterShipmentTypePO.cs" />
+    <Compile Include="Master\MasterShipmentTypeSO.cs" />
+    <Compile Include="SOVetting\SapSoHeader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SOVetting\SapSoOrderItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SOVetting\SapSoSearch.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SOVetting\SapSoSourceItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Master\SurveyLocation.cs" />
+    <Compile Include="Master\City.cs" />
+    <Compile Include="Master\CommodityImex.cs" />
+    <Compile Include="Master\Currency.cs" />
+    <Compile Include="Master\DocumentType.cs" />
+    <Compile Include="Master\DocumentUpload.cs" />
+    <Compile Include="Master\Email.cs" />
+    <Compile Include="Master\EmailRecipient.cs" />
+    <Compile Include="Master\AgreementType.cs" />
+    <Compile Include="Master\EscalationLimit.cs" />
+    <Compile Include="Master\Group.cs" />
+    <Compile Include="FreightCost\MasterGeneric.cs" />
+    <Compile Include="Master\ImportMasterFreightCostCalculator.cs" />
+    <Compile Include="Master\LogImport.cs" />
+    <Compile Include="Master\MasterInboundRate.cs" />
+    <Compile Include="Master\MasterRate.cs" />
+    <Compile Include="Master\MasterRateLog.cs" />
+    <Compile Include="Master\MasterSurcharge.cs" />
+    <Compile Include="Master\MasterTruckingRate.cs" />
+    <Compile Include="Master\Menu.cs" />
+    <Compile Include="Master\ModaOfCondition.cs" />
+    <Compile Include="Master\ReadDataExcel\ReadDataPartsList.cs" />
+    <Compile Include="Master\Region.cs" />
+    <Compile Include="Master\RoleAccessMenu.cs" />
+    <Compile Include="Master\saveFileExcel.cs" />
+    <Compile Include="Master\TodoLists.cs" />
+    <Compile Include="Master\ImportGates.cs" />
+    <Compile Include="Master\FreightPort.cs" />
+    <Compile Include="Master\JobFlags.cs" />
+    <Compile Include="Master\SeaPorts.cs" />
+    <Compile Include="Master\ShippingInstruction.cs" />
+    <Compile Include="Master\LicensePorts.cs" />
+    <Compile Include="Master\LicenseGroup.cs" />
+    <Compile Include="Master\HSCodeLists.cs" />
+    <Compile Include="Master\OrderMethod.cs" />
+    <Compile Include="Master\Lartas.cs" />
+    <Compile Include="Master\OrderProfile.cs" />
+    <Compile Include="Master\PartsLists.cs" />
+    <Compile Include="Master\Profile.cs" />
+    <Compile Include="Master\Commodity.cs" />
+    <Compile Include="Master\Hub.cs" />
+    <Compile Include="Master\Area.cs" />
+    <Compile Include="Master\SosGroup.cs" />
+    <Compile Include="Master\Store.cs" />
+    <Compile Include="Master\RoleAccess.cs" />
+    <Compile Include="Master\UserAccess.cs" />
+    <Compile Include="PartTracking\Milestone.cs" />
+    <Compile Include="PartTracking\PartsOrderAndCase.cs" />
+    <Compile Include="PartTracking\V_CLIENTORDER_HEADER.cs" />
+    <Compile Include="PartTracking\V_CUSTORDER_HEADER_NEW.cs" />
+    <Compile Include="PartTracking\V_CUSTORDER_HEADERS.cs" />
+    <Compile Include="PartTracking\V_FORWADER_STATUS.cs" />
+    <Compile Include="PartTracking\V_GET_CUSTOMER.cs" />
+    <Compile Include="PartTracking\V_CUSTORDER_HEADER.cs" />
+    <Compile Include="PartTracking\V_GET_CUSTOMER_GROUP.cs" />
+    <Compile Include="PartTracking\V_MODEL_LIST.cs" />
+    <Compile Include="PartTracking\V_STOCKORDER_HEADER.cs" />
+    <Compile Include="PartTracking\V_SUPPLIER_STATUS.cs" />
+    <Compile Include="PartTracking\V_TRAKINDO_STATUS.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\DeliveryTrackingStatus.cs" />
+    <Compile Include="Report\PartOrderCaseReports.cs" />
+    <Compile Include="Report\PartOrderDetailReports.cs" />
+    <Compile Include="Report\PartOrderReports.cs" />
+    <Compile Include="Report\OutstandingBackOrderItems.cs" />
+    <Compile Include="Report\PartReleaseInformation.cs" />
+    <Compile Include="Report\PSSIntransit.cs" />
+    <Compile Include="Report\PODtoBOFills.cs" />
+    <Compile Include="Report\STRespondTime.cs" />
+    <Compile Include="Report\UnrealisticCommittedDateBackOrderItems.cs" />
+    <Compile Include="Report\UnrealisticCommittedDateExstocks.cs" />
+    <Compile Include="Report\zIndex.cs" />
+    <Compile Include="Report\WHDocumentReprints.cs" />
+    <Compile Include="Report\VendorConstraint.cs" />
+    <Compile Include="Report\SubmittedItem.cs" />
+    <Compile Include="Report\OrderConfirmations.cs" />
+    <Compile Include="Report\LongPods.cs" />
+    <Compile Include="Report\LongIntransits.cs" />
+    <Compile Include="Report\DocumentAmends.cs" />
+    <Compile Include="Report\BoRespondTimes.cs" />
+    <Compile Include="Report\BackOrderSubmissionss.cs" />
+    <Compile Include="Report\AckMessages.cs" />
+    <Compile Include="Report\CounterPerformances.cs" />
+    <Compile Include="Report\DocumentAwaitingAcks.cs" />
+    <Compile Include="Report\EmergencyOrders.cs" />
+    <Compile Include="Report\DocumentSuspends.cs" />
+    <Compile Include="Report\DocumentReprints.cs" />
+    <Compile Include="Report\DocumentPendingRelease.cs" />
+    <Compile Include="Report\DocumentNonConsolidateInvoices.cs" />
+    <Compile Include="Report\DocumentHelds.cs" />
+    <Compile Include="Report\DocumentConsolidateInvoices.cs" />
+    <Compile Include="SAP\MaterialDescription.cs" />
+    <Compile Include="SAP\Customer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Data\Data.csproj">
+      <Project>{a3909376-f931-465f-9768-99b11459b742}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\adapters\standalone-framework.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-3d.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-all.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts-more.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\highcharts.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\data.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\drilldown.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\exporting.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\funnel.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\heatmap.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\no-data-to-display.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\modules\solid-gauge.src.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-blue.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-green.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-unica.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\gray.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid-light.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\sand-signika.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\skies.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

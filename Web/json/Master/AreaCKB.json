@@ -1,0 +1,23 @@
+﻿{
+    "total": 100,
+    "rows": [
+        {
+            "area": "01",
+            "area_ckb": "Cilandak"
+        },
+        {
+            "area": "02",
+            "area_ckb": "Tangerang"
+        },
+        {
+            "area": "03",
+            "area_ckb": "Ternate"
+        },
+        {
+            "area": "04",
+            "area_ckb": "Batam"
+        }
+
+
+    ]
+}

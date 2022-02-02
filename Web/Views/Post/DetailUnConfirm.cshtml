@@ -1,0 +1,921 @@
+﻿@{ViewBag.Title = "Detail Po No : 14500124422";}
+<div class="row">
+    <div class="col-md-9">&nbsp;</div>
+    <div class="col-md-3">
+        <div style="border-bottom:1px solid #e8e8e8;width:300px;"><strong>Welcome Back,</strong> PT. MEORA PRIMA SOLUSINDO</div>
+        <div style="width:300px;"><strong>@DateTime.Now.ToString("dd.MM.yyyy HH.mm.ss")</strong></div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12" style="background:white;">
+        <a href="HomeVendor" class="btn btn-sm"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+        @* <button class="btn btn-success delivery" style="float:right; margin:10px 5px 10px 0;">Submit  <span class="fa fa-chevron-circle-right"></span></button>*@
+
+        @*<button class="btn btn-success delivery" style="float:right; margin:10px 5px 10px 0;">Invoicing  <span class="fa fa-chevron-circle-right"></span></button>*@
+
+        @*<button class="btn btn-success invoicing" style="float:right; margin:10px 5px 10px 0;">Invoicing  <span class="fa fa-chevron-circle-right"></span></button>*@
+        @*<button class="btn btn-success delivery" style="float:right; margin:10px 5px 10px 0;">Delivery   <span class="fa fa-chevron-circle-right"></span></button>*@
+        <button class="btn btn-danger unconfirm" style="float:right; margin:10px 5px 10px 0;">UnConfirm  <span class="fa fa-chevron-circle-left"></span></button>
+        <div style="margin-top:10px;">
+            <table id="table-inprogress" class="table table-bordered table-striped" style="background:white;">
+                @*<thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align:middle;">PO No</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">PO Date</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivery Date</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Status</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivery Type</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Confirmation</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Processing</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivering</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">BAST</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Invoicing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">14500124422</td>
+                            <td class="text-center">31.01.2020</td>
+                            <td class="text-center">02.02.2020</td>
+                            <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                            <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                            <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+
+                        </tr>
+                    </tbody>*@
+            </table>
+
+            <div style="align-content:center;">
+                <div class="col-md-12" style="margin-top:10px;background:#e8e8e8;padding:10px;margin-bottom:10px;">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control input-sm" name="name" placeholder="Item Name" />
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control input-sm select2" name="status">
+                            <option value="this">On Schedule</option>
+                            <option value="this">Risk Delay</option>
+                            <option value="this">Delay</option>
+                            <option value="this">POD</option>
+                            <option value="this">BAST</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-control input-sm select2" name="branch">
+                            <option value="" selected>Branch </option>
+                            <option value="this">BATU HIJAU 1 - TU </option>
+                            <option value="this">BENGKULU - TU</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 justify-content-center">
+                        <button class="btn btn-danger bg-gray" style="color:black">Search</button>
+                        <button class="btn btn-primary bg-gray text-black-50" style="color:black;">Refresh</button>
+                        <button class="btn btn-warning bg-gray text-black-50" style="color:black;">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:20px">
+                <div id="table-inprogress">
+                    <table id="table-item" class="table table-bordered" style="width:100%;">
+                        @*<thead>
+                                <tr>
+                                    <td style="height:30px;" class="text-center">Action</td>
+                                    <td style="height:30px;" class="text-center">Item</td>
+                                    <td style="height:30px;" class="text-center">Status</td>
+                                    <td style="height:30px;" class="text-center">Delivery Type</td>
+                                    <td style="height:30px;" class="text-center">Forwarder</td>
+                                    <td style="height:30px;" class="text-center">ETD</td>
+                                    <td style="height:30px;" class="text-center">ATD</td>
+                                    <td style="height:30px;" class="text-center">Original QTY</td>
+                                    <td style="height:30px;" class="text-center">QTY</td>
+                                    <td style="height:30px;" class="text-center">UOM</td>
+                                    <td style="height:30px;" class="text-center">Price / Item</td>
+                                    <td style="height:30px;" class="text-center">Total</td>
+                                    <td style="height:30px;" class="text-center">Destination</td>
+                                    <td style="height:30px;" class="text-center">User</td>
+                                    <td style="height:30px;" class="text-center">Position</td>
+                                    <td style="height:30px;" class="text-center">Notes</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">
+
+                                        <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                        <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>
+                                    </td>
+                                    <td>Cartridge HP CE285A BLACK / HP 85A</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">FULLY DELIVERY</td>
+                                    <td class="text-center">CKB</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center">5</td>
+                                    <td>EA</td>
+                                    <td class="text-right">800.000</td>
+                                    <td class="text-right">4.000.000</td>
+                                    <td>BATU HIJAU 1 - TU</td>
+                                    <td>SUMIATI</td>
+                                    <td>TOL MERAK</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+
+                                        <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                        <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>
+                                    </td>
+                                    <td>Cartridge HP CF287A</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">FULLY DELIVERY</td>
+                                    <td class="text-center">CKB</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">2</td>
+                                    <td>EA</td>
+                                    <td class="text-right">2.600.000</td>
+                                    <td class="text-right">3.200.000</td>
+                                    <td>BENGKULU - TU</td>
+                                    <td>FAJRIANSYAH</td>
+                                    <td>BANDUNG</td>
+                                    <td>N/A</td>
+                                </tr>
+                            </tbody>*@
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- Section Tab Third -->
+    </div>
+    <div class="col-md-12">
+
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Form Upload Invoicing</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:-20px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+
+                <div class="row text-center divUploadFile dropzone" style="width:500px;margin-left:20px;" id="FormUploadMaterialPrice">
+                </div>
+                <div class="row" style="margin-top:20px;">
+                    <table id="table-upload" class="table table-bordered table-striped" style="background:white;">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="vertical-align:middle;">No</th>
+                                <th class="text-center" style="vertical-align:middle;">FileName</th>
+                                <th class="text-center" style="vertical-align:middle;">Size</th>
+                                <th class="text-center" style="vertical-align:middle;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                    <td class="text-left">14500124422</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center">02.02.2020</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+
+                                </tr>*@
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalUpdateStatusForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Form Update Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:-20px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <label>No Item</label>
+                    <input type="text" id="orangeForm-name" class="form-control validate" value="1" readonly="true">
+                </div>
+                <div class="md-form mb-5">
+                    <label>Item Name</label>
+                    <input type="text" id="itemName" class="form-control validate" value="Cartridge HP CE285A BLACK / HP 85A" readonly="true">
+
+                </div>
+
+                <div class="md-form mb-4">
+                    <label>PR No</label>
+                    <input type="text" id="prNo" class="form-control validate" value="14500124422" readonly="true">
+                </div>
+
+                <div class="md-form mb-4">
+                    <label>Status</label>
+                    <select name="status" id="status" class="form-control validate select2">
+                        <option value="this">On Schedule</option>
+                        <option value="this">Risk Delay</option>
+                        <option value="this">Delay</option>
+                        <option value="this">POD</option>
+                        <option value="this">BAST</option>
+                    </select>
+                </div>
+                <div class="md-form mb-4">
+                    <label>Apply Status For</label>
+                    <select name="status" id="status" class="form-control validate">
+                        <option value="this">This Item</option>
+
+                        <option value="this">PR</option>
+                        <option value="this">ALL</option>
+                    </select>
+                </div>
+                <div class="md-form mb-4">
+                    <label>Notes</label>
+                    <textarea id="Notes" placeholder="N/A" class="form-control validate"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalViewStatusForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">View Status Notes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:-20px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-auto">
+                <div class="row">
+                    <div class="col-md-12" style="background-color:white;">
+                        <table id="table-inprogress" class="table table-bordered table-striped" style="background:white;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="vertical-align:middle;">Date</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Status</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">02.02.2020</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">N/A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <link href="~/Content/POST/Custom.css" rel="stylesheet" />
+    @*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+
+    <link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-table.min.js"></script>
+    @section scripts{
+        <script>
+            $("#table-po").bootstrapTable();
+
+
+            var dataInProgress = [
+                {
+                    No: 1,
+                    PONo: '14500124422',
+                    PODate: '31.01.2020',
+                    StatusPO: '<label class="label label-success">On Schedule</label>',
+                    DeliveryType: 'FULL DELIVERY',
+                    //ShippingBy: `<select class='form-control select2'>
+                    //                            <option value='' selected>Send by Forwarder</option>
+                    //                            <option value=''>Send to CKB</option>
+                    //                            <option value=''>Taken by PPTU</option>
+                    //                        </select>`,
+                    ShippingBy: `Send To Forwarder`,
+                    Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                    Processing: '<i class="text-primary fa fa-check-circle" />',
+                    Delivering: '<i class="text-primary fa fa-check-circle" />',
+                    Bast: '<a href="#" class="upload" title="Upload File"><i class="fa fa-paperclip" style="font-size:12px;"/></a>',
+                    Invoicing: '<a href="#" class="upload" title="Upload File"><i class="fa fa-paperclip" style="font-size:12px;"/></a>',
+                }
+
+            ];
+
+            var dataItem = [
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'Cartridge HP CE285A BLACK / HP 85A',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '5',
+                    Uom: 'EA',
+                    Price: '800.000',
+                    Total: '4.000.000',
+                    Destination: 'BATU HIJAU 1 - TU',
+                    User: 'SUMIATI',
+                    Position: 'TOL MERAK',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'Cartridge HP CF287A',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '2',
+                    Uom: 'EA',
+                    Price: '326.500',
+                    Total: '3.265.000',
+                    Destination: 'BENGKULU - TU',
+                    User: 'FAJRIANSYAH',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP F6VA26A BLACK / 680 B',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '2',
+                    Uom: 'EA',
+                    Price: '105.000',
+                    Total: '210.000',
+                    Destination: 'Tanjung Redeb - TU',
+                    User: 'Ikhwan Cipta',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP F6VA27A COLOUR / 680 C',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '2',
+                    Uom: 'SET',
+                    Price: '105.000',
+                    Total: '210.000',
+                    Destination: 'Tanjung Redeb - TU',
+                    User: 'Ikhwan Cipta',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CF287A',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '1',
+                    Uom: 'EA',
+                    Price: '2.600.000',
+                    Total: '2.600.000',
+                    Destination: 'Bengkulu - TU',
+                    User: 'Fajriansyah',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CF287A',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '2',
+                    Uom: 'EA',
+                    Price: '3.000.000',
+                    Total: '6.000.000',
+                    Destination: 'Meulaboh - TU',
+                    User: 'Hamdani',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CN055A / 933 XL MAGENTA',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '1',
+                    Uom: 'EA',
+                    Price: '188.000',
+                    Total: '188.000',
+                    Destination: 'Central Service - TU',
+                    User: 'Rani Maharan',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CN054A / 933 XL CYAN',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '2',
+                    Uom: 'EA',
+                    Price: '188.000',
+                    Total: '376.000',
+                    Destination: 'Central Service - TU',
+                    User: 'Rani Maharan',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CN056A / 933 XL YELLOW',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '6',
+                    Uom: 'EA',
+                    Price: '188.000',
+                    Total: '1.128.000',
+                    Destination: 'Central Service - TU',
+                    User: 'Rani Maharan',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+                {
+                    Action: ` <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                                                                            <a class="btn btn-info btn-xs updatestatus" href="#" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="View Notes"></i></a>`,
+                    Item: 'CARTRIDGE HP CN057S / HP 932 BLACK',
+                    Status: '<label class="label label-success">ON SCHEDULE</label>',
+                    DeliveryType: 'FULL DELIVERY',
+
+                    Forwarder: 'CKB',
+                    ETD: '30.07.2020',
+                    ATD: '30.07.2020',
+                    Qty: '8',
+                    Uom: 'EA',
+                    Price: '240.000',
+                    Total: '1.920.000',
+                    Destination: 'Central Service - TU',
+                    User: 'Rani Maharan',
+                    Position: 'BANDUNG',
+                    Notes: 'N/A'
+                },
+            ]
+            var $tableInprogress = $('#table-inprogress').bootstrapTable({
+                detailView: false,
+
+                columns: [
+                    {
+                        title: 'No',
+                        field: 'No',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '50',
+
+                    },
+
+                    {
+                        title: 'PO No',
+                        field: 'PONo',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110'
+
+                    },
+                    {
+                        title: 'PO Date',
+                        field: 'PODate',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Status PO',
+                        field: 'StatusPO',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Delivery Type',
+                        field: 'DeliveryType',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Shipping By',
+                        field: 'ShippingBy',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+
+                    },
+                    {
+                        title: 'Confirmation',
+                        field: 'Confirmation',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Processing',
+                        field: 'Processing',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Delivering',
+                        field: 'Delivering',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: ' BAST',
+                        field: 'Bast',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Invoicing',
+                        field: 'Invoicing',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                ],
+                data: dataInProgress
+
+            });
+
+
+
+            var $tableItem = $('#table-item').bootstrapTable({
+                detailView: false,
+                pagination: true,
+                serverSort: false,
+                columns: [
+                    {
+                        title: 'Action',
+                        field: 'Action',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+                        visible: false
+
+                    },
+
+                    {
+                        title: 'Item',
+                        field: 'Item',
+                        class: 'text-left',
+                        align: 'left',
+                        width: '450'
+
+                    },
+                    {
+                        title: 'Status',
+                        field: 'Status',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+                        visible: true
+
+                    },
+                    {
+                        title: 'Delivery Type',
+                        field: 'DeliveryType',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '180',
+
+                    },
+
+                    {
+                        title: 'Forwarder',
+                        field: 'Forwarder',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+                        visible: false
+
+                    },
+                    {
+                        title: 'ETD',
+                        field: 'ETD',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'ATD',
+                        field: 'ATD',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: ' QTY',
+                        field: 'Qty',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'UOM',
+                        field: 'Uom',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Price / Item',
+                        field: 'Price',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Total',
+                        field: 'Total',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Destination',
+                        field: 'Destination',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '200',
+
+                    },
+                    {
+                        title: 'User',
+                        field: 'User',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Position',
+                        field: 'Position',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+
+                    },
+                    {
+                        title: 'Notes',
+                        field: 'Notes',
+                        class: 'text-center',
+                        align: 'center',
+                        width: '110',
+                        visible: false
+
+                    },
+                ],
+                data: dataItem
+
+            });
+
+
+
+            $('.select2').select2();
+
+
+
+
+            var myDropzone = new Dropzone("#FormUploadMaterialPrice", { // Make the bodyFormUpload a dropzone
+                url: "/DetailDelivering?Id=1", // Set the url
+                thumbnailHeight: 100,
+                thumbnailWeight: 100,
+                method: 'POST',
+                acceptedFiles: '.xlsx',
+                filesizeBase: 1024,
+                autoProcessQueue: true,
+                maxFiles: 1,
+                maxFilesize: 10, // MB
+                parallelUploads: 1,
+                dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
+                previewTemplate: $("#template-dropzone").html(),
+                uploadMultiple: false
+                //previewsContainer: "#FormUploadMaterial", // Define the container to display the previews
+                //clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+            });
+
+            myDropzone.on("addedfile", function (file) {
+                // Hookup the start button
+                $("#actions .start").on("click", function () {
+                    myDropzone.enqueueFile(file);
+                });
+                $("#placeholderUpload").hide();
+            });
+
+            myDropzone.on("totaluploadprogress", function (progress) {
+                $("#total-progress .progress-bar").css("width", progress + "%");
+                $("#progressPercent").html(progress + "%");
+            });
+
+            myDropzone.on("sending", function (file, xhr, formData) {
+                // Show the total progress bar when upload starts
+                $("#total-progress").css("opacity", 1);
+                $("#actions .delete").attr("disabled", "disabled");
+                // And disable the start button
+                $(".start").attr("disabled", "disabled");
+            });
+
+            myDropzone.on("complete", function (resp) {
+                if (resp.status === "success") {
+                    var respText = resp.xhr.response;
+                    var respData = JSON.parse(respText);
+                    var failedList = respData.failedList;
+
+                    $("#actions .delete").prop("disabled", false);
+                    var type = respData.status ? "success" : "error";
+                    swal("Upload Status", respData.msg, type);
+                    $tableMaterialPrice.edatagrid("reload");
+
+                    setTimeout(function () {
+                        myDropzone.removeAllFiles(true);
+                    }, 1800);
+                }
+            });
+
+            // Hide the total progress bar when nothing's uploading anymore
+            myDropzone.on("queuecomplete", function (progress) {
+                $("#total-progress").css("opacity", "0");
+            });
+
+            $("#actions .start").on("click", function () {
+                myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.QUEUED));
+            });
+
+            $("#actions .cancel").on("click", function () {
+                myDropzone.removeAllFiles(true);
+                $("#placeholderUpload").hide();
+            });
+
+
+            $('.unconfirm').click(function () {
+                swal({
+                    title: "Are you sure?",
+                    text: "want to unconfirm?",
+                    type: "info",
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonColor: "#00c0ef",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    showCloseButton: true,
+
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        location.href = "Detail?Id=1"
+                    }
+                })
+            })
+
+            var $tableInprogress = $('#table-done').bootstrapTable({
+                detailView: true,
+                onExpandRow: function (index, row, e) {
+                    /* eslint no-use-before-define: ["error", { "functions": false }]*/
+                    var childTable = $("#child-table-done").html();
+                    e.html(childTable);
+                }
+            })
+
+            $('.deliveryDate').daterangepicker({
+                opens: 'right',
+                locale: {
+                    format: 'DD.MMM.YYYY'
+                },
+
+            }, function (start, end) {
+                console.log('start', start._d);
+                var start_date = moment(start._d).format("DD.MM.YYYY");
+                var end_date = moment(end._d).format("DD.MM.YYYY");
+
+                $('.deliveryDate').val(start_date + '-' + end_date);
+            });
+
+            $('.updatestatus').click(function () {
+                $('#modalUpdateStatusForm').modal();
+            })
+
+            $('.upload').click(function () {
+                $('#modalUpload').modal();
+            })
+
+            $('.viewNotes').click(function () {
+                $('#modalViewStatusForm').modal();
+            })
+
+        </script>
+    }

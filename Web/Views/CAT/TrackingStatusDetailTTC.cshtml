@@ -1,0 +1,155 @@
+﻿@model App.Data.Domain.SP_TrackingStatusDetailTTC
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Status Transit to CRC</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <div class="form-horizontal">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Doc Return</label>
+                        <div class="col-md-10">
+                            <input name="DocReturn" id="DocReturn" class="form-control" value="@Model.DocReturn" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">WCSL</label>
+                        <div class="col-md-10">
+                            <input name="WCSL" id="WCSL" class="form-control" value="@Model.WCSL" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="box box-warning" style="min-height: 380px;">
+                        <div class="box-header">
+                            <h5 class="box-title">Outstanding CRR</h5>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <form role="form" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">WO Number</label>
+                                        <div class="col-md-8">
+                                            <input name="WONumber" id="WONumber" class="form-control" value="@Model.WONumber" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Recondition No</label>
+                                        <div class="col-md-8">
+                                            <input name="ReconditionNo" id="ReconditionNo" class="form-control" value="@Model.ReconditionNo" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label class="control-label col-md-4">DA Number</label>
+                                            <div class="col-md-8">
+                                                <input name="DANumber" id="DANumber" class="form-control" value="@Model.DANumber" disabled="disabled" />
+                                            </div>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Component ID</label>
+                                        <div class="col-md-8">
+                                            <input name="ComponentID" id="ComponentID" class="form-control" value="@Model.ComponentID" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Stand ID</label>
+                                        <div class="col-md-8">
+                                            <input name="StandID" id="StandID" class="form-control" value="@Model.StandID" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">CRR Date Issued</label>
+                                        <div class="col-md-8">
+                                            <input name="CRCDateIssued" id="CRCDateIssued" class="form-control" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Elapsed Day</label>
+                                        <div class="col-md-8">
+                                            <input name="ElapsedDay" id="ElapsedDay" class="form-control" value="@Model.ElapsedDay" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Status</label>
+                                        <div class="col-md-8">
+                                            <input name="Status" id="Status" class="form-control" value="@Model.Status" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="box box-warning" style="min-height: 220px;">
+                        <div class="box-header">
+                            <h5 class="box-title">Outstanding Receiving</h5>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <form role="form" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">WO Number</label>
+                                        <div class="col-md-8">
+                                            <input name="WONumber" id="WONumber" class="form-control" value="@Model.WONumber" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">CRR Created</label>
+                                        <div class="col-md-8">
+                                            <input name="CRRCreated" id="CRRCreated" class="form-control" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Remark Received</label>
+                                        <div class="col-md-8">
+                                            <input name="RemarkReceived" id="RemarkReceived" class="form-control" value="@Model.RemarkReceived" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Remark Follow Up CRR</label>
+                                        <div class="col-md-8">
+                                            <input name="RemarkFollowUpCRR" id="RemarkFollowUpCRR" class="form-control" value="@Model.RemarkFollowUpCRR" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        var CRRDateIssued = dateFormatterCAT('@Model.CRRDateIssued');
+        //var CRRCreated = dateFormatterCAT('@Model.CRRCreated');
+        var CRRCreated = '@Model.CRRCreated';
+        $('#CRCDateIssued').val(CRRDateIssued);
+        $('#CRRCreated').val(CRRCreated);
+    });
+</script>

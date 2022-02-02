@@ -1,0 +1,158 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{1619F87F-E7A3-4C59-91F1-4B02C0201C95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{AA882B1F-AC41-49C2-944C-F766C110A690}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Library\App.Data\Data.csproj", "{A3909376-F931-465F-9768-99B11459B742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Library\App.Service\Service.csproj", "{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowService", "WindowService\WindowService.csproj", "{1169754E-CCFA-4B1F-9C5A-930BB705EB1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowService", "WindowService", "{B6A0421C-3EB0-44EC-BE87-8D23B532F312}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowService.Library", "WindowService.Library\WindowService.Library.csproj", "{5E169D9B-B338-4FE3-9CA4-662B0A362EE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowService.Console", "WindowService.Console\WindowService.Console.csproj", "{8E652D78-837D-4B45-8FE6-1408CB04C1F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowServiceEbupot", "WindowServiceEbupot\WindowServiceEbupot.csproj", "{22D076F2-D1BB-4400-AA50-65D7DFD14107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1619F87F-E7A3-4C59-91F1-4B02C0201C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1619F87F-E7A3-4C59-91F1-4B02C0201C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1619F87F-E7A3-4C59-91F1-4B02C0201C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1619F87F-E7A3-4C59-91F1-4B02C0201C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3909376-F931-465F-9768-99B11459B742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3909376-F931-465F-9768-99B11459B742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3909376-F931-465F-9768-99B11459B742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3909376-F931-465F-9768-99B11459B742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1169754E-CCFA-4B1F-9C5A-930BB705EB1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1169754E-CCFA-4B1F-9C5A-930BB705EB1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1169754E-CCFA-4B1F-9C5A-930BB705EB1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1169754E-CCFA-4B1F-9C5A-930BB705EB1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E169D9B-B338-4FE3-9CA4-662B0A362EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E169D9B-B338-4FE3-9CA4-662B0A362EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E169D9B-B338-4FE3-9CA4-662B0A362EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E169D9B-B338-4FE3-9CA4-662B0A362EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E652D78-837D-4B45-8FE6-1408CB04C1F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E652D78-837D-4B45-8FE6-1408CB04C1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E652D78-837D-4B45-8FE6-1408CB04C1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E652D78-837D-4B45-8FE6-1408CB04C1F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D076F2-D1BB-4400-AA50-65D7DFD14107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D076F2-D1BB-4400-AA50-65D7DFD14107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D076F2-D1BB-4400-AA50-65D7DFD14107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D076F2-D1BB-4400-AA50-65D7DFD14107}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3909376-F931-465F-9768-99B11459B742} = {AA882B1F-AC41-49C2-944C-F766C110A690}
+		{C364B90C-81D2-4B0F-AA3C-90E2D0F8AECF} = {AA882B1F-AC41-49C2-944C-F766C110A690}
+		{1169754E-CCFA-4B1F-9C5A-930BB705EB1B} = {B6A0421C-3EB0-44EC-BE87-8D23B532F312}
+		{9ACECC9A-859D-4B88-8CD9-AE4220AF7DC3} = {B6A0421C-3EB0-44EC-BE87-8D23B532F312}
+		{5E169D9B-B338-4FE3-9CA4-662B0A362EE7} = {B6A0421C-3EB0-44EC-BE87-8D23B532F312}
+		{8E652D78-837D-4B45-8FE6-1408CB04C1F7} = {B6A0421C-3EB0-44EC-BE87-8D23B532F312}
+		{22D076F2-D1BB-4400-AA50-65D7DFD14107} = {B6A0421C-3EB0-44EC-BE87-8D23B532F312}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0111E067-1142-4DE8-9BE8-31D9CDA9004C}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.trakindo.co.id:8080/tfs/portal
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Library\\App.Data\\Data.csproj
+		SccProjectTopLevelParentUniqueName1 = Pis.sln
+		SccProjectName1 = Library/App.Data
+		SccLocalPath1 = Library\\App.Data
+		SccProjectUniqueName2 = Library\\App.Service\\Service.csproj
+		SccProjectTopLevelParentUniqueName2 = Pis.sln
+		SccProjectName2 = Library/App.Service
+		SccLocalPath2 = Library\\App.Service
+		SccProjectUniqueName3 = Test\\Test.csproj
+		SccProjectTopLevelParentUniqueName3 = Pis.sln
+		SccProjectName3 = Test
+		SccLocalPath3 = Test
+		SccProjectUniqueName4 = Web\\Web.csproj
+		SccProjectName4 = Web
+		SccLocalPath4 = Web
+		SccProjectUniqueName5 = WindowService.Console\\WindowService.Console.csproj
+		SccProjectTopLevelParentUniqueName5 = Pis.sln
+		SccProjectName5 = WindowService.Console
+		SccLocalPath5 = WindowService.Console
+		SccProjectUniqueName6 = WindowService.Library\\WindowService.Library.csproj
+		SccProjectTopLevelParentUniqueName6 = Pis.sln
+		SccProjectName6 = WindowService.Library
+		SccLocalPath6 = WindowService.Library
+		SccProjectUniqueName7 = WindowService\\WindowService.csproj
+		SccProjectTopLevelParentUniqueName7 = Pis.sln
+		SccProjectName7 = WindowService
+		SccLocalPath7 = WindowService
+		SccProjectUniqueName8 = WindowServiceEbupot\\WindowServiceEbupot.csproj
+		SccProjectTopLevelParentUniqueName8 = Pis.sln
+		SccProjectName8 = WindowServiceEbupot
+		SccLocalPath8 = WindowServiceEbupot
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.trakindo.co.id:8080/tfs/portal
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Library\\App.Data\\Data.csproj
+		SccProjectTopLevelParentUniqueName1 = Pis.sln
+		SccProjectName1 = Library/App.Data
+		SccLocalPath1 = Library\\App.Data
+		SccProjectUniqueName2 = Library\\App.Service\\Service.csproj
+		SccProjectTopLevelParentUniqueName2 = Pis.sln
+		SccProjectName2 = Library/App.Service
+		SccLocalPath2 = Library\\App.Service
+		SccProjectUniqueName3 = Test\\Test.csproj
+		SccProjectTopLevelParentUniqueName3 = Pis.sln
+		SccProjectName3 = Test
+		SccLocalPath3 = Test
+		SccProjectUniqueName4 = Web\\Web.csproj
+		SccProjectName4 = Web
+		SccLocalPath4 = Web
+		SccProjectUniqueName5 = WindowService.Console\\WindowService.Console.csproj
+		SccProjectTopLevelParentUniqueName5 = Pis.sln
+		SccProjectName5 = WindowService.Console
+		SccLocalPath5 = WindowService.Console
+		SccProjectUniqueName6 = WindowService.Library\\WindowService.Library.csproj
+		SccProjectTopLevelParentUniqueName6 = Pis.sln
+		SccProjectName6 = WindowService.Library
+		SccLocalPath6 = WindowService.Library
+		SccProjectUniqueName7 = WindowService\\WindowService.csproj
+		SccProjectTopLevelParentUniqueName7 = Pis.sln
+		SccProjectName7 = WindowService
+		SccLocalPath7 = WindowService
+		
+		SccProjectUniqueName9 = WindowsServicePOST\\WindowsServicePOST.csproj
+		SccProjectTopLevelParentUniqueName9 = Pis.sln
+		SccProjectName9 = WindowsServicePOST
+		SccLocalPath9 = WindowsServicePOST
+		SccProjectUniqueName10 = WindowServiceEbupot\\WindowServiceEbupot.csproj
+		SccProjectTopLevelParentUniqueName10 = Pis.sln
+		SccProjectName10 = WindowServiceEbupot
+		SccLocalPath10 = WindowServiceEbupot
+	EndGlobalSection
+EndGlobal

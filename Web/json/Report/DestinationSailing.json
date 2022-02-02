@@ -1,0 +1,42 @@
+﻿{
+    "total": 100,
+    "rows": [
+      {
+            "pic_name": "Mohammad Ansori",
+            "department": "Parts Departement",
+            "branch": "Samarinda",
+            "request_date": "04/01/2018",
+            "pete": "Permanent",
+            "sanon": "Non Sales",
+            "consignee": "CATERPILLAR S.A.R.L. Singapore Branch",
+            "destination_country": "Singapore",
+            "customer": "CATERPILLAR S.A.R.L. Singapore Branch",
+            "load_port": "SURABAYA PORT",
+            "destination_port": "Singapore",
+            "edt": "30/01/2018",
+            "eta": "20/02/2018",
+            "sourceCountry": "Jakarta",
+            "shippingMethod": "Sea",
+            "estimationDay":  "7 hari"
+      },
+      {
+            "pic_name": "Mahfuddinur",
+            "department": "Parts Operation Departement",
+            "branch": "Batu Licin",
+            "request_date": "11/01/2018",
+            "pete": "Permanent",
+            "sanon": "Non Sales",
+            "consignee": "CATERPILLAR S.A.R.L. Singapore Branch",
+            "destination_country": "Singapore",
+            "customer": "CATERPILLAR S.A.R.L. Singapore Branch",
+            "load_port": "SURABAYA PORT",
+            "destination_port": "Singapore",
+            "edt": "19/04/2018",
+            "eta": null,
+            "sourceCountry": "Surabaya",
+            "shippingMethod": "Air",
+            "estimationDay": "5 hari"
+      }
+
+    ]
+}

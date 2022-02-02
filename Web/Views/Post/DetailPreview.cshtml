@@ -1,0 +1,83 @@
+﻿@{
+    string StepName = ViewBag.StepName ?? "confirm";
+    ViewBag.Title = "Detail Po No : 14500124422";
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+
+<input id="requestId" value="@ViewBag.Id" style="display:none;">
+<div class="row" style="margin-top:75px;">
+    <div class="custom-grid-style">
+        <button class="btn btn-default" data-last="~/HomeVendor" onclick="goToLastPage()" type="button"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</button>&nbsp;
+        @{
+            switch (StepName)
+            {
+                case "confirm":
+                    <a onclick="ClickSubmit(2489)" class="btn btn-success confirm float-right" style="margin-left:10px;">Confirm  <span class="fa fa-chevron-circle-right"></span></a>
+                    <a onclick="ClickSubmit(4219)" class="btn btn-warning confirm float-right">unconfirmed  <span class="fa fa-times-circle"></span></a>
+                    <script src="~/Scripts.app/POST/DataConfirm.js"></script>
+                    break;
+                case "process":
+                    <a href="~/Post/DetailDelivering?id=@Html.Raw(ViewBag.Id)" class="btn btn-success delivery float-right" style="color:white;">PO Delivery  <span class="fa fa-chevron-circle-right"></span></a>
+                    <script src="~/Scripts.app/POST/DataProcess.js"></script>
+                    break;
+                case "delivery":
+                    <a href="#" class="btn btn-success delivery float-right" onclick="confirmPOD()" style="color:white;">PO BAST  <span class="fa fa-chevron-circle-right"></span></a>
+                    <script src="~/Scripts.app/POST/DataDelivery.js"></script>
+                    break;
+                case "bast":
+                    <a href="#" class="btn btn-success delivery float-right" onclick="InitModalUploadBast()" style="color:white;">PO Invoice  <span class="fa fa-chevron-circle-right"></span></a>
+                    <script src="~/Scripts.app/POST/DataBast.js"></script>
+                    <script src="~/Scripts.app/POST/DataUpload.js"></script>
+                    break;
+                case "invoice":
+                    <a href="#" class="btn btn-success delivery float-right" onclick="InitModalUploadInvoice()" style="color:white;">Submit  <span class="fa fa-chevron-circle-right"></span></a>
+                    <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    <script src="~/Scripts.app/POST/DataUpload.js"></script>
+                    break;
+                case "submit":
+                    <a href="~/Post/HomeVendor/?tab=2" class="btn btn-success delivery float-right" style="color:white;margin-left:10px;">PO Close  <span class="fa fa-chevron-circle-right"></span></a>
+                    <a href="~/Post/DetailBast?id=@Html.Raw(ViewBag.Id)" class="btn btn-warning delivery float-right" style="color:white;margin-left:10px;">Revise Bast <span class="fa fa-chevron-circle-left"></span></a>
+                    <a href="~/Post/DetailInvoicing?id=@Html.Raw(ViewBag.Id)" class="btn btn-warning delivery float-right" style="color:white;margin-left:10px;">Revise Invoice <span class="fa fa-chevron-circle-left"></span></a>
+                    <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    break;
+                default:
+                    <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    break;
+            }
+        }
+    </div>
+</div>
+<div class="row">
+    <div style="margin-top:10px;">
+        <table id="table-inprogress" data-classes="table-borderless" class="table"></table>
+        <hr />
+        @Html.Partial("~/Views/Post/NavSearchDetail.cshtml")
+        <div style="margin-top:20px">
+            <div id="table-inprogress" class="table-responsive">
+                <table id="table-item" data-classes="table-borderless" class="table table-hover table-striped" style="width:100%;"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Post/ModalConfirm.cshtml")
+@Html.Partial("~/Views/Post/ModalStatusUpdate.cshtml")
+@Html.Partial("~/Views/Post/ModalStatusList.cshtml")
+@Html.Partial("~/Views/Post/ModalDocBast.cshtml")
+@Html.Partial("~/Views/Post/ModalDocInv.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadBast.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadInvoice.cshtml")
+
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />*@
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">*@
+@*<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/POST/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+<script src="~/Scripts/sweetalert.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>*@
+@section scripts{
+    <script src="~/Scripts.app/POST/VendorDetail.js" type="text/javascript"></script>
+}

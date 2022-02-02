@@ -1,0 +1,42 @@
+﻿{
+    "total": 100,
+    "rows": [
+        {
+            "no": "1",
+            "nama": "trakindo_utama_tangerang.png",
+            "judul": "Laga Pramusim",
+            "deskripsi": "Trakindo Utama Tangerang",
+            "deskripsi2": "Laga Pramusim: Dua Gol Penalti Selamatkan Chelsea dari Kekalahan",
+            "started_date": "16 Aug 2019",
+            "expired_date": "17 Aug 2019"
+        },
+        {
+            "no": "2",
+            "nama": "trakindo_utama_cilandak.png",
+            "judul": "BMKG",
+            "deskripsi": "Trakindo Utama Cilandak",
+            "deskripsi2": "BMKG Sedang Kembangkan Sistem Prakiraan Gempa dengan Magnet Bumi",
+            "started_date": "17 Aug 2019",
+            "expired_date": "18 Aug 2019"
+        },
+        {
+            "no": "3",
+            "nama": "trakindo_utama_jakarta.png",
+            "judul": "Korsel",
+            "deskripsi": "Trakindo Utama Jakarta",
+            "deskripsi2": "Korsel Cabut Jepang dari Daftar Negara yang Disukai dalam Perdagangan",
+            "started_date": "18 Aug 2019",
+            "expired_date": "19 Aug 2019"
+        },
+        {
+            "no": "4",
+            "nama": "trakindo_utama_sumatera.png",
+            "judul": "Running Text",
+            "deskripsi": "Trakindo Utama Sumatera",
+            "deskripsi2": "Diduga Ini Sebab Munculnya 'Prabowo' di Running Text Puskesmas Semarang",
+            "started_date": "19 Aug 2019",
+            "expired_date": "20 Aug 2019"
+        }
+
+    ]
+}

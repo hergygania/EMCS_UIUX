@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "KPI Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = ViewBag.Message + "";
+
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+        var request = HttpContext.Current.Request;
+        var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+
+        if (appUrl == "/")
+        {
+            appUrl = "";
+        }
+
+        var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+        ViewBag.baseUrl = baseUrl + "/";
+    }
+    catch { }
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-warning" style="min-height:555px">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div id="changeLogChart"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-warning" style="min-height:555px">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div id="changeLogChartNewMapping"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-warning" style="min-height:555px">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div id="container"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var msg = '@message';
+        if (msg != '') {
+            sAlert('', msg, '');
+        }
+
+    </script>
+    <script type="text/javascript">
+        var baseUrl = '@ViewBag.baseUrl';
+    </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    @*<script src="https://code.highcharts.com/modules/exporting.js"></script>*@
+    @*<script src="https://code.highcharts.com/modules/export-data.js"></script>*@
+    @*<script src="https://code.highcharts.com/modules/accessibility.js"></script>*@
+    <script src="@Url.Content("~/Scripts.app/imex/KPIDashboard.js")"></script>
+}
+

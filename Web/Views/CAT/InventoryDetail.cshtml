@@ -1,0 +1,255 @@
+﻿@model App.Data.Domain.SP_DataInventory
+
+@{
+    ViewBag.Title = "Inventory Detail";
+}
+
+<script src="~/Scripts.app/cat/InventoryDetail.cshtml.js"></script>
+@{
+    if ((bool)(ViewBag.AllowDelete ?? false))
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if ((bool)(ViewBag.AllowUpdate ?? false))
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="box-header" style="margin-top:-9px; margin-bottom:-8px">
+    <h3 class="box-title">@ViewBag.Title</h3>
+    <button type="button" class="btn btn-danger" onclick="goToParent()" style="float:right; margin-right:2%"><i class="fa fa-mail-reply"></i> Back</button>
+</div>
+<form role="form">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset id="filter">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Alternative Part Number</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.AlternetPartNumber, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Component Inventory Number</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.ComponentInventoryNumber, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Detail Supply Component Used SN</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.UnitNumber, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Detail Supply Component Equip No.</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.EquipmentNumber, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Customer</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.Customer, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Doc Sales</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.DocSales, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Doc Return</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.DocReturn, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Doc Transfer</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.DocTransfer, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">MO</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.MO, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Store</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.StoreNumber, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">SOS</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.SOS, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">WCSL</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.DocWCSL, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">WO</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.NewWO6F, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Rebuild Status CMS</label>
+                            <div class="input-group col-lg-8 col-xs-8 model-parent">
+                                @Html.TextBoxFor(m => m.RebuildStatus, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">CRC Promised Completion Date</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.CRC_PCD, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Last Status</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.LastStatus, new { @class = "form-control", @disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Surplus</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                <select class="js-states form-control" id="Surplus">
+                                    @*<option value="BLANK">Blank</option>*@
+                                    <option value="YES">Yes</option>
+                                    <option value="NO">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Remarks</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @if ((bool)(ViewBag.AllowUpdate ?? false))
+                        {
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <a href="javascript:void(0)" onclick="SaveSurplus()" id="btn-save-surplus" class="btn btn-success"><i class="fa fa-save"></i> Save Surplus & Remarks</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-lg-12" style="text-align:right;padding-right:30px;">
+
+            </div>
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#trackstatus" data-toggle="tab">Tracking Status</a></li>
+                    <li><a href="#allocation" data-toggle="tab">Allocation</a></li>
+                    <li><a href="#trackdeliver" data-toggle="tab">Tracking Delivery</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="trackstatus" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar" id="toolbar-trackstatus">
+                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                        <input name="searchText" id="status" class="form-control" type="text" placeholder="Search Status" style="height: 32px;">
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="tblTrackingStatus" data-show-export="true" style="table-layout:fixed;"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="allocation" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-body">
+                                    <div class="col-lg-12">
+                                        <div class="toolbar" id="toolbar-allocation">
+                                            @{
+                                                if ((bool)(ViewBag.AllowCreate ?? false))
+                                                {
+                                                    <button type="button" class="btn btn-warning" onclick="loadDialog('/cat/AddAllocation/?KAL=@ViewBag.KAL')" id="btnCreate" style="width:150px;">
+                                                        <i class="fa fa-plus"></i> Add Allocation
+                                                    </button>
+                                                }
+                                            }
+                                            <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                                <input name="searchText" id="invallocation" class="form-control" type="text" placeholder="Search Unit No. Or Serial No Or PO No Or Customer" style="height: 32px;">
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered" id="tblAllocation"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="trackdeliver" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar" id="toolbar-trackdelivery">
+                                    @*<div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                            <input name="searchText" id="delivery" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                                        </div>*@
+                                </div>
+                                <table class="table table-bordered" id="tblTrackingDelivery" data-show-export="true" style="table-layout:fixed;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="modal-footer">
+                    <button id="btn-back" type="button" class="btn btn-danger" onclick="goToParent()"><i class="fa fa-mail-reply"></i> Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="InventoryID" value="@(ViewBag.InventoryID)" />
+    <input type="hidden" id="KAL" name="KAL" value="@(ViewBag.KAL)" />
+    <input type="hidden" id="SurplusValue" value="@Model.Surplus" />
+</form>
+<a data-modal="" href="/cat/EditAllocation/1" class="editRecord" style="display:none"></a>
+<!-- modal placeholder-->
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+    </script>
+    @*<script src="~/Scripts.app/cat/InventoryDetail.cshtml.js"></script>*@
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+}

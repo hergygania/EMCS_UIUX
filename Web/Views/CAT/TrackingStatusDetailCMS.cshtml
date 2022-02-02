@@ -1,0 +1,284 @@
+﻿@model App.Data.Domain.TrackingStatusDetailCMS
+@{
+    if (ViewBag.Status == "SQ")
+    {
+        ViewBag.TitleModal = "Status Staging";
+    }
+    else if (ViewBag.Status == "BER")
+    {
+        ViewBag.TitleModal = "Status Beyond Eceonomic Repair";
+    }
+    else
+    {
+        ViewBag.TitleModal = "Status Work In Progress";
+    }
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@ViewBag.TitleModal</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <div class="form-horizontal">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">WO Number</label>
+                        <div class="col-md-8">
+                            <input name="WONumber" id="WONumber" class="form-control" value="@Model.WONumber" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">CRC Promised Completion Date</label>
+                        <div class="col-md-8">
+                            <input name="CRCPromisedCompletionDate" id="CRCPromisedCompletionDate" class="form-control" value="@Model.CRCPromisedCompletionDate" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Job Loc</label>
+                        <div class="col-md-8">
+                            <input name="JobLoc" id="JobLoc" class="form-control" value="@Model.JobLoc" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Job Code</label>
+                        <div class="col-md-8">
+                            <input name="JobCode" id="JobCode" class="form-control" value="@Model.JobCode" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Return as zero hour</label>
+                        <div class="col-md-8">
+                            <input name="ReturnAsZeroHour" id="ReturnAsZeroHour" class="form-control" value="@Model.ReturnAsZeroHour" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">TUID</label>
+                        <div class="col-md-8">
+                            <input name="TUID" id="TUID" class="form-control" value="@Model.TUID" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Date Received</label>
+                        <div class="col-md-8">
+                            <input name="DateReceived" id="DateReceived" class="form-control" value="@Model.DateReceived" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Job Instruction</label>
+                        <div class="col-md-8">
+                            <input name="JobInstruction" id="JobInstruction" class="form-control" value="@Model.JobInstruction" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Component Condition</label>
+                        <div class="col-md-8">
+                            <input name="ComponentCondition" id="ComponentCondition" class="form-control" value="@Model.ComponentCondition" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Stand ID</label>
+                        <div class="col-md-8">
+                            <input name="StandID" id="StandID" class="form-control" value="@Model.StandID" disabled="disabled" />
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-md-4">Note</label>
+                            <div class="col-md-8">
+                                <input name="Note" id="Note" class="form-control" value="@Model.Noted" disabled="disabled" />
+                            </div>
+                        </div>*@
+
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.Status == "WIP")
+        {
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#OWSS" data-toggle="tab">OWSS Data</a></li>
+                    <li><a href="#BO" data-toggle="tab">BO Data</a></li>
+                    <li><a href="#trackingStatusCMS" data-toggle="tab">Tracking Status CMS</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="OWSS" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar" id="toolbar-tblOWSS">
+                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                        <input name="searchText" id="searchTextOWSS" class="form-control" type="text" placeholder="Search Part Number" style="height: 32px;">
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="tblOWSS" style="table-layout:fixed;"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="BO" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar" id="toolbar-tblBO">
+                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                        <input name="searchText" id="searchTextBO" class="form-control" type="text" placeholder="Search Part Number" style="height: 32px;">
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="tblBO" style="table-layout:fixed;"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="trackingStatusCMS" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar" id="toolbar-tblStatusCMS">
+                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                        <input name="searchText" id="searchTextStatusCMS" class="form-control" type="text" placeholder="Search WO Number" style="height: 32px;">
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="tblStatusCMS" style="table-layout:fixed;"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        initTblOWSS('@Model.WIP_ID');
+        initTblBO('@Model.WIP_ID');
+        initTblStatusCMS('@Model.WIP_ID');
+        if ('@ViewBag.Status' == 'WIP') {
+            $(".modal-dialog").css("width", "95%");
+        }
+    });
+
+    function initTblOWSS(WIP_ID) {
+        $("#tblOWSS").bootstrapTable({
+            url: '/cat/getOWSSData/',
+            toolbar: '#toolbar-tblOWSS',
+            toolbarAlign: 'left',
+            striped: true,
+            cache: false,
+            queryParams: function (p) {
+                return {
+                    WIP_ID: WIP_ID,
+                    searchkey: $('#searchTextOWSS').val()
+                }
+            },
+            pagination: true,
+            pageSize: '5',
+            search: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            onClickRow: selectRow,
+            showColumns: false,
+            showRefresh: true,
+            smartDisplay: false,
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [
+                //{ field: 'NO', title: 'No', halign: 'center', align: 'ceneter', sortable: false, switchable: false, visible: true },
+                { field: 'DateComplete', title: 'Date Complete', halign: 'center', align: 'left', formatter: dateFormatterCAT, sortable: true, switchable: false },
+                { field: 'WO', title: 'WO', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'Component', title: 'Component /<br>Part to be  Salvage', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'PartNumber', title: 'Part Number', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'DateSendOWSS', title: 'Date Send OWSS<br>from to MSD', halign: 'center', align: 'left', formatter: dateFormatterCAT, sortable: true, switchable: false },
+                { field: 'DateSendToVendor', title: 'Date Send to Vendor', halign: 'center', align: 'left', formatter: dateFormatterCAT, sortable: true, switchable: false },
+                { field: 'DateReceived', title: 'Date Received', halign: 'center', align: 'left', formatter: dateFormatterCAT, sortable: true, switchable: false },
+                { field: 'DateEstimatedToCompleted', title: 'Date Estimated<br>to Completed', halign: 'center', align: 'left', formatter: dateFormatterCAT, sortable: true, switchable: false }
+            ]
+        });
+    }
+
+    function initTblBO(WIP_ID) {
+        $("#tblBO").bootstrapTable({
+            url: '/cat/getBO/',
+            toolbar: '#toolbar-tblBO',
+            toolbarAlign: 'left',
+            striped: true,
+            cache: false,
+            queryParams: function (p) {
+                return {
+                    WIP_ID: WIP_ID,
+                    searchkey: $('#searchTextBO').val()
+                }
+            },
+            pagination: true,
+            pageSize: '5',
+            search: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            onClickRow: selectRow,
+            showColumns: false,
+            showRefresh: true,
+            smartDisplay: false,
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [
+                //{ field: 'NO', title: 'No', halign: 'center', align: 'ceneter', sortable: false, switchable: false, visible: true },
+                { field: 'WO', title: 'WO No.', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'PartNumber', title: 'Part Number', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'Description', title: 'Description', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'DateETA', title: 'ETA', halign: 'center', align: 'left', sortable: true, switchable: false }
+            ]
+        });
+    }
+
+    function initTblStatusCMS(WIP_ID) {
+        $("#tblStatusCMS").bootstrapTable({
+            url: '/cat/getTrackingStausCMS/',
+            toolbar: '#toolbar-tblStatusCMS',
+            toolbarAlign: 'left',
+            striped: true,
+            cache: false,
+            queryParams: function (p) {
+                return {
+                    WIP_ID: WIP_ID,
+                    searchkey: $('#searchTextStatusCMS').val()
+                }
+            },
+            pagination: true,
+            pageSize: '5',
+            search: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            onClickRow: selectRow,
+            showColumns: false,
+            showRefresh: true,
+            smartDisplay: false,
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [
+                { field: 'WO', title: 'WO No.', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'WCSL', title: 'WCSL', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'STATUS', title: 'Status', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'CreatedDate', title: 'Created Date', halign: 'center', align: 'center', formatter: dateFormatterCAT, sortable: true },
+                { field: 'UpdatedDate', title: 'Updated Date', halign: 'center', align: 'center', formatter: dateFormatterCAT, sortable: true }
+            ]
+        });
+    }
+</script>

@@ -1,0 +1,48 @@
+﻿<table class="table-data">
+    <tr>
+        <th class="text_center text_bold border_bottom border_top border_left" style="width:15%">Name</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:7%">Item No.</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:5%">Qty</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:10%">Part Number</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:10%">SN</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:10%">SIB</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:10%">WO</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:5%">J-Code</th>
+        <th class="text_center text_bold border_bottom border_top" style="width:15%">Unit Price</th>
+        <th class="text_center text_bold border_bottom border_top border_right" style="width:15%">Extended Value</th>
+    </tr>
+
+    @{
+        int No = 1;
+    }
+    @foreach (var item in Model.TemplateDetail)
+    {
+        <tr>
+            <td class="tabledata_spacing text_left border_left">@item.Name</td>
+            <td class="tabledata_spacing text_center">@No</td>
+            <td class="tabledata_spacing text_center">@item.Quantity</td>
+            <td class="tabledata_spacing text_left">@item.PartNumber</td>
+            <td class="tabledata_spacing text_left">@item.Sn</td>
+            <td class="tabledata_spacing text_left">@item.SibNumber</td>
+            <td class="tabledata_spacing text_left">@item.WoNumber</td>
+            <td class="tabledata_spacing text_center">@item.JCode</td>
+            <td class="tabledata_spacing text_right">@item.UnitPrice</td>
+            <td class="tabledata_spacing border_right text_right">@item.ExtendedValue</td>
+        </tr>
+        No++;
+    }
+    @{
+        if (Model.TemplateDetail.Count <= 2)
+        {
+            int dummy = 5;
+            for (int no = 1; no <= dummy; no++)
+            {
+                <tr><td colspan="10" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                if (no == 5)
+                {
+                    <tr><td colspan="10" class="border_top">&nbsp;</td></tr>
+                }
+            }
+        }
+    }
+</table>

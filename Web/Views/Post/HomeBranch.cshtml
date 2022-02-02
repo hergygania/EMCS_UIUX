@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "_Layout";
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+
+<div class="navbar tab fixed-top flex-column navbar-expand container-fluid flex-lg-row bd-navbar" style="margin-top: 57px;">
+    <div class="navbar-nav-scroll">
+        <ul class="navbar-nav bd-navbar-nav flex-row">
+            <li class="nav-item" hidden>
+                <a class="nav-link fade showTab @((ViewBag.TabDefault == 0) ? "active" : "")" data-content="tabIncoming" href="javascript:void(0);" data-toggle="tab">PO Incoming<span class="badge badge-warning">10</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link showTab @((ViewBag.TabDefault == 1) ? "active" : "")" " data-content="tabInprocess" href="javascript:void(0);" data-toggle="tab">PO In-Progress <span class="badge badge-primary">6</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link showTab @((ViewBag.TabDefault == 2) ? "active" : "")" " data-content="tabDone" href="javascript:void(0);" data-toggle="tab">PO Done <span class="badge badge-success">6</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row" style="margin-top:110px;">
+    <div class="tab-content" style="width:100%;">
+        <!-- Section Tab First -->
+        @Html.Partial("~/Views/Post/NavSearch.cshtml")
+        <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 0) ? "show active" : "")" id="tabIncoming" hidden>
+            <div style="margin-top:10px;">
+                <table id="table-po" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                <hr />
+            </div>
+        </div>
+        <!-- Section Tab Second -->
+        <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 1) ? "show active" : "")" " id="tabInprocess">
+            <div style="margin-top:10px;">
+                <table id="table-inprogress" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                <hr />
+            </div>
+        </div>
+        <!-- Section Tab Third -->
+        <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 2) ? "show active" : "")" " id="tabDone">
+            <div style="margin-top:10px;">
+                <table id="table-done" data-classes="table-borderless" data-detail-view="true" class="table table-striped" style="background:white;"></table>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Post/ModalViewInv.cshtml")
+@Html.Partial("~/Views/Post/ModalViewBast.cshtml")
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/Custom.js"></script>
+    <script src="~/Scripts.app/POST/BranchHome.js"></script>
+}

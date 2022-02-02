@@ -1,0 +1,121 @@
+﻿<div class="row">
+    <div class="col-md-6 box-custom">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Freight Calculator</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group no-border">
+                                <label class="col-md-4 col-xs-12 control-label">Origin <span class="pull-right">:</span> </label>
+                                <div class="col-md-8 col-xs-12">
+                                    <select class="select2 form-control" id="searchOrigin" name="Origin"></select>
+                                </div>
+                            </div>
+                            <div class="form-group no-border">
+                                <label class="col-md-4 col-xs-12 control-label">Destination <span class="pull-right">:</span> </label>
+                                <div class="col-md-8">
+                                    <select class="select2 form-control" id="searchDestination" name="Destination"></select>
+                                </div>
+                            </div>
+                            <div class="form-group no-border">
+                                <label class="col-md-4 col-xs-12 control-label">Product Hierarchy <span class="pull-right">:</span> </label>
+                                <div class="col-md-8">
+                                    <select class="select2 form-control" id="searchModel" name="Model"></select>
+                                </div>
+                            </div>
+                            @*<div class="form-group no-border">
+                                <label class="col-md-4 col-xs-12 control-label">ETD <span class="pull-right">:</span> </label>
+                                <div class="col-md-8">
+                                    <input type="text" id="searchETD" name="ETD" placeholder="ETD" class="form-control datepicker" />
+                                </div>
+                            </div>*@
+                            <div class="form-group no-border">
+                                <div class="col-md-12 text-right">
+                                    <button id="searchFreight" class="btn btn-warning" style="color:black;"><i class="fa fa-search"></i> Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 box-custom">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Result</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            @*<div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Moda Transport <span class="pull-right">:</span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label" id="ResultModaTransport">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Shipment Moda <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultShipmentModa">-</label>
+                                </div>
+                            </div>*@
+                           <div class="form-group no-border">
+                                <label class="col-md-4 col-xs-12 control-label">Product Hierarchy <span class="pull-right">:</span> </label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultModel">-</label>
+                                </div>
+                            </div>                         
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">From <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultOrigin">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">To <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultDestination">-</label>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ETD <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultETD">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ETA <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultETA">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Model <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultModel">-</label>
+                                </div>
+                            </div>*@
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Estimation Cost <span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultCost">-</label>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label"><i>Notes *</i><span class="pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label" id="ResultCost">-</label>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "Export Transactions";
+}
+
+<div class="row">
+    <div class="col-md-6 pull-left">
+        <div class="box box-primary box-shadow">
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-sm" onclick="TrendExportDownload()"><i class="fa fa-file-excel-o"></i></button>
+                    </div>
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="TrendExportButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                            <i class="fa fa-th"></i>
+                        </button>
+                        <ul id="TrendExportFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Interval</label>
+                                        <select class="pull-right select2 form-control" id="TrendExportYearInterval"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Start Year</label>
+                                        <input class="form-control" id="TrendExportStartYear" placeholder="Please Choose Start Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">End Year</label>
+                                        <input class="form-control" id="TrendExportEndYear" placeholder="End Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-default btn-sm" onclick="TrendExportSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                    </div>                                    
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="container_trend"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 pull-left">
+        <div class="box box-primary box-shadow">
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-sm"  onclick="ExportByCategoryDownload()"><i class="fa fa-file-excel-o"></i></button>
+                    </div>
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="ExportByCategoryButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                            <i class="fa fa-th"></i>
+                        </button>
+                        <ul id="ExportByCategoryFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Interval</label>
+                                        <select class="pull-right select2 form-control" id="ExportByCategoryYearInterval"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Start Year</label>
+                                        <input class="form-control" id="ExportByCategoryStartYear" placeholder="Please Choose Start Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">End Year</label>
+                                        <input class="form-control" id="ExportByCategoryEndYear" placeholder="End Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-default btn-sm" onclick="ExportByCategorySearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="container_trend_pie"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 pull-left">
+        <div class="box box-primary box-shadow">
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-sm" id="btn-big-5-commodities-download"><i class="fa fa-file-excel-o"></i></button>
+                    </div>
+                    <div class="dropdown pull-right">
+
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="btn-big-5-commodities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <ul class="dropdown-menu" id="ul-big-5-commodities">
+                            <form class="form-horizontal" id="form-export-today">
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                    <div class="input-group col-lg-12 col-xs-12">
+                                        <input type="text" class="form-control year required" id="date1-export-type" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                        <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                            <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                    <div class="input-group col-lg-12 col-xs-12">
+                                        <select class="pull-right select2 form-control required" id="slc-export-type">
+                                            <option value=>Sales & Non Sales</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Non Sales">Non Sales</option>
+
+                                        </select>
+                                    </div>
+                                </li>
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                    <button class="btn btn-success btn-sm" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                </li>
+                            </form>
+                        </ul>
+
+                    </div>
+                </div>
+                <div id="container_bigest"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 pull-left">
+        <div class="box box-primary box-shadow">
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-sm"  onclick="SalesVSNonSalesDownload()"><i class="fa fa-file-excel-o"></i></button>
+                    </div>
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="SalesVSNonSalesButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                            <i class="fa fa-th"></i>
+                        </button>
+                        <ul id="SalesVSNonSalesFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Start Year</label>
+                                        <input class="form-control" id="SalesVSNonSalesStartYear" placeholder="Please Choose Start Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">End Year</label>
+                                        <input class="form-control" id="SalesVSNonSalesEndYear" placeholder="End Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-default btn-sm" onclick="SalesVSNonSalesSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="container_compare_sales"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 pull-left">
+        <div class="box box-primary box-shadow">
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-sm" onclick="TotalExportDownload()"><i class="fa fa-file-excel-o"></i></button>
+                    </div>
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="TotalExportButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                            <i class="fa fa-th"></i>
+                        </button>
+                        <ul id="TotalExportFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label">Year</label>
+                                        <input class="form-control" id="TotalExportYear" placeholder="Please Choose Year" readonly="readonly" style="background:white;">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-default btn-sm" onclick="TotalExportSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                    </div>
+                                </div>                              
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/ExportActivity.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

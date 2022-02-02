@@ -1,0 +1,270 @@
+﻿@using System.Web.Mvc
+@model App.Web.Models.RoleAccessMenuModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    ViewBag.Title = "Role Access Menu Management";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="toolbar">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-xs-12">Role</label>
+                                    <div class="col-lg-6 col-xs-5">
+                                        <select id="RoleID" name="RoleID" style="height:35px;" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            @{
+                                if (ViewBag.AllowCreate || ViewBag.AllowUpdate || ViewBag.AllowDelete)
+                                {
+                                    <div style="margin: 5px 25px; text-align: right; ">
+                                        <a id="btnSave" href="javascript:void(0)" style="width:80px; text-align:center;" onclick="save(this)" class="btn btn-dropbox disabled" role="button">
+                                            <i class="fa fa-send-o"></i> Save
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            <br />
+                            <table id="tg" class="easyui-treegrid" title="Editable TreeGrid" style="width: 98%;"
+                                   data-options="
+                                        iconCls: 'icon-ok',
+                                        animate: true,
+                                        collapsible: false,
+                                        noheader: true,
+                                        fitColumns: true,
+                                        method: 'get',
+                                        idField: 'ID',
+                                        treeField: 'Name',
+                                        showFooter: false"></table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.easyui.min.js"></script>
+<script src="~/Scripts/easyloader.js"></script>
+<link href="~/Content/easyui.css" rel="stylesheet" />
+<script type="text/javascript">
+    var json;
+
+    $(document).ready(function () {
+        $.getJSON("/master/getMasterRole", function (json) {
+            $("#RoleID").select2({
+                placeholder: 'Master Role',
+                data: json,
+                width: "245px"
+            }).on("change", function (e) {
+                $('#tg').treegrid('loading');
+                if (this.value == 1) {
+                    EventCancel();
+                }
+                else
+                    EventEdit();
+
+
+                $.ajax({
+                    url: "/master/GetRoleMenuList",
+                    data: 'RoleID=' + this.value,
+                    cache: false,
+                    error: function (e) {
+                        $('#tg').treegrid('loaded');
+                        sAlert("Error", e.statusText, "error");
+                    },
+                    success: function (data) {
+                        $('#tg').treegrid('loaded');
+                        $('#tg').treegrid('loadData', data);
+                    }
+                });
+
+                //EventCancel();
+            });
+        });
+
+        $('#tg').treegrid({
+            url: '/master/GetRoleMenuList',
+            onLoadSuccess: function () { $('#tg').treegrid('collapseAll', 0); },
+            onBeforeLoad: function () {
+                $('#tg').treegrid('getPanel').panel('panel').width($(".datagrid-htable")[1].clientWidth + 1);
+            },
+            columns: [[
+                {
+                    field: 'Name', title: 'Name'
+                    , formatter: function (value, row) {
+                        return '<i class="' + row.icon + '"></i>&nbsp&nbsp' + value;
+                    }
+                },
+        {
+            field: 'IsRead', title: 'Is Read', formatter: formatCheckBoxIsRead,
+            editor: 'checkbox', width: 5, align: 'center'
+        },
+        {
+            field: 'IsCreated', title: 'Is Created', formatter: formatCheckBoxIsCreate,
+            editor: 'checkbox', width: 5, align: 'center'
+        },
+        {
+            field: 'IsUpdated', title: 'Is Updated', formatter: formatCheckBoxIsUpdate,
+            editor: 'checkbox', width: 5, align: 'center'
+        },
+        {
+            field: 'IsDeleted', title: 'Is Deleted', formatter: formatCheckBoxIsDelete,
+            editor: 'checkbox', width: 5, align: 'center'
+        }
+            ]]
+        });
+
+    });
+
+    function formatCheckBoxIsRead(value, row) {
+        var s;
+        var i = 0;
+        if (!value) {
+            s = '<div>' +
+                    '<label><input class="chk" type="checkbox" id="IsRead" value="' + 1 + '" checked onclick="Onclick(this, ' + row.ID + ');"></label></div>';
+            return s;
+        } else {
+            s = '<div>' +
+                    '<label><input class="chk" type="checkbox" id="IsRead" value="' + 0 + '" onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        }
+    }
+
+    function formatCheckBoxIsCreate(value, row) {
+        var s;
+        var i = 0;
+        if (!value) {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsCreated" value="' + 1 + '" checked onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        } else {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsCreated" value="' + 0 + '" onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        }
+    }
+
+    function formatCheckBoxIsUpdate(value, row) {
+        var s;
+        var i = 0;
+        if (!value) {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsUpdated" value="' + 1 + '" checked onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        } else {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsUpdated" value="' + 0 + '" onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        }
+    }
+
+    function formatCheckBoxIsDelete(value, row) {
+        var s;
+        var i = 0;
+        if (!value) {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsDeleted" value="' + 1 + '" checked onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+
+            return s;
+        } else {
+            s = '<div>' +
+                    '<label><input  type="checkbox" id="IsDeleted" value="' + 0 + '" onclick="Onclick(this, ' + row.ID + ');"></label>'
+            '</div>';
+            return s;
+        }
+    }
+
+    function Onclick(e, ID) {
+        switch (e.id) {
+            case 'IsRead':
+                $('#tg').treegrid('update', {
+                    id: ID,
+                    row: {
+                        IsRead: !e.checked
+                    }
+                });
+                break;
+            case 'IsCreated':
+                $('#tg').treegrid('update', {
+                    id: ID,
+                    row: {
+                        IsCreated: !e.checked
+                    }
+                });
+                break;
+            case 'IsUpdated':
+                $('#tg').treegrid('update', {
+                    id: ID,
+                    row: {
+                        IsUpdated: !e.checked
+                    }
+                });
+                break;
+            case 'IsDeleted':
+                $('#tg').treegrid('update', {
+                    id: ID,
+                    row: {
+                        IsDeleted: !e.checked
+                    }
+                });
+                break;
+        }
+        json = $('#tg').treegrid('getData');
+        $(".checkbox").removeClass("disabled");
+    }
+
+    function save(e) {
+        $('#tg').treegrid('loading');
+        EventCancel();
+        json = $('#tg').treegrid('getData');
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateRoleAccessMenuDetail", "Master")',
+            data: JSON.stringify(json),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            //async: false,
+            error: function (e) {
+                if (e.statusText != "OK") {
+                    sAlert("Error", e.statusText, "error");
+                } else {
+                    sAlert("Unauthorised", "Your don't have permission !, please contact your Administrator", "error");
+                }
+                $('#tg').treegrid('loaded');
+            },
+            success: function (result) {
+                $('#tg').treegrid('loaded');
+                if (typeof (result) == "string") {
+                    sAlert("Error", result, "error");
+                } else {
+                    $('#tg').treegrid('loadData', result);
+                    sAlert("Success", "Data Saved Successfully.", "success");
+                    //sAlert("Error", result.statusText, "error");
+                }
+            }
+        });
+    }
+
+    function EventEdit() {
+        $("#btnSave").removeClass("disabled");
+    }
+
+    function EventCancel() {
+        $("#btnSave").addClass("disabled");
+    }
+</script>

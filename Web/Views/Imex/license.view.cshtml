@@ -1,0 +1,260 @@
+@model App.Data.Domain.LicenseManagement
+@{
+	var mode = ViewBag.crudMode;
+	var title = "Detail";
+}
+
+<style type="text/css">
+	.select2-selection__choice {
+		white-space: normal !important;
+	}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title"><i class="fa fa-list"></i> @title License Management</h4>
+</div>
+
+@using(Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body" style="margin:10px">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">License Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.LicenseNumber" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Description</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextAreaFor(m => m.Description,2,100, new { @class = "form-control", @readonly="readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Serie</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.Serie" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Group</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.GroupName" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Ports</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.PortsName" readonly />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Release Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.ReleaseDate.Value.ToString("dd MMM yyyy")" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Expired Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.ExpiredDate.Value.ToString("dd MMM yyyy")" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Validity</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.ValidityCalc" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Quota</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.Quota" readonly />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Status</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@(Model.Status==1?"Active" : "Inactive")" readonly />
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-12">
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="input-group col-lg-offset-4 col-xs-12">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="width:150px;"> Close</button>
+                            <span id="progress" class="text-center" style="display: none;">
+                                <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                                Wait..
+                            </span>
+                        </div>
+                    </div>
+                </div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<h5 style="text-align:left"><strong>Data History</strong></h5>
+		<div class="toolbarMdl">
+			<a href="#" class="btn btn-info downloadExceldtl" style="width:150px;">
+				<i class="fa fa-download"></i> Download to Excel
+			</a>
+		</div>
+		<table class="table table-bordered table2excelDet" id="tblHist" style="width:100%"></table>
+	</div>
+
+	<input type="hidden" name="LicenseManagementID" value="@Model.LicenseManagementID" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+
+}
+
+<script type="text/javascript">
+	var $tableHist = $('#tblHist');
+	$(function () {
+
+		$tableHist.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarMdl',
+			toolbarAlign: 'left',
+			sidePagination: 'server',
+			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			columns: [{
+				title: 'No',
+				halign: 'center',
+				align: 'right',
+				width: '3%',
+				formatter: runningFormatter
+			}, {
+				field: 'Serie',
+				title: 'Serie',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'GroupName',
+				title: 'Group',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'Description',
+				title: 'Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'LicenseNumber',
+				title: 'License Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ReleaseDate',
+				title: 'Release Date',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter'
+			}, {
+				field: 'ExpiredDate',
+				title: 'Expired Date',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter'
+			}, {
+				field: 'ValidityCalc',
+				title: 'Validity',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'Quota',
+				title: 'Quota',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'DayRemain',
+				title: 'Day Remain',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			},
+			{
+                //field: 'PortsName',
+                field: 'Ports',
+				title: 'Ports',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			},
+			//{
+			//	field: 'Status',
+			//	title: '<div style="white-space:nowrap;">Status</div>',
+			//	halign: 'center',
+			//	align: 'left',
+			//	sortable: true
+			//},
+			{
+				field: 'ModifiedBy',
+				title: 'ModifiedBy',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'ModifiedDate',
+				title: 'ModifiedDate',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter',
+				visible: false
+			}]
+		});
+
+		//	$("#btnFilter").click(function () {
+		window.pis.table({
+			objTable: $tableHist,
+			urlSearch: '/imex/LicenseHistPage',
+			urlPaging: '/imex/LicenseHistPageXt',
+			searchParams: {
+				LicenseManagementID: $("[name=LicenseManagementID]").val()
+			},
+			autoLoad: true
+		});
+
+		$(".downloadExceldtl").click(function () {
+			$(".table2excelDet").table2excel({
+				exclude: ".noExl",
+				filename: "licenseHist.xls"
+			});
+		});
+	});
+</script>

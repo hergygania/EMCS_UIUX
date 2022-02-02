@@ -1,0 +1,314 @@
+<div class="modal" id="modalPartOrderList" tabindex="-1" role="dialog" aria-labelledby="select data" aria-hidden="true" data-focus-on="input:first" style="z-index: 1400;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" aria-hidden="true" onclick="$('#modalPartOrderList').modal('toggle');">×</button>
+				<h4 class="modal-title"><i class="fa fa-list"></i>  Invoice / SX Detail</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="row" style="margin-left:2px;margin-right:2px">
+					<div class="row">
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Invoice No</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="InvoiceNo" type="text" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Store Number</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="StoreNumber" type="text" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Agreement Type</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="AgreementType" type="text" class="form-control" />
+								</div>
+							</div>
+
+						</div>
+
+						<!-- FILTER KOLOM KANAN - START -->
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="InvoiceDate" type="text" class="form-control pull-right daterange" />
+									<div class="input-group-addon">
+										<i class="fa fa-calendar"></i>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">J Code</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="JCode" type="text" class="form-control" />
+								</div>
+							</div>
+
+							@*<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">J Code test1</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<select class="form-control">
+										<option value="1">test 1</option>
+										<option value="3">test 2</option>
+										<option value="2">test 3</option>
+									</select>
+								</div>
+							</div>*@
+							@*<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">J Code select2</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									@Html.ListBox("selJCode2", new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selJCode2", @class = " input-sm form-control", @style = "width:95%;display:none" })
+									&nbsp;
+								</div>
+							</div>*@
+
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">DA Number</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input id="DANumber" type="text" class="form-control" />
+								</div>
+							</div>
+
+						</div>
+						<!-- FILTER KOLOM KANAN - END -->
+
+					</div>
+				</div>
+
+				<div class="row" style="min-height:300px;margin-left:2px;margin-right:2px">
+					<div class="toolbarPart" style="float:right; margin-right:15px">
+						<button id="btnFilterSx" type="button" class="btn btn-success" style="float:right;width:150px; margin-right:15px"><i class="fa fa-search"></i> Filter</button>
+					</div>
+					<table class="table table-bordered" id="tablePartsOrder" style="width:100%;"></table>
+					<ul id="output"></ul>
+				</div>
+								
+			</div>
+
+			<div class="modal-footer" style="margin-top:-25px">
+				<button id="bntCloseSx" type="button" class="btn">Close</button>
+				<button id="bntSelectSx" type="button" class="btn btn-success">Select</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function () {
+
+		$.ajaxSetup({ cache: false });
+		var $tablePart = $('#tablePartsOrder');
+
+
+		$('#bntCloseSx').click(function () {
+			$('#modalPartOrderList').modal('toggle');
+			showMainScrollbar(false);
+		});
+
+		$('#myModalPlace').on('shown.bs.modal', function (e) {
+			showMainScrollbar(false);
+		});
+
+		$('#modalPartOrderList').on('shown.bs.modal', function (e) {
+			//$('#myModalPlace').modal('toggle');
+			//$('#selJCode2').html('');
+			//$('#selJCode2').append('<option value=""></option>');
+
+			//$.getJSON('/Picker/GetJCode', null, function (dt) {
+			//	$.each(dt.Result, function (i, v) {
+			//		$('#selJCode2').append("<option '" + v.id + "'>" + v.text + "</option>");
+			//	})
+			//})
+			//.done(function () {
+			//	$('#selJCode2').hide();
+			//	$('#selJCode2').select2({allowClear: true});
+			//	$('.select2-selection__arrow').show();
+			//})
+			//helpers.buildDropdown('/Picker/GetJCode', $('#selJCode2'), true, null);
+
+			$tablePart.bootstrapTable('load', { "rows": null, "total": 0 });
+			$tablePart.bootstrapTable('refresh')
+			$("#tablePartsOrder tbody tr").remove();
+		});
+
+
+		$("#bntSelectSx").click(function () {
+			$('#modalPartOrderList').modal('toggle');
+			showMainScrollbar(false);
+		});
+
+		$("#btnFilterSx").click(function () {
+			var _staDate, _endDate;
+			if ($('#InvoiceDate').val() != '') {
+				_staDate = $('#InvoiceDate').data('daterangepicker').startDate.format('MM/DD/YYYY');
+				_endDate = $('#InvoiceDate').data('daterangepicker').endDate.format('MM/DD/YYYY');
+			}
+
+			/*
+				freight: get from index.cshtml
+				vettingRoute: get from partial partsOrder.cshtml
+			*/
+
+			window.pis.table({
+				objTable: $tablePart,
+				urlSearch: '/vetting-process/ShipmentPartsOrder',
+				urlPaging: '/vetting-process/ShipmentPartsOrderXt',
+				searchParams: {
+					Freight: freight,
+					vettingRoute: (vettingRoute == undefined ? 0 : vettingRoute),
+					InvoiceNo: $('#InvoiceNo').val(),
+					DateSta: _staDate,
+					DateFin: _endDate,
+					JCode: $('#JCode').val(),
+					AgreementType: $('#AgreementType').val(),
+					StoreNumber: $('#StoreNumber').val(),
+					DANumber: $('#DANumber').val(),
+					ShipmentMode: shipmentMode
+				},
+				dataHeight: 366,
+				autoLoad: true
+			});
+		});
+
+		$tablePart.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarPart',
+			toolbarAlign: 'left',
+			onClickRow: selectRow,
+			sidePagination: 'server',
+			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			checkboxHeader: true,
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [{
+				ffield: 'cek',
+				title: 'cek',
+				width: '35x',
+				align: 'center',
+				checkbox: true,
+				class: 'noExl',
+				switchable: false
+			}, {
+				field: 'InvoiceNo',
+				title: 'Invoice No',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				switchable: false
+			}, {
+				field: 'InvoiceDate',
+				title: 'Invoice Date',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter',
+				switchable: false
+			}, {
+				field: 'AgreementType',
+				title: 'Agreement Type',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'JCode',
+				title: 'J-Code',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'StoreNumber',
+				title: 'Store Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'DA',
+				title: 'DA Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ModifiedBy',
+				title: 'ModifiedBy',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'ModifiedDate',
+				title: 'ModifiedDate',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter',
+				visible: false
+			}, {
+				field: 'PartsOrderID',
+				title: 'Id',
+				sortable: true,
+				visible: false
+			}
+			]
+		});
+
+
+		function operateFormatter() {
+			var btn = [];
+			btn.push('<div class="btn-group">');
+			btn.push('<button type="button" class="btn btn-xs btn-info detail" title="Detail" data-toggle="modal" data-target="#mymodal"><i class="fa fa-search-plus"></i> Detail</button>')
+			btn.push('</div>');
+			return btn.join('');
+		};
+
+	});
+
+
+
+	function bindForm(dialog) {
+		$('form', dialog).submit(function () {
+			$('#progress').show();
+			enableLink(false);
+
+			$.ajax({
+				url: this.action,
+				type: this.method,
+				data: $(this).serialize(),
+				success: function (result) {
+
+					enableLink(true);
+
+					if (result.Status == 0) {
+						if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+						$('#myModalPlace').modal('hide');
+						$('#progress').hide();
+						$("#btnFilter").trigger('click');
+					}
+					else {
+						if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+						$('#progress').hide();
+					}
+				}
+			});
+			return false;
+		});
+	};
+
+</script>

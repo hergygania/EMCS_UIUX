@@ -1,0 +1,238 @@
+﻿@{
+    ViewBag.Title = "Shipping Instruction Form";
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:555px">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">SI No.</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpNoSl" name="inpNoSl" value="SI.0112190017" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Date</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpDateSI" name="inpDateSI" value="01 Jan 2019" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Reference No</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpReferenceSI" name="inpReferenceSI" value="SO123" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">To</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <select class="form-control" id="slcToSI" name="slcToSI">
+                                                    <option value="">Please Select</option>
+                                                    <option value="CKB">CKB</option>
+                                                    <option value="Non CKB">Non CKB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Address</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <textarea class="form-control" placeholder="Address" id="txtAddress" name="txtAddress"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Phone No</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control toSIfield" id="inpPhoneNoSI" name="inpPhoneNoSI" placeholder="0877 xxx xxx">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Fax No.</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control toSIfield" id="inpNoFaxSI" name="inpNoFaxSI" placeholder="0877 xxx xxx">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">PIC</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control toSIfield" id="inpPicSI" name="inpPicSI" placeholder="PIC">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Email</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="email" class="form-control toSIfield" id="inpEmailSI" name="inpEmailSI" placeholder="user@email.com">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Consignee</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpConsigneeSI" name="inpConsigneeSI" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Notify Party</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpNotifySI" name="inpNotifySI" placeholder="Notify Name" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Mark & No</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpMarkSI" name="inpMarkSI" placeholder="EA001" name="markeSI" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Description</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <textarea class="form-control disabled" style="background:#e6e4e4;" rows="4" cols="5" placeholder="Description" id="txtDescriptionSI" name="txtDescriptionSI"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Total Gross Weight</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="number" class="form-control" id="inpToGrossWeightSI" name="inpToGrossWeightSI" placeholder="Total Gross Weight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Net Weight</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpNetWeightSI" name="inpNetWeightSI" placeholder="Total Net Weight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Volume</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpVolumeSI" name="inpVolumeSI" placeholder="Volume" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Booking Number</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpBookingNumberSI" name="inpBookingNumberSI" placeholder="Booking Number" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Booking Date</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpBookingDateSI" name="inpBookingDateSI" value="05 Jan 2019" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Port of Loading</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpPortLoadingSI" name="inpPortLoadingSI" value="Tanjung Priok" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Port of Discharge</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpPortDischargeSI" name="inpPortDischargeSI" placeholder="Port of Discharge" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETD Date</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" name="inpEtdDateSI" id="inpEtdDateSI" value="01 Jan 2019" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETA Date</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" name="inpEtaDateSI" id="inpEtaDateSI" value="10 Jan 2019" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Vessel / Flight</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="date" class="form-control" id="inpVesselSI" name="inpVesselSI" placeholder="Vessel / Flight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Connecting Vessel / Flight</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpConnectingVesselSI" name="inpConnectingVesselSI" placeholder="Connecting Vessel" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Voyage (Vessel / Flight)</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpVoyageSI" name="inpVoyageSI" placeholder="Voyage Vessel" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Voyage (Connecting Vessel)</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpVoyageConnectingSI" name="inpVoyageConnectingSI" value="10 Jan 2019" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Port of Destination</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpPortDestcSI" name="inpPortDestcSI" placeholder="Port Of Destination" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Document Required</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpDocReqSI" name="inpDocReqSI" placeholder="Document Required" value="Shipping_Instruction.xls">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Special Instruction</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <textarea type="text" rows="5" class="form-control" id="inpSpecialInsructionSI" name="inpSpecialInsructionSI" placeholder="Special Instruction"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">CTNR</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpCtnrSI" name="inpCtnrSI">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Seal</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpSealSI" name="inpSealSI">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Prepared By</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control" id="inpPreparedbySI" name="inpPreparedbySI">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" class="btn btn-info" id="inpSaveSI"><i class="fa fa-file-archive"></i>&nbsp;Save as Draft</button>
+                                        <button type="submit" class="btn btn-success" id="inpSubmitSI"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplEdit.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

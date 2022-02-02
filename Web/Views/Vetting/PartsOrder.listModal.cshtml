@@ -1,0 +1,406 @@
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<div class="form-group">
+		<h4 class="modal-title">
+			<i class="fa fa-list"></i>  Invoice / SX Detail&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+			@Html.DropDownList("Freight", new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selFreight", @style = "font-size:medium;color:darkblue" })
+		</h4>
+	</div>
+
+</div>
+
+<div class="modal-body">
+	<div class="row" style="margin-left:2px;margin-right:2px;">
+		<div class="row">
+
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Invoice No</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<input id="InvoiceNo" type="text" class="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Agreement Type</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						@*<input id="AgreementType" type="text" class="form-control" />*@
+						@Html.ListBox("selAgreementType", new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selAgreementType", @class = " input-sm form-control", @style = "width:95%;display:none" })
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">J Code</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						@*<input id="JCode" type="text" class="form-control" />*@
+						@Html.ListBox("selJCode", new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selJCode", @class = " input-sm form-control", @style = "width:95%;display:none" })
+					</div>
+				</div>
+
+
+			</div>
+
+			<!-- FILTER KOLOM KANAN - START -->
+			<div class="col-lg-6">
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<input id="InvoiceDate" type="text" class="form-control pull-right daterange" />
+						<div class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">Store Number</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<input id="StoreNumber" type="text" class="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-lg-4 col-xs-4">DA Number</label>
+					<div class="input-group col-lg-8 col-xs-8">
+						<input id="DANumber" type="text" class="form-control" />
+					</div>
+				</div>
+
+			</div>
+			<!-- FILTER KOLOM KANAN - END -->
+
+		</div>
+	</div>
+
+	<div class="row" style="min-height:300px;margin-left:2px;margin-right:2px">
+		<div class="toolbarPart" style="float:right; margin-right:15px">
+			<button id="btnFilterSx" type="button" class="btn btn-success" style="float:right;width:150px; margin-right:15px"><i class="fa fa-search"></i> Filter</button>
+		</div>
+		<table class="table table-bordered" id="tablePartsOrder" style="width:100%;"></table>
+		<ul id="output"></ul>
+	</div>
+
+</div>
+
+<div class="modal-footer" style="margin-top:-25px">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	@*<button id="bntCloseSx" type="button" class="btn">Close</button>*@
+	<button id="bntSelectSx" type="button" class="btn btn-success">Select</button>
+</div>
+
+
+<script type="text/javascript">
+	$(function () {
+		$.ajaxSetup({ cache: false });
+		var $tablePart = $('#tablePartsOrder');
+		var checkedRows = [];
+		enableLink(false);
+
+		$tablePart.on('check-all.bs.table', function (e, object) {
+			$.each(object, function (index, row) {
+				//$.each(checkedRows, function (i, value) {
+				//	if (value != null && value.PartsOrderID == row.PartsOrderID) // delete index
+				//	{
+				//		delete checkedRows[i];
+				//		alert(i +' del ' + row.InvoiceNo)
+				//	}
+				//});
+
+				checkedRows.push({ PartsOrderID: row.PartsOrderID, InvoiceNo: row.InvoiceNo, InvoiceDate: dateFormatter(row.InvoiceDate), JCode: row.JCode, StoreNumber: row.StoreNumber, AgreementType: row.AgreementType, DA: row.DA, ModifiedBy: row.ModifiedBy, ModifiedDate: dateFormatter(row.ModifiedDate) });
+				//checkedRowsPut(row);
+			});
+			console.log('check-all.bs.table:');
+			console.log(checkedRows);
+		});
+
+		$tablePart.on('uncheck-all.bs.table', function (e, object) {
+			$.each(object, function (index, row) {
+
+				$.each(checkedRows, function (index, value) {
+					if (value != null && value.PartsOrderID === row.PartsOrderID) {
+						checkedRows.splice(index, 1);
+					}
+				});
+
+			});
+			console.log('uncheck-all.bs.table:');
+			console.log(checkedRows);
+		});
+
+		$tablePart.on('check.bs.table', function (e, row) {
+			checkedRows.push({ PartsOrderID: row.PartsOrderID, InvoiceNo: row.InvoiceNo, InvoiceDate: dateFormatter(row.InvoiceDate), JCode: row.JCode, StoreNumber: row.StoreNumber, AgreementType: row.AgreementType, DA: row.DA, ModifiedBy: row.ModifiedBy, ModifiedDate: dateFormatter(row.ModifiedDate) });
+			console.log(checkedRows);
+		});
+
+		$tablePart.on('uncheck.bs.table', function (e, row) {
+			$.each(checkedRows, function (index, value) {
+				if (value != null && value.PartsOrderID === row.PartsOrderID) {
+					checkedRows.splice(index, 1);
+				}
+			});
+			console.log(checkedRows);
+		});
+
+		var isRunningSX = 0;
+		$('#myModalPlace').on('shown.bs.modal', function (e) {
+			if (isRunningSX == 1) return;
+			isRunningSX = 1;
+
+			getJCode();
+			//helpers.buildDropdown('/Picker/GetJCode', $('#selJCode'), true, null);
+			//helpers.buildDropdown('/Picker/GetAgreementType', $('#selAgreementType'), true, null);
+
+			$tablePart.bootstrapTable('load', { "rows": null, "total": 0 });
+			$tablePart.bootstrapTable('refresh')
+			$("#tablePartsOrder tbody tr").remove();
+		});
+
+		$('#bntSelectSx').click(function () {
+			enableLink(false);
+
+			$.ajax({
+				url: '/vetting-process/ManifestGetSx',
+				type: 'post',
+				data: {
+					arrObject: JSON.stringify(checkedRows),
+					ShipmentManifestID: $('#ShipmentManifestID').val()
+				},
+				success: function (result) {
+					checkedRows = [];
+					refreshManifest();
+					$('#myModalPlace').modal('toggle');
+				}
+			});
+		});
+
+
+		$("#btnFilterSx").click(function () {
+			enableLink(false);
+			var _staDate, _endDate;
+			if ($('#InvoiceDate').val() != '') {
+				_staDate = $('#InvoiceDate').data('daterangepicker').startDate.format('MM/DD/YYYY');
+				_endDate = $('#InvoiceDate').data('daterangepicker').endDate.format('MM/DD/YYYY');
+			}
+
+			/*
+				freight: get from index.cshtml
+				vettingRoute: get from partial partsOrder.cshtml
+			*/
+
+			window.pis.table({
+				objTable: $tablePart,
+				urlSearch: '/vetting-process/ShipmentPartsOrder',
+				urlPaging: '/vetting-process/ShipmentPartsOrderXt',
+				searchParams: {
+					Freight: freight,
+					FreightShippId: $('#selFreight').val(),
+					vettingRoute: (vettingRoute == undefined ? 0 : vettingRoute),
+					InvoiceNo: $('#InvoiceNo').val(),
+					DateSta: _staDate,
+					DateFin: _endDate,
+					//JCode: $('#JCode').val(),
+					selJCode: $('#selJCode').val(),
+					//AgreementType: $('#AgreementType').val(),
+					selAgreementType: $('#selAgreementType').val(),
+					StoreNumber: $('#StoreNumber').val(),
+					DANumber: $('#DANumber').val(),
+					ShipmentMode: shipmentMode
+				},
+				dataHeight: 366,
+				autoLoad: true
+			});
+		});
+
+		$tablePart.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			//clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarPart',
+			toolbarAlign: 'left',
+			onClickRow: selectRow,
+			sidePagination: 'server',
+			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			checkboxHeader: true,
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [{
+				ffield: 'cek',
+				title: 'cek',
+				width: '35x',
+				align: 'center',
+				checkbox: true,
+				class: 'noExl',
+				switchable: false
+			}, {
+				field: 'InvoiceNo',
+				title: 'Invoice No',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				switchable: false,
+				formatter: formatterPartInvNo,
+				events: operateManifestDetail
+			}, {
+				field: 'InvoiceDate',
+				title: 'Invoice Date',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter',
+				switchable: false
+			}, {
+				field: 'AgreementType',
+				title: 'Agreement Type',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'JCode',
+				title: 'J-Code',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				switchable: false
+			}, {
+				field: 'StoreNumber',
+				title: 'Store Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'DA',
+				title: 'DA Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				switchable: false
+			}, {
+				field: 'ShippingInstruction',
+				title: 'Ship-Instruction',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			},
+			{
+				field: 'ModifiedBy',
+				title: 'ModifiedBy',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'ModifiedDate',
+				title: 'ModifiedDate',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter',
+				visible: false
+			}, {
+				field: 'PartsOrderID',
+				title: 'Id',
+				sortable: true,
+				visible: false
+			}
+			]
+		});
+
+
+		function formatterPartInvNo(value, row, index) {
+			return '<a class="imexInvoice" style="cursor:pointer;text-decoration:underline">' + row.InvoiceNo + '</a>';
+		};
+
+		getJCode = function () {
+			$('#selJCode').html('');
+			$('#selJCode').append('<option value=""></option>');
+			$.getJSON('/Picker/GetJCode', null, function (dt) {
+				$.each(dt.Result, function (i, v) {
+					$('#selJCode').append("<option value='" + v.id + "'>" + v.text + "</option>");
+				})
+			})
+			.done(function () {
+				$('#selJCode').hide();
+				$('#selJCode').select2({ allowClear: true });
+				getAgreementType();
+			})
+		};
+
+		getAgreementType = function () {
+			$('#selAgreementType').html('');
+			$('#selAgreementType').append('<option value=""></option>');
+			$.getJSON('/Picker/GetAgreementType', null, function (dt) {
+				$.each(dt.Result, function (i, v) {
+					$('#selAgreementType').append("<option value='" + v.id + "'>" + v.text + "</option>");
+				})
+			})
+			.done(function () {
+				$('#selAgreementType').hide();
+				$('#selAgreementType').select2({ allowClear: true });
+				$('.select2-selection__arrow').show();
+				getFreight();
+			})
+		};
+
+		getFreight = function () {
+			$('#selFreight').html('');
+			$('#selFreight').empty();
+			var selected = '';
+			$.getJSON('/Picker/GetShippingType?freight=' + freight, null, function (dt) {
+
+				if (dt.Result.length > 1)
+					$('#selFreight').append('<option value="">' + freight + ' Shipping (all)</option>');
+
+				$.each(dt.Result, function (i, v) {
+					selected = ($('#DefaultShippId').val() == v.id ? 'selected="selected"' : '');
+					$('#selFreight').append("<option " + selected + " value='" + v.id + "'>" + v.text + "</option>");
+				})
+			})
+			.done(function () {
+				enableLink(true);
+			})
+		};
+
+	});
+
+
+	function bindForm(dialog) {
+		$('form', dialog).submit(function () {
+			$('#progress').show();
+			enableLink(false);
+
+			$.ajax({
+				url: this.action,
+				type: this.method,
+				data: $(this).serialize(),
+				success: function (result) {
+
+					enableLink(true);
+
+					if (result.Status == 0) {
+						if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+						$('#myModalPlace').modal('hide');
+						$('#progress').hide();
+						$("#btnFilter").trigger('click');
+					}
+					else {
+						if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+						$('#progress').hide();
+					}
+				}
+			});
+			return false;
+		});
+	};
+
+</script>

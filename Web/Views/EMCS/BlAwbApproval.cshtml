@@ -1,0 +1,320 @@
+﻿@model  App.Web.Models.EMCS.BlAwbModel
+@{
+    ViewBag.Title = "Bl Awb Approval";
+    ViewBag.TypeReq = "BlAwb";
+    ViewBag.IdReq = Model.BlAwb.IdCl;
+    ViewBag.IdStep = Model.Request.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+<style>
+    .help-block {
+        color: #a94442;
+        display: inline;
+        font-weight: bolder;
+    }
+</style>
+<div class="col-md-12">
+    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">BL / AWB </a>
+            </li>
+            <li role="presentation">
+                <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
+            </li>
+            <li role="presentation">
+                <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+            </li>
+        </ul>
+
+        <div class="tab-content tabs-custom">
+            <div role="tabpanel" class="tab-pane active" id="invoice">
+                <div class="row">
+                    <form id="FormUploadBlAwb">
+                        <div class="modal-body">
+                            <div class="col-md-6">
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4">ID</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        <input type="text" class="form-control" id="CargoID" name="CargoID" value="@Model.Data.Id" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Master BL Number</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.BlAwb.Number, new { @class = "form-control", @id = "Number", @placeholder = "Bl Awb Number", @name = "Number", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Master BL Date</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.BlAwb.MasterBlDate, new { @class = "form-control date", @id = "MasterBlDate", @placeholder = "Master BL Date ", @name = "MasterBlDate", @readonly = true })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">House BL Number</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.BlAwb.HouseBlNumber, new { @class = "form-control required", @id = "HouseBlNumber", @placeholder = "House BL Number", @name = "HouseBlNumber", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">House BL Date</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.BlAwb.HouseBlDate, new { @class = "form-control date required", @id = "HouseBlDate", @placeholder = "House BL Date", @name = "HouseBlDate", @readonly = true })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Publisher</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.BlAwb.Publisher, new { @class = "form-control required", @id = "Publisher", @placeholder = "Publisher", @name = "Publisher", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4" id="cc_num">Description</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextAreaFor(m => m.BlAwb.Description, new { @class = "form-control required", @id = "Description", @placeholder = "Description", @name = "Description", @readonly = true })
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <p></p>
+                                    <a href="~/EMCS/MyTask" class="btn btn-default" style="min-width:120px;"><i class="fa fa-chevron-left"></i>&nbsp;Back</a>
+                                    <button type="button" class="btn btn-success" id="btnApproveBlAwb" style="min-width:120px;"><i class="fa fa-paper-plane"></i> Approve</button>
+                                    <button id="btnRevise" type="button" class="btn btn-warning" value="Revise" style="min-width:120px;"><i class="fa fa-edit"></i>&nbsp;Revise</button>
+                                    <button type="button" class="btn btn-danger" id="btnReject" style="min-width:120px;"><i class="fa fa-times"></i> Reject</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table style="width:100%" border="0" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="height:40px;vertical-align:middle; text-align: center;width:80%">Name</th>
+                                            <th style="height:40px;vertical-align:middle; text-align: center;width:20%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="trCompleteDoc">
+                                            <td>
+                                                <div class="form-group div-mandatory">
+                                                    <label class="control-label" id="label-document-SK"><strong>BL / AWB Document</strong></label>
+                                                    @*<input type="text" class="do-not-ignore hide" name="UrlDocumentSK" id="url-document-SK" required />*@
+                                                    <input type="text" class="do-not-ignore hide" name="UrlDocumentDOC" id="url-document-DOC" required />
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-info btn-xs dz-clickable" id="document-DOC" type="button" data-toggle="tooltip" title="Upload!"><i class="fa fa-upload"></i></button>
+                                                <button class="btn btn-default btn-xs preview-document" id="preview-document-DOC" type="button" data-toggle="tooltip" title="View Document!"><i class="fa fa-search"></i></button>
+                                                <a href="#" class="btn btn-success btn-xs DownloadDocument" id="download-document-DOC" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="fa fa-download"></i></a>
+                                                <div id="previews">
+                                                    <div id="template" class="template file-row dz-image-preview">
+                                                        <div>
+                                                            <p class="name" data-dz-name=""></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <iframe id="DocumentShow" title="Document Show" src="" style="width: 100%;height: 550px"></iframe>
+                            </div>
+                        </div>
+                        <div class="box-footer text-right">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="history">
+                <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                        <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                        <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="problemhistory">
+                <div class="row">
+                    <div class="col-xs-12 table-responsive">
+                        <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+
+            @*<div role="tabpanel" class="tab-pane" id="documents">
+                    <div class="row">
+                        <div class="col-xs-12 table-responsive">
+                            <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered"></table>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Modal.FormProblem")
+
+@section scripts{
+    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/BlAwb.cshtml.js")"></script>
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    <script>
+        var wizardState = "@ViewBag.WizardData.Progress";
+        var CargoTypeName = "@Model.Data.CargoTypeName";
+    </script>
+
+    <script>
+
+        $("#btnApproveBlAwb").on("click", function () {
+            Swal.fire({
+                title: 'Approve Confirmation',
+                text: 'Do you want to continue ?',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Approve!',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showCloseButton: true
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        input: 'textarea',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        inputPlaceholder: 'Type your notes here...',
+                        inputAttributes: {
+                            'aria-label': 'Type your notes here'
+                        },
+                        showCancelButton: false
+                    }).then((result) => {
+                        var Notes = result.value;
+                        var Status = "Approve";
+                        var Id = $('#CargoID').val();
+                        var data = { Notes: Notes, Status: Status, Id: Id };
+                        ApproveBlAwb(data);
+                    });
+                }
+                return false;
+            });
+        });
+
+        function ApproveBlAwb(obj) {
+            var item = {
+                Id: obj.Id,
+                Status: obj.Status,
+                Notes: obj.Notes,
+                Detail: {
+                    obj
+                }
+            };
+            console.log(item);
+            $.ajax({
+                url: "/EMCS/ApprovalBlAwb",
+                type: "POST",
+                data: {
+                    Id: obj.Id,
+                    Status: obj.Status,
+                    Notes: obj.Notes,
+                    Detail: obj
+                },
+                success: function (resp) {
+                    Swal.fire({
+                        title: 'Approve!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success'
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                }
+            });
+        }
+
+        $("#YesReviseBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Revise";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        $("#YesRejectBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Reject";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function (resp) {
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+            return status;
+        }
+
+        function ReviseProblem(Status, IdRequest, Notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/ApprovalBlAwb",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: Status,
+                    Id: IdRequest,
+                    Notes: Notes
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success',
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+        }
+
+
+    </script>
+}

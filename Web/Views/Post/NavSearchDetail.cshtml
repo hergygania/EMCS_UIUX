@@ -1,0 +1,32 @@
+﻿<div class="row custom-grid-left" style="margin-top:20px;padding:10px;margin-bottom:10px;">
+    <div class="col custom-grid-left">
+        <input type="text" class="form-control" name="name" id="itemName" placeholder="Item Name" />
+    </div>
+    <div class="col">
+        <select class="form-control input-sm select2" id="select2StatusPO" data-placeholder="Item Status">
+            <option></option>
+        </select>
+    </div>
+
+    <div class="col">
+        <div class="input-group">
+            <input type="text" name="DeliveryDate" class="daterange form-control input-sm" id="deliveryDateItem" placeholder="Delivery Date" />
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <select class="form-control input-sm select2" name="branch" id="select2Destination">
+            <option selected></option>
+        </select>
+    </div>
+
+    <div class="col-3 custom-grid-right">
+        <div class="row">
+            <button class="btn col btn btn-outline-primary" onclick="searchItem()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;
+            <button class="btn col btn btn-outline-warning" style="color:black;" onclick="clearSearchDetail()"><i class="fa fa-recycle"></i>&nbsp;Reset</button>
+        </div>
+    </div>
+</div>

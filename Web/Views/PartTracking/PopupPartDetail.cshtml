@@ -1,0 +1,202 @@
+﻿@{
+	ViewBag.Title = "Detail By Part Number & Source";
+}
+<div class="modal fade bs-example-modal-lg" id="modal" role="dialog" aria-hidden="true" data-focus-on="input:first" style="z-index: 1400;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><i class="fa fa-list"></i> @ViewBag.Title</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Part Number</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_part_no" name="d_part_no" class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Part Description</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_part_desc" name="d_part_desc" class="form-control" value="SHOE" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Source</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_source" name="d_source" class="form-control" readonly="readonly" />
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Invoice Number</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_invoice_no" name="d_invoice_no" class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_invoice_date" name="d_invoice_date" class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-4 col-xs-4">Doc Number</label>
+								<div class="input-group col-lg-8 col-xs-8">
+									<input type="text" id="d_doc_number" name="d_doc_number" class="form-control" readonly="readonly" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-12" style="margin-top:10px">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs nav-justified">
+								<li class="active"><a href="#tab_1" data-toggle="tab">SUPPLIER STATUS</a></li>
+								<li><a href="#tab_2" data-toggle="tab">FORWADER STATUS</a></li>
+								<li><a href="#tab_3" data-toggle="tab">TRAKINDO STATUS</a></li>
+							</ul>
+							<div class="tab-content" style="height:300px">
+								<div class="tab-pane active" id="tab_1">
+									<table id="supStatus" class="table table-bordered" style="width:3000px;table-layout:fixed;"></table>
+								</div>
+								<div class="tab-pane" id="tab_2">
+									<table id="forwStatus" class="table table-bordered"></table>
+								</div>
+								<div class="tab-pane" id="tab_3">
+									<table id="trakStatus" class="table table-bordered"></table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<script>
+	$(function () {
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		$("#supStatus").bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+//			toolbarAlign: 'left',
+//			onClickRow: selectRow,
+			sidePagination: 'server',
+//			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [
+			[
+        			{ field: 'case_number', title: 'Case Number', width: '120px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'asn_number', title: 'ASN Number', width: '115px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'case_type', title: 'Case Type', width: '100px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'case_desc', title: 'Case Desc', width: '150px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'weight', title: 'Weight<br />(Kg)', width: '95px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'ship_via', title: 'Ship VIA', width: '130px', halign: 'center', align: 'left', rowspan: 2, sortable: true, switchable: false },
+                    { field: 'status_bo', title: 'Status BO', width: '100px', halign: 'center', align: 'left', rowspan: 2, sortable: true },
+                    { field: 'facility_bo', title: 'Facility BO', width: '150px', halign: 'center', align: 'left', rowspan: 2, sortable: true },
+                    { title: 'Material in Transit', width: '580px', align: 'center', colspan: 5 }
+			],
+                [
+        			{ field: 'total', title: 'Total', width: '80px', halign: 'center', align: 'left', sortable: true },
+                    { field: 'next_rcvd_qty', title: 'Next Rcvd QTY', width: '170px', halign: 'center', align: 'left', sortable: true },
+                    { field: 'nect_rcvd_date', title: 'Next Rcvd Date', width: '170px', halign: 'center', formatter: dateFormatter, align: 'left', sortable: true },
+                    { field: 'total_bo', title: 'Total BO', width: '80px', halign: 'center', align: 'left', sortable: true },
+                    { field: 'freeze', title: 'Freeze', width: '80px', halign: 'center', align: 'left', sortable: true }
+                ]
+			]
+		});
+
+
+		$("#forwStatus").bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+//			reorderableColumns: true,
+//			toolbarAlign: 'left',
+//			onClickRow: selectRow,
+			sidePagination: 'server',
+//			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [
+    			{ field: 'case_number', title: 'Case Number', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'da_number', title: 'DA Number', halign: 'center', align: 'left', sortable: true },
+                { field: 'last_location', title: 'Last Location', halign: 'center', align: 'left', sortable: true },
+                { field: 'origin', title: 'Origin', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'destination', title: 'Destination', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'service_type', title: 'Service Type', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'status', title: '<div style="white-space:nowrap;">Status</div>', halign: 'center', align: 'left', sortable: true },
+                { field: 'status_date', title: 'Status Date', halign: 'center', align: 'left', formatter: dateFormatter, sortable: true }
+			]
+		});
+
+
+		$("#trakStatus").bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+//			clickToSelect: true,
+//			reorderableColumns: true,
+//			toolbarAlign: 'left',
+//			onClickRow: selectRow,
+			sidePagination: 'server',
+//			showColumns: true,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [
+			    { field: 'store_number', title: 'Store Number', halign: 'center', align: 'left', sortable: true, switchable: false },
+                { field: 'case_number', title: 'Case Number', halign: 'center', align: 'left', sortable: true, switchable: false },
+    			{ field: 'order_date', title: 'Order Date', halign: 'right', align: 'right', formatter: dateFormatter, sortable: true, switchable: false },
+			    { field: 'order_qty', title: 'Order QTY', halign: 'center', align: 'center', sortable: true, switchable: false },
+    			{ field: 'supply_qty', title: 'Supply QTY', halign: 'center', align: 'center', sortable: true },
+                { field: 'supply_date', title: 'Supply Date', halign: 'right', align: 'right', formatter: dateFormatter, sortable: true },
+                { field: 'bo_qty', title: 'BO QTY', halign: 'center', align: 'center', sortable: true },
+                { field: 'bo_to_fill', title: 'BO Fill/ RG', halign: 'center', align: 'center', sortable: true },
+                { field: 'bo_to_date', title: 'BO Fill/ RG Date', halign: 'right', align: 'right', formatter: dateFormatter, sortable: true }
+			]
+		});
+
+		//enableLink(true);
+	});
+
+
+	function dateFormatter(dt) {
+		if (dt != null) {
+			var formattedDate = moment(dt).format('DD MMM YYYY');
+			return formattedDate;
+		}
+	};
+
+</script>

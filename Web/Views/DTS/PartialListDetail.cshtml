@@ -1,0 +1,62 @@
+﻿<table class="table table-bordered tableDataId" data-id-field="ID">
+    <thead>
+        <tr>
+            <th class="text-center" colspan="2">RTS</th>
+            <th class="text-center" colspan="2">On Board Vessel</th>
+
+            <th class="text-center" colspan="2">Port In</th>
+            <th class="text-center" colspan="2">Port Out</th>
+
+            <th class="text-center" colspan="2">PLB In</th>
+            <th class="text-center" colspan="2">PLB Out</th>
+
+            <th class="text-center" colspan="2">Yard In</th>
+            <th class="text-center" colspan="2">Yard Out</th>
+        </tr>
+        <tr>
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+            <th class="text-center">Plan</th>
+            <th class="text-center">Actual</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.listDetail)
+        {
+            <tr>
+                <td style="height:10px !important;" class="text-center">@(item.RTSPlan != null ? ((DateTime)item.RTSPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.RTSActual != null ? ((DateTime)item.RTSActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.OnBoardVesselPlan != null ? ((DateTime)item.OnBoardVesselPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.OnBoardVesselActual != null ? ((DateTime)item.OnBoardVesselActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PortInPlan != null ? ((DateTime)item.PortInPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PortInActual != null ? ((DateTime)item.PortInActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PortOutPlan != null ? ((DateTime)item.PortOutPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PortOutActual != null ? ((DateTime)item.PortOutActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PLBInPlan != null ? ((DateTime)item.PLBInPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PLBInActual != null ? ((DateTime)item.PLBInActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PLBOutPlan != null ? ((DateTime)item.PLBOutPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.PLBOutActual != null ? ((DateTime)item.PLBOutActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.YardInPlan != null ? ((DateTime)item.YardInPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.YardInActual != null ? ((DateTime)item.YardInActual).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.YardOutPlan != null ? ((DateTime)item.YardOutPlan).ToString("dd MMM yyyy") : "-")</td>
+                <td style="height:10px !important;" class="text-center">@(item.YardOutActual != null ? ((DateTime)item.YardOutActual).ToString("dd MMM yyyy") : "-")</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

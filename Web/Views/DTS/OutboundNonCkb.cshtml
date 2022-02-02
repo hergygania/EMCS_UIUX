@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Outbound Non CKB";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .btnForm {
+        width: 100px;
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div id="toolbar" class="col-md-8 toolbarBtn">
+                    <div class="row">
+                        @{
+                            if (ViewBag.allowCreate)
+                            {
+                                <a href="~/DTS/FormOutbound" class="btn btn-primary btnForm" id="btnCreateInbound"><i class="fa fa-plus-circle"></i> New</a>
+                            }
+                        }
+                        <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                            <input name="searchText" class="form-control" type="text" placeholder="Search Outbound" style="height: 32px;">
+                        </div>
+                    </div>
+                </div>
+                <table id="tableOutboundNonCkb" data-toolbar=".toolbar" data-show-export="true" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/OutboundNonCkb.cshtml.js")"></script>
+}

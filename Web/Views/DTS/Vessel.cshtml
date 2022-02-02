@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Vessel Schedule";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Filter</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="formFreightSearch">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">ETA JKT</label>
+                                <div class="col-md-6">
+                                    <input class="form-control" placeholder="ETA JKT Date" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">ETD JKT</label>
+                                <div class="col-md-6">
+                                    <input class="form-control" placeholder="ETD JKT Date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Vessel Name</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" placeholder="Vessel Name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button class="btn btn-success">Display Data</button>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <table class="table table-bordered" style="width:100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="vertical-align:middle;">Sailing Routes</th>
+                    <th class="text-center" style="vertical-align:middle;">Vessel Name</th>
+                    <th class="text-center" style="vertical-align:middle;">Closing Date</th>
+                    <th class="text-center" style="vertical-align:middle;">ETA Jakarta</th>
+                    <th class="text-center" style="vertical-align:middle;">ETD Jakarta</th>
+                    <th class="text-center" style="vertical-align:middle;">ETD Destination</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jakarta - Banjarmasin Balikpapan</td>
+                    <td>KK Nusantara Sejati</td>
+                    <td>22 May 2018</td>
+                    <td>23 May 2018</td>
+                    <td>29 May 2018</td>
+                    <td>
+                        29 May 2018 > Banjarmasin <br />
+                        31 May 2018 > Banjarmasin
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jakarta - Banjarmasin</td>
+                    <td>KM Priscilia</td>
+                    <td>22 May 2018</td>
+                    <td>23 May 2018</td>
+                    <td>29 May 2018</td>
+                    <td>
+                        29 May 2018 > Banjarmasin <br />
+                        31 May 2018 > Banjarmasin
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jakarta - Makassar</td>
+                    <td>KK MM Sejati</td>
+                    <td>22 May 2018</td>
+                    <td>23 May 2018</td>
+                    <td>29 May 2018</td>
+                    <td>
+                        29 May 2018 > Banjarmasin <br />
+                        31 May 2018 > Banjarmasin
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/Freight.cshtml.js")"></script>
+}
+
