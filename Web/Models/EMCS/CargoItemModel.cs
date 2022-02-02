@@ -1,15 +1,21 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Web.Mvc;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Models.EMCS
 {
     public class CargoItemModel
     {
+<<<<<<< HEAD
         public CargoItemModel()
         {
             listContainerType = new List<SelectListItem>();
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public long Id { get; set; }
 
         public long IdCargo { get; set; }
@@ -36,8 +42,11 @@ namespace App.Web.Models.EMCS
 
         public Nullable<decimal> Gross { get; set; }
 
+<<<<<<< HEAD
         public List<SelectListItem> listContainerType { get; set; }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public string CreateBy { get; set; }
 
         public DateTime CreateDate { get; set; }

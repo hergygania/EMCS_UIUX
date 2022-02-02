@@ -1350,7 +1350,11 @@ $(function () {
 
         enableLink(false);
         $.ajax({
+<<<<<<< HEAD
             url: myApp.fullPath + "DTS/DownloadOutbound",
+=======
+            url: myApp.fullPath  + "DTS/DownloadOutbound",
+>>>>>>> 639d8d0 (Intial commit)
             type: 'GET',
             data: {
                 PrimaryParam: PrimaryParam,
@@ -1367,7 +1371,11 @@ $(function () {
             },
             success: function (guid) {
                 enableLink(true);
+<<<<<<< HEAD
                 window.open(myApp.root + 'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
+=======
+                window.open(myApp.root +'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
+>>>>>>> 639d8d0 (Intial commit)
             },
             cache: false
         });
@@ -1408,13 +1416,21 @@ $(function () {
 
     $.ajax({
         type: "POST",
+<<<<<<< HEAD
         url: myApp.fullPath + 'DTS/GetMasterAction',
+=======
+        url: myApp.fullPath  + 'DTS/GetMasterAction',
+>>>>>>> 639d8d0 (Intial commit)
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
                 var items = [];
                 for (var x in result) {
+<<<<<<< HEAD
                     items.push({ id: result[x].Code, text: result[x].Description1 });
+=======
+                    items.push({ id: result[x].Code, text: result[x].Description1});
+>>>>>>> 639d8d0 (Intial commit)
                 }
                 $("#Action").select2({ placeholder: 'Select Activity', data: items });
                 $("#Action").val(null).trigger("change");
@@ -1428,7 +1444,11 @@ $(function () {
 
     $.ajax({
         type: "POST",
+<<<<<<< HEAD
         url: myApp.fullPath + 'DTS/GetMasterStatus',
+=======
+        url: myApp.fullPath  + 'DTS/GetMasterStatus',
+>>>>>>> 639d8d0 (Intial commit)
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
@@ -1546,6 +1566,7 @@ $(function () {
             }
         }
 
+<<<<<<< HEAD
 
 
         if ((outboundTracking.selectedRow.Action != 'PODC' && outboundTracking.selectedRow.Action != 'PODB') && outboundTracking.selectedRow.Status == 'BAST') {
@@ -1556,6 +1577,13 @@ $(function () {
             sAlert('Warning', "Activity POD must selected BAST status ", 'warning');
             return;
         }
+=======
+        if ((outboundTracking.selectedRow.Action != 'PODC' && outboundTracking.selectedRow.Action != 'PODB') && outboundTracking.selectedRow.Status == 'BAST') {
+            sAlert('Warning', "BAST status can be selected if the Activity is POD Customer", 'warning');
+            return;
+        }
+       
+>>>>>>> 639d8d0 (Intial commit)
         if (!isAnyUpdate) {
             sAlert('Warning', "no data changed", 'warning');
             return;

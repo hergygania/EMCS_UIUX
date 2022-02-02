@@ -9,13 +9,20 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowService.Library</RootNamespace>
     <AssemblyName>WindowService.Library</AssemblyName>
+<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+>>>>>>> 639d8d0 (Intial commit)
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+<<<<<<< HEAD
     <TargetFrameworkProfile />
+=======
+>>>>>>> 639d8d0 (Intial commit)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,7 +92,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+<<<<<<< HEAD
     <Reference Include="System.Web" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,7 +103,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Helper\NetworkShare.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="Library.cs" />
     <Compile Include="Model\BOMIT.cs" />
     <Compile Include="Model\BOMITTMP.cs" />

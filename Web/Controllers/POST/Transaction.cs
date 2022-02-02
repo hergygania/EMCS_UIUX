@@ -26,7 +26,11 @@ namespace App.Web.Controllers.POST
             return data;
         }
 
+<<<<<<< HEAD
         public ActionResult HomeVendor(int tab = 0, int landingpage = 0)
+=======
+        public ActionResult HomeVendor(int tab = 0)
+>>>>>>> 639d8d0 (Intial commit)
         {
             var userLogin = GetUserLogin();
             var Group = Service.POST.Global.GetGroupByUserId(userLogin);
@@ -38,8 +42,11 @@ namespace App.Web.Controllers.POST
             int Active = tab == 0 ? 1 : tab;
             ViewBag.TabDefault = Group == "POSTVENDOR" ? tab : Active;
 
+<<<<<<< HEAD
             ViewBag.LandingPage = landingpage;
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
             var param = new SearchHeader();
             ViewBag.CountPOIncoming = Service.POST.PO.GetTotalList(userLogin, param, "INCOMING");
             ViewBag.CountPOProgress = Service.POST.PO.GetTotalList(userLogin, param, "PROGRESS");
@@ -56,6 +63,7 @@ namespace App.Web.Controllers.POST
             return View();
         }
 
+<<<<<<< HEAD
         public ActionResult HomeFinance(int tab = 0)
         {
             var userLogin = GetUserLogin();
@@ -86,6 +94,8 @@ namespace App.Web.Controllers.POST
             return View();
         }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         //add detail
         public ActionResult Detail(int Id)
         {
@@ -586,8 +596,12 @@ namespace App.Web.Controllers.POST
             {
                 return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
+<<<<<<< HEAD
         }    
 
+=======
+        }
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult SaveItem(UpdateTrItem item, string saveType)
         {
             try
@@ -595,11 +609,19 @@ namespace App.Web.Controllers.POST
                 string itemId;
                 if (saveType == "NOTES")
                 {
+<<<<<<< HEAD
                     itemId = Service.POST.Transaction.UpdateItemNotes(item);
                 }
                 else
                 {
                     itemId = Service.POST.Transaction.UpdateItem(item);
+=======
+                    itemId = Service.POST.Transaction.UpadateItemNotes(item);
+                }
+                else
+                {
+                    itemId = Service.POST.Transaction.UpadateItem(item);
+>>>>>>> 639d8d0 (Intial commit)
                 }
 
 
@@ -611,6 +633,7 @@ namespace App.Web.Controllers.POST
             }
         }
 
+<<<<<<< HEAD
         public JsonResult SaveHardCopy(UpdateInvoiceHardCopy hardcopy)
         {
             try
@@ -626,6 +649,8 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 
         public JsonResult UpadateItemQtyPartial(string idItem, string qtyPartial)
@@ -741,6 +766,7 @@ namespace App.Web.Controllers.POST
             }
         }
 
+<<<<<<< HEAD
         public ActionResult DownloadGRData(string PoNo,string ItemId ="")
         {
             Guid guid = Guid.NewGuid();
@@ -782,18 +808,30 @@ namespace App.Web.Controllers.POST
         {
             var data = Service.POST.Transaction.GetDataRequestAttachmentById(id);
             byte[] fileBytes;
+=======
+        public FileResult DownloadFileRequest(int id)
+        {
+            var data = Service.POST.Transaction.GetDataRequestAttachmentById(id);
+>>>>>>> 639d8d0 (Intial commit)
             if (data != null)
             {
                 var pathFile = data.Path;
                 var fileNameOri = data.FileNameOri;
 
+<<<<<<< HEAD
                 fileBytes = System.IO.File.ReadAllBytes(pathFile);
+=======
+                var fileBytes = System.IO.File.ReadAllBytes(pathFile);
+>>>>>>> 639d8d0 (Intial commit)
                 return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileNameOri);
             }
             else
                 return null;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public FileResult DownloadFileRequestAll(int requestid)
         {
 
@@ -810,7 +848,11 @@ namespace App.Web.Controllers.POST
                 for (int i = 0; i < data.Count; i++)
                 {
                     var pathFile = data[i].Path;
+<<<<<<< HEAD
 
+=======
+                   
+>>>>>>> 639d8d0 (Intial commit)
                     if (fileNameOri != data[i].FileNameOri)
                     {
                         ZipEntry entry = new ZipEntry(Path.GetFileName(pathFile));
@@ -847,7 +889,11 @@ namespace App.Web.Controllers.POST
             return File(finalResult, "application/zip", fileName);
 
         }
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult UpdateNameAttachment(int id, string name)
         {
             try
@@ -994,7 +1040,10 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", msg = ex.InnerException.Message, result = data }, JsonRequestBehavior.AllowGet);
             }
         }
+<<<<<<< HEAD
         #region ListPO
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult GetListPOInComing(string user, SearchHeader param)
         {
             try
@@ -1067,6 +1116,7 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+<<<<<<< HEAD
         #endregion
 
         #region ListInvoiceFinance
@@ -1152,6 +1202,8 @@ namespace App.Web.Controllers.POST
 
 
         #endregion
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public JsonResult GetListItemByRequestId(int requestId, SearchDetail param)
         {
@@ -1330,6 +1382,7 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+<<<<<<< HEAD
         public JsonResult HarcopyInvoiceDelete(int Id)
         {
             try
@@ -1342,6 +1395,8 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult GetItemPartialListById(int Id)
         {
             try
@@ -1355,6 +1410,7 @@ namespace App.Web.Controllers.POST
             }
         }
 
+<<<<<<< HEAD
         public JsonResult GetHardCopyInvoiceByInvoiceId(int Id)
         {
             try
@@ -1380,6 +1436,8 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public JsonResult GetItemPartialById(int Id)
         {
@@ -1450,6 +1508,7 @@ namespace App.Web.Controllers.POST
         }
         #endregion
 
+<<<<<<< HEAD
         public JsonResult GetSelectFileNameInvoice(Int64 id)
         {
             try
@@ -1462,6 +1521,8 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         #region checking Request
         public JsonResult IsTaskByUser(int id)
         {
@@ -1505,7 +1566,11 @@ namespace App.Web.Controllers.POST
                
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+<<<<<<< HEAD
             catch (Exception )
+=======
+            catch (Exception ex)
+>>>>>>> 639d8d0 (Intial commit)
             {
                 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1520,7 +1585,11 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+<<<<<<< HEAD
             catch (Exception )
+=======
+            catch (Exception ex)
+>>>>>>> 639d8d0 (Intial commit)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1536,7 +1605,11 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+<<<<<<< HEAD
             catch (Exception)
+=======
+            catch (Exception ex)
+>>>>>>> 639d8d0 (Intial commit)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1552,7 +1625,11 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+<<<<<<< HEAD
             catch (Exception )
+=======
+            catch (Exception ex)
+>>>>>>> 639d8d0 (Intial commit)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);

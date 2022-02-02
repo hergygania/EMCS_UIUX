@@ -21,7 +21,11 @@ namespace App.Web.Controllers.DTS
     {
         private readonly string ServerMapPath = "~/Upload/DTS/deliveryrequisition/";
 
+<<<<<<< HEAD
         
+=======
+        // GET: DailyReport
+>>>>>>> 639d8d0 (Intial commit)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult DeliveryRequisitionListV1()
         {
@@ -148,9 +152,12 @@ namespace App.Web.Controllers.DTS
                     var formType = formColl.formType;
                     formColl.ExpectedTimeLoading = (formColl.ExpectedTimeLoading == null) ? DateTime.Now : formColl.ExpectedTimeLoading;
                     formColl.ExpectedTimeArrival = (formColl.ExpectedTimeArrival == null) ? DateTime.Now : formColl.ExpectedTimeArrival;
+<<<<<<< HEAD
                     formColl.Province = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Province, "Provinsi");
                     formColl.Kabupaten = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kabupaten,"Kabupaten");
                     formColl.Kecamatan = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kecamatan, "Kecamatan");
+=======
+>>>>>>> 639d8d0 (Intial commit)
                     DeliveryRequisition header = new DeliveryRequisition();
                     header = formColl.CastToDR();
                     var ReqNameAccess = Service.Master.UserAcces.GetUserRoles(userId);
@@ -220,6 +227,7 @@ namespace App.Web.Controllers.DTS
         [HttpPost]
         public JsonResult DeliveryRequisitionProccess(string formType, DeliveryRequisition item, List<DeliveryRequisitionUnit> detailUnits)
         {
+<<<<<<< HEAD
             Int64 DRID = item.ID;
             item.ReRouted = false;
             item.RefNo = (item.RefNo ?? "").Trim();
@@ -275,6 +283,22 @@ namespace App.Web.Controllers.DTS
                     res = Service.DTS.DeliveryRequisition.crud(formType, header, detailUnits);
                 }
                  
+=======
+            item.ReRouted = false;
+            item.RefNo = (item.RefNo ?? "").Trim();
+            if (formType == "U")
+            {
+                //var item = formColl;
+                var header = Service.DTS.DeliveryRequisition.GetId(item.ID);
+
+                if (header.Status == "rerouted")
+                {
+                    item.Status = "complete";
+                }
+
+                ViewBag.crudMode = formType;
+                var res = Service.DTS.DeliveryRequisition.crud(formType, item, detailUnits);
+>>>>>>> 639d8d0 (Intial commit)
                 if (res > 0)
                 {                
 
@@ -282,8 +306,11 @@ namespace App.Web.Controllers.DTS
                     {
                         sendingEmailDR(item.Status, item.ID);
                     }
+<<<<<<< HEAD
               
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
                     return JsonCRUDMessage(ViewBag.crudMode);
                 }
                 else
@@ -359,6 +386,7 @@ namespace App.Web.Controllers.DTS
             var paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
             return Json(paging, JsonRequestBehavior.AllowGet);
         }
+<<<<<<< HEAD
 
         public ActionResult DeliveryRequisitionIncomingPage()
         {
@@ -384,6 +412,8 @@ namespace App.Web.Controllers.DTS
             var paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
             return Json(paging, JsonRequestBehavior.AllowGet);
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         //public ActionResult DeliveryRequisitionPageAllNotif()
         //{
         //    this.PaginatorBoot.Remove("SessionTRN");
@@ -473,6 +503,7 @@ namespace App.Web.Controllers.DTS
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
         public JsonResult getMasterDistrict(string key,string provinsiId)
         {
             var item = Service.DTS.MasterDistrict.GetListFilter(key,provinsiId);
@@ -482,6 +513,17 @@ namespace App.Web.Controllers.DTS
         public JsonResult getMasterSubDistrict(string key,string districtId)
         {
             var item = Service.DTS.MasterSubDistrict.GetListFilter(key, districtId);
+=======
+        public JsonResult getMasterDistrict(string key)
+        {
+            var item = Service.DTS.MasterDistrict.GetListFilter(key);
+            return Json(item, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getMasterSubDistrict(string key)
+        {
+            var item = Service.DTS.MasterSubDistrict.GetListFilter(key);
+>>>>>>> 639d8d0 (Intial commit)
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
@@ -641,13 +683,18 @@ namespace App.Web.Controllers.DTS
             try
             {
                 string response = client.UploadString(emailUrl, json);
+<<<<<<< HEAD
                 
+=======
+                //Log(response);
+>>>>>>> 639d8d0 (Intial commit)
             }
             catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
         }
+<<<<<<< HEAD
         public JsonResult GetStatusDR(Int64 Id)
         {
 
@@ -656,11 +703,14 @@ namespace App.Web.Controllers.DTS
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public JsonResult GetDRExist(string refNo)
         {
           
             var header = Service.DTS.DeliveryRequisition.GetDRExistDetail(refNo);
+<<<<<<< HEAD
             List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();     
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
@@ -769,6 +819,16 @@ namespace App.Web.Controllers.DTS
             }
         }
 
+=======
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
+            //if (items != null && items.Count() > 0)
+            //{
+
+            //}
+            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+>>>>>>> 639d8d0 (Intial commit)
 
         public JsonResult GetDRReferenceNo(string keyType, string number)
         {
@@ -799,7 +859,12 @@ namespace App.Web.Controllers.DTS
                         if (header.RefType == "SO")
                         {
                             header.SoNo = header.RefNo;
+<<<<<<< HEAD
                             header.SoDate = header.RefNoDate;                            
+=======
+                            header.SoDate = header.RefNoDate;
+                            // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
+>>>>>>> 639d8d0 (Intial commit)
                         }
                         else if (header.RefType == "STR")
                         {
@@ -860,7 +925,12 @@ namespace App.Web.Controllers.DTS
                     if (header.RefType == "SO")
                     {
                         header.SoNo = header.RefNo;
+<<<<<<< HEAD
                         header.SoDate = header.RefNoDate;                       
+=======
+                        header.SoDate = header.RefNoDate;
+                        // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
+>>>>>>> 639d8d0 (Intial commit)
                     }
                     else if (header.RefType == "STR")
                     {

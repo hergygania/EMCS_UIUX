@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using System.Text.RegularExpressions;
 using System.Dynamic;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Service.EMCS
 {
@@ -28,6 +31,7 @@ namespace App.Service.EMCS
             }
         }
 
+<<<<<<< HEAD
         public static dynamic NpePebList(GridListFilter crit)
         {
             try
@@ -67,15 +71,20 @@ namespace App.Service.EMCS
             }
         }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public static Data.Domain.EMCS.ReturnSpInsert InsertNpePeb(Data.Domain.EMCS.NpePeb item, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
+<<<<<<< HEAD
                 string strNpeDateSubmitToCustomOffice = "";
                 if (item.NpeDateSubmitToCustomOffice.HasValue)
                 {
                     strNpeDateSubmitToCustomOffice = item.NpeDateSubmitToCustomOffice.Value.ToString();
                 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@Id", item.Id));
@@ -104,11 +113,15 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@UpdateDate", ""));
                 parameterList.Add(new SqlParameter("@IsDelete", false));
                 parameterList.Add(new SqlParameter("@RegistrationNumber", item.RegistrationNumber ?? ""));
+<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
                 SqlParameter[] parameters = parameterList.ToArray();
 
                 // ReSharper disable once CoVariantArrayConversion
+<<<<<<< HEAD
                 try
                 {
                     var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber , @NpeDateSubmitToCustomOffice", parameters).FirstOrDefault();
@@ -174,6 +187,10 @@ namespace App.Service.EMCS
                     throw ex;
                 }
 
+=======
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber", parameters).FirstOrDefault();
+                return data;
+>>>>>>> 639d8d0 (Intial commit)
             }
         }
 
@@ -260,6 +277,7 @@ namespace App.Service.EMCS
                 return 1;
             }
         }
+<<<<<<< HEAD
         public static bool NpePebHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -278,6 +296,8 @@ namespace App.Service.EMCS
 
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
     }
 }

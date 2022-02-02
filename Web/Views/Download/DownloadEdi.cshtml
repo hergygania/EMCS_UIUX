@@ -264,6 +264,7 @@
                         </td>
                         <td></td>
                         <td class="border_top border_left table-title-data text_bold">
+<<<<<<< HEAD
                             @if (Model.TemplateHeader.ShipDelivery == "Bill To")
                             {
                                 <div >BILL TO</div>
@@ -274,6 +275,11 @@
                                     @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
                                 </div>}
 
+=======
+                            <div>
+                                @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
+                            </div>
+>>>>>>> 639d8d0 (Intial commit)
                         </td>
                     </tr>
                     <tr>
@@ -386,8 +392,11 @@
                     </tr>
                 </table>
                 <div>&nbsp;</div>
+<<<<<<< HEAD
                 
                
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 <table>
                     <tr>
                         <td colspan="13" class="tableda text_9">
@@ -395,12 +404,15 @@
                         </td>
                     </tr>
                 </table>
+<<<<<<< HEAD
             
                 <table class="">
                     <tr>
                         <td><img src="@ViewBag.QrCodeUrlEDI" height="150px" width="150px" /></td>
                     </tr>
                 </table>
+=======
+>>>>>>> 639d8d0 (Intial commit)
             </div>
         </div>
     </div>

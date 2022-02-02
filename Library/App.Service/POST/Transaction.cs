@@ -118,7 +118,11 @@ namespace App.Service.POST
             }
         }
 
+<<<<<<< HEAD
         public static string UpdateItem(UpdateTrItem item)
+=======
+        public static string UpadateItem(UpdateTrItem item)
+>>>>>>> 639d8d0 (Intial commit)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
             {
@@ -136,7 +140,11 @@ namespace App.Service.POST
                 parameterList.Add(new SqlParameter("@QtyPartial", item.QtyPartial ?? ""));
                 parameterList.Add(new SqlParameter("@QtyPartial_Id", item.QtyPartialId ?? ""));
                 SqlParameter[] parameters = parameterList.ToArray();
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 639d8d0 (Intial commit)
                 var data = db.DbContext.Database.SqlQuery<string>(@"exec [dbo].[SP_TrItem_UPDATE]
                 	@id		  
                   , @status  
@@ -155,7 +163,11 @@ namespace App.Service.POST
             }
         }
 
+<<<<<<< HEAD
         public static string UpdateItemNotes(UpdateTrItem item)
+=======
+        public static string UpadateItemNotes(UpdateTrItem item)
+>>>>>>> 639d8d0 (Intial commit)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
             {
@@ -175,6 +187,7 @@ namespace App.Service.POST
                 return data;
             }
         }
+<<<<<<< HEAD
 
         public static Int64 UpdateHardCopy(UpdateInvoiceHardCopy hardcopy)
         {
@@ -215,6 +228,18 @@ namespace App.Service.POST
                 if (data != null)
                 {
                     data.suratketerangantidakpotongpajak = suratketerangan;
+=======
+        public static int UpdateInvoice(int id,  string suratketerangan)
+        {
+           
+            using (var db = new Data.POSTContext())
+            {
+                
+                var data = (from p in db.TrPO where p.IdRequest == id select p).FirstOrDefault();
+                if (data != null)
+                {
+                    data.suratketerangantidakpotongpajak = suratketerangan;  
+>>>>>>> 639d8d0 (Intial commit)
                     db.SaveChanges();
                 }
             }
@@ -359,7 +384,11 @@ namespace App.Service.POST
 
         #region Attachment
 
+<<<<<<< HEAD
         public static int UpdateItemMappingUploadInvoice(int idItem, int attachmentId, bool selected, int requestId)
+=======
+        public static int UpdateItemMappingUploadInvoice(int idItem, int attachmentId, bool selected,int requestId)
+>>>>>>> 639d8d0 (Intial commit)
         {
             var model = new MappingUploadItem();
             var userLogin = SiteConfiguration.UserName;
@@ -427,7 +456,11 @@ namespace App.Service.POST
             }
             return 1;
         }
+<<<<<<< HEAD
 
+=======
+     
+>>>>>>> 639d8d0 (Intial commit)
         public static int UpdateItemDocType(int idItem, int attachmentId, string dataselected)
         {
             using (var db = new Data.POSTContext())
@@ -449,9 +482,15 @@ namespace App.Service.POST
             }
             return 1;
         }
+<<<<<<< HEAD
 
 
         public static int RejectAttachment(int attachmentId, bool reject, string rejectnote)
+=======
+               
+
+        public static int RejectAttachment(int attachmentId, bool reject,string rejectnote)
+>>>>>>> 639d8d0 (Intial commit)
         {
             using (var db = new Data.POSTContext())
             {
@@ -465,7 +504,11 @@ namespace App.Service.POST
             return 1;
         }
 
+<<<<<<< HEAD
         public static int ApproveAttachment(int attachmentId, bool approve, string role, string note)
+=======
+        public static int ApproveAttachment(int attachmentId, bool approve,string role,string note)
+>>>>>>> 639d8d0 (Intial commit)
         {
             using (var db = new Data.POSTContext())
             {
@@ -473,7 +516,11 @@ namespace App.Service.POST
                 data.IsRejected = false;
 
                 data.ApproveDateFinance = DateTime.Now;
+<<<<<<< HEAD
                 if (role == "Administrator,POSTFINANCE" || role == "Administrator,POSTFINANCEBRANCH")
+=======
+                if (role == "Administrator,POSTFINANCE" ||  role == "Administrator,POSTFINANCEBRANCH")
+>>>>>>> 639d8d0 (Intial commit)
                 {
                     data.IsApprove = approve;
                     data.Notes += " Finance : " + note;
@@ -534,11 +581,18 @@ namespace App.Service.POST
             var path = Global.GetParameterByName("PATH_ATTACHMENT");
             var userLogin = SiteConfiguration.UserName;
             var fileName = fileNameOri;
+<<<<<<< HEAD
             var FileNameKOFAX = "";
             var PO_Number = "";
             var Destination = "";
             var BusinessArea = "";
             var CreateBySAP = "";
+=======
+            //var FileNameKOFAX = "";
+            var PO_Number = "";
+            var Destination = "";
+            var BusinessArea = "";
+>>>>>>> 639d8d0 (Intial commit)
 
             using (var db = new Data.POSTContext())
             {
@@ -554,7 +608,11 @@ namespace App.Service.POST
                     PO_Number = DataItem.Po_Number;
                     Destination = DataItem.Destination;
                     BusinessArea = DataItem.BusinessArea;
+<<<<<<< HEAD
                     CreateBySAP = DataItem.CreateBySAP;
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
                     if (codeAttachment == "BAST") {
                         Approved = true;
                         FlowProcessID = 1665;
@@ -568,10 +626,17 @@ namespace App.Service.POST
 
                     }
                 }
+<<<<<<< HEAD
                 //FileNameKOFAX = "POST" + "_" + BusinessArea + "_" + PO_Number + ".pdf";
                 model.RequestID = requestId;
                 model.ItemID = ItemID;
                
+=======
+
+                model.RequestID = requestId;
+                model.ItemID = ItemID;
+                model.Path = path;
+>>>>>>> 639d8d0 (Intial commit)
                 model.FileName = fileName;
                 model.FileNameOri = Path.GetFileName(fileNameOri);
                 model.CodeAttachment = codeAttachment;
@@ -586,6 +651,7 @@ namespace App.Service.POST
                 model.FlowID = 1072;
                 model.FlowProcessID = FlowProcessID;
                 model.FlowProcessStatusID = FlowProcessStatusID;
+<<<<<<< HEAD
               
                 if (codeAttachment == "BAST")
                 {
@@ -636,10 +702,45 @@ namespace App.Service.POST
                 db.SaveChanges();
 
                 UpdateItemMappingUpload(ItemID, (int)model.ID, true);
+=======
+
+                db.TrRequestAttachment.Add(model);
+                db.SaveChanges();
+
+
+                fileName = model.CodeAttachment + "_" + model.ID + "_" + fileNameOri;
+                path = Global.CreateShareFolderRequest(path, model.UploadedDate, model.RequestID);
+                Global.SaveFileToShareFolderRequest(path, fileName, file);
+
+              
+
+
+                model.FileName = fileName;
+                model.Path = path + fileName;
+                //model.FileNameKOFAX = FileNameKOFAX;
+                db.SaveChanges();
+
+                if (codeAttachment == "BAST" )
+                {
+                    UpdateItemMappingUpload(ItemID, (int)model.ID, true);
+                }
+                else if (codeAttachment == "INVOICE")
+                {
+                    UpdateItemMappingUpload(ItemID, (int)model.ID, true);
+
+                    //SEND TO SHARE FOLDER KOFAX
+                    //FileNameKOFAX = "POST_BusArea_PONo_xxxxx.pdf";
+                    //FileNameKOFAX = "POST" + "_" + BusinessArea + "_" + PO_Number + ".pdf";
+
+                    //path = Global.CreateShareFolderRequest(path, model.UploadedDate, model.RequestID);
+                    //Global.SaveFileToShareFolderRequest(path, FileNameKOFAX, file);
+                }
+>>>>>>> 639d8d0 (Intial commit)
 
                 return model.ID;
             }
         }
+<<<<<<< HEAD
         public static int CheckKOFAXVendor(string Destination)
         {
             int KOFAXVendor = 0;
@@ -658,6 +759,9 @@ namespace App.Service.POST
             }
             return KOFAXVendor;
         }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         public static TrRequestAttachment GetDataRequestAttachmentById(int id)
         {
             using (var db = new Data.POSTContext())
@@ -671,7 +775,11 @@ namespace App.Service.POST
             List<TrRequestAttachment> DataAttachment = new List<TrRequestAttachment>();
             using (var db = new Data.POSTContext())
             {
+<<<<<<< HEAD
                 DataAttachment = (from p in db.TrRequestAttachment where p.RequestID == requestid && p.IsRejected == false orderby p.FileNameOri select p ).ToList();
+=======
+                DataAttachment = (from p in db.TrRequestAttachment where p.RequestID == requestid orderby p.FileNameOri select p ).ToList();
+>>>>>>> 639d8d0 (Intial commit)
                 return DataAttachment;
             }
         }

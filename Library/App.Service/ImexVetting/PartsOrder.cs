@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Data;
 using System.Globalization;
 using System.Linq;
 using App.Data;
+=======
+using System.Linq;
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Service.Vetting
 {
@@ -51,6 +55,7 @@ VettingRoute	Ket							Status	Ket
 		{
 			using(var db = new Data.EfDbContext())
 			{
+<<<<<<< HEAD
                 #region Old Code Not Work Dips
 
                 //var tpart = db.partsorders.where(w => true);
@@ -263,6 +268,145 @@ VettingRoute	Ket							Status	Ket
 			public string agreementType { get; set; }
 			public string storeNumber { get; set; }
 			public string daNumber { get; set; }
+=======
+
+                
+                var tPart = db.PartsOrders.Where(w => true);
+
+				var isfreight = freight == 1 ? true : false;
+				var si = db.ShippingInstructions.Where(w => w.IsSeaFreight == isfreight);
+
+				//var tPart = db.PartsOrders.Where(w => w.ShippingInstructionID == freight);
+				//if(vettingRoute==1)
+				//	tPart = tPart.Where(w => w.VettingRoute <= vettingRoute);
+				//else
+				//tPart = tPart.Where(w => w.VettingRoute == vettingRoute);
+
+				if(!string.IsNullOrEmpty(invoiceNo))
+					tPart = tPart.Where(w => w.InvoiceNo.Contains(invoiceNo));
+
+				if(!string.IsNullOrEmpty(jCode))
+					tPart = tPart.Where(w => jCode.Contains(w.JCode));
+
+				if(!string.IsNullOrEmpty(agreementType))
+					tPart = tPart.Where(w => agreementType.Contains(w.AgreementType));
+
+				if(!string.IsNullOrEmpty(storeNumber))
+					tPart = tPart.Where(w => w.StoreNumber.Contains(storeNumber));
+
+				if(!string.IsNullOrEmpty(daNumber))
+					tPart = tPart.Where(w => w.DA.Contains(daNumber));
+
+				if(dateSta.HasValue && dateFin.HasValue)
+					tPart = tPart.Where(w => w.InvoiceDate >= dateSta.Value && w.InvoiceDate <= dateFin.Value);
+
+				if(freightShippId.HasValue) { 
+					tPart = tPart.Where(w => w.ShippingInstructionID == freightShippId.Value);
+					si = si.Where(w => w.ShippingInstructionID == freightShippId.Value);
+				}
+
+				// look upp from shipment survey
+				if(!string.IsNullOrEmpty(shipmentMode) && shipmentMode.ToLower() == "survey" && vettingRoute == 2)
+				{
+					var except = (from c in db.PartsOrderDetails
+                                  from m in db.StagingPartsMapping.Where(mp => mp.PartNumber == c.PartsNumber)
+                                  from o in db.OrderMethods.Where(w => w.OMCode == m.OM && w.VettingRoute.Value == 2)
+												from s in db.SurveyDetails.Where(w => w.PartsOrderDetailID == c.DetailID).DefaultIfEmpty()
+												where s==null && o.OMID != null
+                                  select new { c.PartsOrderID })
+											.GroupBy(g => g.PartsOrderID)
+											.Select(s => new { partsOrderID = s.Key });
+
+					tPart = from c in tPart.Where(w => w.SurveyDate.HasValue == true)
+									from _c in except.Where(w => w.partsOrderID == c.PartsOrderID).DefaultIfEmpty()
+									where _c != null
+									select c;
+				}
+                    
+
+				if(vettingRoute == 1)
+				{
+					var except = (from c in db.PartsOrderDetails
+                                                from m in db.StagingPartsMapping.Where(mp => mp.PartNumber == c.PartsNumber)
+												from o in db.OrderMethods.Where(w => w.OMCode == m.OM && w.VettingRoute.Value == 1)
+												where (!c.ReturnToVendor.HasValue || c.ReturnToVendor == 0) && o.OMID != null
+												select new { c.PartsOrderID })
+											.GroupBy(g => g.PartsOrderID)
+                                            .Select(s => new { partsOrderID = s.Key });
+                    tPart = from c in tPart
+									from _c in except.Where(w => w.partsOrderID == c.PartsOrderID).DefaultIfEmpty()
+									where _c != null
+									select c;
+				}
+				else if(vettingRoute == 2)
+				{
+					var except = (from c in db.PartsOrderDetails
+                                  from m in db.StagingPartsMapping.Where(mp => mp.PartNumber == c.PartsNumber)
+                                  from o in db.OrderMethods.Where(w => w.OMCode == m.OM && w.VettingRoute.Value == 2)
+												where (!c.ReturnToVendor.HasValue || c.ReturnToVendor == 0) && o.OMID != null
+												select new { c.PartsOrderID })
+											.GroupBy(g => g.PartsOrderID)
+											.Select(s => new { partsOrderID = s.Key });
+					tPart = from c in tPart
+									from _c in except.Where(w => w.partsOrderID == c.PartsOrderID).DefaultIfEmpty()
+									where _c != null
+									select c;
+				}
+				else if(vettingRoute == 3)
+				{
+					var except = (from c in db.PartsOrderDetails
+                            from m in db.StagingPartsMapping.Where(mp => mp.PartNumber == c.PartsNumber)
+                                  from o in db.OrderMethods.Where(w => w.OMCode == m.OM)
+												where (!c.ReturnToVendor.HasValue || c.ReturnToVendor==0) && o.OMID != null
+                                                select new { c.PartsOrderID })
+											.GroupBy(g => g.PartsOrderID)
+											.Select(s => new { partsOrderID = s.Key });
+					tPart = from c in tPart
+									from _c in except.Where(w => w.partsOrderID == c.PartsOrderID)
+                                    where _c != null
+                                    select c;
+				}
+				//else if(vettingRoute == 3)
+				//{
+				//	var except = (from c in db.PartsOrderDetails
+				//								from o in db.OrderMethods.Where(w => w.OMID == c.OMID && w.VettingRoute.Value == 3)
+				//								select new { c.PartsOrderID })
+				//							.GroupBy(g => g.PartsOrderID)
+				//							.Select(s => new { partsOrderID = s.Key });
+				//	tPart = from c in tPart
+				//					from _c in except.Where(w => w.partsOrderID == c.PartsOrderID).DefaultIfEmpty()
+				//					where _c == null
+				//					select c;
+				//}
+
+				var list = (from c in tPart
+                                        from d in db.PartsOrderDetails.Where(w => w.PartsOrderID == c.PartsOrderID)
+                            //from o in db.OrderMethods.Where(w => w.OMID == d.OMID && w.VettingRoute == vettingRoute)
+                            from i in si.Where(w => w.ShippingInstructionID == c.ShippingInstructionID)
+                            from shp in db.ShipmentManifestDetails.Where(w => w.PartsOrderID == c.PartsOrderID).DefaultIfEmpty()
+                            where shp == null
+										select c).ToList();
+
+				#region old
+				//if(vettingRoute == 1)
+				//{
+				//	var except = (from c in db.PartsOrderDetails
+				//								from o in db.OrderMethods.Where(w => w.OMID == c.OMID && (w.VettingRoute.Value == 2 || w.VettingRoute.Value == 3))
+				//								select new { c.PartsOrderID })
+				//							.GroupBy(g => g.PartsOrderID)
+				//							.Select(s => new { partsOrderID = s.Key }).ToList();
+
+				//	//list = list.Where(p => !except.Select(s => s.partsOrderID).Contains(p.PartsOrderID)).AsParallel().ToList();
+				//	list = (from c in list
+				//					from x in except.Where(w => w.partsOrderID == c.PartsOrderID).DefaultIfEmpty()
+				//					where x == null
+				//					select c).ToList();
+				//}
+				#endregion
+
+				return list;
+			}
+>>>>>>> 639d8d0 (Intial commit)
 		}
 
 		public static Data.Domain.PartsOrder GetId(long id)

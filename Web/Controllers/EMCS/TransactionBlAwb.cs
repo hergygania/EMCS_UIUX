@@ -15,13 +15,17 @@ using System.Net;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+<<<<<<< HEAD
 using System.ComponentModel;
 using System;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+<<<<<<< HEAD
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult BLAWBList()
@@ -48,6 +52,8 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcBlAwb.BLAWBList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public ActionResult BlAwbRevise(Data.Domain.EMCS.GridListFilter filter)
         {
             ApplicationTitle();
@@ -75,10 +81,13 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             var data = new BlAwbModel();
+<<<<<<< HEAD
             if (filter.Rfc)
                 ViewBag.CanRequestForChange = true;
             else
                 ViewBag.CanRequestForChange = false;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             data.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Id);
             data.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(filter.Id);
             data.Request = Service.EMCS.SvcRequestCl.GetRequestCl(filter.Id);
@@ -176,6 +185,7 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public ActionResult DraftBlAwb(Data.Domain.EMCS.BlAwb form, string status)
         {
+<<<<<<< HEAD
             if (form.Id > 0 && form.CreateBy != SiteConfiguration.UserName)
             {
                 var model = new BlAwbModel();
@@ -270,6 +280,10 @@ namespace App.Web.Controllers.EMCS
                 Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
             }
             return Json(new { data }, JsonRequestBehavior.AllowGet);
+=======
+            long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
+            return JsonMessage("This ticket has been " + status, 0, data);
+>>>>>>> 639d8d0 (Intial commit)
         }
 
     }

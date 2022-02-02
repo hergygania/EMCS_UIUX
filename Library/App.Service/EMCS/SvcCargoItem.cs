@@ -10,8 +10,13 @@ using App.Data.Domain.EMCS;
 namespace App.Service.EMCS
 {
 
+<<<<<<< HEAD
 
     /// <summary> Services Proses Shipment inbound.</summary>                
+=======
+    /// <summary>
+    /// Services Proses Shipment inbound.</summary>                
+>>>>>>> 639d8d0 (Intial commit)
     public class SvcCargoItem
     {
         public const string CacheName = "App.EMCS.SvcCargoItem";
@@ -28,6 +33,7 @@ namespace App.Service.EMCS
             }
         }
 
+<<<<<<< HEAD
         public static List<SpCargoItemDetail> GetDataByCargoId(List<long> ids)
         {
             try
@@ -47,6 +53,8 @@ namespace App.Service.EMCS
             }
         }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public static long Insert(CargoItem item, long itemId, string dml)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -128,6 +136,7 @@ namespace App.Service.EMCS
             }
         }
 
+<<<<<<< HEAD
         //public static dynamic GetTotalDataCargo(long id)
         //{
         //    using (var db = new Data.EmcsContext())
@@ -177,6 +186,9 @@ namespace App.Service.EMCS
         //    }
         //}
         public static dynamic GetTotalDataCargo(long id,string selectvalue) 
+=======
+        public static dynamic GetTotalDataCargo(long id)
+>>>>>>> 639d8d0 (Intial commit)
         {
             using (var db = new Data.EmcsContext())
             {
@@ -203,6 +215,7 @@ namespace App.Service.EMCS
                 dynamic result = new ExpandoObject();
                 if (dataItem.Count > 0)
                 {
+<<<<<<< HEAD
                     if(selectvalue == "NoItem")
                     {
                         result.totalPackage = dataItem.GroupBy(a => new { a.Id, a.IdCipl }).Count();
@@ -212,6 +225,9 @@ namespace App.Service.EMCS
                         result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
                     }
                     
+=======
+                    result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
+>>>>>>> 639d8d0 (Intial commit)
                     //result.totalPackage = dataItem.GroupBy(a => a.CaseNumber && a.IdCipl).Count();
                     // ReSharper disable once PossibleInvalidOperationException
                     result.totalNetWeight = dataItem.GroupBy(a => a.IdCargo).Select(a => a.Sum(x => x.Net)).FirstOrDefault().Value;

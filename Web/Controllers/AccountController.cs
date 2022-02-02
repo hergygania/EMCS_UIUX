@@ -428,11 +428,15 @@ namespace App.Web.Controllers
                     pwd = builder.ToString();
                 }
             }
+<<<<<<< HEAD
             catch(Exception ex)
             {
                 throw ex;
                 err = true; 
             }
+=======
+            catch { err = true; }
+>>>>>>> 639d8d0 (Intial commit)
 
             if (item == null || string.IsNullOrEmpty(item.UserID) || err)
             {
@@ -448,6 +452,7 @@ namespace App.Web.Controllers
                 return 3;
             }
 
+<<<<<<< HEAD
             //if (hashPassword != pwd && isPortal == false)
             //{
             //    var wrong = await Service.Master.UserAcces.SetPasswordWrong(userName);
@@ -455,6 +460,15 @@ namespace App.Web.Controllers
             //}
             //else
             //{
+=======
+            if (hashPassword != pwd && isPortal == false)
+            {
+                var wrong = await Service.Master.UserAcces.SetPasswordWrong(userName);
+                return 4;
+            }
+            else
+            {
+>>>>>>> 639d8d0 (Intial commit)
                 string isAdmin = ("" + item.RoleAccess).ToLower().Contains("administrator") ? "true" : "false";
 
                 Authentication.WriteCookie(System.Web.HttpContext.Current, item.UserID, item.UserID,
@@ -468,7 +482,11 @@ namespace App.Web.Controllers
                 }
 
                 return 0;//RedirectToLocal(_url);
+<<<<<<< HEAD
             //}
+=======
+            }
+>>>>>>> 639d8d0 (Intial commit)
         }
 
         private static string CalculatedMD5Hash(string strPassword)

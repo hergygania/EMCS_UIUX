@@ -48,6 +48,9 @@
         public string SealNo { get; set; }
         public string SignedName { get; set; }
         public string SignedPosition { get; set; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

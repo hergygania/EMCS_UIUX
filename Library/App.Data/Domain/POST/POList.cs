@@ -164,12 +164,17 @@ namespace App.Data.Domain.POST
         public int? CountNotUploadedBAST { get; set; }
         public int? CountHasUploadedInvoice { get; set; }
         public int? CountNotUploadedInvoice { get; set; }
+<<<<<<< HEAD
         public int? CountHasSubmitHardcopyInvoice { get; set; }
         public int? CountNotSubmitHardcopyInvoice { get; set; }
         public int? CountReviewInvoice { get; set; }
         public int? CountPOSTINGSAP { get; set; }
         public int? CountKOFAXUpload { get; set; }
         public int? CountKOFAXNotUpload { get; set; }
+=======
+        public int? CountReviewInvoice { get; set; }
+        public int? CountPOSTINGSAP { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
         public string Inv_Posting_Date { get; set; }
         public string GR_Posting_Date { get; set; }
         public string Delivery_Doc_Date { get; set; }
@@ -279,7 +284,10 @@ namespace App.Data.Domain.POST
         public string Status { get; set; }
         public string Po_Number { get; set; }
         public string BusinessArea { get; set; }
+<<<<<<< HEAD
         public string CreateBySAP { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 
     public class HistoryPOById_List

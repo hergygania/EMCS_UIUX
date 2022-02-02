@@ -122,8 +122,11 @@ namespace App.Data.Domain
         public bool? SendEmailToServiceTUBatuLicin { get; set; }
         public bool? SendEmailToServiceTUSangatta { get; set; }
         public bool? SendEmailToServiceTUKendari { get; set; }
+<<<<<<< HEAD
         public bool? SendEmailToServiceTUMeulaboh { get; set; }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public string RequestNotes { get; set; }
         public string SendEmailNotes { get; set; }
         public string ActivityTracking { get; set; }
@@ -238,13 +241,21 @@ namespace App.Data.Domain
                 SendEmailToServiceTUBatuLicin = this.SendEmailToServiceTUBatuLicin,
                 SendEmailToServiceTUSangatta = this.SendEmailToServiceTUSangatta,
                 SendEmailToServiceTUKendari = this.SendEmailToServiceTUKendari,
+<<<<<<< HEAD
                 SendEmailToServiceTUMeulaboh = this.SendEmailToServiceTUMeulaboh,
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 IsDemob = this.IsDemob,
                 RequestNotes = this.RequestNotes,
                 SendEmailNotes = this.SendEmailNotes,
                 ActivityTracking = this.ActivityTracking,
                 StatusTracking = this.StatusTracking,
+<<<<<<< HEAD
                 ForceComplete = this.ForceComplete                
+=======
+                ForceComplete = this.ForceComplete
+                
+>>>>>>> 639d8d0 (Intial commit)
             };
 
             return obj;

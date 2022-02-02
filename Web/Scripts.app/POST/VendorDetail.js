@@ -10,9 +10,12 @@ var AtaVisible = AtaVisible ?? true;
 var GRVisible = GRVisible ?? true;
 var canEdit = canEdit ?? false;
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 if (($('#Role').val() === "Administrator,POSTEXPEDITOR") && $("#Shipment").val() === "PTTU") {
     canEdit = true;
 }
@@ -31,10 +34,13 @@ var IdItem = 0;
 var PrePayment = $('#PrePayment').val();
 var Shipment = $('#Shipment').val();
 var BastVisible = BastVisible ?? false;
+<<<<<<< HEAD
 var RemoveHCVisible = RemoveHCVisible ?? false;
 if (Role == "Administrator,POSTVENDOR") {
     RemoveHCVisible = true
 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 var InvoiceVisible = InvoiceVisible ?? false;
 if (Shipment == "") {
     if (PrePayment == 1) {
@@ -666,6 +672,7 @@ function InitTableInProgress() {
             events: operateEventHeader
         },
         {
+<<<<<<< HEAD
             title: 'Invoice Validation',
             field: 'CountKOFAXUpload',
             class: 'text-center',
@@ -681,6 +688,14 @@ function InitTableInProgress() {
             align: 'center',
             width: '100px',
             formatter: GetProcessFlowChecklistInvoiceHardcopy,
+=======
+            title: 'Invoice Approved',
+            field: 'CountReviewInvoice',
+            class: 'text-center',
+            align: 'center',
+            width: '100px',
+            formatter: GetProcessFlowChecklistInvoiceFinance,
+>>>>>>> 639d8d0 (Intial commit)
             events: operateEventHeader
         },
         {
@@ -743,7 +758,11 @@ function InitTableItem() {
                     if (Role === "Administrator,POSTEXPEDITOR" || Role === "Administrator,POSTVENDOR") {
                         console.log(Role);
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
+<<<<<<< HEAD
                         var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
+=======
+                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;
+>>>>>>> 639d8d0 (Intial commit)
                     }
                     else {
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
@@ -817,6 +836,7 @@ function InitTableItem() {
                     return ActionItem1
                 }
             }, {
+<<<<<<< HEAD
                 title: 'HardCopy Invoice',
                 class: 'text-nowrap',
                 align: 'center',
@@ -831,6 +851,8 @@ function InitTableItem() {
                     return ActionItem1
                 }
             }, {
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 title: 'PR Number',
                 field: 'PR_Number',
                 class: 'text-nowrap',
@@ -1307,18 +1329,28 @@ function DeleteFileUpload(id, type) {
 
 
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function DownloadFileUpload(id) {
     url = "/POST/DownloadFileRequest?id=" + id;
     window.open(url, '_blank');
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function DownloadFileRequestAll() {
     var requestId = parseInt($('#requestId').val());
     url = "/POST/DownloadFileRequestAll?requestid=" + requestId;
     window.open(url, '_blank');
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
@@ -1449,6 +1481,7 @@ function InitTablepartialQty() {
         ]
     })
 }
+<<<<<<< HEAD
 function InitTablehardcopyInvoice() {
     $('#table-hardcopyinvoice').bootstrapTable({
         detailView: false,
@@ -1512,6 +1545,9 @@ function InitTablehardcopyInvoice() {
         ]
     })
 }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
 
 $('#table-partialQty tr').click(function (event) {
     if (event.target.type !== 'radio') {
@@ -1541,6 +1577,7 @@ window.EventsFormatter = {
             });
        
     },
+<<<<<<< HEAD
 
     'click .removehardcopy': function (e, value, row, index) {
         var HardCopyId = row.Id;
@@ -1564,6 +1601,8 @@ window.EventsFormatter = {
         });
 
     },
+=======
+>>>>>>> 639d8d0 (Intial commit)
 }
 $(":radio[name=radios]").change(function () {
     $(".table tr.active").removeClass("active");
@@ -1600,6 +1639,7 @@ function deletePartialQty(ID) {
         }
     });
 }
+<<<<<<< HEAD
 function deleteHarcopyInvoice(ID) {
     $.ajax({
         type: "POST",
@@ -1616,6 +1656,8 @@ function deleteHarcopyInvoice(ID) {
         }
     });
 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 function GetPartialItem(id) {
     $.getJSON("GetItemPartialById?Id=" + id)
@@ -1859,6 +1901,7 @@ function InitModalUpdateStatus(id) {
 
         })
 }
+<<<<<<< HEAD
 
 function InitModalHardCopy(id) {   
     if (Role.includes("Administrator,POSTVENDOR")) {
@@ -1879,6 +1922,8 @@ function InitModalHardCopy(id) {
 
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function InitModalViewNotes(id) {
     $.getJSON("GetItemListById?Id=" + id)
         .then(function (data) {
@@ -1892,6 +1937,7 @@ function InitModalViewNotes(id) {
         })
 }
 
+<<<<<<< HEAD
 function InitSelect2Destination() {
     $('#select2Destination').select2({
         placeholder: "Destination",
@@ -1921,6 +1967,9 @@ function InitSelect2Destination() {
         return;
     });
 }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
 function InitSelect2StatusPO(POType) {
     var StatusPO = [];
     if (POType == '') {
@@ -1977,9 +2026,13 @@ function InitDateRange() {
     $('#ata').datepicker({
         format: 'dd.mm.yyyy',
     });
+<<<<<<< HEAD
     $('#submissiondate').datepicker({
         format: 'dd.mm.yyyy',
     });
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
 
 }
 function clearSearchDetail() {
@@ -1990,6 +2043,7 @@ function clearSearchDetail() {
     $("#table-item").bootstrapTable('refresh');
 
 }
+<<<<<<< HEAD
 function InitSelect2filenameinvoice() {
     $('#select2file').select2({
         placeholder: "File Name Invoice",
@@ -1999,6 +2053,17 @@ function InitSelect2filenameinvoice() {
             data: function (params) {
                 var query = {
                     id: requestId,
+=======
+function InitSelect2Destination() {
+    $('#select2Destination').select2({
+        placeholder: "Destination",
+        id: "id",
+        ajax: {
+            url: 'GetSelectBranch',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+>>>>>>> 639d8d0 (Intial commit)
                     type: 'public'
                 }
                 return query;
@@ -2171,6 +2236,7 @@ function ClickSubmitWithComment(FlowProcessStatusID, OldFlowProcessStatusID, man
 
 }
 function ClickSubmitDelivery() {
+<<<<<<< HEAD
     var Shipment = $('#Select2Shipment').val();
     if (Shipment == null || Shipment == '' ) {
         swalWarning('Please Choose Shipment');
@@ -2181,6 +2247,10 @@ function ClickSubmitDelivery() {
     }
   
    
+=======
+    UpdateShipment();
+    var Shipment = $('#Select2Shipment').val();
+>>>>>>> 639d8d0 (Intial commit)
     var FlowProcessStatusID = 4217//Default Forwarder
     if (Shipment == 'CKB') {
         FlowProcessStatusID = 2499
@@ -2319,6 +2389,7 @@ function UpdateShipment() {
         }
     })
 }
+<<<<<<< HEAD
 
 function UpdateHardCopy() { 
     var attachmentId = $('#select2file').val();
@@ -2355,6 +2426,8 @@ function UpdateHardCopy() {
     })
 }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function UpdateItem() {
     var ApplyFor = $('#ApplyFor').val();
     var idItem = $('#item_id').val();
@@ -2530,11 +2603,19 @@ function InitDropZoneBast() {
         thumbnailHeight: 100,
         thumbnailWeight: 100,
         method: 'POST',
+<<<<<<< HEAD
         acceptedFiles: ".pdf",
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 10,
         maxFilesize: 2, // MB
+=======
+        acceptedFiles: ".pdf,.zip,.rar",
+        filesizeBase: 1024,
+        autoProcessQueue: true,
+        maxFiles: 10,
+        maxFilesize: 20, // MB
+>>>>>>> 639d8d0 (Intial commit)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2606,7 +2687,11 @@ function InitDropZoneInvoice() {
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 1,
+<<<<<<< HEAD
         maxFilesize: 2, // MB
+=======
+        maxFilesize: 10, // MB
+>>>>>>> 639d8d0 (Intial commit)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2757,8 +2842,13 @@ function InitModalUploadBast(id, statusItem) {
     if (parseInt(isTaskUser) == 0) {
         document.getElementById("BtnSaveBast").style.display = "none";
 
+<<<<<<< HEAD
         if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
             document.getElementById("FormUploadBAST").style.display = "none";
+=======
+        if (Role.includes('POSTBRANCH') || Role.includes('POSTFINANCEVIEWERBRANCH') || Role.includes('POSTFINANCEVIEWER') || Role.includes('POSTVIEWER')) {
+            document.getElementById("BtnApproveBAST").style.display = "block";
+>>>>>>> 639d8d0 (Intial commit)
         }
     }
 
@@ -2805,7 +2895,10 @@ function ViewPopup() {
 }
 
 function InitData(id) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     IdItem = id;
     $.getJSON("GetListAttachment?id=" + IdItem + "&type=BAST", function (data) {
         var countBastUpload = data.result.length;
@@ -2827,6 +2920,7 @@ function InitData(id) {
                 document.getElementById("FormUploadInvoice").style.display = "none";
             }
             else {
+<<<<<<< HEAD
                 if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
                     document.getElementById("FormUploadInvoice").style.display = "none";
                  }
@@ -2834,6 +2928,9 @@ function InitData(id) {
                     document.getElementById("FormUploadInvoice").style.display = "block";
                  }
              
+=======
+                document.getElementById("FormUploadInvoice").style.display = "block";
+>>>>>>> 639d8d0 (Intial commit)
             }
 
             if (parseInt(isTaskUser) == 0) {
@@ -2847,7 +2944,11 @@ function InitData(id) {
             }
 
         });
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         $('#modalUploadInvoicing').modal();
         $('#table-uploadInvoice').bootstrapTable('refresh', {
             query: {
@@ -2856,7 +2957,10 @@ function InitData(id) {
             }
         });
     })
+<<<<<<< HEAD
  
+=======
+>>>>>>> 639d8d0 (Intial commit)
 }
 
 function InitModalUploadPO() {
@@ -3290,9 +3394,13 @@ function InitTableUploadInvoice() {
                         return [btnDownload, btnDelete].join('&nbsp;');
                     } else {
                         btnDownload = `<a href="#" onclick="DownloadFileUpload(${data.ID});" class="btn btn-light btn-xs" title="Download"><span class="fa fa-download"></span></a>&nbsp;`;
+<<<<<<< HEAD
                         //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
 
                         if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
+=======
+                        if (Role.includes('POSTTAX') || Role.includes('POSTFINANCE') || Role.includes('POSTFINANCEBRANCH')) {
+>>>>>>> 639d8d0 (Intial commit)
                             if (data.CountItemHasInvoiceSAP == 0) {
                                 if (data.IsRejected == 0 && IsApprove == 0) {
 
@@ -3328,6 +3436,30 @@ function InitTableUploadInvoice() {
                     return `<select id="${data.ID}_Progress"  class="Select2Progress form-control gosearch">`
                 }
             },
+<<<<<<< HEAD
+=======
+            //{
+            //    title: 'Doc Type Mandatory',
+            //    width: '300',
+            //    class: 'align-top',
+            //    align: 'left',
+            //    halign: 'center',
+            //    formatter: function (row, data, index) {
+            //        return '<ul class="list-inline"><li class="list-inline-item">Invoice</li></ul>'
+            //    }
+            //},
+            //{
+            //    title: 'Doc Type',
+            //    width: '250',
+            //    align: 'left',
+            //    halign: 'center',
+            //    class: 'align-top',
+            //    formatter: function (row, data, index) {
+            //        return `<select id="${data.ID}_DocType"   multiple="multiple"  class="Select2DocType form-control gosearch">`
+            //    }
+            //},
+
+>>>>>>> 639d8d0 (Intial commit)
             {
                 title: 'Refer to BAST',
                 width: '300',
@@ -3369,7 +3501,11 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Approve Date Finance',
+<<<<<<< HEAD
                 field: 'CreateDate',
+=======
+                field: 'ApproveDateFinance',
+>>>>>>> 639d8d0 (Intial commit)
                 class: 'align-top',
                 halign: 'center',
                 align: 'left',
@@ -3379,6 +3515,7 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Status',
+<<<<<<< HEAD
                 field: 'Status',
                 class: 'align-top',
                 align: 'center',
@@ -3400,6 +3537,12 @@ function InitTableUploadInvoice() {
                 align: 'center',
                 halign: 'center',
                 //visible: VisibleKOFAXMessage
+=======
+                field: 'ApproveStatus',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center'
+>>>>>>> 639d8d0 (Intial commit)
 
             }
         ]
@@ -3654,6 +3797,7 @@ function InitTableUploadPO() {
     });
 }
 
+<<<<<<< HEAD
 function DownloadGR() {
 
     var param = {
@@ -3681,6 +3825,8 @@ function DownloadGR() {
         }
     })
 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 
 
@@ -3704,7 +3850,11 @@ $(document).ready(function () {
     InitDropZonePO();
     InitTableViewNotes();
     InitTablepartialQty();
+<<<<<<< HEAD
     InitTablehardcopyInvoice();
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
     //InitTableGr();
     //InitTableInvoice();
 })

@@ -49,8 +49,13 @@ function load_data_tabledoc() {
         events: operateEventRight,
         formatter: function (data, row) {
             if (row.Filename !== "") {
+<<<<<<< HEAD
                 var btnDownload = "<button class='btn btn-xs btn-link btn-success download' type='button'><i class='tim-icons icon-cloud-download-93'></i></button>";
                 var btnPreview = "<button class='btn btn-xs btn-link btn-info btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='tim-icons icon-single-copy-04'></i></button>";
+=======
+                var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+>>>>>>> 639d8d0 (Intial commit)
                 return [btnDownload, btnPreview].join(' ');
             } else {
                 return "-";
@@ -62,9 +67,15 @@ function load_data_tabledoc() {
     function operateFormatter() {
         var btn = [];
         btn.push('<div class="btn-toolbar row">');
+<<<<<<< HEAD
         btn.push('<button type="button" class="btn btn-info btn-link btn-xs edit" data-toggle="modal" data-target="#myModalDocument" title="Edit"><i class="tim-icons icon-pencil"></i></button>\
             <button type="button" class="btn btn-success btn-link btn-xs upload" data-toggle="modal" data-target="#myModalUploadPlace" title="Upload"><i class="tim-icons icon-cloud-upload-94"></i></button>');
         btn.push('<button type="button" class="btn btn-danger btn-link btn-xs remove" title="Delete"><i class="tim-icons icon-simple-remove"></i></button>');
+=======
+        btn.push('<button type="button" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#myModalDocument" title="Edit"><i class="fa fa-edit"></i></button>\
+            <button type="button" class="btn btn-primary btn-xs upload" data-toggle="modal" data-target="#myModalUploadPlace" title="Upload"><i class="fa fa-upload"></i></button>');
+        btn.push('<button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+>>>>>>> 639d8d0 (Intial commit)
         btn.push('</div>');
         return btn.join('');
     }

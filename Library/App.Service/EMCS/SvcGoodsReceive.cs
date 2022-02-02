@@ -6,7 +6,10 @@ using System.Linq;
 using App.Domain;
 using System.Dynamic;
 using System.Text.RegularExpressions;
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Service.EMCS
 {
@@ -58,6 +61,7 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+<<<<<<< HEAD
         public static bool GRHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -73,6 +77,8 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public static dynamic GetListSpGRhistory(Data.Domain.EMCS.GridListFilter crit)
         {
@@ -293,6 +299,7 @@ namespace App.Service.EMCS
                 return data;
             }
         }
+<<<<<<< HEAD
         public static dynamic GRDocumentList(GridListFilter filter)
         {
             using (var db = new Data.EmcsContext())
@@ -418,5 +425,7 @@ namespace App.Service.EMCS
             //}
         }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

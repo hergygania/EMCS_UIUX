@@ -81,7 +81,11 @@
         public DateTime? CreateDate { get; set; }
         [StringLength(50)]
         public string UpdateBy { get; set; }
+<<<<<<< HEAD
         public DateTime? UpdateDate { get; set; }      
      
+=======
+        public DateTime? UpdateDate { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

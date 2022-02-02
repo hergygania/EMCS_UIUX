@@ -9,13 +9,20 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Service</RootNamespace>
     <AssemblyName>App.Service</AssemblyName>
+<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+>>>>>>> 639d8d0 (Intial commit)
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+<<<<<<< HEAD
     <TargetFrameworkProfile />
+=======
+>>>>>>> 639d8d0 (Intial commit)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -137,7 +144,10 @@
     <Compile Include="DTS\DeliveryInstructionUnit.cs" />
     <Compile Include="DTS\DeliveryRequisitionStatus.cs" />
     <Compile Include="DTS\DeliveryRequisitionUnit.cs" />
+<<<<<<< HEAD
     <Compile Include="DTS\DeliveryRequisition_Reroute.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="DTS\ExportToPDF.cs" />
     <Compile Include="DTS\InboundEviz.cs" />
     <Compile Include="DTS\MasterDistrict.cs" />
@@ -165,7 +175,10 @@
     <Compile Include="EMCS\SvcBlAwb.cs" />
     <Compile Include="EMCS\SvcCargoItem.cs" />
     <Compile Include="EMCS\SvcDelegation.cs" />
+<<<<<<< HEAD
     <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="EMCS\SvcShippingInstruction.cs" />
     <Compile Include="EMCS\SvcContainer.cs" />
     <Compile Include="EMCS\SvcGeneral.cs" />
@@ -210,7 +223,10 @@
     <Compile Include="EMCS\SvcRPTTUBranch.cs" />
     <Compile Include="EMCS\SvcRSailingEstimation.cs" />
     <Compile Include="EMCS\SvcRTaxAudit.cs" />
+<<<<<<< HEAD
     <Compile Include="EMCS\SVCShippingSummary.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="EMCS\SvcTotalCipl.cs" />
     <Compile Include="EMCS\SvcUserLog.cs" />
     <Compile Include="EMCS\SvcWizard.cs" />
@@ -221,7 +237,10 @@
     <Compile Include="FreightCost\MasterModaOfConditionTruckingRateImport.cs" />
     <Compile Include="FreightCost\MasterRateImport.cs" />
     <Compile Include="FreightCost\MasterSurchargeImport.cs" />
+<<<<<<< HEAD
     <Compile Include="Helper\NetworkShare.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="ImexVetting\ManualVetting.cs" />
     <Compile Include="ImexVetting\ReadDataManualVetting.cs" />
     <Compile Include="Imex\ChangeLogBLL.cs" />
@@ -255,7 +274,10 @@
     <Compile Include="POST\Dashboard.cs" />
     <Compile Include="POST\Ebupot.cs" />
     <Compile Include="POST\IntegrasiEproc.cs" />
+<<<<<<< HEAD
     <Compile Include="POST\Invoice.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="POST\MasterMappingUser.cs" />
     <Compile Include="POST\Report.cs" />
     <Compile Include="POST\QuickSearch.cs" />

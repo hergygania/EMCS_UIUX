@@ -35,7 +35,10 @@ using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data.SqlClient;
+<<<<<<< HEAD
 using System.Web;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace WindowService.Library
 {
@@ -1075,7 +1078,11 @@ namespace WindowService.Library
         #region POST Console
         public static void ReadEmailPOST()
         {
+<<<<<<< HEAD
             //string Subject = "TRAKINDO_POST";
+=======
+            string Subject = "TRAKINDO_POST";
+>>>>>>> 639d8d0 (Intial commit)
 
             CreateLog("Start Grab Email");
             try
@@ -1115,6 +1122,13 @@ namespace WindowService.Library
                 searchFilterCollection.Add(new SearchFilter.SearchFilterCollection(LogicalOperator.And,
                     new SearchFilter.IsEqualTo(EmailMessageSchema.HasAttachments, true)));
 
+<<<<<<< HEAD
+=======
+                searchFilterCollection.Add(new SearchFilter.SearchFilterCollection(LogicalOperator.And,
+                  new SearchFilter.ContainsSubstring(EmailMessageSchema.Subject, "TRAKINDO_POST")));           
+
+             
+>>>>>>> 639d8d0 (Intial commit)
                 // Create the search filter.
                 SearchFilter searchFilter = new SearchFilter.SearchFilterCollection(LogicalOperator.And,
                     searchFilterCollection.ToArray());
@@ -1125,18 +1139,28 @@ namespace WindowService.Library
                 IOrderedEnumerable<Item> items = null;
                 try
                 {
+<<<<<<< HEAD
                     items = service.FindItems(inbox, searchFilter, iv).OrderByDescending(a => a.DateTimeCreated);
+=======
+                    items = service.FindItems(inbox, searchFilter, iv).OrderBy(a => a.DateTimeReceived);
+>>>>>>> 639d8d0 (Intial commit)
                 }
                 catch (Exception ex)
                 {
                     CreateLog(ex.Message);
                 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 639d8d0 (Intial commit)
                 foreach (EmailMessage msg in items)
                 {
 
                     using (var db = new postContext())
                     {
+<<<<<<< HEAD
                        
                             string PO_number = "";
                             string SubjectMessage = "";
@@ -1242,6 +1266,85 @@ namespace WindowService.Library
                                 msg.IsRead = true;
                                 msg.Update(ConflictResolutionMode.AutoResolve);
                             }                        
+=======
+                        if (!msg.IsRead && msg.Subject.Contains(Subject))
+                        {
+
+                            var dataPO = db.Database.SqlQuery<TrPO>("SELECT * FROM dbo.TrPO where '" + msg.Subject + "' like '%'+ PO_Number +'%'").ToList();
+                            if (dataPO != null)
+                            {
+                                if (dataPO.Count > 0)
+                                {
+
+                                    foreach (var tmpPO in dataPO)
+                                    {
+                                        CreateLog("Read Email: " + msg.Subject);
+                                        EmailMessage message = EmailMessage.Bind(service, msg.Id,
+                                            new PropertySet(BasePropertySet.IdOnly, ItemSchema.Attachments, ItemSchema.HasAttachments));
+
+                                        foreach (Attachment attachment in message.Attachments)
+                                        {
+                                            if (attachment is FileAttachment)
+                                            {
+                                                try
+                                                {
+                                                    var fileAttachment = attachment as FileAttachment;
+                                                    var fileNameFilter = Path.GetFileName(fileAttachment.Name).ToString();
+                                                    if (fileNameFilter.Contains(tmpPO.PO_Number))
+                                                    {
+                                                        var deleteData = db.TrRequestAttachment.Where(a => a.RequestID == tmpPO.IdRequest && a.FileNameOri == fileNameFilter).FirstOrDefault();
+                                                        if (deleteData != null)
+                                                        {
+                                                            db.TrRequestAttachment.Remove(deleteData);
+                                                            db.SaveChanges();
+                                                        }
+
+                                                        var model = new TrRequestAttachment();
+                                                        model.RequestID = tmpPO.IdRequest;
+                                                        model.ItemID = 0;
+                                                        model.Path = "";
+                                                        model.FileName = fileAttachment.Name;
+                                                        model.FileNameOri = Path.GetFileName(fileAttachment.Name);
+                                                        model.CodeAttachment = "PO";
+                                                        model.IsActive = true;
+                                                        model.UploadedDate = DateTime.Now;
+                                                        model.UploadedBy = "CONSOLE_SCHEDULE";
+                                                        model.Name = "";
+                                                        model.Progress = "";
+                                                        model.IsApprove = false;
+                                                        model.IsRejected = false;
+                                                        db.TrRequestAttachment.Add(model);
+                                                        //db.SaveChanges();
+
+                                                        var fileName = "PO" + "_" + model.ID + "_" + fileAttachment.Name;
+                                                        var folder_ = folder + tmpPO.IdRequest + Path.DirectorySeparatorChar;
+                                                        string path = folder_ + fileName;
+                                                        bool exists = Directory.Exists(folder_);
+
+                                                        if (!exists)
+                                                            Directory.CreateDirectory(folder_);
+                                                        fileAttachment.Load(path);
+
+
+                                                        model.FileName = fileName;
+                                                        model.Path = path;
+                                                        db.SaveChanges();
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    CreateLog(ex.InnerException.InnerException.Message);
+                                                    CreateLog(ex.Message);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    msg.IsRead = true;
+                                    msg.Update(ConflictResolutionMode.AlwaysOverwrite);
+                                }
+                            }
+                        }
+>>>>>>> 639d8d0 (Intial commit)
                     }
                 }
                 CreateLog("Start Merge Part Order");
@@ -1252,6 +1355,7 @@ namespace WindowService.Library
                 throw;
             }
         }
+<<<<<<< HEAD
         #endregion
 
         #region POST KOFAX Console
@@ -1330,6 +1434,10 @@ namespace WindowService.Library
             return "";
         }
       
+=======
+
+
+>>>>>>> 639d8d0 (Intial commit)
         #endregion
     }
 }

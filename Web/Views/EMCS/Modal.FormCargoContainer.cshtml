@@ -13,11 +13,15 @@
     <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+<<<<<<< HEAD
     <div class="modal-body" id="checkcn">
         <div class="row">
             <div class="col-md-6">
@@ -63,12 +67,56 @@
             </div>
             <table data-toolbar=".toolbarContainer" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
         </div>
+=======
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group" style="margin-bottom:40px !important;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-3">Container Number</label>
+                        <div class="input-group col-md-9">
+                            @Html.TextBoxFor(m => m.Container.Number, new { @class = "form-control required", @id = "ContainerNumber", placeholder = "Container Number", @maxlength = "12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">Container Type</label>
+                        <div class="input-group col-md-9">
+                            <select id="ContainerType" name="ContainerType" readonly class="select2" required style="width:100%;"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-3">Seal Number</label>
+                        <div class="input-group col-md-9">
+                            @Html.TextBoxFor(m => m.Container.SealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="col-md-3">Select Item</label>
+                        <div class="input-group col-md-9">
+                            <div class="col-md-11 row">
+                                <select class="select2" id="ItemListData"></select>
+                            </div>
+                            <button class="btn btn-sm btn-primary pull-left btnAddItem" style="margin-left:5px;padding-top:6px;"><i class="fa fa-plus-circle"></i>&nbsp;Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row toolbarContainer form-horizontal">
+                    </div>
+                    <table data-toolbar=".toolbarContainer" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
+                </div>
+            </div>
+        </div>
+>>>>>>> 639d8d0 (Intial commit)
     </div>
     <div class="modal-footer">
         <span id="progress" class="text-center" style="display: none;">
             <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
             Wait..
         </span>
+<<<<<<< HEAD
         <button type="button" class="btn btn-warning btn-round mr-2" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
         @if (mode == "I")
         {
@@ -84,19 +132,44 @@
         }
     </div>
     <input type="hidden" id="CargoId" name="CargoId" value="@(ViewBag.CargoID)" />
+=======
+        <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Create</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
+        }
+    </div>
+    <input type="hidden" id="CargoId" name="CargoId" value="@(Model.Cargo.Id)" />
+>>>>>>> 639d8d0 (Intial commit)
 }
 <script>
     $tableContainer = $("#tableAddCargo");
     var mode = '@mode';
     var IdCargo = $("#CargoId").val();
+<<<<<<< HEAD
     $('#ContainerSealNumber').val('');
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
     if (mode != 'I')
         $("#ID").attr('readonly', 'readonly');
 
     $(document).ready(function () {
+<<<<<<< HEAD
 
         $(".btnAddItem").on("click", function (e) {
             debugger;
+=======
+        $(".btnAddItem").on("click", function (e) {
+>>>>>>> 639d8d0 (Intial commit)
             e.preventDefault();
             var value = $("#ItemListData").select2('data')[0];
             console.log('alimutasal line 95 :', value);
@@ -457,6 +530,7 @@
             }
         });
     });
+<<<<<<< HEAD
 
     //let timeoutID = null;
 
@@ -610,3 +684,6 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
+=======
+</script>
+>>>>>>> 639d8d0 (Intial commit)

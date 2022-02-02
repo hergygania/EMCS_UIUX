@@ -45,6 +45,7 @@
         $('#NpeDate').val(null);
     }
 
+<<<<<<< HEAD
     var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
     if (npeDateSubmitToCustomOffice) {
         var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
@@ -58,6 +59,8 @@
     else {
         $('#NpeDateSubmitToCustomOffice').val(null);
     }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     GetDocumentPebNpe();
 
 })

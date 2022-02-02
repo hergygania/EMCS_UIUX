@@ -121,7 +121,10 @@ namespace App.Data.Domain.EMCS
         public string TotalValueConsignee { get; set; }
         public string ValueBalanceConsignee { get; set; }
         public string Status { get; set; }
+<<<<<<< HEAD
         public string CustomsFacilityArea { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
     }
 }

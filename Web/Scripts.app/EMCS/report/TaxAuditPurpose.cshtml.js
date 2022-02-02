@@ -155,8 +155,13 @@ $(function () {
             events: operateEventPeb,
             formatter: function (data, row) {
                 if (row.FilePeb !== "") {
+<<<<<<< HEAD
                     var btnDownload = "<button class='btn btn-xs btn-link btn-success download' type='button'><i class='tim-icons icon-cloud-download-93'></i></button>";
                     var btnPreview = "<button class='btn btn-xs btn-link btn-info btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='tim-icons icon-paper'></i></button>";
+=======
+                    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+>>>>>>> 639d8d0 (Intial commit)
                     return [btnDownload, btnPreview].join(' ');
                 } else {
                     return "-";
@@ -174,8 +179,13 @@ $(function () {
             events: operateEventBlAwb,
             formatter: function (data, row) {
                 if (row.FileBlAwb !== "") {
+<<<<<<< HEAD
                     var btnDownload = "<button class='btn btn-xs btn-link btn-success download' type='button'><i class='tim-icons icon-cloud-download-93'></i></button>";
                     var btnPreview = "<button class='btn btn-xs btn-link btn-info btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='tim-icons icon-paper'></i></button>";
+=======
+                    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+>>>>>>> 639d8d0 (Intial commit)
                     return [btnDownload, btnPreview].join(' ');
                 } else {
                     return "-";

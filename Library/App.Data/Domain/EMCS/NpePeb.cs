@@ -59,7 +59,10 @@
 
         public bool DraftPeb { get; set; }
         public string RegistrationNumber { get; set; }
+<<<<<<< HEAD
        
          public DateTime? NpeDateSubmitToCustomOffice { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

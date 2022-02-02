@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using System.Text.RegularExpressions;
 using System.Dynamic;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Service.EMCS
 {
@@ -19,6 +22,7 @@ namespace App.Service.EMCS
 
         public readonly static ICacheManager CacheManager = new MemoryCacheManager();
 
+<<<<<<< HEAD
         public static dynamic SIList(GridListFilter crit)
         {
             try
@@ -63,6 +67,12 @@ namespace App.Service.EMCS
             using (var db = new Data.EmcsContext())
 
             { 
+=======
+        public static Data.Domain.EMCS.ShippingInstructions GetIdSi(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+>>>>>>> 639d8d0 (Intial commit)
                 var data = db.ShippingInstruction.Where(a => a.Id == id && a.IsDelete == false).FirstOrDefault();
                 return data;
             }

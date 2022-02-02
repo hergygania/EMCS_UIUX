@@ -228,6 +228,7 @@ function ApproveGR(obj) {
             }
         },
         success: function () {
+<<<<<<< HEAD
             Swal.fire({
                 title: 'Submit!',
                 text: 'Data Confirmed Successfully',
@@ -240,12 +241,22 @@ function ApproveGR(obj) {
         }
         });
 };
+=======
+            location.href = "/EMCS/GrList";
+        }
+    });
+}
+>>>>>>> 639d8d0 (Intial commit)
 
 //#region Button Action
 $("#BtnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
+<<<<<<< HEAD
         text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
+=======
+        text: 'Do you want to continue ?',
+>>>>>>> 639d8d0 (Intial commit)
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

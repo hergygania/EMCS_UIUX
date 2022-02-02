@@ -1,10 +1,19 @@
 ﻿<style>
+<<<<<<< HEAD
     @* .stepsbar {
         padding: 0 0 1rem;
         width: 100%;
         display: flex;
         justify-content: center;
         margin-bottom: 50px;
+=======
+    .stepsbar {
+        padding: 1em 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: -10px;
+>>>>>>> 639d8d0 (Intial commit)
         margin-top:-5px;
     }
 
@@ -28,8 +37,11 @@
             text-align: center;
             color: #ccc;
             transition: all 0.5s ease;
+<<<<<<< HEAD
             padding-bottom: 15px !important;
             font-weight: 600;
+=======
+>>>>>>> 639d8d0 (Intial commit)
         }
 
             .stepsbar li div {
@@ -38,7 +50,11 @@
                 background-color: none;
                 overflow:hidden;
                 padding-top:2px;
+<<<<<<< HEAD
                 /*background-image: url(*/@Url.Content("~/Images/EMCS/Icons/map_orange_on_progress.png")/*);*/
+=======
+                background-image: url(@Url.Content("~/Images/EMCS/Icons/map_orange_on_progress.png"));
+>>>>>>> 639d8d0 (Intial commit)
                 height: 27px;
                 width: 27px;
                 background-position: center;
@@ -50,6 +66,7 @@
             .stepsbar li:after {
                 content: "";
                 position: absolute;
+<<<<<<< HEAD
                 width: 90%;
                 height: 15px;
                 /*display: block;*/
@@ -57,10 +74,20 @@
                 z-index: 1;
                 top: 120%;
                 left: 110%;
+=======
+                width: 100%;
+                height: 1px;
+                display: block;
+                background: rgba(251, 181, 23, 0.2);
+                z-index: 1;
+                top: 125%;
+                left: 50%;
+>>>>>>> 639d8d0 (Intial commit)
                 margin-top: -1.2em;
                 background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
                 background-repeat: repeat-x;
                 background-size: 20px 20px;
+<<<<<<< HEAD
                 border-radius: 10px;
             }
 
@@ -75,12 +102,20 @@
                /* .stepsbar li:first-child.active:after {
                     left: 50%;
                 }*/
+=======
+            }
+
+            .stepsbar li:first-child.active:after {
+                left: 50%;
+            }
+>>>>>>> 639d8d0 (Intial commit)
 
             .stepsbar li:last-child:after {
                 display: none;
             }
 
             .stepsbar li.done {
+<<<<<<< HEAD
                 color: #1d8cf8;
             }
 
@@ -105,6 +140,29 @@
                     height: 15px;
                     border-radius: 10px;
                     background-color: #1d8cf8;
+=======
+                color: #808080;
+            }
+
+                    .stepsbar li.done div {
+                        align-content: center;
+                        justify-content: center;
+                        background-color: none;
+                        overflow:visible;
+                        padding-top:2px;
+                        background-image: url(@Url.Content("~/Images/EMCS/Icons/map_orange_done.png"));
+                        height: 27px;
+                        width: 27px;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        margin: 2px auto;
+                    }
+
+                .stepsbar li.done:after {
+                    width: 100%;
+                    background-color: #fe9d01;
+>>>>>>> 639d8d0 (Intial commit)
                     animation: progress 0.3s linear 10;
                 }
 
@@ -118,11 +176,19 @@
             .stepsbar li.active {
                 width: 15%;
                 font-weight: bold;
+<<<<<<< HEAD
                 color: #00f2c3;
             }
 
                 .stepsbar li.active:after {
                     width: 90%;
+=======
+                color: #f39c12;
+            }
+
+                .stepsbar li.active:after {
+                    width: 100%;
+>>>>>>> 639d8d0 (Intial commit)
                 }
 
                 .stepsbar li.active div {
@@ -131,13 +197,18 @@
                     background-color: none;
                     overflow:hidden;
                     padding-top:2px;
+<<<<<<< HEAD
                     /*background-image: url(*/@Url.Content("~/Images/EMCS/Icons/map_orange_line.png")/*);*/
+=======
+                    background-image: url(@Url.Content("~/Images/EMCS/Icons/map_orange_line.png"));
+>>>>>>> 639d8d0 (Intial commit)
                     height: 27px;
                     width: 27px;
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: cover;
                     margin: 2px auto;
+<<<<<<< HEAD
                     /*display: none !important;*/
                 }
 
@@ -158,12 +229,17 @@
                         background-size: 20px 20px;
                     } *@
 
+=======
+                }
+
+>>>>>>> 639d8d0 (Intial commit)
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <input type="hidden" id="WizardState" />
 <div id="stepsbar-wrap">
     <div id="stepsbar" class="stepsbar">
+<<<<<<< HEAD
         
         <ol>
             <li value="1">
@@ -178,17 +254,39 @@
             <li value="3">
                 <span class="indicator"></span>
                 <span class="label">CL</span>
+=======
+        <ol style="width:100%;display: flex;justify-content: center;">
+            <li value="1">
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">CIPL / EDI</span>
+            </li>
+            <li value="2">
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">BAST</span>
+            </li>
+            <li value="3">
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">CL</span>
+>>>>>>> 639d8d0 (Intial commit)
             </li>
             @{
                 if (ViewBag.WizardData.HasSs)
                 {
                     <li value="4">
+<<<<<<< HEAD
                         <span class="indicator"></span>
                 <span class="label">SS</span>
+=======
+                        <div class="icon" style="display:none;"></div>
+                        <span style="line-height:20px;">
+                            SS
+                        </span>
+>>>>>>> 639d8d0 (Intial commit)
                     </li>
                 }
             }
             <li value="5">
+<<<<<<< HEAD
                 <span class="indicator"></span>
                 <span style="line-height:20px;">SI</span>
             </li>
@@ -202,6 +300,20 @@
             </li>
         </ol>
         <div class="stepsbar-line"></div>
+=======
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">SI</span>
+            </li>
+            <li value="6">
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">PEB & NPE</span>
+            </li>
+            <li value="7">
+                <div class="icon" style="display:none;"></div>
+                <span style="line-height:20px;">BL / AWB</span>
+            </li>
+        </ol>
+>>>>>>> 639d8d0 (Intial commit)
     </div>
 </div>
 @Styles.Render("~/Content/EMCS/JqueryUI/jquery-ui.min.css")

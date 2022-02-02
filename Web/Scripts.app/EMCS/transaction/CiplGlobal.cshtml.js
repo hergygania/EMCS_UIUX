@@ -49,7 +49,10 @@ function load_data() {
     if ($('#refCipl') !== null) {
         $('.btnAddItem').prop("disabled", false);
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 639d8d0 (Intial commit)
     $('#jenisBarangCipl').on('change', function () {
         GetReferenceNo();
 
@@ -63,12 +66,18 @@ function load_data() {
         $('.tableItem, .div-idCustomerCipl').show();
 
         $("#exportCipl option[value='Non Sales - Exhibition (Temporary)']").remove();
+<<<<<<< HEAD
      
+=======
+>>>>>>> 639d8d0 (Intial commit)
         if ($(this).val() === 'CATERPILLAR SPAREPARTS') { // Spareparts
             $('#divReferenceNo, .div-idCustomerCipl').show();
             $('.tableItemSpareparts, .categoryspareparts').show();
             $('#forwaderCipl').val('CKB').trigger('change.select2').prop('disabled', false);
+<<<<<<< HEAD
           
+=======
+>>>>>>> 639d8d0 (Intial commit)
             //$('#forwaderAttentionCipl, #divCkbBranchCipl, #forwaderAddressCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderEmailCipl').show("slow");
             $('.forwaderAttentionCipl, .divCkbBranchCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderEmailCipl, .forwaderCompanyCipl, .forwaderForwadingCipl').show("slow");
         } else {
@@ -304,7 +313,10 @@ function load_data() {
             $('#notifyNameCipl').val($('#consigneeNameCipl').val());
             $('#notifyAddressCipl').val($('#consigneeAddressCipl').val());
             $('#notifyCountryCipl').val($('#consigneeCountryCipl').val());
+<<<<<<< HEAD
             $('#select2-notifyCountryCipl-container').text($('#notifyCountryCipl').val());
+=======
+>>>>>>> 639d8d0 (Intial commit)
             $('#notifyTelpCipl').val($('#consigneeTelpCipl').val());
             $('#notifyFaxCipl').val($('#consigneeFaxCipl').val());
             $('#notifyPicCipl').val($('#consigneePicCipl').val());
@@ -400,6 +412,7 @@ function load_data() {
             $tablereference.bootstrapTable('refresh');
         }
     })
+<<<<<<< HEAD
     $('#documentAddButton').on('click', function () {
         $('.modal-title-document').text("Add Document");
         $('.btnAddDocument').text("Add");
@@ -408,6 +421,11 @@ function load_data() {
     window.operateEvents = {
         'click .EditReferenceItem': function (e, value, row, index) {
             
+=======
+
+    window.operateEvents = {
+        'click .EditReferenceItem': function (e, value, row, index) {
+>>>>>>> 639d8d0 (Intial commit)
             if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 if ($(this).val() !== 'Add') {
@@ -418,7 +436,11 @@ function load_data() {
                 $('#IdItem').val(row.Id);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
+=======
+                $('#UomItemCipl').val(row.UnitUom);
+>>>>>>> 639d8d0 (Intial commit)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -437,9 +459,17 @@ function load_data() {
                 $('#SnItemCipl').prop('disabled', true);
                 $('#CcrItemCipl, #JcodeItemCipl, #IdCustomerItemCipl').prop('disabled', false);
                 $('#PartItemCipl, #UnitItemCipl').prop('disabled', false);
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
+=======
+
+                $('#IdItem').val(row.Id);
+                $('#NameItemCipl').val(row.Name);
+                $('#QuantityItemCipl').val(row.Quantity);
+                $('#UomItemCipl').val(row.UnitUom);
+>>>>>>> 639d8d0 (Intial commit)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -468,14 +498,21 @@ function load_data() {
                 } else {
                     $('.btnUpdateReference').show();
                 }
+<<<<<<< HEAD
                 $('#UomItemCipl').val(null).trigger('change');
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 $('#IdItem').val(row.Id);
                 $('#IdReference').val(row.IdReference);
                 $('#IdCustomerItemCipl').val(row.IdCustomer);
                 $('#ReferenceItemCipl').val(row.ReferenceNo);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
+<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
+=======
+                $('#UomItemCipl').val(row.UnitUom);
+>>>>>>> 639d8d0 (Intial commit)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#SnItemCipl').val(row.Sn);
                 $('#JcodeItemCipl').val(row.JCode);
@@ -524,9 +561,12 @@ function load_data() {
             $('#IdDocument').val(row.Id);
             $('#inp-doc-date').val(row.DocumentDate);
             $('#DocumentName').val(row.DocumentName);
+<<<<<<< HEAD
             $('.modal-title-document').text("Update Document");
             $('.btnAddDocument').text("Update");
             
+=======
+>>>>>>> 639d8d0 (Intial commit)
         },
         'click .remove': function (e, value, row, index) {
             CiplDocumentDeleteById(row.Id);
@@ -553,7 +593,11 @@ function load_data() {
                 class: "text-nowrap",
                 events: window.operateEvents,
                 formatter: function (value, row, index) {
+<<<<<<< HEAD
                     return "<button class='btn btn-success btn-link btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='tim-icons icon-pencil'></i></button> <button class='btn btn-danger btn-link btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='tim-icons icon-simple-remove'></i></button>";
+=======
+                    return "<button class='btn btn-default btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='fa fa-pencil'></i></button> <button class='btn btn-danger btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='fa fa-trash'></i></button>";
+>>>>>>> 639d8d0 (Intial commit)
                 }
             }, {
                 field: "Id",
@@ -1577,7 +1621,10 @@ $('#btnAddReference').on('click', function (e) {
     var UnitName = $('#NameItemCipl').valid();
     var Unit = ValidateAddReference();
     if (Unit) {
+<<<<<<< HEAD
         
+=======
+>>>>>>> 639d8d0 (Intial commit)
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -2168,6 +2215,7 @@ function removeSingleAttributeDuplicates(array, key) {
     }
     return result;
 }
+<<<<<<< HEAD
 function removeSingleAttributeDuplicatesNew(array, key,key2) {
     let lookup = {};
     let result = [];
@@ -2180,12 +2228,15 @@ function removeSingleAttributeDuplicatesNew(array, key,key2) {
     }
     return result;
 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function removeDoubleAttributeDuplicates(array) {
     jsonObject = array.map(JSON.stringify);
     uniqueSet = new Set(jsonObject);
     uniqueArray = Array.from(uniqueSet).map(JSON.parse);
     return uniqueArray;
 }
+<<<<<<< HEAD
 function getUniqueNumberOfCollies(array) {
     result = array.filter(function (a) {
         var key = a.CaseNumber + '|' + a.Type;
@@ -2197,6 +2248,8 @@ function getUniqueNumberOfCollies(array) {
 
     return result;
 }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function SumReferenceItem() {
     var SumGross = 0;
     var SumNet = 0;
@@ -2212,7 +2265,11 @@ function SumReferenceItem() {
     if (Category === 'SIB') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
+<<<<<<< HEAD
             CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
+=======
+            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length;
+>>>>>>> 639d8d0 (Intial commit)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2223,7 +2280,11 @@ function SumReferenceItem() {
     } else if (Category === 'PRA' || Category === 'REMAN') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
+<<<<<<< HEAD
             CountJCode = getUniqueNumberOfCollies(data).length;;
+=======
+            CountJCode = removeSingleAttributeDuplicates(data, 'CaseNumber').length;
+>>>>>>> 639d8d0 (Intial commit)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2347,6 +2408,7 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
     var ExtendedValue = UnitPrice * Quantity;
     $('#ExtendedItemCipl').val(formatCurrency(ExtendedValue, ".", ",", 2));
 })
+<<<<<<< HEAD
 function GetDestinationPort() {
     var country = $("#consigneeCountryCipl").val();
    
@@ -2380,6 +2442,9 @@ function GetDestinationPort() {
 
     
 }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
 function GetReferenceNo() {
     var Category = GetCategoryUsed();
     var item = {
@@ -2463,11 +2528,16 @@ function GetReferenceNo() {
             url: "/emcs/GetLocalPortData",
             dataType: 'json',
             data: function (params) {
+<<<<<<< HEAD
                
                 return {
                    
                     Name: params.term
 
+=======
+                return {
+                    Name: params.term
+>>>>>>> 639d8d0 (Intial commit)
                 };
             },
             success: function (data, response) {
@@ -2485,8 +2555,36 @@ function GetReferenceNo() {
         }
     })
 
+<<<<<<< HEAD
     
     
+=======
+    $('#destinationCipl').select2({
+        placeholder: "Select Destination Port",
+        ajax: {
+            url: "/emcs/GetPortData",
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    Name: params.term
+                };
+            },
+            success: function (data, response) {
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data.data, function (item) {
+                        return {
+                            text: item.Text,
+                            id: item.Id
+                        }
+                    })
+                }
+            }
+        }
+    })
+
+>>>>>>> 639d8d0 (Intial commit)
     $('#CkbBranchCipl').select2({
         placeholder: 'Select CKB Branch',
         width: "100%",
@@ -2534,9 +2632,13 @@ function get_used_table_cipl_item() {
         table = $tablepart;
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
         table = $tablemisc;
+<<<<<<< HEAD
     }
     
     else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
+=======
+    } else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
+>>>>>>> 639d8d0 (Intial commit)
         table = $tableunit;
     } else if ($('#idCategoryReference').val() === 'Other') {
         table = $tableemail;
@@ -2544,7 +2646,10 @@ function get_used_table_cipl_item() {
     return table;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function UpdateQuantityReference(Data, Status) {
     var Item = Data;
     $.ajax({
@@ -2854,7 +2959,11 @@ $('#btnSubmitCipl').on('click', function (event) {
             } else {
                 Swal.fire({
                     title: "Confirmation",
+<<<<<<< HEAD
                     text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
+=======
+                    text: "Are you sure want to submit this data?",
+>>>>>>> 639d8d0 (Intial commit)
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -2950,8 +3059,11 @@ function post_insert_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
+<<<<<<< HEAD
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
+=======
+>>>>>>> 639d8d0 (Intial commit)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -2992,6 +3104,7 @@ function post_insert_cipl(status) {
         }
     });
 }
+<<<<<<< HEAD
 function RequestForChangeCIPL(formdata,status) {
     var modelObj = {
         FormType: "CIPL",
@@ -3168,6 +3281,10 @@ $("#RequestForChangeHistoryCIPL").click(function () {
 });
 function post_update_cipl(status) {
   
+=======
+
+function post_update_cipl(status) {
+>>>>>>> 639d8d0 (Intial commit)
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
@@ -3245,8 +3362,11 @@ function post_update_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
+<<<<<<< HEAD
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
+=======
+>>>>>>> 639d8d0 (Intial commit)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),

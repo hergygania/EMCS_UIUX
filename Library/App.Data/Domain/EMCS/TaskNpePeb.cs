@@ -40,7 +40,10 @@
         public string SpecialInstruction { get; set; }
         public string DocumentRequired { get; set; }
 
+<<<<<<< HEAD
         public System.DateTime NpeDateSubmitToCustomOffice { get; set; }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

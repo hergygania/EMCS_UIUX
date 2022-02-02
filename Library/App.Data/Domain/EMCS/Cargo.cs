@@ -26,8 +26,13 @@
         [DisplayName("Incoterms")]
         public string Incoterms { get; set; }
   
+<<<<<<< HEAD
         //[DisplayName("Cargo List Number")]
         //public string CiNo { get; set; }
+=======
+        [DisplayName("Cargo List Number")]
+        public string CiNo { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
 
         [DisplayName("Shipping Summary Number")]
         public string SsNo { get; set; }
@@ -136,8 +141,13 @@
         [DisplayName("Update Date")]
         public DateTime? UpdateDate { get; set; }
 
+<<<<<<< HEAD
         //[DisplayName("Id Kppbc")]
         //public long IdKppbc { get; set; }
+=======
+        [DisplayName("Id Kppbc")]
+        public long IdKppbc { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
 
         public bool IsDelete { get; set; }
 

@@ -8,7 +8,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>WindowServiceEbupot</RootNamespace>
     <AssemblyName>WindowServiceEbupot</AssemblyName>
+<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+>>>>>>> 639d8d0 (Intial commit)
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>

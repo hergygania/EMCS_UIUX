@@ -45,7 +45,10 @@ namespace App.Data
         public virtual DbSet<SpCiplList> SpCiplList { get; set; }
         public virtual DbSet<SpCiplDeleteById> SpCiplDeleteById { get; set; }
         public virtual DbSet<SpGetCiplHistory> SpGetCiplHistory { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<SPGetCiplChangeHistory> SpGetCiplChangeHistory { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public virtual DbSet<SPGetCiplDocument> SPGetCiplDocument { get; set; }
         public virtual DbSet<SpCiplProblemHistory> SpCiplProblemHistory { get; set; }
         public virtual DbSet<SpGetConsigneeName> SpGetConsigneeName { get; set; }
@@ -72,6 +75,7 @@ namespace App.Data
         public virtual DbSet<SpGetGrList> GetGrList { get; set; }
         public virtual DbSet<ShippingInstructions> ShippingInstruction { get; set; }
         public virtual DbSet<SpCargoList> GetCargoList { get; set; }
+<<<<<<< HEAD
         public virtual DbSet<SPShippingInstruction> GetShippingInstructionList { get; set; }
         public virtual DbSet<SPShippingSummary> GetShippingSummary { get; set; }
         public virtual DbSet<SPNpePeb> GetNpePebList { get; set; }
@@ -81,6 +85,11 @@ namespace App.Data
         public virtual DbSet<CargoContainer> CargoContainers { get; set; }
         public virtual DbSet<CargoDocument> CargoDocument { get; set; }
         public virtual DbSet<GoodReceiveDocument> GoodsReceiveDocument { get; set; }
+=======
+        public virtual DbSet<SpCargoDetail> GetCargoDetail { get; set; }
+        public virtual DbSet<NpePeb> NpePebs { get; set; }
+        public virtual DbSet<CargoContainer> CargoContainers { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
         public virtual DbSet<TaskSi> TaskSi { get; set; }
         public virtual DbSet<TaskNpePeb> TaskNpePeb { get; set; }
         public virtual DbSet<TaskBlAwb> TaskBlAwb { get; set; }
@@ -105,7 +114,10 @@ namespace App.Data
         public virtual DbSet<MasterAirSeaPort> MasterAirSeaPorts { get; set; }
         public virtual DbSet<MasterBranchCkb> MasterBranchCkbs { get; set; }
         public virtual DbSet<SpGetCiplTotalData> SpGetCiplTotalDatas { get; set; }
+<<<<<<< HEAD
 
         public virtual DbSet<Type> Type { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

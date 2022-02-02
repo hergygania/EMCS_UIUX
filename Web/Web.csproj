@@ -14,7 +14,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Web</RootNamespace>
     <AssemblyName>App.Web</AssemblyName>
+<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+=======
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+>>>>>>> 639d8d0 (Intial commit)
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44304</IISExpressSSLPort>
@@ -28,7 +32,10 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
+<<<<<<< HEAD
     <TargetFrameworkProfile />
+=======
+>>>>>>> 639d8d0 (Intial commit)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,9 +88,12 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -101,11 +111,14 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\packages\NPOI.2.2.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
       <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
     </Reference>
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
     </Reference>
@@ -123,7 +136,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+<<<<<<< HEAD
     <Reference Include="System.Data.DataSetExtensions" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -135,7 +151,12 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+<<<<<<< HEAD
     <Reference Include="System.Web.Extensions" />
+=======
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -166,9 +187,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="System.Web">
       <Private>False</Private>
     </Reference>
+=======
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -186,7 +215,10 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="System.Xml.Linq" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -195,7 +227,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="WindowsBase" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthorizeAccess.cs" />
@@ -203,7 +238,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+<<<<<<< HEAD
     <Compile Include="MvcMenuEMCSHelpers.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracyDetail.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracySummary.cs" />
@@ -401,7 +439,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Helper\ErrorHelper.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\Extensions\ControllerExtension.cs" />
     <Compile Include="Helper\Extensions\FileExtention.cs" />
@@ -506,7 +547,10 @@
     <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Models\ReportFilterDeliveryTrackingStatusView.cs" />
     <Compile Include="Models\ReportFilterDTS.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\RequestForChangeModel.cs" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Compile Include="Models\RoleAccessMenuModel.cs" />
     <Compile Include="Models\UpdateDocument.cs" />
     <Compile Include="Models\BackorderSubmissionView.cs" />
@@ -559,6 +603,7 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\AdminLTE.css" />
+<<<<<<< HEAD
     <Content Include="Content\Assets\core\js\bootstrap.min.js" />
     <Content Include="Content\Assets\core\js\jquery.min.js" />
     <Content Include="Content\Assets\core\js\popper.min.js" />
@@ -605,6 +650,8 @@
     <Content Include="Content\Assets\js\plugins\nouislider.min.js" />
     <Content Include="Content\Assets\js\plugins\perfect-scrollbar.jquery.min.js" />
     <Content Include="Content\Assets\js\plugins\sweetalert2.min.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Content\customdts.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-table-fixed-columns.css" />
@@ -618,6 +665,7 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
+<<<<<<< HEAD
     <Content Include="Content\EMCS\app-tailwind.css" />
     <Content Include="Content\EMCS\src\app-tailwind.css" />
     <Content Include="Content\EMCS\src\pages\Dashboard.css" />
@@ -630,6 +678,8 @@
     <Content Include="Content\EMCS\src\partials\layout.css" />
     <Content Include="Content\EMCS\src\partials\perfect-scrollbar.css" />
     <Content Include="Content\EMCS\src\partials\table.css" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Content\POST\bootstrap-table.min.css" />
     <Content Include="Content\POST\Dropzone\css\dropzone.css" />
     <Content Include="Content\POST\Dropzone\js\dropzone.js" />
@@ -4943,7 +4993,10 @@
     <Content Include="Images\Evis.png" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\freight.png" />
+<<<<<<< HEAD
     <Content Include="Images\hardcopyinvoice.png" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Images\home.png" />
     <Content Include="Images\HomeNew.png" />
     <Content Include="Images\Intransit.png" />
@@ -4955,7 +5008,10 @@
     <Content Include="Images\origin.png" />
     <Content Include="Images\Password.png" />
     <Content Include="Images\Pickup.png" />
+<<<<<<< HEAD
     <Content Include="Images\pin.png" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Images\po1.png" />
     <Content Include="Images\POD.png" />
     <Content Include="Images\preparation.png" />
@@ -5085,8 +5141,11 @@
     <Content Include="Scripts.app\EMCS\bars\bars.js" />
     <Content Include="Scripts.app\EMCS\bootstrap-table\bootstrap-table-cell-input.js" />
     <Content Include="Scripts.app\EMCS\breaking-news\breaking-news-ticker.min.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\breaking-news\eocjs-newsticker.js" />
     <Content Include="Scripts.app\EMCS\breaking-news\jquery.jConveyorTicker.min.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\circliful\jquery.circliful.js" />
     <Content Include="Scripts.app\EMCS\CountryList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Custom.js" />
@@ -5094,7 +5153,10 @@
     <Content Include="Scripts.app\EMCS\Dashboard.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Department.cshtml.js" />
     <Content Include="Scripts.app\EMCS\dropzone.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\EMCS.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\Flow.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowGeneral.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowNextStep.cshtml.js" />
@@ -5104,7 +5166,10 @@
     <Content Include="Scripts.app\EMCS\FormProblemDelegation.cshtml.js" />
     <Content Include="Scripts.app\EMCS\function.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceiveForm.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\GoodsReceiveFormDocument.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\GoodsReceiveList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceivePreviewForm.cshtml.js" />
     <Content Include="Scripts.app\EMCS\highcharts\data.js" />
@@ -5147,13 +5212,19 @@
     <Content Include="Scripts.app\EMCS\report\TaxAuditPurpose.cshtml.js" />
     <Content Include="Scripts.app\EMCS\RunningTextList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\SIBList.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\src\EMCS.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.css" />
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.js" />
     <Content Include="Scripts.app\EMCS\SuperiorList.cshtml.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\transaction\BLAWBList.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\transaction\Cargo.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoApproval.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoDocuments.cshtml.js" />
@@ -5163,8 +5234,11 @@
     <Content Include="Scripts.app\EMCS\transaction\CargoProblemHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\Cipl.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplApprove.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeDetail.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ChangeHistory.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\transaction\CiplDocuments.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplEdit.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplForm.cshtml.js" />
@@ -5174,15 +5248,22 @@
     <Content Include="Scripts.app\EMCS\transaction\CiplProblemHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\GoodReceiveHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\GoodsReceive.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeHistory.js" />
     <Content Include="Scripts.app\EMCS\transaction\NpePeb.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingSummary.cshtml.js" />
+=======
+    <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\EMCS\typing\jquery.typer.js" />
     <Content Include="Scripts.app\EMCS\VideoList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\wizard\ProgressWizard.js" />
     <Content Include="Scripts.app\FreightCostCalculator\FreightCost.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\FreightCostCalculator\FreightCostCalculator.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\FreightCostCalculator\ImportFCC.cshmtl.js" />
     <Content Include="Scripts.app\Home\Index.ext.cshtml.js" />
     <Content Include="Scripts.app\Home\IndexSupply.int.cshtml.js" />
@@ -5202,7 +5283,10 @@
     <Content Include="Scripts.app\Imex\regulation-management.cshtml.js" />
     <Content Include="Scripts.app\Imex\parts-mapping.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.iud.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\Master\AirPortManagement.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\Master\EscalationLimit.cshtml.js" />
     <Content Include="Scripts.app\Master\FreightPort.cshtml.js" />
     <Content Include="Scripts.app\Master\EmailRecipientManagement.cshtml.js" />
@@ -5216,7 +5300,10 @@
     <Content Include="Scripts.app\Master\Menu.cshtml.js" />
     <Content Include="Scripts.app\Master\Region.cshtml.js" />
     <Content Include="Scripts.app\Master\RoleAccessMenu.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\Master\SeaPortManagement.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\Master\ShippingInstructionManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\OrderMethodManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\LartasManagement.cshtml.js" />
@@ -5232,14 +5319,20 @@
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetail.cshtml - Copy.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetails.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterNew.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\PartTracking\OrderThruCounterPopupPartDetail.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\PartTracking\OrderThruCounters.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounter.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetail.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\StockReplenishment.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\StockReplenishmentDetail.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\PartTracking\StockReplenishmentPopupPartDetail.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\POST\chartjs-plugin-datalabels.min.js" />
     <Content Include="Scripts.app\POST\Dashboard.js" />
     <Content Include="Scripts.app\POST\DataDeliveryConfirm.js" />
@@ -5250,7 +5343,10 @@
     <Content Include="Scripts.app\POST\DataConfirm.js" />
     <Content Include="Scripts.app\POST\Ebupot.js" />
     <Content Include="Scripts.app\POST\EbupotVendor.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\POST\FinanceHome.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\POST\HoReport.js" />
     <Content Include="Scripts.app\POST\MasterMappingUser.js" />
     <Content Include="Scripts.app\POST\MasterParameter.js" />
@@ -5258,7 +5354,10 @@
     <Content Include="Scripts.app\POST\AdvanceSearch.js" />
     <Content Include="Scripts.app\POST\VendorDetail.js" />
     <Content Include="Scripts.app\POST\Comment.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\POST\FinanceHome.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\POST\VendorQuickSearch.js" />
     <Content Include="Scripts.app\POST\VendorHome.js" />
     <Content Include="Scripts.app\PrimeProduct\ImportPrimeProduct.cshmtl.js" />
@@ -5297,12 +5396,18 @@
     <Content Include="Scripts.app\Report\_reportImex.js" />
     <Content Include="Scripts.app\StoreManagement.cshtml.js" />
     <Content Include="Scripts.app\UserManagement.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\Vetting\eLs.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\Vetting\GeneratorVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\ManualVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipmentManifest.form.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipment.iud.cshtml.js" />
+<<<<<<< HEAD
     <Content Include="Scripts.app\Vetting\shipmentManifest.iud.cshtml.js" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts.app\Vetting\survey.iud.cshtml.js" />
     <Content Include="Scripts.app\Vetting\Shipment.cshtml.js" />
     <Content Include="Scripts.app\Vetting\PartsOrder.cshtml.js" />
@@ -5800,6 +5905,7 @@
     </Content>
     <Content Include="Content\E-BUPOT\Manual\UserManual_EBUPOT.pdf" />
     <Content Include="Content\DTS\UserManual.pptx" />
+<<<<<<< HEAD
     <Content Include="Content\Assets\fonts\nucleo.eot" />
     <Content Include="Content\Assets\fonts\nucleo.ttf" />
     <Content Include="Content\Assets\fonts\nucleo.woff" />
@@ -5991,6 +6097,8 @@
     <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_type.scss" />
     <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_utilities.scss" />
     <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_variables.scss" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <None Include="Content\EMCS\Templates\New_Template_Problem_History.xls" />
     <Content Include="Content\EMCS\Templates\Template_DHE_BI.xls" />
     <Content Include="Content\EMCS\Templates\Template_EstimationTime.xls" />
@@ -6113,6 +6221,30 @@
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\src\main\webapp\WEB-INF\spring\app-convert.properties" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\com\highcharts\export\filter\CorsFilter.class" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\log4j.properties" />
+<<<<<<< HEAD
+=======
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007880.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007883.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007886.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007889.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000014.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000017.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000020.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000023.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000026.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000029.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000965.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000974.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000977.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000980.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000983.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000986.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000989.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000992.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000995.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000998.tmp" />
+    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00001001.tmp" />
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\readme.md" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\phantomjs\readme.md" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\php\php-batik\index.php" />
@@ -6694,6 +6826,7 @@
     <Content Include="Scripts\tinymce\utils\validate.js" />
     <Content Include="Scripts\TreeMenu.js" />
     <Content Include="Scripts\validator.min.js" />
+<<<<<<< HEAD
     <Content Include="SQL Scripts\SQL 25 May 2022.txt" />
     <Content Include="SQL Scripts\SQL.txt" />
     <Content Include="SQL Scripts\SQL_19-05.txt" />
@@ -6705,12 +6838,18 @@
     <Content Include="Upload\EMCS\GoodsReceive\22\DocCargo-22.png" />
     <Content Include="Upload\EMCS\GoodsReceive\23\DocCargo-23.png" />
     <Content Include="Upload\EMCS\GoodsReceive\24\DocCargo-24.png" />
+=======
+    <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Upload\EMCS\GR\2\DO.0612190002FG10004xxxxxx.png" />
     <Content Include="Upload\EMCS\GR\3\DO.0612190003FGTesting.jpeg" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Download\CustomBlankHeader.html" />
     <Content Include="Views\Download\CustomFooter.html" />
+<<<<<<< HEAD
     <Content Include="Views\Download\CustomHeader.html" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Views\DTS\DRList.png" />
     <Content Include="Views\Post\AdvanceSearch.cshtml" />
     <Content Include="Views\Post\Dashboard.cshtml" />
@@ -7200,6 +7339,10 @@
     <Content Include="Views\Post\ModalFormCKB.cshtml" />
     <Content Include="Views\Post\DashboardMockUp.cshtml" />
     <Content Include="Views\Post\ModalComment.cshtml" />
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 639d8d0 (Intial commit)
     <Content Include="Views\DTS\NewFreight.cshtml" />
     <Content Include="Views\ChangeLog\Index.cshtml" />
     <Content Include="Views\KPIDashboard\Index.cshtml" />
@@ -7221,6 +7364,7 @@
     <Content Include="Views\Post\MasterMappingUser.cshtml" />
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
+<<<<<<< HEAD
     <Content Include="Views\Post\HomeFinance.cshtml" />
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
@@ -7256,6 +7400,8 @@
     <Content Include="Views\EMCS\BLAWBList.cshtml" />
     <Content Include="Views\EMCS\NpePebList.cshtml" />
     <Content Include="Views\EMCS\GoodsReceiveTabDocument.cshtml" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -7267,7 +7413,10 @@
     <Folder Include="Content\SoVetting\plugins\dataTables.checkboxes\" />
     <Folder Include="File\EMCS\Regulation\" />
     <Folder Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\com\highcharts\export\controller\" />
+<<<<<<< HEAD
     <Folder Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\" />
+=======
+>>>>>>> 639d8d0 (Intial commit)
     <Folder Include="Upload\doc\" />
     <Folder Include="Upload\EMCS\Cipl\" />
     <Folder Include="Upload\EMCS\Sib\" />
@@ -7351,9 +7500,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+<<<<<<< HEAD
   <!-- <Target Name="Tailwind" BeforeTargets="Build">
     <Exec Command="npm run build"/>
   </Target> -->
+=======
+>>>>>>> 639d8d0 (Intial commit)
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,6 +1,9 @@
 ﻿@model  App.Web.Models.EMCS.CargoFormModel
 @{
+<<<<<<< HEAD
     Layout = "~/Views/EMCS/_Layout.cshtml";
+=======
+>>>>>>> 639d8d0 (Intial commit)
     ViewBag.Title = "Cargo Form";
     var title = ViewBag.CargoID == 0 ? "Add" : "Update";
 }
@@ -20,6 +23,7 @@
     .select2-container {
         width: 100% !important;
     }
+<<<<<<< HEAD
 
     .fixed-table-toolbar {
         padding: 0 14px 0 14px;
@@ -88,13 +92,19 @@
             background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
             box-shadow: 3px 5px #a8a8a8;
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 </style>
 
 <a data-modal="" href="/EMCS/EditContainerCargo/1" class="editContainerData" style="display:none;">
     <i class="fa fa-edit"></i> Edit Container
 </a>
 
+<<<<<<< HEAD
 <a data-modal="" href="/EMCS/EditItemCargo/" class="editItemCargo" style="display:none;">
+=======
+<a data-modal="" href="/EMCS/EditItemCargo/0" class="editItemCargo" style="display:none;">
+>>>>>>> 639d8d0 (Intial commit)
     <i class="fa fa-edit"></i> Edit Item Cargo
 </a>
 
@@ -103,6 +113,7 @@
 </a>
 
 <form id="formRequest">
+<<<<<<< HEAD
 <div class="row">
     <div class="col-md-12">
         <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
@@ -389,6 +400,273 @@
                                 <div class="col-xs-12 table-responsive">
 
                                     <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered" data-toggle="table"></table>
+=======
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-warning" style="min-height:555px">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <input type="hidden" id="CargoID" value="0" />
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Cargo No.</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" value="" class="form-control" placeholder="Cargo No" id="inpClNo" name="inpClNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" id="CreateDate" class="form-control" disabled name="CreateDate" value="" placeholder="Cargo Date" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Prepared By</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="inpPreparedCl" name="inpPreparedCl" placeholder="Prepared By" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Consignee</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.Data.Consignee, new { @class = "form-control disabled", @readonly = "readonly", @id = "Consignee", placeholder = "Consignee" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Notify Party</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="NotifyParty" name="NotifyParty" class="form-control" readonly placeholder="Notify Party" style="width:100%;" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Export Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="ExportType" name="ExportType" placeholder="Export Type" class="form-control" style="width:100%;" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Category</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="Category" name="Category" class="form-control" placeholder="Category" style="width:100%;" readonly />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Category)</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Incoterms</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="Incoterms" name="Incoterms" class="form-control" readonly placeholder="Incoterms" required style="width:100%;" />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Incoterms)</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Shipping Method</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="ShippingMethod" name="ShippingMethod" readonly class="form-control" placeholder="Shipping Method" style="width:100%;" />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Incoterms)</div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Kppbc</label>
+                                        <div class="input-group col-lg-8 col-xs-8 col-md-8">
+                                            <select id="IdKppbc" name="IdKppbc" readonly class="select2" required style="width:100%;"></select>
+                                        </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Cargo Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8 col-md-8">
+                                            <select id="CargoType" name="CargoType" readonly class="select2" required style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Reference <span class="text-danger">*</span></label>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <div class="row" style="margin-bottom:5px;">
+                                                <select id="inpReference" class="select2" multiple="multiple" style="width:100%;" required name="inpReference"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-12 divtableCl">
+                                    <div class="toolbar">
+                                        <a class="btn btn-success linkCreateCargo" data-modal="myModalPlace" data-toggle="modal" data-target="" href="/EMCS/CreateContainer/0" style="display:none;">
+                                            <i class="fa fa-plus-circle"></i> Create Cargo
+                                        </a>
+                                        <button type="button" class="btn btn-success btn-md btnAddCIPL" disabled><i class="fa fa-plus-circle"></i> Add Cargo</button>
+                                    </div>
+
+                                    <table class="table table-bordered" id="tableCargoForm"></table>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Packages</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalPackageCl" name="inpTotalPackageCl" placeholder="Total Package" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Net Weight</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalNetWeightCl" name="inpTotalNetWeightCl" placeholder="Total Net Weight" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Gross Weight</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalGrossWeightCl" name="inpTotalGrossWeightCl" placeholder="Total Gross Weight" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Volume</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalVolumeCl" name="inpTotalVolumeCl" placeholder="Total Volume" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">m3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Stuffing Date (Started) <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input class="form-control date required" id="inpStartStuffDateCl" name="inpStartStuffDateCl" placeholder="Stuffing Date Started" readonly="readonly" style="background:white;">
+                                            <div class="input-group-addon calStuffStart" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Stuffing Date (Finished) <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input class="form-control date required" id="inpFinishStuffDateCl" name="inpFinishStuffDateCl" placeholder="Stuffing Date Finished" readonly="readonly" style="background:white;">
+                                            <div class="input-group-addon calStuffFinish" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Vessel / Flight Name <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control required" id="inpVeselCl" name="inpVeselCl" placeholder="Vessel / Flight Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Vessel/Flight No <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control required" id="inpVoyageCl" name="inpVoyageCl" placeholder="Vessel / Flight Number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Connecting Vessel/Flight Name <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="inpConnectVeselCl" name="inpConnectVeselCl" placeholder="Connecting Vessel / Flight Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Connecting Vessel/Flight No <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="inpVoyageConnectCl" name="inpVoyageConnectCl" placeholder="Connecting Vessel / Flight Number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Liner <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control required" id="inpLinerCl" name="inpLinerCl" placeholder="Liner">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Flight / Sailing Schedule (ETD) <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input class="form-control date required" id="inpFlightCl" name="inpFlightCl" placeholder="Flight / Sailing Schedule" style="background:white;" readonly="readonly">
+                                            <div class="input-group-addon calFlightCl" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Arrival Schedule (ETA) <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input class="form-control date required" id="inpArrivalCl" name="inpArrivalCl" placeholder="Arrival Schedule" readonly="readonly" style="background:white;">
+                                            <div class="input-group-addon calArrivalCl" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Booking Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="inpBookNumCl" name="inpBookNumCl" placeholder="Booking Number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Booking Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input class="form-control date" id="inpBookDateCl" name="inpBookDateCl" placeholder="Booking Date" style="background:white;" readonly="readonly">
+                                            <div class="input-group-addon calBookDateCl" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETD</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="date" class="form-control" id="inpETD" name="inpETD">
+                                                <input class="form-control date required" id="inpETD" name="inpETD" placeholder="ETD" style="background:white;" readonly="readonly">
+                                                <div class="input-group-addon calETDCl" style="background:#00C0EF;border-color:#00ACD6;">
+                                                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">ETA</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="date" class="form-control" id="inpETA" name="inpETA">
+                                                <input class="form-control date required" id="inpETA" name="inpETA" placeholder="ETA" style="background:white;" readonly="readonly">
+                                                <div class="input-group-addon calETACl" style="background:#00C0EF;border-color:#00ACD6;">
+                                                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Port of Loading <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2" id="inpPortLoadCl" name="inpPortLoadCl" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Port of Discharge / Destination <span class="text-danger">*</span></label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2" id="inpPortDiscCl" name="inpPortDiscCl" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="form-group pull-right">
+                                <div class="col-md-12">
+                                    @*<a class="btn btn-warning" id="btnCancelCargo" style="min-width:120px;" href="/EMCS/CargoList"><i class="fa fa-arrow-circle-left"></i>Back</a>*@
+                                    <a class="btn btn-default btn-rotate" id="btnBackCargo" href="/EMCS/CargoList" style="min-width:120px;"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                                    <a class="btn btn-info btn-rotate" id="btnSaveCargo" style="min-width:120px;" onclick="post_cargo('Draft')"><i class="fa fa-save"></i>&nbsp;Save As Draft</a>
+                                    <a class="btn btn-success" id="btnSubmitCargo" style="min-width:120px;" onclick="post_cargo('Submit')"><i class="fa fa-paper-plane"></i>&nbsp;Submit</a>
+                                    @*<input type="submit" value="Submit" />*@
+>>>>>>> 639d8d0 (Intial commit)
                                 </div>
                             </div>
                         </div>
@@ -397,6 +675,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 </div>
 </form>
 
@@ -542,6 +821,11 @@
         </div>
     </div>
 </div>
+=======
+</form>
+
+<!-- Modal -->
+>>>>>>> 639d8d0 (Intial commit)
 <div id="myModalPlace" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -555,6 +839,7 @@
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 <script type="text/javascript">
     var CargoID = "@ViewBag.CargoID";
+<<<<<<< HEAD
 /*    var CargoTypeName = "Full Container Load";*/
     $(document).ready(function () {
 
@@ -565,12 +850,19 @@
 <script src="~/Scripts.app/EMCS/dropzone.js"></script>
 <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 <script src="/Scripts/loadingoverlay.min.js"></script>
+=======
+    $(document).ready(function () {
+
+    });
+</script>
+>>>>>>> 639d8d0 (Intial commit)
 
 @section scripts
 {
     @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
     @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoForm.cshtml.js")"></script>
+<<<<<<< HEAD
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
@@ -598,3 +890,7 @@
         });
     });
 </script>
+=======
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}
+>>>>>>> 639d8d0 (Intial commit)

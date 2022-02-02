@@ -63,6 +63,7 @@
             <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
             Wait..
         </span>
+<<<<<<< HEAD
         <button type="button" class="btn btn-round btn-danger mr-2" data-dismiss="modal">Close</button>
         @if (mode == "I")
         {
@@ -75,6 +76,20 @@
         else
         {
             <button type="submit" class="btn btn-round btn-danger"><i class="fa fa-save"></i> Delete</button>
+=======
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+>>>>>>> 639d8d0 (Intial commit)
         }
     </div>
 

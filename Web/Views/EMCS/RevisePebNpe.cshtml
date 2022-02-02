@@ -318,6 +318,7 @@
                 $('#NpeDate').val(null);
             }
 
+<<<<<<< HEAD
             var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
             if (npeDateSubmitToCustomOffice) {
                 var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
@@ -332,11 +333,16 @@
                 $('#NpeDateSubmitToCustomOffice').val(null);
             }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
             var documentNpePeb = "@Model.Document[0].FileName";
             $('#DocumentPebNpe').attr("src", "/Upload/EMCS/NPEPEB/" + documentNpePeb);
 
             $('#DraftNpePeb').on('click', function () {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
             $.ajax({
                 url: '/EMCS/DraftNpePeb',
                 type: 'POST',
@@ -359,8 +365,12 @@
                     DescriptionPassword: $('#NpeDescPass').val(),
                     FreightPayment: removeformatCurrency($('#NpeFreightPayment').val()),
                     InsuranceAmount: removeformatCurrency($('#NpeInsuranceAmount').val()),
+<<<<<<< HEAD
                     Status: $(this).val(),
                     NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
+=======
+                    Status: $(this).val()
+>>>>>>> 639d8d0 (Intial commit)
                 },
                 cache: false,
                 async: false,
@@ -382,10 +392,15 @@
             });
         });
 
+<<<<<<< HEAD
             $("#YesReviseBtn").on("click", function () {
 
                 var isValid = $('#FormUploadNpePeb').valid();
 
+=======
+            $("#YesReviseBtn").on("click",function() {
+                var isValid = $('#FormUploadNpePeb').valid();
+>>>>>>> 639d8d0 (Intial commit)
                 if (isValid) {
                     var status = $("#myModalProblemContent form").valid();
                     var statusName = "Revise";
@@ -403,6 +418,7 @@
                                 Npwp: $('#NpeNpwp').val(),
                                 ReceiverName: $('#NpeReceiver').val(),
                                 PassPabeanOffice: $('#NpePass').val(),
+<<<<<<< HEAD
                                 DHE: removeformatCurrency($('#NpeDHE').val()),
                                 PebFob: removeformatCurrency($('#NpeFob').val()),
                                 Valuta: $('#NpeValuta').val(),
@@ -418,6 +434,22 @@
                                         .val()),
                                 Status: 'Revise',
                                 NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
+=======
+                                DHE: removeformatCurrency($('#NpeDHE').val()),    
+                                PebFob: removeformatCurrency($('#NpeFob').val()), 
+                                Valuta: $('#NpeValuta').val(),
+                                WarehouseLocation: $('#NpeWarehouse').val(),
+                                DocumentComplete: $("input[name='flagCompleteDoc']:checked").val(),
+                                Rate: removeformatCurrency($('#NpeRate').val()), 
+                                DescriptionPassword: $('#NpeDescPass').val(),
+                                FreightPayment:
+                                    removeformatCurrency($('#NpeFreightPayment')
+                                        .val()), 
+                                InsuranceAmount:
+                                    removeformatCurrency($('#NpeInsuranceAmount')
+                                        .val()), 
+                                Status: 'Revise'
+>>>>>>> 639d8d0 (Intial commit)
                             },
                             cache: false,
                             async: false,

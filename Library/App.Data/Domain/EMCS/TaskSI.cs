@@ -18,7 +18,10 @@
         public DateTime? UpdateDate { get; set; }
         public string UpdateBy { get; set; }
         public bool IsDelete { get; set; }
+<<<<<<< HEAD
         public string ExportType { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
     }
 }

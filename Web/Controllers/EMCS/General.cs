@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
+=======
+﻿using System.Collections.Generic;
+>>>>>>> 639d8d0 (Intial commit)
 using System.Linq;
 using System.Web.Mvc;
 using App.Data.Domain.EMCS;
@@ -25,6 +29,7 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcGeneral.CiplDocumentList(filter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+<<<<<<< HEAD
         public JsonResult GetCargoDocumentList(GridListFilter filter)
         {
 
@@ -75,6 +80,9 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         [HttpGet]
         public JsonResult GetPlantList(Domain.MasterSearchForm crit)
         {

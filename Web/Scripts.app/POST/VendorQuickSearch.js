@@ -26,6 +26,7 @@ function closeLoading() {
     $("#loadingModal").modal("hide");
 }
 
+<<<<<<< HEAD
 function DownloadGR() {
  
     var param = {
@@ -54,6 +55,13 @@ function DownloadGR() {
 }
 
 
+=======
+function DownloadFileUpload(id) {
+    url = "/POST/DownloadFileRequest?id=" + id;
+    window.open(url, '_blank');
+}
+
+>>>>>>> 639d8d0 (Intial commit)
 function getColumns(types) {
     var type = $("#poType").val() ?? types;
     var labelEtd = "ETD";
@@ -352,6 +360,7 @@ var columnsGr = [{
     align: 'left',
     width: '450',
     formatter: dateSAPFormatter
+<<<<<<< HEAD
 },
 {
     title: 'GR Amount',
@@ -362,6 +371,8 @@ var columnsGr = [{
     width: '450',
     formatter: currencyFormatter
     
+=======
+>>>>>>> 639d8d0 (Intial commit)
 }]
 
 function setMileStone(res) {
@@ -454,6 +465,7 @@ function setMileStone(res) {
             } else {
                 $('#InvoiceDate').text(dataSingle.ProgressInvoice);
             }
+<<<<<<< HEAD
             $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
             $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
             $('#BastDate').text(hasBast + " of " + totalBast + " (" + percentBast + "%)");
@@ -463,6 +475,8 @@ function setMileStone(res) {
             } else {
                 $('#InvoiceDate').text(totalInvoice + " INVOICE");
             }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         } else {
             $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
             $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
@@ -518,9 +532,15 @@ function setMileStone(res) {
             document.getElementById("Circle-bast").className = "btn btn-default btn-circle";
         } else {
             var pointColorBast = (dataSingle.CountItemNotbast == 0) ? "btn-primary" : "btn-warning";
+<<<<<<< HEAD
             //if (poTypes === "D") {
             //    pointColorBast = "btn-primary";
             //}
+=======
+            if (poTypes === "D") {
+                pointColorBast = dataSingle.ProgressBAST == "100%" ? "btn-primary" : "btn-warning";
+            }
+>>>>>>> 639d8d0 (Intial commit)
             document.getElementById("Circle-bast").className = "btn " + pointColorBast + " btn-circle";
         }
         if (HasGr == 0) {
@@ -533,9 +553,15 @@ function setMileStone(res) {
             document.getElementById("Circle-invoice").className = "btn btn-default btn-circle";
         } else {
             var pointColorInv = (dataSingle.CountItemNotInvoice == 0) ? "btn-primary" : "btn-warning";
+<<<<<<< HEAD
             //if (poTypes === "D") {
             //    pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
             //}
+=======
+            if (poTypes === "D") {
+                pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
+            }
+>>>>>>> 639d8d0 (Intial commit)
             document.getElementById("Circle-invoice").className = "btn " + pointColorInv + " btn-circle";
         }
         if (HasInvoiceFinance == 0) {

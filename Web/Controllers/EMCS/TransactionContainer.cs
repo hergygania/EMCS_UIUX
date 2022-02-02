@@ -41,6 +41,7 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public JsonResult CreateCargoContainer(ContainerFormModel form)
         {
+<<<<<<< HEAD
 
             if(form.ContainerType == null)
             {
@@ -51,6 +52,8 @@ namespace App.Web.Controllers.EMCS
                 var containertype2 = CheckCNNo(a);
                 form.ContainerType = Convert.ToString(containertype2.Data);
             }
+=======
+>>>>>>> 639d8d0 (Intial commit)
             var cargo = Service.EMCS.SvcCargo.GetCargoById(form.CargoId);
 
             if (cargo != null)

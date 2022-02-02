@@ -4,7 +4,10 @@
     {
         public long Id { get; set; }
         public long IdCipl { get; set; }
+<<<<<<< HEAD
         public long IdGr { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public int Limit { get; set; }
         public int Offset { get; set; }
         public long IdFlow { get; set; }
@@ -19,8 +22,12 @@
         public string Cat { get; set; }
         public bool Total { get; set; }
         public string Ciplno { get; set; }
+<<<<<<< HEAD
         public string FormType { get; set; }
         public long Cargoid { get; set; }
         public bool Rfc { get; set; }
+=======
+        public long Cargoid { get; set; }
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

@@ -260,7 +260,11 @@ namespace App.Service.POST
             {
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
+<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@RequestId", requestId ));
+=======
+                parameterList.Add(new SqlParameter("@RequestId", requestId));
+>>>>>>> 639d8d0 (Intial commit)
                 parameterList.Add(new SqlParameter("@ItemName", param.Item ?? ""));
                 parameterList.Add(new SqlParameter("@StartDateDeliveryDate", param.StartDateDeliveryDate ?? ""));
                 parameterList.Add(new SqlParameter("@EndDateDeliveryDate", param.EndDateDeliveryDate ?? ""));
@@ -445,6 +449,7 @@ namespace App.Service.POST
                 return data;
             }
         }
+<<<<<<< HEAD
         public static List<InvoiceHardCopy_List> GetHardCopyInvoiceById(int id)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -471,6 +476,8 @@ namespace App.Service.POST
                 return data;
             }
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         //public static int RemovePartialListById(int Id)
         //{
         //    using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -478,7 +485,11 @@ namespace App.Service.POST
         //        var data = db.DbContext.Database.SqlQuery<ItemById_LIST>(@"exec [dbo].[SP_ItemPartialById_LIST]@Id", Id).ToList();
         //        return 1;
         //    }
+<<<<<<< HEAD
 
+=======
+     
+>>>>>>> 639d8d0 (Intial commit)
         //}
 
         public static int RemovePartialListById(int Id)
@@ -491,6 +502,7 @@ namespace App.Service.POST
             }
             return 1;
         }
+<<<<<<< HEAD
         public static int RemoveHarcopyInvoiceById(int Id)
         {
             using (var db = new Data.POSTContext())
@@ -501,6 +513,8 @@ namespace App.Service.POST
             }
             return 1;
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public static ItemById_LIST GetItemPartialById(int id)
         {

@@ -4,7 +4,10 @@
     ViewBag.TypeReq = "NpePeb";
     ViewBag.IdReq = Model.NpePeb.IdCl;
     ViewBag.IdStep = Model.Request.IdStep;
+<<<<<<< HEAD
     Layout = "~/Views/EMCS/_Layout.cshtml";
+=======
+>>>>>>> 639d8d0 (Intial commit)
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
@@ -78,6 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+<<<<<<< HEAD
                                     <label class="control-label col-lg-4 col-xs-4">Date & Time Submit NPE to Custom Office</label>
                                     <div class="input-group col-lg-8 col-xs-8">
                                         @Html.TextBoxFor(m => m.NpePeb.NpeDateSubmitToCustomOffice, new { @class = "form-control date", @id = "NpeDateSubmitToCustomOffice", @placeholder = "Date", @name = "NpeDateSubmitToCustomOffice" })
@@ -88,6 +92,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+=======
+>>>>>>> 639d8d0 (Intial commit)
                                     <label class="control-label col-lg-4 col-xs-4">No Pen</label>
                                     <div class="input-group col-lg-8 col-xs-8">
                                         @Html.TextBoxFor(m => m.NpePeb.RegistrationNumber, new { @class = "form-control", @id = "RegistrationNumber", @placeholder = "Registration Number", @name = "RegistrationNumber" })
@@ -304,7 +310,11 @@
         $("#btnApproveNpePeb").on("click", function () {
             Swal.fire({
                 title: 'Approve Confirmation',
+<<<<<<< HEAD
                 text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?', text: 'Do you want to continue ?',
+=======
+                text: 'Do you want to continue ?',
+>>>>>>> 639d8d0 (Intial commit)
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',

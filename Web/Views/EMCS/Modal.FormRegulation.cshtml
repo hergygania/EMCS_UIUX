@@ -19,6 +19,7 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-lg-12">
+<<<<<<< HEAD
                 <div class="form-group">
                     <label class="control-label col-md-5 col-xs-12">Instansi</label>
                     <div class="input-group col-md-12 col-xs-12">
@@ -101,6 +102,94 @@
                     <div class="input-group col-md-12 col-xs-12">
                         @Html.TextAreaFor(m => m.Regulation.Keterangan, new { @class = "form-control required", placeholder = "Keterangan" })
                         <div>@Html.ValidationMessageFor(m => m.Regulation.Keterangan)</div>
+=======
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Instansi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Instansi, new { @class = "form-control required", placeholder = "Instansi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Instansi)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Nomor</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Nomor, new { @class = "form-control required", placeholder = "Nomor" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Nomor)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">No Regulasi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.RegulationNo, new { @class = "form-control required", placeholder = "No Regulation" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.RegulationNo)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Kategori</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.DropDownListFor(m => m.Regulation.Category, new SelectList(Model.CategoryList, "Value", "Name"), new { @class = "form-control", id = "Category" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Category)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Jenis Regulasi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.RegulationType, new { @class = "form-control required", placeholder = "Jenis Regulasi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.RegulationType)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Deskripsi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Description, new { @class = "form-control required", row = 5, cols = 5, placeholder = "Deskripsi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Description)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Referensi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Reference, new { @class = "form-control required", placeholder = "Referensi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Reference)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Penetapan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalPenetapan, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Penetapan" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalPenetapan)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Diundangkan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalDiUndangkan, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Diundangkan" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalDiUndangkan)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Berlaku</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalBerlaku, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Berlaku" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalBerlaku)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Berakhir</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalBerakhir, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Berakhir" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalBerakhir)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Keterangan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextAreaFor(m => m.Regulation.Keterangan, new { @class = "form-control required", placeholder = "Keterangan" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Keterangan)</div>
+                        </div>
+>>>>>>> 639d8d0 (Intial commit)
                     </div>
                 </div>
             </div>
@@ -108,6 +197,7 @@
     </div>
 
     <div class="modal-footer">
+<<<<<<< HEAD
         <button type="button" class="btn btn-danger btn-round mr-2" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
         @if (mode == "I")
         {
@@ -120,6 +210,20 @@
         else
         {
             <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-remove"></i> Delete</button>
+=======
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+>>>>>>> 639d8d0 (Intial commit)
         }
 
     </div>

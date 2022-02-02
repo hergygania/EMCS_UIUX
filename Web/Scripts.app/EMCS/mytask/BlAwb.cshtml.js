@@ -110,6 +110,7 @@ function dropzone() {
 
     });
 }
+<<<<<<< HEAD
 
 
 
@@ -117,3 +118,5 @@ function dropzone() {
 
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)

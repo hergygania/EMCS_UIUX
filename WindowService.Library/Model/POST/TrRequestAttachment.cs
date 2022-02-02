@@ -22,7 +22,10 @@
         public bool IsApprove { get; set; }
         public string Notes { get; set; }
         public string QtyPartial { get; set; }
+<<<<<<< HEAD
         public string FileNameKOFAX { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
     
 

@@ -17,7 +17,10 @@ using App.Web.Models.EMCS;
 using Spire.Xls;
 using System.IO;
 using App.Web.App_Start;
+<<<<<<< HEAD
 using App.Web.Helper;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -206,7 +209,10 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             ViewBag.crudMode = "I";
+<<<<<<< HEAD
             ViewBag.IsOwned = true;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
             GoodReceiveModel data = InitGoodReceive(0);
             data.YesNo = YesNoList();
@@ -237,11 +243,16 @@ namespace App.Web.Controllers.EMCS
 
                 item.Notes = form.Data.Notes;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
+<<<<<<< HEAD
                
                 
                     id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
                 
                     var data = InitGoodReceive(id);
+=======
+                id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                var data = InitGoodReceive(id);
+>>>>>>> 639d8d0 (Intial commit)
                 return JsonCRUDMessage(ViewBag.crudMode, data);
             }
             return Json(new { success = false });
@@ -286,10 +297,13 @@ namespace App.Web.Controllers.EMCS
             PaginatorBoot.Remove("SessionTRN");
             GoodReceiveModel data = InitGoodReceive(id);
             ApplicationTitle();
+<<<<<<< HEAD
             string strQrCodeUrlGR = Common.GenerateQrCode(id, "DownloadRg");
             ViewBag.QrCodeUrlGR = strQrCodeUrlGR;
             TempData["QrCodeUrlGR"] = strQrCodeUrlGR;
             TempData.Peek("QrCodeUrlGR");
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("rg", id);
             data.DetailGr = Service.EMCS.DocumentStreamGenerator.GetGrDetailData(id);
             data.YesNo = YesNoList();
@@ -302,10 +316,13 @@ namespace App.Web.Controllers.EMCS
             {
                 ViewBag.crudMode = "U";
                 PaginatorBoot.Remove("SessionTRN");
+<<<<<<< HEAD
                 string strQrCodeUrlGR = Common.GenerateQrCode(id, "DownloadRg");
                 ViewBag.QrCodeUrlGR = strQrCodeUrlGR;
                 TempData["QrCodeUrlGR"] = strQrCodeUrlGR;
                 TempData.Peek("QrCodeUrlGR");
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 var idReq = Service.EMCS.SvcRequestGr.GetRequestById(id);
                 var idGr = Convert.ToInt64(idReq.IdGr);
                 GoodReceiveModel data = InitGoodReceive(idGr);
@@ -326,11 +343,14 @@ namespace App.Web.Controllers.EMCS
         #region Update Form GR
         public ActionResult EditGrForm(long id)
         {
+<<<<<<< HEAD
 			var userId = User.Identity.GetUserId();
 			if (Service.EMCS.SvcGoodsReceive.GRHisOwned(id, userId))
 			ViewBag.IsOwned = true;
 			else
 			ViewBag.IsOwned = false;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.crudMode = "U";
             PaginatorBoot.Remove("SessionTRN");
             GoodReceiveModel data = InitGoodReceive(id);
@@ -406,10 +426,14 @@ namespace App.Web.Controllers.EMCS
                 item.PickupPic = form.Data.PickupPic;
                 item.PickupPoint = form.Data.PickupPoint;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
+<<<<<<< HEAD
                 var userId = User.Identity.GetUserId();
               
                     Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
                
+=======
+                Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
+>>>>>>> 639d8d0 (Intial commit)
                 var detail = InitGoodReceive(form.Data.Id);
                 return JsonCRUDMessage("U", new { detail });
             }
@@ -500,6 +524,7 @@ namespace App.Web.Controllers.EMCS
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
         }
+<<<<<<< HEAD
         [HttpPost]
         public bool GRDocumentInsert(List<Data.Domain.EMCS.GoodReceiveDocument> data)
         {
@@ -588,5 +613,7 @@ namespace App.Web.Controllers.EMCS
 
             return File(fullPath, "text/plain", "NotFound.txt");
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

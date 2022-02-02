@@ -1,9 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using System.Web.Mvc;
 using App.Domain;
 using App.Web.App_Start;
+=======
+using System.Web;
+using System.Web.Mvc;
+using App.Data.Caching;
+using App.Data.Domain;
+using App.Domain;
+using App.Web.Models;
+using App.Web.App_Start;
+using System.Globalization;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Configuration;
+using System.Net;
+>>>>>>> 639d8d0 (Intial commit)
 using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;

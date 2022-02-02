@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using App.Web.Helper;
 using System;
+=======
+﻿using System;
+>>>>>>> 639d8d0 (Intial commit)
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -15,11 +19,18 @@ namespace App.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+<<<<<<< HEAD
         public ErrorHelper _errorHelper = new ErrorHelper();
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
             _errorHelper.Error(ex.ToString());
+=======
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+>>>>>>> 639d8d0 (Intial commit)
             if (ex is ThreadAbortException)
                 return;
             //Server.Transfer("/Shared/BadRequest", true);

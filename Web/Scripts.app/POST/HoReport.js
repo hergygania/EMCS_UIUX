@@ -118,7 +118,19 @@ $(document).ready(function () {
                 align: 'center',
                 width: '350',
                 formatter: dateFormatter,
+<<<<<<< HEAD
             },          
+=======
+            },
+            //{
+            //    title: 'Item Category',
+            //    field: 'Item_Category',
+            //    halign: 'center',
+            //    class: 'text-nowrap',
+            //    align: 'center',
+            //    width: '350'
+            //}, {
+>>>>>>> 639d8d0 (Intial commit)
             {
                 title: 'PO Line Item',
                 field: 'PO_lineitem',
@@ -207,6 +219,10 @@ $(document).ready(function () {
                 width: '300',
 
             },
+<<<<<<< HEAD
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
             {
                 title: 'Request Date',
                 field: 'RequestDate',
@@ -269,6 +285,7 @@ $(document).ready(function () {
                 width: '300',
                 formatter: dateFormatter,
             }, {
+<<<<<<< HEAD
                 title: 'GR/SA Number',
                 field: 'SA_Number',
                 halign: 'center',
@@ -287,6 +304,8 @@ $(document).ready(function () {
                 formatter: dateFormatter,
             },
             {
+=======
+>>>>>>> 639d8d0 (Intial commit)
                 title: 'GR/SA Document Date',
                 field: 'SA_DocumentDate',
                 halign: 'center',
@@ -294,6 +313,7 @@ $(document).ready(function () {
                 align: 'left',
                 width: '110',
                 formatter: dateFormatter,
+<<<<<<< HEAD
             },
             {
                 title: 'GR/SA Amount',
@@ -304,6 +324,9 @@ $(document).ready(function () {
                 width: '110'
                 
             },{
+=======
+            }, {
+>>>>>>> 639d8d0 (Intial commit)
                 title: 'Cost Center',
                 field: 'CostCenter',
                 halign: 'center',

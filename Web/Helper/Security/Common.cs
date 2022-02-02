@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using QRCoder;
 using System;
+=======
+﻿using System;
+>>>>>>> 639d8d0 (Intial commit)
 using System.Configuration;
 using System.Drawing;
 using System.IO;
@@ -12,6 +16,7 @@ namespace App.Web.Helper
 {
     public class Common
     {
+<<<<<<< HEAD
         public static string GenerateQrCode(long IdCipl, string doc)
         {
 
@@ -52,6 +57,8 @@ namespace App.Web.Helper
 
 
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public static string UploadFile(HttpPostedFileBase file, string appName)
         {
 

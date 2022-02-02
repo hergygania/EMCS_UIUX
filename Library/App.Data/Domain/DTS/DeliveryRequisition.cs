@@ -167,7 +167,10 @@
         public bool? SendEmailToServiceTUBatuLicin { get; set; }
         public bool? SendEmailToServiceTUSangatta { get; set; }
         public bool? SendEmailToServiceTUKendari { get; set; }
+<<<<<<< HEAD
         public bool? SendEmailToServiceTUMeulaboh { get; set; }        
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public string RequestNotes { get; set; }
         public string SendEmailNotes { get; set; }

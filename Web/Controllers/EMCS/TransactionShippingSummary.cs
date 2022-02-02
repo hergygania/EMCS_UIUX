@@ -3,12 +3,16 @@ using System;
 using System.Web.Mvc;
 using App.Web.Models.EMCS;
 using System.IO;
+<<<<<<< HEAD
 using App.Web.Helper;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+<<<<<<< HEAD
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult ShippingSummaryList()
         {
@@ -40,6 +44,11 @@ namespace App.Web.Controllers.EMCS
             ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
             TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
             TempData.Peek("QrCodeUrlSS");
+=======
+        public ActionResult ShippingSummaryView(long cargoId = 1)
+        {
+            ApplicationTitle();
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;

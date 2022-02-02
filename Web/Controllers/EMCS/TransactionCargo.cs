@@ -6,10 +6,13 @@ using App.Web.App_Start;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using App.Web.Models;
 using App.Data.Domain;
 using System.ComponentModel;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -37,14 +40,20 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CargoForm()
         {
             ApplicationTitle();
+<<<<<<< HEAD
             ViewBag.IsOwned = true;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+<<<<<<< HEAD
             ViewBag.IsImexUser = false;
             ViewBag.CanRequestForChange = false;
             ViewBag.IsApprover = false;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -66,6 +75,7 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsUpdated, UrlMenu = "CargoList")]
+<<<<<<< HEAD
         public ActionResult UpdateCargo(long cargoId, bool rfc = false)
         {
             var userId = User.Identity.GetUserId();
@@ -73,11 +83,18 @@ namespace App.Web.Controllers.EMCS
             ViewBag.CargoID = cargoId;
             string userRoles = User.Identity.GetUserRoles();
             HttpContext.Session["Cargoid"] = cargoId;
+=======
+        public ActionResult UpdateCargo(long cargoId)
+        {
+            ApplicationTitle();
+            ViewBag.CargoID = cargoId;
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
 
+<<<<<<< HEAD
             ViewBag.IsApprover = false;
             ViewBag.CanRequestForChange = false;
             if (Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId))
@@ -102,6 +119,8 @@ namespace App.Web.Controllers.EMCS
                 ViewBag.CanRequestForChange = false;
             else if(rfc)
                 ViewBag.CanRequestForChange = true;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
             PaginatorBoot.Remove("SessionTRN");
@@ -126,8 +145,12 @@ namespace App.Web.Controllers.EMCS
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(filter.Cargoid);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(filter.Cargoid);
             ViewBag.IdCipl = filter.IdCipl;
+<<<<<<< HEAD
             HttpContext.Session["Cargoid"] = filter.Cargoid;
             GetCargoDocumentList(filter);
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
             return View(detail);
         }
 
@@ -150,12 +173,15 @@ namespace App.Web.Controllers.EMCS
                 detail.DataRequest = Service.EMCS.SvcRequestCl.GetRequestCl(id);
                 detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
                 detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
+<<<<<<< HEAD
                 //ViewBag.IdCipl = filter.IdCipl;
 
                 GridListFilter filter = new GridListFilter();
                 filter.Cargoid = id;
                 GetCargoDocumentList(filter);
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
                 return View(detail);
             }
@@ -258,6 +284,7 @@ namespace App.Web.Controllers.EMCS
         public JsonResult InsertCargo(Data.Domain.EMCS.CargoFormData item)
         {
             try
+<<<<<<< HEAD
             {
 
                 var Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
@@ -265,6 +292,12 @@ namespace App.Web.Controllers.EMCS
                     item.Id = Id;
                 var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
                 var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
+=======
+            {                
+                long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
+                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(id);
+>>>>>>> 639d8d0 (Intial commit)
                 return JsonCRUDMessage("I", new { cargoData });
             }
             catch (Exception ex)
@@ -272,6 +305,7 @@ namespace App.Web.Controllers.EMCS
                 return JsonMessage("Error", 1, ex);
             }
         }
+<<<<<<< HEAD
         [HttpPost]
         public ActionResult SaveChangeHistoryCL(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData item)
         {
@@ -505,11 +539,15 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         [HttpPost]
         public JsonResult InsertCargoAtBottom(Data.Domain.EMCS.CargoFormData item)
         {
             try
             {
+<<<<<<< HEAD
                 var userId = User.Identity.GetUserId();
                 //if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
                 //{
@@ -521,6 +559,18 @@ namespace App.Web.Controllers.EMCS
                 //{
                 //    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
                 //}
+=======
+                if (Service.EMCS.SvcCargo.CiplItemAvailable(item.Id) || item.Status == "Draft")
+                {
+                    long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                    var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
+                    return JsonCRUDMessage("I", new { cargoData });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
+                }
+>>>>>>> 639d8d0 (Intial commit)
             }
             catch (Exception ex)
             {
@@ -598,6 +648,7 @@ namespace App.Web.Controllers.EMCS
             }
         }
 
+<<<<<<< HEAD
         [HttpPost]
         public JsonResult CargoSaveAndApprove(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData cargoform, Data.Domain.EMCS.CargoFormData approvalform)
         {
@@ -655,6 +706,8 @@ namespace App.Web.Controllers.EMCS
         }
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public ActionResult ReportCl(long clId, string reportType)
         {
             string fileExcel = Server.MapPath("~\\Content\\EMCS\\Templates\\TemplateCL.xls");
@@ -663,6 +716,7 @@ namespace App.Web.Controllers.EMCS
             MemoryStream output = Service.EMCS.DocumentStreamGenerator.GetStream(clId, fileExcel, filePath, reportType);
             return File(output.ToArray(), "application/pdf", "CLDocument_" + DateTime.Now.ToString("ddMMyyyyhhhmmss") + ".pdf");    //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
+<<<<<<< HEAD
         [HttpPost]
         public bool CargoDocumentInsert(List<Data.Domain.EMCS.CargoDocument> data)
         {
@@ -919,5 +973,7 @@ namespace App.Web.Controllers.EMCS
 
 
         //}
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

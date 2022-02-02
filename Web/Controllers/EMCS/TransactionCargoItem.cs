@@ -20,6 +20,7 @@ namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+<<<<<<< HEAD
         public List<CargoItemModel> InitCargoItem(List<long> ids)
         {
             try
@@ -70,6 +71,33 @@ namespace App.Web.Controllers.EMCS
 
             }
 
+=======
+        public CargoItemModel InitCargoItem(long id)
+        {
+            var detail = new CargoItemModel();
+            var data = Service.EMCS.SvcCargoItem.GetDataById(id);
+            if (data != null)
+            {
+                detail.Id = data.Id;
+                detail.CargoDescription = data.CargoDescription;
+                detail.ContainerNumber = data.ContainerNumber;
+                detail.ContainerType = data.ContainerType;
+                detail.ContainerSealNumber = data.ContainerSealNumber;
+                detail.IdCargo = data.IdCargo;
+                detail.IdCipl = data.IdCipl;
+                detail.IdCiplItem = data.IdCargo;
+                detail.InBoundDa = data.InboundDa;
+                detail.Length = data.Length;
+                detail.Width = data.Width;
+                detail.Height = data.Height;
+                detail.Net = data.NetWeight;
+                detail.Gross = data.GrossWeight;
+                detail.CaseNumber = data.CaseNumber;
+                detail.ItemName = data.ItemName;
+                detail.Ea = data.EdoNo;
+            }
+            return detail;
+>>>>>>> 639d8d0 (Intial commit)
         }
 
         public ContainerModel InitItemContainer(long id)
@@ -79,6 +107,7 @@ namespace App.Web.Controllers.EMCS
             data.Container = Service.EMCS.SvcContainer.GetDataById(id);
             return data;
         }
+<<<<<<< HEAD
         public CargoItem InitItemCargoFor(long id)
         {
             var data = new CargoItem();
@@ -203,12 +232,60 @@ namespace App.Web.Controllers.EMCS
                 //}
 
                 return JsonCRUDMessage("U", updateModel);
+=======
+
+        public ActionResult EditCargoItem(long id = 0)
+        {
+            ApplicationTitle();
+            ViewBag.crudMode = "U";
+            var detail = InitCargoItem(id);
+            ViewBag.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType");
+            return PartialView("Modal.FormEditCargoItem", detail);
+        }
+
+        [HttpPost]
+        public JsonResult EditCargoItem(CargoItemModel form)
+        {
+            try
+            {
+                var obj = Service.EMCS.SvcCargoItem.GetDataById(form.Id);
+                var dataUpdate = new CargoItem();
+                dataUpdate.Id = form.Id;
+                dataUpdate.IdCargo = form.IdCargo;
+                dataUpdate.ContainerNumber = form.ContainerNumber;
+                dataUpdate.ContainerType = form.ContainerType;
+                dataUpdate.ContainerSealNumber = form.ContainerSealNumber;
+                dataUpdate.Length = form.Length;
+                dataUpdate.Width = form.Width;
+                dataUpdate.Height = form.Height;
+                dataUpdate.Gross = form.Gross;
+                dataUpdate.Net = form.Net;
+
+                var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
+                if (hasChange)
+                {
+                    #region cek apakah perubahan untuk item yg sama sudah dilakukan
+                    var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
+                    var dml = "I";
+                    if (oldUpdate != null)
+                    {
+                        dml = "U";
+                    }
+
+                    Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
+                    #endregion
+                }
+
+                Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+                return JsonCRUDMessage("U", obj);
+>>>>>>> 639d8d0 (Intial commit)
             }
             catch (Exception err)
             {
                 return JsonMessage("Update Cargo Item Failed", 1, err);
             }
         }
+<<<<<<< HEAD
         //public ActionResult EditCargoItemById(long id)
         //{
         //    try
@@ -277,6 +354,8 @@ namespace App.Web.Controllers.EMCS
         //        return JsonMessage("Update Cargo Item Failed", 1, err);
         //    }
         //}
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public ActionResult CreateCargoItem(long id = 0)
         {
@@ -386,6 +465,7 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
         //public JsonResult GetTotalDataCargo(long id)
         //{
         //    var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id);
@@ -396,6 +476,14 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id,selectvalue);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+=======
+        public JsonResult GetTotalDataCargo(long id)
+        {
+            var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult DeleteCargoItem(long id)
         {
             try

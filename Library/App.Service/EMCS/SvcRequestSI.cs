@@ -19,6 +19,7 @@ namespace App.Service.EMCS
 
         public static Data.Domain.EMCS.ReturnSpInsert InsertSi(Data.Domain.EMCS.TaskSi item)
         {
+<<<<<<< HEAD
             try
             {
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -75,6 +76,34 @@ namespace App.Service.EMCS
             {
                 Console.WriteLine(err);
                 throw;
+=======
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@ID", item.Id));
+                parameterList.Add(new SqlParameter("@IdCL", item.IdCl));
+                parameterList.Add(new SqlParameter("@Description", item.Description ?? ""));
+                parameterList.Add(new SqlParameter("@SpecialInstruction", item.SpecialInstruction ?? ""));
+                parameterList.Add(new SqlParameter("@DocumentRequired", item.DocumentRequired ?? ""));
+                parameterList.Add(new SqlParameter("@PicBlAwb", item.PicBlAwb ?? ""));
+                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                parameterList.Add(new SqlParameter("@UpdateDate", ""));
+                parameterList.Add(new SqlParameter("@IsDelete", false));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete", parameters).FirstOrDefault();
+
+                var Status = "Submit";
+                var actionBy = SiteConfiguration.UserName;
+                var comment = item.Description;
+                db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "'");
+
+                return data;
+>>>>>>> 639d8d0 (Intial commit)
             }
         }
 
@@ -113,7 +142,11 @@ namespace App.Service.EMCS
                 return db.CreateRepository<Data.Domain.EMCS.ShippingInstructions>().CRUD(dml, itm);
             }
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 639d8d0 (Intial commit)
         public static Data.Domain.EMCS.ReturnSpInsert InsertBlAwb(Data.Domain.EMCS.TaskBlAwb item, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -138,6 +171,7 @@ namespace App.Service.EMCS
                 return data;
             }
         }
+<<<<<<< HEAD
         public static int SubmtiSI(Data.Domain.EMCS.TaskSi item)
         {
             try
@@ -159,5 +193,7 @@ namespace App.Service.EMCS
 
 
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
     }
 }

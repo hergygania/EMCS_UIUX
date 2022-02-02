@@ -4,18 +4,34 @@ using System.Web;
 using System.Web.Mvc;
 using App.Data.Caching;
 using App.Data.Domain;
+<<<<<<< HEAD
 using App.Web.App_Start;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
 using System;
 using System.ComponentModel;
+=======
+using App.Domain;
+using App.Web.Models;
+using App.Web.App_Start;
+using System.Globalization;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Configuration;
+using System.Net;
+using App.Data.Domain.EMCS;
+using App.Web.Models.EMCS;
+using System.IO;
+using System.Text.RegularExpressions;
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
 
+<<<<<<< HEAD
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult NpePebList()
         {
@@ -40,6 +56,8 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcNpePeb.NpePebList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public ActionResult NpePebApprove()
         {
             ApplicationTitle();
@@ -66,10 +84,13 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             var data = new PebNpeModel();
+<<<<<<< HEAD
             if (filter.Rfc)
                 ViewBag.CanRequestForChange = true;
             else
                 ViewBag.CanRequestForChange = false;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             data.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Id);
             data.NpePeb = Service.EMCS.SvcNpePeb.GetById(filter.Id);
             data.Request = Service.EMCS.SvcRequestCl.GetRequestCl(filter.Id);
@@ -121,6 +142,7 @@ namespace App.Web.Controllers.EMCS
 
         [HttpPost]
         public ActionResult DraftNpePeb(Data.Domain.EMCS.NpePeb form, string status)
+<<<<<<< HEAD
         {
             Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
             if (form.Id > 0)
@@ -271,6 +293,15 @@ namespace App.Web.Controllers.EMCS
             data = Service.EMCS.SvcNpePeb.UpdateNpePeb(form);
             Service.EMCS.SvcNpePeb.ApprovalNpePeb(form, approvalForm, "U");
 
+=======
+        {   
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(form);
+            //} 
+
+            Data.Domain.EMCS.ReturnSpInsert data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
+>>>>>>> 639d8d0 (Intial commit)
             return JsonMessage("This ticket has been " + status, 0, data);
         }
 

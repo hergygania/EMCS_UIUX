@@ -2,10 +2,13 @@
 {
     public class SpCargoItemDetail
     {
+<<<<<<< HEAD
         public SpCargoItemDetail()
         {
 
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public long Id { get; set; }
         public long IdCipl { get; set; }
         public long IdCargo { get; set; }

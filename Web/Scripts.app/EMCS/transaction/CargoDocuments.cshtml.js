@@ -1,4 +1,5 @@
 ﻿$tableDocuments = $('#tableCargoDocuments');
+<<<<<<< HEAD
 function load_data_tabledoc() {
     var columnDocument = [
         {
@@ -278,11 +279,18 @@ var columnDocument1 = [
     },
     {
         field: 'Id',
+=======
+
+var columnDocument = [
+    {
+        field: '',
+>>>>>>> 639d8d0 (Intial commit)
         title: 'No',
         halign: 'center',
         align: 'center',
         class: 'text-nowrap',
         sortable: true,
+<<<<<<< HEAD
         visible: false
     },
     {
@@ -296,6 +304,12 @@ var columnDocument1 = [
     },
     {
         field: 'DocumentDate',
+=======
+        formatter: runningFormatter
+    },
+    {
+        field: 'CaseDate',
+>>>>>>> 639d8d0 (Intial commit)
         title: 'Date',
         halign: 'center',
         align: 'left',
@@ -306,7 +320,11 @@ var columnDocument1 = [
         }
     },
     {
+<<<<<<< HEAD
         field: 'DocumentName',
+=======
+        field: 'Name',
+>>>>>>> 639d8d0 (Intial commit)
         title: 'Document Name',
         halign: 'center',
         align: 'left',
@@ -314,6 +332,7 @@ var columnDocument1 = [
         sortable: true
     },
     {
+<<<<<<< HEAD
         field: 'Filename',
         title: 'Attachment',
         align: 'center',
@@ -391,3 +410,80 @@ function get_cargodocumentviewlist() {
     })
 
 }
+=======
+        field: '',
+        title: 'Action',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        formatter: function (data, row, index) {
+            return operateFormatter(row);
+        }
+        //,
+        //events: operateEvents
+    }];
+
+operateFormatter.DEFAULTS = {
+    Add: false,
+    Edit: false,
+    Delete: false,
+    Info: false,
+    View: false,
+    History: false
+}
+
+function operateFormatter(options) {
+    var btn = [];
+    console.log(options);
+    btn.push('<div class="btn-group">');
+
+    btn.push('</button><button type="button" class="btn btn-default download" title="Download"><i class="fa fa-download"></i></button>')
+
+    btn.push('</div>');
+
+    return btn.join('');
+}
+
+
+window.operateEvents = {
+    'click .download': function (e, value, row, index) {
+        location.href = "/EMCS/ReportDO/" + row.id;
+    }
+};
+
+$(function () {
+    $tableDocuments.bootstrapTable({
+        cache: false,
+        pagination: true,
+        search: false,
+        url: "/Emcs/GetDocumentList",
+        striped: false,
+        showRefresh: true,
+        clickToSelect: false,
+        sidePagination: 'server',
+        showColumns: false,
+        smartDisplay: false,
+        queryParams: function (params) {
+            return {
+                Id: $("#idCargo").val(),
+                Category: "CL"
+            };
+        },
+        pageSize: '10',
+        formatNoMatches: function () {
+            return '<span class="noMatches">No Document available</span>';
+        },
+        columns: columnDocument
+    });
+
+    //window.pis.table({
+    //    objTable: $tableDocuments,
+    //    urlSearch: '/EMCS/CargoDocumentsPage?id=' + $("#idCargo").val(),
+    //    urlPaging: '/EMCS/CargoDocumentsPageXt',
+    //    autoLoad: true
+    //});
+
+
+});
+>>>>>>> 639d8d0 (Intial commit)

@@ -13,7 +13,10 @@ namespace App.Data.Domain.DTS
         public bool requestor { get; set; }
         public string status { get; set; }
         public string today  { get; set; }
+<<<<<<< HEAD
         public string typesearch { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public List<FilterColumn> filterColumns { get; set; }
     }
 }

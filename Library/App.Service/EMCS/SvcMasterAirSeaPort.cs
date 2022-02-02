@@ -16,11 +16,14 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
+<<<<<<< HEAD
             string country = filter.Country ?? "";
             if (country != "")
             {
                 search = country;
             }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
             using (var db = new Data.EmcsContext())
             {
@@ -44,7 +47,11 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
             using (var db = new Data.EmcsContext())
             {
                 var data = db.MasterAirSeaPorts

@@ -256,23 +256,43 @@ $(function () {
     $('#shipmentoutbound').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/OutboundNonCKB');
     });
+<<<<<<< HEAD
  
+=======
+    //$('#createDR').click(function () {       
+    //    window.open(myApp.fullPath + 'DTS/DeliveryRequisitionList?c=1&b=Home', '_blank');
+    //});
+>>>>>>> 639d8d0 (Intial commit)
     $('#createDRnew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');
     });
      
     $('#DRApprove').click(function () {
+<<<<<<< HEAD
         var today = ''
         localStorage.setItem("today", today);
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
     });
 
+=======
+        window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
+    });
+    //$('#createDI').click(function () {
+    //    window.open(myApp.fullPath + 'DTS/Home?c=1&b=Home');
+    //});
+>>>>>>> 639d8d0 (Intial commit)
     $('#createDInew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionList');
     });
     $('#DIApprove').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionListAcc');
     });
+<<<<<<< HEAD
+=======
+    //$('#DRList').click(function () {
+    //    window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');        
+    //});
+>>>>>>> 639d8d0 (Intial commit)
 
     $('#imageDR').click(function () {
         $('#DRView').show()

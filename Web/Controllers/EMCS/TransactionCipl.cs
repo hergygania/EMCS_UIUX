@@ -8,18 +8,25 @@ using System.Web.Script.Serialization;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+<<<<<<< HEAD
 using App.Web.Helper;
 using App.Web.Models;
 using App.Data.Domain;
 using App.Data.Domain.EMCS;
 using System.ComponentModel;
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
 
+<<<<<<< HEAD
         public ErrorHelper _errorHelper = new ErrorHelper();
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         // ================================ CIPL LAYOUT ================================
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult CiplList()
@@ -29,12 +36,15 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+<<<<<<< HEAD
             string userRoles = User.Identity.GetUserRoles();
             if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
                 ViewBag.IsImexUser = false;
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -43,19 +53,26 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CiplForm()
         {
             ApplicationTitle();
+<<<<<<< HEAD
             ViewBag.IsOwned = true;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+<<<<<<< HEAD
             ViewBag.IsApprover = false;
             ViewBag.IsImexUser = false;
             ViewBag.CanRequestForChange = false;
+=======
+>>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
 
         [HttpGet]
+<<<<<<< HEAD
         public ActionResult CiplEdit(long id, bool rfc = false)
         {
             ApplicationTitle();
@@ -94,6 +111,26 @@ namespace App.Web.Controllers.EMCS
           
 
             return View();
+=======
+        public ActionResult CiplEdit(long id)
+        {
+            var userId = User.Identity.GetUserId();
+            if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId))
+            {
+                ApplicationTitle();
+                ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+                ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+                ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+                ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+                PaginatorBoot.Remove("SessionTRN");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Unauthorised", "Shared");
+            }
+
+>>>>>>> 639d8d0 (Intial commit)
 
         }
 
@@ -101,6 +138,7 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CiplView(long id)
         {
             ApplicationTitle();
+<<<<<<< HEAD
             string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadedi");
             ViewBag.QrCodeUrlEDI = strQrCodeUrlEDI;
             TempData["QrCodeUrlEDI"] = strQrCodeUrlEDI;
@@ -113,6 +151,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.QrCodeUrlPL = strQrCodeUrlPL;
             TempData["QrCodeUrlPL"] = strQrCodeUrlPL;
             TempData.Peek("QrCodeUrlPL");
+=======
+>>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
@@ -129,7 +169,11 @@ namespace App.Web.Controllers.EMCS
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlHeaderData(id);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlDetailData(id);
             detail.DataRequest = Service.EMCS.SvcRequestCipl.GetRequestById(id);
+<<<<<<< HEAD
             detail.TemplateHeader.Category = detail.Data.Category;
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
             List<string> items = new List<string>();
             foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
             {
@@ -157,6 +201,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
             ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("cipl", id);
+<<<<<<< HEAD
 
             
             string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadedi");
@@ -171,6 +216,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.QrCodeUrlPL = strQrCodeUrlPL;
             TempData["QrCodeUrlPL"] = strQrCodeUrlPL;
             TempData.Peek("QrCodeUrlPL");
+=======
+>>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
 
             var detail = new CiplModel();
@@ -196,7 +243,11 @@ namespace App.Web.Controllers.EMCS
             ViewBag.refs = string.Join(",", items);
             ViewBag.Currency = detail.Data.Currency;
             ViewBag.IdCust = detail.DataItem.Count != 0 ? detail.DataItem.FirstOrDefault()?.IdCustomer : "";
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
             return View(detail);
         }
 
@@ -308,6 +359,7 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
         public JsonResult GetChangeHistoryList(string idTerm, string formType, string search, int limit, int offset, string sort, string order)
         {
             var dataFilter = new Data.Domain.EMCS.GridListFilter();
@@ -491,6 +543,8 @@ namespace App.Web.Controllers.EMCS
             }
         }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
         public ActionResult CiplHistoryPageXt(long id)
         {
             Func<App.Data.Domain.EMCS.CiplListFilter, List<Data.Domain.EMCS.SpGetCiplHistory>> func = delegate (App.Data.Domain.EMCS.CiplListFilter filter)
@@ -571,20 +625,27 @@ namespace App.Web.Controllers.EMCS
             var exporttype = Service.EMCS.MasterParameter.GetParamByGroup("ExportType");
             var exportremarks = Service.EMCS.MasterParameter.GetParamByGroup("ExportRemarks");
             var paymentterms = Service.EMCS.MasterParameter.GetSelectList2("PaymentTerms");
+<<<<<<< HEAD
             var uomtypes = Service.EMCS.MasterParameter.GetParamByGroup("UOMType");
+=======
+>>>>>>> 639d8d0 (Intial commit)
             var incoterms = Service.EMCS.MasterIncoterms.GetList(crit);
             var packagingtype = Service.EMCS.MasterParameter.GetSelectList("PackagingType");
 
             var shippingmethod = Service.EMCS.MasterParameter.GetSelectList("ShippingMethod");
             var freightpayment = Service.EMCS.MasterParameter.GetSelectList("FreightPayment");
             var forwader = Service.EMCS.MasterParameter.GetSelectList("Forwader");
+<<<<<<< HEAD
             var type = Service.EMCS.SvcCipl.GetTypeSelectList();
+=======
+>>>>>>> 639d8d0 (Intial commit)
             var country = Service.EMCS.SvcCipl.GetCountryList();
             var branch = Service.EMCS.SvcCipl.GetBranchList();
             var kurs = Service.EMCS.SvcCipl.GetLastestKurs();
             var currency = Service.EMCS.SvcCipl.GetCurrencyCipl();
             var categoryreference = Service.EMCS.SvcCipl.GetCategoryReferencet("CategoryReference");
 
+<<<<<<< HEAD
             return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference, type }, JsonRequestBehavior.AllowGet);
         }
 
@@ -776,6 +837,11 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
+=======
+            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference }, JsonRequestBehavior.AllowGet);
+        }
+
+>>>>>>> 639d8d0 (Intial commit)
         public JsonResult GetPickUpPic(string user, string area)
         {
             var data = Service.EMCS.SvcCipl.GetPickUpPic(user, area);
@@ -836,12 +902,19 @@ namespace App.Web.Controllers.EMCS
             try
             {
                 var model = Service.EMCS.SvcCipl.CiplGetById(id);
+<<<<<<< HEAD
                 var request = Service.EMCS.SvcCipl.GetRequestCiplById(Convert.ToString(id), "");
                 var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
 
                 var document = Service.EMCS.SvcCipl.CiplDocumentsGetById(id);
                 var problem = Service.EMCS.SvcCipl.SP_CiplProblemHistory(id);
                 return Json(new { model, forwader, document, problem, request }, JsonRequestBehavior.AllowGet);
+=======
+                var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
+                var document = Service.EMCS.SvcCipl.CiplDocumentsGetById(id);
+                var problem = Service.EMCS.SvcCipl.SP_CiplProblemHistory(id);
+                return Json(new { model, forwader, document, problem }, JsonRequestBehavior.AllowGet);
+>>>>>>> 639d8d0 (Intial commit)
             }
             catch (Exception ex)
             {
@@ -932,6 +1005,7 @@ namespace App.Web.Controllers.EMCS
         {
             long result = 0;
             var userId = User.Identity.GetUserId();
+<<<<<<< HEAD
             try
             {
                 //if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
@@ -946,6 +1020,13 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
 
+=======
+            if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
+            {
+                result = Service.EMCS.SvcCipl.UpdateCipl(item.Forwader, item.Data, status);
+            }
+            return result;
+>>>>>>> 639d8d0 (Intial commit)
         }
 
         [HttpPost]
@@ -999,8 +1080,14 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Offset = filter.Offset;
 
             var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
+<<<<<<< HEAD
 
             return Json(data, JsonRequestBehavior.AllowGet);
+=======
+            var jsonResult = Json(data, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
+>>>>>>> 639d8d0 (Intial commit)
         }
 
         [HttpPost]
@@ -1046,7 +1133,11 @@ namespace App.Web.Controllers.EMCS
 
             return JsonCRUDMessage(ViewBag.crudMode);
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 639d8d0 (Intial commit)
 
         public JsonResult DocumentList()
         {
@@ -1084,11 +1175,14 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCipl.GetConsigneeHistory(term);
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
+<<<<<<< HEAD
         //public JsonResult GetUOMHistory(string term)
         //{
         //    var data = Service.EMCS.SvcCipl.GetUOMHistory(term);
         //    return Json(new { data }, JsonRequestBehavior.AllowGet);
         //}
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
         public ActionResult CiplApproveReviseDimension(long id)
         {
@@ -1200,7 +1294,11 @@ namespace App.Web.Controllers.EMCS
                     System.IO.File.Delete(fullPath);
                 }
 
+<<<<<<< HEAD
                 file.SaveAs(fullPath);
+=======
+                file.SaveAs(fullPath);                
+>>>>>>> 639d8d0 (Intial commit)
 
             }
 

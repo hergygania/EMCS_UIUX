@@ -28,6 +28,7 @@ namespace App.Data.Domain.POST
 
         public bool isTotal { get; set; }
     }
+<<<<<<< HEAD
 
     public class SearchHeaderInvoice
     {
@@ -50,4 +51,6 @@ namespace App.Data.Domain.POST
         public string order { get; set; }
        
     }
+=======
+>>>>>>> 639d8d0 (Intial commit)
 }

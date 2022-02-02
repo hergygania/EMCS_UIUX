@@ -801,7 +801,11 @@ namespace App.Service.EMCS
         }
 
         public static List<ExcelCargoDetailData> GetCargoDetailData(long cargoId)
+<<<<<<< HEAD
             {
+=======
+        {
+>>>>>>> 639d8d0 (Intial commit)
             using (var db = new Data.EmcsContext())
             {
                 db.Database.CommandTimeout = 600;
@@ -1145,9 +1149,12 @@ namespace App.Service.EMCS
             worksheet.Replace(range.Container.Value, item.Container);
             worksheet.Replace(range.Liner.Value, item.Liner);
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
+<<<<<<< HEAD
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
             //worksheet.Replace(range.Qr)
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 
             return msg;
         }

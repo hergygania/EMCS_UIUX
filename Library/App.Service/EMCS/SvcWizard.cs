@@ -375,8 +375,12 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
+<<<<<<< HEAD
                 //var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
                 var item = db.Database.SqlQuery<CountData>("select count(IdCargo) total from dbo.CargoItem where IdCargo =  " + idCargo + " AND isdelete = 0").FirstOrDefault();
+=======
+                var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
+>>>>>>> 639d8d0 (Intial commit)
                 if (item.Total > 1)
                 {
                     return true;

@@ -47,9 +47,13 @@ function setFormSisable(isdisabled, formType) {
             $("#refDINo").parent().removeClass('hidden');
         }
     } 
+<<<<<<< HEAD
     $("#newcustName").show();
     $("#oldcustNamegroup").hide();
     $("#btnhistory").hide();
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
     $('.btn-refNo button').attr("disabled", isdisabled);
     $("#refNo").attr("disabled", isdisabled);
     $("#refDate").attr("disabled", isdisabled);
@@ -66,16 +70,29 @@ function setFormSisable(isdisabled, formType) {
     $("#CustAddress").attr("disabled", isdisabled);
     $("#PicName").attr("disabled", isdisabled);
     $("#PicHP").attr("disabled", isdisabled);
+<<<<<<< HEAD
    
+=======
+    //$("#Kecamatan").attr("disabled", isdisabled);
+    //$("#Kabupaten").attr("disabled", isdisabled);
+    //$("#Province").attr("disabled", isdisabled);
+>>>>>>> 639d8d0 (Intial commit)
     $("#ProvinceID").attr("disabled", isdisabled);
     $("#SubDistrictID").attr("disabled", isdisabled);
     $("#DistrictID").attr("disabled", isdisabled);  
     $("#Origin").attr("disabled", isdisabled);
+<<<<<<< HEAD
     $("#RequestNotes").attr("disabled", isdisabled);    
     $("#ExpectedTimeArrival").attr("disabled", isdisabled);
     $("#ExpectedTimeLoading").attr("disabled", isdisabled);
     
   
+=======
+    $("#RequestNotes").attr("disabled", isdisabled);
+
+    $("#ExpectedTimeArrival").attr("disabled", isdisabled);
+    $("#ExpectedTimeLoading").attr("disabled", isdisabled);
+>>>>>>> 639d8d0 (Intial commit)
     $("#ActualTimeArrival").attr("disabled", isdisabled);
     $("#ActualTimeDeparture").attr("disabled", isdisabled);
 
@@ -114,7 +131,11 @@ function setFormSisable(isdisabled, formType) {
     $form.find("input[name=SendEmailToCkbCakungStandartKit]").attr("disabled", isdisabled);
     $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", isdisabled);
     $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", isdisabled);
+<<<<<<< HEAD
 
+=======
+    //$form.find("input[name=SendEmailToCkb]").attr("disabled", "disabled");
+>>>>>>> 639d8d0 (Intial commit)
 
     if (formType == 'R') {
         $("#refSONo").parent().removeClass('hidden');
@@ -122,9 +143,13 @@ function setFormSisable(isdisabled, formType) {
         $("button[name=ReRoute]").attr("disabled", false);
         $('.btn-refNo button').attr("disabled", false);
         $("#refNo").attr("disabled", false);
+<<<<<<< HEAD
         
     }
   
+=======
+    }
+>>>>>>> 639d8d0 (Intial commit)
 }
 
 function showFormRequisition() {
@@ -153,18 +178,29 @@ var referenceEvent = {
         SELF.fillData(result, formType);
     },
     fillData: function (dataRef, formType = 'I') {
+<<<<<<< HEAD
         $("#btnhistory").show();
+=======
+>>>>>>> 639d8d0 (Intial commit)
         referenceEvent.formType = formType;
         referenceEvent.dataRef = dataRef;
         var isdisabled = dataRef.header.Status === "complete" || dataRef.header.Status === "reject" ? "disabled" : false;
         if (formType === "V" || formType === "R") {
+<<<<<<< HEAD
             isdisabled = true;;
+=======
+            isdisabled = true; // "disabled";
+>>>>>>> 639d8d0 (Intial commit)
         }
         if (dataRef.header.Status === "reject" || dataRef.header.Status === "revise") {
             $("#RejectNoteSpace").show();
             $("textarea[name=RejectNote]").val(dataRef.header.RejectNote);
         }
+<<<<<<< HEAD
        
+=======
+        //console.log(formType);
+>>>>>>> 639d8d0 (Intial commit)
         if (formType == 'I') {
             $form.find("input[name=formType]").val("I");
         } else {
@@ -216,7 +252,12 @@ var referenceEvent = {
         }
         if (formatDate(dataRef.header.ActualTimeDeparture) !== '01 JAN 1900') {
             $("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
+<<<<<<< HEAD
         }      
+=======
+        }
+        //$("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
+>>>>>>> 639d8d0 (Intial commit)
 
         $("#RequestNotes").val(dataRef.header.RequestNotes);
 
@@ -225,7 +266,12 @@ var referenceEvent = {
             $.each(Unit, function (index, itemTod) {
                 $form.find("input[name=unit][value='" + itemTod + "']").prop("checked", true);
             });
+<<<<<<< HEAD
             if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {                
+=======
+            if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {
+                //console.log(dataRef.header.Unit);
+>>>>>>> 639d8d0 (Intial commit)
                 $("#section-dimension").show();
                 $("#on_pondation").hide();
                 $('#u-weight').val(dataRef.header.UnitDimWeight);
@@ -275,7 +321,12 @@ var referenceEvent = {
 
             });
         }
+<<<<<<< HEAD
        
+=======
+
+        //console.log(dataRef.header.Incoterm);
+>>>>>>> 639d8d0 (Intial commit)
         if (dataRef.header.Incoterm && dataRef.header.Incoterm != 'null') {
             var INCTs = dataRef.header.Incoterm.split(',');
             $.each(INCTs, function (index, itemInct) {
@@ -335,6 +386,10 @@ var referenceEvent = {
             $form.find("input[name=IsDemob][value=false]").prop('checked', true).attr("disabled", isdisabled);
         }
 
+<<<<<<< HEAD
+=======
+        //console.log(dataRef.header);
+>>>>>>> 639d8d0 (Intial commit)
         $("#SoNo").val(dataRef.header.SoNo);
         $("#SoDate").val(formatDate(dataRef.header.SoDate));
         $("#STRNo").val(dataRef.header.STRNo);
@@ -369,11 +424,17 @@ var referenceEvent = {
                 $("#DIDateSAP").val(dataRef.header.DIDateSAP);
             }
         }
+<<<<<<< HEAD
+=======
+       
+        //$("#DIDateSAP").val(dataRef.header.DIDateSAP);
+>>>>>>> 639d8d0 (Intial commit)
         $('.SDOC-container').show();
         $('.SDOC-container .row .upload').show();
         $('.SDOC-container .row.preview').show();
         $("button[name=ReRoute]").attr("disabled", true);
 
+<<<<<<< HEAD
         if (['U', 'I'].indexOf(formType) > -1) {            
             if (dataRef.header.Status !== "request rerouted") {
                 $('.SDOC-container .row .upload').show();
@@ -390,6 +451,14 @@ var referenceEvent = {
                 $('.SDOC-container .row.preview').show();
             }
            
+=======
+        if (['U', 'I'].indexOf(formType) > -1) {
+            $('.SDOC-container .row .upload').show();
+            $('.SDOC-container .row.preview').hide();
+        } else if (formType === 'R') {
+            $('.SDOC-container .row .upload').show();
+            $('.SDOC-container .row.preview').show();
+>>>>>>> 639d8d0 (Intial commit)
             showFilePreview(dataRef.header);
         } else if (formType === 'V') {
             $('.SDOC-container .row .upload').hide();
@@ -399,6 +468,7 @@ var referenceEvent = {
         }
         $('.fileinput-remove span').hide();
         setFormSisable(isdisabled, formType);
+<<<<<<< HEAD
         if (formType == 'U' && dataRef.header.Status === "request rerouted") {
             $("#ExpectedTimeArrival").attr("disabled", true);
             $("#ExpectedTimeLoading").attr("disabled", true);
@@ -423,6 +493,8 @@ var referenceEvent = {
             $("#btnhistory").show();  
             $("#btnhistory").attr("disabled", false);
         }
+=======
+>>>>>>> 639d8d0 (Intial commit)
         requestingForm.initTableUnit(dataRef.details, formType, isdisabled);
         showFormRequisition();
     }
@@ -434,7 +506,11 @@ function invalidRef() {
 function viewDR(refNo,refUrl) {
      $.ajax({
         type: "GET",
+<<<<<<< HEAD
          url: refUrl,       
+=======
+        url: refUrl,
+>>>>>>> 639d8d0 (Intial commit)
         beforeSend: function () { },
         complete: function () { },
         dataType: "json",
@@ -449,12 +525,35 @@ function viewDR(refNo,refUrl) {
                     $('#CustID').append(newOption2).trigger('change');
                     $("#CustID").val(d.header.CustID).trigger("change");
                     $("#CustName").val(formatUpperCase(d.header.CustName || ''));
+<<<<<<< HEAD
                     $("#CustAddress").val(formatUpperCase(d.header.CustAddress));                
                     $("#PicName").val(formatUpperCase(d.header.PicName));
                     $("#PicHP").val(formatUpperCase(d.header.PicHP));                  
                     $("#RefNo").val(d.header.RefNo);
                     $("#SoNo").val(d.header.SoNo);
                     $("#SoDate").val(formatDate(d.header.SoDate));
+=======
+                    $("#CustAddress").val(formatUpperCase(d.header.CustAddress));
+                    //$("#ActualTimeArrival").val(formatUpperCase(d.header.ATA));
+                    //$('#ProvinceID').append(newOption2).trigger('change');
+                    //$("#ProvinceID").val(d.header.ProvinceID).trigger("change");
+                    //$("#ProvinceName").val(formatUpperCase(d.header.Province || ''));
+                    //$('#DistrictID').append(newOption2).trigger('change');
+                    //$("#DistrictID").val(d.header.ProvinceID).trigger("change");
+                    //$("#DistrictName").val(formatUpperCase(d.header.Kabupaten || ''));               
+                    //$('#SubDistrictID').append(newOption2).trigger('change');
+                    //$("#SubDistrictID").val(d.header.SubDistrictID).trigger("change");
+                    //$("#SubdistrictName").val(formatUpperCase(d.header.Kabupaten || ''));
+                    $("#PicName").val(formatUpperCase(d.header.PicName));
+                    $("#PicHP").val(formatUpperCase(d.header.PicHP));
+                    //$("#SubDistrictID").val(formatUpperCase(d.header.Kecamatan));
+                    //$("#DistrictID").val(formatUpperCase(d.header.Kabupaten));
+                    //$("#ProvinceID").val(formatUpperCase(d.header.Province));
+                    $("#RefNo").val(d.header.RefNo);
+                    $("#SoNo").val(d.header.SoNo);
+                    $("#SoDate").val(formatDate(d.header.SoDate));
+
+>>>>>>> 639d8d0 (Intial commit)
                     $("button[name=ReRoute]").attr("disabled", false);
                     $("#CustID").attr("disabled", false);
                     $("#CustName").attr("disabled", false);
@@ -464,20 +563,28 @@ function viewDR(refNo,refUrl) {
                     $("#SubDistrictID").attr("disabled", false);
                     $("#DistrictID").attr("disabled", false);
                     $("#ProvinceID").attr("disabled", false);
+<<<<<<< HEAD
                     $("#ExpectedTimeLoading").attr("disabled", false);
                     $("#ExpectedTimeArrival").attr("disabled", false);
+=======
+>>>>>>> 639d8d0 (Intial commit)
                     $("#ActualTimeArrival").attr("disabled", false);
                     $("#ActualTimeDeparture").attr("disabled", false);
                     $('.btn-refNo button').attr("disabled", false);
                     $("#refNo").attr("disabled", false);
                 } else {
                     if ($("#refSONo").parent().hasClass('active')) {
+<<<<<<< HEAD
                         if (d.header.Status != 'request rerouted')
                         {
                             d.header.ExpectedTimeArrival = "";
                             d.header.ExpectedTimeLoading = "";
                         }
                         
+=======
+                        d.header.ExpectedTimeArrival = "";
+                        d.header.ExpectedTimeLoading = "";
+>>>>>>> 639d8d0 (Intial commit)
                         referenceEvent.fillFromSo(d, $form.find("input[name=formType]").val());
                     } else if ($("#refSTRNo").parent().hasClass('active')) {
                         d.header.ExpectedTimeArrival = "";
@@ -490,6 +597,7 @@ function viewDR(refNo,refUrl) {
                     } else if ($("#refDINo").parent().hasClass('active')) {
                         d.header.ExpectedTimeArrival = "";
                         referenceEvent.fillFromDI(d, $form.find("input[name=formType]").val());
+<<<<<<< HEAD
 
                     }
                     if (d.header.Status == 'request rerouted') {
@@ -500,6 +608,11 @@ function viewDR(refNo,refUrl) {
                     }
                     $("button[name=Cancel]").show();
                    
+=======
+                    }
+                    $("button[name=Cancel]").show();
+                    $("button[name=SaveAsDraft]").show();
+>>>>>>> 639d8d0 (Intial commit)
                     $("button[name=SubmitForm]").show();
                     $("button[name=SaveAsRevised]").hide();
                     $("button[name=ReRoute]").hide();
@@ -515,6 +628,7 @@ function viewDR(refNo,refUrl) {
         }
     });
 }
+<<<<<<< HEAD
 
 function viewhistoryreroute() {
     var refNo = $("#refNo").val();
@@ -559,6 +673,8 @@ function viewhistoryreroute() {
     });
 }
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
 function referenceClick() {
     var refNo = $("#refNo").val();
     var refUrl;
@@ -583,6 +699,7 @@ function referenceClick() {
             return;
         }
     }    
+<<<<<<< HEAD
     var DRID = $form.find("input[name=ID]").val();
     if (DRID > 0) {
         var CheckStatusDR;
@@ -668,6 +785,47 @@ function referenceClick() {
     }        
 }
 
+=======
+ 
+    if ($("#refSONo").parent().hasClass('active')) {
+      
+        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "SO" + "&number=" + refNo;
+    }
+    else if ($("#refSTRNo").parent().hasClass('active')) {      
+        
+        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "STR" + "&number=" + refNo;
+    }
+    else if ($("#refPONo").parent().hasClass('active')) {      
+        
+        isExist = refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "PO" + "&number=" + refNo;
+    }
+    else if ($("#refDINo").parent().hasClass('active')) {        
+        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "DI" + "&number=" + refNo;
+    }
+    else {
+        invalidRef();
+        return;
+    }
+    var CheckUrl;
+    CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
+    $.ajax({
+        type: "GET",
+        url: CheckUrl,
+        beforeSend: function () { },
+        complete: function () { },
+        dataType: "json",
+        success: function (d) {
+            if (d.header != null) {
+                sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
+                return;
+            }
+            else {
+                viewDR(refNo,refUrl);
+            }            
+        }
+    })
+}
+>>>>>>> 639d8d0 (Intial commit)
 function resetForm() {
     $form[0].reset();
     resetReference();
@@ -733,13 +891,17 @@ function submitForm(ActType) {
         dataForm['RefNoType'] = "DI";
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     if (!$("#refNo").val() || $("#refNo").val() === '') {
         invalidRef();
         sAlert('Error', "Please fill " + dataForm['RefNoType'] + " Number", "error");
         return;
     }
     if ($("#PicHP").val().length > 16) {
+<<<<<<< HEAD
         sAlert('Error',"Maximum of 16 characters for HP PIC","error");
         return;
     }
@@ -755,6 +917,20 @@ function submitForm(ActType) {
     dataForm['ProvinceName'] = htmlEncode($("#ProvinceID").val());
     dataForm['DistrictName'] = htmlEncode($("#DistrictID").val());
     dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").val());
+=======
+        alert("Maximum of 16 characters for HP PIC");
+        return;
+    }
+
+    dataForm['status'] = htmlEncode(ActType);
+    
+    dataForm['Province'] = htmlEncode($("#ProvinceID").text().trim().replace('-', ''));
+    dataForm['Kabupaten'] = htmlEncode($("#DistrictID").text().trim().replace('-', ''));
+    dataForm['Kecamatan'] = htmlEncode($("#SubDistrictID").text().trim().replace('-', ''));
+    dataForm['ProvinceName'] = htmlEncode($("#ProvinceID").text().replace('-', ''));
+    dataForm['DistrictName'] = htmlEncode($("#DistrictID").text().replace('-', ''));
+    dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").text().replace('-',''));
+>>>>>>> 639d8d0 (Intial commit)
     dataForm['UnitDimWeight'] = htmlEncode($('#u-weight').val());
     dataForm['UnitDimWidth'] = htmlEncode($('#u-width').val());
     dataForm['UnitDimLength'] = htmlEncode($('#u-length').val());
@@ -829,6 +1005,7 @@ function submitForm(ActType) {
                 if (ActType === 'draft') {
                     message = 'Save as Draft NO ' + DRNo + ' Success';
                 } else if (ActType === 'submit') {
+<<<<<<< HEAD
                     if (DRNo ==='') {
                         message = 'Reroute Success';
                     }
@@ -836,6 +1013,9 @@ function submitForm(ActType) {
                         message = 'Submit NO ' + DRNo + ' Success';
                     }
                     
+=======
+                    message = 'Submit NO ' + DRNo + ' Success';
+>>>>>>> 639d8d0 (Intial commit)
                 } else if (ActType === 'revised') {
                     message = 'Save as Revised NO ' + DRNo + ' Success';
                 }
@@ -885,7 +1065,10 @@ function resetReference() {
 }
 function resetFormRequisition() {
     $("#formRequest")[0].reset();
+<<<<<<< HEAD
    
+=======
+>>>>>>> 639d8d0 (Intial commit)
     $(".error").hide();
     $("#formRequest").find('input').attr('disabled', false);
     $("select[name=Sales1Name]").attr("disabled", false);
@@ -955,11 +1138,14 @@ function sendReRoute() {
     formData.append("Province", $('#ProvinceID').text());
     formData.append("RefNo", $('#refNo').val());
 
+<<<<<<< HEAD
     //if ($("#refSTRNo").parent().hasClass('active')) {
     //    sAlert('Error',"Please Input SO # to Change STR # DR Re-Route", 'error');
     //    return;
     //}
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
     if ($("#refSONo").parent().hasClass('active')) {
         formData.append("RefNoType", "SO");
         formData.append("SoNo", $('#SoNo').val());
@@ -978,12 +1164,20 @@ function sendReRoute() {
         formData.append("DINo", $('#DINo').val());
         formData.append("DIDate", $('#DIDate').val());
     }
+<<<<<<< HEAD
     formData.append("Status", 'request rerouted');
     formData.append("SDOC", $('#SDOC')[0].files[0]);
     formData.append("SDOC1", $('#SDOC1')[0].files[0]);
     formData.append("SDOC2", $('#SDOC2')[0].files[0]);
     var modaTransport = $('#formRequest input[name="ModaTransport"]:checked').val();
     formData.append("SDOC2", modaTransport)
+=======
+    formData.append("Status", 'rerouted');
+    formData.append("SDOC", $('#SDOC')[0].files[0]);
+    formData.append("SDOC1", $('#SDOC1')[0].files[0]);
+    formData.append("SDOC2", $('#SDOC2')[0].files[0]);
+
+>>>>>>> 639d8d0 (Intial commit)
     $.ajax({
         type: "POST",
         url: myApp.root + 'DTS/DeliveryRequisitionReRouteForm',
@@ -1008,7 +1202,11 @@ function sendReRoute() {
                 if (d.result !== null) {
                     DRNo = d.result.KeyCustom;
                 }
+<<<<<<< HEAD
                 sAlert('Success', 'Request Reroute NO ' + DRNo + ' Success', 'success');
+=======
+                sAlert('Success', 'Reroute NO ' + DRNo + ' Success', 'success');
+>>>>>>> 639d8d0 (Intial commit)
                 resetForm();
                 hideModal();
             } else {
@@ -1112,7 +1310,11 @@ var requestingForm = {
                 $("#TODOthers").attr('readonly', true);
             }
         });
+<<<<<<< HEAD
         $("#btnhistory").hide();
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
         $('input[type=radio][name=SupportingOfDelivery]').change(function () {
             $("#SODOthers").val('');
             $("#FOT").attr("disabled", false);
@@ -1261,7 +1463,11 @@ function showFilePreview(header) {
 
 $(function () {
     $("#CustID").select2({
+<<<<<<< HEAD
         placeholder: 'Nama Customer (Sudah terisi otomatis dari SAP)',
+=======
+        placeholder: 'Nama Customer (Sudah terisi otomatis daari SAP)',
+>>>>>>> 639d8d0 (Intial commit)
         dropdownParent: $('#myModalRequest'),
         minimumInputLength: 3,
         ajax: {
@@ -1299,6 +1505,7 @@ $(function () {
         $("input[name=Province]").val('');
      
     });
+<<<<<<< HEAD
   
     $("#ProvinceID").select2({
         placeholder: 'Select Provinsi',
@@ -1306,6 +1513,43 @@ $(function () {
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterProvince',          
+=======
+    $("#ProvinceID").select2({
+        placeholder: 'Select Provinsi',
+        minimumInputLength: 3,
+        ajax: {
+            url: myApp.root + 'DTS/getMasterProvince',
+            async: false,
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    key: params.term,
+                    type: 'public'
+                };
+                return query;
+            },
+            processResults: function (data) {
+                console.log(data);
+                var newData = $.map(data, function (obj) {
+                    obj.id = obj.ProvinsiId;
+                    obj.text = obj.ProvinsiName;
+                    return obj;
+                });
+                // Tranforms the top-level key of the response object from 'items' to 'results'
+                return {
+                    results: newData
+                };
+            }
+            // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+        }
+    });
+    $("#ProvinceID").select2({
+        placeholder: 'Select Provinsi',
+        minimumInputLength: 3,
+        ajax: {
+            url: myApp.root + 'DTS/getMasterProvince',
+            async: false,
+>>>>>>> 639d8d0 (Intial commit)
             dataType: 'json',
             data: null,
             data: function (params) {
@@ -1326,8 +1570,12 @@ $(function () {
                 return {
                     results: newData
                 };
+<<<<<<< HEAD
             },
             cache: true
+=======
+            }
+>>>>>>> 639d8d0 (Intial commit)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1339,7 +1587,10 @@ $(function () {
 
     $("#DistrictID").select2({
         placeholder: 'Select Kabupaten',
+<<<<<<< HEAD
         allowClear: true,
+=======
+>>>>>>> 639d8d0 (Intial commit)
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterDistrict',
@@ -1349,11 +1600,17 @@ $(function () {
             data: function (params) {             
                 console.log(params);
                 var query = {
+<<<<<<< HEAD
                     key: params.term,
                     provinsiid: $('#ProvinceID').val(),
                     type: 'public'
                 };
                    
+=======
+                    key: params.term
+                };
+                    type: 'public';
+>>>>>>> 639d8d0 (Intial commit)
                 return query;
             },
             processResults: function (data) {
@@ -1367,8 +1624,12 @@ $(function () {
                 return {
                     results: newData
                 };
+<<<<<<< HEAD
             },
             cache: true
+=======
+            }
+>>>>>>> 639d8d0 (Intial commit)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1381,7 +1642,10 @@ $(function () {
     $("#SubDistrictID").select2({
         
         placeholder: 'Select Kecamatan',
+<<<<<<< HEAD
         allowClear: true,
+=======
+>>>>>>> 639d8d0 (Intial commit)
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterSubDistrict',
@@ -1391,7 +1655,10 @@ $(function () {
             data: function (params) {
                 var query = {
                     key: params.term,
+<<<<<<< HEAD
                     districtid: $('#DistrictID').val(),
+=======
+>>>>>>> 639d8d0 (Intial commit)
                     type: 'public'
                 };
                 return query;
@@ -1407,8 +1674,12 @@ $(function () {
                 return {
                     results: newData
                 };
+<<<<<<< HEAD
             },
             cache: true
+=======
+            }
+>>>>>>> 639d8d0 (Intial commit)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });

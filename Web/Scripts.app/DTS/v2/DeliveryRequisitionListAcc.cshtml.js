@@ -41,11 +41,14 @@ function statusFormatter(str, index, row) {
             text = 'BOOKED';
             icon = 'fa fa-hourglass-start';
             break;
+<<<<<<< HEAD
         case 'request rerouted':
             color = 'warning';
             text = 'REQUEST REROUTED';
             icon = 'fa fa-hourglass-start';
             break;
+=======
+>>>>>>> 639d8d0 (Intial commit)
         case 'rerouted':
             color = 'warning';
             text = 'REROUTED';
@@ -67,6 +70,7 @@ function tooltip() {
 function ActionFormatter(data, row, index) {
     var htm = [];
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></button> ');
+<<<<<<< HEAD
     if (['reject', 'revise','request rerouted'].indexOf(row.Status) <= -1) {
         if (allowUpdate === "True") htm.push('<button class="approve btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></button> ');
     }
@@ -74,6 +78,14 @@ function ActionFormatter(data, row, index) {
     //    if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Reroute"><i class="fa fa-route"></i></button> ');
     //}
 
+=======
+    if (['reject', 'revise'].indexOf(row.Status) <= -1) {
+        if (allowUpdate === "True") htm.push('<button class="approve btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></button> ');
+    }
+    if (row.Status == "rerouted" && row.RefNoType == "SO" ) {
+        if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Reroute"><i class="fa fa-route"></i></button> ');
+    }
+>>>>>>> 639d8d0 (Intial commit)
     return htm.join('');
 }
 function ActionFormatterUnit(value, row, index) {
@@ -127,6 +139,7 @@ window.EventsFormatter = {
             $("button[name=ForceComplete]").show();
             $("button[name=Approve]").hide();
             $("button[name=Revise]").hide();
+<<<<<<< HEAD
         } else if (row.Status === "rerouted") {
             $("button[name=Reject]").show();
             $("button[name=Cancel]").show();
@@ -136,6 +149,9 @@ window.EventsFormatter = {
             $("button[name=Revise]").show();
         }
 
+=======
+        }
+>>>>>>> 639d8d0 (Intial commit)
         $.ajax({
             type: "GET",
             url: myApp.root + 'DTS/GetDRDetails?number=' + row.ID,
@@ -442,7 +458,11 @@ function submitForm(ActType) {
             }
         } else {
             dataForm.push({ name: 'type', value: ActType });
+<<<<<<< HEAD
             requestingFormModalComplete.initShow(rowSelected.header, rowSelected.details, rowSelected.header.Status);
+=======
+            requestingFormModalComplete.initShow(rowSelected.header, rowSelected.details);
+>>>>>>> 639d8d0 (Intial commit)
            //Set Trigger SendEmail
                //SEND TO TU WAREHOUSE
             setInitValCheckSendEmail('SendEmailToCakung');
@@ -476,7 +496,21 @@ function submitForm(ActType) {
             setInitValCheckSendEmail('SendEmailToServiceTUBatuLicin');
             setInitValCheckSendEmail('SendEmailToServiceTUSangatta');
             setInitValCheckSendEmail('SendEmailToServiceTUKendari');
+<<<<<<< HEAD
             setInitValCheckSendEmail('SendEmailToServiceTUMeulaboh');            
+=======
+
+            //Send TO CKB
+            //setInitValCheckSendEmail('SendEmailToCkbAllArea');
+            //setInitValCheckSendEmail('SendEmailToCkbCakung');
+            //setInitValCheckSendEmail('SendEmailToCkbSurabaya');
+            //setInitValCheckSendEmail('SendEmailToCkbMakassar');
+            //setInitValCheckSendEmail('SendEmailToCkbCakungStandartKit');
+            //setInitValCheckSendEmail('SendEmailToCkbBalikpapan');
+            //setInitValCheckSendEmail('SendEmailToCkbBanjarmasin');
+
+            //setInitValCheckSendEmail('SendEmailToCkb');
+>>>>>>> 639d8d0 (Intial commit)
             $("#myModalRequestComplete").modal("show");
         }
     } else if (ActType === "ForceComplete") {
@@ -514,6 +548,7 @@ function submitForm(ActType) {
         setInitValCheckSendEmail('SendEmailToServiceTUBatuLicin');
         setInitValCheckSendEmail('SendEmailToServiceTUSangatta');
         setInitValCheckSendEmail('SendEmailToServiceTUKendari');
+<<<<<<< HEAD
         setInitValCheckSendEmail('SendEmailToServiceTUMeulaboh');
     
         $("#myModalRequestComplete").modal("show");
@@ -521,6 +556,23 @@ function submitForm(ActType) {
         dataForm.push({ name: 'type', value: ActType });
        
         $('#myModalCkb').modal("show");        
+=======
+
+         //Send TO CKB
+        //setInitValCheckSendEmail('SendEmailToCkbAllArea');
+        //setInitValCheckSendEmail('SendEmailToCkbCakung');
+        //setInitValCheckSendEmail('SendEmailToCkbSurabaya');
+        //setInitValCheckSendEmail('SendEmailToCkbMakassar');
+        //setInitValCheckSendEmail('SendEmailToCkbCakungStandartKit');
+        //setInitValCheckSendEmail('SendEmailToCkbBalikpapan');
+        $("#myModalRequestComplete").modal("show");
+    } else if (ActType === "Approve") {
+        dataForm.push({ name: 'type', value: ActType });
+        //sendResponse(dataForm);
+        //showModal('myModalCkb');
+        $('#myModalCkb').modal("show");
+        //$('#myModalCkb input[name="SendEmailToCkb"]').prop("checked", $('#formRequest input[name="SendEmailToCkb"]').is(":checked"));
+>>>>>>> 639d8d0 (Intial commit)
         $('#myModalCkb input[name="SendEmailToCkbSurabaya"]').prop("checked", $('#formRequest input[name="SendEmailToCkbSurabaya"]').is(":checked"));
         $('#myModalCkb input[name="SendEmailToCkbMakassar"]').prop("checked", $('#formRequest input[name="SendEmailToCkbMakassar"]').is(":checked"));
         $('#myModalCkb input[name="SendEmailToCkbCakungStandartKit"]').prop("checked", $('#formRequest input[name="SendEmailToCkbCakungStandartKit"]').is(":checked"));
@@ -535,7 +587,11 @@ function submitForm(ActType) {
 var requestingFormModalComplete = {
     $formEl: null,
     data: null,
+<<<<<<< HEAD
     initShow: function (header, units,status) {
+=======
+    initShow: function (header, units) {
+>>>>>>> 639d8d0 (Intial commit)
         $('.freight').addClass('hidden');
         var SELF = requestingFormModalComplete;
         SELF.data = {
@@ -553,7 +609,11 @@ var requestingFormModalComplete = {
             SELF.$formEl = $('#form-land-freight');
             $('#myModalRequestComplete .modal-title').html('COMPLETE E-DELIVERY (INLAND FREIGHT)');
             $('#land-freight').removeClass('hidden');
+<<<<<<< HEAD
             SELF.initTableUnitInfo(SELF.data.details, status);
+=======
+            SELF.initTableUnitInfo(SELF.data.details);
+>>>>>>> 639d8d0 (Intial commit)
         } else if (modaTransport == "AIR") {
             SELF.$formEl = $('#form-air-freight');
             $('#myModalRequestComplete .modal-title').html('COMPLETE E-DELIVERY (AIR FREIGHT)');
@@ -561,6 +621,7 @@ var requestingFormModalComplete = {
         }
 
     },
+<<<<<<< HEAD
     initTableUnitInfo: function (units, status) {
         var $tableCUnit = $('#tableDRAccComplteUnit');
 
@@ -582,6 +643,15 @@ var requestingFormModalComplete = {
             }
         }
 
+=======
+    initTableUnitInfo: function (units) {
+        var $tableCUnit = $('#tableDRAccComplteUnit');
+        for (var x in units) {
+            units[x].VeselNoPolice = '-';
+            units[x].DriverName = '-';
+            units[x].DriverHp = '-';
+        }
+>>>>>>> 639d8d0 (Intial commit)
         $tableCUnit.bootstrapTable('destroy');
         $tableCUnit.bootstrapTable({
             cache: false,
@@ -674,12 +744,16 @@ function submitFormComplete() {
     //_FM.data.header.SendEmailToCKB = $('#formRequest input[name="SendEmailToCKB"]').is(":checked");
     _FM.data.header.ModaTransport = $('#formRequest input[name="ModaTransport"]:checked').val();
     _FM.data.header['SendEmailNotes'] = $('textarea[name="SendEmailNotes"]').val();
+<<<<<<< HEAD
     if (_FM.data.header.Status = 'rerouted') {
         formData.append("SDOC", $('#SDOC')[0].files[0]);
         formData.append("SDOC1", $('#SDOC1')[0].files[0]);
         formData.append("SDOC2", $('#SDOC2')[0].files[0]);
       
     }
+=======
+    
+>>>>>>> 639d8d0 (Intial commit)
     _FM.data.header['ExpectedTimeArrival'] = $('#formRequest input[name="ExpectedTimeArrival"]').val()
     _FM.data.header['ExpectedTimeLoading'] = $('#formRequest input[name="ExpectedTimeLoading"]').val()
     // TU WAREHOUSE
@@ -713,8 +787,11 @@ function submitFormComplete() {
     _FM.data.header.SendEmailToServiceTUBatuLicin = $('#formRequest input[name="SendEmailToServiceTUBatuLicin"]').is(":checked");
     _FM.data.header.SendEmailToServiceTUSangatta = $('#formRequest input[name="SendEmailToServiceTUSangatta"]').is(":checked");
     _FM.data.header.SendEmailToServiceTUKendari = $('#formRequest input[name="SendEmailToServiceTUKendari"]').is(":checked");
+<<<<<<< HEAD
     _FM.data.header.SendEmailToServiceTUMeulaboh = $('#formRequest input[name="SendEmailToServiceTUMeulaboh"]').is(":checked");
     
+=======
+>>>>>>> 639d8d0 (Intial commit)
    // TU CKB
     _FM.data.header.SendEmailToCkbSurabaya = $('#formRequest input[name="SendEmailToCkbSurabaya"]').is(":checked");
     _FM.data.header.SendEmailToCkbMakassar = $('#formRequest input[name="SendEmailToCkbMakassar"]').is(":checked");
@@ -746,7 +823,11 @@ function submitFormComplete() {
                     sAlert('warning', "Please Fill Driver HP", 'warning')
                     return;
                 }
+<<<<<<< HEAD
             } 
+=======
+            }
+>>>>>>> 639d8d0 (Intial commit)
         }
     }
     formData.append('detailUnits', JSON.stringify(detailUnits));
@@ -1042,6 +1123,7 @@ $(function () {
         },
         columns: columnList
     });
+<<<<<<< HEAD
     var today = localStorage.getItem("today")
     if (today == 'today') {
         window.pis.table({
@@ -1074,6 +1156,20 @@ $(function () {
         });
     }
  
+=======
+    window.pis.table({
+        objTable: $table,
+        urlSearch: '/DTS/DeliveryRequisitionPage',
+        urlPaging: '/DTS/DeliveryRequisitionPageXt',
+        searchParams: {
+            typeData: 'validation',
+            requestor: false,
+            //custName:'',
+            //origin:'',
+        },
+        autoLoad: true
+    });
+>>>>>>> 639d8d0 (Intial commit)
     $("#mySearch").insertBefore($("[name=refresh]"));
 
     $("#btnExportDR").click(function () {
@@ -1164,7 +1260,10 @@ $(function () {
     setActionCheckSendEmail('SendEmailToServiceTUBatuLicin');
     setActionCheckSendEmail('SendEmailToServiceTUSangatta');
     setActionCheckSendEmail('SendEmailToServiceTUKendari');
+<<<<<<< HEAD
     setActionCheckSendEmail('SendEmailToServiceTUMeulaboh');
+=======
+>>>>>>> 639d8d0 (Intial commit)
     
     //setActionCheckSendEmail('SendEmailToCkb');
     //setActionCheckSendEmail('SendEmailToCkbAllArea');
