@@ -23,9 +23,13 @@
         public string Notes { get; set; }
         public string QtyPartial { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string FileNameKOFAX { get; set; }
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public string FileNameKOFAX { get; set; }
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     
 

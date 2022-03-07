@@ -5008,9 +5008,13 @@
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\freight.png" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Images\hardcopyinvoice.png" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Images\hardcopyinvoice.png" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Content Include="Images\home.png" />
     <Content Include="Images\HomeNew.png" />
     <Content Include="Images\Intransit.png" />
@@ -5362,9 +5366,13 @@
     <Content Include="Scripts.app\POST\Ebupot.js" />
     <Content Include="Scripts.app\POST\EbupotVendor.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\POST\FinanceHome.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\POST\FinanceHome.js" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Content Include="Scripts.app\POST\HoReport.js" />
     <Content Include="Scripts.app\POST\MasterMappingUser.js" />
     <Content Include="Scripts.app\POST\MasterParameter.js" />
@@ -5373,9 +5381,13 @@
     <Content Include="Scripts.app\POST\VendorDetail.js" />
     <Content Include="Scripts.app\POST\Comment.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\POST\FinanceHome.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\POST\FinanceHome.js" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Content Include="Scripts.app\POST\VendorQuickSearch.js" />
     <Content Include="Scripts.app\POST\VendorHome.js" />
     <Content Include="Scripts.app\PrimeProduct\ImportPrimeProduct.cshmtl.js" />
@@ -7397,6 +7409,7 @@
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Post\HomeFinance.cshtml" />
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
@@ -7440,6 +7453,12 @@
 >>>>>>> 26aafb4 (Changes of P1-CIPL)
 =======
 >>>>>>> 0aa0fef (new template)
+=======
+
+    <Content Include="Views\Post\HomeFinance.cshtml" />
+    <Content Include="Views\Post\NavFinanceSearch.cshtml" />
+    <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

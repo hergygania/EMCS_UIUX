@@ -26,16 +26,22 @@ namespace App.Data.Domain.POST
         public string ItemDescription { get; set; }
         public string ApproveStatus { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public string SAPDocNumber { get; set; }
         public string WHTaxCode { get; set; }
         public Int64? WHTaxAmount { get; set; }
         public string Status { get; set; }
         public string StatusMessage { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     public class AttachmentListSAP
     {

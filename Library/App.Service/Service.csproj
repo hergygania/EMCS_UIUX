@@ -232,9 +232,13 @@
     <Compile Include="FreightCost\MasterRateImport.cs" />
     <Compile Include="FreightCost\MasterSurchargeImport.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Helper\NetworkShare.cs" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="Helper\NetworkShare.cs" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="ImexVetting\ManualVetting.cs" />
     <Compile Include="ImexVetting\ReadDataManualVetting.cs" />
     <Compile Include="Imex\ChangeLogBLL.cs" />
@@ -269,9 +273,13 @@
     <Compile Include="POST\Ebupot.cs" />
     <Compile Include="POST\IntegrasiEproc.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="POST\Invoice.cs" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="POST\Invoice.cs" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="POST\MasterMappingUser.cs" />
     <Compile Include="POST\Report.cs" />
     <Compile Include="POST\QuickSearch.cs" />

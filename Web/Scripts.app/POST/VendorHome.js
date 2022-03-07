@@ -23,6 +23,9 @@ Dropzone.autoDiscover = false;
 
 $(document).ready(function () {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
     if (landingPage == 1) {
         CheckPopUpHomePage();
@@ -35,9 +38,12 @@ $(document).ready(function () {
         $("#idhome").show();
     }
 
+<<<<<<< HEAD
 =======
     CheckPopUpHomePage();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     initDateRange();
     InitTableViewHistory();
     $('[data-toggle="tooltip"]').tooltip()
@@ -479,6 +485,9 @@ $(document).ready(function () {
                 width: '100px',
                 formatter: GetProcessFlowChecklistGRSA,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             },
             //{
             //    title: 'Document Finance',
@@ -490,9 +499,12 @@ $(document).ready(function () {
             //    formatter: GetProcessFlowChecklistInvoiceDocument,
             //},
            
+<<<<<<< HEAD
 =======
             },  
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 title: 'Invoice Submit',
                 field: 'Invoice_Date',
@@ -512,12 +524,17 @@ $(document).ready(function () {
             },
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 title: 'Invoice Date',
                 field: 'Invoice_Date',
 =======
                 title: 'Invoice Submitted',
                 field: 'Invoicing',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                title: 'Invoice Date',
+                field: 'Invoice_Date',
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 class: 'text-center',
                 align: 'center',
                 width: '100px',
@@ -1389,6 +1406,7 @@ function GetDeliveryFlowChecklist(data, row, index) {
         }
         else
 <<<<<<< HEAD
+<<<<<<< HEAD
             return CurrentProgress;        
 =======
             return CurrentProgress;
@@ -1407,6 +1425,9 @@ function GetDeliveryFlowChecklist(data, row, index) {
         // return current;
         // }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            return CurrentProgress;        
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 }
 
@@ -1514,21 +1535,32 @@ function CheckPopUpHomePage() {
         if (data.IsAgreeHomePage == true) {
             $("#idpopUp").hide();
 <<<<<<< HEAD
+<<<<<<< HEAD
             $("#idpopUpHardCopyInvoice").show();   
             $("#idpopUpPPN").hide();
             $("#idhome").hide();
 =======
             $("#idhome").show();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            $("#idpopUpHardCopyInvoice").show();   
+            $("#idpopUpPPN").hide();
+            $("#idhome").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         }
         else {
             $("#idpopUp").show();
             $("#idhome").hide();
 <<<<<<< HEAD
+<<<<<<< HEAD
              $("#idpopUpPPN").hide();
             $("#idhome").hide();
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+             $("#idpopUpPPN").hide();
+            $("#idhome").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         }
     });
 }
@@ -1538,6 +1570,7 @@ function SavePopUpHome() {
 
     $.getJSON("SavePopUp?isChecked=true&description=HomePage", function (data) {
         $("#idpopUp").hide();
+<<<<<<< HEAD
 <<<<<<< HEAD
         $("#idpopUpHardCopyInvoice").hide();
         $("#idpopUpPPN").show();       
@@ -1560,4 +1593,22 @@ function SavePopUpPPN() {
 
     });
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        $("#idpopUpHardCopyInvoice").hide();
+        $("#idpopUpPPN").show();       
+        $("#idhome").hide();
+    });
+}
+function SavePopUpHardCopy() {   
+        $("#idpopUp").hide();
+        $("#idpopUpHardCopyInvoice").hide();
+        $("#idpopUpPPN").show();
+        $("#idhome").hide();
+}
+function SavePopUpPPN() {
+    $("#idpopUp").hide();
+    $("#idpopUpHardCopyInvoice").hide();
+    $("#idpopUpPPN").hide();
+    $("#idhome").show();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 }

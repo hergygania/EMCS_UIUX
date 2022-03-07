@@ -8669,6 +8669,7 @@ GO
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ==============================================================================================================================================
 From DATE 26/April/2022
 ==============================================================================================================================================
@@ -8966,6 +8967,8 @@ BEGIN
      WHERE Id = @Id    
      SELECT C.Id as ID, CAST(C.IdCl AS nvarchar) as [NO], C.CreateDate as CREATEDATE FROM NpePeb C WHERE C.id = @Id    
 =======
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 CREATE PROC SP_ChangeHistory_RequestForChange_Insert
  @FormType nvarchar(100)
 ,@FormNo INT
@@ -8985,6 +8988,7 @@ CreateBy)VALUES
 @CreateBy)
 SET @ResultID = SCOPE_IDENTITY()
 SELECT @ResultID
+<<<<<<< HEAD
 >>>>>>> 26aafb4 (Changes of P1-CIPL)
 END
 
@@ -9915,3 +9919,6 @@ RF.Reason'
 END
 
 >>>>>>> 26aafb4 (Changes of P1-CIPL)
+=======
+END
+>>>>>>> 93c2efe ([U] Update from client's TFS)

@@ -6,11 +6,15 @@ namespace App.Data.Domain.POST
     {
         public string PO_Number { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public Nullable<System.DateTime> PO_Date { get; set; }       
 =======
         public Nullable<System.DateTime> PO_Date { get; set; }
         //public string Item_Category { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public Nullable<System.DateTime> PO_Date { get; set; }       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public string PO_lineitem { get; set; }
         public string QtyPO { get; set; }
         public string QtyDone { get; set; }
@@ -20,11 +24,15 @@ namespace App.Data.Domain.POST
         public string Purchasing_Group { get; set; }
         public string VendorID { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string VendorName { get; set; }      
 =======
         public string VendorName { get; set; }
         //public string POsenttoVendor { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public string VendorName { get; set; }      
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public Nullable<System.DateTime> PO_ConfirmDate { get; set; }
         public string PR_Number { get; set; }
         public string PR_lineitem { get; set; }
@@ -44,10 +52,14 @@ namespace App.Data.Domain.POST
         public string SA_PostingDate { get; set; }
         public string SA_DocumentDate { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string SA_Amount { get; set; }       
 =======
         //public string CostCenter { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public string SA_Amount { get; set; }       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public string Invoice_Number { get; set; }
         public Nullable<System.DateTime> Invoice_PostingDate { get; set; }
         public Nullable<System.DateTime> Invoice_Date { get; set; }
@@ -57,9 +69,13 @@ namespace App.Data.Domain.POST
         public string PlanCompleteDate { get; set; }
         public string ActualFinishDate { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
        
 =======
         public string SLA { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 }

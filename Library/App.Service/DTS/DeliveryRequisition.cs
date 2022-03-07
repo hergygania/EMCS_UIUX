@@ -72,12 +72,16 @@ namespace App.Service.DTS
             item.UpdateBy = Domain.SiteConfiguration.UserName;
             item.UpdateDate = DateTime.Now;
 <<<<<<< HEAD
+<<<<<<< HEAD
    
 =======
             item.Province = item.Province.Replace("-", "");
             item.Kabupaten = item.Kabupaten.Replace("-", "");
             item.Kecamatan = item.Kecamatan.Replace("-", "");
 >>>>>>> 639d8d0 (Intial commit)
+=======
+   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             if (item.Status != null && (item.Status.ToLower() == "submit" && item.Status.ToLower() == "revised"))
             {
                 item.ActivityTracking = "DR CREATION";
@@ -89,9 +93,13 @@ namespace App.Service.DTS
                 using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     using (System.Data.Entity.DbContextTransaction dbTran = db.DbContext.Database.BeginTransaction())
                     {
                         try
@@ -116,9 +124,13 @@ namespace App.Service.DTS
                                 }
                             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                             if (dataRes > 0)
                             {
                                 if (units != null && units.Count() > 0)
@@ -160,6 +172,9 @@ namespace App.Service.DTS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static int crudreroute(string dml, Data.Domain.DeliveryRequisition item, List<Data.Domain.DeliveryRequisitionUnit> units, App.Data.Domain.DeliveryRequisition_Reroute item_Reroute)
         {
      
@@ -225,8 +240,11 @@ namespace App.Service.DTS
 
 
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static int delete(Data.Domain.DeliveryRequisition item)
         {
             _cacheManager.Remove(cacheName);
@@ -371,12 +389,17 @@ namespace App.Service.DTS
                 parameterList.Add(new SqlParameter("@status", status == null ? "" : status));               
                 parameterList.Add(new SqlParameter("@today", filter.today == null ? "" : filter.today));
 <<<<<<< HEAD
+<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@typesearch", filter.typesearch == null ? "" : filter.typesearch));
 
 =======
                
                
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                parameterList.Add(new SqlParameter("@typesearch", filter.typesearch == null ? "" : filter.typesearch));
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 string filterColumns = String.Empty;
                 if (filter.filterColumns != null && filter.filterColumns.Count > 0)
                 {
@@ -403,10 +426,14 @@ namespace App.Service.DTS
 
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryRequisition>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     (@"exec [dbo].[SP_GetDataDeliveryRequesition] @searchName, @requestor, @createdby, @filters, @forReport, @status,@today,@typesearch", parameters).ToList();
 =======
                     (@"exec [dbo].[SP_GetDataDeliveryRequesition] @searchName, @requestor, @createdby, @filters, @forReport, @status,@today", parameters).ToList();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    (@"exec [dbo].[SP_GetDataDeliveryRequesition] @searchName, @requestor, @createdby, @filters, @forReport, @status,@today,@typesearch", parameters).ToList();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
                 return data;
             }
@@ -473,6 +500,7 @@ namespace App.Service.DTS
                                 Model = q.Model,
                                 SerialNumber = q.SerialNumber,
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 Batch = q.Batch,                              
 =======
                                 Batch = q.Batch,
@@ -537,6 +565,9 @@ namespace App.Service.DTS
                                 //UnitDimVol = p.UnitDimVol,
                                 //SendEmailToCkb = p.SendEmailToCkb
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                                Batch = q.Batch,                              
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                             }
                             ).ToList();
 
@@ -625,10 +656,14 @@ namespace App.Service.DTS
                 {
                     var data = (from p in db.DeliveryRequisition
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 where (p.Status == "submit" || p.Status == "rerouted") && p.CreateDate >= startDateTime && p.CreateDate <= endDateTime
 =======
                                 where p.Status == "submit" && p.CreateDate >= startDateTime && p.CreateDate <= endDateTime
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                                where (p.Status == "submit" || p.Status == "rerouted") && p.CreateDate >= startDateTime && p.CreateDate <= endDateTime
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                                 select p
                                );
                     CountToday = data.Count();
@@ -703,6 +738,9 @@ namespace App.Service.DTS
             return item;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static Data.Domain.DeliveryRequisition GetStatusDR(Int64 Id)
         {
             var db = new Data.DTSContext();
@@ -710,9 +748,12 @@ namespace App.Service.DTS
             var item = tb.ToList().Where(i => i.ID == Id && i.IsDemob == false && i.Status != "reject").FirstOrDefault();
             return item;
         }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static Data.Domain.DeliveryRequisition GetByKeyCustom(string key)
         {
             var db = new Data.DTSContext();
@@ -743,6 +784,9 @@ namespace App.Service.DTS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static List<Data.Domain.DeliveryRequisitionRef> GetReferenceReroute(string keyNumber)
         {
             string key = string.Format(cacheName);
@@ -773,18 +817,25 @@ namespace App.Service.DTS
             }
         }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static List<Data.Domain.DeliveryRequisitionRef> GetReference(string keyType, string keyNumber)
         {
             string key = string.Format(cacheName);
             try
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
                 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
                 {
                     db.DbContext.Database.CommandTimeout = 600;

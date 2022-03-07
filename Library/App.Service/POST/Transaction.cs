@@ -119,10 +119,14 @@ namespace App.Service.POST
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static string UpdateItem(UpdateTrItem item)
 =======
         public static string UpadateItem(UpdateTrItem item)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static string UpdateItem(UpdateTrItem item)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
             {
@@ -141,10 +145,14 @@ namespace App.Service.POST
                 parameterList.Add(new SqlParameter("@QtyPartial_Id", item.QtyPartialId ?? ""));
                 SqlParameter[] parameters = parameterList.ToArray();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
                 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 var data = db.DbContext.Database.SqlQuery<string>(@"exec [dbo].[SP_TrItem_UPDATE]
                 	@id		  
                   , @status  
@@ -164,10 +172,14 @@ namespace App.Service.POST
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static string UpdateItemNotes(UpdateTrItem item)
 =======
         public static string UpadateItemNotes(UpdateTrItem item)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static string UpdateItemNotes(UpdateTrItem item)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
             {
@@ -187,6 +199,7 @@ namespace App.Service.POST
                 return data;
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         public static Int64 UpdateHardCopy(UpdateInvoiceHardCopy hardcopy)
@@ -230,16 +243,53 @@ namespace App.Service.POST
                     data.suratketerangantidakpotongpajak = suratketerangan;
 =======
         public static int UpdateInvoice(int id,  string suratketerangan)
+=======
+
+        public static Int64 UpdateHardCopy(UpdateInvoiceHardCopy hardcopy)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
-           
+            var userLogin = SiteConfiguration.UserName;
+            using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@requesid", hardcopy.requestId));
+                parameterList.Add(new SqlParameter("@attachmentid", hardcopy.attachmentId));
+                parameterList.Add(new SqlParameter("@submissiontype", hardcopy.submissiontype));
+                parameterList.Add(new SqlParameter("@submissiondate", hardcopy.submissionDate));
+                parameterList.Add(new SqlParameter("@receiptnameornumber", hardcopy.receiptnameornumber));
+                parameterList.Add(new SqlParameter("@createby", userLogin));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                var data = db.DbContext.Database.SqlQuery<Int64>(@"exec [dbo].[SP_InvoiceHardcopy_UPDATE]
+                	@requesid		  
+                  , @attachmentid 
+                  , @submissiontype
+                  , @submissiondate
+                  , @receiptnameornumber
+                  , @createby
+                ", parameters).FirstOrDefault();
+
+                return data;
+            }
+        }
+
+        public static int UpdateInvoice(int id, string suratketerangan)
+        {
+
             using (var db = new Data.POSTContext())
             {
-                
+
                 var data = (from p in db.TrPO where p.IdRequest == id select p).FirstOrDefault();
                 if (data != null)
                 {
+<<<<<<< HEAD
                     data.suratketerangantidakpotongpajak = suratketerangan;  
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    data.suratketerangantidakpotongpajak = suratketerangan;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     db.SaveChanges();
                 }
             }
@@ -385,10 +435,14 @@ namespace App.Service.POST
         #region Attachment
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static int UpdateItemMappingUploadInvoice(int idItem, int attachmentId, bool selected, int requestId)
 =======
         public static int UpdateItemMappingUploadInvoice(int idItem, int attachmentId, bool selected,int requestId)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static int UpdateItemMappingUploadInvoice(int idItem, int attachmentId, bool selected, int requestId)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             var model = new MappingUploadItem();
             var userLogin = SiteConfiguration.UserName;
@@ -457,10 +511,14 @@ namespace App.Service.POST
             return 1;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
      
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static int UpdateItemDocType(int idItem, int attachmentId, string dataselected)
         {
             using (var db = new Data.POSTContext())
@@ -483,6 +541,7 @@ namespace App.Service.POST
             return 1;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
         public static int RejectAttachment(int attachmentId, bool reject, string rejectnote)
@@ -491,6 +550,11 @@ namespace App.Service.POST
 
         public static int RejectAttachment(int attachmentId, bool reject,string rejectnote)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+
+        public static int RejectAttachment(int attachmentId, bool reject, string rejectnote)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             using (var db = new Data.POSTContext())
             {
@@ -505,10 +569,14 @@ namespace App.Service.POST
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static int ApproveAttachment(int attachmentId, bool approve, string role, string note)
 =======
         public static int ApproveAttachment(int attachmentId, bool approve,string role,string note)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static int ApproveAttachment(int attachmentId, bool approve, string role, string note)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             using (var db = new Data.POSTContext())
             {
@@ -517,10 +585,14 @@ namespace App.Service.POST
 
                 data.ApproveDateFinance = DateTime.Now;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 if (role == "Administrator,POSTFINANCE" || role == "Administrator,POSTFINANCEBRANCH")
 =======
                 if (role == "Administrator,POSTFINANCE" ||  role == "Administrator,POSTFINANCEBRANCH")
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                if (role == "Administrator,POSTFINANCE" || role == "Administrator,POSTFINANCEBRANCH")
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 {
                     data.IsApprove = approve;
                     data.Notes += " Finance : " + note;
@@ -582,6 +654,7 @@ namespace App.Service.POST
             var userLogin = SiteConfiguration.UserName;
             var fileName = fileNameOri;
 <<<<<<< HEAD
+<<<<<<< HEAD
             var FileNameKOFAX = "";
             var PO_Number = "";
             var Destination = "";
@@ -593,6 +666,13 @@ namespace App.Service.POST
             var Destination = "";
             var BusinessArea = "";
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            var FileNameKOFAX = "";
+            var PO_Number = "";
+            var Destination = "";
+            var BusinessArea = "";
+            var CreateBySAP = "";
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
             using (var db = new Data.POSTContext())
             {
@@ -609,10 +689,14 @@ namespace App.Service.POST
                     Destination = DataItem.Destination;
                     BusinessArea = DataItem.BusinessArea;
 <<<<<<< HEAD
+<<<<<<< HEAD
                     CreateBySAP = DataItem.CreateBySAP;
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    CreateBySAP = DataItem.CreateBySAP;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     if (codeAttachment == "BAST") {
                         Approved = true;
                         FlowProcessID = 1665;
@@ -627,6 +711,7 @@ namespace App.Service.POST
                     }
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //FileNameKOFAX = "POST" + "_" + BusinessArea + "_" + PO_Number + ".pdf";
                 model.RequestID = requestId;
                 model.ItemID = ItemID;
@@ -637,6 +722,12 @@ namespace App.Service.POST
                 model.ItemID = ItemID;
                 model.Path = path;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                //FileNameKOFAX = "POST" + "_" + BusinessArea + "_" + PO_Number + ".pdf";
+                model.RequestID = requestId;
+                model.ItemID = ItemID;
+               
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 model.FileName = fileName;
                 model.FileNameOri = Path.GetFileName(fileNameOri);
                 model.CodeAttachment = codeAttachment;
@@ -652,11 +743,15 @@ namespace App.Service.POST
                 model.FlowProcessID = FlowProcessID;
                 model.FlowProcessStatusID = FlowProcessStatusID;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
               
                 if (codeAttachment == "BAST")
                 {
                     model.IsSendKOFAX = false;
                 }
+<<<<<<< HEAD
                 db.TrRequestAttachment.Add(model);
                 db.SaveChanges();
                
@@ -704,22 +799,53 @@ namespace App.Service.POST
                 UpdateItemMappingUpload(ItemID, (int)model.ID, true);
 =======
 
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 db.TrRequestAttachment.Add(model);
                 db.SaveChanges();
-
-
-                fileName = model.CodeAttachment + "_" + model.ID + "_" + fileNameOri;
+               
                 path = Global.CreateShareFolderRequest(path, model.UploadedDate, model.RequestID);
                 Global.SaveFileToShareFolderRequest(path, fileName, file);
-
-              
-
-
-                model.FileName = fileName;
                 model.Path = path + fileName;
-                //model.FileNameKOFAX = FileNameKOFAX;
+
+                if (codeAttachment == "INVOICE")
+                {
+                    bool IsKOFAXVendor = false;
+                    if (BusinessArea == "0Z02")
+                    {
+                        IsKOFAXVendor = true;
+                    }
+                    if (CreateBySAP == "ADY032291" || CreateBySAP == "NASIR004045" || CreateBySAP == "BTCADM")
+                    {
+                        IsKOFAXVendor = true;
+                    }
+                    var KOFAXVendor = CheckKOFAXVendor(Destination);
+                    if (KOFAXVendor > 0)
+                    {
+                        IsKOFAXVendor = true;
+                    }
+                    if (IsKOFAXVendor)
+                    {
+                        //SEND TO SHARE FOLDER KOFAX                   
+                        FileNameKOFAX = BusinessArea + "_" + PO_Number + "_" + model.ID + "_" + fileNameOri + "";
+
+                        //0Z02 _ 4500147860 _ 41955 _ IFC - TU_INV_2022_I_1032.pdf
+
+                        Global.UploadFiletoShareFolderKOFAX(file, path, FileNameKOFAX, fileName, model.ID);
+                        model.IsSendKOFAX = true;
+                        model.FileNameKOFAX = FileNameKOFAX;
+                    }
+                    else
+                    {
+                        model.IsSendKOFAX = false;
+                        model.FileNameKOFAX = "";
+                    }
+                    model.IsApprove = false;
+                }
+               
                 db.SaveChanges();
 
+<<<<<<< HEAD
                 if (codeAttachment == "BAST" )
                 {
                     UpdateItemMappingUpload(ItemID, (int)model.ID, true);
@@ -736,11 +862,17 @@ namespace App.Service.POST
                     //Global.SaveFileToShareFolderRequest(path, FileNameKOFAX, file);
                 }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                UpdateItemMappingUpload(ItemID, (int)model.ID, true);
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
                 return model.ID;
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static int CheckKOFAXVendor(string Destination)
         {
             int KOFAXVendor = 0;
@@ -759,9 +891,12 @@ namespace App.Service.POST
             }
             return KOFAXVendor;
         }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         public static TrRequestAttachment GetDataRequestAttachmentById(int id)
         {
             using (var db = new Data.POSTContext())
@@ -776,10 +911,14 @@ namespace App.Service.POST
             using (var db = new Data.POSTContext())
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 DataAttachment = (from p in db.TrRequestAttachment where p.RequestID == requestid && p.IsRejected == false orderby p.FileNameOri select p ).ToList();
 =======
                 DataAttachment = (from p in db.TrRequestAttachment where p.RequestID == requestid orderby p.FileNameOri select p ).ToList();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                DataAttachment = (from p in db.TrRequestAttachment where p.RequestID == requestid && p.IsRejected == false orderby p.FileNameOri select p ).ToList();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 return DataAttachment;
             }
         }

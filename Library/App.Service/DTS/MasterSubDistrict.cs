@@ -26,10 +26,14 @@ namespace App.Service.DTS
         /// </summary>
         /// <returns></returns>
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static List<Data.Domain.MasterSubDistrict> GetListFilter(string keySearch,string districtid)
 =======
         public static List<Data.Domain.MasterSubDistrict> GetListFilter(string keySearch)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static List<Data.Domain.MasterSubDistrict> GetListFilter(string keySearch,string districtid)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             string key = string.Format(cacheName);
 
@@ -42,6 +46,7 @@ namespace App.Service.DTS
                     keySearch = Regex.Replace(keySearch, @"[^0-9a-zA-Z]+", "");
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
          
                 parameterList.Add(new SqlParameter("@key", keySearch == null ? "" : keySearch));
                 parameterList.Add(new SqlParameter("@districtid", districtid == null ? "" : districtid));
@@ -50,12 +55,19 @@ namespace App.Service.DTS
                     (@"exec [dbo].[SP_GetSubDistrict] @key,@districtid", parameters).ToList();
 =======
                 
+=======
+         
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 parameterList.Add(new SqlParameter("@key", keySearch == null ? "" : keySearch));
-
+                parameterList.Add(new SqlParameter("@districtid", districtid == null ? "" : districtid));
                 SqlParameter[] parameters = parameterList.ToArray();
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.MasterSubDistrict>
+<<<<<<< HEAD
                     (@"exec [dbo].[SP_GetSubDistrict] @key", parameters).ToList();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    (@"exec [dbo].[SP_GetSubDistrict] @key,@districtid", parameters).ToList();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 return data;
             }
         }

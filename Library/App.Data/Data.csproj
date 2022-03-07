@@ -88,10 +88,7 @@
     <Compile Include="Domain\EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Domain\EMCS\SP_BlAwb.cs" />
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
     <Compile Include="Domain\EMCS\SP_getCiplChangeHistory.cs" />
     <Compile Include="Domain\EMCS\SP_getCiplDocument.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -117,12 +114,19 @@
     
     
     <Compile Include="Domain\POST\BsTablePagingResult.cs" />
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="Domain\POST\InvoiceHardCopy.cs" />
+    <Compile Include="Domain\POST\InvoiceHardCopyList.cs" />
+    <Compile Include="Domain\POST\KOFAXFailedUpload.cs" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="Domain\POST\Ebupot\EbupotDbModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotFormModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotListView.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotTableListModel.cs" />
-	<Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\InvoiceList.cs" />
     <Compile Include="Domain\POST\MtMappingUserBranch.cs" />
     <Compile Include="Domain\POST\PaginationParamEbupot.cs" />
     <Compile Include="Domain\POST\TotalSla.cs" />

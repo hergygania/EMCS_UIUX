@@ -63,6 +63,7 @@ namespace App.Web.Controllers.POST
 
         public void ApplicationTitle()
 <<<<<<< HEAD
+<<<<<<< HEAD
         {        
 =======
         {
@@ -73,6 +74,9 @@ namespace App.Web.Controllers.POST
             //    TempData["myData"] = "Test data";
             //}
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        {        
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
             var userID = User.Identity.GetUserId();
             var userType = User.Identity.GetUserType().ToLower();

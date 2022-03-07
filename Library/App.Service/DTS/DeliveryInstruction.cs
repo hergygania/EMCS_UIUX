@@ -80,10 +80,14 @@ namespace App.Service.DTS
         /// </summary>
         /// <returns></returns>
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static List<Data.Domain.DeliveryInstructionView> GetListFilter(App.Data.Domain.DTS.DeliveryInstructionFilter filter)
 =======
         public static List<Data.Domain.DeliveryInstruction> GetListFilter(App.Data.Domain.DTS.DeliveryInstructionFilter filter)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public static List<Data.Domain.DeliveryInstructionView> GetListFilter(App.Data.Domain.DTS.DeliveryInstructionFilter filter)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             string key = string.Format(cacheName);
 
@@ -104,10 +108,14 @@ namespace App.Service.DTS
                 SqlParameter[] parameters = parameterList.ToArray();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryInstructionView>
 =======
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryInstruction>
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryInstructionView>
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     (@"exec [dbo].[SP_GetDataDeliveryInstruction] @searchName, @requestor, @createdby", parameters).ToList();
 
                 return data;

@@ -48,12 +48,18 @@ function setFormSisable(isdisabled, formType) {
         }
     } 
 <<<<<<< HEAD
+<<<<<<< HEAD
     $("#newcustName").show();
     $("#oldcustNamegroup").hide();
     $("#btnhistory").hide();
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    $("#newcustName").show();
+    $("#oldcustNamegroup").hide();
+    $("#btnhistory").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $('.btn-refNo button').attr("disabled", isdisabled);
     $("#refNo").attr("disabled", isdisabled);
     $("#refDate").attr("disabled", isdisabled);
@@ -71,16 +77,21 @@ function setFormSisable(isdisabled, formType) {
     $("#PicName").attr("disabled", isdisabled);
     $("#PicHP").attr("disabled", isdisabled);
 <<<<<<< HEAD
+<<<<<<< HEAD
    
 =======
     //$("#Kecamatan").attr("disabled", isdisabled);
     //$("#Kabupaten").attr("disabled", isdisabled);
     //$("#Province").attr("disabled", isdisabled);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $("#ProvinceID").attr("disabled", isdisabled);
     $("#SubDistrictID").attr("disabled", isdisabled);
     $("#DistrictID").attr("disabled", isdisabled);  
     $("#Origin").attr("disabled", isdisabled);
+<<<<<<< HEAD
 <<<<<<< HEAD
     $("#RequestNotes").attr("disabled", isdisabled);    
     $("#ExpectedTimeArrival").attr("disabled", isdisabled);
@@ -93,6 +104,13 @@ function setFormSisable(isdisabled, formType) {
     $("#ExpectedTimeArrival").attr("disabled", isdisabled);
     $("#ExpectedTimeLoading").attr("disabled", isdisabled);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    $("#RequestNotes").attr("disabled", isdisabled);    
+    $("#ExpectedTimeArrival").attr("disabled", isdisabled);
+    $("#ExpectedTimeLoading").attr("disabled", isdisabled);
+    
+  
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $("#ActualTimeArrival").attr("disabled", isdisabled);
     $("#ActualTimeDeparture").attr("disabled", isdisabled);
 
@@ -132,10 +150,14 @@ function setFormSisable(isdisabled, formType) {
     $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", isdisabled);
     $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", isdisabled);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     //$form.find("input[name=SendEmailToCkb]").attr("disabled", "disabled");
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
     if (formType == 'R') {
         $("#refSONo").parent().removeClass('hidden');
@@ -144,12 +166,18 @@ function setFormSisable(isdisabled, formType) {
         $('.btn-refNo button').attr("disabled", false);
         $("#refNo").attr("disabled", false);
 <<<<<<< HEAD
+<<<<<<< HEAD
         
     }
   
 =======
     }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        
+    }
+  
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 }
 
 function showFormRequisition() {
@@ -179,28 +207,40 @@ var referenceEvent = {
     },
     fillData: function (dataRef, formType = 'I') {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $("#btnhistory").show();
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        $("#btnhistory").show();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         referenceEvent.formType = formType;
         referenceEvent.dataRef = dataRef;
         var isdisabled = dataRef.header.Status === "complete" || dataRef.header.Status === "reject" ? "disabled" : false;
         if (formType === "V" || formType === "R") {
 <<<<<<< HEAD
+<<<<<<< HEAD
             isdisabled = true;;
 =======
             isdisabled = true; // "disabled";
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            isdisabled = true;;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         }
         if (dataRef.header.Status === "reject" || dataRef.header.Status === "revise") {
             $("#RejectNoteSpace").show();
             $("textarea[name=RejectNote]").val(dataRef.header.RejectNote);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
        
 =======
         //console.log(formType);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         if (formType == 'I') {
             $form.find("input[name=formType]").val("I");
         } else {
@@ -253,11 +293,15 @@ var referenceEvent = {
         if (formatDate(dataRef.header.ActualTimeDeparture) !== '01 JAN 1900') {
             $("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
 <<<<<<< HEAD
+<<<<<<< HEAD
         }      
 =======
         }
         //$("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        }      
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
         $("#RequestNotes").val(dataRef.header.RequestNotes);
 
@@ -267,11 +311,15 @@ var referenceEvent = {
                 $form.find("input[name=unit][value='" + itemTod + "']").prop("checked", true);
             });
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {                
 =======
             if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {
                 //console.log(dataRef.header.Unit);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {                
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 $("#section-dimension").show();
                 $("#on_pondation").hide();
                 $('#u-weight').val(dataRef.header.UnitDimWeight);
@@ -322,11 +370,15 @@ var referenceEvent = {
             });
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
        
 =======
 
         //console.log(dataRef.header.Incoterm);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         if (dataRef.header.Incoterm && dataRef.header.Incoterm != 'null') {
             var INCTs = dataRef.header.Incoterm.split(',');
             $.each(INCTs, function (index, itemInct) {
@@ -387,9 +439,12 @@ var referenceEvent = {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         //console.log(dataRef.header);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         $("#SoNo").val(dataRef.header.SoNo);
         $("#SoDate").val(formatDate(dataRef.header.SoDate));
         $("#STRNo").val(dataRef.header.STRNo);
@@ -425,22 +480,29 @@ var referenceEvent = {
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
        
         //$("#DIDateSAP").val(dataRef.header.DIDateSAP);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         $('.SDOC-container').show();
         $('.SDOC-container .row .upload').show();
         $('.SDOC-container .row.preview').show();
         $("button[name=ReRoute]").attr("disabled", true);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         if (['U', 'I'].indexOf(formType) > -1) {            
             if (dataRef.header.Status !== "request rerouted") {
                 $('.SDOC-container .row .upload').show();
                 $('.SDOC-container .row.preview').hide();
             }
              
+<<<<<<< HEAD
         } else if (formType === 'R') {
             if (dataRef.header.Status === 'complete') {
                 $('.SDOC-container .row .upload').hide();
@@ -459,6 +521,18 @@ var referenceEvent = {
             $('.SDOC-container .row .upload').show();
             $('.SDOC-container .row.preview').show();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        } else if (formType === 'R') {
+            if (dataRef.header.Status === 'complete') {
+                $('.SDOC-container .row .upload').hide();
+                $('.SDOC-container .row.preview').show();
+            }
+            else {
+                $('.SDOC-container .row .upload').show();
+                $('.SDOC-container .row.preview').show();
+            }
+           
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             showFilePreview(dataRef.header);
         } else if (formType === 'V') {
             $('.SDOC-container .row .upload').hide();
@@ -469,6 +543,9 @@ var referenceEvent = {
         $('.fileinput-remove span').hide();
         setFormSisable(isdisabled, formType);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         if (formType == 'U' && dataRef.header.Status === "request rerouted") {
             $("#ExpectedTimeArrival").attr("disabled", true);
             $("#ExpectedTimeLoading").attr("disabled", true);
@@ -493,8 +570,11 @@ var referenceEvent = {
             $("#btnhistory").show();  
             $("#btnhistory").attr("disabled", false);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         requestingForm.initTableUnit(dataRef.details, formType, isdisabled);
         showFormRequisition();
     }
@@ -507,10 +587,14 @@ function viewDR(refNo,refUrl) {
      $.ajax({
         type: "GET",
 <<<<<<< HEAD
+<<<<<<< HEAD
          url: refUrl,       
 =======
         url: refUrl,
 >>>>>>> 639d8d0 (Intial commit)
+=======
+         url: refUrl,       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         beforeSend: function () { },
         complete: function () { },
         dataType: "json",
@@ -525,6 +609,7 @@ function viewDR(refNo,refUrl) {
                     $('#CustID').append(newOption2).trigger('change');
                     $("#CustID").val(d.header.CustID).trigger("change");
                     $("#CustName").val(formatUpperCase(d.header.CustName || ''));
+<<<<<<< HEAD
 <<<<<<< HEAD
                     $("#CustAddress").val(formatUpperCase(d.header.CustAddress));                
                     $("#PicName").val(formatUpperCase(d.header.PicName));
@@ -544,16 +629,19 @@ function viewDR(refNo,refUrl) {
                     //$('#SubDistrictID').append(newOption2).trigger('change');
                     //$("#SubDistrictID").val(d.header.SubDistrictID).trigger("change");
                     //$("#SubdistrictName").val(formatUpperCase(d.header.Kabupaten || ''));
+=======
+                    $("#CustAddress").val(formatUpperCase(d.header.CustAddress));                
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     $("#PicName").val(formatUpperCase(d.header.PicName));
-                    $("#PicHP").val(formatUpperCase(d.header.PicHP));
-                    //$("#SubDistrictID").val(formatUpperCase(d.header.Kecamatan));
-                    //$("#DistrictID").val(formatUpperCase(d.header.Kabupaten));
-                    //$("#ProvinceID").val(formatUpperCase(d.header.Province));
+                    $("#PicHP").val(formatUpperCase(d.header.PicHP));                  
                     $("#RefNo").val(d.header.RefNo);
                     $("#SoNo").val(d.header.SoNo);
                     $("#SoDate").val(formatDate(d.header.SoDate));
+<<<<<<< HEAD
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     $("button[name=ReRoute]").attr("disabled", false);
                     $("#CustID").attr("disabled", false);
                     $("#CustName").attr("disabled", false);
@@ -564,10 +652,15 @@ function viewDR(refNo,refUrl) {
                     $("#DistrictID").attr("disabled", false);
                     $("#ProvinceID").attr("disabled", false);
 <<<<<<< HEAD
+<<<<<<< HEAD
                     $("#ExpectedTimeLoading").attr("disabled", false);
                     $("#ExpectedTimeArrival").attr("disabled", false);
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    $("#ExpectedTimeLoading").attr("disabled", false);
+                    $("#ExpectedTimeArrival").attr("disabled", false);
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     $("#ActualTimeArrival").attr("disabled", false);
                     $("#ActualTimeDeparture").attr("disabled", false);
                     $('.btn-refNo button').attr("disabled", false);
@@ -575,16 +668,22 @@ function viewDR(refNo,refUrl) {
                 } else {
                     if ($("#refSONo").parent().hasClass('active')) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                         if (d.header.Status != 'request rerouted')
                         {
                             d.header.ExpectedTimeArrival = "";
                             d.header.ExpectedTimeLoading = "";
                         }
                         
+<<<<<<< HEAD
 =======
                         d.header.ExpectedTimeArrival = "";
                         d.header.ExpectedTimeLoading = "";
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                         referenceEvent.fillFromSo(d, $form.find("input[name=formType]").val());
                     } else if ($("#refSTRNo").parent().hasClass('active')) {
                         d.header.ExpectedTimeArrival = "";
@@ -598,6 +697,9 @@ function viewDR(refNo,refUrl) {
                         d.header.ExpectedTimeArrival = "";
                         referenceEvent.fillFromDI(d, $form.find("input[name=formType]").val());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
                     }
                     if (d.header.Status == 'request rerouted') {
@@ -605,6 +707,7 @@ function viewDR(refNo,refUrl) {
                     }
                     else {
                         $("button[name=SaveAsDraft]").show();
+<<<<<<< HEAD
                     }
                     $("button[name=Cancel]").show();
                    
@@ -613,6 +716,11 @@ function viewDR(refNo,refUrl) {
                     $("button[name=Cancel]").show();
                     $("button[name=SaveAsDraft]").show();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    }
+                    $("button[name=Cancel]").show();
+                   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     $("button[name=SubmitForm]").show();
                     $("button[name=SaveAsRevised]").hide();
                     $("button[name=ReRoute]").hide();
@@ -629,6 +737,9 @@ function viewDR(refNo,refUrl) {
     });
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 function viewhistoryreroute() {
     var refNo = $("#refNo").val();
@@ -673,8 +784,11 @@ function viewhistoryreroute() {
     });
 }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function referenceClick() {
     var refNo = $("#refNo").val();
     var refUrl;
@@ -700,6 +814,9 @@ function referenceClick() {
         }
     }    
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     var DRID = $form.find("input[name=ID]").val();
     if (DRID > 0) {
         var CheckStatusDR;
@@ -741,6 +858,7 @@ function referenceClick() {
                 }
             }
         })
+<<<<<<< HEAD
     }
     else {
         if ($("#refSONo").parent().hasClass('active')) {
@@ -801,31 +919,56 @@ function referenceClick() {
     }
     else if ($("#refDINo").parent().hasClass('active')) {        
         refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "DI" + "&number=" + refNo;
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     else {
-        invalidRef();
-        return;
-    }
-    var CheckUrl;
-    CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
-    $.ajax({
-        type: "GET",
-        url: CheckUrl,
-        beforeSend: function () { },
-        complete: function () { },
-        dataType: "json",
-        success: function (d) {
-            if (d.header != null) {
-                sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
-                return;
-            }
-            else {
-                viewDR(refNo,refUrl);
-            }            
+        if ($("#refSONo").parent().hasClass('active')) {
+            
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "SO" + "&number=" + refNo;
+            
         }
-    })
+       else if ($("#refSTRNo").parent().hasClass('active')) {
+
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "STR" + "&number=" + refNo;
+        }
+        else if ($("#refPONo").parent().hasClass('active')) {
+
+            isExist = refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "PO" + "&number=" + refNo;
+        }
+        else if ($("#refDINo").parent().hasClass('active')) {
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "DI" + "&number=" + refNo;
+        }
+        else {
+            invalidRef();
+            return;
+        }
+
+        var CheckUrl;
+        CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
+        $.ajax({
+            type: "GET",
+            url: CheckUrl,
+            beforeSend: function () { },
+            complete: function () { },
+            dataType: "json",
+            success: function (d) {
+                if (d.header != null) {
+                    sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
+                    return;
+                }
+                else {
+                    viewDR(refNo, refUrl);
+                }
+            }
+        })
+    }        
 }
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function resetForm() {
     $form[0].reset();
     resetReference();
@@ -892,9 +1035,13 @@ function submitForm(ActType) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     if (!$("#refNo").val() || $("#refNo").val() === '') {
         invalidRef();
         sAlert('Error', "Please fill " + dataForm['RefNoType'] + " Number", "error");
@@ -902,11 +1049,15 @@ function submitForm(ActType) {
     }
     if ($("#PicHP").val().length > 16) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         sAlert('Error',"Maximum of 16 characters for HP PIC","error");
         return;
     }
     if ($("#CustAddress").val().length > 255) {
         sAlert('Error', "Maximum of 255 characters for Destination", "error");
+<<<<<<< HEAD
         return;
     }
     dataForm['status'] = htmlEncode(ActType);
@@ -919,11 +1070,13 @@ function submitForm(ActType) {
     dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").val());
 =======
         alert("Maximum of 16 characters for HP PIC");
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         return;
     }
-
     dataForm['status'] = htmlEncode(ActType);
     
+<<<<<<< HEAD
     dataForm['Province'] = htmlEncode($("#ProvinceID").text().trim().replace('-', ''));
     dataForm['Kabupaten'] = htmlEncode($("#DistrictID").text().trim().replace('-', ''));
     dataForm['Kecamatan'] = htmlEncode($("#SubDistrictID").text().trim().replace('-', ''));
@@ -931,6 +1084,14 @@ function submitForm(ActType) {
     dataForm['DistrictName'] = htmlEncode($("#DistrictID").text().replace('-', ''));
     dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").text().replace('-',''));
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    dataForm['Province'] = htmlEncode($("#ProvinceID").val());
+    dataForm['Kabupaten'] = htmlEncode($("#DistrictID").val());
+    dataForm['Kecamatan'] = htmlEncode($("#SubDistrictID").val());
+    dataForm['ProvinceName'] = htmlEncode($("#ProvinceID").val());
+    dataForm['DistrictName'] = htmlEncode($("#DistrictID").val());
+    dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").val());
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     dataForm['UnitDimWeight'] = htmlEncode($('#u-weight').val());
     dataForm['UnitDimWidth'] = htmlEncode($('#u-width').val());
     dataForm['UnitDimLength'] = htmlEncode($('#u-length').val());
@@ -1006,6 +1167,9 @@ function submitForm(ActType) {
                     message = 'Save as Draft NO ' + DRNo + ' Success';
                 } else if (ActType === 'submit') {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     if (DRNo ==='') {
                         message = 'Reroute Success';
                     }
@@ -1013,9 +1177,12 @@ function submitForm(ActType) {
                         message = 'Submit NO ' + DRNo + ' Success';
                     }
                     
+<<<<<<< HEAD
 =======
                     message = 'Submit NO ' + DRNo + ' Success';
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 } else if (ActType === 'revised') {
                     message = 'Save as Revised NO ' + DRNo + ' Success';
                 }
@@ -1066,9 +1233,13 @@ function resetReference() {
 function resetFormRequisition() {
     $("#formRequest")[0].reset();
 <<<<<<< HEAD
+<<<<<<< HEAD
    
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $(".error").hide();
     $("#formRequest").find('input').attr('disabled', false);
     $("select[name=Sales1Name]").attr("disabled", false);
@@ -1139,13 +1310,19 @@ function sendReRoute() {
     formData.append("RefNo", $('#refNo').val());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     //if ($("#refSTRNo").parent().hasClass('active')) {
     //    sAlert('Error',"Please Input SO # to Change STR # DR Re-Route", 'error');
     //    return;
     //}
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     if ($("#refSONo").parent().hasClass('active')) {
         formData.append("RefNoType", "SO");
         formData.append("SoNo", $('#SoNo').val());
@@ -1165,6 +1342,7 @@ function sendReRoute() {
         formData.append("DIDate", $('#DIDate').val());
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     formData.append("Status", 'request rerouted');
     formData.append("SDOC", $('#SDOC')[0].files[0]);
     formData.append("SDOC1", $('#SDOC1')[0].files[0]);
@@ -1178,6 +1356,14 @@ function sendReRoute() {
     formData.append("SDOC2", $('#SDOC2')[0].files[0]);
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    formData.append("Status", 'request rerouted');
+    formData.append("SDOC", $('#SDOC')[0].files[0]);
+    formData.append("SDOC1", $('#SDOC1')[0].files[0]);
+    formData.append("SDOC2", $('#SDOC2')[0].files[0]);
+    var modaTransport = $('#formRequest input[name="ModaTransport"]:checked').val();
+    formData.append("SDOC2", modaTransport)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $.ajax({
         type: "POST",
         url: myApp.root + 'DTS/DeliveryRequisitionReRouteForm',
@@ -1203,10 +1389,14 @@ function sendReRoute() {
                     DRNo = d.result.KeyCustom;
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
                 sAlert('Success', 'Request Reroute NO ' + DRNo + ' Success', 'success');
 =======
                 sAlert('Success', 'Reroute NO ' + DRNo + ' Success', 'success');
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                sAlert('Success', 'Request Reroute NO ' + DRNo + ' Success', 'success');
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 resetForm();
                 hideModal();
             } else {
@@ -1311,10 +1501,14 @@ var requestingForm = {
             }
         });
 <<<<<<< HEAD
+<<<<<<< HEAD
         $("#btnhistory").hide();
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        $("#btnhistory").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         $('input[type=radio][name=SupportingOfDelivery]').change(function () {
             $("#SODOthers").val('');
             $("#FOT").attr("disabled", false);
@@ -1464,10 +1658,14 @@ function showFilePreview(header) {
 $(function () {
     $("#CustID").select2({
 <<<<<<< HEAD
+<<<<<<< HEAD
         placeholder: 'Nama Customer (Sudah terisi otomatis dari SAP)',
 =======
         placeholder: 'Nama Customer (Sudah terisi otomatis daari SAP)',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        placeholder: 'Nama Customer (Sudah terisi otomatis dari SAP)',
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         dropdownParent: $('#myModalRequest'),
         minimumInputLength: 3,
         ajax: {
@@ -1506,6 +1704,7 @@ $(function () {
      
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
   
     $("#ProvinceID").select2({
         placeholder: 'Select Provinsi',
@@ -1514,10 +1713,15 @@ $(function () {
         ajax: {
             url: myApp.root + 'DTS/getMasterProvince',          
 =======
+=======
+  
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $("#ProvinceID").select2({
         placeholder: 'Select Provinsi',
+        allowClear: true,
         minimumInputLength: 3,
         ajax: {
+<<<<<<< HEAD
             url: myApp.root + 'DTS/getMasterProvince',
             async: false,
             dataType: 'json',
@@ -1550,6 +1754,9 @@ $(function () {
             url: myApp.root + 'DTS/getMasterProvince',
             async: false,
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            url: myApp.root + 'DTS/getMasterProvince',          
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             dataType: 'json',
             data: null,
             data: function (params) {
@@ -1571,11 +1778,16 @@ $(function () {
                     results: newData
                 };
 <<<<<<< HEAD
+<<<<<<< HEAD
             },
             cache: true
 =======
             }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            },
+            cache: true
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1588,9 +1800,13 @@ $(function () {
     $("#DistrictID").select2({
         placeholder: 'Select Kabupaten',
 <<<<<<< HEAD
+<<<<<<< HEAD
         allowClear: true,
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        allowClear: true,
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterDistrict',
@@ -1600,6 +1816,7 @@ $(function () {
             data: function (params) {             
                 console.log(params);
                 var query = {
+<<<<<<< HEAD
 <<<<<<< HEAD
                     key: params.term,
                     provinsiid: $('#ProvinceID').val(),
@@ -1611,6 +1828,13 @@ $(function () {
                 };
                     type: 'public';
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    key: params.term,
+                    provinsiid: $('#ProvinceID').val(),
+                    type: 'public'
+                };
+                   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 return query;
             },
             processResults: function (data) {
@@ -1625,11 +1849,16 @@ $(function () {
                     results: newData
                 };
 <<<<<<< HEAD
+<<<<<<< HEAD
             },
             cache: true
 =======
             }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            },
+            cache: true
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1643,9 +1872,13 @@ $(function () {
         
         placeholder: 'Select Kecamatan',
 <<<<<<< HEAD
+<<<<<<< HEAD
         allowClear: true,
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        allowClear: true,
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterSubDistrict',
@@ -1656,9 +1889,13 @@ $(function () {
                 var query = {
                     key: params.term,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     districtid: $('#DistrictID').val(),
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                    districtid: $('#DistrictID').val(),
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     type: 'public'
                 };
                 return query;
@@ -1675,11 +1912,16 @@ $(function () {
                     results: newData
                 };
 <<<<<<< HEAD
+<<<<<<< HEAD
             },
             cache: true
 =======
             }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            },
+            cache: true
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
