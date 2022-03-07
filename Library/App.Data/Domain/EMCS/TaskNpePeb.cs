@@ -40,5 +40,7 @@
         public string SpecialInstruction { get; set; }
         public string DocumentRequired { get; set; }
 
+        public System.DateTime NpeDateSubmitToCustomOffice { get; set; }
+
     }
 }

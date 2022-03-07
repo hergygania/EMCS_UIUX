@@ -59,5 +59,7 @@
 
         public bool DraftPeb { get; set; }
         public string RegistrationNumber { get; set; }
+       
+         public DateTime? NpeDateSubmitToCustomOffice { get; set; }
     }
 }

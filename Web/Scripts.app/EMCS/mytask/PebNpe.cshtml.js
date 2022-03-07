@@ -45,6 +45,19 @@
         $('#NpeDate').val(null);
     }
 
+    var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
+    if (npeDateSubmitToCustomOffice) {
+        var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
+        if (year != "1900") {
+            $('#NpeDateSubmitToCustomOffice').val(moment(npeDateSubmitToCustomOffice).format("DD MMM YYYY"));
+        }
+        else {
+            $('#NpeDateSubmitToCustomOffice').val(null);
+        }
+    }
+    else {
+        $('#NpeDateSubmitToCustomOffice').val(null);
+    }
     GetDocumentPebNpe();
 
 })

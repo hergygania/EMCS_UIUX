@@ -29,6 +29,11 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
+                string strNpeDateSubmitToCustomOffice = "";
+                if (item.NpeDateSubmitToCustomOffice.HasValue)
+                {
+                    strNpeDateSubmitToCustomOffice = item.NpeDateSubmitToCustomOffice.Value.ToString();
+                }
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@Id", item.Id));
@@ -57,12 +62,22 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@UpdateDate", ""));
                 parameterList.Add(new SqlParameter("@IsDelete", false));
                 parameterList.Add(new SqlParameter("@RegistrationNumber", item.RegistrationNumber ?? ""));
+                parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
 
                 SqlParameter[] parameters = parameterList.ToArray();
 
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber", parameters).FirstOrDefault();
-                return data;
+                try
+                {
+                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber , @NpeDateSubmitToCustomOffice", parameters).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception ex )
+                {
+
+                    throw ex;
+                }
+               
             }
         }
 

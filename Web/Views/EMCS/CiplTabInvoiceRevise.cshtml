@@ -198,6 +198,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Type</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="Type" value="@(string.IsNullOrEmpty(Model.Forwarder.Type) ? "-" : Model.Forwarder.Type)" name="Type" placeholder="Type">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Forwader</label>
                         <div class="input-group col-lg-8 col-xs-8">
                             <input type="text" class="form-control" disabled id="Forwarder" value="@(string.IsNullOrEmpty(Model.Forwarder.Forwader) ? "-" : Model.Forwarder.Forwader)" name="Forwarder" placeholder="Forwarder">

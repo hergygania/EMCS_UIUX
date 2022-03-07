@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace App.Web.Models.EMCS
 {
     public class CargoItemModel
     {
+        public CargoItemModel()
+        {
+            listContainerType = new List<SelectListItem>();
+        }
         public long Id { get; set; }
 
         public long IdCargo { get; set; }
@@ -29,6 +35,8 @@ namespace App.Web.Models.EMCS
         public Nullable<decimal> Net { get; set; }
 
         public Nullable<decimal> Gross { get; set; }
+
+        public List<SelectListItem> listContainerType { get; set; }
 
         public string CreateBy { get; set; }
 

@@ -235,7 +235,7 @@ $("#BtnSubmit").on("click", function (e) {
         if (totalItem > 0) {
             Swal.fire({
                 title: 'Confirmation',
-                text: 'Are you sure want to submit data?',
+                text: 'By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',

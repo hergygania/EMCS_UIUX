@@ -16,6 +16,11 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
+            string country = filter.Country ?? "";
+            if (country != "")
+            {
+                search = country;
+            }
 
             using (var db = new Data.EmcsContext())
             {
@@ -39,7 +44,7 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
-
+          
             using (var db = new Data.EmcsContext())
             {
                 var data = db.MasterAirSeaPorts

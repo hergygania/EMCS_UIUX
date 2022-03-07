@@ -98,5 +98,7 @@ namespace App.Data
         public virtual DbSet<MasterAirSeaPort> MasterAirSeaPorts { get; set; }
         public virtual DbSet<MasterBranchCkb> MasterBranchCkbs { get; set; }
         public virtual DbSet<SpGetCiplTotalData> SpGetCiplTotalDatas { get; set; }
+
+        public virtual DbSet<Type> Type { get; set; }
     }
 }

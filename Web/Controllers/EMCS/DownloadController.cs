@@ -11,7 +11,9 @@ using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using App.Domain;
-
+using App.Data.Domain.EMCS;
+using Newtonsoft.Json;
+using App.Web.Helper;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -58,7 +60,7 @@ namespace App.Web.Controllers.EMCS
 
             return null;
         }
-        
+
         public CargoModel InitModelCargo(long id)
         {
             var detail = new CargoModel();
@@ -84,14 +86,35 @@ namespace App.Web.Controllers.EMCS
             string headerContent;
             if (typeDoc == "Invoice")
             {
+                var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
+                if (qrCodeInvoiceValue == null)
+                {
+                    string strQrCodeUrlInvoice = Common.GenerateQrCode(detail.Data.Id, "downloadInvoice");
+                    qrCodeInvoiceValue = strQrCodeUrlInvoice;
+                }
+                ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
             }
             else if (typeDoc == "Pl")
             {
+                var qrCodelPLValue = TempData["QrCodeUrlPL"];
+                if (qrCodelPLValue == null)
+                {
+                    string strQrCodeUrlPL = Common.GenerateQrCode(detail.Data.Id, "DownloadPl");
+                    qrCodelPLValue = strQrCodeUrlPL;
+                }
+                ViewBag.QrCodeUrlPL = qrCodelPLValue;
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
             }
             else if (typeDoc == "Rg")
             {
+                var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
+                if (qrCodeUrlGRValue == null)
+                {
+                    string strQrCodeUrlGR = Common.GenerateQrCode(detail.Data.Id, "DownloadRg");
+                    qrCodeUrlGRValue = strQrCodeUrlGR;
+                }
+                ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
             }
             else if (typeDoc == "Cargo")
@@ -103,7 +126,14 @@ namespace App.Web.Controllers.EMCS
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargo);
             }
             else
-            {
+            {               
+                var qrCodeValue = TempData["QrCodeUrlEDI"];
+                if(qrCodeValue == null)
+                {
+                    string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
+                    qrCodeValue = strQrCodeUrlEDI;
+                }
+                ViewBag.QrCodeUrlEDI = qrCodeValue;
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
             }
 
@@ -242,9 +272,9 @@ namespace App.Web.Controllers.EMCS
             return File(bytes, "application/pdf", filename);
         }
 
-        
+
         public FileResult DownloadCIPLItem(long id)
-        {           
+        {
             try
             {
                 var data = Service.EMCS.DocumentStreamGenerator.GetStreamCiplItem(id);
@@ -281,7 +311,7 @@ namespace App.Web.Controllers.EMCS
         {
             return View();
         }
-        
+
         private void ExecuteCommand(string command)
         {
             try
@@ -334,13 +364,20 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-        public JsonResult UploadCIPLItem(long idCIPL,string idReference,string refCIPL)
+        public JsonResult UploadCIPLItem(long idCIPL, string idReference, string refCIPL, string ciplFormModelFormData)
         {
             try
             {
+                CiplFormModel objCiplFormModel = new CiplFormModel();
+                if (idCIPL == 0)
+                {
+                    objCiplFormModel = JsonConvert.DeserializeObject<CiplFormModel>(ciplFormModelFormData);
+
+                }
+
                 if (UploadFile("CIPLItem", "TemplateCatepillarSparePart"))
                 {
-                    return GetFileNameCIPLItem(idCIPL, idReference, refCIPL);
+                    return GetFileNameCIPLItem(idCIPL, idReference, refCIPL, objCiplFormModel);
                 }
                 else
                 {
@@ -353,7 +390,7 @@ namespace App.Web.Controllers.EMCS
             }
         }
 
-        public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference,string refCIPL)
+        public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference, string refCIPL, CiplFormModel objCiplFormModel)
         {
             try
             {
@@ -368,20 +405,31 @@ namespace App.Web.Controllers.EMCS
                     {
                         xssf = new XSSFWorkbook(file);
                         sheet = xssf.GetSheet("CIPLItem");
-                        
+
                         var tuple = CheckFileData(sheet, refCIPL, idReference);
-                        if (tuple.Item2 =="success")
+                        if (tuple.Item2 == "success")
                         {
+                            if (idCIPL == 0)
+                            {
+                                objCiplFormModel.Data.ReferenceNo = idReference;
+                                var data = Service.EMCS.SvcCipl.InsertCipl(objCiplFormModel.Forwader, objCiplFormModel.Data, "I", "Draft");
+                                if (data != null)
+                                {
+                                    idCIPL = data.Select(x => x.Id).First();
+                                }
+
+                            }
                             if (GetCIPLItemDataTable(sheet, idCIPL, idReference))
                             {
                                 ViewBag.crudMode = "I";
-                                return Json(new { status = true, msg = "Upload file successfully" });
+
+                                return Json(new { idCIPL = idCIPL, status = true, msg = "Upload file successfully" });
                             }
                             return Json(new { status = true, msg = "Upload file successfully" });
                         }
                         else
                         {
-                            return Json(new { status = false, msg = tuple.Item1});
+                            return Json(new { status = false, msg = tuple.Item1 });
                         }
                     }
                     else
@@ -415,10 +463,10 @@ namespace App.Web.Controllers.EMCS
                 return false;
             }
         }
-        public Tuple<string, string> CheckFileData(ISheet sheet,string refCIPL, string idReference)
+        public Tuple<string, string> CheckFileData(ISheet sheet, string refCIPL, string idReference)
         {
 
-            var tuple = new Tuple<string, string>("","");
+            var tuple = new Tuple<string, string>("", "");
             for (var i = 1; i <= sheet.LastRowNum; i++)
             {
                 if (sheet.GetRow(i) != null)
@@ -449,12 +497,12 @@ namespace App.Web.Controllers.EMCS
                             }
                         }
 
-                      
+
                         if (tuple.Item2 != "success")
                         {
                             break;
                         }
-                    }                 
+                    }
                 }
                 if (tuple.Item2 != "success")
                 {
@@ -465,18 +513,20 @@ namespace App.Web.Controllers.EMCS
 
 
         }
-        public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum,string refCIPL)
+        public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum, string refCIPL)
         {
             string message = "";
             string value = "";
             string messagedesc = "";
             try
             {
-              
-                if (sheet.GetRow(numRow).GetCell(cellNum)!=null)
+
+                if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
-                    value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
-                    if (cellNum == 0 )
+                    //value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
+                    //Note : above condition is not working for string cell value if cell value is null
+                    value = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
+                    if (cellNum == 0)
                     {
                         if (!refCIPL.Contains(value))
                         {
@@ -497,7 +547,7 @@ namespace App.Web.Controllers.EMCS
                     else if (cellNum == 7 || cellNum == 8 || cellNum == 10 || cellNum >= 13)
                     {
 
-                        if (isDecimal(value))                        
+                        if (isDecimal(value))
                         {
                             message = "success";
                             messagedesc = "";
@@ -508,10 +558,10 @@ namespace App.Web.Controllers.EMCS
                             message = "failed";
                             messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " not decimal value";
                         }
-                    }                 
+                    }
                 }
                 else
-                {                   
+                {
                     if (cellNum == 10)
                     {
                         message = "failed";
@@ -521,9 +571,9 @@ namespace App.Web.Controllers.EMCS
                     {
                         message = "success";
                         messagedesc = "";
-                    }                  
+                    }
                 }
-             
+
             }
             catch (Exception e)
             {
@@ -548,9 +598,9 @@ namespace App.Web.Controllers.EMCS
         }
         public string GetCellName(int cell)
         {
-            
+
             string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
-            
+
             return coloum;
         }
 
@@ -561,7 +611,7 @@ namespace App.Web.Controllers.EMCS
             string messagedesc = "";
             string value = "";
             try
-            {              
+            {
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
                     value = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue.ToString();
@@ -569,7 +619,7 @@ namespace App.Web.Controllers.EMCS
                     messagedesc = "";
                 }
                 else
-                {                 
+                {
                     message = "failed";
                     messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " Empty";
                 }
@@ -654,7 +704,7 @@ namespace App.Web.Controllers.EMCS
                 dt.Columns.Add("CoO");
                 dt.Columns.Add("IdParent");
                 dt.Columns.Add("SIBNumber");
-                dt.Columns.Add("WONumber"); 
+                dt.Columns.Add("WONumber");
                 dt.Columns.Add("Claim");
                 dt.Columns.Add("ASNNumber");
 
@@ -663,7 +713,7 @@ namespace App.Web.Controllers.EMCS
                 {
                     if (sheet.GetRow(i) != null)
                     {
-                        dr = AddDataRow(dt, sheet, i, idCIPL,idReference);
+                        dr = AddDataRow(dt, sheet, i, idCIPL, idReference);
                     }
                 }
 
@@ -680,7 +730,7 @@ namespace App.Web.Controllers.EMCS
             }
             catch (Exception ex)
             {
-                
+
                 return false;
             }
         }
@@ -730,8 +780,8 @@ namespace App.Web.Controllers.EMCS
         public DataRow AddDataRow(DataTable dt, ISheet sheet, int i, long idCIPL, string idReference)
         {
             DataRow dataRow = dt.NewRow();
-            var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference); 
-            var Refno = GetStringVal(sheet, i, 0, 0);  
+            var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference);
+            var Refno = GetStringVal(sheet, i, 0, 0);
             dataRow["Id"] = i;
             dataRow["IdCipl"] = idCIPL;
             dataRow["IdReference"] = idReferenceCIPL;
@@ -749,7 +799,7 @@ namespace App.Web.Controllers.EMCS
             dataRow["YearMade"] = "";
             dataRow["Quantity"] = GetDecVal(sheet, i, 2, 0);
             dataRow["UnitPrice"] = GetStringVal(sheet, i, 7, 0);
-            dataRow["ExtendedValue"] = GetStringVal(sheet, i,8, 0);          
+            dataRow["ExtendedValue"] = GetStringVal(sheet, i, 8, 0);
             dataRow["Length"] = GetStringVal(sheet, i, 13, 0);
             dataRow["Width"] = GetStringVal(sheet, i, 14, 0);
             dataRow["Height"] = GetStringVal(sheet, i, 15, 0);
@@ -793,7 +843,7 @@ namespace App.Web.Controllers.EMCS
             {
 
                 string val;
-                val = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
+                val = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
                 return val;
             }
             catch (Exception ex)
@@ -805,17 +855,21 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-                double val;
-                val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
+                double val = 0;
+                //val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
+                if (sheet.GetRow(numRow).GetCell(cellNum) != null)
+                {
+                    val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
+                }
 
                 return val;
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return 0;
             }
         }
 
-     
+
     }
 }

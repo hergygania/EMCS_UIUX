@@ -152,6 +152,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Type</label>
+                                            <div class="col-sm-8">
+                                                <select class="js-example-basic-single" name="Type" id="Type">
+                                                    <option value="NonPJT">Non PJT</option>
+                                                    <option value="PJT">PJT</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </fieldset>
@@ -912,8 +922,7 @@
                 url: "/EMCS/UpdateSI",
                 type: "POST",
                 data: data,
-                success: function (resp) {
-                    debugger;
+                success: function (resp) {                   
                     location.href = "/EMCS/CargoList";
                 }
             });
@@ -953,8 +962,9 @@
                         var SpecialInstruction = $("#SpecialInstruction").val();
                         var DocumentRequired = $("#SiDocumentRequired").val();
                         var PicBlAwb = $('#PicBlAwb').val();
+                        var Type = $('#Type').val();
 
-                        var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb };
+                        var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
                         ApproveCargo(data);
                     }
                     return false;

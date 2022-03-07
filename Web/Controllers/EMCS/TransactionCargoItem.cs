@@ -20,29 +20,44 @@ namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
-        public CargoItemModel InitCargoItem(long id)
+        public List<CargoItemModel> InitCargoItem(long id)
         {
-            var detail = new CargoItemModel();
-            var data = Service.EMCS.SvcCargoItem.GetDataById(id);
-            if (data != null)
+            var detail = new List<CargoItemModel>();
+            var dataList = Service.EMCS.SvcCargoItem.GetDataByCargoId(id);
+            if (dataList.Count > 0)
             {
-                detail.Id = data.Id;
-                detail.CargoDescription = data.CargoDescription;
-                detail.ContainerNumber = data.ContainerNumber;
-                detail.ContainerType = data.ContainerType;
-                detail.ContainerSealNumber = data.ContainerSealNumber;
-                detail.IdCargo = data.IdCargo;
-                detail.IdCipl = data.IdCipl;
-                detail.IdCiplItem = data.IdCargo;
-                detail.InBoundDa = data.InboundDa;
-                detail.Length = data.Length;
-                detail.Width = data.Width;
-                detail.Height = data.Height;
-                detail.Net = data.NetWeight;
-                detail.Gross = data.GrossWeight;
-                detail.CaseNumber = data.CaseNumber;
-                detail.ItemName = data.ItemName;
-                detail.Ea = data.EdoNo;
+                foreach (var data in dataList)
+                {
+                    var cargoModel = new CargoItemModel();
+                    cargoModel.Id = data.Id;
+                    cargoModel.CargoDescription = data.CargoDescription;
+                    cargoModel.ContainerNumber = data.ContainerNumber;
+                    cargoModel.ContainerType = data.ContainerType;
+                    cargoModel.ContainerSealNumber = data.ContainerSealNumber;
+                    cargoModel.IdCargo = data.IdCargo;
+                    cargoModel.IdCipl = data.IdCipl;
+                    cargoModel.IdCiplItem = data.IdCargo;
+                    cargoModel.InBoundDa = data.InboundDa;
+                    cargoModel.Length = data.Length;
+                    cargoModel.Width = data.Width;
+                    cargoModel.Height = data.Height;
+                    cargoModel.Net = data.NetWeight;
+                    cargoModel.Gross = data.GrossWeight;
+                    cargoModel.CaseNumber = data.CaseNumber;
+                    cargoModel.ItemName = data.ItemName;
+                    cargoModel.Ea = data.EdoNo;
+                    detail.Add(cargoModel);
+
+                    cargoModel.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType").ConvertAll(a =>
+                    {
+                        return new SelectListItem()
+                        {
+                            Text = a.Description,
+                            Value = a.Value.ToString(),
+                            Selected = data.ContainerType != null && a.Description.ToString() == data.ContainerType.ToString() ? true : false
+                        };
+                    });
+                }
             }
             return detail;
         }
@@ -57,48 +72,67 @@ namespace App.Web.Controllers.EMCS
 
         public ActionResult EditCargoItem(long id = 0)
         {
-            ApplicationTitle();
-            ViewBag.crudMode = "U";
-            var detail = InitCargoItem(id);
-            ViewBag.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType");
-            return PartialView("Modal.FormEditCargoItem", detail);
+            try
+            {
+                ApplicationTitle();
+                ViewBag.crudMode = "U";
+                var detail = InitCargoItem(id);
+                ViewBag.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType");
+               
+                var containerTypeList = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType").Select(a => new SelectListItem
+                {
+                    Text = a.Description,
+                    Value = a.Value.ToString(),
+                });
+                return PartialView("Modal.FormEditCargoItem", detail);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost]
-        public JsonResult EditCargoItem(CargoItemModel form)
+        public JsonResult EditCargoItem(List<CargoItemModel> form)
         {
             try
             {
-                var obj = Service.EMCS.SvcCargoItem.GetDataById(form.Id);
-                var dataUpdate = new CargoItem();
-                dataUpdate.Id = form.Id;
-                dataUpdate.IdCargo = form.IdCargo;
-                dataUpdate.ContainerNumber = form.ContainerNumber;
-                dataUpdate.ContainerType = form.ContainerType;
-                dataUpdate.ContainerSealNumber = form.ContainerSealNumber;
-                dataUpdate.Length = form.Length;
-                dataUpdate.Width = form.Width;
-                dataUpdate.Height = form.Height;
-                dataUpdate.Gross = form.Gross;
-                dataUpdate.Net = form.Net;
-
-                var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
-                if (hasChange)
+                var updateModel = new List<SpCargoItemDetail>();
+                foreach (var item in form)
                 {
-                    #region cek apakah perubahan untuk item yg sama sudah dilakukan
-                    var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
-                    var dml = "I";
-                    if (oldUpdate != null)
+                    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                    var dataUpdate = new CargoItem();
+                    dataUpdate.Id = item.Id;
+                    dataUpdate.IdCargo = item.IdCargo;
+                    dataUpdate.ContainerNumber = item.ContainerNumber;
+                    dataUpdate.ContainerType = item.ContainerType;
+                    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                    dataUpdate.Length = item.Length;
+                    dataUpdate.Width = item.Width;
+                    dataUpdate.Height = item.Height;
+                    dataUpdate.Gross = item.Gross;
+                    dataUpdate.Net = item.Net;
+
+                    var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
+                    if (hasChange)
                     {
-                        dml = "U";
+                        #region cek apakah perubahan untuk item yg sama sudah dilakukan
+                        var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
+                        var dml = "I";
+                        if (oldUpdate != null)
+                        {
+                            dml = "U";
+                        }
+
+                        Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
+                        #endregion
                     }
 
-                    Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
-                    #endregion
+                    Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+                    updateModel.Add(obj);
                 }
 
-                Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
-                return JsonCRUDMessage("U", obj);
+                return JsonCRUDMessage("U", updateModel);
             }
             catch (Exception err)
             {

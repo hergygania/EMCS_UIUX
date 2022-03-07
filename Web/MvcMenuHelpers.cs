@@ -97,6 +97,7 @@ namespace App.Web
                 appUrl = "";
 
             baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+            //baseUrl = string.Format("{0}://{1}:{2}{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, appUrl);
 
             foreach (var menu in Menus)
             {

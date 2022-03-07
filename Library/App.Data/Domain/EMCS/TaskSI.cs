@@ -18,6 +18,7 @@
         public DateTime? UpdateDate { get; set; }
         public string UpdateBy { get; set; }
         public bool IsDelete { get; set; }
+        public string ExportType { get; set; }
 
     }
 }

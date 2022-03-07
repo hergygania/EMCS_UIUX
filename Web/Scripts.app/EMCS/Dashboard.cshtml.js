@@ -447,6 +447,17 @@ function TotalNetWeight(date1, date2 = '') {
 function ExchangeRateToday(date1, date2 = '') {
     $('.span-exchange-rate, .number-exchange-rate').html(null);
     $('#ul-exchange-rate').html(null);
+    if (date1 != "" && date2 != "") {
+        var start = moment(date1);
+        var end = moment(date2);
+        var difference = end.diff(start, 'days');
+        if (difference > 7) {
+            sAlert('Validation Info', 'Please do not select dates with max difference of 7 Days ..!', 'info');
+           
+            return;          
+        }
+    }
+
     $.ajax({
         url: "/emcs/ExchangeRateToday",
         data: {
@@ -455,8 +466,10 @@ function ExchangeRateToday(date1, date2 = '') {
             searchCode: $('#Area').val()
         },
         //async: false,
-        success: function (data) {
-            if (data.length > 0) {
+        success: function (data) {            
+            if (data.length > 0) {       
+               
+
                 $('.number-exchange-rate').append(formatCurrency(data[0].Rate, ".", ",", 2));
                 $('.span-exchange-rate').append('IDR / ' + data[0].Curr);
                 $.each(data, function (index, element) {
@@ -467,6 +480,9 @@ function ExchangeRateToday(date1, date2 = '') {
                         '</li>';
                     $('#ul-exchange-rate').append(html);
                 });
+
+
+                
             }
 
         }

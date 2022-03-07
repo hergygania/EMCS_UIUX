@@ -28,6 +28,7 @@
         public string UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool IsDelete { get; set; }
-}
+        public string Type { get; set; }
+    }
                                                 
 }

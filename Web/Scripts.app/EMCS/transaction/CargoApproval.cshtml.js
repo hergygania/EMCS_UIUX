@@ -360,7 +360,7 @@ function ApproveCargo(obj) {
 $("#btnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
-        text: 'Do you want to continue ?',
+        text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

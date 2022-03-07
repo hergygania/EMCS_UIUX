@@ -2,6 +2,10 @@
 {
     public class SpCargoItemDetail
     {
+        public SpCargoItemDetail()
+        {
+
+        }
         public long Id { get; set; }
         public long IdCipl { get; set; }
         public long IdCargo { get; set; }

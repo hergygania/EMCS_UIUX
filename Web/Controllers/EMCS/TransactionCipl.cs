@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+using App.Web.Helper;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -44,7 +45,8 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CiplEdit(long id)
         {
             var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId))
+            string userRoles = User.Identity.GetUserRoles();
+           if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId) || userRoles.Contains("EMCSImex"))
             {
                 ApplicationTitle();
                 ViewBag.AllowRead = AuthorizeAcces.AllowRead;
@@ -66,6 +68,18 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CiplView(long id)
         {
             ApplicationTitle();
+            string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadedi");
+            ViewBag.QrCodeUrlEDI = strQrCodeUrlEDI;
+            TempData["QrCodeUrlEDI"] = strQrCodeUrlEDI;
+            TempData.Peek("QrCodeUrlEDI");
+            string strQrCodeUrlInvoice = Common.GenerateQrCode(id, "downloadInvoice");
+            ViewBag.QrCodeUrlInvoice = strQrCodeUrlInvoice;
+            TempData["QrCodeUrlInvoice"] = strQrCodeUrlInvoice;
+            TempData.Peek("QrCodeUrlInvoice");
+            string strQrCodeUrlPL = Common.GenerateQrCode(id, "DownloadPl");
+            ViewBag.QrCodeUrlPL = strQrCodeUrlPL;
+            TempData["QrCodeUrlPL"] = strQrCodeUrlPL;
+            TempData.Peek("QrCodeUrlPL");
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
@@ -327,19 +341,21 @@ namespace App.Web.Controllers.EMCS
             var exporttype = Service.EMCS.MasterParameter.GetParamByGroup("ExportType");
             var exportremarks = Service.EMCS.MasterParameter.GetParamByGroup("ExportRemarks");
             var paymentterms = Service.EMCS.MasterParameter.GetSelectList2("PaymentTerms");
+            var uomtypes = Service.EMCS.MasterParameter.GetParamByGroup("UOMType");
             var incoterms = Service.EMCS.MasterIncoterms.GetList(crit);
             var packagingtype = Service.EMCS.MasterParameter.GetSelectList("PackagingType");
 
             var shippingmethod = Service.EMCS.MasterParameter.GetSelectList("ShippingMethod");
             var freightpayment = Service.EMCS.MasterParameter.GetSelectList("FreightPayment");
             var forwader = Service.EMCS.MasterParameter.GetSelectList("Forwader");
+            var type = Service.EMCS.SvcCipl.GetTypeSelectList();
             var country = Service.EMCS.SvcCipl.GetCountryList();
             var branch = Service.EMCS.SvcCipl.GetBranchList();
             var kurs = Service.EMCS.SvcCipl.GetLastestKurs();
             var currency = Service.EMCS.SvcCipl.GetCurrencyCipl();
             var categoryreference = Service.EMCS.SvcCipl.GetCategoryReferencet("CategoryReference");
 
-            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference }, JsonRequestBehavior.AllowGet);
+            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference,type }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPickUpPic(string user, string area)
@@ -554,9 +570,7 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Offset = filter.Offset;
 
             var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
-            var jsonResult = Json(data, JsonRequestBehavior.AllowGet);
-            jsonResult.MaxJsonLength = int.MaxValue;
-            return jsonResult;
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -640,6 +654,11 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCipl.GetConsigneeHistory(term);
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
+        //public JsonResult GetUOMHistory(string term)
+        //{
+        //    var data = Service.EMCS.SvcCipl.GetUOMHistory(term);
+        //    return Json(new { data }, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult CiplApproveReviseDimension(long id)
         {
