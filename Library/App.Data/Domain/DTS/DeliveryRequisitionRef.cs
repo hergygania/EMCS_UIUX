@@ -122,6 +122,8 @@ namespace App.Data.Domain
         public bool? SendEmailToServiceTUBatuLicin { get; set; }
         public bool? SendEmailToServiceTUSangatta { get; set; }
         public bool? SendEmailToServiceTUKendari { get; set; }
+        public bool? SendEmailToServiceTUMeulaboh { get; set; }
+
         public string RequestNotes { get; set; }
         public string SendEmailNotes { get; set; }
         public string ActivityTracking { get; set; }
@@ -236,13 +238,13 @@ namespace App.Data.Domain
                 SendEmailToServiceTUBatuLicin = this.SendEmailToServiceTUBatuLicin,
                 SendEmailToServiceTUSangatta = this.SendEmailToServiceTUSangatta,
                 SendEmailToServiceTUKendari = this.SendEmailToServiceTUKendari,
+                SendEmailToServiceTUMeulaboh = this.SendEmailToServiceTUMeulaboh,
                 IsDemob = this.IsDemob,
                 RequestNotes = this.RequestNotes,
                 SendEmailNotes = this.SendEmailNotes,
                 ActivityTracking = this.ActivityTracking,
                 StatusTracking = this.StatusTracking,
-                ForceComplete = this.ForceComplete
-                
+                ForceComplete = this.ForceComplete                
             };
 
             return obj;

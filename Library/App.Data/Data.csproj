@@ -73,6 +73,8 @@
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstructionView.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisition_Reroute.cs" />
     <Compile Include="Domain\DTS\FreightCost.cs" />
     <Compile Include="Domain\DTS\InboundEviz.cs" />
     <Compile Include="Domain\DTS\InboundEvizFilter.cs" />
@@ -102,11 +104,15 @@
     
     
     <Compile Include="Domain\POST\BsTablePagingResult.cs" />
+    <Compile Include="Domain\POST\InvoiceHardCopy.cs" />
+    <Compile Include="Domain\POST\InvoiceHardCopyList.cs" />
+    <Compile Include="Domain\POST\KOFAXFailedUpload.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotDbModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotFormModel.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotListView.cs" />
     <Compile Include="Domain\POST\Ebupot\EbupotTableListModel.cs" />
-	<Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\InvoiceList.cs" />
     <Compile Include="Domain\POST\MtMappingUserBranch.cs" />
     <Compile Include="Domain\POST\PaginationParamEbupot.cs" />
     <Compile Include="Domain\POST\TotalSla.cs" />

@@ -28,8 +28,9 @@ namespace App.Data.Domain.POST
         public int? FlowProcessStatusID { get; set; }
         public bool? IsApproveTax { get; set; }
         public string rejectnote { get; set; }
-        //public string FileNameKOFAX { get; set; }
+        public bool? IsSendKOFAX { get; set; }
+        public string FileNameKOFAX { get; set; }
     }
-    
+
 
 }

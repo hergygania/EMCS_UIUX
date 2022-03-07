@@ -23,5 +23,7 @@ namespace App.Data
         public virtual DbSet<TrAttachment> TrAttachment { get; set; }
         public virtual DbSet<MtMappingUserBranch> MtMappingUserBranch { get; set; }
         public virtual DbSet<TrItemPartialQty> TrItemPartialQty { get; set; }
+        public virtual DbSet<KOFAXUploadLog> KOFAXUploadLog { get; set; }
+        public virtual DbSet<InvoiceHardCopy> InvoiceHardCopy { get; set; }
     }
 }

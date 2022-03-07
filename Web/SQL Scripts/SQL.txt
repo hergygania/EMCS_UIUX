@@ -1,0 +1,3047 @@
+﻿-------------------------------------------------------------12-01-2021------------------------------
+
+USE [EMCS]
+GO
+/****** Object:  Table [dbo].[Type]    Script Date: 12-01-2022 17:45:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Type](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](10) NULL,
+ CONSTRAINT [PK_Type] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Type] ON 
+GO
+INSERT [dbo].[Type] ([Id], [Name]) VALUES (1, N'PLB')
+GO
+INSERT [dbo].[Type] ([Id], [Name]) VALUES (2, N'Non PLB')
+GO
+SET IDENTITY_INSERT [dbo].[Type] OFF
+GO
+
+
+ALTER TABLE [dbo].[CiplForwader]
+ADD Type NVARCHAR(10) null
+
+
+
+
+
+
+USE [EMCS]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CiplInsert]    Script Date: 12-01-2022 16:17:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- DROP PROCEDURE [dbo].[SP_CiplInsert]
+ALTER PROCEDURE [dbo].[SP_CiplInsert]
+(
+  @Category NVARCHAR(100),
+  @CategoryItem NVARCHAR(50),
+  @ExportType NVARCHAR(100),
+  @ExportTypeItem NVARCHAR(100),
+  @SoldConsignee NVARCHAR(30),
+  @SoldToName NVARCHAR(200),
+  @SoldToAddress NVARCHAR(MAX),
+  @SoldToCountry NVARCHAR(100),
+  @SoldToTelephone NVARCHAR(100),
+  @SoldToFax NVARCHAR(100),
+  @SoldToPic NVARCHAR(200),
+  @SoldToEmail NVARCHAR(200),
+  @ShipDelivery NVARCHAR(30),
+  @ConsigneeName NVARCHAR(200),
+  @ConsigneeAddress NVARCHAR(MAX),
+  @ConsigneeCountry NVARCHAR(100),
+  @ConsigneeTelephone NVARCHAR(100),
+  @ConsigneeFax NVARCHAR(100),
+  @ConsigneePic NVARCHAR(200),
+  @ConsigneeEmail NVARCHAR(200),
+  @NotifyName NVARCHAR(200),
+  @NotifyAddress NVARCHAR(MAX),
+  @NotifyCountry NVARCHAR(100),
+  @NotifyTelephone NVARCHAR(100),
+  @NotifyFax NVARCHAR(100),
+  @NotifyPic NVARCHAR(200),
+  @NotifyEmail NVARCHAR(200),
+  @ConsigneeSameSoldTo BIGINT,
+  @NotifyPartySameConsignee BIGINT,
+  @Area NVARCHAR(100),
+  @Branch NVARCHAR(100),
+  @Currency NVARCHAR(20),
+  @Rate DECIMAL(18,2),
+  @PaymentTerms NVARCHAR(50),
+  @ShippingMethod NVARCHAR(30),
+  @CountryOfOrigin NVARCHAR(200),
+  @LcNoDate NVARCHAR(200),
+  @IncoTerm NVARCHAR(50),
+  @FreightPayment NVARCHAR(30),
+  @ShippingMarks NVARCHAR(MAX),
+  @Remarks NVARCHAR(200),
+  @SpecialInstruction NVARCHAR(MAX),
+  @CreateBy NVARCHAR(50),
+  @CreateDate datetime,
+  @UpdateBy NVARCHAR(50),
+  @UpdateDate datetime,
+  @Status NVARCHAR(10),
+  @IsDelete BIT,
+  @LoadingPort NVARCHAR(200),
+  @DestinationPort NVARCHAR(200),
+  @PickUpPic NVARCHAR(200),
+  @PickUpArea NVARCHAR(200),
+  @CategoryReference NVARCHAR(50),
+  @ReferenceNo NVARCHAR(50),
+  @Consolidate NVARCHAR(10),
+  @Forwader NVARCHAR(200),
+  @BranchForwarder NVARCHAR(200),
+  @Attention NVARCHAR(200),
+  @Company NVARCHAR(200),
+  @SubconCompany NVARCHAR(200),
+  @Address NVARCHAR(MAX),
+  @AreaForwarder NVARCHAR(100),
+  @City NVARCHAR(100),
+  @PostalCode NVARCHAR(100),
+  @Contact NVARCHAR(200),
+  @FaxNumber NVARCHAR(200),
+  @Forwading NVARCHAR(200),
+  @Email NVARCHAR(200),
+  @Type NVARCHAR(10)
+  --@LASTCIPLID bigint output
+)
+AS
+BEGIN
+  DECLARE @LASTID bigint
+  INSERT INTO [dbo].[Cipl]
+           ([Category]
+           ,[CategoriItem]
+           ,[ExportType]
+           ,[ExportTypeItem]
+		   ,[SoldConsignee]
+           ,[SoldToName]
+           ,[SoldToAddress]
+           ,[SoldToCountry]
+           ,[SoldToTelephone]
+           ,[SoldToFax]
+           ,[SoldToPic]
+           ,[SoldToEmail]
+           ,[ShipDelivery]
+           ,[ConsigneeName]
+           ,[ConsigneeAddress]
+           ,[ConsigneeCountry]
+           ,[ConsigneeTelephone]
+           ,[ConsigneeFax]
+           ,[ConsigneePic]
+           ,[ConsigneeEmail]
+           ,[NotifyName]
+           ,[NotifyAddress]
+           ,[NotifyCountry]
+           ,[NotifyTelephone]
+           ,[NotifyFax]
+           ,[NotifyPic]
+           ,[NotifyEmail]
+           ,[ConsigneeSameSoldTo]
+           ,[NotifyPartySameConsignee]
+       ,[Area]
+       ,[Branch]
+	   ,[Currency]
+	   ,[Rate]
+           ,[PaymentTerms]
+           ,[ShippingMethod]
+           ,[CountryOfOrigin]
+           ,[LcNoDate]
+           ,[IncoTerm]
+           ,[FreightPayment]
+           ,[ShippingMarks]
+           ,[Remarks]
+           ,[SpecialInstruction]
+           ,[CreateBy]
+           ,[CreateDate]
+           ,[UpdateBy]
+           ,[UpdateDate]
+           ,[IsDelete]
+		   ,[LoadingPort]
+		   ,[DestinationPort]
+		   ,[PickUpPic]
+       ,[PickUpArea]
+	   ,[CategoryReference]
+	   ,[ReferenceNo]
+	   ,[Consolidate]
+           )
+     VALUES
+           (@Category
+           ,@CategoryItem
+           ,@ExportType
+           ,@ExportTypeItem
+       ,@SoldConsignee
+           ,@SoldToName
+           ,@SoldToAddress
+           ,@SoldToCountry
+           ,@SoldToTelephone
+           ,@SoldToFax
+           ,@SoldToPic
+           ,@SoldToEmail
+       ,@ShipDelivery
+           ,@ConsigneeName
+           ,@ConsigneeAddress
+           ,@ConsigneeCountry
+           ,@ConsigneeTelephone
+           ,@ConsigneeFax
+           ,@ConsigneePic
+           ,@ConsigneeEmail
+           ,@NotifyName
+           ,@NotifyAddress
+           ,@NotifyCountry
+           ,@NotifyTelephone
+           ,@NotifyFax
+           ,@NotifyPic
+           ,@NotifyEmail
+           ,@ConsigneeSameSoldTo
+           ,@NotifyPartySameConsignee
+       ,@Area
+       ,@Branch
+	   ,@Currency
+	   ,@Rate
+           ,@PaymentTerms
+           ,@ShippingMethod
+           ,@CountryOfOrigin
+           ,@LcNoDate
+           ,@IncoTerm
+           ,@FreightPayment
+           ,@ShippingMarks
+           ,@Remarks
+           ,@SpecialInstruction
+           ,@CreateBy
+           ,@CreateDate
+           ,@UpdateBy
+           ,@UpdateDate
+           ,@IsDelete
+		   ,@LoadingPort
+		   ,@DestinationPort
+		   ,@PickUpPic
+       ,@PickUpArea
+	   ,@CategoryReference
+	   ,@ReferenceNo
+	   ,@Consolidate)
+
+  SET @LASTID = CAST(SCOPE_IDENTITY() as bigint)
+  --SET @LASTCIPLID =@LASTID
+  INSERT INTO [dbo].[CiplForwader]
+           ([IdCipl]
+       ,[Forwader]
+	   ,[Branch]
+	   ,[Attention]
+       ,[Company]
+	   ,[SubconCompany]
+       ,[Address]
+	   ,[Area]
+	   ,[City]
+	   ,[PostalCode]
+       ,[Contact]
+	   ,[FaxNumber]
+	   ,[Forwading]
+       ,[Email]
+           ,[CreateBy]
+           ,[CreateDate]
+           ,[UpdateBy]
+           ,[UpdateDate]
+           ,[IsDelete]
+		   ,[Type]
+           )
+     VALUES
+           (@LASTID
+       ,@Forwader
+	   ,@BranchForwarder
+	   ,@Attention
+       ,@Company
+	   ,@SubconCompany
+       ,@Address
+	   ,@AreaForwarder
+	   ,@City
+	   ,@PostalCode	
+       
+       ,@Contact
+	   ,@FaxNumber
+	   ,@Forwading
+       ,@Email
+           ,@CreateBy
+           ,@CreateDate
+           ,@UpdateBy
+           ,@UpdateDate
+           ,@IsDelete
+		   ,@Type)
+
+
+
+  EXEC dbo.GenerateCiplNumber @LASTID, @CreateBy;
+
+  DECLARE @CIPLNO nvarchar(20), @GETCATEGORY nvarchar(2)
+  
+  SELECT @GETCATEGORY = 
+    CASE
+      WHEN C.Category = 'CATERPILLAR NEW EQUIPMENT' THEN 'PP'
+      WHEN C.Category = 'CATERPILLAR SPAREPARTS' THEN 'SP'
+      WHEN C.Category = 'CATERPILLAR USED EQUIPMENT' THEN 'UE'
+	  WHEN C.Category = 'MISCELLANEOUS' THEN 'MC'
+    ELSE Null
+    END 
+    FROM Cipl C WHERE C.id = @LASTID
+    
+  EXEC dbo.sp_insert_request_data @LASTID, 'CIPL', @GETCATEGORY, @Status, 'CREATE';
+
+END
+
+
+
+
+USE [EMCS]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_CiplUpdate]    Script Date: 12-01-2022 16:13:03 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[SP_CiplUpdate]
+(
+	@id bigint,
+	@Category NVARCHAR(100),
+	@CategoryItem NVARCHAR(50),
+	@ExportType NVARCHAR(100),
+	@ExportTypeItem NVARCHAR(50),
+	@SoldConsignee NVARCHAR(30),
+	@SoldToName NVARCHAR(200),
+	@SoldToAddress NVARCHAR(MAX),
+	@SoldToCountry NVARCHAR(100),
+	@SoldToTelephone NVARCHAR(100),
+	@SoldToFax NVARCHAR(100),
+	@SoldToPic NVARCHAR(200),
+	@SoldToEmail NVARCHAR(200),
+	@ShipDelivery NVARCHAR(30),
+	@ConsigneeName NVARCHAR(200),
+	@ConsigneeAddress NVARCHAR(MAX),
+	@ConsigneeCountry NVARCHAR(100),
+	@ConsigneeTelephone NVARCHAR(100),
+	@ConsigneeFax NVARCHAR(100),
+	@ConsigneePic NVARCHAR(200),
+	@ConsigneeEmail NVARCHAR(200),
+	@NotifyName NVARCHAR(200),
+	@NotifyAddress NVARCHAR(MAX),
+	@NotifyCountry NVARCHAR(100),
+	@NotifyTelephone NVARCHAR(100),
+	@NotifyFax NVARCHAR(100),
+	@NotifyPic NVARCHAR(200),
+	@NotifyEmail NVARCHAR(200),
+	@ConsigneeSameSoldTo BIGINT,
+	@NotifyPartySameConsignee BIGINT,
+	@Area NVARCHAR(100),
+	@Branch NVARCHAR(100),
+	@Currency NVARCHAR(20),
+	@Rate DECIMAL(18,2),
+	@PaymentTerms NVARCHAR(50),
+	@ShippingMethod NVARCHAR(30),
+	@CountryOfOrigin NVARCHAR(30),
+	@LcNoDate NVARCHAR(30),
+	@IncoTerm NVARCHAR(50),
+	@FreightPayment NVARCHAR(30),
+	@ShippingMarks NVARCHAR(MAX),
+	@Remarks NVARCHAR(200),
+	@SpecialInstruction NVARCHAR(MAX),
+	@CreateBy NVARCHAR(50),
+	@CreateDate datetime,
+	@UpdateBy NVARCHAR(50),
+	@UpdateDate datetime,
+	@Status NVARCHAR(10),
+	@IsDelete BIT,
+	@LoadingPort NVARCHAR(200),
+    @DestinationPort NVARCHAR(200),
+	@PickUpPic NVARCHAR(200),
+	@PickUpArea NVARCHAR(200),
+	@CategoryReference NVARCHAR(50),
+	@ReferenceNo NVARCHAR(50),
+	@Consolidate NVARCHAR(20),
+	@Forwader NVARCHAR(200),
+	@BranchForwarder NVARCHAR(200),
+	@Attention NVARCHAR(200),
+	@Company NVARCHAR(200),
+	@SubconCompany NVARCHAR(200),
+	@Address NVARCHAR(MAX),
+	@AreaForwarder NVARCHAR(100),
+	@City NVARCHAR(100),
+	@PostalCode NVARCHAR(100),
+	@Contact NVARCHAR(200),
+	@FaxNumber NVARCHAR(200),
+	@Forwading NVARCHAR(200),
+	@Email NVARCHAR(200),
+	@Type VARCHAR(10)
+)
+AS
+BEGIN
+	UPDATE dbo.Cipl 
+		SET Category = @Category 
+           ,CategoriItem = @CategoryItem
+           ,ExportType = @ExportType
+           ,ExportTypeItem = @ExportTypeItem
+		   ,SoldConsignee = @SoldConsignee
+           ,SoldToName = @SoldToName
+           ,SoldToAddress = @SoldToAddress
+           ,SoldToCountry = @SoldToCountry
+           ,SoldToTelephone = @SoldToTelephone
+           ,SoldToFax = @SoldToFax
+           ,SoldToPic = @SoldToPic
+           ,SoldToEmail = @SoldToEmail
+		   ,ShipDelivery = @ShipDelivery
+           ,ConsigneeName = @ConsigneeName
+           ,ConsigneeAddress = @ConsigneeAddress
+           ,ConsigneeCountry = @ConsigneeCountry
+           ,ConsigneeTelephone = @ConsigneeTelephone
+           ,ConsigneeFax = @ConsigneeFax
+           ,ConsigneePic = @ConsigneePic
+           ,ConsigneeEmail = @ConsigneeEmail
+           ,NotifyName = @NotifyName
+           ,NotifyAddress = @NotifyAddress
+           ,NotifyCountry = @NotifyCountry
+           ,NotifyTelephone = @NotifyTelephone
+           ,NotifyFax = @NotifyFax
+           ,NotifyPic = @NotifyPic
+           ,NotifyEmail = @NotifyEmail
+           ,ConsigneeSameSoldTo = @ConsigneeSameSoldTo
+           ,NotifyPartySameConsignee = @NotifyPartySameConsignee
+		   ,Area = @Area
+		   ,Branch = @Branch
+		   ,Currency = @Currency
+           ,PaymentTerms = @PaymentTerms
+           ,ShippingMethod = @ShippingMethod
+           ,CountryOfOrigin = @CountryOfOrigin
+           ,LcNoDate = @LcNoDate
+           ,IncoTerm = @IncoTerm
+           ,FreightPayment = @FreightPayment
+           ,ShippingMarks = @ShippingMarks
+           ,Remarks = @Remarks
+           ,SpecialInstruction = @SpecialInstruction
+           ,UpdateBy = @UpdateBy
+           ,UpdateDate = @UpdateDate
+           ,IsDelete = @IsDelete
+		   ,LoadingPort = @LoadingPort
+		   ,DestinationPort = @DestinationPort
+		   ,PickUpPic = @PickUpPic
+		   ,PickUpArea = @PickUpArea
+		   ,CategoryReference = @CategoryReference
+		   ,ReferenceNo = @ReferenceNo
+		   ,Consolidate = @Consolidate
+	WHERE id = @id;
+
+	UPDATE dbo.CiplForwader
+	SET Forwader = @Forwader
+		,Branch = @BranchForwarder
+		,Attention = @Attention
+		,Company = @Company
+		,SubconCompany = @SubconCompany
+		,Address = @Address
+		,Area = @AreaForwarder
+		,City = @City
+		,PostalCode = @PostalCode
+		,Contact = @Contact
+		,FaxNumber = @FaxNumber
+		,Forwading = @Forwading
+		,Email = @Email
+		,UpdateBy = @UpdateBy
+		,UpdateDate = @UpdateDate
+        ,IsDelete = @IsDelete
+		,[Type]=@Type
+	WHERE IdCipl = @id;
+
+	DECLARE @GETCATEGORY nvarchar(2)
+	
+	SELECT @GETCATEGORY = 
+		CASE
+			WHEN C.Category = 'CATERPILLAR NEW EQUIPMENT' THEN 'PP'
+			WHEN C.Category = 'CATERPILLAR SPAREPARTS' THEN 'SP'
+			WHEN C.Category = 'CATERPILLAR USED EQUIPMENT' THEN 'UE'
+			WHEN C.Category = 'MISCELLANEOUS' THEN 'MC'
+		ELSE Null
+		END 
+		FROM Cipl C WHERE C.id = @id
+	EXEC [dbo].[sp_update_request_cipl] @id, @UpdateBy, @Status, ''
+
+END
+
+-------------------------------------------------------------------------------------------------------
+
+
+----------------------------11-01--2021 ------------------------------------------------------------------
+ALTER TABLE [dbo].[ShippingInstruction]
+ADD ExportType NVARCHAR(10) 
+
+
+ALTER PROCEDURE [dbo].[SP_SIInsert]
+(
+	@ID BIGINT,
+	@IdCL BIGINT,
+	@Description NVARCHAR(MAX),
+	@SpecialInstruction NVARCHAR(MAX),
+	@DocumentRequired NVARCHAR(MAX),
+	@PicBlAwb NVARCHAR(10),
+	@CreateBy NVARCHAR(50),
+	@CreateDate datetime,
+	@UpdateBy NVARCHAR(50),
+	@UpdateDate datetime,
+	@IsDelete BIT,
+	@ExportType NVARCHAR(10)
+)
+AS
+BEGIN
+	DECLARE @LASTID bigint
+	INSERT INTO [dbo].[ShippingInstruction]
+           ([Description]
+		   ,[IdCL]
+           ,[SpecialInstruction]
+		   ,[PicBlAwb]
+		   ,[CreateBy]
+           ,[CreateDate]
+           ,[UpdateBy]
+           ,[UpdateDate]
+           ,[IsDelete]
+		   ,[ExportType]
+           )
+     VALUES
+           (@Description
+		   ,@IdCL
+           ,@SpecialInstruction
+		   ,@PicBlAwb
+           ,@CreateBy
+           ,@CreateDate
+           ,@UpdateBy
+           ,@UpdateDate
+           ,@IsDelete
+		   ,@ExportType)
+
+	SELECT @LASTID = CAST(SCOPE_IDENTITY() as bigint)
+	EXEC dbo.GenerateShippingInstructionNumber @LASTID, @CreateBy;
+
+	DECLARE @CIPLNO nvarchar(20)
+	SELECT C.id as ID, C.SlNo as [NO], C.CreateDate as CREATEDATE FROM ShippingInstruction C WHERE C.id = @LASTID
+	
+	--EXEC [sp_update_request_cl] @ID, @CreateBy, 'SUBMIT', ''
+	
+	
+
+END
+
+ALTER PROCEDURE [dbo].[sp_update_request_cl] -- exec sp_update_request_cl 1, 'CKB1', 'Submit', 'Testing Notes'
+(
+	@IdCl bigint,
+	@Username nvarchar(100),
+	@NewStatus nvarchar(100),
+	@Notes nvarchar(100) = ''	
+)
+AS
+BEGIN
+	DECLARE @NewStepId bigint;
+	DECLARE @IdFlow bigint;
+	DECLARE @FlowName nvarchar(100);
+	DECLARE @NextStepName nvarchar(100);
+	DECLARE @Now datetime;
+	DECLARE @GroupId nvarchar(100);
+	DECLARE @UserType nvarchar(100);
+	DECLARE @NextStepIdSystem bigint;
+
+	DECLARE @CurrentStepId bigint;
+	DECLARE @CurrentStatus nvarchar(100);
+		
+	SET @Now = GETDATE();
+	select @UserType = [Group] From dbo.fn_get_employee_internal_ckb() WHERE AD_User = @Username
+
+	IF @UserType <> 'internal' AND @UserType = 'CKB'
+	BEGIN
+		SET @GroupId = 'CKB';
+	END
+	ELSE 
+	BEGIN
+		SELECT @GroupId = hce.Organization_Name 
+		FROM employee hce 
+		WHERE hce.AD_User = @Username;
+	END
+
+	--select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list(@Username, @GroupId) t0 where t0.IdCl = @IdCl;
+	--select * from dbo.fn_get_cl_request_list_all() where IdCl = 3;
+
+	Select @CurrentStepId = IdStep, @CurrentStatus = [Status] From [dbo].[RequestCl] WHERE IdCl = @IdCl
+
+	IF @CurrentStepId = 30069
+		BEGIN
+			IF @NewStatus = 'Approve'
+			BEGIN
+				SET @NewStepId = 30070
+				SET @NextStepName = 'Waiting NPE Document'
+				SET @FlowName = 'CL'
+			END
+			ELSE IF @NewStatus = 'Revise'
+			BEGIN
+				SET @NewStepId = 30070
+				SET @NextStepName = 'Need revision review by imex'
+				SET @FlowName = 'CL'
+				SET @NewStatus = 'Revise'
+			END		
+			ELSE IF @NewStatus = 'Reject'
+			BEGIN
+				SET @NewStepId = 30070
+				SET @NextStepName = 'Reject by imex'
+				SET @FlowName = 'CL'
+				SET @NewStatus = 'Reject'
+			END		
+
+			UPDATE [dbo].[RequestCl]
+			SET [IdStep] = @NewStepId
+				,[Status] = @NewStatus
+				--,[Pic] = @Username
+				,[UpdateBy] = @Username
+				,[UpdateDate] = GETDATE()
+			WHERE IdCl = @IdCl
+		END
+	ELSE IF @CurrentStepId = 30071
+		BEGIN
+			IF @NewStatus = 'Approve'
+			BEGIN
+				SET @NewStepId = 10020
+				SET @NextStepName = 'Waiting for BL or AWB'
+				SET @FlowName = 'CL'
+			END
+			ELSE IF @NewStatus = 'Revise'
+			BEGIN
+				SET @NewStepId = 30072
+				SET @NextStepName = 'Need revision review by imex'
+				SET @FlowName = 'CL'
+				SET @NewStatus = 'Revise'
+			END
+			ELSE IF @NewStatus = 'Reject'
+			BEGIN
+				SET @NewStepId = 30072
+				SET @NextStepName = 'Need revision review by imex'
+				SET @FlowName = 'CL'
+				SET @NewStatus = 'Reject'
+			END
+
+			UPDATE [dbo].[RequestCl]
+			SET [IdStep] = @NewStepId
+				,[Status] = @NewStatus
+				--,[Pic] = @Username
+				,[UpdateBy] = @Username
+				,[UpdateDate] = GETDATE()
+			WHERE IdCl = @IdCl
+		END
+	ELSE
+		BEGIN
+				select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
+				--PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
+				--		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
+				--		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
+				--		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
+						IF @CurrentStepId = 12 
+						BEGIN
+						IF @NewStepId = 10017 AND @NewStatus = 'Submit'
+						BEGIN
+						declare @exportType nvarchar(10)=''
+						SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
+						IF (@exportType ='PJT')
+						BEGIN
+						SET @NewStepId =10020
+						SET @NextStepName = 'Waiting for BL or AWB'
+						SET @FlowName = 'CL'
+						SET @NewStatus = 'Approve'
+						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+						END
+						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+						END 
+						END 
+				UPDATE [dbo].[RequestCl]
+				  SET [IdStep] = @NewStepId
+					 ,[Status] = @NewStatus
+					 ,[Pic] = @Username
+					 ,[UpdateBy] = @Username
+					 ,[UpdateDate] = GETDATE()
+				WHERE IdCl = @IdCl
+		END
+	
+	-- Hasni Procedure Cancel PEB
+	IF  @NewStatus = 'Request Cancel'
+	BEGIN
+		SET @NewStepId = 30041
+
+		UPDATE [dbo].[RequestCl]
+		SET [IdStep] = @NewStepId
+	     ,[Status] = @NewStatus
+	     ,[Pic] = @Username
+		 ,[UpdateBy] = @Username
+		 ,[UpdateDate] = GETDATE()
+	WHERE IdCl = @IdCl
+	END
+
+	IF  @NewStatus = 'Draft NPE'
+	BEGIN
+		SET @NewStepId = 30069
+		SET @NewStatus = 'Submit'
+		SET @NextStepName = 'Waiting approve draft NPE'
+		SET @FlowName = 'CL'
+
+		UPDATE [dbo].[RequestCl]
+		SET [IdStep] = @NewStepId
+	     ,[Status] = @NewStatus
+	     ,[Pic] = @Username
+		 ,[UpdateBy] = @Username
+		 ,[UpdateDate] = GETDATE()
+		WHERE IdCl = @IdCl
+	END
+
+	IF  @NewStatus = 'Create NPE'
+	BEGIN
+		SET @NewStepId = 30071
+		SET @NewStatus = 'Submit'
+		SET @NextStepName = 'Waiting approval NPE'
+		SET @FlowName = 'CL'
+
+		UPDATE [dbo].[RequestCl]
+		SET [IdStep] = @NewStepId
+	     ,[Status] = @NewStatus
+	     ,[Pic] = @Username
+		 ,[UpdateBy] = @Username
+		 ,[UpdateDate] = GETDATE()
+		WHERE IdCl = @IdCl
+	END
+
+	IF @NewStepId = 30042 AND @NewStatus = 'Approve'
+	BEGIN
+		UPDATE dbo.NpePeb SET IsDelete = 1 WHERE IdCl = @IdCl;
+	END 
+
+	--======================================================
+	--- Kondisi jika cl akan melanjutkan proses ke system
+	--======================================================
+	IF @NewStepId = 11 AND @NewStatus = 'Submit'
+	BEGIN
+		select @NextStepIdSystem = x.IdNextStep from dbo.fn_get_cl_request_list_all() x where x.IdCl = @IdCl;
+
+		UPDATE [dbo].[RequestCl]
+		SET [IdStep] = @NextStepIdSystem
+	     ,[Status] = @NewStatus
+	     ,[Pic] = @Username
+		 ,[UpdateBy] = @Username
+		 ,[UpdateDate] = GETDATE()
+		WHERE IdCl = @IdCl
+
+		exec sp_set_ss_number @IdCl = @IdCl
+		exec sp_update_cipl_to_revise @IdCl
+	END
+
+	IF @NewStepId = 20033 AND @NewStatus = 'Approve'
+	BEGIN
+		select @NextStepIdSystem = x.IdNextStep from dbo.fn_get_cl_request_list_all() x where x.IdCl = @IdCl;
+
+		UPDATE [dbo].[RequestCl]
+		SET [IdStep] = @NewStepId
+	     ,[Status] = @NewStatus
+	     ,[Pic] = @Username
+		 ,[UpdateBy] = @Username
+		 ,[UpdateDate] = GETDATE()
+		WHERE IdCl = @IdCl
+
+		exec sp_update_cipl_to_revise @IdCl
+	END
+	--======================================================
+
+	exec [dbo].[sp_insert_cl_history]@id=@IdCl, @Flow=@FlowName, @Step=@NextStepName, @Status=@NewStatus, @Notes=@Notes, @CreateBy=@Username, @CreateDate=@Now;
+
+	--IF((select Status from RequestCl where IdCl = @IdCl) <> 'DRAFT')
+	--BEGIN
+	--	--EXEC [sp_send_email_notification] @IdCl, 'Cargo'
+	--	EXEC [sp_proccess_email] @IdCl, 'CL'
+	--END
+END
+
+------------------------------------------------------------------------------End------------------------------------------------------
+
+------------------------------------------------------------ Changes By Mkindo ------------------------------------------------------
+
+CREATE PROCEDURE [dbo].[sp_get_cargo_item_data_by_cargoId]   
+(    
+ @Id nvarchar(100) = ''    
+)    
+AS    
+BEGIN    
+ SET NOCOUNT ON;    
+ DECLARE @sql nvarchar(max);      
+    
+ SET @sql = 'SELECT ';    
+ BEGIN    
+  SET @sql += 'DISTINCT t0.Id ID        
+     ,t1.Id IdCargoItem    
+     ,t2.Id IdCargo    
+     ,t0.IdCipl          
+     ,t0.IdCiplItem               
+     ,t3.CiplNo                     
+     ,t2.Incoterms IncoTerm                     
+     ,t2.Incoterms IncoTermNumber                     
+     ,t1.CaseNumber                     
+     ,t3.EdoNo                     
+     ,t4.DaNo InboundDa                     
+     ,ISNULL(t0.NewLength, t0.Length) Length                    
+     ,ISNULL(t0.NewWidth,t0.Width) Width                     
+     ,ISNULL(t0.NewHeight,t0.Height) Height                    
+     ,ISNULL(t0.NewNet,t0.Net) NetWeight                     
+     ,t1.Sn            
+     ,t1.PartNumber            
+     ,t1.Ccr            
+     ,t1.Quantity            
+     ,t1.Name ItemName            
+     ,t1.JCode            
+     ,t1.ReferenceNo                  
+     ,ISNULL(t0.NewGross,t0.Gross) GrossWeight                     
+     ,CAST(1 as bit) state            
+     ,t2.Category CargoDescription            
+     ,t0.ContainerNumber    
+     ,t5.Description ContainerType    
+     ,t0.ContainerSealNumber'    
+  END    
+   SET @sql +='    
+     FROM dbo.CargoItem t0    
+     JOIN dbo.CiplItem t1 on t1.Id = t0.IdCiplItem    
+     JOIN dbo.Cargo t2 on t2.Id = t0.IdCargo    
+     JOIN dbo.Cipl t3 on t3.id = t1.IdCipl    
+     LEFT JOIN dbo.GoodsReceiveItem t4 on t4.DoNo = t3.EdoNo    
+     LEFT JOIN dbo.MasterParameter t5 on t5.Value = t0.ContainerType AND t5.[Group] = ''ContainerType''    
+     WHERE 1=1 AND t0.IdCargo='+@Id+' ';    
+ print @sql;    
+ EXECUTE(@sql);    
+END    
+
+
+GO
+
+
+
+/* INSERT QUERY NO: 1 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '%', 'Percentage', 0, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 2 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '%O', 'Per mille', 1, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 3 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ONE', 'One', 2, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 4 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'D', 'Days', 3, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 5 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '22S', 'Square millimeter/second', 4, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 6 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CMS', 'Centimeter/second', 5, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 7 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '000', 'Meter/Minute', 6, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 8 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µL', 'Microliter', 7, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 9 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µF', 'Microfarad', 8, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 10 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'IB', 'Pikofarad', 9, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 11 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'A', 'Ampere', 10, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 12 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GOH', 'Gigaohm', 11, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 13 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GM3', 'Gram/Cubic meter', 12, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 14 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ACR', 'Acre', 13, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 15 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'AH', 'Ampere Hour', 14, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 16 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'AM', 'Ampoule', 15, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 17 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KD3', 'Kilogram/cubic decimeter', 16, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 18 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'QML', 'Kilomol', 17, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 19 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NI', 'Kilonewton', 18, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 20 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MN', 'Meganewton', 19, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 21 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGO', 'Megohm', 20, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 22 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MHV', 'Megavolt', 21, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 23 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µA', 'Microampere', 22, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 24 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BAG', 'Bag', 23, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 25 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BAR', 'bar', 24, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 26 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BF', 'Board Foot', 25, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 27 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BT', 'Bottle', 26, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 28 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BOX', 'Box', 27, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 29 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BQK', 'Becquerel/kilogram', 28, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 30 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'BU', 'Bunch', 29, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 31 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'RF', 'Millifarad', 30, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 32 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M/M', 'Mol per cubic meter', 31, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 33 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M/L', 'Mol per liter', 32, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 34 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NA', 'Nanoampere', 33, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 35 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'C3S', 'Cubic centimeter/second', 34, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 36 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'R-U', 'Nanofarad', 35, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 37 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NMM', 'Newton/Square millimeter', 36, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 38 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CCM', 'Cubic centimeter', 37, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 39 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CD', 'Candela', 38, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 40 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CD3', 'Cubic decimeter', 39, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 41 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CFM', 'cubic feet / minute', 40, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 42 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CM', 'Centimeter', 41, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 43 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CM2', 'Square centimeter', 42, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 44 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CMH', 'Centimeter/hour', 43, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 45 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CV', 'Case', 44, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 46 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CL', 'Centiliter', 45, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 47 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CUP', 'cup', 46, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 48 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'S/M', 'Siemens per meter', 47, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 49 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TOM', 'Ton/Cubic meter', 48, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 50 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'VAM', 'Voltampere', 49, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 51 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DAM', 'Dekameter', 50, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 52 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DB', 'decibel', 51, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 53 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DEG', 'Degree', 52, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 54 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DM', 'Decimeter', 53, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 55 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DR', 'Drum', 54, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 56 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DZ', 'Dozen', 55, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 57 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'EA', 'each', 56, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 58 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'EU', 'Enzyme Units', 57, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 59 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'EML', 'Enzyme Units / Milliliter', 58, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 60 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'F', 'Farad', 59, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 61 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '°F', 'Fahrenheit', 60, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 62 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'FT', 'Foot', 61, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 63 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'FT2', 'Square foot', 62, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 64 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'FT3', 'Cubic foot', 63, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 65 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'G', 'Gram', 64, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 66 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'G/L', 'gram act.ingrd / liter', 65, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 67 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GAU', 'Gram Gold', 66, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 68 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GB', 'Container', 67, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 69 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '°C', 'Degrees Celsius', 68, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 70 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GHG', 'Gram/hectogram', 69, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 71 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GJ', 'Gigajoule', 70, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 72 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GKG', 'Gram/kilogram', 71, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 73 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GLI', 'Gram/liter', 72, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 74 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GAL', 'US gallon', 73, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 75 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GPM', 'Gallons per mile (US)', 74, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 76 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GM', 'Gram/Mol', 75, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 77 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GM2', 'Gram/square meter', 76, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 78 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GPH', 'Gallons per hour (US)', 77, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 79 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µGQ', 'Microgram/cubic meter', 78, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 80 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GRO', 'Gross', 79, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 81 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'GAI', 'Gram act. ingrd.', 80, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 82 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'H', 'Hour', 81, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 83 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'HA', 'Hectare', 82, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 84 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'HL', 'Hectoliter', 83, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 85 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'HPA', 'Hectopascal', 84, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 86 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'HZ', 'Hertz (1/second)', 85, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 87 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '""""', 'Inch', 86, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 88 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '"""2"', 'Square inch', 87, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 89 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '"""3"', 'Cubic inch', 88, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 90 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'J', 'Joule', 89, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 91 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'YR', 'Years', 90, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 92 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'JKG', 'Joule/Kilogram', 91, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 93 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'JKK', 'Spec. Heat Capacity', 92, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 94 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'JMO', 'Joule/Mol', 93, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 95 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'K', 'Kelvin', 94, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 96 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KA', 'Kiloampere', 95, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 97 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CAN', 'Canister', 96, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 98 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CAR', 'Carton', 97, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 99 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KBK', 'Kilobecquerel/kilogram', 98, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 100 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KFS', 'kilogramforce/squarecentimeter', 99, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 101 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KG', 'Kilogram', 100, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 102 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KGF', 'Kilogram/Square meter', 101, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 103 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KGK', 'Kilogram/Kilogram', 102, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 104 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KGM', 'Kilogram/Mol', 103, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 105 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KGS', 'Kilogram/second', 104, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 106 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KGV', 'Kilogram/cubic meter', 105, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 107 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KAI', 'Kilogram act. ingrd.', 106, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 108 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KHZ', 'Kilohertz', 107, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 109 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'CRT', 'Crate', 108, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 110 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KIT', 'KIT', 109, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 111 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KJ', 'Kilojoule', 110, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 112 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KJK', 'Kilojoule/kilogram', 111, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 113 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KJM', 'Kilojoule/Mol', 112, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 114 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KL', 'Kiloliter', 113, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 115 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KM', 'Kilometer', 114, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 116 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KM2', 'Square kilometer', 115, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 117 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KMH', 'Kilometer/hour', 116, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 118 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KMK', 'Cubic meter/Cubic meter', 117, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 119 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KML', 'Kilometers per liter', 118, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 120 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KMN', 'Kelvin/Minute', 119, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 121 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KMS', 'Kelvin/Second', 120, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 122 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KOH', 'Kiloohm', 121, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 123 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KPA', 'Kilopascal', 122, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 124 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KT', 'Kilotonne', 123, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 125 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KV', 'Kilovolt', 124, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 126 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KVA', 'Kilovoltampere', 125, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 127 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KW', 'Kilowatt', 126, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 128 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KWH', 'Kilowatt hours', 127, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 129 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'KIK', 'kg act.ingrd. / kg', 128, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 130 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'L', 'Liter', 129, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 131 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LMI', 'Liter/Minute', 130, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 132 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LB', 'US pound', 131, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 133 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'AU', 'Activity unit', 132, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 134 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LHK', 'Liter per 100 km', 133, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 135 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LK', 'Link', 134, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 136 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LMS', 'Liter/Molsecond', 135, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 137 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LPH', 'Liter per hour', 136, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 138 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'LT', 'Lot', 137, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 139 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M', 'Meter', 138, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 140 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M%', 'Percent mass', 139, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 141 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M%O', 'Permille mass', 140, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 142 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M/S', 'Meter/second', 141, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 143 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M2', 'Square meter', 142, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 144 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M-2', '1 / square meter', 143, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 145 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M2S', 'Square meter/second', 144, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 146 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M3', 'Cubic meter', 145, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 147 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M3D', 'Cubic meter/day', 146, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 148 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M3S', 'Cubic meter/second', 147, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 149 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MA', 'Milliampere', 148, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 150 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MAH', 'Milimeter Ampere Hour', 149, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 151 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MBA', 'Millibar', 150, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 152 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MBZ', 'Meterbar/second', 151, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 153 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MEJ', 'Megajoule', 152, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 154 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MG', 'Milligram', 153, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 155 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGE', 'Milligram/Square centimeter', 154, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 156 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGG', 'Milligram/gram', 155, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 157 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGK', 'Milligram/kilogram', 156, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 158 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGL', 'Milligram/liter', 157, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 159 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGQ', 'Milligram/cubic meter', 158, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 160 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MGW', 'Megawatt', 159, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 161 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MHZ', 'Megahertz', 160, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 162 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MI', 'Mile', 161, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 163 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MI2', 'Square mile', 162, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µM', 'Micrometer', 163, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 165 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MIN', 'Minute', 164, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 166 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MIS', 'Microsecond', 165, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 167 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MIJ', 'Millijoule', 166, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 168 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ML', 'Milliliter', 167, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 169 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MLK', 'Milliliter/cubic meter', 168, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 170 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MLI', 'Milliliter act. ingr.', 169, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 171 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MM', 'Millimeter', 170, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 172 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MM2', 'Square millimeter', 171, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 173 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMA', 'Millimeter/year', 172, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 174 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMG', 'Millimol/gram', 173, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 175 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMH', 'Millimeter/hour', 174, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 176 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMK', 'Millimol/kilogram', 175, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 177 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMO', 'Millimol', 176, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 178 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MM3', 'Cubic millimeter', 177, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 179 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MMS', 'Millimeter/second', 178, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 180 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MNM', 'Millinewton/meter', 179, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 181 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MOK', 'Mol/kilogram', 180, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 182 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MOL', 'Mol', 181, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 183 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MON', 'Months', 182, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 184 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPA', 'Megapascal', 183, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 185 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPB', 'Mass parts per billion', 184, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 186 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPG', 'Miles per gallon (US)', 185, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 187 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPM', 'Mass parts per million', 186, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 188 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPS', 'Millipascal seconds', 187, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 189 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPT', 'Mass parts per trillion', 188, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 190 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPZ', 'Meterpascal/second', 189, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 191 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M3H', 'Cubic meter/Hour', 190, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 192 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MSE', 'Millisecond', 191, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 193 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MS2', 'Meter/second squared', 192, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 194 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MTE', 'Millitesla', 193, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 195 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'M/H', 'Meter/Hour', 194, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 196 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MV', 'Millivolt', 195, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 197 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MVA', 'Megavoltampere', 196, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 198 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MW', 'Milliwatt', 197, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 199 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MWH', 'Megawatt hour', 198, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 200 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'N', 'Newton', 199, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 201 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NAM', 'Nanometer', 200, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 202 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NM', 'Newton/meter', 201, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 203 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NOD', 'Node', 202, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 204 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'NS', 'Nanosecond', 203, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 205 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'OCM', 'Spec. Elec. Resistance', 204, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 206 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'OHM', 'Ohm', 205, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 207 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'OM', 'Spec. Elec. Resistance', 206, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 208 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'OZ', 'Ounce', 207, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 209 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'FOZ', 'Fluid Ounce US', 208, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 210 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'P', 'Points', 209, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 211 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PA', 'Pascal', 210, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 212 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAA', 'Pair', 211, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 213 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAD', 'Pad', 212, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 214 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAG', 'Page', 213, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 215 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAC', 'Pack', 214, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 216 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAL', 'Pallet', 215, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 217 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PAS', 'Pascal second', 216, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 218 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PRC', '[Group] proportion', 217, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 219 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PIL', 'Pail', 218, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 220 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PMI', '1/minute', 219, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 221 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PMR', 'Permeation Rate SI', 220, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 222 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PPB', 'Parts per billion', 221, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 223 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PPM', 'Parts per million', 222, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 224 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PPT', 'Parts per trillion', 223, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 225 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PRM', 'Permeation Rate', 224, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 226 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PRS', 'Number of Persons', 225, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 227 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PS', 'Picosecond', 226, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 228 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PSI', 'Pound Square inch', 227, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 229 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PT', '"Pint', 228, 0, 0,  GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 230 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'QT', '"Quart', 229, 0, 0,  GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 231 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'RHO', 'Gram/cubic centimeter', 230, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 232 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'RLL', 'Roll', 231, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 233 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'RM', 'Ream', 232, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 234 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ROL', 'Role', 233, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 235 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'S', 'Second', 234, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 236 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SA', 'Pack', 235, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 237 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SAC', 'Sack', 236, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 238 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SCH', 'Sachet', 237, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 239 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SET', 'Set', 238, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 240 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SHT', 'Sheets', 239, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 241 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'SPL', 'Spool', 240, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 242 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'PC', 'Piece', 241, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 243 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'HR', 'Hours', 242, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 244 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'T', '"Ton',243, 0,  0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 245 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'DAY', 'Days', 244, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 246 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TC3', '1/cubic centimeter', 245, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 247 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TES', 'Tesla', 246, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 248 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TS', 'Thousands', 247, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 249 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TM3', '1/cubic meter', 248, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 250 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TO', 'Tonne', 249, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 251 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TON', 'US ton', 250, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 252 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', '001', '', 251, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 253 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'TUB', 'Tube', 252, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 254 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'µGL', 'Microgram/liter', 253, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 255 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'UN', 'Unit', 254, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 256 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'USR', 'User', 255, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 257 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'V', 'Volt', 256, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 258 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'V%', 'Percent volume', 257, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 259 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'V%O', 'Permille volume', 258, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 260 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MSC', 'Microsiemens per centimeter', 259, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 261 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'MPL', 'Millimol per liter', 260, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 262 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'VAL', 'Value-only material', 261, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 263 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'VPB', 'Volume parts per billion', 262, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 264 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'VPM', 'Volume parts per million', 263, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 265 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'VPT', 'Volume parts per trillion', 264, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 266 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'W', 'Watt', 265, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 267 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'WK', 'Weeks', 266, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 268 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'WMK', 'Heat Conductivity', 267, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 269 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'WKY', 'Evaporation Rate', 268, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 270 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'YD', 'Yards', 269, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 271 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'YD2', 'Square Yard', 270, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 272 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'YD3', 'Cubic yard', 271, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 273 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ZPU', 'Packing Unit', 272, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 274 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ZUA', 'Unassigned', 273, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 275 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'bbl', 'British Thermal Unit/US Barrel', 274, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 276 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'bft', 'British Thermal Unit/Cubic Ft', 275, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 277 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'bgl', 'British Thermal Unit/US Gallon', 276, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 278 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'btl', 'British Thermal Unit/US Pound', 277, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 279 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'gj3', 'Gigajoule/1000 Cubic Meters', 278, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 280 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'gjm', 'Gigajoule/Cubic Meter', 279, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 281 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'gjt', 'Gigajoule/US Tonne', 280, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 282 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'jm3', 'Joule/Cubic Meter', 281, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 283 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kgb', 'Kilogram/US Barrel', 282, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 284 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kgj', 'Kilogram/Joule', 283, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 285 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kgm', 'Kilogram/Million BTU', 284, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 286 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kgs', 'Kilogram/Standard Cubic Foot', 285, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 287 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kgt', 'Kilogram/US Tonne', 286, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 288 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'kml', 'Kilogram/Kilogram Mole', 287, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 289 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbb', 'US Pound/British Thermal Unit', 288, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 290 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbg', 'US Pound/US Gallon', 289, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 291 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbl', 'US Pound/US Pound Mole', 290, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 292 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbm', 'US Pound/Million BTU', 291, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 293 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbs', 'US Pound/Standard Cubic Foot', 292, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 294 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'lbt', 'US Pound/US Tonne', 293, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 295 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'mbb', 'Million BTU/US Barrel', 294, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 296 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'mbt', 'Million BTU/US Tonne', 295, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 297 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tbl', 'Tonne/US Barrel', 296, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 298 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tbt', 'Tonne/British Thermal Unit', 297, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 299 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tgl', 'US Tonne/US Gallon', 298, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 300 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tjl', 'Tonne/Joule', 299, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 301 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tm3', 'Tonne/1000 Cubic Meters', 300, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 302 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'tt', 'Tonne/Tonne', 301, 0, 0, GETUTCDATE()
+);
+
+/* INSERT QUERY NO: 303 */
+INSERT INTO MasterParameter([Group], Value, [Name], Sort, IsDeleted, CreateBy, CreateDate)
+VALUES
+(
+'UOMType', 'ttj', 'Tonne/Terajoule', 302, 0, 0, GETUTCDATE()
+);
+
+ALTER PROCEDURE [dbo].[SP_CiplItemGetById]   
+(  
+  @id BIGINT  
+)  
+AS  
+BEGIN  
+  SELECT distinct CI.Id  
+    , CI.IdCipl  
+    , CI.IdReference  
+    , (SELECT CASE  
+        WHEN CI.ReferenceNo = '-' THEN CI.CaseNumber   
+        ELSE CI.ReferenceNo  
+        END) AS ReferenceNo  
+    , CI.IdCustomer  
+    , CI.Name  
+    ,(SELECT [Name] FROM MasterParameter WHERE [Group] = 'UOMType' AND [Value]= CI.Uom) AS UnitUom  
+    , CI.PartNumber  
+    , CI.Sn  
+    , CI.JCode  
+    , CI.Ccr  
+    , CI.CaseNumber  
+    , CI.Type  
+    , CI.IdNo  
+    , CI.YearMade  
+    , CI.Quantity  
+    , CI.UnitPrice  
+    , CI.ExtendedValue  
+    , CI.Length  
+    , CI.Width  
+    , CI.Height  
+    , CI.Volume  
+    , CI.GrossWeight  
+    , CI.NetWeight  
+    , CI.Currency  
+ , CI.CoO  
+ , CI.IdParent  
+ , CI.WONumber  
+ , CI.SIBNumber  
+    , CI.CreateBy  
+    , CI.CreateDate  
+    , CI.UpdateBy  
+    , CI.UpdateDate  
+    , CI.IsDelete  
+ , CI.Claim  
+ , CI.ASNNumber  
+  FROM dbo.CiplItem CI  
+  WHERE CI.IdCipl = @id  
+  AND CI.IsDelete = 0  
+  ORDER BY IdReference, Id  
+END  
+  
+  
+  
+------------------------------------------------------------ Changes By Mkindo END ------------------------------------------------------
+
+CREATE PROC SP_ChangeHistory_RFCItem_Insert
+@RFCID INT
+,@FieldName NVARCHAR(200)
+,@BeforeValue NVARCHAR(200)
+,@AfterValue NVARCHAR(200)
+AS
+BEGIN
+DECLARE @ResultID INT
+INSERT INTO RFCItem
+(RFCID,
+AfterValue,
+BeforeValue,
+FieldName)VALUES
+(@RFCID,
+@AfterValue,
+@BeforeValue,
+@FieldName)
+SET @ResultID = SCOPE_IDENTITY()
+SELECT @ResultID
+END
+
+GO
+
+
+CREATE PROC SP_ChangeHistory_RequestForChange_Insert
+ @FormType nvarchar(100)
+,@FormNo INT
+,@Reason NVARCHAR(MAX)
+,@CreateBy NVARCHAR(150)
+AS
+BEGIN
+DECLARE @ResultID INT
+INSERT INTO RequestForChange
+(FormType,
+FormNo,
+Reason,
+CreateBy)VALUES
+(@FormType,
+@FormNo,
+@Reason,
+@CreateBy)
+SET @ResultID = SCOPE_IDENTITY()
+SELECT @ResultID
+END

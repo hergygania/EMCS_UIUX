@@ -26,10 +26,33 @@ function closeLoading() {
     $("#loadingModal").modal("hide");
 }
 
-function DownloadFileUpload(id) {
-    url = "/POST/DownloadFileRequest?id=" + id;
-    window.open(url, '_blank');
+function DownloadGR() {
+ 
+    var param = {
+        "poNo": $("#poNo").val()
+       
+    };
+    $.ajax({
+        cache: false,   
+        url: 'DownloadGRData',
+        method: 'GET',
+        data: param,
+        success: function (res) {
+            setTimeout(function () {
+                closeLoading();
+            }, 3000);
+            url = "/POST/DownloadResultGRData?guid=" + res
+            window.open(url, '_blank');
+        },
+        error: function (err) {
+            setTimeout(function () {
+                closeLoading();
+            }, 3000);
+            swalSuccess(' failed Download!');
+        }
+    })
 }
+
 
 function getColumns(types) {
     var type = $("#poType").val() ?? types;
@@ -329,6 +352,16 @@ var columnsGr = [{
     align: 'left',
     width: '450',
     formatter: dateSAPFormatter
+},
+{
+    title: 'GR Amount',
+    field: 'GRValue',
+    class: 'text-nowrap',
+    halign: 'center',
+    align: 'left',
+    width: '450',
+    formatter: currencyFormatter
+    
 }]
 
 function setMileStone(res) {
@@ -421,6 +454,15 @@ function setMileStone(res) {
             } else {
                 $('#InvoiceDate').text(dataSingle.ProgressInvoice);
             }
+            $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
+            $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
+            $('#BastDate').text(hasBast + " of " + totalBast + " (" + percentBast + "%)");
+
+            if (totalInvoice === null) {
+                $('#InvoiceDate').text("-");
+            } else {
+                $('#InvoiceDate').text(totalInvoice + " INVOICE");
+            }
         } else {
             $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
             $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
@@ -476,9 +518,9 @@ function setMileStone(res) {
             document.getElementById("Circle-bast").className = "btn btn-default btn-circle";
         } else {
             var pointColorBast = (dataSingle.CountItemNotbast == 0) ? "btn-primary" : "btn-warning";
-            if (poTypes === "D") {
-                pointColorBast = dataSingle.ProgressBAST == "100%" ? "btn-primary" : "btn-warning";
-            }
+            //if (poTypes === "D") {
+            //    pointColorBast = "btn-primary";
+            //}
             document.getElementById("Circle-bast").className = "btn " + pointColorBast + " btn-circle";
         }
         if (HasGr == 0) {
@@ -491,9 +533,9 @@ function setMileStone(res) {
             document.getElementById("Circle-invoice").className = "btn btn-default btn-circle";
         } else {
             var pointColorInv = (dataSingle.CountItemNotInvoice == 0) ? "btn-primary" : "btn-warning";
-            if (poTypes === "D") {
-                pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
-            }
+            //if (poTypes === "D") {
+            //    pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
+            //}
             document.getElementById("Circle-invoice").className = "btn " + pointColorInv + " btn-circle";
         }
         if (HasInvoiceFinance == 0) {

@@ -256,28 +256,23 @@ $(function () {
     $('#shipmentoutbound').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/OutboundNonCKB');
     });
-    //$('#createDR').click(function () {       
-    //    window.open(myApp.fullPath + 'DTS/DeliveryRequisitionList?c=1&b=Home', '_blank');
-    //});
+ 
     $('#createDRnew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');
     });
      
     $('#DRApprove').click(function () {
+        var today = ''
+        localStorage.setItem("today", today);
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
     });
-    //$('#createDI').click(function () {
-    //    window.open(myApp.fullPath + 'DTS/Home?c=1&b=Home');
-    //});
+
     $('#createDInew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionList');
     });
     $('#DIApprove').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionListAcc');
     });
-    //$('#DRList').click(function () {
-    //    window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');        
-    //});
 
     $('#imageDR').click(function () {
         $('#DRView').show()

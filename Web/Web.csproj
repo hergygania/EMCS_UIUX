@@ -4873,6 +4873,7 @@
     <Content Include="Images\Evis.png" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\freight.png" />
+    <Content Include="Images\hardcopyinvoice.png" />
     <Content Include="Images\home.png" />
     <Content Include="Images\HomeNew.png" />
     <Content Include="Images\Intransit.png" />
@@ -5162,6 +5163,7 @@
     <Content Include="Scripts.app\POST\DataConfirm.js" />
     <Content Include="Scripts.app\POST\Ebupot.js" />
     <Content Include="Scripts.app\POST\EbupotVendor.js" />
+    <Content Include="Scripts.app\POST\FinanceHome.js" />
     <Content Include="Scripts.app\POST\HoReport.js" />
     <Content Include="Scripts.app\POST\MasterMappingUser.js" />
     <Content Include="Scripts.app\POST\MasterParameter.js" />
@@ -5169,6 +5171,7 @@
     <Content Include="Scripts.app\POST\AdvanceSearch.js" />
     <Content Include="Scripts.app\POST\VendorDetail.js" />
     <Content Include="Scripts.app\POST\Comment.js" />
+    <Content Include="Scripts.app\POST\FinanceHome.js" />
     <Content Include="Scripts.app\POST\VendorQuickSearch.js" />
     <Content Include="Scripts.app\POST\VendorHome.js" />
     <Content Include="Scripts.app\PrimeProduct\ImportPrimeProduct.cshmtl.js" />
@@ -6949,6 +6952,10 @@
     <Content Include="Views\Post\MasterMappingUser.cshtml" />
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
+
+    <Content Include="Views\Post\HomeFinance.cshtml" />
+    <Content Include="Views\Post\NavFinanceSearch.cshtml" />
+    <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

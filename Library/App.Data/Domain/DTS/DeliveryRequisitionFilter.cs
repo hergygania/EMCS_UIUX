@@ -13,6 +13,7 @@ namespace App.Data.Domain.DTS
         public bool requestor { get; set; }
         public string status { get; set; }
         public string today  { get; set; }
+        public string typesearch { get; set; }
         public List<FilterColumn> filterColumns { get; set; }
     }
 }

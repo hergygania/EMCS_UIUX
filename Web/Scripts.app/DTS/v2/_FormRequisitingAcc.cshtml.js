@@ -32,6 +32,8 @@ function setFormSisable(isdisabled, formType) {
             $("#refDINo").parent().removeClass('hidden');
         }
     } 
+    $("#newcustName").show();
+    $("#oldcustNamegroup").hide();
     $('.btn-refNo button').attr("disabled", isdisabled);
     $("#refNo").attr("disabled", isdisabled);
     $("#refDate").attr("disabled", isdisabled);
@@ -53,6 +55,7 @@ function setFormSisable(isdisabled, formType) {
     $("#Province").attr("disabled", isdisabled);
     $("#Origin").attr("disabled", isdisabled);
     $("#RequestNotes").attr("disabled", isdisabled);
+    $("#btnhistory").hide();
     if(formType === 'V')
     {
         $("#ExpectedTimeArrival").attr("disabled", isdisabled);
@@ -115,6 +118,37 @@ function setFormSisable(isdisabled, formType) {
         $form.find("input[name=SendEmailToCkbCakungStandartKit]").attr("disabled", true);
         $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", true);
         $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", true);
+    } else if (referenceEvent.dataRef.header.Status == 'rerouted' && formType == "U") {
+ 
+        $form.find("input[name=SendEmailToCkbSurabaya]").attr("disabled", true);
+        $form.find("input[name=SendEmailToCkbMakassar]").attr("disabled", true);
+        $form.find("input[name=SendEmailToCkbCakungStandartKit]").attr("disabled", true);
+        $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", true);
+        $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", true);
+
+        $form.find("input[name=SendEmailToServiceTUPalembang]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUPekanBaru]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUJambi]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBengkulu]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUTanjungEnim]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUMedan]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUPadang]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBangkaBelitung]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBandarLampung]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBSD]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUSurabaya]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUManado]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUJayapura]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUSorong]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUSamarinda]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBalikpapan]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUMakassar]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUSemarang]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUPontianak]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUBatuLicin]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUSangatta]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUKendari]").attr("disabled", false);
+        $form.find("input[name=SendEmailToServiceTUMeulaboh]").attr("disabled", false);    
     }
 
 
@@ -125,6 +159,50 @@ function showFormRequisition() {
 function invalidRef() {
     $("#refDate").hide();
     $("#refNo").removeProp('readonly', false);
+}
+
+function viewhistoryreroute() {
+    var refNo = $("#refNo").val();
+    var refUrl;   
+    refUrl = myApp.root + 'DTS/GetHistoryReroute?number=' + refNo
+   
+    $.ajax({
+        type: "GET",
+        url: refUrl,
+        beforeSend: function () { },
+        complete: function () { },
+        dataType: "json",
+        success: function (d) {
+            if (d && d.header.RefNo != null && d.header.RefNo != 'null' && d.header.RefNo != '') {
+               
+               
+                $("#OldCustName").val(d.header.CustName || '');
+                $("#OldCustName").attr("disabled", true);        
+                $("#newcustName").hide();
+                $("#oldcustNamegroup").show();
+                $("#CustAddress").val(d.header.CustAddress);
+                $("#PicName").val(d.header.PicName);
+                $("#PicHP").val(d.header.PicHP);
+                $("#Kecamatan").val(d.header.Kecamatan);
+                $("#Kabupaten").val(d.header.Kabupaten);
+                $("#Province").val(d.header.Province);
+                $("#RefNo").val(d.header.RefNo);
+                $("#SoNo").val(d.header.SoNo);
+                $("#SoDate").val(formatDate(d.header.SoDate));
+                $("button[name=ReRoute]").attr("disabled", false);
+                $('.SDOC-container .row .upload').hide();
+                $('.SDOC-container .row.preview').hide();                
+            } else {
+                invalidRef();
+                sAlert('Error', 'REF NO ' + refNo + " Not Found!", "error");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            invalidRef();
+            sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
+           
+        }
+    });
 }
 
 function referenceClick() {
@@ -347,10 +425,9 @@ var referenceEvent = {
                 $form.find("input[name=ModaTransport][value='" + itemInct + "']").prop("checked", true);
             });
         }
-        //$form.find("input[name=SendEmailToCkb]").prop("checked", dataRef.header.SendEmailToCkb == true);
+       
       // CKB
-        $form.find("input[name=SendEmailToCkbSurabaya]").prop("checked", dataRef.header.SendEmailToCkbSurabaya == true);
-        //$form.find("input[name=SendEmailToCkbSurabaya]").attr("disabled", isdisabled);
+        $form.find("input[name=SendEmailToCkbSurabaya]").prop("checked", dataRef.header.SendEmailToCkbSurabaya == true);      
         $form.find("input[name=SendEmailToCkbMakassar]").prop("checked", dataRef.header.SendEmailToCkbMakassar == true);   
         $form.find("input[name=SendEmailToCkbCakungStandartKit]").prop("checked", dataRef.header.SendEmailToCkbCakungStandartKit == true);
         $form.find("input[name=SendEmailToCkbBalikpapan]").prop("checked", dataRef.header.SendEmailToCkbBalikpapan == true);
@@ -385,7 +462,7 @@ var referenceEvent = {
         $form.find("input[name=SendEmailToServiceTUBatuLicin]").prop("checked", dataRef.header.SendEmailToServiceTUBatuLicin == true);
         $form.find("input[name=SendEmailToServiceTUSangatta]").prop("checked", dataRef.header.SendEmailToServiceTUSangatta == true);
         $form.find("input[name=SendEmailToServiceTUKendari]").prop("checked", dataRef.header.SendEmailToServiceTUKendari == true);
-
+        $form.find("input[name=SendEmailToServiceTUMeulaboh]").prop("checked", dataRef.header.SendEmailToServiceTUMeulaboh == true);        
         if (dataRef.header.IsDemob) {
             $form.find("input[name=IsDemob][value=true]").prop('checked', true).attr("disabled", isdisabled);
         } else {
@@ -438,9 +515,14 @@ var referenceEvent = {
         if (formType == 'R') {
             $('.SDOC-container .row .upload').show();
             $('.SDOC-container .row.preview').hide();
-            //showFilePreview(dataRef.header);
-        } else {
-            $('.SDOC-container .row .upload').hide();
+
+      
+        } else if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "STR" && dataRef.header.ReRouted == true){
+            $('.SDOC-container .row .upload').show();
+            $('.SDOC-container .row.preview').show();
+            showFilePreview(dataRef.header);
+        }else {
+            $('.SDOC-container .row .upload').show();
             $('.SDOC-container .row.preview').show();
             showFilePreview(dataRef.header);
         }
@@ -451,25 +533,33 @@ var referenceEvent = {
         $('input[name="SendEmailCheckAll"]').prop("checked", false);
 
         if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "STR" && dataRef.header.ReRouted == true) {
-            $("button[name=ReRoute]").attr("disabled", false);
-            // $("button[name=ReRoute]").html('<i class="fa fa-check-circle"></i> Complete');
+            $("button[name=ReRoute]").attr("disabled", false);          
             $("#CustID").attr("disabled", false);
             $("#CustName").attr("disabled", false);
             $("#CustAddress").attr("disabled", false);
             $("#PicName").attr("disabled", false);
             $("#PicHP").attr("disabled", false);
-            $("button[name=Reject]").hide();
+            $("#ExpectedTimeArrival").attr("disabled", true);
+            $("#ExpectedTimeLoading").attr("disabled", true);
+            $("button[name=Reject]").show();
             $("button[name=Approve]").hide();
             $("button[name=Revise]").hide();
-            //$("#Kecamatan").attr("disabled", false);
-            //$("#Kabupaten").attr("disabled", false);
-            //$("#Province").attr("disabled", false);
+            $form.find("input[name=SupportingOfDelivery]").attr("disabled", false);
+            $("#btnhistory").show();
         }
-     
+        if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "SO" && dataRef.header.ReRouted == true) {
+            
+            $("#ExpectedTimeArrival").attr("disabled", true);
+            $("#ExpectedTimeLoading").attr("disabled", true);
+         
+        }
         if (['submit', 'approve', 'revised'].indexOf(dataRef.header.Status) > -1 && formType == 'U') {
             $form.find("input[name=ModaTransport]").attr("disabled", false);
         }
-
+        if (formType == 'V' && dataRef.header.Status === "rerouted") {
+            $("#btnhistory").show();
+            $("#btnhistory").attr("disabled", false);
+        }
       
         requestingForm.initTableUnit(dataRef.details, formType, isdisabled);
         showFormRequisition();
@@ -479,6 +569,7 @@ function resetForm() {
     $form[0].reset();
     resetReference();
     resetFormRequisition();
+    $("#btnhistory").hide();
     $("[name=refresh]").trigger('click');
 }
 function resetReference() {
@@ -636,8 +727,7 @@ var requestingForm = {
             }
         });
         $("input[type=radio][name='reference']").change(function () {
-            //resetFormRequisition();
-            //console.log($('input[name=formType]').val());
+         
         });
     }
 }

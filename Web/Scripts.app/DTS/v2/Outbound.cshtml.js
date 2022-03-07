@@ -1350,7 +1350,7 @@ $(function () {
 
         enableLink(false);
         $.ajax({
-            url: myApp.fullPath  + "DTS/DownloadOutbound",
+            url: myApp.fullPath + "DTS/DownloadOutbound",
             type: 'GET',
             data: {
                 PrimaryParam: PrimaryParam,
@@ -1367,7 +1367,7 @@ $(function () {
             },
             success: function (guid) {
                 enableLink(true);
-                window.open(myApp.root +'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
+                window.open(myApp.root + 'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
             },
             cache: false
         });
@@ -1408,13 +1408,13 @@ $(function () {
 
     $.ajax({
         type: "POST",
-        url: myApp.fullPath  + 'DTS/GetMasterAction',
+        url: myApp.fullPath + 'DTS/GetMasterAction',
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
                 var items = [];
                 for (var x in result) {
-                    items.push({ id: result[x].Code, text: result[x].Description1});
+                    items.push({ id: result[x].Code, text: result[x].Description1 });
                 }
                 $("#Action").select2({ placeholder: 'Select Activity', data: items });
                 $("#Action").val(null).trigger("change");
@@ -1428,7 +1428,7 @@ $(function () {
 
     $.ajax({
         type: "POST",
-        url: myApp.fullPath  + 'DTS/GetMasterStatus',
+        url: myApp.fullPath + 'DTS/GetMasterStatus',
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
@@ -1546,11 +1546,16 @@ $(function () {
             }
         }
 
+
+
         if ((outboundTracking.selectedRow.Action != 'PODC' && outboundTracking.selectedRow.Action != 'PODB') && outboundTracking.selectedRow.Status == 'BAST') {
-            sAlert('Warning', "BAST status can be selected if the Activity is POD Customer", 'warning');
+            sAlert('Warning', "BAST status can be selected if the Activity is POD", 'warning');
             return;
         }
-       
+        if ((outboundTracking.selectedRow.Action == 'PODC' || outboundTracking.selectedRow.Action == 'PODB') && outboundTracking.selectedRow.Status != 'BAST') {
+            sAlert('Warning', "Activity POD must selected BAST status ", 'warning');
+            return;
+        }
         if (!isAnyUpdate) {
             sAlert('Warning', "no data changed", 'warning');
             return;

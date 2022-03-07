@@ -56,7 +56,9 @@ function ActionFormatter(value, row, index) {
   
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i>&nbsp;</button>');
     if (row.Status === "approve") {
-        htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
+        if (row.DRID > 0) {
+            htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
+        }
     }
     if (row.Status !== "reject" && row.Status !== "revise") {
         htm.push('<button class="approve btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i>&nbsp;</button> ');

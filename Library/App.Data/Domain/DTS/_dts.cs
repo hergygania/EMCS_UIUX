@@ -21,5 +21,6 @@
         public virtual DbSet<FreightCalculator> FreightCalculators { get; set; }
         public virtual DbSet<DeliveryRequisitionStatus> DeliveryRequisitionStatus { get; set; }
         public virtual DbSet<CategoryCode> CategoryCode { get; set; }
+        public virtual DbSet<DeliveryRequisition_Reroute> DeliveryRequisition_Reroute { get; set; }
     }
 }

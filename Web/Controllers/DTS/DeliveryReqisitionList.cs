@@ -21,7 +21,7 @@ namespace App.Web.Controllers.DTS
     {
         private readonly string ServerMapPath = "~/Upload/DTS/deliveryrequisition/";
 
-        // GET: DailyReport
+        
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult DeliveryRequisitionListV1()
         {
@@ -148,6 +148,9 @@ namespace App.Web.Controllers.DTS
                     var formType = formColl.formType;
                     formColl.ExpectedTimeLoading = (formColl.ExpectedTimeLoading == null) ? DateTime.Now : formColl.ExpectedTimeLoading;
                     formColl.ExpectedTimeArrival = (formColl.ExpectedTimeArrival == null) ? DateTime.Now : formColl.ExpectedTimeArrival;
+                    formColl.Province = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Province, "Provinsi");
+                    formColl.Kabupaten = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kabupaten,"Kabupaten");
+                    formColl.Kecamatan = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kecamatan, "Kecamatan");
                     DeliveryRequisition header = new DeliveryRequisition();
                     header = formColl.CastToDR();
                     var ReqNameAccess = Service.Master.UserAcces.GetUserRoles(userId);
@@ -217,20 +220,61 @@ namespace App.Web.Controllers.DTS
         [HttpPost]
         public JsonResult DeliveryRequisitionProccess(string formType, DeliveryRequisition item, List<DeliveryRequisitionUnit> detailUnits)
         {
+            Int64 DRID = item.ID;
             item.ReRouted = false;
             item.RefNo = (item.RefNo ?? "").Trim();
             if (formType == "U")
-            {
-                //var item = formColl;
-                var header = Service.DTS.DeliveryRequisition.GetId(item.ID);
+            {               
+                var header = Service.DTS.DeliveryRequisition.GetId(DRID);
 
-                if (header.Status == "rerouted")
+                DeliveryRequisition_Reroute item_Reroute = new DeliveryRequisition_Reroute();
+
+                if (header.Status == "request rerouted")
                 {
-                    item.Status = "complete";
+                    if (item.RefNoType == "STR" || item.RefNoType == "DI")
+                    {
+                        return JsonMessage("Please Input SO # to Change STR # DR Re-Route", 1, "i");
+                    }                    
+                  
+                    item_Reroute = Service.DTS.DeliveryRequisition_Reroute.RerouteForm(header);
+
+                    item_Reroute.NewCustName = item.CustName;
+                    item_Reroute.NewPicName = item.PicName;
+                    item_Reroute.NewPicHP = item.PicHP;
+                    item_Reroute.NewCustAddress = item.CustAddress;
+                    item_Reroute.NewRefNo = item.RefNo;
+                    item_Reroute.NewRefNoType = item.RefNoType;
+
+                    Service.DTS.DeliveryRequisition_Reroute.crud(item_Reroute);
                 }
+                
 
                 ViewBag.crudMode = formType;
-                var res = Service.DTS.DeliveryRequisition.crud(formType, item, detailUnits);
+                int res = 0 ;
+                if (header.Status == "request rerouted")
+                {
+                    header.CustName = item.CustName;
+                    header.PicName = item.PicName;
+                    header.PicHP = item.PicHP;
+                    header.CustAddress = item.CustAddress;
+                    header.RefNo = item.RefNo;
+                    header.RefNoType = item.RefNoType;
+                    header.Province = item.Province;
+                    header.Kabupaten = item.Kabupaten;
+                    header.Kecamatan = item.Kecamatan;
+                    header.RequestNotes = item.RequestNotes;
+                    header.Status = "rerouted";
+                    res = Service.DTS.DeliveryRequisition.crudreroute(formType, header, detailUnits, item_Reroute);                    
+                }
+                else
+                {
+                    if (header.Status =="draft" || header.Status=="revise")
+                    {
+                        header.Status = item.Status;
+                    }
+                    res = Service.DTS.DeliveryRequisition.crud(formType, header, detailUnits);
+                }
+                 
                 if (res > 0)
                 {                
 
@@ -238,6 +282,8 @@ namespace App.Web.Controllers.DTS
                     {
                         sendingEmailDR(item.Status, item.ID);
                     }
+              
+
                     return JsonCRUDMessage(ViewBag.crudMode);
                 }
                 else
@@ -296,6 +342,31 @@ namespace App.Web.Controllers.DTS
         }
 
         public ActionResult DeliveryRequisitionPageXt()
+        {
+            Func<App.Data.Domain.DTS.DeliveryRequisitionFilter, List<Data.Domain.DeliveryRequisition>> func = delegate (App.Data.Domain.DTS.DeliveryRequisitionFilter filter)
+            {
+                var param = Request["params"];
+                if (!string.IsNullOrEmpty(param))
+                {
+                    JavaScriptSerializer ser = new JavaScriptSerializer();
+                    filter = ser.Deserialize<App.Data.Domain.DTS.DeliveryRequisitionFilter>(param);
+                }
+
+                var list = Service.DTS.DeliveryRequisition.GetListFilter(filter);
+                return list.ToList();
+            };
+
+            var paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
+            return Json(paging, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeliveryRequisitionIncomingPage()
+        {
+            this.PaginatorBoot.Remove("SessionTRN");
+            return DeliveryRequisitionIncomingPageXt();
+        }
+
+        public ActionResult DeliveryRequisitionIncomingPageXt()
         {
             Func<App.Data.Domain.DTS.DeliveryRequisitionFilter, List<Data.Domain.DeliveryRequisition>> func = delegate (App.Data.Domain.DTS.DeliveryRequisitionFilter filter)
             {
@@ -402,15 +473,15 @@ namespace App.Web.Controllers.DTS
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getMasterDistrict(string key)
+        public JsonResult getMasterDistrict(string key,string provinsiId)
         {
-            var item = Service.DTS.MasterDistrict.GetListFilter(key);
+            var item = Service.DTS.MasterDistrict.GetListFilter(key,provinsiId);
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getMasterSubDistrict(string key)
+        public JsonResult getMasterSubDistrict(string key,string districtId)
         {
-            var item = Service.DTS.MasterSubDistrict.GetListFilter(key);
+            var item = Service.DTS.MasterSubDistrict.GetListFilter(key, districtId);
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
@@ -570,26 +641,134 @@ namespace App.Web.Controllers.DTS
             try
             {
                 string response = client.UploadString(emailUrl, json);
-                //Log(response);
+                
             }
             catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
         }
+        public JsonResult GetStatusDR(Int64 Id)
+        {
+
+            var header = Service.DTS.DeliveryRequisition.GetStatusDR(Id);
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();           
+            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
 
         public JsonResult GetDRExist(string refNo)
         {
           
             var header = Service.DTS.DeliveryRequisition.GetDRExistDetail(refNo);
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
-            //if (items != null && items.Count() > 0)
-            //{
-
-            //}
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();     
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
         }
+        public JsonResult GetDRRerouteHistory(string KeyCustom)
+        {
+
+            var header = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(KeyCustom);
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
+            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+        public JsonResult GetDRReferenceRerouteNo(string number,Int64 ID)
+        {
+            var header = new App.Data.Domain.DeliveryRequisitionRef();
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
+            try
+            {
+             
+                    List<Data.Domain.DeliveryRequisitionRef> items = Service.DTS.DeliveryRequisition.GetReferenceReroute(number);
+
+                    var db = new Data.DTSContext();
+                    var refnoSAP = items.First();
+                    var tb = db.DeliveryRequisition;
+                    var HeaderDR = tb.ToList().Where(i => i.ID == ID).FirstOrDefault();
+                
+                    if (HeaderDR !=null)
+                    {
+                        header.ID = HeaderDR.ID;
+                        header.Sales1ID = HeaderDR.Sales1ID;
+                        header.Sales1Name = HeaderDR.Sales1Name;
+                        header.Sales1Hp = HeaderDR.Sales1Hp;
+                        header.ExpectedTimeArrival = HeaderDR.ExpectedTimeArrival;
+                        header.ExpectedTimeLoading = HeaderDR.ExpectedTimeLoading;
+                        header.Status = HeaderDR.Status;
+                        header.Origin = HeaderDR.Origin;
+                        header.RequestNotes = HeaderDR.RequestNotes;
+                        header.SupportingDocument = HeaderDR.SupportingDocument;
+                        header.SupportingDocument1 = HeaderDR.SupportingDocument1;
+                        header.SupportingDocument2 = HeaderDR.SupportingDocument2;
+                        header.SupportingDocument3 = HeaderDR.SupportingDocument3;
+                    }
+
+                    header.RefNo = number;
+                    header.CustID = refnoSAP.CustID;
+                    header.CustName = refnoSAP.CustName;
+                    header.CustAddress = refnoSAP.CustAddress;
+                    header.PicName = refnoSAP.PicName;
+                    header.PicHP = refnoSAP.PicHP;
+               
+                    var Detail = db.DeliveryRequisitionUnit;
+                    var Detailitem = Detail.ToList().Where(i => i.HeaderID == ID).ToList();
+                    foreach (var item in Detailitem)
+                    {
+                        details.Add(new Data.Domain.DeliveryRequisitionUnitRef
+                        {
+                            
+                            RefNo = item.RefNo.ToString(),
+                            RefItemId = item.RefItemId,
+                            Model = item.Model,
+                            SerialNumber = item.SerialNumber,
+                            Batch = item.Batch,
+                            Checked = 1,
+                            Selectable = 0
+
+                        });
+                    }                 
+                
+                var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var result = Json(new { header, details, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+        }
+        public JsonResult GetHistoryReroute(string keyType, string number)
+        {
+            var header = new App.Data.Domain.DeliveryRequisition_Reroute();
+           
+            try
+            {
+              
+                    List<Data.Domain.DeliveryRequisition_Reroute> items = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(number);
+
+                    var db = new Data.DTSContext();
+                    var tb = db.DeliveryRequisition_Reroute;
+                    var Demobilization = tb.ToList().Where(i => i.RefNo == number).FirstOrDefault();
+                  
+                    if (items != null && items.Count() > 0)
+                    {
+                        header = items.First();
+                       
+
+                     
+                    }
+                
+                var result = Json(new { header }, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var result = Json(new { header, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+        }
+
 
         public JsonResult GetDRReferenceNo(string keyType, string number)
         {
@@ -620,8 +799,7 @@ namespace App.Web.Controllers.DTS
                         if (header.RefType == "SO")
                         {
                             header.SoNo = header.RefNo;
-                            header.SoDate = header.RefNoDate;
-                            // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
+                            header.SoDate = header.RefNoDate;                            
                         }
                         else if (header.RefType == "STR")
                         {
@@ -682,8 +860,7 @@ namespace App.Web.Controllers.DTS
                     if (header.RefType == "SO")
                     {
                         header.SoNo = header.RefNo;
-                        header.SoDate = header.RefNoDate;
-                        // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
+                        header.SoDate = header.RefNoDate;                       
                     }
                     else if (header.RefType == "STR")
                     {

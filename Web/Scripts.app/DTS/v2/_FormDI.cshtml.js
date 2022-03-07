@@ -597,7 +597,7 @@ var DIForm = {
                     formatter: function () {
                         if (DIForm.mode === "I" || DIForm.mode === "U") {
                             var htm = [];
-                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-remove"></i></button> ');
+                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-trash"></i></button> ');
                             return htm.join('');
                         }
                         return '';
