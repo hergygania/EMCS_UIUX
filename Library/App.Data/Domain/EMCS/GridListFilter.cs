@@ -18,6 +18,7 @@
         public string Cat { get; set; }
         public bool Total { get; set; }
         public string Ciplno { get; set; }
+        public string FormType { get; set; }
         public long Cargoid { get; set; }
     }
 }

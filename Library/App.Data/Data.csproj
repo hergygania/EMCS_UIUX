@@ -83,6 +83,7 @@
     <Compile Include="Domain\EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Domain\EMCS\SP_getCiplChangeHistory.cs" />
     <Compile Include="Domain\EMCS\SP_getCiplDocument.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

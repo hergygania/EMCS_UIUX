@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using App.Data.Domain.EMCS;
 using System.Dynamic;
 using System.Text.RegularExpressions;
+using App.Data.Domain;
 
 namespace App.Service.EMCS
 {
@@ -536,7 +537,7 @@ namespace App.Service.EMCS
             }
         }
 
-        public static List<MasterCustomers> GetIdCustomer()
+        public static List<Data.Domain.EMCS.MasterCustomers> GetIdCustomer()
         {
             using (var db = new Data.EmcsContext())
             {
@@ -609,8 +610,12 @@ namespace App.Service.EMCS
                 var sql = @"[dbo].[sp_get_reference_item] @Column = '" + column + "', @ColumnValue = '" + columnValue + "', @Category = '" + category + "' ";
                 //var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(SQL + ", @isTotal=0").FirstOrDefault();
                 var data = db.Database.SqlQuery<ReferenceToCiplItem>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit= 50000").ToList();
-
+               if(data.Count > 0)
+                {
+                    data.ToList().ForEach(c => c.PartNumber = c.PartNumber.Replace(@":AA", string.Empty));
+                }
                 dynamic result = new ExpandoObject();
+
                 //result.total = count.total;
                 result.rows = data;
                 return result;
@@ -738,6 +743,43 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+        public static dynamic GetListSpChangeHistory(GridListFilter crit)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                crit.Sort = crit.Sort ?? "CreateDate";
+                db.Database.CommandTimeout = 600;
+                var sql = @"[dbo].[SP_CiplChangeHistoryGetById] @id='" + crit.Term + "', @formtype='" + crit.FormType + "'";
+                var count = db.Database.SqlQuery<CountData>(sql + ", @IsTotal=0").FirstOrDefault();
+                var data = db.Database.SqlQuery<SPGetCiplChangeHistory>(sql + ", @IsTotal=0, @sort='" + crit.Sort + "',  @order='" + crit.Order + "', @offset='" + crit.Offset.ToString() + "', @limit='" + crit.Limit.ToString() + "'").ToList();
+
+                dynamic result = new ExpandoObject();
+                if (count != null) result.total = count.Total;
+                result.rows = data;
+                return result;
+            }
+        }
+
+        public static dynamic GetSpChangeHistoryReason(string idTerm,string formtype)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "Select TOP 1 Reason from RequestForChange WHERE FormNo = '" + idTerm + "' AND FormType = '" + formtype + "'";
+                var data = db.Database.SqlQuery<string>(sql).FirstOrDefault();
+                return data;
+            }
+        }
+
+        public static List<RFCItem> GetRequestForChangeDataList(string idTerm, string formtype)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "SELECT RF.RFCID,RF.TableName,RF.FieldName,RF.BeforeValue,RF.AfterValue FROM RequestForChange R INNER JOIN RFCItem RF ON R.ID = RF.RFCID WHERE R.[Status] = 0 AND R.FormNo = '" + idTerm + "' AND R.FormType = '" + formtype + "'";
+                var data = db.Database.SqlQuery<RFCItem>(sql).ToList();
+                return data;
+            }
+        }
+
 
         public static dynamic GetListSpDocument(GridListFilter crit)
         {
@@ -1139,6 +1181,49 @@ namespace App.Service.EMCS
                 return data.Select(i => new Data.Domain.EMCS.SelectItem2 { Id = i.text, Text = i.text }).ToList();
             }
         }
+
+        public static int InsertRequestChangeHistory(Data.Domain.RequestForChange data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@FormType", data.FormType));
+                parameterList.Add(new SqlParameter("@FormNo", data.FormNo));
+                parameterList.Add(new SqlParameter("@Reason", data.Reason ?? ""));
+                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName ?? ""));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RequestForChange_Insert] @FormType, @FormNo, @Reason, @CreateBy", parameters).First();
+                return obj;
+            }
+        }
+
+        public static bool InsertRFCItem(List<Data.Domain.RFCItem> data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                for (var j = 0; j < data.Count; j++)
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@RFCID", data[j].RFCID));
+                    parameterList.Add(new SqlParameter("@TableName", data[j].TableName?? ""));
+                    parameterList.Add(new SqlParameter("@LableName", data[j].LableName ?? ""));
+                    parameterList.Add(new SqlParameter("@FieldName", data[j].FieldName ?? ""));
+                    parameterList.Add(new SqlParameter("@BeforeValue", data[j].BeforeValue ?? ""));
+                    parameterList.Add(new SqlParameter("@AfterValue", data[j].AfterValue ?? ""));
+
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
+                    var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RFCItem_Insert] @RFCID, @TableName, @LableName, @FieldName , @BeforeValue , @AfterValue", parameters).First();
+                }
+                return true;
+            }
+        }
+
 
     }
 }

@@ -42,7 +42,12 @@
     $("#open-export-today, #open-total-net-weight, #open-exchange-rate, #open-total-value").on("click", function (e) {
         e.stopPropagation();
     });
-
+    $('#date1-exchange-rate').on('change', function () {
+        validateDate($('#date1-exchange-rate').val(), $('#date2-exchange-rate').val());
+    });
+    $('#date2-exchange-rate').on('change', function () {
+        validateDate($('#date1-exchange-rate').val(), $('#date2-exchange-rate').val());
+    });
     var countOutstanding = 1;
     var rowOutstanding = 5;
     Outstanding(countOutstanding, rowOutstanding);
@@ -202,7 +207,32 @@
             blink(element, time); // recurse
         }, time * 10);
     }
+    function validateDate(date1, date2) {
+        var d1 = new Date(date1);
+        var d2 = new Date(date2);
+        var currentDate = new Date();
+        if (d1 > currentDate) {
+            sAlert('Validation Info', 'Please do not select start date greater than current date ..!', 'info');
+            $('#date1-exchange-rate').val("");
+            return;
+        }
+        if (d2 > currentDate) {
+            sAlert('Validation Info', 'Please do not select end date greater than current date ..!', 'info');
+            $('#date2-exchange-rate').val("");
+            return;
+        }
+        if (date1 != "" && date2 != "") {
 
+            var start = moment(date1);
+            var end = moment(date2);
+            var difference = end.diff(start, 'days');
+            if (difference > 7) {
+                sAlert('Validation Info', 'Please do not select start  date with max difference of prior of 7 Days to end date ..!', 'info');
+                return;
+            }
+        }
+
+    }
     requestdata();
     getTrendExport(yearNow - 2, yearNow);
     getExportByCategory(yearNow - 2, yearNow);

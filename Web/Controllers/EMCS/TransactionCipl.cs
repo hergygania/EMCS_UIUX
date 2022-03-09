@@ -9,6 +9,10 @@ using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
 using App.Web.Helper;
+using App.Web.Models;
+using App.Data.Domain;
+using App.Data.Domain.EMCS;
+using System.ComponentModel;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -46,13 +50,14 @@ namespace App.Web.Controllers.EMCS
         {
             var userId = User.Identity.GetUserId();
             string userRoles = User.Identity.GetUserRoles();
-           if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId) || userRoles.Contains("EMCSImex"))
+            if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId) || userRoles.Contains("EMCSImex"))
             {
                 ApplicationTitle();
                 ViewBag.AllowRead = AuthorizeAcces.AllowRead;
                 ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
                 ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
                 ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+                ViewBag.GroupName = Service.EMCS.SvcUserLog.GetUserDetail().Group == null ? "" : Service.EMCS.SvcUserLog.GetUserDetail().Group;
                 PaginatorBoot.Remove("SessionTRN");
                 return View();
             }
@@ -60,8 +65,6 @@ namespace App.Web.Controllers.EMCS
             {
                 return RedirectToAction("Unauthorised", "Shared");
             }
-
-
         }
 
         [HttpGet]
@@ -96,7 +99,7 @@ namespace App.Web.Controllers.EMCS
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlHeaderData(id);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlDetailData(id);
             detail.DataRequest = Service.EMCS.SvcRequestCipl.GetRequestById(id);
-
+            detail.TemplateHeader.Category = detail.Data.Category;
             List<string> items = new List<string>();
             foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
             {
@@ -124,6 +127,18 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
             ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("cipl", id);
+            string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadedi");
+            ViewBag.QrCodeUrlEDI = strQrCodeUrlEDI;
+            TempData["QrCodeUrlEDI"] = strQrCodeUrlEDI;
+            TempData.Peek("QrCodeUrlEDI");
+            string strQrCodeUrlInvoice = Common.GenerateQrCode(id, "downloadInvoice");
+            ViewBag.QrCodeUrlInvoice = strQrCodeUrlInvoice;
+            TempData["QrCodeUrlInvoice"] = strQrCodeUrlInvoice;
+            TempData.Peek("QrCodeUrlInvoice");
+            string strQrCodeUrlPL = Common.GenerateQrCode(id, "DownloadPl");
+            ViewBag.QrCodeUrlPL = strQrCodeUrlPL;
+            TempData["QrCodeUrlPL"] = strQrCodeUrlPL;
+            TempData.Peek("QrCodeUrlPL");
             PaginatorBoot.Remove("SessionTRN");
 
             var detail = new CiplModel();
@@ -261,6 +276,75 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetChangeHistoryList(string idTerm,string formType, string search, int limit, int offset, string sort, string order)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Sort = sort;
+            dataFilter.Order = order;
+            dataFilter.Offset = offset;
+            dataFilter.Limit = limit;
+            dataFilter.Term = idTerm;
+            dataFilter.FormType = formType;
+            var data = Service.EMCS.SvcCipl.GetListSpChangeHistory(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetChangeHistoryReason(string idTerm, string formtype)
+        {
+            var data = Service.EMCS.SvcCipl.GetSpChangeHistoryReason(idTerm, formtype);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ApproveChangeHistory(string idTerm, string formtype)
+        {
+            var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm, formtype);
+
+            var cipl = Service.EMCS.SvcCipl.CiplGetById(Convert.ToInt32(idTerm));
+
+            var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(Convert.ToInt32(idTerm));
+
+            var ciplHistory = data.Where(x => x.TableName == typeof(Cipl).Name).ToList();
+
+            var forwaderHistory = data.Where(x => x.TableName == typeof(CiplForwader).Name).ToList();
+
+            var properties = TypeDescriptor.GetProperties(typeof(Cipl));
+
+            string[] _ignoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl" };
+
+            foreach (PropertyDescriptor property in properties)
+            {
+                if (!_ignoreParameters.Contains(property.Name))
+                {
+                    var historyProp = ciplHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                    if (historyProp != null)
+                    {
+                        property.SetValue(cipl, historyProp.AfterValue);
+                    }
+                }
+            }
+
+            var propertiesCiplForwader = TypeDescriptor.GetProperties(typeof(CiplForwader));
+
+            foreach (PropertyDescriptor property in propertiesCiplForwader)
+            {
+                if (!_ignoreParameters.Contains(property.Name))
+                {
+                    var historyProp = forwaderHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                    if (historyProp != null)
+                    {
+                        property.SetValue(forwader, historyProp.AfterValue);
+                    }
+                }
+            }
+
+            var userId = User.Identity.GetUserId();
+            if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId))
+            {
+                 Service.EMCS.SvcCipl.UpdateCipl(forwader, cipl, "");
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult CiplHistoryPageXt(long id)
         {
             Func<App.Data.Domain.EMCS.CiplListFilter, List<Data.Domain.EMCS.SpGetCiplHistory>> func = delegate (App.Data.Domain.EMCS.CiplListFilter filter)
@@ -355,9 +439,81 @@ namespace App.Web.Controllers.EMCS
             var currency = Service.EMCS.SvcCipl.GetCurrencyCipl();
             var categoryreference = Service.EMCS.SvcCipl.GetCategoryReferencet("CategoryReference");
 
-            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference,type }, JsonRequestBehavior.AllowGet);
+            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference, type }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult SaveChangeHistory(RequestForChangeModel form, CiplFormModel item)
+        {
+            var requestForChange = new RequestForChange();
 
+            requestForChange.FormNo = form.FormNo;
+            requestForChange.FormType = form.FormType;
+            requestForChange.Status = form.Status;
+            requestForChange.Reason = form.Reason;
+
+            var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
+
+            var model = Service.EMCS.SvcCipl.CiplGetById(item.Data.Id);
+            var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(item.Data.Id);
+            
+            var newmodel = new CiplFormModel();
+            newmodel.Data = model;
+            newmodel.Forwader = forwader;
+
+            var listRfcItems = new List<Data.Domain.RFCItem>();
+            string[] _ignnoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl" };
+            var properties = TypeDescriptor.GetProperties(typeof(Cipl));
+            foreach (PropertyDescriptor property in properties)
+            {
+                if (!_ignnoreParameters.Contains(property.Name))
+                {
+                    var currentValue = property.GetValue(item.Data);
+                    if (currentValue != null && property.GetValue(model) != null)
+                    {
+                        if (currentValue.ToString() != property.GetValue(model).ToString())
+                        {
+                            var rfcItem = new Data.Domain.RFCItem();
+
+                            rfcItem.RFCID = id;
+                            rfcItem.TableName = "Cipl";
+                            rfcItem.LableName = property.Name;
+                            rfcItem.FieldName = property.Name;
+                            rfcItem.BeforeValue = property.GetValue(model).ToString();
+                            rfcItem.AfterValue = currentValue.ToString();
+                            listRfcItems.Add(rfcItem);
+                        }
+                    }
+                }
+            }
+
+            var propertiesForwader = TypeDescriptor.GetProperties(typeof(CiplForwader));
+            foreach (PropertyDescriptor property in propertiesForwader)
+            {
+                if (!_ignnoreParameters.Contains(property.Name))
+                {
+                    var currentValueForwader = property.GetValue(item.Forwader);
+                    if (currentValueForwader != null && property.GetValue(forwader) != null)
+                    {
+                        if (currentValueForwader.ToString() != property.GetValue(forwader).ToString())
+                        {
+                            var rfcItem = new Data.Domain.RFCItem();
+
+                            rfcItem.RFCID = id;
+                            rfcItem.TableName = "CiplForwader";
+                            rfcItem.LableName = property.Name;
+                            rfcItem.FieldName = property.Name;
+                            rfcItem.BeforeValue = property.GetValue(forwader).ToString();
+                            rfcItem.AfterValue = currentValueForwader.ToString();
+                            listRfcItems.Add(rfcItem);
+                        }
+                    }
+                }
+            }
+
+            Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+
+            return Json("");
+        }
         public JsonResult GetPickUpPic(string user, string area)
         {
             var data = Service.EMCS.SvcCipl.GetPickUpPic(user, area);
@@ -570,6 +726,7 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Offset = filter.Offset;
 
             var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
+
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -616,7 +773,7 @@ namespace App.Web.Controllers.EMCS
 
             return JsonCRUDMessage(ViewBag.crudMode);
         }
-        
+
 
         public JsonResult DocumentList()
         {
@@ -770,7 +927,7 @@ namespace App.Web.Controllers.EMCS
                     System.IO.File.Delete(fullPath);
                 }
 
-                file.SaveAs(fullPath);                
+                file.SaveAs(fullPath);
 
             }
 

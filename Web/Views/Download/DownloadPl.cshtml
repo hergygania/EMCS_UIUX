@@ -21,7 +21,16 @@
                         </td>
                         <td class="" style="width:10%;">&nbsp;</td>
                         <td class="text_bold border_right" colspan="4" style="width:45%;">
-                            <div class="border_title border_title_left">@((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")</div>
+                            @if (Model.TemplateHeader.ShipDelivery == "Bill To")
+                            {
+                                <div class="border_title border_title_left">BILL TO</div>
+                            }
+                            else
+                            {
+                                <div class="border_title border_title_left">
+                                    @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
+                                </div>
+                            }
                         </td>
                     </tr>
                     <tr>

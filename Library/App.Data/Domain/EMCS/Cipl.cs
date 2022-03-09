@@ -9,6 +9,7 @@
     {
         [Key]
         public long Id { get; set; }
+        
         public string CiplNo { get; set; }
         public string ClNo { get; set; }
         public string EdoNo { get; set; }

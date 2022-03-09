@@ -501,6 +501,7 @@
     <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Models\ReportFilterDeliveryTrackingStatusView.cs" />
     <Compile Include="Models\ReportFilterDTS.cs" />
+    <Compile Include="Models\RequestForChangeModel.cs" />
     <Compile Include="Models\RoleAccessMenuModel.cs" />
     <Compile Include="Models\UpdateDocument.cs" />
     <Compile Include="Models\BackorderSubmissionView.cs" />
@@ -5091,6 +5092,7 @@
     <Content Include="Scripts.app\EMCS\transaction\CargoProblemHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\Cipl.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplApprove.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\transaction\CiplChangeHIstory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplDocuments.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplEdit.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplForm.cshtml.js" />
@@ -6955,6 +6957,7 @@
     <Content Include="Views\Post\MasterMappingUser.cshtml" />
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
+    <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

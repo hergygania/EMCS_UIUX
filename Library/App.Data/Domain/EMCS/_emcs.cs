@@ -45,6 +45,7 @@ namespace App.Data
         public virtual DbSet<SpCiplList> SpCiplList { get; set; }
         public virtual DbSet<SpCiplDeleteById> SpCiplDeleteById { get; set; }
         public virtual DbSet<SpGetCiplHistory> SpGetCiplHistory { get; set; }
+        public virtual DbSet<SPGetCiplChangeHistory> SpGetCiplChangeHistory { get; set; }
         public virtual DbSet<SPGetCiplDocument> SPGetCiplDocument { get; set; }
         public virtual DbSet<SpCiplProblemHistory> SpCiplProblemHistory { get; set; }
         public virtual DbSet<SpGetConsigneeName> SpGetConsigneeName { get; set; }

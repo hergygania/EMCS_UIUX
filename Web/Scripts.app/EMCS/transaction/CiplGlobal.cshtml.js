@@ -399,9 +399,14 @@ function load_data() {
             $tablereference.bootstrapTable('refresh');
         }
     })
+    $('#documentAddButton').on('click', function () {
+        $('.modal-title-document').text("Add Document");
+        $('.btnAddDocument').text("Add");
+    })
 
     window.operateEvents = {
         'click .EditReferenceItem': function (e, value, row, index) {
+            debugger;
             if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 if ($(this).val() !== 'Add') {
@@ -412,7 +417,7 @@ function load_data() {
                 $('#IdItem').val(row.Id);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -431,7 +436,7 @@ function load_data() {
                 $('#SnItemCipl').prop('disabled', true);
                 $('#CcrItemCipl, #JcodeItemCipl, #IdCustomerItemCipl').prop('disabled', false);
                 $('#PartItemCipl, #UnitItemCipl').prop('disabled', false);
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
                 $('#PartItemCipl').val(row.PartNumber);
@@ -462,13 +467,14 @@ function load_data() {
                 } else {
                     $('.btnUpdateReference').show();
                 }
+                $('#UomItemCipl').val(null).trigger('change');
                 $('#IdItem').val(row.Id);
                 $('#IdReference').val(row.IdReference);
                 $('#IdCustomerItemCipl').val(row.IdCustomer);
                 $('#ReferenceItemCipl').val(row.ReferenceNo);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
+                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#SnItemCipl').val(row.Sn);
                 $('#JcodeItemCipl').val(row.JCode);
@@ -517,6 +523,9 @@ function load_data() {
             $('#IdDocument').val(row.Id);
             $('#inp-doc-date').val(row.DocumentDate);
             $('#DocumentName').val(row.DocumentName);
+            $('.modal-title-document').text("Update Document");
+            $('.btnAddDocument').text("Update");
+            
         },
         'click .remove': function (e, value, row, index) {
             CiplDocumentDeleteById(row.Id);
@@ -2176,6 +2185,17 @@ function removeDoubleAttributeDuplicates(array) {
     uniqueArray = Array.from(uniqueSet).map(JSON.parse);
     return uniqueArray;
 }
+function getUniqueNumberOfCollies(array) {
+    result = array.filter(function (a) {
+        var key = a.CaseNumber + '|' + a.Type;
+        if (!this[key]) {
+            this[key] = true;
+            return true;
+        }
+    }, Object.create(null));
+
+    return result;
+}
 function SumReferenceItem() {
     var SumGross = 0;
     var SumNet = 0;
@@ -2202,12 +2222,7 @@ function SumReferenceItem() {
     } else if (Category === 'PRA' || Category === 'REMAN') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-            debugger;
-            var UniqueCaseNumber = removeSingleAttributeDuplicates(data, 'CaseNumber');
-            var UniqueType = removeSingleAttributeDuplicates(data, 'Type');
-            var Uniqueitems = UniqueCaseNumber.push(UniqueType);
-                /* UniqueCaseNumber.length == 1 && UniqueType.length == 1 ? 1 : UniqueCaseNumber.length + UniqueType.length - 1;*/
-            CountJCode = Uniqueitems - 1;
+            CountJCode = getUniqueNumberOfCollies(data).length;;
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2974,7 +2989,164 @@ function post_insert_cipl(status) {
     });
 }
 
+$("#RequestChange").click(function () {
+    debugger;
+    var modelObj = {
+        FormType: "CIPL",
+        FormNo: $('#idCipl').val(),
+        Reason: $('#ReasonForChange').val(),
+        /*rfcList: requestForChange*/
+    }
+    if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
+        var CategoryItem = $('#sparepartsCipl').val();
+    } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
+        var CategoryItem = $('#permanentCipl').val();
+    } else if ($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') {
+        var CategoryItem = $('#unitCipl').val();
+    }
+    var item = {
+        Data: {
+            Id: $('#idCipl').val(),
+            CiplNo: $('#noCipl').val(),
+            dateCipl: $('#dateCipl').val(),
+            Category: $('#jenisBarangCipl').val(),
+            ReferenceNo: $('#refCipl').val() === null ? "" : $('#refCipl').val().toString(),
+            CategoriItem: CategoryItem,
+            ExportType: $('#exportCipl').val(),
+            ExportTypeItem: $('#exportremarksCipl').val(),
+            refCipl: $('#refCipl').val(),
+            SoldConsignee: $('#soldConsigneeCipl').val(),
+            SoldToName: $('#consigneeNameCipl').val(),
+            SoldToAddress: $('#consigneeAddressCipl').val(),
+            SoldToCountry: $('#consigneeCountryCipl').val(),
+            SoldToTelephone: $('#consigneeTelpCipl').val(),
+            SoldToFax: $('#consigneeFaxCipl').val(),
+            SoldToPic: $('#consigneePicCipl').val(),
+            SoldToEmail: $('#consigneeEmailCipl').val(),
+
+            //SoldToName: $('#salesNameCipl').val(),
+            //SoldToAddress: $('#salesAddressCipl').val(),
+            //SoldToCountry: $('#salesCountryCipl').val(),
+            //SoldToTelephone: $('#salesTelpCipl').val(),
+            //SoldToFax: $('#salesFaxCipl').val(),
+            //SoldToPic: $('#salesPicCipl').val(),
+            //SoldToEmail: $('#salesEmailCipl').val(),
+
+            ShipDelivery: $('#shipDeliveryCipl').val(),
+            ConsigneeSameSoldTo: $('#ConsigneeSameSoldTo').val(),
+            ConsigneeName: $('#consigneeNameCipl').val(),
+            ConsigneeAddress: $('#consigneeAddressCipl').val(),
+            ConsigneeCountry: $("#consigneeCountryCipl").val(),
+            ConsigneeTelephone: $('#consigneeTelpCipl').val(),
+            ConsigneeFax: $('#consigneeFaxCipl').val(),
+            ConsigneePic: $('#consigneePicCipl').val(),
+            ConsigneeEmail: $('#consigneeEmailCipl').val(),
+            //consigneeCipl: $('#consigneeCipl').val(),
+            NotifyPartySameConsignee: $('#NotifyPartySameConsignee').val(),
+            NotifyName: $('#notifyNameCipl').val(),
+            NotifyAddress: $('#notifyAddressCipl').val(),
+            NotifyCountry: $('#notifyCountryCipl').val(),
+            NotifyTelephone: $('#notifyTelpCipl').val(),
+            NotifyFax: $('#notifyFaxCipl').val(),
+            NotifyPic: $('#notifyPicCipl').val(),
+            NotifyEmail: $('#notifyEmailCipl').val(),
+            Area: $('#areaCipl').val().split('-')[0].trim(),
+            Branch: $('#cabangCipl').val().split('-')[0].trim(),
+            Currency: $('#currencyCipl').val(),
+            Rate: $('#RateCipl').val(),
+            LcNoDate: $('#lcnoCipl').val() + ' - ' + $('#lcDateCipl').val(),
+            PaymentTerms: $('#paymentCipl').val(),
+            LoadingPort: $('#loadingCipl').val(),
+            DestinationPort: $('#destinationCipl').val(),
+            IncoTerm: $('#incoCipl').val(),
+            ShippingMethod: $('#shippingCipl').val(),
+            FreightPayment: $('#freightCipl').val(),
+            CountryOfOrigin: $('#countryCipl').val(),
+            ShippingMarks: $('#shippingMarkCipl').val(),
+            Remarks: $('#remarksCipl').val(),
+            inspectionCipl: $('#inspectionCipl').val(),
+            SpecialInstruction: $('#txtSpecialInscCipl').val(),
+            Status: status,
+            PickUpPic: $('#idPickupPic').val() === null || $('#idPickupPic').val() === "" ? "" : $('#idPickupPic').val().split('-')[0].trim(),
+            PickUpArea: $('#idPickupArea').val() === null || $('#idPickupArea').val() === "" ? "" : $('#idPickupArea').val().split('-')[0].trim(),
+            CategoryReference: $('#idCategoryReference').val(),
+            Consolidate: $('#ConsolidateCipl').val()
+        },
+        Forwader: {
+            Forwader: $('#forwaderCipl').val(),
+            Type: $('#typeCipl').val(),
+            Branch: $('#CkbBranchCipl').val(),
+            Attention: $('#forwaderAttentionCipl').val(),
+            Company: $('#forwaderCompanyCipl').val(),
+            SubconCompany: $('#forwaderForwadingCipl').val(),
+            Address: $('#forwaderAddressCipl').val(),
+            Area: $('#forwaderAreaCipl').val(),
+            City: $('#forwaderCityCipl').val(),
+            PostalCode: $('#forwaderPostalCodeCipl').val(),
+            Contact: $('#forwaderContactCipl').val(),
+            FaxNumber: $('#forwaderFaxCipl').val(),
+            Forwading: $('#forwaderForwadingCipl').val(),
+            Email: $('#forwaderEmailCipl').val()
+        }
+    }
+
+    $.ajax({
+        url: '/EMCS/SaveChangeHistory',
+        type: 'POST',
+        data: {
+            form: modelObj,
+            item: item
+        },
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            //var getstatus = status === 'Draft' ? ' Saved' : ' Submit';
+            //if (data == 1) {
+            //    Swal.fire({
+            //        type: 'success',
+            //        title: 'Success',
+            //        text: 'Save, Your Data Has Been' + getstatus,
+            //    })
+            //} else {
+            //    Swal.fire({
+            //        type: 'warning',
+            //        title: 'Update Failed !',
+            //        text: 'Unauthorized to update this document !',
+            //    })
+            //}
+
+            //post_update_cipl_item(data, status);
+        },
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Update Data',
+            })
+        }
+    });
+    //$.ajax({
+    //    url: '/EMCS/SaveChangeHistory',
+    //    type: 'POST',
+    //    data: modelObj,
+    //    cache: false,
+    //    async: false,
+    //    success: function (data, response) {
+    //        debugger;
+    //    },
+    //    error: function (e) {
+    //        Swal.fire({
+    //            type: 'error',
+    //            title: 'Oops...',
+    //            text: 'Something went wrong! Fail Insert Data',
+    //        })
+    //    }
+    //});
+
+   
+});
 function post_update_cipl(status) {
+  
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {

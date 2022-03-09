@@ -264,9 +264,16 @@
                         </td>
                         <td></td>
                         <td class="border_top border_left table-title-data text_bold">
-                            <div>
-                                @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
-                            </div>
+                            @if (Model.TemplateHeader.ShipDelivery == "Bill To")
+                            {
+                                <div >BILL TO</div>
+                            }
+                            else
+                            {
+                                <div>
+                                    @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
+                                </div>}
+
                         </td>
                     </tr>
                     <tr>
