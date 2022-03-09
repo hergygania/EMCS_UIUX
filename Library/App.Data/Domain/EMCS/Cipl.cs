@@ -10,9 +10,13 @@
         [Key]
         public long Id { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
         public string CiplNo { get; set; }
         public string ClNo { get; set; }
         public string EdoNo { get; set; }

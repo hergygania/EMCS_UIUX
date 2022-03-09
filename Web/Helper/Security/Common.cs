@@ -33,11 +33,11 @@ namespace App.Web.Helper
                 // invoice = downloadInvoice
                 //PL =DownloadPl
 
-                string url = HttpContext.Current.Request.Url.AbsoluteUri;
-                Uri url1 = new Uri(url);
-                string host = url1.GetLeftPart(UriPartial.Authority);
+                //string url = HttpContext.Current.Request.Url.AbsoluteUri;
+                //Uri url1 = new Uri(url);
+                //string host = url1.GetLeftPart(UriPartial.Authority);
 
-                string docUrl = host + "/download/" + doc + "/" + IdCipl;
+                string docUrl = "staging.mkindo.com:5181" + "/download/" + doc + "/" + IdCipl;
                 string imgDataURL = string.Empty;
                 QRCodeGenerator ObjQr = new QRCodeGenerator();
                 QRCodeData qrCodeData = ObjQr.CreateQrCode(docUrl, QRCodeGenerator.ECCLevel.Q);
@@ -53,6 +53,7 @@ namespace App.Web.Helper
 
                 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -79,6 +80,8 @@ namespace App.Web.Helper
                 //}
 
 >>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+=======
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
                 return imgDataURL;
             }
             catch (Exception ex)

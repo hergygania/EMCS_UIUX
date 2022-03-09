@@ -23,6 +23,9 @@
         public bool Total { get; set; }
         public string Ciplno { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
         public string FormType { get; set; }
         public long Cargoid { get; set; }
         public bool Rfc { get; set; }

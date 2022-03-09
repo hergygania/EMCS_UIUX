@@ -548,9 +548,13 @@
     <Compile Include="Models\ReportFilterDeliveryTrackingStatusView.cs" />
     <Compile Include="Models\ReportFilterDTS.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Models\RequestForChangeModel.cs" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="Models\RequestForChangeModel.cs" />
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
     <Compile Include="Models\RoleAccessMenuModel.cs" />
     <Compile Include="Models\UpdateDocument.cs" />
     <Compile Include="Models\BackorderSubmissionView.cs" />
@@ -5235,10 +5239,14 @@
     <Content Include="Scripts.app\EMCS\transaction\Cipl.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplApprove.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeDetail.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ChangeHistory.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\EMCS\transaction\CiplChangeHIstory.cshtml.js" />
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
     <Content Include="Scripts.app\EMCS\transaction\CiplDocuments.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplEdit.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplForm.cshtml.js" />
@@ -7372,6 +7380,7 @@
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Post\HomeFinance.cshtml" />
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
@@ -7409,6 +7418,9 @@
     <Content Include="Views\EMCS\GoodsReceiveTabDocument.cshtml" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

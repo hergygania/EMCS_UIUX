@@ -11,7 +11,11 @@ namespace App.Data.Domain.EMCS
     {
         [Key]
         public int Id { get; set; }
+<<<<<<< HEAD
         public string FormNo { get; set; }
+=======
+        public int FormNo { get; set; }
+>>>>>>> 26aafb4 (Changes of P1-CIPL)
         public string BeforeValue { get; set; }
         public string AfterValue { get; set; }
         public string FieldName { get; set; }
