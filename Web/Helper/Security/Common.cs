@@ -20,11 +20,11 @@ namespace App.Web.Helper
                 // invoice = downloadInvoice
                 //PL =DownloadPl
 
-                string url = HttpContext.Current.Request.Url.AbsoluteUri;
-                Uri url1 = new Uri(url);
-                string host = url1.GetLeftPart(UriPartial.Authority);
+                //string url = HttpContext.Current.Request.Url.AbsoluteUri;
+                //Uri url1 = new Uri(url);
+                //string host = url1.GetLeftPart(UriPartial.Authority);
 
-                string docUrl = host + "/download/" + doc + "/" + IdCipl;
+                string docUrl = "staging.mkindo.com:5181" + "/download/" + doc + "/" + IdCipl;
                 string imgDataURL = string.Empty;
                 QRCodeGenerator ObjQr = new QRCodeGenerator();
                 QRCodeData qrCodeData = ObjQr.CreateQrCode(docUrl, QRCodeGenerator.ECCLevel.Q);
@@ -39,29 +39,6 @@ namespace App.Web.Helper
                     //Passing image data in viewbag to view  
 
                 }
-
-
-                //switch (doc)
-                //{
-                //    case "downloadedi":
-                //        ViewBag.QrCodeUrlEDI = imgDataURL;
-                //        TempData["QrCodeUrlEDI"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlEDI");
-                //        break;
-                //    case "downloadInvoice":
-                //        ViewBag.QrCodeUrlInvoice = imgDataURL;
-                //        TempData["QrCodeUrlInvoice"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlInvoice");
-                //        break;
-                //    case "DownloadPl":
-                //        ViewBag.QrCodeUrlPL = imgDataURL;
-                //        TempData["QrCodeUrlPL"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlPL");
-                //        break;
-
-                //    default:
-                //        break;
-                //}
 
                 return imgDataURL;
             }

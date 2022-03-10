@@ -14,6 +14,8 @@ namespace App.Data.Domain
         [Key]
         public int ID { get; set; }
         public int RFCID { get; set; }
+        public string TableName { get; set; }
+        public string LableName { get; set; }
         public string FieldName { get; set; }
         public string BeforeValue { get; set; }
         public string AfterValue { get; set; }

@@ -117,7 +117,15 @@
                 <tr>
                     <td colspan="6" style="height:15px" class="border_left border_top border_right border_bottom text_bold">@Model.Data.SoldConsignee</td>
                     <td colspan="3" class="border_top"></td>
-                    <td colspan="5" class="border_left border_top border_right border_bottom text_bold">@((Model.Data.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.Data.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")</td>
+                    @if (Model.TemplateHeader.ShipDelivery == "Bill To")
+                    {
+                        <td colspan="5" class="border_left border_top border_right border_bottom text_bold">BILL TO</td>
+
+                    }
+                    else
+                    {
+                        <td colspan="5" class="border_left border_top border_right border_bottom text_bold">@((Model.Data.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.Data.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")</td>
+                    }
                 </tr>
                 <tr>
                     <td colspan="6"></td>
