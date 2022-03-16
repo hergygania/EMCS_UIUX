@@ -411,7 +411,17 @@ namespace App.Service.EMCS
                 return data;
             }
         }
+        public static long ApproveChangeHistory(string formNo, string formType)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@FormType", formType));
+                parameterList.Add(new SqlParameter("@FormNo", formNo));
+                SqlParameter[] parameters = parameterList.ToArray();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         public static long UpdateCipl(CiplForwader forwader, Cipl cipl, string status)
@@ -602,6 +612,14 @@ namespace App.Service.EMCS
             }
         }
 =======
+=======
+                db.DbContext.Database.ExecuteSqlCommand("exec [dbo].[SP_ApproveChangeHistory] @FormType, @FormNo", parameters);
+                return 1;
+            }
+
+            return 0;
+        }
+>>>>>>> 23d1d01 (P1- CIPL P-1 : Slide No. 17))
         public static long UpdateCipl(CiplForwader forwader, Cipl cipl, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -1007,7 +1025,7 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
-                var sql = "Select TOP 1 Reason from RequestForChange WHERE FormNo = '" + idTerm + "' AND FormType = '" + formtype + "'";
+                var sql = "Select TOP 1 Reason from RequestForChange WHERE status = 0 AND FormNo = '" + idTerm + "' AND FormType = '" + formtype + "'";
                 var data = db.Database.SqlQuery<string>(sql).FirstOrDefault();
                 return data;
             }

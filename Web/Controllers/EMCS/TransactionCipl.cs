@@ -607,7 +607,45 @@ namespace App.Web.Controllers.EMCS
                     var historyProp = ciplHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
                     if (historyProp != null)
                     {
-                        property.SetValue(cipl, historyProp.AfterValue);
+                        System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                        switch (typeCode)
+                        {
+                            case TypeCode.Boolean:
+                                property.SetValue(cipl, Convert.ToBoolean(historyProp.AfterValue));
+                                break;
+                            case TypeCode.String:
+                                property.SetValue(cipl, Convert.ToString(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Char:
+                                property.SetValue(cipl, Convert.ToChar(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Double:
+                                property.SetValue(cipl, Convert.ToDouble(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Single:
+                                property.SetValue(cipl, Convert.ToSingle(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Int32:
+                                property.SetValue(cipl, Convert.ToInt32(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Int16:
+                                property.SetValue(cipl, Convert.ToInt16(historyProp.AfterValue));
+                                break;
+                            case TypeCode.DateTime:
+                                property.SetValue(cipl, Convert.ToDateTime(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Decimal:
+                                property.SetValue(cipl, Convert.ToDecimal(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Object:
+                                //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                break;
+                            default:
+                                property.SetValue(cipl, historyProp.AfterValue);
+                                break;
+                        }
+                        //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
+                       
                     }
                 }
             }
@@ -621,16 +659,54 @@ namespace App.Web.Controllers.EMCS
                     var historyProp = forwaderHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
                     if (historyProp != null)
                     {
-                        property.SetValue(forwader, historyProp.AfterValue);
+                        System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                        switch (typeCode)
+                        {
+                            case TypeCode.Boolean:
+                                property.SetValue(forwader, Convert.ToBoolean(historyProp.AfterValue));
+                                break;
+                            case TypeCode.String:
+                                property.SetValue(forwader, Convert.ToString(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Char:
+                                property.SetValue(forwader, Convert.ToChar(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Double:
+                                property.SetValue(forwader, Convert.ToDouble(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Single:
+                                property.SetValue(forwader, Convert.ToSingle(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Int32:
+                                property.SetValue(forwader, Convert.ToInt32(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Int16:
+                                property.SetValue(forwader, Convert.ToInt16(historyProp.AfterValue));
+                                break;
+                            case TypeCode.DateTime:
+                                property.SetValue(forwader, Convert.ToDateTime(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Decimal:
+                                property.SetValue(forwader, Convert.ToDecimal(historyProp.AfterValue));
+                                break;
+                            case TypeCode.Object:
+                                //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                break;
+                            default:
+                                property.SetValue(forwader, historyProp.AfterValue);
+                                break;
+                        }
+                        //property.SetValue(forwader, historyProp.AfterValue);
                     }
                 }
             }
-
+            Service.EMCS.SvcCipl.ApproveChangeHistory(idTerm,formtype);
+            
             var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId))
-            {
+            //if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId))
+            //{
                  Service.EMCS.SvcCipl.UpdateCipl(forwader, cipl, "");
-            }
+            //}
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -1186,6 +1262,7 @@ namespace App.Web.Controllers.EMCS
             long result = 0;
             var userId = User.Identity.GetUserId();
 <<<<<<< HEAD
+<<<<<<< HEAD
             try
             {
                 //if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
@@ -1203,8 +1280,12 @@ namespace App.Web.Controllers.EMCS
 =======
             if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
             {
+=======
+            //if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
+            //{
+>>>>>>> 23d1d01 (P1- CIPL P-1 : Slide No. 17))
                 result = Service.EMCS.SvcCipl.UpdateCipl(item.Forwader, item.Data, status);
-            }
+            //}
             return result;
 >>>>>>> 639d8d0 (Intial commit)
         }
