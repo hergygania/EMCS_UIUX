@@ -56,7 +56,7 @@ namespace App.Service.EMCS
             using (var db = new Data.EmcsContext())
             {
                 var search = (String.IsNullOrEmpty(crit.searchName) || crit.searchName == "null") ? "" : crit.searchName;
-                var tb = db.MasterCountry.Where(a => a.Description.Contains(search) || a.CountryCode.Contains(search));
+                var tb = db.MasterCountry.Where(a => a.Description.Contains(search) || a.CountryCode.Contains(search) && !a.IsDeleted);
                 return tb.ToList();
             }
         }
