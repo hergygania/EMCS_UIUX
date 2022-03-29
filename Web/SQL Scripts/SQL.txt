@@ -9918,7 +9918,18 @@ RF.Reason'
  --print(@sql);          
 END
 
+<<<<<<< HEAD
 >>>>>>> 26aafb4 (Changes of P1-CIPL)
 =======
 END
 >>>>>>> 93c2efe ([U] Update from client's TFS)
+=======
+GO
+
+INSERT INTO [Type]([Name])
+VALUES ('FTZ');
+INSERT INTO [Type]([Name])
+VALUES ('Ordinary');
+delete from [Type]
+where Id= 2
+>>>>>>> 6f983be (Penambahan kolom di CIPL untuk memilih kode PLB atau non PLB => not done)
