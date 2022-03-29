@@ -96,10 +96,14 @@ $(function () {
         [{
             field: "PebMonth",
 <<<<<<< HEAD
+<<<<<<< HEAD
             title: "&nbsp;MONTH &nbsp;&nbsp;",
 =======
             title: "MONTH &nbsp;&nbsp;&nbsp;",
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            title: "&nbsp;MONTH &nbsp;&nbsp;",
+>>>>>>> 7bf5852 (first commit)
             rowspan: 3,
             valign: "middle",
             align: "center",
