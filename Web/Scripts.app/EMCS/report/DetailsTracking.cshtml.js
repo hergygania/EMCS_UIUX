@@ -95,7 +95,7 @@ $(function () {
     var columns = [
         [{
             field: "PebMonth",
-            title: "MONTH &nbsp;&nbsp;&nbsp;",
+            title: "&nbsp;MONTH &nbsp;&nbsp;",
             rowspan: 3,
             valign: "middle",
             align: "center",

@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Tax Audit Purpose";
 }
-
+<style>
+    .tableFixHead thead {
+        position: sticky;
+        top: 0;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="box">
@@ -53,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered table-striped" data-toolbar=".toolbar" id="tbl-tax-audit"></table>
+                <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-tax-audit"></table>
             </div>
         </div>
     </div>

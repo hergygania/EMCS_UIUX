@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Destination Country List & Sailing Time";
 }
-
+<style>
+    .tableFixHead thead {
+        position: sticky;
+        top: 0;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-12">
@@ -50,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered table-striped" id="tbl-destination-sailing"></table>
+                <table class="table table-bordered table-striped tableFixHead" id="tbl-destination-sailing"></table>
             </div>
         </div>
     </div>
