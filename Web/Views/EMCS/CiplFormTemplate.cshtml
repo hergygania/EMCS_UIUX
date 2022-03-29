@@ -139,7 +139,10 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-xs-4" required>Country</label>
                                                 <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Country" data-name="SoldToCountry" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country" required>
+                                                    @*<input type="text" class="form-control inpConsignee requestChange" data-lable="Country" data-name="SoldToCountry" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country" required></select>*@
+                                                    @*<select class="select2 requestChange" data-name="SoldToCountry" data-lable="Country" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country"></select>*@
+                                                    <select class="select2 requestChange" data-name="SoldToCountry" data-lable="Country" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country"></select>
+
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -209,7 +212,9 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-xs-4">Country</label>
                                                 <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Country" data-name="NotifyCountry" id="notifyCountryCipl" placeholder="Country" name="notifyCountryCipl" required>
+                                                    @*<select type="text" class="form-control inpNotify requestChange" data-lable="Notify Country" data-name="NotifyCountry" id="notifyCountryCipl" placeholder="Country" name="notifyCountryCipl" required></select>*@
+                                                    <select class="select2 requestChange" data-name="NotifyCountry" data-lable="Notify Country" id="notifyCountryCipl" name="notifyCountryCipl" placeholder="Country1"></select>
+
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -554,12 +559,12 @@
                                     <div class="col-md-12">
                                         <a href="~/EMCS/CiplList" class="btn btn-warning" style="min-width:120px;"><i class="fa fa-arrow-left"></i>&nbsp;Back</a>
                                         @*@if (ViewBag.GroupName.Contains("Imex"))
-                                        {*@
-                                            <button type="button" hidden class="btn btn-info" data-toggle="modal" id="RequestForChangeHistoryCIPL"  data-target="#myModalRequestForChangeReason" style="min-width:120px;" ><i class='fa fa-save'></i>&nbsp;Request for change history</button>
+        {*@
+                                        <button type="button" hidden class="btn btn-info" data-toggle="modal" id="RequestForChangeHistoryCIPL" data-target="#myModalRequestForChangeReason" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Request for change history</button>
                                         @*}*@
-                                            <button class="btn btn-info" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
-                                            <button type="button" class="btn btn-success" id="btnSubmitCipl" value="Submit" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
-                                        </div>
+                                        <button class="btn btn-info" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
+                                        <button type="button" class="btn btn-success" id="btnSubmitCipl" value="Submit" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
