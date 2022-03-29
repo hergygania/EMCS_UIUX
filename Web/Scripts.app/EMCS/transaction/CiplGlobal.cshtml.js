@@ -326,9 +326,13 @@ function load_data() {
             $('#notifyAddressCipl').val($('#consigneeAddressCipl').val());
             $('#notifyCountryCipl').val($('#consigneeCountryCipl').val());
 <<<<<<< HEAD
+<<<<<<< HEAD
             $('#select2-notifyCountryCipl-container').text($('#notifyCountryCipl').val());
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            $('#select2-notifyCountryCipl-container').text($('#notifyCountryCipl').val());
+>>>>>>> 7e56358 (Commit work of CIPL)
             $('#notifyTelpCipl').val($('#consigneeTelpCipl').val());
             $('#notifyFaxCipl').val($('#consigneeFaxCipl').val());
             $('#notifyPicCipl').val($('#consigneePicCipl').val());
@@ -2743,12 +2747,18 @@ function get_used_table_cipl_item() {
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
         table = $tablemisc;
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
     
     else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
 =======
     } else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    }
+    
+    else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
+>>>>>>> 7e56358 (Commit work of CIPL)
         table = $tableunit;
     } else if ($('#idCategoryReference').val() === 'Other') {
         table = $tableemail;
