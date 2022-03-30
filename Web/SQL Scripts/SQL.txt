@@ -3701,3 +3701,11 @@ RF.Reason'
  --print(@sql);          
 END
 
+GO
+
+INSERT INTO [Type]([Name])
+VALUES ('FTZ');
+INSERT INTO [Type]([Name])
+VALUES ('Ordinary');
+delete from [Type]
+where Id= 2
