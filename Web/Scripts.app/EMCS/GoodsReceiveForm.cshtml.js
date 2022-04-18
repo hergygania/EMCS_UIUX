@@ -594,6 +594,9 @@ $(document).ready(function () {
     initVehicleAutocomplete();
     initVehicleMerkAutocomplete();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 });
 
 var myDropzoneDocument = new Dropzone("#FormUploadDocumentContainer", { // Make the bodyFormUpload a dropzone
@@ -678,6 +681,9 @@ $("#actions .start").on("click", function () {
 $("#actions .cancel").on("click", function () {
     myDropzoneDocument.removeAllFiles(true);
     $("#placeholderUpload").hide();
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 });

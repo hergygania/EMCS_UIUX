@@ -5,11 +5,17 @@ using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using System.Text.RegularExpressions;
 using System.Dynamic;
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Data.Domain.EMCS;
+using System.Text.RegularExpressions;
+using System.Dynamic;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Service.EMCS
 {
@@ -23,6 +29,9 @@ namespace App.Service.EMCS
         public readonly static ICacheManager CacheManager = new MemoryCacheManager();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static dynamic BLAWBList(GridListFilter crit)
         {
             try
@@ -61,9 +70,12 @@ namespace App.Service.EMCS
                 throw ex;
             }
         }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static Data.Domain.EMCS.BlAwb GetByIdcl(long id)
         {
             using (var db = new Data.EmcsContext())
@@ -198,6 +210,9 @@ namespace App.Service.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static bool BlAwbHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -213,8 +228,11 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 
     }

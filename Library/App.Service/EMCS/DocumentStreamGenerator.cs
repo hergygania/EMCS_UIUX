@@ -802,10 +802,14 @@ namespace App.Service.EMCS
 
         public static List<ExcelCargoDetailData> GetCargoDetailData(long cargoId)
 <<<<<<< HEAD
+<<<<<<< HEAD
             {
 =======
         {
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            {
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             using (var db = new Data.EmcsContext())
             {
                 db.Database.CommandTimeout = 600;
@@ -1150,11 +1154,17 @@ namespace App.Service.EMCS
             worksheet.Replace(range.Liner.Value, item.Liner);
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
 <<<<<<< HEAD
+<<<<<<< HEAD
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
             //worksheet.Replace(range.Qr)
 
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
+            //worksheet.Replace(range.Qr)
+
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
             return msg;
         }

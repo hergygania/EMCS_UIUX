@@ -1,9 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 =======
 ﻿using System.Collections.Generic;
 >>>>>>> 639d8d0 (Intial commit)
+=======
+﻿using System;
+using System.Collections.Generic;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 using System.Linq;
 using System.Web.Mvc;
 using App.Data.Domain.EMCS;
@@ -30,6 +35,9 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public JsonResult GetCargoDocumentList(GridListFilter filter)
         {
 
@@ -80,9 +88,12 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [HttpGet]
         public JsonResult GetPlantList(Domain.MasterSearchForm crit)
         {

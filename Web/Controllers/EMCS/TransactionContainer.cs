@@ -42,6 +42,9 @@ namespace App.Web.Controllers.EMCS
         public JsonResult CreateCargoContainer(ContainerFormModel form)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
             if(form.ContainerType == null)
             {
@@ -52,8 +55,11 @@ namespace App.Web.Controllers.EMCS
                 var containertype2 = CheckCNNo(a);
                 form.ContainerType = Convert.ToString(containertype2.Data);
             }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             var cargo = Service.EMCS.SvcCargo.GetCargoById(form.CargoId);
 
             if (cargo != null)

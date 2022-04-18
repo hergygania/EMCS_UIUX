@@ -7,9 +7,13 @@ using App.Domain;
 using System.Dynamic;
 using System.Text.RegularExpressions;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Data.Domain.EMCS;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Service.EMCS
 {
@@ -62,6 +66,9 @@ namespace App.Service.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static bool GRHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -77,8 +84,11 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         public static dynamic GetListSpGRhistory(Data.Domain.EMCS.GridListFilter crit)
         {
@@ -300,6 +310,9 @@ namespace App.Service.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static dynamic GRDocumentList(GridListFilter filter)
         {
             using (var db = new Data.EmcsContext())
@@ -425,7 +438,10 @@ namespace App.Service.EMCS
             //}
         }
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     }
 }

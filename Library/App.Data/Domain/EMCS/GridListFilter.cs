@@ -5,9 +5,13 @@
         public long Id { get; set; }
         public long IdCipl { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public long IdGr { get; set; }
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public long IdGr { get; set; }
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public int Limit { get; set; }
         public int Offset { get; set; }
         public long IdFlow { get; set; }

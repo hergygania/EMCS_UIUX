@@ -1,9 +1,6 @@
 ﻿@model  App.Web.Models.EMCS.CiplModel
 @{
-<<<<<<< HEAD
     Layout = "~/Views/EMCS/_Layout.cshtml";
-=======
->>>>>>> 639d8d0 (Intial commit)
     ViewBag.Title = "Commercial Invoice Packing List Approve";
     ViewBag.TypeReq = "Cipl";
     ViewBag.IdReq = Model.Data.Id;
@@ -14,7 +11,6 @@
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 
-<<<<<<< HEAD
 <style>
     .tabs {
         font-size: 15px;
@@ -64,8 +60,6 @@
 </style>
 <input type="hidden" name="formType" id="formType" value="CIPL" />
 
-=======
->>>>>>> 639d8d0 (Intial commit)
 <div class="col-md-12">
     <div class="col-md-12">
         @Html.Partial("~/Views/EMCS/Wizard.cshtml")
@@ -109,9 +103,6 @@
                     <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
                 </li>
                 <li role="presentation">
-                    <a href="#Changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">Request for change</a>
-                </li>
-                <li role="presentation">
                     <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
                 </li>
                 <li role="presentation">
@@ -139,11 +130,15 @@
                 <div role="tabpanel" class="tab-pane" id="history">
                     @Html.Partial("CiplTabHistory")
                 </div>
+<<<<<<< HEAD
                 <div role="tabpanel" class="tab-pane" id="Changehistory">
                     @Html.Partial("CiplTabChangeHistory")
                 </div>
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+               
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 <div role="tabpanel" class="tab-pane" id="problemhistory">
                     @Html.Partial("CiplTabProblemHistory")
                 </div>

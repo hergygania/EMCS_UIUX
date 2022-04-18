@@ -17,6 +17,7 @@ using App.Data.Domain.EMCS;
 using Newtonsoft.Json;
 using App.Web.Helper;
 using App.Web.App_Start;
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
@@ -25,6 +26,8 @@ using App.Data.Domain.EMCS;
 using Newtonsoft.Json;
 using App.Web.Helper;
 >>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -98,11 +101,15 @@ namespace App.Web.Controllers.EMCS
             return data;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
 =======
 
         public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         {
             string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
 
@@ -172,10 +179,14 @@ namespace App.Web.Controllers.EMCS
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             else if (typeDoc == "Si")
             {
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
             }
+<<<<<<< HEAD
             else if (typeDoc == "Ss")
             {
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
@@ -190,18 +201,24 @@ namespace App.Web.Controllers.EMCS
                 }
                 ViewBag.QrCodeUrlEDI = qrCodeValue;
 =======
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             else if (typeDoc == "Ss")
             {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargo);
+                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
             }
             else
+<<<<<<< HEAD
 <<<<<<< HEAD
             {
 >>>>>>> 639d8d0 (Intial commit)
 =======
             {               
+=======
+            {
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 var qrCodeValue = TempData["QrCodeUrlEDI"];
-                if(qrCodeValue == null)
+                if (qrCodeValue == null)
                 {
                     string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
                     qrCodeValue = strQrCodeUrlEDI;
@@ -243,6 +260,9 @@ namespace App.Web.Controllers.EMCS
                     };
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 else if (typeDoc == "Si")
                 {
                     dataview = new ViewAsPdf(view, cargoSiModel)
@@ -265,8 +285,11 @@ namespace App.Web.Controllers.EMCS
                         PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
                     };
                 }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 else if (typeDoc == "Cargo")
                 {
                     dataview = new ViewAsPdf(view, cargo)
@@ -288,6 +311,7 @@ namespace App.Web.Controllers.EMCS
 
         protected string RenderPartialViewToString(string viewName, object model)
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
             try
             {
@@ -317,13 +341,33 @@ namespace App.Web.Controllers.EMCS
                 ViewData.Model = model;
 
             using (StringWriter sw = new StringWriter())
+=======
+            try
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
+                if (string.IsNullOrEmpty(viewName))
+                    viewName = ControllerContext.RouteData.GetRequiredString("action");
 
+<<<<<<< HEAD
                 return sw.GetStringBuilder().ToString();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                if (model != null)
+                    ViewData.Model = model;
+
+                using (StringWriter sw = new StringWriter())
+                {
+                    ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                    ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                    viewResult.View.Render(viewContext, sw);
+
+                    return sw.GetStringBuilder().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             }
         }
 
@@ -343,6 +387,9 @@ namespace App.Web.Controllers.EMCS
             return GeneratePdf(detail, View, "Pl");
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         //public ActionResult DownloadSi(long id)
         //{
         //    var detail = InitModelCargo(id);
@@ -350,9 +397,12 @@ namespace App.Web.Controllers.EMCS
         //    string View = "DownloadSi";
         //    return GeneratePdf(detail, View, "Si");
         //}
+<<<<<<< HEAD
 =======
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult DownloadEdi(long id)
         {
             var detail = InitModelCipl(id);
@@ -376,6 +426,9 @@ namespace App.Web.Controllers.EMCS
         public ActionResult DownloadSs(long id)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadss");
             ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
             TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
@@ -435,19 +488,17 @@ namespace App.Web.Controllers.EMCS
             }
 
            
+<<<<<<< HEAD
         }
 
 
 =======
             var detail = InitModelCargo(id);
             return View(detail);
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         }
 
-        public ActionResult DownloadSi(long id)
-        {
-            var detail = InitModelCargo(id);
-            return View(detail);
-        }
 
 >>>>>>> 639d8d0 (Intial commit)
         public ActionResult DownloadStatement(int id)

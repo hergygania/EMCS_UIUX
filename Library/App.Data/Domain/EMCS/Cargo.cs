@@ -27,12 +27,17 @@
         public string Incoterms { get; set; }
   
 <<<<<<< HEAD
+<<<<<<< HEAD
         //[DisplayName("Cargo List Number")]
         //public string CiNo { get; set; }
 =======
         [DisplayName("Cargo List Number")]
         public string CiNo { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        //[DisplayName("Cargo List Number")]
+        //public string CiNo { get; set; }
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         [DisplayName("Shipping Summary Number")]
         public string SsNo { get; set; }
@@ -142,12 +147,17 @@
         public DateTime? UpdateDate { get; set; }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //[DisplayName("Id Kppbc")]
         //public long IdKppbc { get; set; }
 =======
         [DisplayName("Id Kppbc")]
         public long IdKppbc { get; set; }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        //[DisplayName("Id Kppbc")]
+        //public long IdKppbc { get; set; }
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         public bool IsDelete { get; set; }
 

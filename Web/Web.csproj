@@ -133,9 +133,13 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Reference Include="System.Data.DataSetExtensions" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Reference Include="System.Data.DataSetExtensions" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -148,11 +152,15 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Reference Include="System.Web.Extensions" />
 =======
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Reference Include="System.Web.Extensions" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -184,6 +192,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Reference Include="System.Web">
       <Private>False</Private>
     </Reference>
@@ -194,6 +203,11 @@
     </Reference>
     <Reference Include="System.Web.Extensions" />
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -212,9 +226,13 @@
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Reference Include="System.Xml.Linq" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Reference Include="System.Xml.Linq" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -444,9 +462,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Compile Include="Helper\ErrorHelper.cs" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="Helper\ErrorHelper.cs" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\Extensions\ControllerExtension.cs" />
     <Compile Include="Helper\Extensions\FileExtention.cs" />
@@ -5185,9 +5207,13 @@
     <Content Include="Scripts.app\EMCS\function.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceiveForm.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\GoodsReceiveFormDocument.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\EMCS\GoodsReceiveFormDocument.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\EMCS\GoodsReceiveList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceivePreviewForm.cshtml.js" />
     <Content Include="Scripts.app\EMCS\highcharts\data.js" />
@@ -5240,9 +5266,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\transaction\BLAWBList.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\EMCS\transaction\BLAWBList.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\EMCS\transaction\Cargo.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoApproval.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoDocuments.cshtml.js" />
@@ -5254,6 +5284,7 @@
     <Content Include="Scripts.app\EMCS\transaction\CiplApprove.cshtml.js" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeDetail.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ChangeHistory.cshtml.js" />
 =======
@@ -5261,6 +5292,9 @@
 =======
     <Content Include="Scripts.app\EMCS\transaction\CiplChangeHIstory.cshtml.js" />
 >>>>>>> 26aafb4 (Changes of P1-CIPL)
+=======
+    <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeDetail.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\EMCS\transaction\CiplDocuments.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplEdit.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplForm.cshtml.js" />
@@ -5271,21 +5305,31 @@
     <Content Include="Scripts.app\EMCS\transaction\GoodReceiveHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\GoodsReceive.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeHistory.js" />
     <Content Include="Scripts.app\EMCS\transaction\NpePeb.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingSummary.cshtml.js" />
+<<<<<<< HEAD
 =======
     <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\EMCS\typing\jquery.typer.js" />
     <Content Include="Scripts.app\EMCS\VideoList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\wizard\ProgressWizard.js" />
     <Content Include="Scripts.app\FreightCostCalculator\FreightCost.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\FreightCostCalculator\FreightCostCalculator.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\FreightCostCalculator\FreightCostCalculator.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\FreightCostCalculator\ImportFCC.cshmtl.js" />
     <Content Include="Scripts.app\Home\Index.ext.cshtml.js" />
     <Content Include="Scripts.app\Home\IndexSupply.int.cshtml.js" />
@@ -5306,9 +5350,13 @@
     <Content Include="Scripts.app\Imex\parts-mapping.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.iud.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\Master\AirPortManagement.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\Master\AirPortManagement.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\Master\EscalationLimit.cshtml.js" />
     <Content Include="Scripts.app\Master\FreightPort.cshtml.js" />
     <Content Include="Scripts.app\Master\EmailRecipientManagement.cshtml.js" />
@@ -5323,9 +5371,13 @@
     <Content Include="Scripts.app\Master\Region.cshtml.js" />
     <Content Include="Scripts.app\Master\RoleAccessMenu.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\Master\SeaPortManagement.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\Master\SeaPortManagement.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\Master\ShippingInstructionManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\OrderMethodManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\LartasManagement.cshtml.js" />
@@ -5342,9 +5394,13 @@
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetails.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterNew.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\PartTracking\OrderThruCounterPopupPartDetail.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\PartTracking\OrderThruCounterPopupPartDetail.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\PartTracking\OrderThruCounters.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounter.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetail.cshtml.js" />
@@ -5352,9 +5408,13 @@
     <Content Include="Scripts.app\PartTracking\StockReplenishmentDetail.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\PartTracking\StockReplenishmentPopupPartDetail.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\PartTracking\StockReplenishmentPopupPartDetail.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\POST\chartjs-plugin-datalabels.min.js" />
     <Content Include="Scripts.app\POST\Dashboard.js" />
     <Content Include="Scripts.app\POST\DataDeliveryConfirm.js" />
@@ -5427,17 +5487,25 @@
     <Content Include="Scripts.app\StoreManagement.cshtml.js" />
     <Content Include="Scripts.app\UserManagement.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\Vetting\eLs.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\Vetting\eLs.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\Vetting\GeneratorVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\ManualVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipmentManifest.form.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipment.iud.cshtml.js" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Scripts.app\Vetting\shipmentManifest.iud.cshtml.js" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Scripts.app\Vetting\shipmentManifest.iud.cshtml.js" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Scripts.app\Vetting\survey.iud.cshtml.js" />
     <Content Include="Scripts.app\Vetting\Shipment.cshtml.js" />
     <Content Include="Scripts.app\Vetting\PartsOrder.cshtml.js" />
@@ -6866,6 +6934,7 @@
 <<<<<<< HEAD
     <Content Include="SQL Scripts\SQL 25 May 2022.txt" />
     <Content Include="SQL Scripts\SQL.txt" />
+<<<<<<< HEAD
     <Content Include="SQL Scripts\SQL_19-05.txt" />
     <Content Include="SQL Scripts\SQL_20-05.txt" />
     <Content Include="Upload\EMCS\Cargo\10262\DocCargo-10262.png" />
@@ -6873,23 +6942,34 @@
 =======
     <Content Include="SQL Scripts\SQL.txt" />
 >>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+=======
+    <Content Include="Upload\EMCS\Cargo\10262\DocCargo-10262.png" />
+    <Content Include="Upload\EMCS\Cargo\10263\DocCargo-10263.png" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
     <Content Include="Upload\EMCS\GoodsReceive\21\DocCargo-21.png" />
     <Content Include="Upload\EMCS\GoodsReceive\22\DocCargo-22.png" />
     <Content Include="Upload\EMCS\GoodsReceive\23\DocCargo-23.png" />
     <Content Include="Upload\EMCS\GoodsReceive\24\DocCargo-24.png" />
+<<<<<<< HEAD
 =======
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Upload\EMCS\GR\2\DO.0612190002FG10004xxxxxx.png" />
     <Content Include="Upload\EMCS\GR\3\DO.0612190003FGTesting.jpeg" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Download\CustomBlankHeader.html" />
     <Content Include="Views\Download\CustomFooter.html" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Content Include="Views\Download\CustomHeader.html" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <Content Include="Views\Download\CustomHeader.html" />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Views\DTS\DRList.png" />
     <Content Include="Views\Post\AdvanceSearch.cshtml" />
     <Content Include="Views\Post\Dashboard.cshtml" />
@@ -7414,9 +7494,12 @@
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
     <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\EMCS\_Layout.cshtml" />
     <Content Include="Views\EMCS\_Menu.cshtml" />
 <<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Content Include="Views\EMCS\TaskRequestForChange.cshtml" />
     <Content Include="Temp\ExportPDFCalculator.docx" />
     <Content Include="Views\PrimeProduct\ImportPrimeProduct.cshtml" />
@@ -7445,6 +7528,7 @@
     <Content Include="Views\EMCS\RequestForChangeDetail.cshtml" />
     <Content Include="Views\EMCS\BLAWBList.cshtml" />
     <Content Include="Views\EMCS\NpePebList.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\EMCS\GoodsReceiveTabDocument.cshtml" />
 =======
 >>>>>>> 639d8d0 (Intial commit)
@@ -7459,6 +7543,8 @@
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
 >>>>>>> 93c2efe ([U] Update from client's TFS)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

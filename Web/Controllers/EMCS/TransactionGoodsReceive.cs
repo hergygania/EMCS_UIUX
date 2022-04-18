@@ -193,7 +193,11 @@ namespace App.Web.Controllers.EMCS
 
                     item.Notes = form.Data.Notes;
                     item.EstimationTimePickup = form.Data.EstimationTimePickup;
-                    id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                    var userId = User.Identity.GetUserId();
+                    if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                    {
+                        id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                    }
                     var data = InitGoodReceive(id);
                     return JsonCRUDMessage(ViewBag.crudMode, data);
                 }
@@ -248,15 +252,21 @@ namespace App.Web.Controllers.EMCS
                 item.Notes = form.Data.Notes;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                
                 
                     id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
                 
                     var data = InitGoodReceive(id);
+<<<<<<< HEAD
 =======
                 id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
                 var data = InitGoodReceive(id);
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 return JsonCRUDMessage(ViewBag.crudMode, data);
             }
             return Json(new { success = false });
@@ -437,6 +447,7 @@ namespace App.Web.Controllers.EMCS
                 item.PickupPoint = form.Data.PickupPoint;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 var userId = User.Identity.GetUserId();
               
                     Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
@@ -444,6 +455,13 @@ namespace App.Web.Controllers.EMCS
 =======
                 Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                var userId = User.Identity.GetUserId();
+                if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                {
+                    Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
+                }
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 var detail = InitGoodReceive(form.Data.Id);
                 return JsonCRUDMessage("U", new { detail });
             }
@@ -535,6 +553,9 @@ namespace App.Web.Controllers.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [HttpPost]
         public bool GRDocumentInsert(List<Data.Domain.EMCS.GoodReceiveDocument> data)
         {
@@ -623,7 +644,10 @@ namespace App.Web.Controllers.EMCS
 
             return File(fullPath, "text/plain", "NotFound.txt");
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     }
 }

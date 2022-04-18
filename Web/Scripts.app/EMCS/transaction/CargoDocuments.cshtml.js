@@ -1,5 +1,8 @@
 ﻿$tableDocuments = $('#tableCargoDocuments');
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 function load_data_tabledoc() {
     var columnDocument = [
         {
@@ -63,8 +66,13 @@ function load_data_tabledoc() {
             events: operateEventRight,
             formatter: function (data, row) {
                 if (row.Filename !== "") {
+<<<<<<< HEAD
                     var btnDownload = "<button class='btn btn-xs btn-link btn-success download' type='button'><i class='fa fa-download'></i></button>";
                     var btnPreview = "<button class='btn btn-xs btn-link btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+=======
+                    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                     return [btnDownload, btnPreview].join(' ');
                 } else {
                     return "-";
@@ -72,6 +80,7 @@ function load_data_tabledoc() {
             },
             class: 'text-nowrap'
         }];
+<<<<<<< HEAD
 
     window.operateEventRight = {
         'click .download': function (e, value, row) {
@@ -280,16 +289,225 @@ var columnDocument1 = [
     {
         field: 'Id',
 =======
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
-var columnDocument = [
+    window.operateEventRight = {
+        'click .download': function (e, value, row) {
+            
+            location.href = "/EMCS/DownloadCargoDocument/" + row.Id;
+        },
+        'click .showDocument': function (e, value, row) {
+            document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/Cargo/" + row.Id + '/' + row.Filename;
+        }
+    };
+
+    operateFormatter.DEFAULTS = {
+        Add: false,
+        Edit: false,
+        Delete: false,
+        Info: false,
+        View: false,
+        History: false
+    }
+
+    function operateFormatter(data, row, index) {
+        var btn = [];
+        btn.push('<div class="btn-toolbar row">');
+        btn.push('<button type="button" class="btn btn-info btn-xs edit" data-toggle="modal" data-target="#myModalDocument" title="Edit" > <i class="fa fa-edit"></i></button >\
+            <button type="button" class="btn btn-primary btn-xs upload" data-toggle="modal" data-target="#myModalUploadPlace" title="Upload"><i class="fa fa-upload"></i></button>');
+        btn.push('<button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+        btn.push('</div>');
+        return btn.join('');
+    }
+    
+
+
+    //window.operateEvents = {
+    //    'click .download': function (e, value, row, index) {
+    //        location.href = "/EMCS/ReportDO/" + row.id;
+    //    }
+    //};
+
+    //function SetEditedRow(Id, DocumentName) {
+    //    
+    //    $('#Id').val(Id);
+    //    $("input[name=Id]").val(Id);
+    //    //$('#inp-doc-date').val(DocumentDate);
+    //    $('#DocumentName').val(DocumentName);
+    //}
+    $tableDocuments.bootstrapTable({
+        columns: columnDocument,
+        cache: false,
+        search: false,
+        striped: false,
+        clickToSelect: true,
+        reorderableColumns: true,
+        toolbar: '.toolbarDocument',
+        toolbarAlign: 'left',
+        onClickRow: selectRow,
+        showColumns: true,
+        showRefresh: false,
+        smartDisplay: false,
+        pagination: true,
+        sidePagination: 'client',
+        pageSize: '5',
+        formatNoMatches: function () {
+            return '<span class="noMatches">No data found</span>';
+        },
+    });
+}
+
+
+function ajaxInsertUpdateDocument() {
+    
+    var json = new Array();
+    json.push({
+        Id: $('#Id').val(),
+        IdCargo: $('#CargoID').val(),
+        DocumentDate: $('#inp-doc-date').val(),
+        DocumentName: $('#DocumentName').val()
+    });
+    $.ajax({
+        url: '/EMCS/CargoDocumentInsert',
+        type: 'POST',
+        data: {
+            data: json
+        },
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            Swal.fire({
+                type: 'success',
+                title: 'Success'
+                , text: 'Saved, Your Data Has Been Saved',
+            })
+        },
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Update Data',
+            })
+        }
+    })
+
+}
+function CargoDocumentConvert(data) {
+    var array = new Array();
+    $.each(data, function (index, element) {
+        var arraydata = {
+            Id: element.Id,
+            Cargoid: element.IdCargo,
+            DocumentDate: moment(element.DocumentDate).format("DD MMM YYYY"),
+            DocumentName: element.DocumentName,
+            Filename: element.Filename
+        }
+        array.push(arraydata);
+    })
+    return array;
+}
+
+$("#documentAddButton").on('click', function () {
+    
+    $('#Id').val(0);
+    $('#DocumentName').val(null);
+})
+
+$("#listgetforview").on('click', function () {
+    
+    get_cargodocumentviewlist();
+})
+function get_cargodocumentlist() {
+    
+    $.ajax({
+        url: '/EMCS/GetCargoDocumentList',
+        type: 'POST',
+        data: {
+            Cargoid: $('#CargoID').val(),
+
+        },
+
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            var convert = CargoDocumentConvert(data);
+            convert.Id = 0;
+
+            if (convert.length > 0) {
+                $tableDocuments.bootstrapTable('removeAll');
+                $tableDocuments.bootstrapTable('load', convert);
+                $tableDocuments.bootstrapTable('remove', convert.Id);
+
+
+                //$tableDocuments.bootstrapTable('refresh');
+            } else {
+                $tableDocuments.bootstrapTable('removeAll');
+            }
+            convert.Id = 0;
+        },
+
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Get Data',
+            })
+        }
+
+    })
+
+}
+$("#btnAddItem").on('click', function () {
+    $('#DocumentName').val() = null;
+})
+$("#btnAddDocument").on("click", function () {
+    
+    var id = $("#CargoID").val();
+
+    if ($("#CargoID").val() == null || $("#CargoID").val() == 0) {
+        Swal.fire({
+            type: 'error',
+            title: 'Opps..',
+            html: 'Cargo Id Is Not Found,Please save as Draft before Add Document'
+        });
+        return false;
+    }
+    else {
+        ajaxInsertUpdateDocument();
+        get_cargodocumentlist();
+    }
+
+
+})
+
+//******************************************Get For Only View Document*********************************************//
+$tableDocuments1 = $('#tableCargoDocuments1');
+var columnDocument1 = [
     {
         field: '',
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        title: 'Action',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        formatter: function (data, row, index) {
+            return "-";
+        },
+
+    },
+    {
+        field: 'Id',
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         title: 'No',
         halign: 'center',
         align: 'center',
         class: 'text-nowrap',
         sortable: true,
+<<<<<<< HEAD
 <<<<<<< HEAD
         visible: false
     },
@@ -310,6 +528,21 @@ var columnDocument = [
     {
         field: 'CaseDate',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        visible: false
+    },
+    {
+        field: 'Cargoid',
+        title: 'Cargo No',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        visible: false
+    },
+    {
+        field: 'DocumentDate',
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         title: 'Date',
         halign: 'center',
         align: 'left',
@@ -321,10 +554,14 @@ var columnDocument = [
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         field: 'DocumentName',
 =======
         field: 'Name',
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        field: 'DocumentName',
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         title: 'Document Name',
         halign: 'center',
         align: 'left',
@@ -332,6 +569,7 @@ var columnDocument = [
         sortable: true
     },
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         field: 'Filename',
         title: 'Attachment',
@@ -414,76 +652,87 @@ function get_cargodocumentviewlist() {
         field: '',
         title: 'Action',
         halign: 'center',
+=======
+        field: 'Filename',
+        title: 'Attachment',
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         align: 'center',
+        valign: 'center',
+        halign: "center",
         class: 'text-nowrap',
         sortable: true,
-        formatter: function (data, row, index) {
-            return operateFormatter(row);
-        }
-        //,
-        //events: operateEvents
+        formatter: function (data, row) {
+            //if (row.Filename !== "") {
+            //    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+            //    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+            //    return [btnDownload, btnPreview].join(' ');
+            //} else {
+            return "-";
+            //}
+        },
+        class: 'text-nowrap'
     }];
+$tableDocuments1.bootstrapTable({
+    columns: columnDocument1,
+    cache: false,
+    search: false,
+    striped: false,
+    clickToSelect: true,
+    reorderableColumns: true,
+    toolbar: '.toolbarDocument',
+    toolbarAlign: 'left',
+    onClickRow: selectRow,
+    showColumns: true,
+    showRefresh: false,
+    smartDisplay: false,
+    pagination: true,
+    sidePagination: 'client',
+    pageSize: '5',
+    formatNoMatches: function () {
+        return '<span class="noMatches">No data found</span>';
+    },
+});
+function get_cargodocumentviewlist() {
+    
+    $.ajax({
+        url: '/EMCS/GetCargoDocumentList',
+        type: 'POST',
+        data: {
+            Cargoid: $('#CargoID').val(),
 
-operateFormatter.DEFAULTS = {
-    Add: false,
-    Edit: false,
-    Delete: false,
-    Info: false,
-    View: false,
-    History: false
-}
+        },
 
-function operateFormatter(options) {
-    var btn = [];
-    console.log(options);
-    btn.push('<div class="btn-group">');
-
-    btn.push('</button><button type="button" class="btn btn-default download" title="Download"><i class="fa fa-download"></i></button>')
-
-    btn.push('</div>');
-
-    return btn.join('');
-}
-
-
-window.operateEvents = {
-    'click .download': function (e, value, row, index) {
-        location.href = "/EMCS/ReportDO/" + row.id;
-    }
-};
-
-$(function () {
-    $tableDocuments.bootstrapTable({
         cache: false,
-        pagination: true,
-        search: false,
-        url: "/Emcs/GetDocumentList",
-        striped: false,
-        showRefresh: true,
-        clickToSelect: false,
-        sidePagination: 'server',
-        showColumns: false,
-        smartDisplay: false,
-        queryParams: function (params) {
-            return {
-                Id: $("#idCargo").val(),
-                Category: "CL"
-            };
+        async: false,
+        success: function (data, response) {
+            var convert = CargoDocumentConvert(data);
+            convert.Id = 0;
+            if (convert.length > 0) {
+                $tableDocuments1.bootstrapTable('removeAll');
+                $tableDocuments1.bootstrapTable('load', convert);
+                $tableDocuments1.bootstrapTable('remove', convert.Id);
+
+
+                //$tableDocuments.bootstrapTable('refresh');
+            } else {
+                $tableDocuments1.bootstrapTable('removeAll');
+            }
+            convert.Id = 0;
         },
-        pageSize: '10',
-        formatNoMatches: function () {
-            return '<span class="noMatches">No Document available</span>';
-        },
-        columns: columnDocument
-    });
 
-    //window.pis.table({
-    //    objTable: $tableDocuments,
-    //    urlSearch: '/EMCS/CargoDocumentsPage?id=' + $("#idCargo").val(),
-    //    urlPaging: '/EMCS/CargoDocumentsPageXt',
-    //    autoLoad: true
-    //});
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Get Data',
+            })
+        }
 
+    })
 
+<<<<<<< HEAD
 });
 >>>>>>> 639d8d0 (Intial commit)
+=======
+}
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)

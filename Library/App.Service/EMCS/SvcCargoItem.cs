@@ -40,6 +40,7 @@ namespace App.Service.EMCS
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static List<SpCargoItemDetail> GetDataByCargoId(List<long> ids)
         {
             try
@@ -63,12 +64,24 @@ namespace App.Service.EMCS
 >>>>>>> 639d8d0 (Intial commit)
 =======
         public static List<SpCargoItemDetail> GetDataByCargoId(long id)
+=======
+        public static List<SpCargoItemDetail> GetDataByCargoId(List<long> ids)
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         {
-            using (var db = new Data.EmcsContext())
+            try
             {
-                var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + id + "'";
-                var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
-                return data;
+                var idList = string.Join(",", ids.Select(n => "" + n + "").ToArray());
+                
+                using (var db = new Data.EmcsContext())
+                {
+                    var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + idList + "'";
+                    var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
+                    return data;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -155,6 +168,9 @@ namespace App.Service.EMCS
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         //public static dynamic GetTotalDataCargo(long id)
         //{
         //    using (var db = new Data.EmcsContext())
@@ -204,9 +220,12 @@ namespace App.Service.EMCS
         //    }
         //}
         public static dynamic GetTotalDataCargo(long id,string selectvalue) 
+<<<<<<< HEAD
 =======
         public static dynamic GetTotalDataCargo(long id)
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         {
             using (var db = new Data.EmcsContext())
             {
@@ -234,6 +253,9 @@ namespace App.Service.EMCS
                 if (dataItem.Count > 0)
                 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                     if(selectvalue == "NoItem")
                     {
                         result.totalPackage = dataItem.GroupBy(a => new { a.Id, a.IdCipl }).Count();
@@ -243,9 +265,12 @@ namespace App.Service.EMCS
                         result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
                     }
                     
+<<<<<<< HEAD
 =======
                     result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                     //result.totalPackage = dataItem.GroupBy(a => a.CaseNumber && a.IdCipl).Count();
                     // ReSharper disable once PossibleInvalidOperationException
                     result.totalNetWeight = dataItem.GroupBy(a => a.IdCargo).Select(a => a.Sum(x => x.Net)).FirstOrDefault().Value;

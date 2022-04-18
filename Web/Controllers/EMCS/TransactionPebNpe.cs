@@ -4,27 +4,12 @@ using System.Web;
 using System.Web.Mvc;
 using App.Data.Caching;
 using App.Data.Domain;
-<<<<<<< HEAD
 using App.Web.App_Start;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
 using System;
 using System.ComponentModel;
-=======
-using App.Domain;
-using App.Web.Models;
-using App.Web.App_Start;
-using System.Globalization;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Configuration;
-using System.Net;
-using App.Data.Domain.EMCS;
-using App.Web.Models.EMCS;
-using System.IO;
-using System.Text.RegularExpressions;
->>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -32,6 +17,9 @@ namespace App.Web.Controllers.EMCS
     {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult NpePebList()
         {
@@ -56,8 +44,11 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcNpePeb.NpePebList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult NpePebApprove()
         {
             ApplicationTitle();
@@ -142,6 +133,7 @@ namespace App.Web.Controllers.EMCS
 
         [HttpPost]
         public ActionResult DraftNpePeb(Data.Domain.EMCS.NpePeb form, string status)
+<<<<<<< HEAD
 <<<<<<< HEAD
         {
             Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
@@ -295,14 +287,27 @@ namespace App.Web.Controllers.EMCS
 
 =======
         {   
+=======
+        {
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             //if (!ModelState.IsValid)
             //{
             //    return View(form);
             //} 
+<<<<<<< HEAD
 
             Data.Domain.EMCS.ReturnSpInsert data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
 >>>>>>> 639d8d0 (Intial commit)
             return JsonMessage("This ticket has been " + status, 0, data);
+=======
+            Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
+            var userId = User.Identity.GetUserId();
+            if (Service.EMCS.SvcNpePeb.NpePebHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+            {
+               data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
+            }
+                return JsonMessage("This ticket has been " + status, 0, data);
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         }
 
         [HttpPost]

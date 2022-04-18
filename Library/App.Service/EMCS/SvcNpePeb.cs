@@ -288,6 +288,9 @@ namespace App.Service.EMCS
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static bool NpePebHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -306,8 +309,11 @@ namespace App.Service.EMCS
 
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
     }
 }

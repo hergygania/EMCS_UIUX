@@ -17,19 +17,13 @@ using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Dynamic;
-<<<<<<< HEAD
 using App.Web.Helper;
-=======
->>>>>>> 639d8d0 (Intial commit)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
-<<<<<<< HEAD
         
-=======
->>>>>>> 639d8d0 (Intial commit)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public ActionResult Mytask()
         {
@@ -43,6 +37,7 @@ namespace App.Web.Controllers.EMCS
             var filter = new GridListFilter();
             filter.Username = SiteConfiguration.UserName;
 <<<<<<< HEAD
+<<<<<<< HEAD
             ViewBag.IsImexUser = false;
             string userRoles = User.Identity.GetUserRoles();
             if (userRoles.Contains("EMCSRequestor") || userRoles.Contains("Imex"))
@@ -55,10 +50,16 @@ namespace App.Web.Controllers.EMCS
 =======
 >>>>>>> 639d8d0 (Intial commit)
 
+=======
+            ViewBag.IsImexUser = false;
+            if(User.Identity.GetUserRoles().Contains("EMCSRequestor") || User.Identity.GetUserRoles().Contains("Imex"))
+                ViewBag.IsImexUser = true;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             dynamic allCount = new ExpandoObject();
             allCount.Cipl = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             allCount.Gr = Service.EMCS.SvcRequestGr.GetTotalList(filter);
             allCount.Cl = Service.EMCS.SvcRequestCl.GetTotalList(filter);
+<<<<<<< HEAD
 <<<<<<< HEAD
             allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
             allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
@@ -76,12 +77,27 @@ namespace App.Web.Controllers.EMCS
         }
 =======
             allCount.Npe = Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
+=======
+            allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
             allCount.Bl = Service.EMCS.SvcRequestCl.GetBlTotalList(filter);
+            //allCount.RFC = Service.EMCS.SvcRequestCl.GetRFCTotalList();
             return View(allCount);
         }
+<<<<<<< HEAD
 
 >>>>>>> 639d8d0 (Intial commit)
+=======
+        public ActionResult RequestForChangeDetail(string formtype,int id,int formid)
+        {
+            ViewBag.AppTitle = "Request For Change";
+            ViewBag.FormType = formtype;
+            ViewBag.RFCId = id;
+            ViewBag.FormId = formid;
+            return View();
+        }
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult TaskCipl()
         {
             ViewBag.AppTitle = "Export Monitoring & Control System";
@@ -99,6 +115,9 @@ namespace App.Web.Controllers.EMCS
             return Json(new { total, rows = data }, JsonRequestBehavior.AllowGet);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public JsonResult RejectChangeHistory(string idterm,string reason)
         {
@@ -106,8 +125,11 @@ namespace App.Web.Controllers.EMCS
             Service.EMCS.SvcCipl.RejectRequestForChangeHistory(Convert.ToInt32(idterm), reason);
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public JsonResult GetTaskClData(GridListFilter filter)

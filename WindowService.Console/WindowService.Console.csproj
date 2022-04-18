@@ -10,10 +10,14 @@
     <RootNamespace>WindowService.Console</RootNamespace>
     <AssemblyName>WindowService.Console</AssemblyName>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
 =======
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <SccProjectName>SAK</SccProjectName>
@@ -36,9 +40,13 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <TargetFrameworkProfile />
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <TargetFrameworkProfile />
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

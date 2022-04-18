@@ -101,6 +101,7 @@
                                     <input type="hidden" class="form-control" id="CargoID" name="CargoID" disabled value="@Model.Data.Id">
                                     <input type="text" class="form-control" id="noCl" name="noCl" disabled value="@Model.Data.ClNo">
                                 </div>
+<<<<<<< HEAD
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-4 col-xs-4">Date</label>
@@ -117,6 +118,169 @@
                                     {
                                         <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
                                     }
+=======
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Export Type</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="exportType" name="exportType" value="@(!string.IsNullOrEmpty(Model.Data.ExportType) ? Model.Data.ExportType : "-")" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Category</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="category" name="category" value="@Model.Data.Category" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Incoterms</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="incoterms" name="incoterms" value="@Model.Data.IncotermsDesc" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Shipping Method</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="ShippingMethod" class="form-control" value="@Model.Data.ShippingMethod" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Cargo Type</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" name="CargoType" class="form-control" value="@Model.Data.CargoTypeName" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Referrence</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" id="Referrence" name="Referrence" disabled rows="2" cols="2">@(Model.Data.RefEdo ?? "")</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend style="display: none;">&nbsp;</legend>
+                                <div class="col-md-12">
+                                    <table class="table table-bordered" id="tableCargoView" style="width: 100%;"></table>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border">&nbsp;</legend>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Total Packages</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-6 col-xs-6" disabled>
+                                                <select id="select" onchange="getTotalData()" class="form-control" style=" height:33px;" disabled>
+                                                    <option value="CaseNo" selected="selected">Total Package by CaseNumber</option>
+                                                    <option value="NoItem">Total Package by Item</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-6" style="right:23px;">
+                                                <input type="text" class="form-control text-right" id="topackCl" name="topackCl" value="@Model.TemplateHeader.TotalCaseNumber" disabled>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 0px;">
+                                            <label class="control-label col-lg-4 col-xs-4">Total Net Weight</label>
+                                            <div class="input-group col-lg-8 col-xs-8" style="padding-left: 5px; padding-right: 15px;">
+                                                <input type="text" class="form-control text-right" id="tonetwegCl" name="togroswegCl" value="" disabled>
+                                                <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group" style="margin-left: 0px;">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Gross Weight</label>
+                                        <div class="input-group col-lg-8 col-xs-8" style="padding-left: 5px; padding-right: 15px;">
+                                            <input type="text" class="form-control text-right" id="togroswegCl" name="togroswegCl" value="" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-left: 0px;">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Volume</label>
+                                        <div class="input-group col-lg-8 col-xs-8" style="padding-left: 5px; padding-right: 15px;">
+                                            <input type="text" class="form-control text-right" id="tovolumeCl" name="tovolumeCl" value="" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">m3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4">Stuffing Date (Started)</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="startstufCl" name="startstufCl" value="@(Model.Data.StuffingDateStarted.HasValue ? Model.Data.StuffingDateStarted.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4">Stuffing Date (Finished)</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="finishstufCl" name="finishstufCl" value="@(Model.Data.StuffingDateFinished.HasValue ? Model.Data.StuffingDateFinished.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Flight / Sailing Schedule (ETD) </label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="flightCl" name="flightCl" value="@(Model.Data.SailingSchedule.HasValue ? Model.Data.SailingSchedule.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Arrival Schedule (ETA)</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="arrivalCl" name="arrivalCl" value="@(Model.Data.ArrivalDestination.HasValue ? Model.Data.ArrivalDestination.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Vessel/Flight Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="veselCl" name="veselCl" value="@Model.Data.VesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Vessel/Flight No</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageVesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Booking Number</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="booknumCl" name="booknumCl" value="@Model.Data.BookingNumber" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Booking Date</label>
+                                        <div class="col-sm-8">
+                                            <input class="form-control" id="bookdateCl" name="bookdateCl" value="@(Model.Data.BookingDate.HasValue ? Model.Data.BookingDate.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Connecting Vessel/Flight Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="connectveselCl" name="connectveselCl" value="@Model.Data.ConnectingVesselFlight" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4">Connecting Vessel/Flight No</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageConnectingVessel" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
                                 </div>
                             </div>
@@ -607,6 +771,7 @@
 
             <div role="tabpanel" class="tab-pane" id="documents">
 <<<<<<< HEAD
+<<<<<<< HEAD
                 @*<div class="row">
                 <div class="col-xs-12 table-responsive">*@
                 @Html.Partial("CargoTabDocuments")
@@ -619,6 +784,13 @@
                     </div>
                 </div>
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                @*<div class="row">
+                    <div class="col-xs-12 table-responsive">*@
+                @Html.Partial("CargoTabDocuments")
+                @*</div>
+                    </div>*@
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             </div>
             @if (Model.TemplateHeader != null)
             {
@@ -875,6 +1047,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/Cargo.cshtml.js")"></script>
 }
 
@@ -904,3 +1077,7 @@
 =======
 }
 >>>>>>> 639d8d0 (Intial commit)
+=======
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/Cargo.cshtml.js")"></script>
+}
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)

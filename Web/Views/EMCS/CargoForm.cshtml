@@ -105,10 +105,14 @@
 </a>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <a data-modal="" href="/EMCS/EditItemCargo/" class="editItemCargo" style="display:none;">
 =======
 <a data-modal="" href="/EMCS/EditItemCargo/0" class="editItemCargo" style="display:none;">
 >>>>>>> 639d8d0 (Intial commit)
+=======
+<a data-modal="" href="/EMCS/EditItemCargo/" class="editItemCargo" style="display:none;">
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <i class="fa fa-edit"></i> Edit Item Cargo
 </a>
 
@@ -407,6 +411,7 @@
 =======
     <div class="row">
         <div class="col-md-12">
+<<<<<<< HEAD
             <div class="box box-warning" style="min-height:555px">
                 <div class="box-body">
                     <div class="row">
@@ -544,6 +549,105 @@
                                     <input class="form-control date required" id="inpStartStuffDateCl" name="inpStartStuffDateCl" placeholder="Stuffing Date Started" readonly="readonly" style="background:white;">
                                     <div class="input-group-addon calStuffStart" style="background:#00C0EF;border-color:#00ACD6;">
                                         <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+=======
+            <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tab-task-cargo" aria-controls="home" role="tab" data-toggle="tab">Cargo</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab-cargodocuments" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    </li>
+                </ul>
+                <div class="tab-content tabs-custom">
+                    <div class="tab-pane active" id="tab-task-cargo">
+                        <div class="col-lg-12">
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border"></legend>
+                                <div class="col-lg-6">
+                                    <input type="hidden" id="CargoID" value="0" />
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Cargo No.</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" value="" class="form-control" placeholder="Cargo No" id="inpClNo" name="inpClNo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" id="CreateDate" class="form-control" disabled name="CreateDate" value="" placeholder="Cargo Date" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Prepared By</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="inpPreparedCl" name="inpPreparedCl" placeholder="Prepared By" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Consignee</label>
+                                        @*<div class="input-group col-lg-8 col-xs-8" id="Consignee">*@
+                                        <div class="input-group col-lg-8 col-xs-8" >
+                                            @*@Html.TextBoxFor(m => m.Data.Consignee, new { @class = "form-control disabled", @readonly = "readonly", @id = "Consignee", placeholder = "Consignee" })*@
+                                            <input type="text" class="form-control" id="Consignee" name="inpPreparedCl" placeholder="Prepared By" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Notify Party</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="NotifyParty" name="NotifyParty" class="form-control" readonly placeholder="Notify Party" style="width:100%;" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Export Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="ExportType" name="ExportType" placeholder="Export Type" class="form-control" style="width:100%;" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Category</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="Category" name="Category" class="form-control" placeholder="Category" style="width:100%;" readonly />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Category)</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Incoterms</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="Incoterms" name="Incoterms" class="form-control" readonly placeholder="Incoterms" required style="width:100%;" />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Incoterms)</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Shipping Method</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="ShippingMethod" name="ShippingMethod" readonly class="form-control" placeholder="Shipping Method" style="width:100%;" />
+                                            <div>@Html.ValidationMessageFor(m => m.Data.Incoterms)</div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Kppbc</label>
+                                            <div class="input-group col-lg-8 col-xs-8 col-md-8">
+                                                <select id="IdKppbc" name="IdKppbc" readonly class="select2" required style="width:100%;"></select>
+                                            </div>
+                                        </div>*@
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Cargo Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8 col-md-8">
+                                            <select id="CargoType" name="CargoType" readonly class="select2" required style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Reference <span class="text-danger">*</span></label>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <div class="row" style="margin-bottom:5px;">
+                                                <select id="inpReference" class="select2" multiple="multiple" style="width:100%;" required name="inpReference"></select>
+                                            </div>
+                                        </div>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                                     </div>
                                 </div>
                             </div>
@@ -664,7 +768,61 @@
 
                             <fieldset class="scheduler-border">
                                 <legend class="scheduler-border"></legend>
+<<<<<<< HEAD
 
+=======
+                                <div class="col-lg-12 divtableCl">
+                                    <div class="toolbar">
+                                        <a class="btn btn-success linkCreateCargo" data-modal="myModalPlace" data-toggle="modal" data-target="" href="/EMCS/CreateContainer/0" style="display:none;">
+                                            <i class="fa fa-plus-circle"></i> Create Cargo
+                                        </a>
+                                        <button type="button" class="btn btn-success btn-md btnAddCIPL" disabled><i class="fa fa-plus-circle"></i> Add Cargo</button>
+                                        <button type="button" class="btn btn-success btn-md edit" id="editItemCargoAll" ><i class="fa fa-plus-circle"></i> Edit Multiple</button>
+                                    </div>
+                                    @*<input type="hidden" id="CLID"  />*@
+                                    <table class="table table-bordered" id="tableCargoForm" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true"></table>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Packages</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-6 col-xs-6">
+                                                <select id="select" onchange="getTotalData()" class="form-control" style=" height: 33px;right: 14px;">
+                                                    <option value="CaseNo" selected="selected">Total Package by CaseNumber</option>
+                                                    <option value="NoItem">Total Package by Item</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-6" style="right: 37px;">
+                                                <input type="text" class="form-control text-right" id="inpTotalPackageCl" name="inpTotalPackageCl" placeholder="Total Package" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Net Weight</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalNetWeightCl" name="inpTotalNetWeightCl" placeholder="Total Net Weight" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Gross Weight</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalGrossWeightCl" name="inpTotalGrossWeightCl" placeholder="Total Gross Weight" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Total Volume</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control text-right" id="inpTotalVolumeCl" name="inpTotalVolumeCl" placeholder="Total Volume" disabled>
+                                            <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">m3</div>
+                                        </div>
+                                    </div>
+                                </div>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                             </fieldset>
                             <fieldset class="scheduler-border">
                                 <legend class="scheduler-border"></legend>
@@ -674,6 +832,12 @@
                                 <div class="col-md-12">
                                     @*<a class="btn btn-warning" id="btnCancelCargo" style="min-width:120px;" href="/EMCS/CargoList"><i class="fa fa-arrow-circle-left"></i>Back</a>*@
                                     <a class="btn btn-default btn-rotate" id="btnBackCargo" href="/EMCS/CargoList" style="min-width:120px;"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                                    @{
+                                        if (ViewBag.IsImexUser && ViewBag.CanRequestForChange && ViewBag.CargoID > 0)
+                                        {
+                                            <button type="button"  class="btn btn-info" id="RequestForChangeHistoryCL" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Request for change history</button>
+                                        }
+                                    }
                                     <a class="btn btn-info btn-rotate" id="btnSaveCargo" style="min-width:120px;" onclick="post_cargo('Draft')"><i class="fa fa-save"></i>&nbsp;Save As Draft</a>
                                     <a class="btn btn-success" id="btnSubmitCargo" style="min-width:120px;" onclick="post_cargo('Submit')"><i class="fa fa-paper-plane"></i>&nbsp;Submit</a>
                                     @*<input type="submit" value="Submit" />*@
@@ -682,10 +846,135 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-cargodocuments">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <div class="toolbarDocument" id="toolbarDocument">
+                                    <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                        
+                                        <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered" data-toggle="table"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+@*</div>
+    </div>*@
+<div id="cargoItemForm"></div>
+<!-- Modal -->
+<div id="myModalDocument" class="modal fade in" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Document</h4>
+            </div>
+            <form id="FormDocument">
+                <div class="modal-body">
+                    <div class="row" id="formeditreference">
+                        <div class="col-lg-12">
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <input type="text" class="form-control" id="Id" name="Id">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-xs-12">Document Date</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <span class="input-group-addon cal-doc-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input class="form-control date required" id="inp-doc-date" name="inp-doc-date" placeholder="Date" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-xs-12">Document Name</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <input type="text" class="form-control" id="DocumentName" name="DocumentName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id='myModalUploadPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+            <div id="template-dropzone" class="hidden">
+                <div id="template" class="file-row text-left" style="padding:20px;">
+                    <!-- This is used as the file preview template -->
+                    <div class="col-md-2">
+                        <div class="row">
+                            <span class="preview">
+                                <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="name" data-dz-name></p>
+                        <strong class="error text-danger" data-dz-errormessage></strong>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <p class="size" data-dz-size></p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span data-dz-uploadprogress id="progressPercent"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 </div>
 </form>
@@ -799,6 +1088,10 @@
     </div>
 </div>
 <div id='myModalUploadPreview' class='modal fade '>
+=======
+</div>
+<div id='myModalUploadPreview' class='modal fade in'>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -832,11 +1125,14 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 =======
 </form>
 
 <!-- Modal -->
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 <div id="myModalPlace" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -863,10 +1159,18 @@
 <script src="/Scripts/loadingoverlay.min.js"></script>
 =======
     $(document).ready(function () {
-
+        
+        load_data_tabledoc();
+        get_cargodocumentlist();
     });
 </script>
+<<<<<<< HEAD
 >>>>>>> 639d8d0 (Intial commit)
+=======
+<script src="~/Scripts.app/EMCS/dropzone.js"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+<script src="/Scripts/loadingoverlay.min.js"></script>
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 @section scripts
 {
@@ -874,6 +1178,9 @@
     @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoForm.cshtml.js")"></script>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
