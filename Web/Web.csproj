@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Web</RootNamespace>
     <AssemblyName>App.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>44304</IISExpressSSLPort>
@@ -28,6 +28,7 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.5</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +81,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -119,6 +123,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
@@ -130,8 +135,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -162,11 +166,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -184,6 +186,7 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -397,6 +400,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ErrorHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\Extensions\ControllerExtension.cs" />
     <Compile Include="Helper\Extensions\FileExtention.cs" />
@@ -5036,6 +5040,7 @@
     <Content Include="Scripts.app\EMCS\FormProblemDelegation.cshtml.js" />
     <Content Include="Scripts.app\EMCS\function.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceiveForm.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\GoodsReceiveFormDocument.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceiveList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\GoodsReceivePreviewForm.cshtml.js" />
     <Content Include="Scripts.app\EMCS\highcharts\data.js" />
@@ -5083,6 +5088,7 @@
     <Content Include="Scripts.app\EMCS\SuperiorList.cshtml.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts.app\EMCS\transaction\BLAWBList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\Cargo.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoApproval.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoDocuments.cshtml.js" />
@@ -5092,7 +5098,7 @@
     <Content Include="Scripts.app\EMCS\transaction\CargoProblemHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\Cipl.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplApprove.cshtml.js" />
-    <Content Include="Scripts.app\EMCS\transaction\CiplChangeHIstory.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeDetail.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplDocuments.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplEdit.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CiplForm.cshtml.js" />
@@ -5102,11 +5108,15 @@
     <Content Include="Scripts.app\EMCS\transaction\CiplProblemHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\GoodReceiveHistory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\GoodsReceive.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\mytask\TaskRequestForChangeHistory.js" />
+    <Content Include="Scripts.app\EMCS\transaction\NpePeb.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\transaction\ShippingSummary.cshtml.js" />
     <Content Include="Scripts.app\EMCS\typing\jquery.typer.js" />
     <Content Include="Scripts.app\EMCS\VideoList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\wizard\ProgressWizard.js" />
     <Content Include="Scripts.app\FreightCostCalculator\FreightCost.cshtml.js" />
+    <Content Include="Scripts.app\FreightCostCalculator\FreightCostCalculator.cshtml.js" />
     <Content Include="Scripts.app\FreightCostCalculator\ImportFCC.cshmtl.js" />
     <Content Include="Scripts.app\Home\Index.ext.cshtml.js" />
     <Content Include="Scripts.app\Home\IndexSupply.int.cshtml.js" />
@@ -5126,6 +5136,7 @@
     <Content Include="Scripts.app\Imex\regulation-management.cshtml.js" />
     <Content Include="Scripts.app\Imex\parts-mapping.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.iud.cshtml.js" />
+    <Content Include="Scripts.app\Master\AirPortManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\EscalationLimit.cshtml.js" />
     <Content Include="Scripts.app\Master\FreightPort.cshtml.js" />
     <Content Include="Scripts.app\Master\EmailRecipientManagement.cshtml.js" />
@@ -5139,6 +5150,7 @@
     <Content Include="Scripts.app\Master\Menu.cshtml.js" />
     <Content Include="Scripts.app\Master\Region.cshtml.js" />
     <Content Include="Scripts.app\Master\RoleAccessMenu.cshtml.js" />
+    <Content Include="Scripts.app\Master\SeaPortManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\ShippingInstructionManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\OrderMethodManagement.cshtml.js" />
     <Content Include="Scripts.app\Master\LartasManagement.cshtml.js" />
@@ -5154,12 +5166,14 @@
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetail.cshtml - Copy.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetails.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterNew.cshtml.js" />
+    <Content Include="Scripts.app\PartTracking\OrderThruCounterPopupPartDetail.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounters.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounter.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\OrderThruCounterDetail.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\StockReplenishment.cshtml.js" />
     <Content Include="Scripts.app\PartTracking\StockReplenishmentDetail.cshtml.js" />
     <Content Include="Scripts.app\Imex\shipmentData.cshtml.js" />
+    <Content Include="Scripts.app\PartTracking\StockReplenishmentPopupPartDetail.cshtml.js" />
     <Content Include="Scripts.app\POST\chartjs-plugin-datalabels.min.js" />
     <Content Include="Scripts.app\POST\Dashboard.js" />
     <Content Include="Scripts.app\POST\DataDeliveryConfirm.js" />
@@ -5215,10 +5229,12 @@
     <Content Include="Scripts.app\Report\_reportImex.js" />
     <Content Include="Scripts.app\StoreManagement.cshtml.js" />
     <Content Include="Scripts.app\UserManagement.cshtml.js" />
+    <Content Include="Scripts.app\Vetting\eLs.cshtml.js" />
     <Content Include="Scripts.app\Vetting\GeneratorVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\ManualVetting.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipmentManifest.form.cshtml.js" />
     <Content Include="Scripts.app\Vetting\shipment.iud.cshtml.js" />
+    <Content Include="Scripts.app\Vetting\shipmentManifest.iud.cshtml.js" />
     <Content Include="Scripts.app\Vetting\survey.iud.cshtml.js" />
     <Content Include="Scripts.app\Vetting\Shipment.cshtml.js" />
     <Content Include="Scripts.app\Vetting\PartsOrder.cshtml.js" />
@@ -6441,12 +6457,19 @@
     <Content Include="Scripts\TreeMenu.js" />
     <Content Include="Scripts\validator.min.js" />
     <Content Include="SQL Scripts\SQL.txt" />
+    <Content Include="Upload\EMCS\Cargo\10262\DocCargo-10262.png" />
+    <Content Include="Upload\EMCS\Cargo\10263\DocCargo-10263.png" />
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
+    <Content Include="Upload\EMCS\GoodsReceive\21\DocCargo-21.png" />
+    <Content Include="Upload\EMCS\GoodsReceive\22\DocCargo-22.png" />
+    <Content Include="Upload\EMCS\GoodsReceive\23\DocCargo-23.png" />
+    <Content Include="Upload\EMCS\GoodsReceive\24\DocCargo-24.png" />
     <Content Include="Upload\EMCS\GR\2\DO.0612190002FG10004xxxxxx.png" />
     <Content Include="Upload\EMCS\GR\3\DO.0612190003FGTesting.jpeg" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Download\CustomBlankHeader.html" />
     <Content Include="Views\Download\CustomFooter.html" />
+    <Content Include="Views\Download\CustomHeader.html" />
     <Content Include="Views\DTS\DRList.png" />
     <Content Include="Views\Post\AdvanceSearch.cshtml" />
     <Content Include="Views\Post\Dashboard.cshtml" />
@@ -6958,6 +6981,34 @@
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
     <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
+    <Content Include="Views\EMCS\TaskRequestForChange.cshtml" />
+    <Content Include="Temp\ExportPDFCalculator.docx" />
+    <Content Include="Views\PrimeProduct\ImportPrimeProduct.cshtml" />
+    <Content Include="Views\EMCS\CargoTabDocuments.cshtml" />
+    <Content Include="Views\EMCS\ShippingSummaryList.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Master\AirPortManagement.cshtml" />
+    <Content Include="Views\Master\AirPortManagement.iud.cshtml" />
+    <Content Include="Views\Master\SeaPortManagement.cshtml" />
+    <Content Include="Views\Master\SeaPortManagement.iud.cshtml" />
+    <Content Include="Views\PartTracking\OrderThruCounterPopupMilestone.cshtml" />
+    <Content Include="Views\PartTracking\OrderThruCounterPopupPartDetail.cshtml" />
+    <Content Include="Views\PartTracking\StockReplenishmentPopupPartDetail.cshtml" />
+    <Content Include="Views\Report\PSSInstransit.cshtml" />
+    <Content Include="Views\Vetting\eLs.cshtml" />
+    <Content Include="Views\Vetting\eLs.iud.cshtml" />
+    <Content Include="Views\Vetting\PartsOrder.listCheck.cshtml" />
+    <Content Include="Views\Vetting\ShipmentManifest.iud.cshtml" />
+    <Content Include="Views\Download\CustomHeaderSi.cshtml" />
+    <Content Include="Views\Download\CustomHeaderSs.cshtml" />
+    <Content Include="Views\DeliveryTrackingStatus\DeliveryTrackingStatus.cshtml" />
+    <Content Include="Views\DeliveryTrackingStatus\DIFOT.cshtml" />
+    <Content Include="Views\DeliveryTrackingStatus\ImportPrimeProduct.cshtml" />
+    <Content Include="Views\DeliveryTrackingStatus\PrimeProduct.cshtml" />
+    <Content Include="Views\EMCS\RequestForChangeDetail.cshtml" />
+    <Content Include="Views\EMCS\BLAWBList.cshtml" />
+    <Content Include="Views\EMCS\NpePebList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

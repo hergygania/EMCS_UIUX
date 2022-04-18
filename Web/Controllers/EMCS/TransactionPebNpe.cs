@@ -22,6 +22,30 @@ namespace App.Web.Controllers.EMCS
     public partial class EmcsController
     {
 
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
+        public ActionResult NpePebList()
+        {
+            ApplicationTitle();
+            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            PaginatorBoot.Remove("SessionTRN");
+            return View();
+        }
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "NpePebList")]
+        public JsonResult GetNpePebList(GridListFilterModel filter)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Limit = filter.Limit;
+            dataFilter.Order = filter.Order;
+            dataFilter.Term = filter.Term;
+            dataFilter.Sort = filter.Sort;
+            dataFilter.Offset = filter.Offset;
+
+            var data = Service.EMCS.SvcNpePeb.NpePebList(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult NpePebApprove()
         {
             ApplicationTitle();
@@ -99,14 +123,18 @@ namespace App.Web.Controllers.EMCS
 
         [HttpPost]
         public ActionResult DraftNpePeb(Data.Domain.EMCS.NpePeb form, string status)
-        {   
+        {
             //if (!ModelState.IsValid)
             //{
             //    return View(form);
             //} 
-
-            Data.Domain.EMCS.ReturnSpInsert data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
-            return JsonMessage("This ticket has been " + status, 0, data);
+            Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
+            var userId = User.Identity.GetUserId();
+            if (Service.EMCS.SvcNpePeb.NpePebHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+            {
+               data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
+            }
+                return JsonMessage("This ticket has been " + status, 0, data);
         }
 
         [HttpPost]

@@ -13,13 +13,15 @@ namespace App.Data.Domain
     {
         [Key]
 		public int ID { get; set; }
+		public string RFCNumber { get; set; }
 		public string FormType { get; set; }
-		public int FormNo { get; set; }
-		public bool Status { get; set; }
+		public int FormId { get; set; }
+		public string FormNo { get; set; }
+		public int Status { get; set; }
 		public string Reason { get; set; }
-		public int CreateBy { get; set; }
+		public string CreateBy { get; set; }
 		public DateTime CreateDate { get; set; }
-		public int UpdateBy { get; set; }
+		public string UpdateBy { get; set; }
 		public DateTime UpdateDate { get; set; }
 	}
 }

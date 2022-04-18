@@ -4,6 +4,7 @@
     {
         public long Id { get; set; }
         public long IdCipl { get; set; }
+        public long IdGr { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
         public long IdFlow { get; set; }

@@ -34,17 +34,27 @@ namespace App.Web.Controllers.EMCS
 
             var filter = new GridListFilter();
             filter.Username = SiteConfiguration.UserName;
-
+            ViewBag.IsImexUser = false;
+            if(User.Identity.GetUserRoles().Contains("EMCSRequestor") || User.Identity.GetUserRoles().Contains("Imex"))
+                ViewBag.IsImexUser = true;
             dynamic allCount = new ExpandoObject();
             allCount.Cipl = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             allCount.Gr = Service.EMCS.SvcRequestGr.GetTotalList(filter);
             allCount.Cl = Service.EMCS.SvcRequestCl.GetTotalList(filter);
-            allCount.Npe = Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
+            allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
             allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
             allCount.Bl = Service.EMCS.SvcRequestCl.GetBlTotalList(filter);
+            //allCount.RFC = Service.EMCS.SvcRequestCl.GetRFCTotalList();
             return View(allCount);
         }
-
+        public ActionResult RequestForChangeDetail(string formtype,int id,int formid)
+        {
+            ViewBag.AppTitle = "Request For Change";
+            ViewBag.FormType = formtype;
+            ViewBag.RFCId = id;
+            ViewBag.FormId = formid;
+            return View();
+        }
         public ActionResult TaskCipl()
         {
             ViewBag.AppTitle = "Export Monitoring & Control System";
@@ -60,6 +70,13 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcRequestCipl.GetList(filter);
             var total = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             return Json(new { total, rows = data }, JsonRequestBehavior.AllowGet);
+        }
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
+        public JsonResult RejectChangeHistory(string idterm,string reason)
+        {
+            string username = SiteConfiguration.UserName;
+            Service.EMCS.SvcCipl.RejectRequestForChangeHistory(Convert.ToInt32(idterm), reason);
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]

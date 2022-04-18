@@ -28,13 +28,22 @@ namespace App.Service.EMCS
             }
         }
 
-        public static List<SpCargoItemDetail> GetDataByCargoId(long id)
+        public static List<SpCargoItemDetail> GetDataByCargoId(List<long> ids)
         {
-            using (var db = new Data.EmcsContext())
+            try
             {
-                var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + id + "'";
-                var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
-                return data;
+                var idList = string.Join(",", ids.Select(n => "" + n + "").ToArray());
+                
+                using (var db = new Data.EmcsContext())
+                {
+                    var sql = "EXEC [sp_get_cargo_item_data_by_cargoId] @Id='" + idList + "'";
+                    var data = db.Database.SqlQuery<SpCargoItemDetail>(sql).ToList();
+                    return data;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -119,7 +128,55 @@ namespace App.Service.EMCS
             }
         }
 
-        public static dynamic GetTotalDataCargo(long id)
+        //public static dynamic GetTotalDataCargo(long id)
+        //{
+        //    using (var db = new Data.EmcsContext())
+        //    {
+        //        var dataItem = (from t0 in db.CargoItemData
+        //                        join t1 in db.CargoData on t0.IdCargo equals t1.Id
+        //                        join t2 in db.CiplItemData on t0.IdCiplItem equals t2.Id
+        //                        join t3 in db.CiplData on t2.IdCipl equals t3.Id
+        //                        where t0.IdCargo == id
+        //                        select new
+        //                        {
+        //                            t0.Id,
+        //                            t0.Net,
+        //                            t0.Gross,
+        //                            t0.Height,
+        //                            t0.Width,
+        //                            t3.EdoNo,
+        //                            t0.Length,
+        //                            t0.IdCargo,
+        //                            t2.CaseNumber,
+        //                            t2.Sn,
+        //                            t2.IdCipl
+        //                        }).ToList();
+
+        //        dynamic result = new ExpandoObject();
+        //        if (dataItem.Count > 0)
+        //        {
+        //            result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
+        //            //result.totalPackage = dataItem.GroupBy(a => a.CaseNumber && a.IdCipl).Count();
+        //            // ReSharper disable once PossibleInvalidOperationException
+        //            result.totalNetWeight = dataItem.GroupBy(a => a.IdCargo).Select(a => a.Sum(x => x.Net)).FirstOrDefault().Value;
+        //            // ReSharper disable once PossibleInvalidOperationException
+        //            result.totalGrossWeight = dataItem.GroupBy(a => a.IdCargo).Select(x => x.Sum(y => y.Gross)).FirstOrDefault().Value;
+        //            // ReSharper disable once PossibleInvalidOperationException
+        //            decimal volume = dataItem.GroupBy(a => a.Id).Select(x => x.Sum(y => y.Length * y.Width * y.Height)).ToList().Sum(x => x.Value);
+        //            decimal volumeM3 = volume / 1000000;
+        //            result.totalVolume = volumeM3;
+        //        }
+        //        else
+        //        {
+        //            result.totalPackage = 0;
+        //            result.totalNetWeight = 0;
+        //            result.totalGrossWeight = 0;
+        //            result.totalVolume = 0;
+        //        }
+        //        return result;
+        //    }
+        //}
+        public static dynamic GetTotalDataCargo(long id,string selectvalue) 
         {
             using (var db = new Data.EmcsContext())
             {
@@ -146,7 +203,15 @@ namespace App.Service.EMCS
                 dynamic result = new ExpandoObject();
                 if (dataItem.Count > 0)
                 {
-                    result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
+                    if(selectvalue == "NoItem")
+                    {
+                        result.totalPackage = dataItem.GroupBy(a => new { a.Id, a.IdCipl }).Count();
+                    }
+                    else
+                    {
+                        result.totalPackage = dataItem.GroupBy(a => new { a.CaseNumber, a.IdCipl }).Count();
+                    }
+                    
                     //result.totalPackage = dataItem.GroupBy(a => a.CaseNumber && a.IdCipl).Count();
                     // ReSharper disable once PossibleInvalidOperationException
                     result.totalNetWeight = dataItem.GroupBy(a => a.IdCargo).Select(a => a.Sum(x => x.Net)).FirstOrDefault().Value;

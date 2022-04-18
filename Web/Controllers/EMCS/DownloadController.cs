@@ -14,6 +14,7 @@ using App.Domain;
 using App.Data.Domain.EMCS;
 using Newtonsoft.Json;
 using App.Web.Helper;
+using App.Web.App_Start;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -78,8 +79,7 @@ namespace App.Web.Controllers.EMCS
             data.DetailGr = Service.EMCS.DocumentStreamGenerator.GetGrDetailData(id);
             return data;
         }
-
-        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null)
+        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
         {
             string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
 
@@ -121,14 +121,18 @@ namespace App.Web.Controllers.EMCS
             {
                 headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
             }
+            else if (typeDoc == "Si")
+            {
+                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
+            }
             else if (typeDoc == "Ss")
             {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargo);
+                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
             }
             else
-            {               
+            {
                 var qrCodeValue = TempData["QrCodeUrlEDI"];
-                if(qrCodeValue == null)
+                if (qrCodeValue == null)
                 {
                     string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
                     qrCodeValue = strQrCodeUrlEDI;
@@ -168,6 +172,28 @@ namespace App.Web.Controllers.EMCS
                         PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
                     };
                 }
+                else if (typeDoc == "Si")
+                {
+                    dataview = new ViewAsPdf(view, cargoSiModel)
+                    {
+                        IsJavaScriptDisabled = false,
+                        CustomSwitches = customSwitches,
+                        PageOrientation = Rotativa.Options.Orientation.Portrait,
+                        PageSize = Rotativa.Options.Size.A4,
+                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                    };
+                }
+                else if (typeDoc == "Ss")
+                {
+                    dataview = new ViewAsPdf(view, cargoSsModel)
+                    {
+                        IsJavaScriptDisabled = false,
+                        CustomSwitches = customSwitches,
+                        PageOrientation = Rotativa.Options.Orientation.Portrait,
+                        PageSize = Rotativa.Options.Size.A4,
+                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                    };
+                }
                 else if (typeDoc == "Cargo")
                 {
                     dataview = new ViewAsPdf(view, cargo)
@@ -189,19 +215,26 @@ namespace App.Web.Controllers.EMCS
 
         protected string RenderPartialViewToString(string viewName, object model)
         {
-            if (string.IsNullOrEmpty(viewName))
-                viewName = ControllerContext.RouteData.GetRequiredString("action");
-
-            if (model != null)
-                ViewData.Model = model;
-
-            using (StringWriter sw = new StringWriter())
+            try
             {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
+                if (string.IsNullOrEmpty(viewName))
+                    viewName = ControllerContext.RouteData.GetRequiredString("action");
 
-                return sw.GetStringBuilder().ToString();
+                if (model != null)
+                    ViewData.Model = model;
+
+                using (StringWriter sw = new StringWriter())
+                {
+                    ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                    ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                    viewResult.View.Render(viewContext, sw);
+
+                    return sw.GetStringBuilder().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -220,7 +253,13 @@ namespace App.Web.Controllers.EMCS
             string View = "DownloadPl";
             return GeneratePdf(detail, View, "Pl");
         }
-
+        //public ActionResult DownloadSi(long id)
+        //{
+        //    var detail = InitModelCargo(id);
+        //    ViewBag.TypeDocument = "Shipping Information";
+        //    string View = "DownloadSi";
+        //    return GeneratePdf(detail, View, "Si");
+        //}
         public ActionResult DownloadEdi(long id)
         {
             var detail = InitModelCipl(id);
@@ -243,15 +282,67 @@ namespace App.Web.Controllers.EMCS
 
         public ActionResult DownloadSs(long id)
         {
-            var detail = InitModelCargo(id);
-            return View(detail);
+            string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadss");
+            ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
+            TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
+            TempData.Peek("QrCodeUrlSS");
+            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("ss", id);
+            ViewBag.CargoID = id;
+
+            ViewBag.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
+            ViewBag.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
+
+            CargoSsModel data = new CargoSsModel
+            {
+                Header = Service.EMCS.DocumentStreamGenerator.GetCargoSsHeader(id),
+                Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSsDetail(id)
+            };
+            return GeneratePdf(null, "DownloadSs", "Ss", null, null,null, data);
+        }
+        public ActionResult DownloadSi(int id)
+        {
+           
+            try
+            {
+                string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadsl");
+                ViewBag.QrCodeUrlSI = strQrCodeUrlEDI;
+                TempData["QrCodeUrlSI"] = strQrCodeUrlEDI;
+                TempData.Peek("QrCodeUrlSI");
+                ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+                ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+                ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+                ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+                ViewBag.CargoID = id;
+                var GetCargoId = Service.EMCS.SvcShippingInstruction.GetIdSi(id);
+                long NewCargoId = Convert.ToInt64(GetCargoId.IdCl);
+                ViewBag.IdCargo = NewCargoId;
+                ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("si", id);
+
+                Service.EMCS.DocumentStreamGenerator.GetCargoSi(NewCargoId);
+                ViewBag.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(NewCargoId);
+                ViewBag.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(NewCargoId);
+
+                CargoSiModel data = new CargoSiModel
+                {
+                    Header = Service.EMCS.DocumentStreamGenerator.GetCargoSiHeader(NewCargoId),
+                    Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId),
+                    Item = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetailItem(NewCargoId),
+                    ContainerTypes = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId).Select(i => i.ContainerDescription).Distinct().ToList()
+                };
+                return GeneratePdf(null, "DownloadSi", "Si", null, null, data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+           
         }
 
-        public ActionResult DownloadSi(long id)
-        {
-            var detail = InitModelCargo(id);
-            return View(detail);
-        }
 
         public ActionResult DownloadStatement(int id)
         {

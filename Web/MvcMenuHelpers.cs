@@ -34,7 +34,7 @@ namespace App.Web
                     }
 
                     var UserRole = (from p in db.UserAccess_Role
-                                    where p.UserID == UserName 
+                                    where p.UserID == UserName
                                     select p).ToList();
 
                     bool IsAdmin = false;
@@ -46,9 +46,9 @@ namespace App.Web
                     int row = 0;
                     sb.Clear();
                     sb = new StringBuilder();
-                     foreach (var q in UserRole)
+                    foreach (var q in UserRole)
                     {
-                        
+
                         if (UserRole != null)
                             RoleID = Convert.ToInt32(q.RoleID);
                         if (IsAdmin == false)
@@ -57,22 +57,22 @@ namespace App.Web
                             {
                                 if (row == 0)
                                 {
-                                    CreateHTMLMenu(CreateDataMenu(RoleID,1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
+                                    CreateHTMLMenu(CreateDataMenu(RoleID, 1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
                                 }
                                 else
                                 {
-                                    CreateHTMLMenu(CreateDataMenu(RoleID,0).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
+                                    CreateHTMLMenu(CreateDataMenu(RoleID, 0).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
                                 }
-                                
+
                             }
-                        }                        
+                        }
                         else
                         {
-                            CreateHTMLMenu(CreateDataMenu(RoleID,1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
+                            CreateHTMLMenu(CreateDataMenu(RoleID, 1).OrderBy(p => p.OrderNo).ToList(), sClass, 0);
                         }
                         row++;
                     }
-                       
+
 
                     menuHTML = sb.ToString();
 
@@ -96,7 +96,15 @@ namespace App.Web
             if (appUrl == "/")
                 appUrl = "";
 
-            baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+            if (!request.Url.Authority.Contains("localhost"))
+            {
+
+                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, "staging.mkindo.com:5181", appUrl);
+            }
+            else
+            {
+                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+            }
             //baseUrl = string.Format("{0}://{1}:{2}{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, appUrl);
 
             foreach (var menu in Menus)
@@ -151,12 +159,12 @@ namespace App.Web
             }
         }
 
-        public List<RoleAccessDetailsMenu> CreateDataMenu(int RoleID,int ViewHome)
+        public List<RoleAccessDetailsMenu> CreateDataMenu(int RoleID, int ViewHome)
         {
             if (RoleID == 24)
                 ViewHome = 1;
 
-            var menus = GetListMenuAccess(RoleID,ViewHome).OrderBy(p => p.OrderNo).ToList();
+            var menus = GetListMenuAccess(RoleID, ViewHome).OrderBy(p => p.OrderNo).ToList();
 
             List<RoleAccessDetailsMenu> hierarchy = new List<RoleAccessDetailsMenu>();
 

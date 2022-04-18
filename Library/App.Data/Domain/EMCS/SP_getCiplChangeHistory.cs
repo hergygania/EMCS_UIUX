@@ -11,7 +11,7 @@ namespace App.Data.Domain.EMCS
     {
         [Key]
         public int Id { get; set; }
-        public int FormNo { get; set; }
+        public string FormNo { get; set; }
         public string BeforeValue { get; set; }
         public string AfterValue { get; set; }
         public string FieldName { get; set; }

@@ -6,6 +6,7 @@ using System.Linq;
 using App.Domain;
 using System.Dynamic;
 using System.Text.RegularExpressions;
+using App.Data.Domain.EMCS;
 
 namespace App.Service.EMCS
 {
@@ -54,6 +55,21 @@ namespace App.Service.EMCS
                 dynamic result = new ExpandoObject();
                 if (count != null) result.total = count.Total;
                 result.rows = data;
+                return result;
+            }
+        }
+        public static bool GRHisOwned(long id, string userId)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var result = false;
+
+                var tb = db.GoodsReceive.FirstOrDefault(a => a.Id == id && a.CreateBy == userId);
+                if (tb != null)
+                {
+                    result = true;
+                }
+
                 return result;
             }
         }
@@ -277,5 +293,130 @@ namespace App.Service.EMCS
                 return data;
             }
         }
+        public static dynamic GRDocumentList(GridListFilter filter)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                //GoodReceiveDocument a = ewn 
+                //filter.Cargoid =
+                try
+                {
+                    filter.Sort = filter.Sort ?? "Id";
+                    db.Database.CommandTimeout = 600;
+                    var sql = @"[dbo].[sp_get_gr_document_list] @IdGr = '" + filter.IdGr + "'";
+                    var data = db.Database.SqlQuery<GoodReceiveDocument>(sql).ToList();
+
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    var a = ex.Message;
+                    return a;
+                }
+            }
+        }
+        public static bool InsertGRDocument(List<GoodReceiveDocument> data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                try
+                {
+
+                    for (var i = 0; i < data.Count; i++)
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        List<SqlParameter> parameters = new List<SqlParameter>();
+                        parameters.Add(new SqlParameter("@Id", data[i].Id));
+                        parameters.Add(new SqlParameter("@IdGr", data[i].IdGr));
+                        parameters.Add(new SqlParameter("@DocumentDate", data[i].DocumentDate));
+                        parameters.Add(new SqlParameter("@DocumentName", data[i].DocumentName ?? ""));
+                        parameters.Add(new SqlParameter("@Filename", data[i].Filename ?? ""));
+                        parameters.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                        parameters.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                        parameters.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                        parameters.Add(new SqlParameter("@UpdateDate", ""));
+                        parameters.Add(new SqlParameter("@IsDelete", false));
+                        SqlParameter[] sql = parameters.ToArray();
+                        db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_GRDocumentAdd] @Id,@IdGr,@DocumentDate,@DocumentName,@Filename,@CreateBy,@CreateDate,@UpdateBy,@UpdateDate,@IsDelete", sql);
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    var a = ex.Message;
+                }
+                return true;
+            }
+
+        }
+
+        public static long DeleteGRDocumentById(long idDocument)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", idDocument));
+                parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+                parameterList.Add(new SqlParameter("@IsDelete", true));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_GrDocumentDelete] @id, @UpdateBy, @UpdateDate, @IsDelete", parameters);
+                return 1;
+            }
+        }
+        public static bool UpdateFileGRDocument(long id, string filename)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@Id", id));
+                    parameterList.Add(new SqlParameter("@Filename", filename));
+                    parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_GrDocumentUpdateFile] @Id, @Filename, @UpdateBy", parameters);
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+        public static List<GoodReceiveDocument> GRDocumentListById(long id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@id", id));
+                    SqlParameter[] parameters = parameterList.ToArray();
+
+                    var data = db.DbContext.Database.SqlQuery<GoodReceiveDocument>("[dbo].[sp_get_gr_document_list_byid] @id", parameters).ToList();
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            //using (var db = new Data.EmcsContext())
+            //{
+            //    var data = db.CiplD.Where(a => a.IdRequest == id && a.IsDelete == false);
+            //    return data.ToList();
+            //}
+        }
+
     }
 }

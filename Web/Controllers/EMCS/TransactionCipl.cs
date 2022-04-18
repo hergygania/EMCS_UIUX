@@ -19,7 +19,7 @@ namespace App.Web.Controllers.EMCS
     public partial class EmcsController
     {
 
-
+        public ErrorHelper _errorHelper = new ErrorHelper();
         // ================================ CIPL LAYOUT ================================
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult CiplList()
@@ -29,6 +29,12 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            string userRoles = User.Identity.GetUserRoles();
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+                ViewBag.IsImexUser = true;
+            else
+                ViewBag.IsImexUser = false;
+
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -41,6 +47,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.IsImexUser = false;
+            ViewBag.CanRequestForChange = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -57,6 +65,14 @@ namespace App.Web.Controllers.EMCS
                 ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
                 ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
                 ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+                if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+                    ViewBag.IsImexUser = true;
+                else
+                    ViewBag.IsImexUser = false;
+                if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(id), "CIPL") > 0)
+                    ViewBag.CanRequestForChange = false;
+                else
+                    ViewBag.CanRequestForChange = true;
                 ViewBag.GroupName = Service.EMCS.SvcUserLog.GetUserDetail().Group == null ? "" : Service.EMCS.SvcUserLog.GetUserDetail().Group;
                 PaginatorBoot.Remove("SessionTRN");
                 return View();
@@ -276,7 +292,7 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetChangeHistoryList(string idTerm,string formType, string search, int limit, int offset, string sort, string order)
+        public JsonResult GetChangeHistoryList(string idTerm, string formType, string search, int limit, int offset, string sort, string order)
         {
             var dataFilter = new Data.Domain.EMCS.GridListFilter();
             dataFilter.Sort = sort;
@@ -285,7 +301,20 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Limit = limit;
             dataFilter.Term = idTerm;
             dataFilter.FormType = formType;
-            var data = Service.EMCS.SvcCipl.GetListSpChangeHistory(dataFilter);
+            var data = Service.EMCS.SvcCipl.GetListSpRequestForChangeDetails(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRequestForChangeList(string idTerm, string formType, string search, int limit, int offset, string sort, string order)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Sort = sort;
+            dataFilter.Order = order;
+            dataFilter.Offset = offset;
+            dataFilter.Limit = limit;
+            dataFilter.Term = idTerm;
+            dataFilter.FormType = formType;
+            var data = Service.EMCS.SvcCipl.GetRequestForChangeList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -294,131 +323,147 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCipl.GetSpChangeHistoryReason(idTerm, formtype);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public JsonResult ApproveChangeHistory(string idTerm, string formtype)
+        public JsonResult CheckRequestExists(int idTerm, string formtype)
         {
-            var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm, formtype);
-
-            var cipl = Service.EMCS.SvcCipl.CiplGetById(Convert.ToInt32(idTerm));
-
-            var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(Convert.ToInt32(idTerm));
-
-            var ciplHistory = data.Where(x => x.TableName == typeof(Cipl).Name).ToList();
-
-            var forwaderHistory = data.Where(x => x.TableName == typeof(CiplForwader).Name).ToList();
-
-            var properties = TypeDescriptor.GetProperties(typeof(Cipl));
-
-            string[] _ignoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl" };
-
-            foreach (PropertyDescriptor property in properties)
-            {
-                if (!_ignoreParameters.Contains(property.Name))
-                {
-                    var historyProp = ciplHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
-                    if (historyProp != null)
-                    {
-                        System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
-                        switch (typeCode)
-                        {
-                            case TypeCode.Boolean:
-                                property.SetValue(cipl, Convert.ToBoolean(historyProp.AfterValue));
-                                break;
-                            case TypeCode.String:
-                                property.SetValue(cipl, Convert.ToString(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Char:
-                                property.SetValue(cipl, Convert.ToChar(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Double:
-                                property.SetValue(cipl, Convert.ToDouble(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Single:
-                                property.SetValue(cipl, Convert.ToSingle(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Int32:
-                                property.SetValue(cipl, Convert.ToInt32(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Int16:
-                                property.SetValue(cipl, Convert.ToInt16(historyProp.AfterValue));
-                                break;
-                            case TypeCode.DateTime:
-                                property.SetValue(cipl, Convert.ToDateTime(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Decimal:
-                                property.SetValue(cipl, Convert.ToDecimal(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Object:
-                                //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
-                                break;
-                            default:
-                                property.SetValue(cipl, historyProp.AfterValue);
-                                break;
-                        }
-                        //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
-                       
-                    }
-                }
-            }
-
-            var propertiesCiplForwader = TypeDescriptor.GetProperties(typeof(CiplForwader));
-
-            foreach (PropertyDescriptor property in propertiesCiplForwader)
-            {
-                if (!_ignoreParameters.Contains(property.Name))
-                {
-                    var historyProp = forwaderHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
-                    if (historyProp != null)
-                    {
-                        System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
-                        switch (typeCode)
-                        {
-                            case TypeCode.Boolean:
-                                property.SetValue(forwader, Convert.ToBoolean(historyProp.AfterValue));
-                                break;
-                            case TypeCode.String:
-                                property.SetValue(forwader, Convert.ToString(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Char:
-                                property.SetValue(forwader, Convert.ToChar(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Double:
-                                property.SetValue(forwader, Convert.ToDouble(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Single:
-                                property.SetValue(forwader, Convert.ToSingle(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Int32:
-                                property.SetValue(forwader, Convert.ToInt32(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Int16:
-                                property.SetValue(forwader, Convert.ToInt16(historyProp.AfterValue));
-                                break;
-                            case TypeCode.DateTime:
-                                property.SetValue(forwader, Convert.ToDateTime(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Decimal:
-                                property.SetValue(forwader, Convert.ToDecimal(historyProp.AfterValue));
-                                break;
-                            case TypeCode.Object:
-                                //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
-                                break;
-                            default:
-                                property.SetValue(forwader, historyProp.AfterValue);
-                                break;
-                        }
-                        //property.SetValue(forwader, historyProp.AfterValue);
-                    }
-                }
-            }
-            Service.EMCS.SvcCipl.ApproveChangeHistory(idTerm,formtype);
-            
-            var userId = User.Identity.GetUserId();
-            //if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId))
-            //{
-                 Service.EMCS.SvcCipl.UpdateCipl(forwader, cipl, "");
-            //}
+            var data = Service.EMCS.SvcCipl.CheckRequestNotApproved(idTerm, formtype);
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ApproveChangeHistory(string idTerm, string formId, string formtype)
+        {
+            try
+            {
+
+
+                var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
+
+                var cipl = Service.EMCS.SvcCipl.CiplGetById(Convert.ToInt32(formId));
+
+                var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(Convert.ToInt32(formId));
+
+                var ciplHistory = data.Where(x => x.TableName == typeof(Cipl).Name).ToList();
+
+                var forwaderHistory = data.Where(x => x.TableName == typeof(CiplForwader).Name).ToList();
+
+                var properties = TypeDescriptor.GetProperties(typeof(Cipl));
+
+                string[] _ignoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl" };
+
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignoreParameters.Contains(property.Name))
+                    {
+                        var historyProp = ciplHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                        if (historyProp != null)
+                        {
+                            System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                            switch (typeCode)
+                            {
+                                case TypeCode.Boolean:
+                                    property.SetValue(cipl, Convert.ToBoolean(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.String:
+                                    property.SetValue(cipl, Convert.ToString(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Char:
+                                    property.SetValue(cipl, Convert.ToChar(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Double:
+                                    property.SetValue(cipl, Convert.ToDouble(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Single:
+                                    property.SetValue(cipl, Convert.ToSingle(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int32:
+                                    property.SetValue(cipl, Convert.ToInt32(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int16:
+                                    property.SetValue(cipl, Convert.ToInt16(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.DateTime:
+                                    property.SetValue(cipl, Convert.ToDateTime(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Decimal:
+                                    property.SetValue(cipl, Convert.ToDecimal(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Object:
+                                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                    break;
+                                default:
+                                    property.SetValue(cipl, historyProp.AfterValue);
+                                    break;
+                            }
+                            //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
+
+                        }
+                    }
+                }
+
+                var propertiesCiplForwader = TypeDescriptor.GetProperties(typeof(CiplForwader));
+
+                foreach (PropertyDescriptor property in propertiesCiplForwader)
+                {
+                    if (!_ignoreParameters.Contains(property.Name))
+                    {
+                        var historyProp = forwaderHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                        if (historyProp != null)
+                        {
+                            System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                            switch (typeCode)
+                            {
+                                case TypeCode.Boolean:
+                                    property.SetValue(forwader, Convert.ToBoolean(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.String:
+                                    property.SetValue(forwader, Convert.ToString(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Char:
+                                    property.SetValue(forwader, Convert.ToChar(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Double:
+                                    property.SetValue(forwader, Convert.ToDouble(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Single:
+                                    property.SetValue(forwader, Convert.ToSingle(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int32:
+                                    property.SetValue(forwader, Convert.ToInt32(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int16:
+                                    property.SetValue(forwader, Convert.ToInt16(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.DateTime:
+                                    property.SetValue(forwader, Convert.ToDateTime(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Decimal:
+                                    property.SetValue(forwader, Convert.ToDecimal(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Object:
+                                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                    break;
+                                default:
+                                    property.SetValue(forwader, historyProp.AfterValue);
+                                    break;
+                            }
+                            //property.SetValue(forwader, historyProp.AfterValue);
+                        }
+                    }
+                }
+                Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
+
+                var userId = User.Identity.GetUserId();
+                if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                {
+                    Service.EMCS.SvcCipl.UpdateCipl(forwader, cipl, "");
+                }
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                _errorHelper.Error(ex.ToString());
+                throw ex;
+            }
         }
 
         public ActionResult CiplHistoryPageXt(long id)
@@ -522,16 +567,17 @@ namespace App.Web.Controllers.EMCS
         {
             var requestForChange = new RequestForChange();
 
-            requestForChange.FormNo = form.FormNo;
+            requestForChange.FormNo = item.Data.CiplNo;
             requestForChange.FormType = form.FormType;
             requestForChange.Status = form.Status;
+            requestForChange.FormId = form.FormId;
             requestForChange.Reason = form.Reason;
 
             var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
 
             var model = Service.EMCS.SvcCipl.CiplGetById(item.Data.Id);
             var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(item.Data.Id);
-            
+
             var newmodel = new CiplFormModel();
             newmodel.Data = model;
             newmodel.Forwader = forwader;
@@ -650,10 +696,12 @@ namespace App.Web.Controllers.EMCS
             try
             {
                 var model = Service.EMCS.SvcCipl.CiplGetById(id);
+                var request = Service.EMCS.SvcCipl.GetRequestCiplById(Convert.ToString(id),"");
                 var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
+                
                 var document = Service.EMCS.SvcCipl.CiplDocumentsGetById(id);
                 var problem = Service.EMCS.SvcCipl.SP_CiplProblemHistory(id);
-                return Json(new { model, forwader, document, problem }, JsonRequestBehavior.AllowGet);
+                return Json(new { model, forwader, document, problem,request }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -744,11 +792,20 @@ namespace App.Web.Controllers.EMCS
         {
             long result = 0;
             var userId = User.Identity.GetUserId();
-            //if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
-            //{
+            try
+            {
+                //if (Service.EMCS.SvcCipl.CiplHisOwned(item.Data.Id, userId))
+                //{
                 result = Service.EMCS.SvcCipl.UpdateCipl(item.Forwader, item.Data, status);
-            //}
-            return result;
+                //}
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _errorHelper.Error(ex.ToString());
+                throw ex;
+            }
+
         }
 
         [HttpPost]

@@ -25,7 +25,7 @@
     <i class="fa fa-edit"></i> Edit Container
 </a>
 
-<a data-modal="" href="/EMCS/EditItemCargo/0" class="editItemCargo" style="display:none;">
+<a data-modal="" href="/EMCS/EditItemCargo/" class="editItemCargo" style="display:none;">
     <i class="fa fa-edit"></i> Edit Item Cargo
 </a>
 
@@ -36,9 +36,18 @@
 <form id="formRequest">
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-warning" style="min-height:555px">
-                <div class="box-body">
-                    <div class="row">
+            <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tab-task-cargo" aria-controls="home" role="tab" data-toggle="tab">Cargo</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab-cargodocuments" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    </li>
+                </ul>
+                <div class="tab-content tabs-custom">
+                    <div class="tab-pane active" id="tab-task-cargo">
                         <div class="col-lg-12">
                             <fieldset class="scheduler-border">
                                 <legend class="scheduler-border"></legend>
@@ -64,8 +73,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">Consignee</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            @Html.TextBoxFor(m => m.Data.Consignee, new { @class = "form-control disabled", @readonly = "readonly", @id = "Consignee", placeholder = "Consignee" })
+                                        @*<div class="input-group col-lg-8 col-xs-8" id="Consignee">*@
+                                        <div class="input-group col-lg-8 col-xs-8" >
+                                            @*@Html.TextBoxFor(m => m.Data.Consignee, new { @class = "form-control disabled", @readonly = "readonly", @id = "Consignee", placeholder = "Consignee" })*@
+                                            <input type="text" class="form-control" id="Consignee" name="inpPreparedCl" placeholder="Prepared By" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,11 +115,11 @@
                                         </div>
                                     </div>
                                     @*<div class="form-group">
-                                        <label class="control-label col-lg-4 col-xs-4">Kppbc</label>
-                                        <div class="input-group col-lg-8 col-xs-8 col-md-8">
-                                            <select id="IdKppbc" name="IdKppbc" readonly class="select2" required style="width:100%;"></select>
-                                        </div>
-                                    </div>*@
+                                            <label class="control-label col-lg-4 col-xs-4">Kppbc</label>
+                                            <div class="input-group col-lg-8 col-xs-8 col-md-8">
+                                                <select id="IdKppbc" name="IdKppbc" readonly class="select2" required style="width:100%;"></select>
+                                            </div>
+                                        </div>*@
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">Cargo Type</label>
                                         <div class="input-group col-lg-8 col-xs-8 col-md-8">
@@ -134,17 +145,25 @@
                                             <i class="fa fa-plus-circle"></i> Create Cargo
                                         </a>
                                         <button type="button" class="btn btn-success btn-md btnAddCIPL" disabled><i class="fa fa-plus-circle"></i> Add Cargo</button>
-                                        <button type="button" class="btn btn-success btn-md " id="editItemCargoAll" href="/EMCS/EditItemCargo/0" ><i class="fa fa-plus-circle"></i> Edit Cargo</button>
+                                        <button type="button" class="btn btn-success btn-md edit" id="editItemCargoAll" ><i class="fa fa-plus-circle"></i> Edit Multiple</button>
                                     </div>
-
-                                    <table class="table table-bordered" id="tableCargoForm"></table>
+                                    @*<input type="hidden" id="CLID"  />*@
+                                    <table class="table table-bordered" id="tableCargoForm" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true"></table>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">Total Packages</label>
                                         <div class="input-group col-lg-8 col-xs-8">
-                                            <input type="text" class="form-control text-right" id="inpTotalPackageCl" name="inpTotalPackageCl" placeholder="Total Package" disabled>
+                                            <div class="col-lg-6 col-xs-6">
+                                                <select id="select" onchange="getTotalData()" class="form-control" style=" height: 33px;right: 14px;">
+                                                    <option value="CaseNo" selected="selected">Total Package by CaseNumber</option>
+                                                    <option value="NoItem">Total Package by Item</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-6" style="right: 37px;">
+                                                <input type="text" class="form-control text-right" id="inpTotalPackageCl" name="inpTotalPackageCl" placeholder="Total Package" disabled>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -297,6 +316,12 @@
                                 <div class="col-md-12">
                                     @*<a class="btn btn-warning" id="btnCancelCargo" style="min-width:120px;" href="/EMCS/CargoList"><i class="fa fa-arrow-circle-left"></i>Back</a>*@
                                     <a class="btn btn-default btn-rotate" id="btnBackCargo" href="/EMCS/CargoList" style="min-width:120px;"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                                    @{
+                                        if (ViewBag.IsImexUser && ViewBag.CanRequestForChange && ViewBag.CargoID > 0)
+                                        {
+                                            <button type="button"  class="btn btn-info" id="RequestForChangeHistoryCL" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Request for change history</button>
+                                        }
+                                    }
                                     <a class="btn btn-info btn-rotate" id="btnSaveCargo" style="min-width:120px;" onclick="post_cargo('Draft')"><i class="fa fa-save"></i>&nbsp;Save As Draft</a>
                                     <a class="btn btn-success" id="btnSubmitCargo" style="min-width:120px;" onclick="post_cargo('Submit')"><i class="fa fa-paper-plane"></i>&nbsp;Submit</a>
                                     @*<input type="submit" value="Submit" />*@
@@ -304,13 +329,169 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-cargodocuments">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <div class="toolbarDocument" id="toolbarDocument">
+                                    <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                        
+                                        <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered" data-toggle="table"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+@*</div>
+    </div>*@
+<div id="cargoItemForm"></div>
+<!-- Modal -->
+<div id="myModalDocument" class="modal fade in" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Document</h4>
+            </div>
+            <form id="FormDocument">
+                <div class="modal-body">
+                    <div class="row" id="formeditreference">
+                        <div class="col-lg-12">
+                            <div class="form-group hidden">
+                                <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <input type="text" class="form-control" id="Id" name="Id">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-xs-12">Document Date</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <span class="input-group-addon cal-doc-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input class="form-control date required" id="inp-doc-date" name="inp-doc-date" placeholder="Date" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-xs-12">Document Name</label>
+                                <div class="input-group col-md-9 col-xs-12">
+                                    <input type="text" class="form-control" id="DocumentName" name="DocumentName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id='myModalUploadPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+            <div id="template-dropzone" class="hidden">
+                <div id="template" class="file-row text-left" style="padding:20px;">
+                    <!-- This is used as the file preview template -->
+                    <div class="col-md-2">
+                        <div class="row">
+                            <span class="preview">
+                                <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="name" data-dz-name></p>
+                        <strong class="error text-danger" data-dz-errormessage></strong>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <p class="size" data-dz-size></p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span data-dz-uploadprogress id="progressPercent"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
                 </div>
             </div>
         </div>
     </div>
-</form>
-
-<!-- Modal -->
+</div>
+<div id='myModalUploadPreview' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">Filename</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="Filename" name="Filename">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="myModalPlace" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -325,14 +506,20 @@
 <script type="text/javascript">
     var CargoID = "@ViewBag.CargoID";
     $(document).ready(function () {
-
+        
+        load_data_tabledoc();
+        get_cargodocumentlist();
     });
 </script>
+<script src="~/Scripts.app/EMCS/dropzone.js"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+<script src="/Scripts/loadingoverlay.min.js"></script>
 
 @section scripts
 {
     @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
     @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoForm.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }

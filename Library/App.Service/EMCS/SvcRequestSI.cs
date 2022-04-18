@@ -19,32 +19,63 @@ namespace App.Service.EMCS
 
         public static Data.Domain.EMCS.ReturnSpInsert InsertSi(Data.Domain.EMCS.TaskSi item)
         {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            try
             {
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@ID", item.Id));
-                parameterList.Add(new SqlParameter("@IdCL", item.IdCl));
-                parameterList.Add(new SqlParameter("@Description", item.Description ?? ""));
-                parameterList.Add(new SqlParameter("@SpecialInstruction", item.SpecialInstruction ?? ""));
-                parameterList.Add(new SqlParameter("@DocumentRequired", item.DocumentRequired ?? ""));
-                parameterList.Add(new SqlParameter("@PicBlAwb", item.PicBlAwb ?? ""));
-                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
-                parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
-                parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
-                parameterList.Add(new SqlParameter("@UpdateDate", ""));
-                parameterList.Add(new SqlParameter("@IsDelete", false));
-                parameterList.Add(new SqlParameter("@ExportType", item.ExportType ?? ""));
-                SqlParameter[] parameters = parameterList.ToArray();
-                // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete,@ExportType", parameters).FirstOrDefault();
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@ID", item.Id));
+                    parameterList.Add(new SqlParameter("@IdCL", item.IdCl));
+                    parameterList.Add(new SqlParameter("@Description", item.Description ?? ""));
+                    parameterList.Add(new SqlParameter("@SpecialInstruction", item.SpecialInstruction ?? ""));
+                    parameterList.Add(new SqlParameter("@DocumentRequired", item.DocumentRequired ?? ""));
+                    parameterList.Add(new SqlParameter("@PicBlAwb", item.PicBlAwb ?? ""));
+                    parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                    parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                    parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                    parameterList.Add(new SqlParameter("@UpdateDate", ""));
+                    parameterList.Add(new SqlParameter("@IsDelete", false));
+                    parameterList.Add(new SqlParameter("@ExportType", "" ?? ""));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
 
-                var Status = "Submit";
-                var actionBy = SiteConfiguration.UserName;
-                var comment = item.Description;
-                db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "'");
+                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete,@ExportType", parameters).FirstOrDefault();
+                    var gettype = GetExportShipmentType(item.IdCl);
+                    var exporttype = gettype.ExportShipmentType;
+                    var Status = "Submit";
+                    var actionBy = SiteConfiguration.UserName;
+                    var comment = item.Description;
+                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "', @exporttype='" + exporttype + "'");
 
-                return data;
+                    return data;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+
+        }
+        public static Data.Domain.EMCS.CiplForwader GetExportShipmentType(long id)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@IdCL", id ));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.CiplForwader>(" exec [dbo].[SP_GetSiExportShipmentType] @IdCL", parameters).FirstOrDefault();
+                    return data;
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+                throw;
             }
         }
 

@@ -186,7 +186,11 @@ namespace App.Web.Controllers.EMCS
 
                     item.Notes = form.Data.Notes;
                     item.EstimationTimePickup = form.Data.EstimationTimePickup;
-                    id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                    var userId = User.Identity.GetUserId();
+                    if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                    {
+                        id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                    }
                     var data = InitGoodReceive(id);
                     return JsonCRUDMessage(ViewBag.crudMode, data);
                 }
@@ -236,8 +240,11 @@ namespace App.Web.Controllers.EMCS
 
                 item.Notes = form.Data.Notes;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
-                id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
-                var data = InitGoodReceive(id);
+               
+                
+                    id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
+                
+                    var data = InitGoodReceive(id);
                 return JsonCRUDMessage(ViewBag.crudMode, data);
             }
             return Json(new { success = false });
@@ -393,7 +400,11 @@ namespace App.Web.Controllers.EMCS
                 item.PickupPic = form.Data.PickupPic;
                 item.PickupPoint = form.Data.PickupPoint;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
-                Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
+                var userId = User.Identity.GetUserId();
+                if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                {
+                    Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
+                }
                 var detail = InitGoodReceive(form.Data.Id);
                 return JsonCRUDMessage("U", new { detail });
             }
@@ -483,6 +494,94 @@ namespace App.Web.Controllers.EMCS
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
+        }
+        [HttpPost]
+        public bool GRDocumentInsert(List<Data.Domain.EMCS.GoodReceiveDocument> data)
+        {
+
+            var id = Service.EMCS.SvcGoodsReceive.InsertGRDocument(data);
+            return id;
+        }
+        public string GetdocFileNameForGR(System.Web.HttpPostedFileBase file, long id)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+
+            if (fileName != null)
+            {
+                var ext = Path.GetExtension(fileName);
+                var path = Server.MapPath("~/Upload/EMCS/GoodsReceive/" + id);
+                bool isExists = Directory.Exists(path);
+                fileName = "DocCargo-" + id.ToString() + ext;
+
+                if (!isExists)
+                    Directory.CreateDirectory(path);
+
+                var fullPath = Path.Combine(path, fileName);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                file.SaveAs(fullPath);
+
+            }
+
+            return fileName;
+        }
+        public string UploadDocumentGr(long id)
+        {
+            string fileName = "";
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    return GetdocFileNameForGR(file, id);
+                }
+            }
+            return fileName;
+        }
+        [HttpPost]
+        public ActionResult GrDocumentUpload(long id)
+        {
+            string fileResult = UploadDocumentGr(id);
+            if (fileResult != "")
+            {
+                var result = Service.EMCS.SvcGoodsReceive.UpdateFileGRDocument(id, fileResult);
+                return Json(new { status = true, msg = "Upload File Successfully" });
+            }
+            else
+            {
+                return Json(new { status = false, msg = "Upload File gagal" });
+            }
+        }
+
+
+        [HttpPost]
+        public long GrDocumentDeleteById(long id)
+        {
+            id = Service.EMCS.SvcGoodsReceive.DeleteGRDocumentById(id);
+            return id;
+        }
+        public FileResult DownloadGrDocument(long id)
+        {
+            //var list = Service.EMCS.SvcCipl.CiplHistoryGetById(id);
+            var files = Service.EMCS.SvcGoodsReceive.GRDocumentListById(id).FirstOrDefault();
+            string fullPath = Request.MapPath("~/Upload/EMCS/Dummy/NotFound.txt");
+
+            if (files != null)
+            {
+                //var fileData = files;
+                fullPath = Request.MapPath("~/Upload/EMCS/GoodsReceive/" + files.Id + "/" + files.Filename);
+                var fileBytes = System.IO.File.ReadAllBytes(fullPath);
+                string fileName = files.Filename;
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            }
+
+            return File(fullPath, "text/plain", "NotFound.txt");
         }
     }
 }

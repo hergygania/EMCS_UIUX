@@ -1,0 +1,312 @@
+﻿@model  App.Web.Models.EMCS.CargoSsModel
+
+@{
+    ViewBag.Title = "CustomHeaderSs";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function subst() {
+            var vars = {};
+            var x = document.location.search.substring(1).split('&');
+            for (var i in x) { var z = x[i].split('=', 2); vars[z[0]] = unescape(z[1]); }
+            var x = ['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+
+            var n = document.getElementById("header_document");
+            var m = document.getElementsByClassName("address_document");
+
+            for (var i in x) {
+                var y = document.getElementsByClassName(x[i]);
+                for (var j = 0; j < y.length; ++j) {
+                    y[j].textContent = vars[x[i]];
+                    if (vars['page'] != 1) {
+                        for (var h = 0; h < m.length; ++h) {
+                            m[h].innerHTML = "";
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <style type="text/css">
+        html body {
+            /*font-family: 'Arial Narrow', Arial, sans-serif;*/
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.67ex;
+            font-weight: 100 !important;
+            line-height: 18px;
+            text-rendering: optimizeSpeed;
+        }
+
+        table tr td, th {
+            /*font-family: 'Arial Narrow', Arial, sans-serif;*/
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.67ex;
+            line-height: 18px;
+            text-rendering: optimizeSpeed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* TABLE */
+        .table thead tr {
+            -webkit-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            -moz-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+        }
+
+            .table thead tr th {
+                /*background: -moz-linear-gradient(left, rgba(60,141,188,1) 0%, rgba(60,141,188,0.93) 56%, rgba(61,142,190,0.93) 58%, rgba(86,156,235,0.93) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(60,141,188,1)), color-stop(56%, rgba(60,141,188,0.93)), color-stop(58%, rgba(61,142,190,0.93)), color-stop(100%, rgba(86,156,235,0.93)));*/
+                background-color: black;
+                /* background: rgba(60,141,188,1); */
+                font-weight: 600;
+                line-height: 1;
+                color: white;
+            }
+
+        .table tbody tr td {
+            line-height: 1;
+        }
+
+        .table-document {
+            border: none;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table-document tr td {
+                background: white;
+            }
+
+            .table-document tr td {
+                line-height: 20px;
+            }
+
+        .table-custom {
+            border: 0.5px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-data {
+            border: 0.5px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse !important;
+        }
+
+            .table-data tr td {
+                /*border: 0.5px solid darkgrey !important;*/
+            }
+
+        .border_top {
+            border-top: 0.5px solid darkgrey !important;
+        }
+
+        .border_bottom {
+            border-bottom: 0.5px solid darkgrey !important;
+        }
+
+        .border_left {
+            padding-left: 10px !important;
+            border-left: 0.5px solid darkgrey !important;
+        }
+
+        .border_right {
+            padding-right: 10px !important;
+            border-right: 0.5px solid darkgrey !important;
+        }
+
+        .text_left {
+            text-align: left !important;
+        }
+
+        .text_right {
+            text-align: right !important;
+        }
+
+        .text_center {
+            text-align: center !important;
+        }
+
+        .text_arial {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .text_bold {
+            font-weight: 800;
+        }
+
+        .tabledata_spacing {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .text_docno {
+            color: darkorange;
+        }
+
+        .text_gold {
+            color: gold;
+        }
+
+        .text_docno_big {
+            font-size: 15px;
+            color: darkorange;
+        }
+
+        .text_20 {
+            font-size: 20px !important;
+        }
+
+        .text_18 {
+            font-size: 18px !important;
+        }
+
+        .text_16 {
+            font-size: 16px !important;
+        }
+
+        .text_14 {
+            font-size: 14px !important;
+        }
+
+        .text_12 {
+            font-size: 12px !important;
+        }
+
+        .text_9 {
+            font-size: 9px !important;
+        }
+
+        .text_8 {
+            font-size: 8px !important;
+        }
+
+        .text_justify {
+            text-align: justify;
+        }
+
+        .text_italic {
+            font-style: italic;
+        }
+
+        .table-title-data {
+            color: red;
+        }
+
+        .width_50_persen {
+            width: 50%
+        }
+
+        .padding_left_10 {
+            padding-left: 10px !important;
+        }
+
+        .padding_right_10 {
+            padding-right: 10px !important;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .table-title-data div {
+            border-right: 1px solid #b9b4b4;
+            border-bottom: 1px solid #b9b4b4;
+            width: 300px;
+            padding-left: 14px;
+            margin-left: -10px;
+            font-weight: 700;
+            color: red;
+            margin-top: 0px;
+            line-height: 35px;
+            color: black;
+            z-index: 99999;
+        }
+    </style>
+</head>
+<body id="header_document" @*style="margin:0 auto;padding-left:31px;padding-right:23px;"*@ onload="subst()">
+    <div style="width:950px !important;darkgray;padding:10px 10px 10px 10px;margin:20px auto">
+        <div style="padding-left:4px;padding-right:4px;">
+            <div style="padding:10px">
+                <table class="table-document">
+                    <tr>
+                        <td style="width:3%"></td>
+                        <td style="width:14%"></td>
+                        <td style="width:9%"></td>
+                        <td style="width:2%"></td>
+                        <td style="width:18%"></td>
+                        <td style="width:14%"></td>
+                        <td style="width:8%"></td>
+                        <td style="width:9%"></td>
+                        <td style="width:10%"></td>
+                        <td style="width:1%"></td>
+                        <td style="width:11%"></td>
+                    </tr>
+                    <tr style="height:20px">
+                        <td colspan="11">
+                            <img alt="Trakindo Logo" src="../../Images/trakindo_logo.jpg" style="position:absolute;top:-5px" />
+                        </td>
+                    </tr>
+                    <tr><td colspan="11" style="height:10px"></td></tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4">PT. TRAKINDO UTAMA</td>
+                        <td colspan="5" rowspan="2" class="border_left border_top border_right">
+                            <span class="text_bold header_title">SHIPPING SUMMARY</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
+                        <td class="border_top border_left">Number</td>
+                        <td colspan="4" class="border_right text_bold text_docno_big">: @Model.Header.SsNo</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="4">INDONESIA - 12560</td>
+                        <td class="border_left">Date</td>
+                        <td colspan="4" class="border_right text_bold">: @Model.Header.ClApprovedDate</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Tel.</td>
+                        <td colspan="3">: (62-21) 29976620</td>
+                        <td class="border_bottom border_left">Reference</td>
+                        <td colspan="4" class="border_bottom border_right text_bold">: @Model.Header.ReferenceNo</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Fax.</td>
+                        <td colspan="3">: (62-21) 29976612</td>
+                        <td></td>
+                        <td colspan="4"></td>
+                    </tr>
+                    <tr><td colspan="11" style="height:20px"></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

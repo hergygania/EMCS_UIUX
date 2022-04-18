@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
+using App.Data.Domain.EMCS;
+using System.Text.RegularExpressions;
+using System.Dynamic;
 
 namespace App.Service.EMCS
 {
@@ -22,6 +25,45 @@ namespace App.Service.EMCS
             {
                 var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false).FirstOrDefault();
                 return data;
+            }
+        }
+
+        public static dynamic NpePebList(GridListFilter crit)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    string Term = "";
+                    string Order = "";
+                    crit.Sort = crit.Sort ?? "Id";
+                    db.Database.CommandTimeout = 600;
+
+                    if (crit.Term != null)
+                    {
+                        Term = Regex.Replace(crit.Term, @"[^0-9a-zA-Z]+", "");
+                    }
+
+                    if (crit.Order != null)
+                    {
+                        Order = Regex.Replace(crit.Order, @"[^0-9a-zA-Z]+", "");
+                    }
+
+
+                    var sql = @"[dbo].[sp_get_npepeb_list] @Username='" + SiteConfiguration.UserName + "', @Search = '" + crit.Term + "' ";
+                    var count = db.Database.SqlQuery<CountData>(sql + ", @isTotal=1").FirstOrDefault();
+                    var data = db.Database.SqlQuery<SPNpePeb>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit='" + crit.Limit + "'").ToList();
+
+
+                    dynamic result = new ExpandoObject();
+                    if (count != null) result.total = count.Total;
+                    result.rows = data;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -164,6 +206,24 @@ namespace App.Service.EMCS
                 return 1;
             }
         }
+        public static bool NpePebHisOwned(long id, string userId)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var result = false;
+
+                var tb = db.NpePebs.FirstOrDefault(a => a.Id == id && a.CreateBy == userId);
+                if (tb != null)
+                {
+                    result = true;
+                }
+
+                return result;
+            }
+        }
+
+
+
 
     }
 }
