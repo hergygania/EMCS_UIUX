@@ -6,19 +6,10 @@ using App.Web.App_Start;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 using App.Data.Domain.EMCS;
 using App.Web.Models;
 using App.Data.Domain;
 using System.ComponentModel;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -81,7 +72,7 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsUpdated, UrlMenu = "CargoList")]
-<<<<<<< HEAD
+
         public ActionResult UpdateCargo(long cargoId, bool rfc = false)
         {
             var userId = User.Identity.GetUserId();
@@ -89,25 +80,18 @@ namespace App.Web.Controllers.EMCS
             ViewBag.CargoID = cargoId;
             string userRoles = User.Identity.GetUserRoles();
             HttpContext.Session["Cargoid"] = cargoId;
-=======
+
         public ActionResult UpdateCargo(long cargoId)
         {
 
             ApplicationTitle();
             ViewBag.CargoID = cargoId;
-<<<<<<< HEAD
->>>>>>> 639d8d0 (Intial commit)
-=======
             string userRoles = User.Identity.GetUserRoles();
             HttpContext.Session["Cargoid"] = cargoId;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-<<<<<<< HEAD
-
-<<<<<<< HEAD
             ViewBag.IsApprover = false;
             ViewBag.CanRequestForChange = false;
             if (Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId))
@@ -122,9 +106,6 @@ namespace App.Web.Controllers.EMCS
                 else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex")))
                     ViewBag.IsApprover = true;
             }
-
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
@@ -142,7 +123,6 @@ namespace App.Web.Controllers.EMCS
                 ViewBag.CanRequestForChange = false;
             else
                 ViewBag.CanRequestForChange = true;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
             PaginatorBoot.Remove("SessionTRN");
@@ -167,17 +147,8 @@ namespace App.Web.Controllers.EMCS
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(filter.Cargoid);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(filter.Cargoid);
             ViewBag.IdCipl = filter.IdCipl;
-<<<<<<< HEAD
-<<<<<<< HEAD
             HttpContext.Session["Cargoid"] = filter.Cargoid;
             GetCargoDocumentList(filter);
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-            HttpContext.Session["Cargoid"] = filter.Cargoid;
-            GetCargoDocumentList(filter);
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             return View(detail);
         }
 
@@ -200,10 +171,6 @@ namespace App.Web.Controllers.EMCS
                 detail.DataRequest = Service.EMCS.SvcRequestCl.GetRequestCl(id);
                 detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
                 detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 //ViewBag.IdCipl = filter.IdCipl;
 
                 GridListFilter filter = new GridListFilter();
@@ -213,8 +180,6 @@ namespace App.Web.Controllers.EMCS
 <<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
                 return View(detail);
             }
