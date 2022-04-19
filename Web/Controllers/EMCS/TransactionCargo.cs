@@ -41,6 +41,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.IsImexUser = false;
+            ViewBag.CanRequestForChange = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
