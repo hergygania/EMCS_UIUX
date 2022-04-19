@@ -20,6 +20,31 @@ namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
+        public ActionResult BLAWBList()
+        {
+            ApplicationTitle();
+            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            PaginatorBoot.Remove("SessionTRN");
+            return View();
+        }
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "BLAWBList")]
+        public JsonResult GetBLAWBList(GridListFilterModel filter)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Limit = filter.Limit;
+            dataFilter.Order = filter.Order;
+            dataFilter.Term = filter.Term;
+            dataFilter.Sort = filter.Sort;
+            dataFilter.Offset = filter.Offset;
+
+            var data = Service.EMCS.SvcBlAwb.BLAWBList(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult BlAwbRevise(Data.Domain.EMCS.GridListFilter filter)
         {
             ApplicationTitle();
@@ -144,8 +169,18 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public ActionResult DraftBlAwb(Data.Domain.EMCS.BlAwb form, string status)
         {
-            long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
-            return JsonMessage("This ticket has been " + status, 0, data);
+            var userId = User.Identity.GetUserId();
+            if (Service.EMCS.SvcBlAwb.BlAwbHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+            {
+                long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
+                return JsonMessage("This ticket has been " + status, 0, data);
+            }
+            else
+            {
+                return JsonMessage("This ticket has been " + status, 0,null);
+            }
+            
+
         }
 
     }

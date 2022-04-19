@@ -42,6 +42,15 @@ namespace App.Service.EMCS
 
             }
         }
+        public static Data.Domain.EMCS.CargoItem GetDataItemById(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.CargoItemData.Where(a => a.Id == id).FirstOrDefault();
+                return data;
+
+            }
+        }
 
         public static long Insert(Data.Domain.EMCS.CargoContainer item, string dml)
         {

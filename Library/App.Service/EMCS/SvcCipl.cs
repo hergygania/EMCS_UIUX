@@ -388,29 +388,16 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
                 parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
                 parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
+                parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
 
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type", parameters).ToList();
+                var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters).ToList();
                 return data;
             }
         }
-        public static long ApproveChangeHistory(string formNo, string formType)
-        {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-            {
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@FormType", formType));
-                parameterList.Add(new SqlParameter("@FormNo", formNo));
-                SqlParameter[] parameters = parameterList.ToArray();
+       
 
-                db.DbContext.Database.ExecuteSqlCommand("exec [dbo].[SP_ApproveChangeHistory] @FormType, @FormNo", parameters);
-                return 1;
-            }
-
-            return 0;
-        }
         public static long UpdateCipl(CiplForwader forwader, Cipl cipl, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -488,9 +475,10 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
                 parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
                 parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
+                parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type", parameters);
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters);
                 return 1;
             }
         }
@@ -758,7 +746,9 @@ namespace App.Service.EMCS
                 return result;
             }
         }
-        public static dynamic GetListSpChangeHistory(GridListFilter crit)
+
+        #region RequestForChange
+        public static dynamic GetListSpRequestForChangeDetails(GridListFilter crit)
         {
             using (var db = new Data.EmcsContext())
             {
@@ -774,28 +764,135 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+        public static dynamic GetRequestForChangeList(GridListFilter crit)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                crit.Sort = crit.Sort ?? "CreateDate";
+                db.Database.CommandTimeout = 600;
+                var sql = @"[dbo].[sp_RequestForChangeHistory]";
+                var count = db.Database.SqlQuery<CountData>(sql + " @IsTotal=0,@Approver='" + SiteConfiguration.UserName + "'").FirstOrDefault();
+                var data = db.Database.SqlQuery<Sp_RequestForChangeHistory>(sql + "@IsTotal=0, @sort='" + crit.Sort + "',  @order='" + crit.Order + "', @offset='" + crit.Offset.ToString() + "', @limit='" + crit.Limit.ToString() + "'").ToList();
 
+                dynamic result = new ExpandoObject();
+                if (count != null) result.total = count.Total;
+                result.rows = data;
+                return result;
+            }
+        }
         public static dynamic GetSpChangeHistoryReason(string idTerm,string formtype)
         {
             using (var db = new Data.EmcsContext())
             {
-                var sql = "Select TOP 1 Reason from RequestForChange WHERE status = 0 AND FormNo = '" + idTerm + "' AND FormType = '" + formtype + "'";
+                var sql = "Select TOP 1 Reason from RequestForChange WHERE  Id = '" + idTerm + "'";
                 var data = db.Database.SqlQuery<string>(sql).FirstOrDefault();
                 return data;
             }
         }
-
-        public static List<RFCItem> GetRequestForChangeDataList(string idTerm, string formtype)
+       
+        public static dynamic CheckRequestExists(int formId, string formtype)
         {
             using (var db = new Data.EmcsContext())
             {
-                var sql = "SELECT RF.RFCID,RF.TableName,RF.FieldName,RF.BeforeValue,RF.AfterValue FROM RequestForChange R INNER JOIN RFCItem RF ON R.ID = RF.RFCID WHERE R.[Status] = 0 AND R.FormNo = '" + idTerm + "' AND R.FormType = '" + formtype + "'";
+                var sql = "select TOP 1(Id) from RequestForChange WHERE FormId = '" + formId + "' AND FormType = '" + formtype + "' and [Status] = 0";
+                var data = db.Database.SqlQuery<int>(sql).FirstOrDefault();
+                return data;
+            }
+        }
+        public static dynamic CheckRequestNotApproved(int Id, string formtype)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "select TOP 1(Id) from RequestForChange WHERE Id = '" + Id + "' AND FormType = '" + formtype + "' and [Status] = 0";
+                var data = db.Database.SqlQuery<int>(sql).FirstOrDefault();
+                return data;
+            }
+        }
+        public static List<RFCItem> GetRequestForChangeDataList(string idTerm)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var sql = "SELECT RF.RFCID,RF.TableName,RF.FieldName,RF.BeforeValue,RF.AfterValue FROM RequestForChange R INNER JOIN RFCItem RF ON R.ID = RF.RFCID WHERE R.[Status] = 0 AND R.Id = '" + idTerm + "'";
                 var data = db.Database.SqlQuery<RFCItem>(sql).ToList();
                 return data;
             }
         }
+        public static long ApproveRequestForChangeHistory(int formId)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", formId));
+                parameterList.Add(new SqlParameter("@UpdatedBy", SiteConfiguration.UserName));
+                SqlParameter[] parameters = parameterList.ToArray();
 
+                db.DbContext.Database.ExecuteSqlCommand("exec [dbo].[SP_ApproveChangeHistory]  @Id,@UpdatedBy", parameters);
+                return 1;
+            }
 
+            return 0;
+        }
+        public static long RejectRequestForChangeHistory(int formId,string reason)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", formId));
+                parameterList.Add(new SqlParameter("@Reason", reason));
+                parameterList.Add(new SqlParameter("@UpdatedBy", SiteConfiguration.UserName));
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                db.DbContext.Database.ExecuteSqlCommand("exec [dbo].[SP_RejectChangeHistory]  @Id,@Reason,@UpdatedBy", parameters);
+                return 1;
+            }
+
+            return 0;
+        }
+        public static int InsertRequestChangeHistory(Data.Domain.RequestForChange data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@FormType", data.FormType));
+                parameterList.Add(new SqlParameter("@FormNo", data.FormNo));
+                parameterList.Add(new SqlParameter("@FormId", data.FormId));
+                parameterList.Add(new SqlParameter("@Reason", data.Reason ?? ""));
+                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName ?? ""));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RequestForChange_Insert] @FormType, @FormNo,@FormId, @Reason, @CreateBy", parameters).First();
+                return obj;
+            }
+        }
+        public static bool InsertRFCItem(List<Data.Domain.RFCItem> data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                for (var j = 0; j < data.Count; j++)
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@RFCID", data[j].RFCID));
+                    parameterList.Add(new SqlParameter("@TableName", data[j].TableName ?? ""));
+                    parameterList.Add(new SqlParameter("@LableName", data[j].LableName ?? ""));
+                    parameterList.Add(new SqlParameter("@FieldName", data[j].FieldName ?? ""));
+                    parameterList.Add(new SqlParameter("@BeforeValue", data[j].BeforeValue ?? ""));
+                    parameterList.Add(new SqlParameter("@AfterValue", data[j].AfterValue ?? ""));
+
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
+                    var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RFCItem_Insert] @RFCID, @TableName, @LableName, @FieldName , @BeforeValue , @AfterValue", parameters).First();
+                }
+                return true;
+            }
+        }
+
+        #endregion
         public static dynamic GetListSpDocument(GridListFilter crit)
         {
             using (var db = new Data.EmcsContext())
@@ -1197,48 +1294,7 @@ namespace App.Service.EMCS
             }
         }
 
-        public static int InsertRequestChangeHistory(Data.Domain.RequestForChange data)
-        {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-            {
-
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@FormType", data.FormType));
-                parameterList.Add(new SqlParameter("@FormNo", data.FormNo));
-                parameterList.Add(new SqlParameter("@Reason", data.Reason ?? ""));
-                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName ?? ""));
-
-                SqlParameter[] parameters = parameterList.ToArray();
-                // ReSharper disable once CoVariantArrayConversion
-                var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RequestForChange_Insert] @FormType, @FormNo, @Reason, @CreateBy", parameters).First();
-                return obj;
-            }
-        }
-
-        public static bool InsertRFCItem(List<Data.Domain.RFCItem> data)
-        {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-            {
-                for (var j = 0; j < data.Count; j++)
-                {
-                    db.DbContext.Database.CommandTimeout = 600;
-                    List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(new SqlParameter("@RFCID", data[j].RFCID));
-                    parameterList.Add(new SqlParameter("@TableName", data[j].TableName?? ""));
-                    parameterList.Add(new SqlParameter("@LableName", data[j].LableName ?? ""));
-                    parameterList.Add(new SqlParameter("@FieldName", data[j].FieldName ?? ""));
-                    parameterList.Add(new SqlParameter("@BeforeValue", data[j].BeforeValue ?? ""));
-                    parameterList.Add(new SqlParameter("@AfterValue", data[j].AfterValue ?? ""));
-
-                    SqlParameter[] parameters = parameterList.ToArray();
-                    // ReSharper disable once CoVariantArrayConversion
-                    var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RFCItem_Insert] @RFCID, @TableName, @LableName, @FieldName , @BeforeValue , @AfterValue", parameters).First();
-                }
-                return true;
-            }
-        }
-
+        
 
     }
 }

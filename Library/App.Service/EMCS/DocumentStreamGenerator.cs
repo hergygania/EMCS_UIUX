@@ -801,7 +801,7 @@ namespace App.Service.EMCS
         }
 
         public static List<ExcelCargoDetailData> GetCargoDetailData(long cargoId)
-        {
+            {
             using (var db = new Data.EmcsContext())
             {
                 db.Database.CommandTimeout = 600;
@@ -1145,6 +1145,9 @@ namespace App.Service.EMCS
             worksheet.Replace(range.Container.Value, item.Container);
             worksheet.Replace(range.Liner.Value, item.Liner);
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
+            worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
+            //worksheet.Replace(range.Qr)
+
 
             return msg;
         }

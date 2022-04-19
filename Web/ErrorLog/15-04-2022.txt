@@ -1,0 +1,10 @@
+###############################################################
+DateTime: 4/15/2022 21:13:09
+Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at App.Web.Controllers.EMCS.EmcsController.ApproveChangeHistory(String idTerm, String formId, String formtype) in E:\Hendri\EMCS\Web\Controllers\EMCS\TransactionCipl.cs:line 338
+###############################################################
+###############################################################
+DateTime: 4/15/2022 21:34:33
+Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at App.Web.Controllers.EMCS.EmcsController.ApproveChangeHistory(String idTerm, String formId, String formtype) in E:\Hendri\EMCS\Web\Controllers\EMCS\TransactionCipl.cs:line 338
+###############################################################

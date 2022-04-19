@@ -5,11 +5,13 @@ using System.Web.Mvc;
 using App.Web.App_Start;
 using System.IO;
 using App.Web.Models.EMCS;
+using App.Web.Helper;
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult ShippingInstructionList()
         {
             ApplicationTitle();
@@ -19,6 +21,19 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
             PaginatorBoot.Remove("SessionTRN");
             return View();
+        }
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "ShippingInstructionList")]
+        public JsonResult GetShippingInstructionList(GridListFilterModel filter)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Limit = filter.Limit;
+            dataFilter.Order = filter.Order;
+            dataFilter.Term = filter.Term;
+            dataFilter.Sort = filter.Sort;
+            dataFilter.Offset = filter.Offset;
+
+            var data = Service.EMCS.SvcShippingInstruction.SIList(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SubmitSi(Data.Domain.EMCS.GridListFilter filter)
@@ -82,32 +97,45 @@ namespace App.Web.Controllers.EMCS
             return View();
         }
 
-        public ActionResult ShippingInstructionView(long cargoId = 1)
+        public ActionResult ShippingInstructionView(long cargoId = 1 )
         {
-            ApplicationTitle();
-            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
-            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
-            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
-            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-            ViewBag.CargoID = cargoId;
-            var GetCargoId = Service.EMCS.SvcShippingInstruction.GetIdSi(cargoId);
-            long NewCargoId = Convert.ToInt64(GetCargoId.IdCl);
-            ViewBag.IdCargo = NewCargoId;
-            ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("si", cargoId);
-            PaginatorBoot.Remove("SessionTRN");
 
-            Service.EMCS.DocumentStreamGenerator.GetCargoSi(NewCargoId);
-            ViewBag.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(NewCargoId);
-            ViewBag.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(NewCargoId);
-
-            CargoSiModel data = new CargoSiModel
+            try
             {
-                Header = Service.EMCS.DocumentStreamGenerator.GetCargoSiHeader(NewCargoId),
-                Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId),
-                Item = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetailItem(NewCargoId),
-                ContainerTypes = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId).Select(i=>i.ContainerDescription).Distinct().ToList()
-            };
-            return View(data);
+                ApplicationTitle();
+                string strQrCodeUrlEDI = Common.GenerateQrCode(cargoId, "downloadsl");
+                ViewBag.QrCodeUrlSI = strQrCodeUrlEDI;
+                TempData["QrCodeUrlSI"] = strQrCodeUrlEDI;
+                TempData.Peek("QrCodeUrlSI");
+                ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+                ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+                ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+                ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+                ViewBag.CargoID = cargoId;
+                var GetCargoId = Service.EMCS.SvcShippingInstruction.GetIdSi(cargoId);
+                long NewCargoId = Convert.ToInt64(GetCargoId.IdCl);
+                ViewBag.IdCargo = NewCargoId;
+                ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("si", cargoId);
+                PaginatorBoot.Remove("SessionTRN");
+
+                Service.EMCS.DocumentStreamGenerator.GetCargoSi(NewCargoId);
+                ViewBag.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(NewCargoId);
+                ViewBag.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(NewCargoId);
+
+                CargoSiModel data = new CargoSiModel
+                {
+                    Header = Service.EMCS.DocumentStreamGenerator.GetCargoSiHeader(NewCargoId),
+                    Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId),
+                    Item = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetailItem(NewCargoId),
+                    ContainerTypes = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId).Select(i => i.ContainerDescription).Distinct().ToList()
+                };
+                return View(data);
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult ReportSi(long clId, string reportType)

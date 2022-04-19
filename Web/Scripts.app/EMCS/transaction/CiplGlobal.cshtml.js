@@ -2348,7 +2348,7 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
     $('#ExtendedItemCipl').val(formatCurrency(ExtendedValue, ".", ",", 2));
 })
 function GetDestinationPort() {
-    var country = $("#countryCipl").val();
+    var country = $("#consigneeCountryCipl").val();
    
         $('#destinationCipl').select2({
             placeholder: "Select Destination Port",
@@ -2951,6 +2951,7 @@ function post_insert_cipl(status) {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
+            ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -2991,13 +2992,11 @@ function post_insert_cipl(status) {
         }
     });
 }
-
-$("#RequestChange").click(function () {
-    debugger;
+function RequestForChangeCIPL(formdata) {
     var modelObj = {
         FormType: "CIPL",
-        FormNo: $('#idCipl').val(),
-        Reason: $('#ReasonForChange').val(),
+        FormId: $('#idCipl').val(),
+        Reason: formdata.Notes,
         /*rfcList: requestForChange*/
     }
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
@@ -3078,6 +3077,7 @@ $("#RequestChange").click(function () {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
+            ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -3103,22 +3103,13 @@ $("#RequestChange").click(function () {
         cache: false,
         async: false,
         success: function (data, response) {
-            //var getstatus = status === 'Draft' ? ' Saved' : ' Submit';
-            //if (data == 1) {
-            //    Swal.fire({
-            //        type: 'success',
-            //        title: 'Success',
-            //        text: 'Save, Your Data Has Been' + getstatus,
-            //    })
-            //} else {
-            //    Swal.fire({
-            //        type: 'warning',
-            //        title: 'Update Failed !',
-            //        text: 'Unauthorized to update this document !',
-            //    })
-            //}
-
-            //post_update_cipl_item(data, status);
+            Swal.fire({
+                type: 'success',
+                title: 'Success',
+                text: 'Request for change is sent for approval',
+            }).then((result) => {
+                window.location.href = "/EMCS/CiplList";
+                });
         },
         error: function (e) {
             Swal.fire({
@@ -3128,23 +3119,50 @@ $("#RequestChange").click(function () {
             })
         }
     });
-    //$.ajax({
-    //    url: '/EMCS/SaveChangeHistory',
-    //    type: 'POST',
-    //    data: modelObj,
-    //    cache: false,
-    //    async: false,
-    //    success: function (data, response) {
-    //        debugger;
-    //    },
-    //    error: function (e) {
-    //        Swal.fire({
-    //            type: 'error',
-    //            title: 'Oops...',
-    //            text: 'Something went wrong! Fail Insert Data',
-    //        })
-    //    }
-    //});
+   
+}
+$("#RequestForChangeHistoryCIPL").click(function () {
+    Swal.fire({
+        title: 'Request this change?',
+        text: 'By approving this changes, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this request of change?',
+        type: 'question',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, Request!',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        showCloseButton: true
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire({
+                input: 'textarea',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                inputPlaceholder: 'Please add reason for this request for change...',
+                inputAttributes: {
+                    'aria-label': 'Please add reason for this request for change...'
+                },
+                showCancelButton: false
+            }).then((result) => {
+                if (result.value !== '') {
+                    var Notes = result.value;
+                    var Status = "Approve";
+                    var Id = $('#RFCId').val();
+                    var formdata = { Notes: Notes, Status: Status, Id: Id };
+                    RequestForChangeCIPL(formdata);
+                }
+                else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Please add request for change reason',
+                    })
+                }
+            });
+        }
+        return false;
+    });
 
    
 });
@@ -3228,6 +3246,7 @@ function post_update_cipl(status) {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
+            ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),

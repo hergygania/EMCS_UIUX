@@ -3,6 +3,7 @@
     ViewBag.Title = "View Shipping Instruction";
     ViewBag.Page = "si";
     ViewBag.Id = @ViewBag.CargoID.ToString();
+    //ViewBag.QrCodeUrlSL = @ViewBag.QrCodeUrlSL();
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
@@ -26,12 +27,14 @@
                     <div class="row" style="margin-top:15px;margin-bottom:10px;padding-left:10px">
                         <div class="col-md-12">
                             <strong>
-                                <a class="btn btn-info" href="~/EMCS/ReportSI?CLId=@ViewBag.IdCargo&reportType=SI"><i class="fa fa-file-pdf-o"></i> Export SI</a>
+                                @*<a class="btn btn-info" href="~/EMCS/ReportSI?CLId=@ViewBag.IdCargo&reportType=SI"><i class="fa fa-file-pdf-o"></i> Export SI</a>*@
+                                <a class="btn btn-info" href="~/download/DownloadSi/@ViewBag.Id"><i class="fa fa-file-pdf-o"></i> Export SI</a>
                             </strong>
                         </div>
                     </div>
                     <div style="padding:10px">
                         <table class="table-document">
+
                             <tr>
                                 <td style="width:3%"></td>
                                 <td style="width:8%"></td>
@@ -208,127 +211,132 @@
                                     </table>
                                 </td>
                                 @*@foreach (var item in Model.Item)
-                                {
-                                    <td class="tabledata_spacing text_left">@item.Name</td>
-                                }*@
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="border_left border_right">Total Gross Weight :</td>
-                                    <td colspan="4" class="border_left border_right">Net Weight : </td>
-                                    <td colspan="4" class="border_left border_right border_top">Volume :</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalGrossWeight</td>
-                                    <td colspan="3" class="border_bottom border_right">KGS</td>
-                                    <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalNetWeight</td>
-                                    <td colspan="2" class="border_bottom border_right">KGS</td>
-                                    <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalVolume</td>
-                                    <td colspan="2" class="border_bottom border_right">M3</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="border_left border_bottom">Booking Number</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.BookingNumber</td>
-                                    <td colspan="2" class="border_bottom"></td>
-                                    <td colspan="2" class="border_bottom">Booking Date</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.BookingDate</td>
-                                    <td colspan="2" class="border_bottom border_right"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="border_left border_bottom">Port of Loading</td>
-                                    <td class="border_bottom">:</td>
-                                    <td colspan="3" class="border_bottom text_bold">@Model.Header.PortOfLoading</td>
-                                    <td colspan="2" class="border_bottom">Port of Discharge</td>
-                                    <td class="border_bottom">:</td>
-                                    <td colspan="3" class="border_bottom text_bold border_right">@Model.Header.PortOfDestination</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="border_left border_bottom">ETD Date</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.Etd</td>
-                                    <td colspan="2" class="border_bottom"></td>
-                                    <td colspan="2" class="border_bottom">ETA Date</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.Eta</td>
-                                    <td colspan="2" class="border_bottom border_right"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="border_left border_bottom">Vessel Voyage</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.VesselVoyage</td>
-                                    <td colspan="2" class="border_bottom"></td>
-                                    <td colspan="2" class="border_bottom">Connecting Vessel Voyage</td>
-                                    <td class="border_bottom">:</td>
-                                    <td class="border_bottom text_bold">@Model.Header.ConnectingVesselVoyage</td>
-                                    <td colspan="2" class="border_bottom border_right"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="border_left border_bottom">Final Destination</td>
-                                    <td class="border_bottom">:</td>
-                                    <td colspan="9" class="border_bottom border_right text_bold">@Model.Header.FinalDestination</td>
-                                </tr>
-                                <tr style="min-height:90px">
-                                    <td colspan="3" class="border_left border_bottom">Special Instruction</td>
-                                    <td class="border_bottom">:</td>
-                                    <td colspan="9" class="border_bottom border_right text_bold">@Model.Header.SpecialInstruction</td>
-                                </tr>
-                                <tr><td colspan="13" style="height:20px"></td></tr>
-                                <tr>
-                                    <td colspan="6" style="vertical-align:top">
-                                        <table border="0" style="width:100%">
-                                            <tr><td class="tabledata_spacing text_bold">@Model.Header.StuffingDate</td></tr>
-                                            <tr><td class="tabledata_spacing text_bold">@Model.Header.StuffingDateOff</td></tr>
-                                            @foreach (var item in Model.ContainerTypes)
+                {
+                    <td class="tabledata_spacing text_left">@item.Name</td>
+                }*@
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="border_left border_right">Total Gross Weight :</td>
+                                <td colspan="4" class="border_left border_right">Net Weight : </td>
+                                <td colspan="4" class="border_left border_right border_top">Volume :</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalGrossWeight</td>
+                                <td colspan="3" class="border_bottom border_right">KGS</td>
+                                <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalNetWeight</td>
+                                <td colspan="2" class="border_bottom border_right">KGS</td>
+                                <td colspan="2" class="border_left border_bottom text_bold text_right tabledata_spacing">@Model.Header.TotalVolume</td>
+                                <td colspan="2" class="border_bottom border_right">M3</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="border_left border_bottom">Booking Number</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.BookingNumber</td>
+                                <td colspan="2" class="border_bottom"></td>
+                                <td colspan="2" class="border_bottom">Booking Date</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.BookingDate</td>
+                                <td colspan="2" class="border_bottom border_right"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="border_left border_bottom">Port of Loading</td>
+                                <td class="border_bottom">:</td>
+                                <td colspan="3" class="border_bottom text_bold">@Model.Header.PortOfLoading</td>
+                                <td colspan="2" class="border_bottom">Port of Discharge</td>
+                                <td class="border_bottom">:</td>
+                                <td colspan="3" class="border_bottom text_bold border_right">@Model.Header.PortOfDestination</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="border_left border_bottom">ETD Date</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.Etd</td>
+                                <td colspan="2" class="border_bottom"></td>
+                                <td colspan="2" class="border_bottom">ETA Date</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.Eta</td>
+                                <td colspan="2" class="border_bottom border_right"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="border_left border_bottom">Vessel Voyage</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.VesselVoyage</td>
+                                <td colspan="2" class="border_bottom"></td>
+                                <td colspan="2" class="border_bottom">Connecting Vessel Voyage</td>
+                                <td class="border_bottom">:</td>
+                                <td class="border_bottom text_bold">@Model.Header.ConnectingVesselVoyage</td>
+                                <td colspan="2" class="border_bottom border_right"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="border_left border_bottom">Final Destination</td>
+                                <td class="border_bottom">:</td>
+                                <td colspan="9" class="border_bottom border_right text_bold">@Model.Header.FinalDestination</td>
+                            </tr>
+                            <tr style="min-height:90px">
+                                <td colspan="3" class="border_left border_bottom">Special Instruction</td>
+                                <td class="border_bottom">:</td>
+                                <td colspan="9" class="border_bottom border_right text_bold">@Model.Header.SpecialInstruction</td>
+                            </tr>
+                            <tr><td colspan="13" style="height:20px"></td></tr>
+                            <tr>
+                                <td colspan="6" style="vertical-align:top">
+                                    <table border="0" style="width:100%">
+                                        <tr><td class="tabledata_spacing text_bold">@Model.Header.StuffingDate</td></tr>
+                                        <tr><td class="tabledata_spacing text_bold">@Model.Header.StuffingDateOff</td></tr>
+                                        @foreach (var item in Model.ContainerTypes)
+                                        {
+                                            <tr><td class="tabledata_spacing text_bold">@item</td></tr>
+                                        }
+                                        <tr><td class="tabledata_spacing text_bold">@Model.Header.Liner</td></tr>
+                                    </table>
+                                </td>
+                                <td colspan="7">
+                                    <table border="0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text_bold tabledata_spacing" rowspan="2" style="width:20%">CTNR #</th>
+                                                <th class="text_bold tabledata_spacing" rowspan="2" style="width:60%">CTNR TYPE</th>
+                                                <th class="text_bold tabledata_spacing" rowspan="2" style="width:20%">SEAL #</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Detail)
                                             {
-                                                <tr><td class="tabledata_spacing text_bold">@item</td></tr>
-                                            }
-                                            <tr><td class="tabledata_spacing text_bold">@Model.Header.Liner</td></tr>
-                                        </table>
-                                    </td>
-                                    <td colspan="7">
-                                        <table border="0" style="width:100%">
-                                            <thead>
                                                 <tr>
-                                                    <th class="text_bold tabledata_spacing" rowspan="2" style="width:20%">CTNR #</th>
-                                                    <th class="text_bold tabledata_spacing" rowspan="2" style="width:60%">CTNR TYPE</th>
-                                                    <th class="text_bold tabledata_spacing" rowspan="2" style="width:20%">SEAL #</th>
+                                                    <td class="tabledata_spacing text_left">@item.ContainerNumber</td>
+                                                    <td class="tabledata_spacing text_left">@item.ContainerType</td>
+                                                    <td class="tabledata_spacing text_right">@item.ContainerSealNumber</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.Detail)
-                                                {
-                                                    <tr>
-                                                        <td class="tabledata_spacing text_left">@item.ContainerNumber</td>
-                                                        <td class="tabledata_spacing text_left">@item.ContainerType</td>
-                                                        <td class="tabledata_spacing text_right">@item.ContainerSealNumber</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="height:10px"></td>
-                                    <td colspan="7"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" style="height:30px"></td>
-                                    <td colspan="8"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="13">PREPARED BY :</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="13">PT. Trakindo Utama - IMEX</td>
-                                </tr>
-                                <tr><td colspan="11">@ViewBag.TemplateHeader.SignedName</td></tr>
-                                <tr><td colspan="11">@ViewBag.TemplateHeader.SignedPosition</td></tr>
-                                <tr><td colspan="13" style="height:30px"></td></tr>
-                                <tr>
-                                    <td colspan="13" class="text_footer">This is an electronic document, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.</td>
-                                </tr>
-                            </table>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" style="height:10px"></td>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" style="height:30px"></td>
+                                <td colspan="8"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="13">PREPARED BY :</td>
+                            </tr>
+                            <tr>
+                                <td colspan="13">PT. Trakindo Utama - IMEX</td>
+                            </tr>
+                            <tr><td colspan="11">@ViewBag.TemplateHeader.SignedName</td></tr>
+                            <tr><td colspan="11">@ViewBag.TemplateHeader.SignedPosition</td></tr>
+                            <tr><td colspan="13" style="height:30px"></td></tr>
+                            <tr>
+                                <td colspan="13" class="text_footer">This is an electronic document, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.</td>
+                            </tr>
+                        </table>
+                        <table class="table-document">
+                            <tr>
+                                <td><img src="@ViewBag.QrCodeUrlSI" height="150px" width="150px" /></td>
+                            </tr>
+                        </table>
 
                     </div>
                 </div>
@@ -372,10 +380,11 @@
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
-
+               
                 <div role="tabpanel" class="tab-pane" id="documents">
                     <div class="row">
                         <div class="col-xs-12 table-responsive">
@@ -409,7 +418,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -422,6 +430,7 @@
     <script>
     var wizardState = @ViewBag.WizardData.Progress;
     </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/ShippingInstruction.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }

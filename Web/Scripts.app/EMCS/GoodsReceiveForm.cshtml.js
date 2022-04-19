@@ -27,6 +27,22 @@ window.operateEvents = {
             }
             return false;
         });
+    },
+    'click .editDocument': function (e, value, row, index) {
+        
+        $('#Id').val(row.Id);
+        $('#inp-doc-date').val(row.DocumentDate);
+        $('#DocumentName').val(row.DocumentName);
+    },
+    'click .removeDocument': function (e, value, row, index) {
+        
+        GrDocumentDeleteById(row.Id);
+        get_grdocumentlist();
+    },
+    'click .uploadDocument': function (e, value, row, index) {
+        
+        $('#IdDocumentUpload').val(row.Id);
+        //$(".uploadRecord").attr('href', '/EMCS/CiplDocumentUpload/' + row.Id).trigger('click');
     }
 };
 
@@ -36,6 +52,13 @@ window.operateEventRight = {
     },
     'click .showDocument': function (e, value, row) {
         $(".PreviewFile").attr('href', '/EMCS/PreviewGrItem?Id=' + row.Id).trigger('click');
+    },
+    'click .downloaddoc': function (e, value, row) {
+        
+        location.href = "/EMCS/DownloadGrDocument/" + row.Id;
+    },
+    'click .showDocumentdoc': function (e, value, row) {
+        document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + row.Id + '/' + row.Filename;
     }
 };
 
@@ -561,4 +584,88 @@ $(document).ready(function () {
     $.validator.unobtrusive.parse("form");
     initVehicleAutocomplete();
     initVehicleMerkAutocomplete();
+});
+
+var myDropzoneDocument = new Dropzone("#FormUploadDocumentContainer", { // Make the bodyFormUpload a dropzone
+    
+    url: "/EMCS/GrDocumentUpload", // Set the url
+
+    thumbnailHeight: 100,
+    thumbnailWeight: 100,
+    timeout: "80000",
+    method: 'POST',
+    dictDefaultMessage: "<h4>Click this Section for Browse the Import File.</h4>",
+    acceptedFiles: '.pdf, .jpeg, .jpg, .png',
+    filesizeBase: 1024,
+    autoProcessQueue: true,
+    maxFiles: 1,
+    maxFilesize: 100, // MB
+    parallelUploads: 1,
+    previewTemplate: $("#template-dropzone").html(),
+    uploadMultiple: false
+    //previewsContainer: "#FormUploadMaterial", // Define the container to display the previews
+    //clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+}
+);
+
+myDropzoneDocument.on("addedfile", function (file) {
+    
+    // Hookup the start button
+    $("#actions .start").on("click", function () {
+        myDropzone.enqueueFile(file);
+    });
+    $("#placeholderUpload").hide();
+});
+
+myDropzoneDocument.on("totaluploadprogress", function (progress) {
+    
+    $("#total-progress .progress-bar").css("width", progress + "%");
+    $("#progressPercent").html(progress + "%");
+});
+
+myDropzoneDocument.on("sending", function (file, xhr, formData) {
+    
+
+    formData.append("id", $("#IdDocumentUpload").val());
+    // Show the total progress bar when upload starts
+    $("#total-progress").css("opacity", 1);
+    // And disable the start button
+    $("#actions .delete").attr("disabled", "disabled");
+    $(".start").attr("disabled", "disabled");
+
+});
+
+myDropzoneDocument.on("complete", function (resp) {
+    
+
+    if (resp.status === "success") {
+        $("#actions .delete").prop("disabled", false);
+        if (resp.size >= 9785 && resp.size <= 9800) {
+            swal.fire("Upload Status", "Empty files will not be uploaded.", "error");
+        }
+        else {
+            var respText = resp.xhr.response;
+            var respData = JSON.parse(respText);
+            console.log(respData);
+            var type = respData.status ? "success" : "error";
+            swal.fire("Upload Status", respData.msg, type);
+            get_grdocumentlist();
+        }
+    }
+});
+
+myDropzoneDocument.on("queuecomplete", function (progress) {
+    $("#total-progress").css("opacity", "0");
+    setTimeout(function () {
+        myDropzoneDocument.removeAllFiles(true);
+    }, 400);
+});
+
+$("#actions .start").on("click", function () {
+    myDropzoneDocument.enqueueFiles(myDropzoneDocument.getFilesWithStatus(Dropzone.QUEUED));
+});
+
+$("#actions .cancel").on("click", function () {
+    myDropzoneDocument.removeAllFiles(true);
+    $("#placeholderUpload").hide();
 });

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
+using App.Data.Domain.EMCS;
+using System.Text.RegularExpressions;
+using System.Dynamic;
 
 namespace App.Service.EMCS
 {
@@ -16,7 +19,44 @@ namespace App.Service.EMCS
 
         public readonly static ICacheManager CacheManager = new MemoryCacheManager();
 
+        public static dynamic BLAWBList(GridListFilter crit)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    string Term = "";
+                    string Order = "";
+                    crit.Sort = crit.Sort ?? "Id";
+                    db.Database.CommandTimeout = 600;
 
+                    if (crit.Term != null)
+                    {
+                        Term = Regex.Replace(crit.Term, @"[^0-9a-zA-Z]+", "");
+                    }
+
+                    if (crit.Order != null)
+                    {
+                        Order = Regex.Replace(crit.Order, @"[^0-9a-zA-Z]+", "");
+                    }
+
+
+                    var sql = @"[dbo].[sp_get_blawb_list] @Username='" + SiteConfiguration.UserName + "', @Search = '" + crit.Term + "' ";
+                    var count = db.Database.SqlQuery<CountData>(sql + ", @isTotal=1").FirstOrDefault();
+                    var data = db.Database.SqlQuery<SPBlAwb>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit='" + crit.Limit + "'").ToList();
+
+
+                    dynamic result = new ExpandoObject();
+                    if (count != null) result.total = count.Total;
+                    result.rows = data;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static Data.Domain.EMCS.BlAwb GetByIdcl(long id)
         {
             using (var db = new Data.EmcsContext())
@@ -120,6 +160,21 @@ namespace App.Service.EMCS
                 // ReSharper disable once CoVariantArrayConversion
                 db.DbContext.Database.ExecuteSqlCommand(@"[dbo].[sp_insert_document] @IdRequest, @Category, @Status, @Step, @Name, @Tag, @FileName, @Date, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete", parameters);
                 return 1;
+            }
+        }
+        public static bool BlAwbHisOwned(long id, string userId)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var result = false;
+
+                var tb = db.BlAwb.FirstOrDefault(a => a.Id == id && a.CreateBy == userId);
+                if (tb != null)
+                {
+                    result = true;
+                }
+
+                return result;
             }
         }
 

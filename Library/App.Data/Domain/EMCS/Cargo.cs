@@ -26,8 +26,8 @@
         [DisplayName("Incoterms")]
         public string Incoterms { get; set; }
   
-        [DisplayName("Cargo List Number")]
-        public string CiNo { get; set; }
+        //[DisplayName("Cargo List Number")]
+        //public string CiNo { get; set; }
 
         [DisplayName("Shipping Summary Number")]
         public string SsNo { get; set; }
@@ -136,8 +136,8 @@
         [DisplayName("Update Date")]
         public DateTime? UpdateDate { get; set; }
 
-        [DisplayName("Id Kppbc")]
-        public long IdKppbc { get; set; }
+        //[DisplayName("Id Kppbc")]
+        //public long IdKppbc { get; set; }
 
         public bool IsDelete { get; set; }
 
