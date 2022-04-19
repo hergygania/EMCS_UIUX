@@ -37,20 +37,14 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CargoForm()
         {
             ApplicationTitle();
-<<<<<<< HEAD
             ViewBag.IsOwned = true;
-=======
->>>>>>> 639d8d0 (Intial commit)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-<<<<<<< HEAD
             ViewBag.IsImexUser = false;
             ViewBag.CanRequestForChange = false;
             ViewBag.IsApprover = false;
-=======
->>>>>>> 639d8d0 (Intial commit)
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -80,6 +74,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.CargoID = cargoId;
             string userRoles = User.Identity.GetUserRoles();
             HttpContext.Session["Cargoid"] = cargoId;
+        }
 
         public ActionResult UpdateCargo(long cargoId)
         {
@@ -110,15 +105,11 @@ namespace App.Web.Controllers.EMCS
                 ViewBag.IsImexUser = true;
             else
                 ViewBag.IsImexUser = false;
-<<<<<<< HEAD
 
             if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
                 ViewBag.CanRequestForChange = false;
             else if(rfc)
                 ViewBag.CanRequestForChange = true;
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
             if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
                 ViewBag.CanRequestForChange = false;
             else
@@ -177,9 +168,6 @@ namespace App.Web.Controllers.EMCS
                 filter.Cargoid = id;
                 GetCargoDocumentList(filter);
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
 
                 return View(detail);
             }
@@ -282,28 +270,21 @@ namespace App.Web.Controllers.EMCS
         public JsonResult InsertCargo(Data.Domain.EMCS.CargoFormData item)
         {
             try
-<<<<<<< HEAD
-<<<<<<< HEAD
             {
-
                 var Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                 if (item.Id == 0)
                     item.Id = Id;
                 var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
                 var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
-=======
-            {                
-=======
-            {
-
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                 CargoItem a = new CargoItem();
                 a.IdCargo = id;
                 CheckCNNo(a);
                 var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
                 var ss = Service.EMCS.SvcCargo.CiplItemAvailable(id);
->>>>>>> 639d8d0 (Intial commit)
+                item.Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
+                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
                 return JsonCRUDMessage("I", new { cargoData });
             }
             catch (Exception ex)
@@ -311,10 +292,6 @@ namespace App.Web.Controllers.EMCS
                 return JsonMessage("Error", 1, ex);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [HttpPost]
         public ActionResult SaveChangeHistoryCL(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData item)
         {
@@ -330,11 +307,7 @@ namespace App.Web.Controllers.EMCS
             var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
 
             var listRfcItems = new List<Data.Domain.RFCItem>();
-<<<<<<< HEAD
             string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
-=======
-            string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod","Status", "CreateDate" };
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
             foreach (PropertyDescriptor property in properties)
             {
@@ -348,11 +321,7 @@ namespace App.Web.Controllers.EMCS
                             var rfcItem = new Data.Domain.RFCItem();
 
                             rfcItem.RFCID = id;
-<<<<<<< HEAD
                             rfcItem.TableName = "Cargo";
-=======
-                            rfcItem.TableName = "CL";
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                             rfcItem.LableName = property.Name;
                             rfcItem.FieldName = property.Name;
                             rfcItem.BeforeValue = property.GetValue(model).ToString();
@@ -372,7 +341,6 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-<<<<<<< HEAD
                 var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
                 if (formtype == "Cargo") {
 
@@ -549,74 +517,6 @@ namespace App.Web.Controllers.EMCS
                 Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
 
                 return Json("", JsonRequestBehavior.AllowGet);
-=======
-
-
-                var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
-                var cargo = Service.EMCS.SvcCargo.GetCargoFormDataById(Convert.ToInt32(formId));
-
-                var cargoHistory = data.Where(x => x.TableName == typeof(Data.Domain.EMCS.CargoFormData).Name).ToList();
-
-                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
-
-                string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
-
-                foreach (PropertyDescriptor property in properties)
-                {
-                    if (!_ignoreParameters.Contains(property.Name))
-                    {
-                        var historyProp = cargoHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
-                        if (historyProp != null)
-                        {
-                            System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
-                            switch (typeCode)
-                            {
-                                case TypeCode.Boolean:
-                                    property.SetValue(cargo, Convert.ToBoolean(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.String:
-                                    property.SetValue(cargo, Convert.ToString(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Char:
-                                    property.SetValue(cargo, Convert.ToChar(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Double:
-                                    property.SetValue(cargo, Convert.ToDouble(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Single:
-                                    property.SetValue(cargo, Convert.ToSingle(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Int32:
-                                    property.SetValue(cargo, Convert.ToInt32(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Int16:
-                                    property.SetValue(cargo, Convert.ToInt16(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.DateTime:
-                                    property.SetValue(cargo, Convert.ToDateTime(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Decimal:
-                                    property.SetValue(cargo, Convert.ToDecimal(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Object:
-                                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
-                                    break;
-                                default:
-                                    property.SetValue(cargo, historyProp.AfterValue);
-                                    break;
-                            }
-                            //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
-
-                        }
-                    }
-                }
-
-                Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
-                Service.EMCS.SvcCargo.CrudSp(cargo, "I");
-                var userId = User.Identity.GetUserId();
-                
-                return Json(data, JsonRequestBehavior.AllowGet);
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             }
             catch (Exception ex)
             {
@@ -625,19 +525,11 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [HttpPost]
         public JsonResult InsertCargoAtBottom(Data.Domain.EMCS.CargoFormData item)
         {
             try
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 var userId = User.Identity.GetUserId();
                 //if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
                 //{
@@ -649,12 +541,10 @@ namespace App.Web.Controllers.EMCS
                 //{
                 //    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
                 //}
-=======
                 if (Service.EMCS.SvcCargo.CiplItemAvailable(item.Id) || item.Status == "Draft")
-=======
+
                 var userId = User.Identity.GetUserId();
                 if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 {
                     long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                     var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
@@ -664,7 +554,6 @@ namespace App.Web.Controllers.EMCS
                 {
                     return Json(new { success = false, responseText = "Cargo Item is not complete !" });
                 }
->>>>>>> 639d8d0 (Intial commit)
             }
             catch (Exception ex)
             {
@@ -742,7 +631,6 @@ namespace App.Web.Controllers.EMCS
             }
         }
 
-<<<<<<< HEAD
         [HttpPost]
         public JsonResult CargoSaveAndApprove(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData cargoform, Data.Domain.EMCS.CargoFormData approvalform)
         {
@@ -800,8 +688,6 @@ namespace App.Web.Controllers.EMCS
         }
 
 
-=======
->>>>>>> 639d8d0 (Intial commit)
         public ActionResult ReportCl(long clId, string reportType)
         {
             string fileExcel = Server.MapPath("~\\Content\\EMCS\\Templates\\TemplateCL.xls");
@@ -810,10 +696,6 @@ namespace App.Web.Controllers.EMCS
             MemoryStream output = Service.EMCS.DocumentStreamGenerator.GetStream(clId, fileExcel, filePath, reportType);
             return File(output.ToArray(), "application/pdf", "CLDocument_" + DateTime.Now.ToString("ddMMyyyyhhhmmss") + ".pdf");    //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [HttpPost]
         public bool CargoDocumentInsert(List<Data.Domain.EMCS.CargoDocument> data)
         {
@@ -974,7 +856,6 @@ namespace App.Web.Controllers.EMCS
             }
 
         }
-<<<<<<< HEAD
         [HttpPost]
         public JsonResult CheckCNNoAndGetId(CargoItem cargoItem)
         {
@@ -1049,16 +930,13 @@ namespace App.Web.Controllers.EMCS
             }
 
         }
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+        
         //public JsonResult GetCargotype(int  cargotype)
         //{
         //    string data = "";
         //    App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
         //    try
         //    {
-
-
         //        m = Service.EMCS.SvcCargo.GetCargoType(cargotype);
         //        data = m.Description;
         //    }
@@ -1066,17 +944,7 @@ namespace App.Web.Controllers.EMCS
         //    {
         //         data = ex.Message;
         //    }
-
         //    return Json(data);
-
-
-
-
         //}
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     }
 }
