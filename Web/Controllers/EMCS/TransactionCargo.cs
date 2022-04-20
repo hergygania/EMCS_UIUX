@@ -41,6 +41,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.IsImexUser = false;
+            ViewBag.CanRequestForChange = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -239,12 +241,9 @@ namespace App.Web.Controllers.EMCS
             try
             {
 
-                long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
-                CargoItem a = new CargoItem();
-                a.IdCargo = id;
-                CheckCNNo(a);
-                var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
-                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(id);
+                item.Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
+                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
                 return JsonCRUDMessage("I", new { cargoData });
             }
             catch (Exception ex)
