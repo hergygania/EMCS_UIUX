@@ -2976,6 +2976,7 @@ END
 GO  
   
 ------------------------------------------------------------ Changes By Developer END ------------------------------------------------------
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 INSERT [dbo].[MasterParameter] ( [Group], [Value], [Name], [Description], [Sort], [IsDeleted], [CreateBy], [CreateDate], [UpdateBy], [UpdateDate]) VALUES ( N'ShipDelivery', N'Bill To', N'Bill To', NULL, N'4', 0, N'0', CAST(N'2022-01-04T09:43:00' AS SmallDateTime), N'0', CAST(N'2022-01-04T09:43:00' AS SmallDateTime))
@@ -9323,9 +9324,11 @@ GO
 
 GO
 >>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+=======
+
+>>>>>>> 61b5219 (tidy up SQL Queries)
 INSERT [dbo].[MasterParameter] ( [Group], [Value], [Name], [Description], [Sort], [IsDeleted], [CreateBy], [CreateDate], [UpdateBy], [UpdateDate]) VALUES ( N'ShipDelivery', N'Bill To', N'Bill To', NULL, N'4', 0, N'0', CAST(N'2022-01-04T09:43:00' AS SmallDateTime), N'0', CAST(N'2022-01-04T09:43:00' AS SmallDateTime))
 GO
-
 
 ALTER PROCEDURE [dbo].[sp_update_request_cl] -- exec sp_update_request_cl 1, 'CKB1', 'Submit', 'Testing Notes'
 (
@@ -9367,107 +9370,108 @@ BEGIN
 	--select * from dbo.fn_get_cl_request_list_all() where IdCl = 3;
 
 	Select @CurrentStepId = IdStep, @CurrentStatus = [Status] From [dbo].[RequestCl] WHERE IdCl = @IdCl
-			IF @NewStatus = 'Approve'
-			BEGIN
-			SELECT @LoadingPort = PortOfLoading , @DestinationPort = PortOfDestination FROM Cargo where Id = @IdCl 
-			Update Cipl SET LoadingPort = @LoadingPort ,DestinationPort = @DestinationPort Where id in (Select IdCipl From CargoCipl where IdCargo = @IdCl)
-			END
+    
+    IF @NewStatus = 'Approve'
+    BEGIN
+        SELECT @LoadingPort = PortOfLoading , @DestinationPort = PortOfDestination FROM Cargo where Id = @IdCl 
+        Update Cipl SET LoadingPort = @LoadingPort ,DestinationPort = @DestinationPort Where id in (Select IdCipl From CargoCipl where IdCargo = @IdCl)
+    END
 
 
 	IF @CurrentStepId = 30069
-		BEGIN
-			IF @NewStatus = 'Approve'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Waiting NPE Document'
-				SET @FlowName = 'CL'
-			END
-			ELSE IF @NewStatus = 'Revise'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Revise'
-			END		
-			ELSE IF @NewStatus = 'Reject'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Reject by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Reject'
-			END		
+    BEGIN
+        IF @NewStatus = 'Approve'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Waiting NPE Document'
+            SET @FlowName = 'CL'
+        END
+        ELSE IF @NewStatus = 'Revise'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Revise'
+        END		
+        ELSE IF @NewStatus = 'Reject'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Reject by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Reject'
+        END		
 
-			UPDATE [dbo].[RequestCl]
-			SET [IdStep] = @NewStepId
-				,[Status] = @NewStatus
-				--,[Pic] = @Username
-				,[UpdateBy] = @Username
-				,[UpdateDate] = GETDATE()
-			WHERE IdCl = @IdCl
-		END
+        UPDATE [dbo].[RequestCl]
+        SET [IdStep] = @NewStepId
+            ,[Status] = @NewStatus
+            --,[Pic] = @Username
+            ,[UpdateBy] = @Username
+            ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	ELSE IF @CurrentStepId = 30071
-		BEGIN
-			IF @NewStatus = 'Approve'
-			BEGIN
-				SET @NewStepId = 10020
-				SET @NextStepName = 'Waiting for BL or AWB'
-				SET @FlowName = 'CL'
-			END
-			ELSE IF @NewStatus = 'Revise'
-			BEGIN
-				SET @NewStepId = 30072
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Revise'
-			END
-			ELSE IF @NewStatus = 'Reject'
-			BEGIN
-				SET @NewStepId = 30072
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Reject'
-			END
+    BEGIN
+        IF @NewStatus = 'Approve'
+        BEGIN
+            SET @NewStepId = 10020
+            SET @NextStepName = 'Waiting for BL or AWB'
+            SET @FlowName = 'CL'
+        END
+        ELSE IF @NewStatus = 'Revise'
+        BEGIN
+            SET @NewStepId = 30072
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Revise'
+        END
+        ELSE IF @NewStatus = 'Reject'
+        BEGIN
+            SET @NewStepId = 30072
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Reject'
+        END
 
-			UPDATE [dbo].[RequestCl]
-			SET [IdStep] = @NewStepId
-				,[Status] = @NewStatus
-				--,[Pic] = @Username
-				,[UpdateBy] = @Username
-				,[UpdateDate] = GETDATE()
-			WHERE IdCl = @IdCl
-		END
+        UPDATE [dbo].[RequestCl]
+        SET [IdStep] = @NewStepId
+            ,[Status] = @NewStatus
+            --,[Pic] = @Username
+            ,[UpdateBy] = @Username
+            ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	ELSE
-		BEGIN
-				select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
-				--PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
-				--		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
-				--		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
-				--		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
-						IF @CurrentStepId = 12 
-						BEGIN
-						IF @NewStepId = 10017 AND @NewStatus = 'Submit'
-						BEGIN
-						declare @exportType nvarchar(10)=''
-						SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
-						IF (@exportType ='PJT')
-						BEGIN
-						SET @NewStepId =10020
-						SET @NextStepName = 'Waiting for BL or AWB'
-						SET @FlowName = 'CL'
-						SET @NewStatus = 'Approve'
-						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-						END
-						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-						END 
-						END 
-				UPDATE [dbo].[RequestCl]
-				  SET [IdStep] = @NewStepId
-					 ,[Status] = @NewStatus
-					 ,[Pic] = @Username
-					 ,[UpdateBy] = @Username
-					 ,[UpdateDate] = GETDATE()
-				WHERE IdCl = @IdCl
-		END
+    BEGIN
+        select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
+        --PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
+        --		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
+        --		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
+        --		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
+                IF @CurrentStepId = 12 
+                BEGIN
+                IF @NewStepId = 10017 AND @NewStatus = 'Submit'
+                BEGIN
+                declare @exportType nvarchar(10)=''
+                SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
+                IF (@exportType ='PJT')
+                BEGIN
+                SET @NewStepId =10020
+                SET @NextStepName = 'Waiting for BL or AWB'
+                SET @FlowName = 'CL'
+                SET @NewStatus = 'Approve'
+                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+                END
+                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+                END 
+                END 
+        UPDATE [dbo].[RequestCl]
+            SET [IdStep] = @NewStepId
+                ,[Status] = @NewStatus
+                ,[Pic] = @Username
+                ,[UpdateBy] = @Username
+                ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	
 	-- Hasni Procedure Cancel PEB
 	IF  @NewStatus = 'Request Cancel'
@@ -9563,7 +9567,6 @@ BEGIN
 	--	EXEC [sp_proccess_email] @IdCl, 'CL'
 	--END
 END
-
 GO
 
 -- =============================================
@@ -9583,99 +9586,225 @@ ALTER FUNCTION [dbo].[fn_proccess_email_template]
 RETURNS nvarchar(max)
 AS
 BEGIN
-	
-	
-                ------------------------------------------------------------------
-                -- 1. Melakukan Declare semua variable yang dibutuhkan
-                ------------------------------------------------------------------
-                BEGIN
-								
-                                -- ini hanya sample silahkan comment jika akan digunakan
-                                --SET @template = 'Ini adalah email dari [requestor_name], dan ini adalah email untuk [last_pic_name]. selanjutnya akan dikirim ke [next_pic_name]';
-                                DECLARE @variable_table TABLE (
-                                    key_data VARCHAR(MAX) NULL,
-                                    val_data VARCHAR(MAX) NULL
-                                );
+	------------------------------------------------------------------
+    -- 1. Melakukan Declare semua variable yang dibutuhkan
+    ------------------------------------------------------------------
+    BEGIN  
+        -- ini hanya sample silahkan comment jika akan digunakan
+        --SET @template = 'Ini adalah email dari [requestor_name], dan ini adalah email untuk [last_pic_name]. selanjutnya akan dikirim ke [next_pic_name]';
+        DECLARE @variable_table TABLE (
+            key_data VARCHAR(MAX) NULL,
+            val_data VARCHAR(MAX) NULL
+        );
 
-                                DECLARE 
-                                                @key NVARCHAR(MAX), 
-                                                @flow NVARCHAR(MAX), 
-                                                @val NVARCHAR(MAX),
-                                                @requestor_name NVARCHAR(MAX),
-                                                @requestor_id NVARCHAR(MAX),
-                                                @requestor_username NVARCHAR(MAX),
-                                                @last_pic_name NVARCHAR(MAX),
-                                                @last_pic_id NVARCHAR(MAX),
-                                                @last_pic_username NVARCHAR(MAX),
-                                                @next_pic_name NVARCHAR(MAX),
-                                                @next_pic_id NVARCHAR(MAX),
-                                                @next_pic_username NVARCHAR(MAX),
-                                                @si_number NVARCHAR(MAX) = '',
-                                                @ss_number NVARCHAR(MAX) = '',
-                                                @req_number NVARCHAR(MAX) = '',
-												@CiplNo NVARCHAR(MAX) = '',
-												@CIPLBranchName NVARCHAR(MAX) = '',
-												@PICPickupPoints NVARCHAR(MAX) = '',
-												@PickupPointsArea NVARCHAR(MAX) = '',
-                                                @npe_number NVARCHAR(MAX) = '',
-                                                @peb_number NVARCHAR(MAX) = '',
-                                                @bl_awb_number NVARCHAR(MAX) = '',
-                                                @req_date NVARCHAR(MAX) = '',
-                                                @superior_req_name nvarchar(max) = '',
-                                                @superior_req_id nvarchar(max) = '',
-												@employee_name nvarchar(max) = ''
-												
-								IF (@lastPIC <> '')
-								BEGIN
-									SELECT @employee_name = employee_name 
-									FROM dbo.fn_get_employee_internal_ckb() 
-									WHERE AD_User = @lastPIC;
-								END
-                END
+        DECLARE 
+            @key NVARCHAR(MAX), 
+            @flow NVARCHAR(MAX), 
+            @val NVARCHAR(MAX),
+            @requestor_name NVARCHAR(MAX),
+            @requestor_id NVARCHAR(MAX),
+            @requestor_username NVARCHAR(MAX),
+            @last_pic_name NVARCHAR(MAX),
+            @last_pic_id NVARCHAR(MAX),
+            @last_pic_username NVARCHAR(MAX),
+            @next_pic_name NVARCHAR(MAX),
+            @next_pic_id NVARCHAR(MAX),
+            @next_pic_username NVARCHAR(MAX),
+            @si_number NVARCHAR(MAX) = '',
+            @ss_number NVARCHAR(MAX) = '',
+            @req_number NVARCHAR(MAX) = '',
+            @CiplNo NVARCHAR(MAX) = '',
+            @CIPLBranchName NVARCHAR(MAX) = '',
+            @PICPickupPoints NVARCHAR(MAX) = '',
+            @PickupPointsArea NVARCHAR(MAX) = '',
+            @npe_number NVARCHAR(MAX) = '',
+            @peb_number NVARCHAR(MAX) = '',
+            @bl_awb_number NVARCHAR(MAX) = '',
+            @req_date NVARCHAR(MAX) = '',
+            @superior_req_name nvarchar(max) = '',
+            @superior_req_id nvarchar(max) = '',
+            @employee_name nvarchar(max) = ''
+                        
+        IF (@lastPIC <> '')
+        BEGIN
+            SELECT @employee_name = employee_name 
+            FROM dbo.fn_get_employee_internal_ckb() 
+            WHERE AD_User = @lastPIC;
+        END
+    END
                 
-                ------------------------------------------------------------------
-                -- 2. Query untuk mengisi data ke variable variable yang dibutuhkan
-                ------------------------------------------------------------------
-                BEGIN
-                                -- Mengambil data dari fn request per flow
-                                BEGIN
-                                                IF (@requestType = 'CIPL')
-                                                BEGIN
-                                                                SET @flow = 'CIPL';
-                   SELECT 
-                                                                                @requestor_id = t1.Employee_ID,
-                                                                                @requestor_name = t1.Employee_Name,
-																				@superior_req_name = t1.Superior_Name,
-                                                                                @superior_req_id = t1.Superior_ID,
-                                                                                @requestor_username = t1.AD_User,
-                                                                                @last_pic_id = t2.Employee_ID,
-                                                                                @last_pic_name = t2.Employee_Name,
-                                                                                @last_pic_username = t2.AD_User,
-                                                                                @next_pic_id = t3.Employee_ID,
-																				@CiplNo = t4.CiplNo,
-																				@CIPLBranchName = t4.Branch,
-																				@PICPickupPoints = t4.PickUpPic,
-																				@PickupPointsArea = t4.PickUpArea,
-                                                                                @next_pic_name = 
-                                                                                                CASE
-                                                                                                                WHEN t0.Status = 'Revise' OR t0.Status = 'Reject' OR (t0.Status = 'Approve' AND t0.NextAssignType IS NULL) THEN t5.Employee_Name
-                                                                                                                WHEN t0.NextAssignType = 'Group' THEN t0.NextAssignTo
-                                                                                                                ELSE t3.Employee_Name
-                                                                                                END,
-                                                                                @next_pic_username = t3.AD_User,
-                                                                                @req_number = IIF(@typeDoc = 'CKB', ISNULL(t4.EdoNo,''), t4.CiplNo),
-                                                                                @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)
-                                                                FROM 
-                                                                                dbo.fn_get_cipl_request_list_all() t0 
-                                                                                INNER JOIN dbo.Cipl t4 on t4.id = t0.IdCipl
-                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = t0.CreateBy
-                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User = t0.Pic
-                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t3 on t3.AD_User = t0.NextAssignTo
-                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t5 on t5.AD_User = t0.UpdateBy
-                                                                WHERE 
-                                                                                t0.IdCipl = @requestId;
-                                                END
+    ------------------------------------------------------------------
+    -- 2. Query untuk mengisi data ke variable variable yang dibutuhkan
+    ------------------------------------------------------------------
+    BEGIN
+        -- Mengambil data dari fn request per flow
+        BEGIN
+            IF (@requestType = 'CIPL')
+            BEGIN
+                SET @flow = 'CIPL';
+                SELECT 
+                    @requestor_id = t1.Employee_ID,
+                    @requestor_name = t1.Employee_Name,
+                    @superior_req_name = t1.Superior_Name,
+                    @superior_req_id = t1.Superior_ID,
+                    @requestor_username = t1.AD_User,
+                    @last_pic_id = t2.Employee_ID,
+                    @last_pic_name = t2.Employee_Name,
+                    @last_pic_username = t2.AD_User,
+                    @next_pic_id = t3.Employee_ID,
+                    @CiplNo = t4.CiplNo,
+                    @CIPLBranchName = t4.Branch,
+                    @PICPickupPoints = t4.PickUpPic,
+                    @PickupPointsArea = t4.PickUpArea,
+                    @next_pic_name = 
+                        CASE
+                            WHEN t0.Status = 'Revise' OR t0.Status = 'Reject' OR (t0.Status = 'Approve' AND t0.NextAssignType IS NULL) THEN t5.Employee_Name
+                            WHEN t0.NextAssignType = 'Group' THEN t0.NextAssignTo
+                            ELSE t3.Employee_Name
+                        END,
+                    @next_pic_username = t3.AD_User,
+                    @req_number = IIF(@typeDoc = 'CKB', ISNULL(t4.EdoNo,''), t4.CiplNo),
+                    @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)
+                FROM 
+                    dbo.fn_get_cipl_request_list_all() t0 
+                    INNER JOIN dbo.Cipl t4 on t4.id = t0.IdCipl
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = t0.CreateBy
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User = t0.Pic
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t3 on t3.AD_User = t0.NextAssignTo
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t5 on t5.AD_User = t0.UpdateBy
+                WHERE 
+                    t0.IdCipl = @requestId;
+            END
 
+            --IF (@requestType IN ('CL', 'BLAWB', 'PEB_NPE'))
+            IF (@requestType = 'CL') OR (@requestType = 'BLAWB') OR (@requestType = 'PEB_NPE') 
+            BEGIN
+                SET @flow = @requestType;
+                SELECT 
+                    @requestor_id = t5.Employee_ID,
+                    @requestor_name = t5.Employee_Name,
+                    @superior_req_name = t5.Superior_Name,
+                    @superior_req_id = t5.Superior_ID,
+                    @requestor_username = t5.AD_User,
+                    @last_pic_id = t6.Employee_ID,
+                    @last_pic_name = t6.Employee_Name,
+                    @last_pic_username = t6.AD_User,
+                    @next_pic_id = t7.Employee_ID,
+                    @next_pic_name = t7.Employee_Name,
+                    @next_pic_username = t7.AD_User,
+                    @req_number = t1.ClNo,
+                    @ss_number = t1.SsNo,
+                    @si_number = t2.SlNo,
+                    @npe_number = t3.NpeNumber,
+                    @peb_number = t3.PebNumber,
+                    @bl_awb_number = t4.Number,
+                    @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)
+                FROM 
+                    dbo.fn_get_cl_request_list_all() t0 
+                    INNER JOIN dbo.Cargo t1 on t1.id = t0.IdCl
+                    INNER JOIN dbo.ShippingInstruction t2 on t2.IdCL = t0.IdCl
+                    LEFT JOIN dbo.NpePeb t3 on t3.IdCL = t0.IdCl
+                    LEFT JOIN dbo.BlAwb t4 on t4.IdCL = t0.IdCl
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t5 on t5.AD_User = t0.CreateBy
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t6 on t6.AD_User = t0.Pic
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t7 on t7.AD_User = t0.NextAssignTo
+                WHERE 
+                    t0.IdCl = @requestId;                                                                     
+            END
+
+            IF (@requestType = 'RG')
+            BEGIN
+                SET @flow = 'Receive Goods';
+                SELECT 
+                    @requestor_id = t1.Employee_ID,
+                    @requestor_name = t1.Employee_Name,
+                    @superior_req_name = t1.Superior_Name,
+                    @superior_req_id = t1.Superior_ID,
+                    @requestor_username = t1.AD_User,
+                    @last_pic_id = t2.Employee_ID,
+                    @last_pic_name = t2.Employee_Name,
+                    @last_pic_username = t2.AD_User,
+                    @next_pic_id = t3.Employee_ID,
+                    @next_pic_name = t3.Employee_Name,
+                    @next_pic_username = t3.AD_User,
+                    @req_number = t4.GrNo,
+                    @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)
+                FROM 
+                    dbo.fn_get_gr_request_list_all() t0 
+                    INNER JOIN dbo.GoodsReceive t4 on t4.id = t0.IdGr
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = t0.CreateBy
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User = t0.Pic
+                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t3 on t3.AD_User = t0.NextAssignTo
+                WHERE 
+                    t0.IdGr = @requestId;
+            END
+
+            IF (@requestType = 'DELEGATION')
+            BEGIN
+                SET @flow = 'Delegation';
+                --SELECT * FROM dbo.fn_get_gr_request_list_all() t0 where t0.Id = @requestId;
+            END
+
+            INSERT 
+            INTO 
+                @variable_table 
+            VALUES 
+                ('@RequestorName', ISNULL(@requestor_name, '-'))
+                ,('@RequestNo', ISNULL(@req_number, '-'))
+                ,('@CreatedDate', ISNULL(@req_date, '-'))
+                ,('@CiplNo', ISNULL(@CiplNo, '-'))
+                ,('@CIPLBranchName', ISNULL(@CIPLBranchName, '-'))
+                ,('@PICPickupPoints', ISNULL(@PICPickupPoints, '-'))
+                ,('@PickupPointsArea', ISNULL(@PickupPointsArea, '-'))
+                ,('@SuperiorEmpID', ISNULL(@superior_req_id, '-'))
+                ,('@SuperiorName', ISNULL(@superior_req_name, '-'))
+                ,('@MobileLink', 'http://pis.trakindo.co.id')
+                ,('@DesktopLink', 'http://pis.trakindo.co.id')
+                ,('@ApproverPosition', ISNULL(@flow, '-'))
+                ,('@ApproverName', ISNULL(@next_pic_name, ISNULL(@employee_name,'-')))
+                ,('@RequestorEmpID', ISNULL(@requestor_id, '-'))
+                ,('@flow', ISNULL(@flow, '-'))
+                ,('@requestor_name', ISNULL(@requestor_name, '-'))
+                ,('@requestor_id', ISNULL(@requestor_id, '-'))
+                ,('@last_pic_name', ISNULL(@last_pic_name, '-'))
+                ,('@last_pic_id', ISNULL(@last_pic_id, '-'))
+                ,('@next_pic_name', ISNULL(@next_pic_name, '-'))
+                ,('@next_pic_id', ISNULL(@next_pic_id, '-'))
+                ,('@si_number', ISNULL(@si_number, '-'))
+                ,('@ss_number', ISNULL(@ss_number, '-'))
+                ,('@req_number', ISNULL(@req_number, '-'))
+                ,('@npe_number', ISNULL(@npe_number, '-'))
+                ,('@peb_number', ISNULL(@peb_number, '-'))
+                ,('@bl_awb_number', ISNULL(@bl_awb_number, '-'))
+                ,('@req_date', ISNULL(@req_date, '-'))
+                ,('@superior_req_name', ISNULL(@superior_req_name, '-'))
+                ,('@superior_req_id', ISNULL(@superior_req_id, '-'))
+            END
+        END
+                
+    ------------------------------------------------------------------
+    -- 3. Melakukan Replace terhadap data yang di petakan di template dgn menggunakan perulangan
+    ------------------------------------------------------------------
+    BEGIN
+        DECLARE cursor_variable CURSOR
+        FOR 
+        SELECT 
+            key_data, 
+            val_data 
+        FROM 
+            @variable_table;
+                                                                        
+        OPEN cursor_variable; 
+        FETCH NEXT FROM cursor_variable INTO @key, @val; 
+        WHILE @@FETCH_STATUS = 0
+            BEGIN
+                -- Melakukan Replace terhadap variable di template dengan value dari hasil pencarian data diata.
+                IF ISNULL(@key, '') <> ''
+                BEGIN
+                    SET @template = REPLACE(@template, @key, @val);
+                END
+
+<<<<<<< HEAD
                                                 --IF (@requestType IN ('CL', 'BLAWB', 'PEB_NPE'))
 												IF (@requestType = 'CL') OR (@requestType = 'BLAWB') OR (@requestType = 'PEB_NPE') 
                                                 BEGIN
@@ -10113,295 +10242,36 @@ INSERT
                                                                 BEGIN        
           SET @Template = REPLACE(@Template, @key, @val);        
                                                    END        
+=======
+                FETCH NEXT FROM cursor_variable INTO 
+                    @key, 
+                    @val;
+            END;
+>>>>>>> 61b5219 (tidy up SQL Queries)
         
-                                                                FETCH NEXT FROM cursor_variable INTO         
-       @key,         
-                                           @val;        
-                                    END;        
-                                        
-                                CLOSE cursor_variable;         
-                                DEALLOCATE cursor_variable;        
-                END        
-        
-        
-    
-END    
-Return @Template    
-    
-END
-
-GO
-  
-CREATE  FUNCTION [dbo].[fnSplitStringRFC]  
-(  
- @RowData varchar(8000),  
- @SplitOn nvarchar(5)  
-)    
-RETURNS @RtnValue table   
-(  
- Id int identity(1,1),  
- Data nvarchar(100)  
-)   
-AS    
-BEGIN   
-Declare @Cnt int  
-Set @Cnt = 1  
-  
- While (Charindex(@SplitOn,@RowData)>0)  
- Begin  
- Insert Into @RtnValue (data)  
- Select   
- Data = ltrim(rtrim(Substring(@RowData,1,Charindex(@SplitOn,@RowData)-1)))  
-  
- Set @RowData = Substring(@RowData,Charindex(@SplitOn,@RowData)+1,len(@RowData))  
- Set @Cnt = @Cnt + 1  
- End  
-  
-Insert Into @RtnValue (data)  
-Select Data = ltrim(rtrim(@RowData))  
-  
- Return  
-END
-  
-GO
-
-CREATE PROCEDURE [dbo].[SP_CiplChangeHistoryGetById] -- exec [dbo].[SP_CiplChangeHistoryGetById] '33433','CIPL',0,'CreateDate','asc','0','10'            
-(            
- @id NVARCHAR(10),           
- @formtype NVARCHAR(100),           
- @IsTotal bit = 0,            
- @sort nvarchar(100) = 'CreateDate',            
- @order nvarchar(100) = 'DESC',            
- @offset nvarchar(100) = '0',            
- @limit nvarchar(100) = '10'            
-)             
-AS            
-BEGIN            
- DECLARE @sql nvarchar(max);              
-          
-            
- SET @sql = 'SELECT ';            
- SET @sort = 'RF.'+@sort;            
-            
- IF (@IsTotal <> 0)            
- BEGIN            
-  SET @sql += 'count(*) total'            
- END             
- ELSE            
- BEGIN            
- SET @sql += 'R.FieldName,          
-R.BeforeValue,          
-R.AfterValue,      
-RF.ID,      
-RF.FormNo,        
-RF.CreateBy,          
-RF.CreateDate,          
-RF.Reason'            
- END            
- SET @sql +=' FROM RequestForChange RF          
- INNER JOIN RFCItem R ON R.RFCID = RF.ID            
-     WHERE  R.RFCID = '''+@id+ '''';            
- IF @isTotal = 0             
- BEGIN            
- SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';            
- END             
-            
- --select @sql;            
- EXECUTE(@sql);            
- --print(@sql);            
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[sp_RequestForChangeHistory]              
-(                
-              
- @IsTotal bit = 0,                
- @sort nvarchar(100) = 'CreateDate',                
- @order nvarchar(100) = 'DESC',                
- @offset nvarchar(100) = '0',                
- @limit nvarchar(100) = '10'                
-)                 
-AS                
-BEGIN                
- DECLARE @sql nvarchar(max);                  
-              
+        CLOSE cursor_variable; 
+        DEALLOCATE cursor_variable;
+    END
                 
- SET @sql = 'SELECT ';                
- SET @sort = 'RF.'+@sort;                
-                
- IF (@IsTotal <> 0)                
- BEGIN                
-  SET @sql += 'count(*) total'                
- END                 
- ELSE                
- BEGIN                
- SET @sql += '         
-RF.ID,       
-RF.FormId,     
-RF.RFCNumber,    
-RF.FormType,    
-RF.FormNo,            
-RF.CreateBy,              
-RF.CreateDate,              
-RF.Reason,  
-RF.[Status]'                
- END                
- SET @sql +=' FROM RequestForChange RF              
-     ';                
- IF @isTotal = 0                 
- BEGIN                
- SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';                
- END                 
-                
- --select @sql;                
- EXECUTE(@sql);                
- --print(@sql);                
+    ------------------------------------------------------------------
+    -- 4. Menampilkan hasil dari proses replace
+    ------------------------------------------------------------------
+    BEGIN
+        RETURN @template;
+    END
 END
-
 GO
 
-CREATE PROC SP_ApproveChangeHistory         
-        
- @Id INT      
- ,@UpdatedBy NVARCHAR(200)     
-AS        
-BEGIN        
- UPDATE RequestForChange        
- SET [Status] = 1 ,  UpdateBy = @UpdatedBy       
- WHERE         
-   Id = @Id       
-     
-    EXEC [dbo].[sp_Process_Email_RFC] @Id,'Approved'     
-END 
-
+USE EMCS
 GO
 
-CREATE PROC SP_RejectChangeHistory           
- @Id INT      
- ,@Reason NVARCHAR(MAX)      
- ,@UpdatedBy NVARCHAR(MAX)      
-AS          
-BEGIN          
- UPDATE RequestForChange          
- SET [Status] = 2 , ReasonIfRejected = @Reason ,  UpdateBy =  @UpdatedBy       
- WHERE           
-   Id = @Id   
-   EXEC [dbo].[sp_Process_Email_RFC] @Id,'Reject'   
-END   
+INSERT INTO [Type]([Name]) VALUES ('FTZ');
+INSERT INTO [Type]([Name]) VALUES ('Ordinary');
+DELETE FROM [Type] WHERE ID = 2;
 
-GO
-
-CREATE PROC Sp_RequestForChange_Insert      
-@FormType nvarchar(300)      
-,@FormNo nvarchar(300)     
-,@FormId int     
-,@Reason nvarchar(MAX)      
-,@CreateBy nvarchar(300)      
-AS      
-BEGIN      
-    
-    
-    
-DECLARE @RFCNumber NVARCHAR(50)       
-SELECT TOP 1 @RFCNumber = RFCNumber FROM RequestForChange ORDER BY ID DESC        
-DECLARE @PrefixCode NVARCHAR(15)      
-DECLARE @Year as NVARCHAR(20)        
-SET @PrefixCode = 'RFC'      
-SET @Year = YEAR(getdate())      
-iF @RFCNumber IS NuLL      
-BEGIN        
-DECLARE @invnumber NVARCHAR(50)      
-SET @invnumber = @PrefixCode + @Year + '000000'       
-SET  @RFCNumber =  @invnumber       
-END      
-ELSE      
-BEGIN       
-    DECLARE @ID INT             
-  DECLARE @Temp NVARCHAR(20)          
-  DECLARE @Temp1 NVARCHAR(20)          
-  DECLARE @Temp2 NVARCHAR(20)       
-  DECLARE @Temp3 NVARCHAR(20)         
-  DECLARE @TmpInvoiceNo TABLE (Id INT IDENTITY(1,1), Col4 VARCHAR(50))         
-  INSERT INTO @TmpInvoiceNo(Col4) SELECT Data As QuotationNo FROM [fnSplitStringRFC](@RFCNumber,'')          
-          
-  DECLARE @No as NVARCHAR(20)          
-  DECLARE @TableName NVARCHAR(200)          
-  SELECT @Year = Col4 FROM @TmpInvoiceNo WHERE Id = 1          
-  SELECT @No = Col4 FROM @TmpInvoiceNo WHERE Id = 2            
-        
-        
-  SET @Temp =  SUBSTRING(@RFCNumber, 1, 3)      
-  SET @Temp1 = SUBSTRING(@RFCNumber, 4, 4)      
-  SET @Temp2 = SUBSTRING(@RFCNumber, 8, 9)      
-  SET @Temp3 = SUBSTRING(@RFCNumber, 8, 9)      
-  SET @Temp2 = right('00000' + cast(@Temp3 as varchar(6))+ 1, 6)      
-  SET @Temp3 = right('00000' + cast(@Temp2 as varchar(6)), 6)      
-  IF YEAR(getdate()) = @Temp1          
-   BEGIN          
-    SET @RFCNumber = @Temp +''+ @Temp1 +''+ @Temp3      
-   END          
-  ELSE          
-   BEGIN       
-   SET @RFCNumber = @Temp + CAST(YEAR(getdate()) AS NVARCHAR(4))+''+CAST('000001' AS NVARCHAR(6))          
-          
-   END        
- END    
-    
-    
--------------------------------------------------------------------------------    
-DECLARE @ResultId INT      
-INSERT INTO RequestForChange (FormType,      
-FormNo,    
-RFCNumber,    
-FormId,    
-Reason,      
-CreateBy) VALUES (@FormType,@FormNo,@RFCNumber,@FormId,@Reason,@CreateBy)      
-      
-SET @ResultId = SCOPE_IDENTITY()  
-  EXEC [dbo].[sp_Process_Email_RFC] @ResultId,'Approval'   
-SELECT @ResultId      
-END
-
-GO
-
-CREATE PROC Sp_RFCItem_Insert  
-  
-@RFCID INT  
-,@TableName NVARCHAR(250) = NULL  
-,@LableName NVARCHAR(250) = NULL  
-,@FieldName NVARCHAR(350) = NULL  
-,@BeforeValue NVARCHAR(MAX) = NULL  
-,@AfterValue NVARCHAR(MAX) = NULL  
-AS  
-BEGIN  
-  
-DECLARE @ResultId INT  
-  
-Insert Into RFCItem   
-(RFCID,  
-TableName,  
-LableName,  
-FieldName,  
-BeforeValue,  
-AfterValue)   
-VALUES   
-(@RFCID,  
-@TableName,  
-@LableName,  
-@FieldName,  
-@BeforeValue,  
-@AfterValue)  
-  
-SET @ResultId = SCOPE_IDENTITY()  
-  
-SELECT @ResultId  
-END
-
-GO
-
-
-
+--=====================================================================================
+--Request for change start
+--=====================================================================================
 
 USE [EMCS]
 GO
@@ -10433,12 +10303,13 @@ CREATE TABLE [dbo].[RequestForChange](
 	[CreateBy] [nvarchar](150) NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[UpdateBy] [nvarchar](150) NULL,
+	[Approver] [nvarchar](150) NULL,
 	[UpdateDate] [datetime] NULL,
 	[ReasonIfRejected] [nvarchar](max) NULL,
- CONSTRAINT [PK_RequestForChange] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    CONSTRAINT [PK_RequestForChange] PRIMARY KEY CLUSTERED 
+    (
+        [ID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 /****** Object:  Table [dbo].[RFCItem]    Script Date: 09-04-2022 16:42:49 ******/
@@ -10454,24 +10325,440 @@ CREATE TABLE [dbo].[RFCItem](
 	[FieldName] [nvarchar](100) NULL,
 	[BeforeValue] [nvarchar](100) NULL,
 	[AfterValue] [nvarchar](100) NULL,
- CONSTRAINT [PK_RFCItem] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    CONSTRAINT [PK_RFCItem] PRIMARY KEY CLUSTERED 
+    (
+        [ID] ASC
+    ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
 ALTER TABLE [dbo].[RequestForChange] ADD  CONSTRAINT [DF_RequestForChange_Status]  DEFAULT ((0)) FOR [Status]
 GO
+
 ALTER TABLE [dbo].[RequestForChange] ADD  CONSTRAINT [DF_RequestForChange_CreateDate]  DEFAULT (getutcdate()) FOR [CreateDate]
 GO
 
-=====================================================================================
-Request for change end
-=====================================================================================
+CREATE PROC sp_Process_Email_RFC  
+    @RFCId INT,  
+    @Doctype NVARCHAR(200)  
+AS  
+BEGIN  
+    DECLARE @Email NVARCHAR(200)  
+    DECLARE @Subject NVARCHAR(MAX)  
+    DECLARE @Template NVARCHAR(MAX)  
+    
+    DECLARE @ApproverUser NVARCHAR(MAX)    
+    DECLARE @RequestorUser NVARCHAR(MAX)  
+    
+    SELECT @RequestorUser = RFC.CreateBy   
+        ,@ApproverUser = RFC.UpdateBy    
+    FROM RequestForChange RFC       
+    WHERE ID = @RFCId  
+  
+    IF(@Doctype = 'Approval')  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Requestor'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Approver'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template      
+    END  
+    ELSE IF(@Doctype = 'Approved')  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Requestor'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Approver'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
+    END  
+    ELSE  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Requestor'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Approver'  
+        
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
+    END  
+  
+END
+GO
 
-======================================================================================
-Replace Emailtemplate Data
-=====================================================================================
+-- here
+CREATE FUNCTION [fn_proccess_email_template_RFC]    
+(        
+    @RFCId INT = '',        
+    @Template nvarchar(max) = ''       
+)        
+RETURNS NVARCHAR(MAX)    
+AS    
+BEGIN     
+    DECLARE @RequestNo NVARCHAR(MAX)    
+    DECLARE @CreatedDate DATETIME    
+    DECLARE @DocumentType NVARCHAR(MAX)    
+    DECLARE @DocumentNo NVARCHAR(MAX)    
+    DECLARE @RequestReason NVARCHAR(MAX)    
+    DECLARE @SuperiorName NVARCHAR(MAX)    
+    DECLARE @SuperiorEmpID NVARCHAR(MAX)    
+    DECLARE @MobileLink NVARCHAR(MAX)    
+    DECLARE @DesktopLink NVARCHAR(MAX)    
+    DECLARE @RequestorName NVARCHAR(MAX)    
+    DECLARE @RequestorEmpID NVARCHAR(MAX)    
+    DECLARE @ApproverName NVARCHAR(MAX)    
+    DECLARE @ReasonIfRejected NVARCHAR(MAx)    
+    DECLARE @UpdatedDate Datetime    
+        
+        
+    SET @MobileLink = 'http://pis.trakindo.co.id'    
+    SET @DesktopLink = 'http://pis.trakindo.co.id'    
+        
+    SELECT @RequestNo = RFC.RFCNumber    
+        ,@DocumentType = RFC.FormType    
+        ,@DocumentNo = RFC.FormNo    
+        ,@RequestReason = RFC.Reason    
+        ,@RequestorEmpID = RFC.CreateBy    
+        ,@CreatedDate = RFC.CreateDate    
+        ,@SuperiorEmpID = RFC.UpdateBy    
+        ,@UpdatedDate = RFC.UpdateDate    
+        ,@ReasonIfRejected = RFC.ReasonIfRejected    
+        ,@ApproverName = t2.Employee_Name    
+        ,@RequestorName = t1.Employee_Name    
+        ,@SuperiorName = t2.Employee_Name    
+    FROM RequestForChange RFC     
+    LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = RFC.CreateBy      
+    LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User =RFC.UpdateBy    
+    WHERE ID = @RFCId    
+    
+    BEGIN    
+        DECLARE @variable_table TABLE (        
+                key_data VARCHAR(MAX) NULL,        
+                val_data VARCHAR(MAX) NULL        
+            );        
+        DECLARE @key NVARCHAR(MAX),         
+                @flow NVARCHAR(MAX),         
+                @val NVARCHAR(MAX)    
+    INSERT         
+    INTO         
+    @variable_table         
+    VALUES         
+        ('@RequestNo', ISNULL(@RequestNo, '-'))        
+        ,('@DocumentType', ISNULL(@DocumentType, '-'))     
+        ,('@DocumentNo', ISNULL(@DocumentNo, '-'))     
+        ,('@RequestReason', ISNULL(@RequestReason, '-'))     
+        ,('@RequestorEmpID', ISNULL(@RequestorEmpID, '-'))     
+        ,('@CreatedDate', ISNULL(CONVERT(nvarchar(10), @CreatedDate, 103), '-'))     
+        ,('@SuperiorEmpID', ISNULL(@SuperiorEmpID, '-'))     
+        ,('@UpdatedDate', ISNULL(CONVERT(nvarchar(10), @UpdatedDate, 103), '-'))     
+        ,('@ReasonIfRejected', ISNULL(@ReasonIfRejected, '-'))     
+        ,('@ApproverName', ISNULL(@ApproverName, '-'))     
+        ,('@RequestorName', ISNULL(@RequestorName, '-'))     
+        ,('@SuperiorName', ISNULL(@SuperiorName, '-'))     
+      
+        BEGIN        
+            DECLARE cursor_variable CURSOR        
+            FOR         
+            SELECT         
+                key_data,         
+                val_data         
+            FROM         
+                @variable_table;        
+                                                                                                        
+            OPEN cursor_variable;         
+            
+            FETCH NEXT FROM cursor_variable INTO @key, @val;         
+            
+            WHILE @@FETCH_STATUS = 0        
+            BEGIN        
+                -- Melakukan Replace terhadap variable di template dengan value dari hasil pencarian data diata.        
+                IF ISNULL(@key, '') <> ''        
+                BEGIN        
+                    SET @Template = REPLACE(@Template, @key, @val);        
+                END        
+                
+                FETCH NEXT FROM cursor_variable INTO         
+                    @key,         
+                    @val;        
+            END;        
+                                        
+            CLOSE cursor_variable;         
+            DEALLOCATE cursor_variable;        
+        END            
+    END    
+    Return @Template    
+    
+END
+GO
+  
+CREATE  FUNCTION [dbo].[fnSplitStringRFC](  
+    @RowData varchar(8000),  
+    @SplitOn nvarchar(5)  
+) RETURNS @RtnValue table (  
+    Id int identity(1,1),  
+    Data nvarchar(100)  
+)   
+AS    
+BEGIN   
+    Declare @Cnt int  
+    Set @Cnt = 1  
+  
+    While (Charindex(@SplitOn,@RowData)>0)  
+    Begin  
+        Insert Into @RtnValue (data)
+        Select   
+            Data = ltrim(rtrim(Substring(@RowData,1,Charindex(@SplitOn,@RowData)-1)))  
+
+        Set @RowData = Substring(@RowData,Charindex(@SplitOn,@RowData)+1,len(@RowData))  
+        Set @Cnt = @Cnt + 1  
+    End  
+  
+    Insert Into @RtnValue (data)  
+    Select Data = ltrim(rtrim(@RowData))  
+  
+    Return  
+END
+GO
+
+CREATE PROCEDURE [dbo].[SP_CiplChangeHistoryGetById] -- exec [dbo].[SP_CiplChangeHistoryGetById] '33433','CIPL',0,'CreateDate','asc','0','10'            
+(            
+    @id NVARCHAR(10),           
+    @formtype NVARCHAR(100),           
+    @IsTotal bit = 0,            
+    @sort nvarchar(100) = 'CreateDate',            
+    @order nvarchar(100) = 'DESC',            
+    @offset nvarchar(100) = '0',            
+    @limit nvarchar(100) = '10'            
+)             
+AS            
+BEGIN            
+    DECLARE @sql nvarchar(max);              
+                 
+    SET @sql = 'SELECT ';            
+    SET @sort = 'RF.'+@sort;            
+            
+    IF (@IsTotal <> 0)            
+    BEGIN            
+        SET @sql += 'count(*) total'            
+    END             
+    ELSE            
+    BEGIN            
+        SET @sql += 'R.FieldName,          
+        R.BeforeValue,          
+        R.AfterValue,      
+        RF.ID,      
+        RF.FormNo,        
+        RF.CreateBy,          
+        RF.CreateDate,          
+        RF.Reason'            
+    END            
+    SET @sql +=' FROM RequestForChange RF          
+        INNER JOIN RFCItem R ON R.RFCID = RF.ID            
+        WHERE  R.RFCID = '''+@id+ '''';            
+    
+    IF @isTotal = 0             
+    BEGIN            
+        SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';            
+    END             
+            
+    --select @sql;            
+    EXECUTE(@sql);            
+    --print(@sql);            
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[sp_RequestForChangeHistory]              
+(
+    @IsTotal bit = 0,                
+    @sort nvarchar(100) = 'CreateDate',                
+    @order nvarchar(100) = 'DESC',                
+    @offset nvarchar(100) = '0',                
+    @limit nvarchar(100) = '10'                
+)                 
+AS                
+BEGIN                
+    DECLARE @sql nvarchar(max);         
+                
+    SET @sql = 'SELECT ';                
+    SET @sort = 'RF.'+@sort;                
+                
+    IF (@IsTotal <> 0)                
+    BEGIN                
+        SET @sql += 'count(*) total'                
+    END                 
+    ELSE                
+    BEGIN                
+        SET @sql += '         
+            RF.ID,       
+            RF.FormId,     
+            RF.RFCNumber,    
+            RF.FormType,    
+            RF.FormNo,            
+            RF.CreateBy,              
+            RF.CreateDate,              
+            RF.Reason,  
+            RF.[Status]'                
+    END                
+    SET @sql +=' FROM RequestForChange RF              
+            ';                
+    IF @isTotal = 0                 
+    BEGIN                
+        SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';                
+    END                 
+                    
+    --select @sql;                
+    EXECUTE(@sql);                
+    --print(@sql);                
+END
+
+GO
+
+CREATE PROC SP_ApproveChangeHistory
+    @Id INT      
+    ,@UpdatedBy NVARCHAR(200)     
+AS        
+BEGIN        
+    UPDATE RequestForChange        
+    SET [Status] = 1 ,  UpdateBy = @UpdatedBy       
+    WHERE Id = @Id       
+     
+    EXEC [dbo].[sp_Process_Email_RFC] @Id,'Approved'     
+END 
+
+GO
+
+CREATE PROC SP_RejectChangeHistory           
+    @Id INT      
+    ,@Reason NVARCHAR(MAX)      
+    ,@UpdatedBy NVARCHAR(MAX)      
+AS          
+BEGIN          
+    UPDATE RequestForChange          
+    SET [Status] = 2 , ReasonIfRejected = @Reason ,  UpdateBy =  @UpdatedBy       
+    WHERE Id = @Id   
+    EXEC [dbo].[sp_Process_Email_RFC] @Id,'Reject'   
+END   
+
+GO
+
+CREATE PROC Sp_RequestForChange_Insert      
+    @FormType nvarchar(300)      
+    ,@FormNo nvarchar(300)     
+    ,@FormId int     
+    ,@Reason nvarchar(MAX)      
+    ,@CreateBy nvarchar(300)      
+AS      
+BEGIN
+    DECLARE @RFCNumber NVARCHAR(50)       
+    SELECT TOP 1 @RFCNumber = RFCNumber FROM RequestForChange ORDER BY ID DESC        
+    DECLARE @PrefixCode NVARCHAR(15)      
+    DECLARE @Year as NVARCHAR(20)        
+    SET @PrefixCode = 'RFC'      
+    SET @Year = YEAR(getdate())      
+
+    IF @RFCNumber IS NuLL      
+    BEGIN        
+        DECLARE @invnumber NVARCHAR(50)      
+        SET @invnumber = @PrefixCode + @Year + '000000'       
+        SET  @RFCNumber =  @invnumber       
+    END      
+    ELSE      
+    BEGIN       
+        DECLARE @ID INT             
+        DECLARE @Temp NVARCHAR(20)          
+        DECLARE @Temp1 NVARCHAR(20)          
+        DECLARE @Temp2 NVARCHAR(20)       
+        DECLARE @Temp3 NVARCHAR(20)         
+        DECLARE @TmpInvoiceNo TABLE (Id INT IDENTITY(1,1), Col4 VARCHAR(50))         
+        
+        INSERT INTO @TmpInvoiceNo(Col4) SELECT Data As QuotationNo FROM [fnSplitStringRFC](@RFCNumber,'')          
+
+        DECLARE @No as NVARCHAR(20)          
+        DECLARE @TableName NVARCHAR(200)          
+        SELECT @Year = Col4 FROM @TmpInvoiceNo WHERE Id = 1          
+        SELECT @No = Col4 FROM @TmpInvoiceNo WHERE Id = 2            
+            
+        SET @Temp =  SUBSTRING(@RFCNumber, 1, 3)      
+        SET @Temp1 = SUBSTRING(@RFCNumber, 4, 4)      
+        SET @Temp2 = SUBSTRING(@RFCNumber, 8, 9)      
+        SET @Temp3 = SUBSTRING(@RFCNumber, 8, 9)      
+        SET @Temp2 = right('00000' + cast(@Temp3 as varchar(6))+ 1, 6)      
+        SET @Temp3 = right('00000' + cast(@Temp2 as varchar(6)), 6)      
+
+        IF YEAR(getdate()) = @Temp1          
+        BEGIN          
+            SET @RFCNumber = @Temp +''+ @Temp1 +''+ @Temp3      
+        END          
+        ELSE          
+        BEGIN       
+            SET @RFCNumber = @Temp + CAST(YEAR(getdate()) AS NVARCHAR(4))+''+CAST('000001' AS NVARCHAR(6))                  
+        END        
+    END    
+    
+    
+-------------------------------------------------------------------------------    
+    DECLARE @ResultId INT      
+    INSERT INTO RequestForChange (FormType, FormNo, RFCNumber, FormId, Reason, CreateBy) VALUES (@FormType,@FormNo,@RFCNumber,@FormId,@Reason,@CreateBy)      
+        
+    SET @ResultId = SCOPE_IDENTITY()  
+    EXEC [dbo].[sp_Process_Email_RFC] @ResultId,'Approval'   
+    SELECT @ResultId      
+END
+
+GO
+
+CREATE PROC Sp_RFCItem_Insert  
+    @RFCID INT  
+    ,@TableName NVARCHAR(250) = NULL  
+    ,@LableName NVARCHAR(250) = NULL  
+    ,@FieldName NVARCHAR(350) = NULL  
+    ,@BeforeValue NVARCHAR(MAX) = NULL  
+    ,@AfterValue NVARCHAR(MAX) = NULL  
+AS  
+BEGIN  
+    DECLARE @ResultId INT  
+  
+    INSERT INTO RFCItem (RFCID, TableName, LableName, FieldName, BeforeValue, AfterValue)   
+    VALUES (@RFCID, @TableName, @LableName, @FieldName, @BeforeValue,@AfterValue)  
+    
+    SET @ResultId = SCOPE_IDENTITY()  
+    
+    SELECT @ResultId  
+END
+
+GO
+--=====================================================================================
+--Request for change end
+--=====================================================================================
+
+--======================================================================================
+--Replace Emailtemplate Data
+--=====================================================================================
 
 USE [EMCS]
 GO
@@ -10479,6 +10766,7 @@ TRUNCATE TABLE [dbo].[EmailTemplate]
 GO
 SET IDENTITY_INSERT [dbo].[EmailTemplate] ON 
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (1, N'Cipl', N'Submit', N'Requestor', N'CIPL @RequestNo SUBMITTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CIPL Form has been submitted to @ApproverPosition for review & approval in 24 hours after received this request.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10527,6 +10815,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (2, N'Cipl', N'Approval', N'Approver', N'CIPL @RequestNo WAITING APPROVAL', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>You have one Export CIPL form Approval Request for your review & approval in 24 hours after received this request.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10575,6 +10864,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (3, N'Cipl', N'Revise', N'Requestor', N'CIPL @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CIPL Form has been requested for revision by your approver.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10623,6 +10913,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (4, N'Cipl', N'Revise', N'Approver', N'CIPL @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>You have requested a revision on Export CIPL form with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10671,6 +10962,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (5, N'Cipl', N'Reject', N'Requestor', N'CIPL @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CIPL Form has been rejected by your approver.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10719,6 +11011,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (6, N'Cipl', N'Reject', N'Approver', N'CIPL @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>An Export CIPL form has been rejected with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10767,6 +11060,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (7, N'Cipl', N'Approved', N'Requestor', N'CIPL @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CIPL Form has been fully approved.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10815,6 +11109,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (8, N'Cipl', N'Approved', N'Approver', N'CIPL @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>An Export CIPL form has been fully approved with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -10863,6 +11158,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (9, N'GoodReceive', N'Submit', N'Requestor', N'GR @RequestNo SUBMITTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @RequestorName,</span><br /><br />
 <span>Your Export GR Form has been submitted to the Export CIPL Requestor for review & approval in 24 hours after received this request.</span><br /><br />
@@ -10894,6 +11190,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (10, N'GoodReceive', N'Approval', N'Approver', N'GR @RequestNo WAITING APPROVAL', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @ApproverName,</span><br /><br />
 <span>You have one Export GR form Approval Request for your review & approval in 24 hours after received this request.</span><br /><br />
@@ -10925,6 +11222,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (11, N'GoodReceive', N'Revise', N'Requestor', N'GR @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @RequestorName,</span><br /><br />
 <span>Your Export GR Form has been requested for revision by your approver.</span><br /><br />
@@ -10956,6 +11254,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (12, N'GoodReceive', N'Revise', N'Approver', N'GR @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>You have requested a revision on Export GR form with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11004,6 +11303,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (13, N'GoodReceive', N'Reject', N'Requestor', N'GR @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export GR Form has been rejected by your approver.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11052,6 +11352,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (14, N'GoodReceive', N'Reject', N'Approver', N'GR @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>An Export GR form has been rejected with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11100,6 +11401,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (15, N'GoodReceive', N'Approved', N'Requestor', N'GR @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export GR Form has been fully approved.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11148,6 +11450,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (16, N'GoodReceive', N'Approved', N'Approver', N'GR @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>An Export GR form has been fully approved with details.</span><br /><br />       
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11196,6 +11499,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>    
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (17, N'Cargo', N'Submit', N'Requestor', N'CL @RequestNo SUBMITTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CL Form has been submitted to @ApproverPosition for review & approval in 24 hours after received this request.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11244,6 +11548,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (18, N'Cargo', N'Approval', N'Approver', N'CL @RequestNo WAITING APPROVAL', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>You have one Export CL form Approval Request for your review & approval in 24 hours after received this request.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11292,6 +11597,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (19, N'Cargo', N'Revise', N'Requestor', N'CL @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CL Form has been requested for revision by your approver.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11340,6 +11646,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (20, N'Cargo', N'Revise', N'Approver', N'CL @RequestNo REVISED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>You have requested a revision on Export CL form with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11388,6 +11695,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (21, N'Cargo', N'Reject', N'Requestor', N'CL @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CL Form has been rejected by your approver.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11436,6 +11744,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (22, N'Cargo', N'Reject', N'Approver', N'CL @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @ApproverName,</span><br /><br />
 <span>An Export CL form has been rejected with details.</span><br /><br />
@@ -11467,6 +11776,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (23, N'Cargo', N'Approved', N'Requestor', N'CL @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @RequestorName,</span><br /><br />  <span>Your Export CL Form has been fully approved.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11515,6 +11825,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (24, N'Cargo', N'Approved', N'Approver', N'CL @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
    <span>Dear @ApproverName,</span><br /><br />  <span>An Export CL form has been fully approved with details.</span><br /><br />  
    <table border = ''0'' style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
@@ -11563,6 +11874,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
    <br />  <span>Best regards,</span><br /><span>EMCS Application</span>  <br /><br />  <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>  
 </body>', N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime), N'0', CAST(N'2019-02-10T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (25, N'Cipl', N'InfoCKB', N'CKB', N'CIPL @RequestNo Complete', N'<!DOCTYPE html>
 <html>
 
@@ -11629,6 +11941,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 
 </html>', N'IT', CAST(N'2020-07-03T00:00:00' AS SmallDateTime), N'IT', CAST(N'2020-07-03T00:00:00' AS SmallDateTime))
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (26, N'RFC', N'Approval', N'Requestor', N'RFC @RequestNo WAITING APPROVAL', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @RequestorName,</span><br /><br />
 <span>Your Request for Changes (RFC) form has been submitted to IMEX Superior for review & approval in 24 hours after received this request.</span><br /><br />
@@ -11675,6 +11988,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', NULL, NULL, NULL, NULL)
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (27, N'RFC', N'Approval', N'Approver', N'RFC @RequestNo WAITING APPROVAL', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @ApproverName,</span><br /><br />
 <span>You have one Request for Changes Approval for your review & approval in 24 hours after received this request.</span><br /><br />
@@ -11706,6 +12020,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', NULL, NULL, NULL, NULL)
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (28, N'RFC', N'Approved', N'Requestor', N'RFC @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @RequestorName,</span><br /><br />
 <span>Your Request for Changes (RFC) has been fully approved.</span><br /><br />
@@ -11751,6 +12066,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', NULL, NULL, NULL, NULL)
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (29, N'RFC', N'Approved', N'Approver', N'RFC @RequestNo APPROVED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @ApproverName,</span><br /><br />
 <span>Thank you for your approval this Request for Changes (RFC) below.</span><br /><br />
@@ -11795,6 +12111,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', NULL, NULL, NULL, NULL)
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (30, N'RFC', N'Reject', N'Requestor', N'RFC @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @RequestorName,</span><br /><br />
 <span>Your Request for Changes (RFC) has been rejected by your approver.</span><br /><br />
@@ -11839,6 +12156,7 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 <span style="font-size: 9pt;"><i>Do not reply this email, this email is automatically generated by system</i></span>
 </body>', NULL, NULL, NULL, NULL)
 GO
+
 INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subject], [Message], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate]) VALUES (31, N'RFC', N'Reject', N'Approver', N'RFC @RequestNo REJECTED', N'<body style="font-family: verdana, helvetica, sans-serif;font-size: 10pt;">
 <span>Dear @ApproverName,</span><br /><br />
 <span>A Request for Changes (RFC) has been rejected with details.</span><br /><br />
@@ -11885,317 +12203,277 @@ INSERT [dbo].[EmailTemplate] ([ID], [Module], [Status], [RecipientType], [Subjec
 </body>', NULL, NULL, NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[EmailTemplate] OFF
-
 GO
 
 ALTER PROCEDURE [dbo].[sp_RequestForChangeHistory]              
-(                
-              
- @IsTotal bit = 0,                
- @sort nvarchar(100) = 'CreateDate',                
- @order nvarchar(100) = 'DESC',                
- @offset nvarchar(100) = '0',                
- @limit nvarchar(100) = '10',
- @Approver nvarchar(100) = 'XUPJ21WDN'
+(
+    @IsTotal bit = 0,                
+    @sort nvarchar(100) = 'CreateDate',                
+    @order nvarchar(100) = 'DESC',                
+    @offset nvarchar(100) = '0',                
+    @limit nvarchar(100) = '10',
+    @Approver nvarchar(100) = 'XUPJ21WDN'
 )                 
 AS                
 BEGIN                
- DECLARE @sql nvarchar(max);                  
-              
+    DECLARE @sql nvarchar(max);                  
                 
- SET @sql = 'SELECT ';                
- SET @sort = 'RF.'+@sort;                
                 
- IF (@IsTotal <> 0)                
- BEGIN                
-  SET @sql += 'count(*) total'                
- END                 
- ELSE                
- BEGIN                
- SET @sql += '         
-RF.ID,       
-RF.FormId,     
-RF.RFCNumber,    
-RF.FormType,    
-RF.FormNo,            
-RF.CreateBy,              
-RF.CreateDate,              
-RF.Reason,  
-RF.[Status]'                
- END                
- SET @sql +=' FROM RequestForChange RF WHERE RF.Approver =  '+@Approver+'';                
- IF @isTotal = 0                 
- BEGIN                
- SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';                
- END                 
+    SET @sql = 'SELECT ';                
+    SET @sort = 'RF.'+@sort;                
                 
- --select @sql;                
- EXECUTE(@sql);                
- --print(@sql);                
+    IF (@IsTotal <> 0)                
+    BEGIN                
+        SET @sql += 'count(*) total'                
+    END                 
+    ELSE                
+    BEGIN                
+        SET @sql += '         
+            RF.ID,       
+            RF.FormId,     
+            RF.RFCNumber,    
+            RF.FormType,    
+            RF.FormNo,            
+            RF.CreateBy,              
+            RF.CreateDate,              
+            RF.Reason,  
+            RF.[Status]'                
+    END                
+    SET @sql +=' FROM RequestForChange RF WHERE RF.Approver =  '+@Approver+'';                
+    
+    IF @isTotal = 0                 
+    BEGIN                
+        SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';                
+    END                 
+                
+    --select @sql;                
+    EXECUTE(@sql);                
+    --print(@sql);                
 END
-
 GO
 
 ALTER PROC Sp_RequestForChange_Insert      
-@FormType nvarchar(300)      
-,@FormNo nvarchar(300)     
-,@FormId int     
-,@Reason nvarchar(MAX)      
-,@CreateBy nvarchar(300)      
+    @FormType nvarchar(300)      
+    ,@FormNo nvarchar(300)     
+    ,@FormId int     
+    ,@Reason nvarchar(MAX)      
+    ,@CreateBy nvarchar(300)      
 AS      
 BEGIN      
-    
-DECLARE @Approver NVARCHAR(150)
+    DECLARE @Approver NVARCHAR(150)
 
-SET @Approver = CASE
-    WHEN (@CreateBy ='XUPJ21WDN') THEN 'xupj21dxd' 
-    WHEN (@CreateBy ='xupj21dxd') THEN 'xupj21fig'
-END;
+    SET @Approver = CASE
+        WHEN (@CreateBy ='XUPJ21WDN') THEN 'xupj21dxd' 
+        WHEN (@CreateBy ='xupj21dxd') THEN 'xupj21fig'
+    END;
     
-DECLARE @RFCNumber NVARCHAR(50)       
-SELECT TOP 1 @RFCNumber = RFCNumber FROM RequestForChange ORDER BY ID DESC        
-DECLARE @PrefixCode NVARCHAR(15)      
-DECLARE @Year as NVARCHAR(20)        
-SET @PrefixCode = 'RFC'      
-SET @Year = YEAR(getdate())      
-iF @RFCNumber IS NuLL      
-BEGIN        
-DECLARE @invnumber NVARCHAR(50)      
-SET @invnumber = @PrefixCode + @Year + '000000'       
-SET  @RFCNumber =  @invnumber       
-END      
-ELSE      
-BEGIN       
-    DECLARE @ID INT             
-  DECLARE @Temp NVARCHAR(20)          
-  DECLARE @Temp1 NVARCHAR(20)          
-  DECLARE @Temp2 NVARCHAR(20)       
-  DECLARE @Temp3 NVARCHAR(20)         
-  DECLARE @TmpInvoiceNo TABLE (Id INT IDENTITY(1,1), Col4 VARCHAR(50))         
-  INSERT INTO @TmpInvoiceNo(Col4) SELECT Data As QuotationNo FROM [fnSplitStringRFC](@RFCNumber,'')          
-          
-  DECLARE @No as NVARCHAR(20)          
-  DECLARE @TableName NVARCHAR(200)          
-  SELECT @Year = Col4 FROM @TmpInvoiceNo WHERE Id = 1          
-  SELECT @No = Col4 FROM @TmpInvoiceNo WHERE Id = 2            
+    DECLARE @RFCNumber NVARCHAR(50)       
+    SELECT TOP 1 @RFCNumber = RFCNumber FROM RequestForChange ORDER BY ID DESC        
+    DECLARE @PrefixCode NVARCHAR(15)      
+    DECLARE @Year as NVARCHAR(20)        
+    SET @PrefixCode = 'RFC'      
+    SET @Year = YEAR(getdate())      
+    
+    IF @RFCNumber IS NuLL      
+    BEGIN        
+        DECLARE @invnumber NVARCHAR(50)      
+        SET @invnumber = @PrefixCode + @Year + '000000'       
+        SET  @RFCNumber =  @invnumber       
+    END      
+    ELSE      
+    BEGIN       
+        DECLARE @ID INT             
+        DECLARE @Temp NVARCHAR(20)          
+        DECLARE @Temp1 NVARCHAR(20)          
+        DECLARE @Temp2 NVARCHAR(20)       
+        DECLARE @Temp3 NVARCHAR(20)         
+        DECLARE @TmpInvoiceNo TABLE (Id INT IDENTITY(1,1), Col4 VARCHAR(50))         
+        INSERT INTO @TmpInvoiceNo(Col4) SELECT Data As QuotationNo FROM [fnSplitStringRFC](@RFCNumber,'')          
+                
+        DECLARE @No as NVARCHAR(20)          
+        DECLARE @TableName NVARCHAR(200)          
+        SELECT @Year = Col4 FROM @TmpInvoiceNo WHERE Id = 1          
+        SELECT @No = Col4 FROM @TmpInvoiceNo WHERE Id = 2            
         
         
-  SET @Temp =  SUBSTRING(@RFCNumber, 1, 3)      
-  SET @Temp1 = SUBSTRING(@RFCNumber, 4, 4)      
-  SET @Temp2 = SUBSTRING(@RFCNumber, 8, 9)      
-  SET @Temp3 = SUBSTRING(@RFCNumber, 8, 9)      
-  SET @Temp2 = right('00000' + cast(@Temp3 as varchar(6))+ 1, 6)      
-  SET @Temp3 = right('00000' + cast(@Temp2 as varchar(6)), 6)      
-  IF YEAR(getdate()) = @Temp1          
-   BEGIN          
-    SET @RFCNumber = @Temp +''+ @Temp1 +''+ @Temp3      
-   END          
-  ELSE          
-   BEGIN       
-   SET @RFCNumber = @Temp + CAST(YEAR(getdate()) AS NVARCHAR(4))+''+CAST('000001' AS NVARCHAR(6))          
-          
-   END        
- END    
-    
+        SET @Temp =  SUBSTRING(@RFCNumber, 1, 3)      
+        SET @Temp1 = SUBSTRING(@RFCNumber, 4, 4)      
+        SET @Temp2 = SUBSTRING(@RFCNumber, 8, 9)      
+        SET @Temp3 = SUBSTRING(@RFCNumber, 8, 9)      
+        SET @Temp2 = right('00000' + cast(@Temp3 as varchar(6))+ 1, 6)      
+        SET @Temp3 = right('00000' + cast(@Temp2 as varchar(6)), 6)      
+
+        IF YEAR(getdate()) = @Temp1          
+        BEGIN          
+            SET @RFCNumber = @Temp +''+ @Temp1 +''+ @Temp3      
+        END          
+        ELSE          
+        BEGIN       
+            SET @RFCNumber = @Temp + CAST(YEAR(getdate()) AS NVARCHAR(4))+''+CAST('000001' AS NVARCHAR(6))
+        END        
+    END    
     
 -------------------------------------------------------------------------------    
-DECLARE @ResultId INT      
-INSERT INTO RequestForChange (FormType,      
-FormNo,    
-RFCNumber,    
-FormId,    
-Reason,      
-CreateBy,Approver) VALUES (@FormType,@FormNo,@RFCNumber,@FormId,@Reason,@CreateBy,@Approver)      
+    DECLARE @ResultId INT      
+    INSERT INTO RequestForChange (FormType, FormNo, RFCNumber, FormId, Reason, CreateBy,Approver) VALUES (@FormType,@FormNo,@RFCNumber,@FormId,@Reason,@CreateBy,@Approver)      
       
-SET @ResultId = SCOPE_IDENTITY()  
-  EXEC [dbo].[sp_Process_Email_RFC] @ResultId,'Approval'   
-SELECT @ResultId      
+    SET @ResultId = SCOPE_IDENTITY()  
+    EXEC [dbo].[sp_Process_Email_RFC] @ResultId,'Approval'   
+    SELECT @ResultId      
 END
-
 GO
 
 ALTER PROC sp_Process_Email_RFC  
-@RFCId INT,  
-@Doctype NVARCHAR(200)  
+    @RFCId INT,  
+    @Doctype NVARCHAR(200)  
 AS  
 BEGIN  
-DECLARE @Email NVARCHAR(200)  
-DECLARE @Subject NVARCHAR(MAX)  
-DECLARE @Template NVARCHAR(MAX)  
-  
-DECLARE @ApproverUser NVARCHAR(MAX)    
-DECLARE @RequestorUser NVARCHAR(MAX)  
+    DECLARE @Email NVARCHAR(200)  
+    DECLARE @Subject NVARCHAR(MAX)  
+    DECLARE @Template NVARCHAR(MAX)  
     
-SELECT @RequestorUser = RFC.CreateBy   
-,@ApproverUser = RFC.Approver    
-FROM RequestForChange RFC       
-WHERE ID = @RFCId  
+    DECLARE @ApproverUser NVARCHAR(MAX)    
+    DECLARE @RequestorUser NVARCHAR(MAX)  
+        
+    SELECT @RequestorUser = RFC.CreateBy   
+    ,@ApproverUser = RFC.Approver    
+    FROM RequestForChange RFC       
+    WHERE ID = @RFCId  
   
-IF(@Doctype = 'Approval')  
-BEGIN  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Requestor'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
-  
-  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Approver'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
-  
-END  
-ELSE IF(@Doctype = 'Approved')  
-BEGIN  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Requestor'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
-  
-  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Approver'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
-END  
-ELSE  
-BEGIN  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Requestor'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
-  
-  
-SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Approver'  
-  
-SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
-SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
-  
-exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
-END  
-  
-END
+    IF(@Doctype = 'Approval')  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Requestor'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approval' AND RecipientType = 'Approver'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
+    END  
+    ELSE IF(@Doctype = 'Approved')  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Requestor'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Approved' AND RecipientType = 'Approver'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+        
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
+    END  
+    ELSE  
+    BEGIN  
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Requestor'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
 
+        exec sp_send_email_for_single @Subject, @RequestorUser, @Template  
+        
+        SELECT @Subject = [Subject] , @Template = [Message] FROM EmailTemplate WHERE [Module] = 'RFC' AND [Status] = 'Reject' AND RecipientType = 'Approver'  
+        SET @Subject = dbo.[fn_proccess_email_template_RFC](@RFCId, @Subject)  
+        SET @Template = dbo.[fn_proccess_email_template_RFC](@RFCId, @Template)  
+  
+        exec sp_send_email_for_single @Subject, @ApproverUser, @Template  
+    END  
+END
 GO
 
 ALTER FUNCTION [fn_proccess_email_template_RFC]    
 (        
-                @RFCId INT = '',        
-                @Template nvarchar(max) = ''       
+    @RFCId INT = '',        
+    @Template nvarchar(max) = ''       
 )        
 RETURNS NVARCHAR(MAX)    
 AS    
 BEGIN    
     
-DECLARE @RequestNo NVARCHAR(MAX)    
-DECLARE @CreatedDate DATETIME    
-DECLARE @DocumentType NVARCHAR(MAX)    
-DECLARE @DocumentNo NVARCHAR(MAX)    
-DECLARE @RequestReason NVARCHAR(MAX)    
-DECLARE @SuperiorName NVARCHAR(MAX)    
-DECLARE @SuperiorEmpID NVARCHAR(MAX)    
-DECLARE @MobileLink NVARCHAR(MAX)    
-DECLARE @DesktopLink NVARCHAR(MAX)    
-DECLARE @RequestorName NVARCHAR(MAX)    
-DECLARE @RequestorEmpID NVARCHAR(MAX)    
-DECLARE @ApproverName NVARCHAR(MAX)    
-DECLARE @ReasonIfRejected NVARCHAR(MAx)    
-DECLARE @UpdatedDate Datetime    
+    DECLARE @RequestNo NVARCHAR(MAX)    
+    DECLARE @CreatedDate DATETIME    
+    DECLARE @DocumentType NVARCHAR(MAX)    
+    DECLARE @DocumentNo NVARCHAR(MAX)    
+    DECLARE @RequestReason NVARCHAR(MAX)    
+    DECLARE @SuperiorName NVARCHAR(MAX)    
+    DECLARE @SuperiorEmpID NVARCHAR(MAX)    
+    DECLARE @MobileLink NVARCHAR(MAX)    
+    DECLARE @DesktopLink NVARCHAR(MAX)    
+    DECLARE @RequestorName NVARCHAR(MAX)    
+    DECLARE @RequestorEmpID NVARCHAR(MAX)    
+    DECLARE @ApproverName NVARCHAR(MAX)    
+    DECLARE @ReasonIfRejected NVARCHAR(MAx)    
+    DECLARE @UpdatedDate Datetime    
     
+    SET @MobileLink = 'http://pis.trakindo.co.id'    
+    SET @DesktopLink = 'http://pis.trakindo.co.id'    
     
-SET @MobileLink = 'http://pis.trakindo.co.id'    
-SET @DesktopLink = 'http://pis.trakindo.co.id'    
+    SELECT @RequestNo = RFC.RFCNumber    
+        ,@DocumentType = RFC.FormType    
+        ,@DocumentNo = RFC.FormNo    
+        ,@RequestReason = RFC.Reason    
+        ,@RequestorEmpID = RFC.CreateBy    
+        ,@CreatedDate = RFC.CreateDate    
+        ,@SuperiorEmpID = RFC.Approver    
+        ,@UpdatedDate = RFC.UpdateDate    
+        ,@ReasonIfRejected = RFC.ReasonIfRejected    
+        ,@ApproverName = t2.Employee_Name    
+        ,@RequestorName = t1.Employee_Name    
+        ,@SuperiorName = t2.Employee_Name    
+    FROM RequestForChange RFC     
+    LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = RFC.CreateBy      
+    LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User =RFC.Approver    
+    WHERE ID = @RFCId    
     
-SELECT @RequestNo = RFC.RFCNumber    
-,@DocumentType = RFC.FormType    
-,@DocumentNo = RFC.FormNo    
-,@RequestReason = RFC.Reason    
-,@RequestorEmpID = RFC.CreateBy    
-,@CreatedDate = RFC.CreateDate    
-,@SuperiorEmpID = RFC.Approver    
-,@UpdatedDate = RFC.UpdateDate    
-,@ReasonIfRejected = RFC.ReasonIfRejected    
-,@ApproverName = t2.Employee_Name    
-,@RequestorName = t1.Employee_Name    
-,@SuperiorName = t2.Employee_Name    
-FROM RequestForChange RFC     
-LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = RFC.CreateBy      
-LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User =RFC.Approver    
-WHERE ID = @RFCId    
-    
-BEGIN    
- DECLARE @variable_table TABLE (        
-                                    key_data VARCHAR(MAX) NULL,        
-                                    val_data VARCHAR(MAX) NULL        
-                                );        
-           DECLARE @key NVARCHAR(MAX),         
-                                                @flow NVARCHAR(MAX),         
-                                                @val NVARCHAR(MAX)    
-INSERT         
-    INTO         
-      @variable_table         
-      VALUES         
-      ('@RequestNo', ISNULL(@RequestNo, '-'))        
-      ,('@DocumentType', ISNULL(@DocumentType, '-'))     
-   ,('@DocumentNo', ISNULL(@DocumentNo, '-'))     
-   ,('@RequestReason', ISNULL(@RequestReason, '-'))     
-   ,('@RequestorEmpID', ISNULL(@RequestorEmpID, '-'))     
-   ,('@CreatedDate', ISNULL(CONVERT(nvarchar(10), @CreatedDate, 103), '-'))     
-   ,('@SuperiorEmpID', ISNULL(@SuperiorEmpID, '-'))     
-   ,('@UpdatedDate', ISNULL(CONVERT(nvarchar(10), @UpdatedDate, 103), '-'))     
-   ,('@ReasonIfRejected', ISNULL(@ReasonIfRejected, '-'))     
-   ,('@ApproverName', ISNULL(@ApproverName, '-'))     
-   ,('@RequestorName', ISNULL(@RequestorName, '-'))     
-   ,('@SuperiorName', ISNULL(@SuperiorName, '-'))     
+    BEGIN    
+        DECLARE @variable_table TABLE (key_data VARCHAR(MAX) NULL, val_data VARCHAR(MAX) NULL);        
+        DECLARE @key NVARCHAR(MAX),         
+                @flow NVARCHAR(MAX),         
+                @val NVARCHAR(MAX)    
+
+        INSERT         
+        INTO         
+            @variable_table         
+            VALUES         
+            ('@RequestNo', ISNULL(@RequestNo, '-'))        
+            ,('@DocumentType', ISNULL(@DocumentType, '-'))     
+        ,('@DocumentNo', ISNULL(@DocumentNo, '-'))     
+        ,('@RequestReason', ISNULL(@RequestReason, '-'))     
+        ,('@RequestorEmpID', ISNULL(@RequestorEmpID, '-'))     
+        ,('@CreatedDate', ISNULL(CONVERT(nvarchar(10), @CreatedDate, 103), '-'))     
+        ,('@SuperiorEmpID', ISNULL(@SuperiorEmpID, '-'))     
+        ,('@UpdatedDate', ISNULL(CONVERT(nvarchar(10), @UpdatedDate, 103), '-'))     
+        ,('@ReasonIfRejected', ISNULL(@ReasonIfRejected, '-'))     
+        ,('@ApproverName', ISNULL(@ApproverName, '-'))     
+        ,('@RequestorName', ISNULL(@RequestorName, '-'))     
+        ,('@SuperiorName', ISNULL(@SuperiorName, '-'))     
       
-              
-    
-    
-    BEGIN        
-                                DECLARE cursor_variable CURSOR        
-                                FOR         
-                                                SELECT         
-                                                                key_data,         
-                                                                val_data         
-                                                FROM         
-                                                                @variable_table;        
-                                                                                                        
-                                OPEN cursor_variable;         
-                                FETCH NEXT FROM cursor_variable INTO @key, @val;         
-                                WHILE @@FETCH_STATUS = 0        
-                                    BEGIN        
-                                                                -- Melakukan Replace terhadap variable di template dengan value dari hasil pencarian data diata.        
-                                                                IF ISNULL(@key, '') <> ''        
-                                                                BEGIN        
-          SET @Template = REPLACE(@Template, @key, @val);        
-                                                   END        
-        
-                                                                FETCH NEXT FROM cursor_variable INTO         
-       @key,         
-                                           @val;        
-                                    END;        
-                                        
-                                CLOSE cursor_variable;         
-                                DEALLOCATE cursor_variable;        
+        BEGIN        
+            DECLARE cursor_variable CURSOR        
+            FOR SELECT key_data, val_data FROM @variable_table;        
+                                                                                                    
+            OPEN cursor_variable;         
+            FETCH NEXT FROM cursor_variable INTO @key, @val;         
+            WHILE @@FETCH_STATUS = 0        
+            BEGIN        
+                -- Melakukan Replace terhadap variable di template dengan value dari hasil pencarian data diata.        
+                IF ISNULL(@key, '') <> ''        
+                BEGIN        
+                    SET @Template = REPLACE(@Template, @key, @val);        
                 END        
         
-        
-    
-END    
-Return @Template    
-    
+                FETCH NEXT FROM cursor_variable INTO @key, @val;        
+            END;        
+            CLOSE cursor_variable;         
+            DEALLOCATE cursor_variable;        
+        END        
+    END    
+    Return @Template    
 END
-
 GO
 
 create table CargoDocument
@@ -12306,7 +12584,7 @@ END
 Go
 
 
-ALTER PROCEDURE [dbo].[sp_get_cargo_document_list] 
+CREATE PROCEDURE [dbo].[sp_get_cargo_document_list] 
 (
 	@IdCargo NVARCHAR(10),
 	@IsTotal bit = 0,
@@ -12496,7 +12774,6 @@ BEGIN
 	EXECUTE(@sql);
 	END
 END
-
 Go
 
 create procedure [dbo].[sp_getcontainertype]
@@ -12644,7 +12921,6 @@ BEGIN
 	EXECUTE(@sql);
 	--select @sql;
 END
-
 Go
 
 Create PROCEDURE [dbo].[sp_get_gr_document_list_byid] 
@@ -12685,7 +12961,6 @@ BEGIN
 	EXECUTE(@sql);
 	
 END
-
 Go
 
 Create PROCEDURE [dbo].[SP_GRDocumentAdd]
@@ -12774,7 +13049,6 @@ BEGIN
 	WHERE Id = @Id;
 
 END
-
 Go
   
 CREATE PROCEDURE [dbo].[sp_get_shippinginstruction_list] 
@@ -12875,121 +13149,25 @@ END
 Go
 
 
-Insert Into Master_Menu
-(
-ID,
-ParentID,
-Name,
-URL,
-OrderNo,
-Icon,
-isDefault,
-isActive,
-EntryDate,
-EntryBy
+USE PartsInformationSystem
+GO
 
-)
-values
-(
-'242',
-'126',
-'Shipping Instruction List',
-'EMCS/ShippingInstructionList',
-5,
-'fa fa-check-square',
-0,
-1,
-GETDATE(),
-'ict.bpm'
-
-)
-
+Insert Into Master_Menu ( ID, ParentID, Name, URL, OrderNo, Icon, isDefault, isActive, EntryDate, EntryBy  ) values ( '242', '126', 'Shipping Instruction List', 'EMCS/ShippingInstructionList', 5, 'fa fa-check-square', 0, 1, GETDATE(), 'ict.bpm'  ) 
 Go
 
-Insert Into Role_Access_Menu
-(
-ID,
-RoleID,
-MenuID,
-isRead,
-isCreate,
-isUpdated,
-isDeleted,
-EntryDate,
-EntryBy
-
-)
-values
-(
-11,
-24,
-242,
-'true','true','true','true',
-GETDATE(),
-'ict.bpm'
-
-)
-
+Insert Into Role_Access_Menu ( ID, RoleID, MenuID, isRead, isCreate, isUpdated, isDeleted, EntryDate, EntryBy  ) values ( 11, 24, 242, 'true','true','true','true', GETDATE(), 'ict.bpm'  ) 
 Go
 
-insert into Master_Menu (
-ID,
-ParentID,
-Name,
-URL,
-OrderNo,
-Icon,
-isDefault,
-isActive,
-EntryDate,
-ModifiedDate,
-EntryBy,
-ModifiedBy
-)
-values(
-243,
-126,
-'Shipping Summary List',
-'EMCS/ShippingSummaryList',
-6,
-'fa fa-cubes',
-0,
-1,
-GETDATE(),
-GETDATE(),
-'ict.bpm',
-'ict.bpm'
-)
-
+insert into Master_Menu ( ID, ParentID, Name, URL, OrderNo, Icon, isDefault, isActive, EntryDate, ModifiedDate, EntryBy, ModifiedBy ) values( 243, 126, 'Shipping Summary List', 'EMCS/ShippingSummaryList', 6, 'fa fa-cubes', 0, 1, GETDATE(), GETDATE(), 'ict.bpm', 'ict.bpm' ) 
 Go
 
-insert into Role_Access_Menu(
-ID,
-RoleID,
-MenuID,
-isRead,
-isCreate,
-isUpdated,
-isDeleted,
-EntryDate,
-EntryBy
-)
-values	(
-12,
-24,
-243,
-'true',
-1,
-1,
-1,
-GETDATE(),
-'ict.bpm'
-)
-
+insert into Role_Access_Menu( ID, RoleID, MenuID, isRead, isCreate, isUpdated, isDeleted, EntryDate, EntryBy ) values	( 12, 24, 243, 'true', 1, 1, 1, GETDATE(), 'ict.bpm' ) 
 Go
 
-ALTER PROCEDURE [dbo].[sp_get_shippingsummary_list] 
-(
+USE EMCS
+GO
+
+CREATE PROCEDURE [dbo].[sp_get_shippingsummary_list]  (
 	@Username nvarchar(100),
 	@Search nvarchar(100),
 	@isTotal bit = 0,
@@ -13127,6 +13305,9 @@ where Id= 1 or Id = 2 or Id = 3 or Id = 4 or Id = 5 or Id = 6 or Id = 7 or Id = 
 
 Go
 
+USE PartsInformationSystem
+GO
+
 Insert Into Master_Menu
 (
 ID,
@@ -13184,7 +13365,11 @@ GETDATE(),
 
 Go
 
-ALTER PROCEDURE [dbo].[sp_get_npepeb_list] 
+
+USE EMCS
+GO
+
+CREATE PROCEDURE [dbo].[sp_get_npepeb_list] 
 (
 	@Username nvarchar(100),
 	@Search nvarchar(100),
@@ -13268,6 +13453,9 @@ END
 
 Go
 
+USE PartsInformationSystem
+GO
+
 Insert Into Master_Menu
 (
 ID,
@@ -13299,30 +13487,26 @@ GETDATE(),
 
 Go
 
-Insert Into Role_Access_Menu
-(
-ID,
-RoleID,
-MenuID,
-isRead,
-isCreate,
-isUpdated,
-isDeleted,
-EntryDate,
-EntryBy
+Insert Into Role_Access_Menu(
+    ID,
+    RoleID,
+    MenuID,
+    isRead,
+    isCreate,
+    isUpdated,
+    isDeleted,
+    EntryDate,
+    EntryBy
+)
+values(
+    14,
+    24,
+    245,
+    'true','true','true','true',
+    GETDATE(),
+    'ict.bpm'
 
 )
-values
-(
-14,
-24,
-245,
-'true','true','true','true',
-GETDATE(),
-'ict.bpm'
-
-)
-
 Go
 
 USE [EMCS]
@@ -13379,22 +13563,22 @@ BEGIN
 	BEGIN
 	
 		SET @sql += ' t0.Id
-						, t0.IdCl
-						, t0.Number
-						, t0.MasterBlDate
-						, t0.HouseBlNumber
-						, t0.HouseBlDate	
-						, t0.Publisher
-						, CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Employee_Name ELSE t3.FullName END PreparedBy
-						, CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Email ELSE t3.Email END Email       
-						, STUFF((SELECT '', ''+ISNULL(tx1.EdoNo, ''-'')
-							FROM dbo.CargoItem tx0
-							JOIN dbo.Cipl tx1 on tx1.id = tx0.IdCipl
-							WHERE tx0.IdCargo = tx0.Id
-							GROUP BY tx1.EdoNo
-							FOR XML PATH(''''),type).value(''.'',''nvarchar(max)''),1,1,'''') [RefEdo]
-						, t8.ClNo
-						, t8.CargoType '
+                , t0.IdCl
+                , t0.Number
+                , t0.MasterBlDate
+                , t0.HouseBlNumber
+                , t0.HouseBlDate	
+                , t0.Publisher
+                , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Employee_Name ELSE t3.FullName END PreparedBy
+                , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Email ELSE t3.Email END Email       
+                , STUFF((SELECT '', ''+ISNULL(tx1.EdoNo, ''-'')
+                    FROM dbo.CargoItem tx0
+                    JOIN dbo.Cipl tx1 on tx1.id = tx0.IdCipl
+                    WHERE tx0.IdCargo = tx0.Id
+                    GROUP BY tx1.EdoNo
+                    FOR XML PATH(''''),type).value(''.'',''nvarchar(max)''),1,1,'''') [RefEdo]
+                , t8.ClNo
+                , t8.CargoType '
 	END
 	SET @sql +='  FROM BlAwb t0
 				 JOIN dbo.Cargo t8 on t8.Id = t0.IdCl
@@ -13465,99 +13649,99 @@ BEGIN
 	Select @CurrentStepId = IdStep, @CurrentStatus = [Status] From [dbo].[RequestCl] WHERE IdCl = @IdCl
 
 	IF @CurrentStepId = 30069
-		BEGIN
-			IF @NewStatus = 'Approve'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Waiting NPE Document'
-				SET @FlowName = 'CL'
-			END
-			ELSE IF @NewStatus = 'Revise'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Revise'
-			END		
-			ELSE IF @NewStatus = 'Reject'
-			BEGIN
-				SET @NewStepId = 30070
-				SET @NextStepName = 'Reject by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Reject'
-			END		
+    BEGIN
+        IF @NewStatus = 'Approve'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Waiting NPE Document'
+            SET @FlowName = 'CL'
+        END
+        ELSE IF @NewStatus = 'Revise'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Revise'
+        END		
+        ELSE IF @NewStatus = 'Reject'
+        BEGIN
+            SET @NewStepId = 30070
+            SET @NextStepName = 'Reject by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Reject'
+        END		
 
-			UPDATE [dbo].[RequestCl]
-			SET [IdStep] = @NewStepId
-				,[Status] = @NewStatus
-				--,[Pic] = @Username
-				,[UpdateBy] = @Username
-				,[UpdateDate] = GETDATE()
-			WHERE IdCl = @IdCl
-		END
+        UPDATE [dbo].[RequestCl]
+        SET [IdStep] = @NewStepId
+            ,[Status] = @NewStatus
+            --,[Pic] = @Username
+            ,[UpdateBy] = @Username
+            ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	ELSE IF @CurrentStepId = 30071
-		BEGIN
-			IF @NewStatus = 'Approve'
-			BEGIN
-				SET @NewStepId = 10020
-				SET @NextStepName = 'Waiting for BL or AWB'
-				SET @FlowName = 'CL'
-			END
-			ELSE IF @NewStatus = 'Revise'
-			BEGIN
-				SET @NewStepId = 30072
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Revise'
-			END
-			ELSE IF @NewStatus = 'Reject'
-			BEGIN
-				SET @NewStepId = 30072
-				SET @NextStepName = 'Need revision review by imex'
-				SET @FlowName = 'CL'
-				SET @NewStatus = 'Reject'
-			END
+    BEGIN
+        IF @NewStatus = 'Approve'
+        BEGIN
+            SET @NewStepId = 10020
+            SET @NextStepName = 'Waiting for BL or AWB'
+            SET @FlowName = 'CL'
+        END
+        ELSE IF @NewStatus = 'Revise'
+        BEGIN
+            SET @NewStepId = 30072
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Revise'
+        END
+        ELSE IF @NewStatus = 'Reject'
+        BEGIN
+            SET @NewStepId = 30072
+            SET @NextStepName = 'Need revision review by imex'
+            SET @FlowName = 'CL'
+            SET @NewStatus = 'Reject'
+        END
 
-			UPDATE [dbo].[RequestCl]
-			SET [IdStep] = @NewStepId
-				,[Status] = @NewStatus
-				--,[Pic] = @Username
-				,[UpdateBy] = @Username
-				,[UpdateDate] = GETDATE()
-			WHERE IdCl = @IdCl
-		END
+        UPDATE [dbo].[RequestCl]
+        SET [IdStep] = @NewStepId
+            ,[Status] = @NewStatus
+            --,[Pic] = @Username
+            ,[UpdateBy] = @Username
+            ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	ELSE
-		BEGIN
-				select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
-				--PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
-				--		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
-				--		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
-				--		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
-						IF @CurrentStepId = 12 
-						BEGIN
-						IF @NewStepId = 10017 AND @NewStatus = 'Submit'
-						BEGIN
-						--declare @exportType nvarchar(10)=''
-						--SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
-						IF (@exportType ='PJT')
-						BEGIN
-						SET @NewStepId =10020
-						SET @NextStepName = 'Waiting for BL or AWB'
-						SET @FlowName = 'CL'
-						SET @NewStatus = 'Approve'
-						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-						END
-						--PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-						END 
-						END 
-				UPDATE [dbo].[RequestCl]
-				  SET [IdStep] = @NewStepId
-					 ,[Status] = @NewStatus
-					 ,[Pic] = @Username
-					 ,[UpdateBy] = @Username
-					 ,[UpdateDate] = GETDATE()
-				WHERE IdCl = @IdCl
-		END
+    BEGIN
+        select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
+        --PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
+        --		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
+        --		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
+        --		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
+                IF @CurrentStepId = 12 
+                BEGIN
+                IF @NewStepId = 10017 AND @NewStatus = 'Submit'
+                BEGIN
+                --declare @exportType nvarchar(10)=''
+                --SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
+                IF (@exportType ='PJT')
+                BEGIN
+                SET @NewStepId =10020
+                SET @NextStepName = 'Waiting for BL or AWB'
+                SET @FlowName = 'CL'
+                SET @NewStatus = 'Approve'
+                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+                END
+                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
+                END 
+                END 
+        UPDATE [dbo].[RequestCl]
+            SET [IdStep] = @NewStepId
+                ,[Status] = @NewStatus
+                ,[Pic] = @Username
+                ,[UpdateBy] = @Username
+                ,[UpdateDate] = GETDATE()
+        WHERE IdCl = @IdCl
+    END
 	
 	-- Hasni Procedure Cancel PEB
 	IF  @NewStatus = 'Request Cancel'
@@ -13656,6 +13840,10 @@ END
 
 Go
 
+Alter Table CiplForwader
+Add  ExportShipmentType Nvarchar(max) null
+Go
+
 ALTER PROCEDURE [dbo].[SP_CiplUpdate]
 (
 	@id bigint,
@@ -13733,57 +13921,57 @@ ALTER PROCEDURE [dbo].[SP_CiplUpdate]
 AS
 BEGIN
 	UPDATE dbo.Cipl 
-		SET Category = @Category 
-           ,CategoriItem = @CategoryItem
-           ,ExportType = @ExportType
-           ,ExportTypeItem = @ExportTypeItem
-		   ,SoldConsignee = @SoldConsignee
-           ,SoldToName = @SoldToName
-           ,SoldToAddress = @SoldToAddress
-           ,SoldToCountry = @SoldToCountry
-           ,SoldToTelephone = @SoldToTelephone
-           ,SoldToFax = @SoldToFax
-           ,SoldToPic = @SoldToPic
-           ,SoldToEmail = @SoldToEmail
-		   ,ShipDelivery = @ShipDelivery
-           ,ConsigneeName = @ConsigneeName
-           ,ConsigneeAddress = @ConsigneeAddress
-           ,ConsigneeCountry = @ConsigneeCountry
-           ,ConsigneeTelephone = @ConsigneeTelephone
-           ,ConsigneeFax = @ConsigneeFax
-           ,ConsigneePic = @ConsigneePic
-           ,ConsigneeEmail = @ConsigneeEmail
-           ,NotifyName = @NotifyName
-           ,NotifyAddress = @NotifyAddress
-           ,NotifyCountry = @NotifyCountry
-           ,NotifyTelephone = @NotifyTelephone
-           ,NotifyFax = @NotifyFax
-           ,NotifyPic = @NotifyPic
-           ,NotifyEmail = @NotifyEmail
-           ,ConsigneeSameSoldTo = @ConsigneeSameSoldTo
-           ,NotifyPartySameConsignee = @NotifyPartySameConsignee
-		   ,Area = @Area
-		   ,Branch = @Branch
-		   ,Currency = @Currency
-           ,PaymentTerms = @PaymentTerms
-           ,ShippingMethod = @ShippingMethod
-           ,CountryOfOrigin = @CountryOfOrigin
-           ,LcNoDate = @LcNoDate
-           ,IncoTerm = @IncoTerm
-           ,FreightPayment = @FreightPayment
-           ,ShippingMarks = @ShippingMarks
-           ,Remarks = @Remarks
-           ,SpecialInstruction = @SpecialInstruction
-           ,UpdateBy = @UpdateBy
-           ,UpdateDate = @UpdateDate
-           ,IsDelete = @IsDelete
-		   ,LoadingPort = @LoadingPort
-		   ,DestinationPort = @DestinationPort
-		   ,PickUpPic = @PickUpPic
-		   ,PickUpArea = @PickUpArea
-		   ,CategoryReference = @CategoryReference
-		   ,ReferenceNo = @ReferenceNo
-		   ,Consolidate = @Consolidate
+    SET Category = @Category 
+        ,CategoriItem = @CategoryItem
+        ,ExportType = @ExportType
+        ,ExportTypeItem = @ExportTypeItem
+        ,SoldConsignee = @SoldConsignee
+        ,SoldToName = @SoldToName
+        ,SoldToAddress = @SoldToAddress
+        ,SoldToCountry = @SoldToCountry
+        ,SoldToTelephone = @SoldToTelephone
+        ,SoldToFax = @SoldToFax
+        ,SoldToPic = @SoldToPic
+        ,SoldToEmail = @SoldToEmail
+        ,ShipDelivery = @ShipDelivery
+        ,ConsigneeName = @ConsigneeName
+        ,ConsigneeAddress = @ConsigneeAddress
+        ,ConsigneeCountry = @ConsigneeCountry
+        ,ConsigneeTelephone = @ConsigneeTelephone
+        ,ConsigneeFax = @ConsigneeFax
+        ,ConsigneePic = @ConsigneePic
+        ,ConsigneeEmail = @ConsigneeEmail
+        ,NotifyName = @NotifyName
+        ,NotifyAddress = @NotifyAddress
+        ,NotifyCountry = @NotifyCountry
+        ,NotifyTelephone = @NotifyTelephone
+        ,NotifyFax = @NotifyFax
+        ,NotifyPic = @NotifyPic
+        ,NotifyEmail = @NotifyEmail
+        ,ConsigneeSameSoldTo = @ConsigneeSameSoldTo
+        ,NotifyPartySameConsignee = @NotifyPartySameConsignee
+        ,Area = @Area
+        ,Branch = @Branch
+        ,Currency = @Currency
+        ,PaymentTerms = @PaymentTerms
+        ,ShippingMethod = @ShippingMethod
+        ,CountryOfOrigin = @CountryOfOrigin
+        ,LcNoDate = @LcNoDate
+        ,IncoTerm = @IncoTerm
+        ,FreightPayment = @FreightPayment
+        ,ShippingMarks = @ShippingMarks
+        ,Remarks = @Remarks
+        ,SpecialInstruction = @SpecialInstruction
+        ,UpdateBy = @UpdateBy
+        ,UpdateDate = @UpdateDate
+        ,IsDelete = @IsDelete
+        ,LoadingPort = @LoadingPort
+        ,DestinationPort = @DestinationPort
+        ,PickUpPic = @PickUpPic
+        ,PickUpArea = @PickUpArea
+        ,CategoryReference = @CategoryReference
+        ,ReferenceNo = @ReferenceNo
+        ,Consolidate = @Consolidate
 	WHERE id = @id;
 
 	UPDATE dbo.CiplForwader
@@ -13821,8 +14009,6 @@ BEGIN
 	EXEC [dbo].[sp_update_request_cipl] @id, @UpdateBy, @Status, ''
 
 END
-
-
 Go
 
 ALTER PROCEDURE [dbo].[SP_CiplInsert]
@@ -13903,165 +14089,165 @@ AS
 BEGIN
   DECLARE @LASTID bigint
   INSERT INTO [dbo].[Cipl]
-           ([Category]
-           ,[CategoriItem]
-           ,[ExportType]
-           ,[ExportTypeItem]
-		   ,[SoldConsignee]
-           ,[SoldToName]
-           ,[SoldToAddress]
-           ,[SoldToCountry]
-           ,[SoldToTelephone]
-           ,[SoldToFax]
-           ,[SoldToPic]
-           ,[SoldToEmail]
-           ,[ShipDelivery]
-           ,[ConsigneeName]
-           ,[ConsigneeAddress]
-           ,[ConsigneeCountry]
-           ,[ConsigneeTelephone]
-           ,[ConsigneeFax]
-           ,[ConsigneePic]
-           ,[ConsigneeEmail]
-           ,[NotifyName]
-           ,[NotifyAddress]
-           ,[NotifyCountry]
-           ,[NotifyTelephone]
-           ,[NotifyFax]
-           ,[NotifyPic]
-           ,[NotifyEmail]
-           ,[ConsigneeSameSoldTo]
-           ,[NotifyPartySameConsignee]
-       ,[Area]
-       ,[Branch]
-	   ,[Currency]
-	   ,[Rate]
-           ,[PaymentTerms]
-           ,[ShippingMethod]
-           ,[CountryOfOrigin]
-           ,[LcNoDate]
-           ,[IncoTerm]
-           ,[FreightPayment]
-           ,[ShippingMarks]
-           ,[Remarks]
-           ,[SpecialInstruction]
-           ,[CreateBy]
-           ,[CreateDate]
-           ,[UpdateBy]
-           ,[UpdateDate]
-           ,[IsDelete]
-		   ,[LoadingPort]
-		   ,[DestinationPort]
-		   ,[PickUpPic]
-       ,[PickUpArea]
-	   ,[CategoryReference]
-	   ,[ReferenceNo]
-	   ,[Consolidate]
-           )
+        ([Category]
+        ,[CategoriItem]
+        ,[ExportType]
+        ,[ExportTypeItem]
+        ,[SoldConsignee]
+        ,[SoldToName]
+        ,[SoldToAddress]
+        ,[SoldToCountry]
+        ,[SoldToTelephone]
+        ,[SoldToFax]
+        ,[SoldToPic]
+        ,[SoldToEmail]
+        ,[ShipDelivery]
+        ,[ConsigneeName]
+        ,[ConsigneeAddress]
+        ,[ConsigneeCountry]
+        ,[ConsigneeTelephone]
+        ,[ConsigneeFax]
+        ,[ConsigneePic]
+        ,[ConsigneeEmail]
+        ,[NotifyName]
+        ,[NotifyAddress]
+        ,[NotifyCountry]
+        ,[NotifyTelephone]
+        ,[NotifyFax]
+        ,[NotifyPic]
+        ,[NotifyEmail]
+        ,[ConsigneeSameSoldTo]
+        ,[NotifyPartySameConsignee]
+        ,[Area]
+        ,[Branch]
+        ,[Currency]
+        ,[Rate]
+        ,[PaymentTerms]
+        ,[ShippingMethod]
+        ,[CountryOfOrigin]
+        ,[LcNoDate]
+        ,[IncoTerm]
+        ,[FreightPayment]
+        ,[ShippingMarks]
+        ,[Remarks]
+        ,[SpecialInstruction]
+        ,[CreateBy]
+        ,[CreateDate]
+        ,[UpdateBy]
+        ,[UpdateDate]
+        ,[IsDelete]
+        ,[LoadingPort]
+        ,[DestinationPort]
+        ,[PickUpPic]
+        ,[PickUpArea]
+        ,[CategoryReference]
+        ,[ReferenceNo]
+        ,[Consolidate]
+    )
      VALUES
-           (@Category
-           ,@CategoryItem
-           ,@ExportType
-           ,@ExportTypeItem
-       ,@SoldConsignee
-           ,@SoldToName
-           ,@SoldToAddress
-           ,@SoldToCountry
-           ,@SoldToTelephone
-           ,@SoldToFax
-           ,@SoldToPic
-           ,@SoldToEmail
-       ,@ShipDelivery
-           ,@ConsigneeName
-           ,@ConsigneeAddress
-           ,@ConsigneeCountry
-           ,@ConsigneeTelephone
-           ,@ConsigneeFax
-           ,@ConsigneePic
-           ,@ConsigneeEmail
-           ,@NotifyName
-           ,@NotifyAddress
-           ,@NotifyCountry
-           ,@NotifyTelephone
-           ,@NotifyFax
-           ,@NotifyPic
-           ,@NotifyEmail
-           ,@ConsigneeSameSoldTo
-           ,@NotifyPartySameConsignee
-       ,@Area
-       ,@Branch
-	   ,@Currency
-	   ,@Rate
-           ,@PaymentTerms
-           ,@ShippingMethod
-           ,@CountryOfOrigin
-           ,@LcNoDate
-           ,@IncoTerm
-           ,@FreightPayment
-           ,@ShippingMarks
-           ,@Remarks
-           ,@SpecialInstruction
-           ,@CreateBy
-           ,@CreateDate
-           ,@UpdateBy
-           ,@UpdateDate
-           ,@IsDelete
-		   ,@LoadingPort
-		   ,@DestinationPort
-		   ,@PickUpPic
-       ,@PickUpArea
-	   ,@CategoryReference
-	   ,@ReferenceNo
-	   ,@Consolidate)
+        (@Category
+        ,@CategoryItem
+        ,@ExportType
+        ,@ExportTypeItem
+        ,@SoldConsignee
+        ,@SoldToName
+        ,@SoldToAddress
+        ,@SoldToCountry
+        ,@SoldToTelephone
+        ,@SoldToFax
+        ,@SoldToPic
+        ,@SoldToEmail
+        ,@ShipDelivery
+        ,@ConsigneeName
+        ,@ConsigneeAddress
+        ,@ConsigneeCountry
+        ,@ConsigneeTelephone
+        ,@ConsigneeFax
+        ,@ConsigneePic
+        ,@ConsigneeEmail
+        ,@NotifyName
+        ,@NotifyAddress
+        ,@NotifyCountry
+        ,@NotifyTelephone
+        ,@NotifyFax
+        ,@NotifyPic
+        ,@NotifyEmail
+        ,@ConsigneeSameSoldTo
+        ,@NotifyPartySameConsignee
+        ,@Area
+        ,@Branch
+        ,@Currency
+        ,@Rate
+        ,@PaymentTerms
+        ,@ShippingMethod
+        ,@CountryOfOrigin
+        ,@LcNoDate
+        ,@IncoTerm
+        ,@FreightPayment
+        ,@ShippingMarks
+        ,@Remarks
+        ,@SpecialInstruction
+        ,@CreateBy
+        ,@CreateDate
+        ,@UpdateBy
+        ,@UpdateDate
+        ,@IsDelete
+        ,@LoadingPort
+        ,@DestinationPort
+        ,@PickUpPic
+        ,@PickUpArea
+        ,@CategoryReference
+        ,@ReferenceNo
+        ,@Consolidate)
 
   SET @LASTID = CAST(SCOPE_IDENTITY() as bigint)
   --SET @LASTCIPLID =@LASTID
-  INSERT INTO [dbo].[CiplForwader]
-           ([IdCipl]
-       ,[Forwader]
-	   ,[Branch]
-	   ,[Attention]
-       ,[Company]
-	   ,[SubconCompany]
-       ,[Address]
-	   ,[Area]
-	   ,[City]
-	   ,[PostalCode]
-       ,[Contact]
-	   ,[FaxNumber]
-	   ,[Forwading]
-       ,[Email]
-           ,[CreateBy]
-           ,[CreateDate]
-           ,[UpdateBy]
-           ,[UpdateDate]
-           ,[IsDelete]
-		   ,[Type]
-		   ,[ExportShipmentType]
-           )
-     VALUES
-           (@LASTID
-       ,@Forwader
-	   ,@BranchForwarder
-	   ,@Attention
-       ,@Company
-	   ,@SubconCompany
-       ,@Address
-	   ,@AreaForwarder
-	   ,@City
-	   ,@PostalCode	
-       
-       ,@Contact
-	   ,@FaxNumber
-	   ,@Forwading
-       ,@Email
-           ,@CreateBy
-           ,@CreateDate
-           ,@UpdateBy
-           ,@UpdateDate
-           ,@IsDelete
-		   ,@Type
-		   ,@ExportShipmentType)
+  INSERT INTO [dbo].[CiplForwader](
+        [IdCipl]
+        ,[Forwader]
+        ,[Branch]
+        ,[Attention]
+        ,[Company]
+        ,[SubconCompany]
+        ,[Address]
+        ,[Area]
+        ,[City]
+        ,[PostalCode]
+        ,[Contact]
+        ,[FaxNumber]
+        ,[Forwading]
+        ,[Email]
+        ,[CreateBy]
+        ,[CreateDate]
+        ,[UpdateBy]
+        ,[UpdateDate]
+        ,[IsDelete]
+        ,[Type]
+        ,[ExportShipmentType]
+    )
+     VALUES (
+        @LASTID
+        ,@Forwader
+        ,@BranchForwarder
+        ,@Attention
+        ,@Company
+        ,@SubconCompany
+        ,@Address
+        ,@AreaForwarder
+        ,@City
+        ,@PostalCode	
+
+        ,@Contact
+        ,@FaxNumber
+        ,@Forwading
+        ,@Email
+        ,@CreateBy
+        ,@CreateDate
+        ,@UpdateBy
+        ,@UpdateDate
+        ,@IsDelete
+        ,@Type
+        ,@ExportShipmentType)
 
 
 
@@ -14082,27 +14268,17 @@ BEGIN
   EXEC dbo.sp_insert_request_data @LASTID, 'CIPL', @GETCATEGORY, @Status, 'CREATE';
 
 END
-
 Go
 
-
-Alter Table CiplForwader
-Add  ExportShipmentType Nvarchar(max) null,
-
-Go
-
-create procedure [dbo].[SP_GetSiExportShipmentType]
-(
-@IdCL bigint
+create procedure [dbo].[SP_GetSiExportShipmentType] (
+    @IdCL bigint
 )
 AS
 BEGIN
-select * from  CargoCipl  cc 
-join CiplForwader cf on cf.IdCipl = cc.IdCipl
-where cc.IdCargo = @IdCL
-end 
-
-
+    select * from  CargoCipl  cc 
+    join CiplForwader cf on cf.IdCipl = cc.IdCipl
+    where cc.IdCargo = @IdCL
+END 
 GO
 
 USE [PartsInformationSystem]
@@ -14111,6 +14287,7 @@ TRUNCATE TABLE  [dbo].[Role_Access_Menu]
 GO
 TRUNCATE TABLE [dbo].[Master_Menu]
 GO
+
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (1, 0, N'SCIS', N'SCIS', 1, N'glyphicon glyphicon-dashboard', 0, 1, CAST(N'2016-11-15T12:40:49.280' AS DateTime), CAST(N'2016-11-15T12:40:49.280' AS DateTime), N'ict.test', N'ict.test')
 GO
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (2, 1, N'Home', N'Home/Index', 1, N'fa fa-home', 1, 1, CAST(N'2016-11-15T12:42:11.000' AS DateTime), CAST(N'2016-11-15T12:43:34.573' AS DateTime), N'ict.test', N'ict.test')
@@ -23831,8 +24008,11 @@ INSERT [dbo].[Role_Access_Menu] ([ID], [RoleID], [MenuID], [isRead], [isCreate],
 GO
 INSERT [dbo].[Role_Access_Menu] ([ID], [RoleID], [MenuID], [isRead], [isCreate], [isUpdated], [isDeleted], [EntryDate], [EntryBy]) VALUES (12618, 54, 243, 1, 1, NULL, 1, NULL, NULL)
 GO
+<<<<<<< HEAD
 
 
 
  
 >>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+=======
+>>>>>>> 61b5219 (tidy up SQL Queries)
