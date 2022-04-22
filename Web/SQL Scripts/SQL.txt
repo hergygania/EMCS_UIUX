@@ -14281,6 +14281,7 @@ BEGIN
 END 
 GO
 
+<<<<<<< HEAD
 USE [PartsInformationSystem]
 GO
 TRUNCATE TABLE  [dbo].[Role_Access_Menu]
@@ -14621,6 +14622,286 @@ GO
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (240, 237, N'Master Mapping User', N'Post/MasterMappingUser', 104, N'fa fa-users', 0, 1, CAST(N'2021-06-15T13:39:21.033' AS DateTime), CAST(N'2021-06-15T13:39:21.033' AS DateTime), N'ict.bpm', N'ict.bpm')
 GO
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (241, 135, N'Superior', N'EMCS/SuperiorList', 0, N'fa fa-check', 0, 1, CAST(N'2021-06-17T11:15:46.000' AS DateTime), CAST(N'2021-06-18T08:18:45.950' AS DateTime), N'ict.bpm', N'ict.bpm')
+=======
+-- =============================================    
+-- Author:                            Ali Mutasal    
+-- ALTER date: 09 Des 2019    
+-- Description:    Function untuk melakukan proses email    
+-- =============================================    
+ALTER FUNCTION [dbo].[fn_proccess_email_template]    
+(    
+                -- Add the parameters for the function here    
+                @requestType nvarchar(100) = 'CIPL',    
+                @requestId nvarchar(100) = '',    
+                @template nvarchar(max) = '',    
+    @typeDoc nvarchar(max) = '',    
+    @lastPIC nvarchar(max) = ''    
+)    
+RETURNS nvarchar(max)    
+AS    
+BEGIN    
+     
+     
+                ------------------------------------------------------------------    
+                -- 1. Melakukan Declare semua variable yang dibutuhkan    
+                ------------------------------------------------------------------    
+                BEGIN    
+            
+                                -- ini hanya sample silahkan comment jika akan digunakan    
+                                --SET @template = 'Ini adalah email dari [requestor_name], dan ini adalah email untuk [last_pic_name]. selanjutnya akan dikirim ke [next_pic_name]';    
+                                DECLARE @variable_table TABLE (    
+                                    key_data VARCHAR(MAX) NULL,    
+                                    val_data VARCHAR(MAX) NULL    
+                                );    
+    
+                                DECLARE     
+                                                @key NVARCHAR(MAX),     
+                                                @flow NVARCHAR(MAX),     
+                                                @val NVARCHAR(MAX),    
+                                                @requestor_name NVARCHAR(MAX),    
+                                                @requestor_id NVARCHAR(MAX),    
+                                                @requestor_username NVARCHAR(MAX),    
+                                                @last_pic_name NVARCHAR(MAX),    
+                                                @last_pic_id NVARCHAR(MAX),    
+                                                @last_pic_username NVARCHAR(MAX),    
+                                                @next_pic_name NVARCHAR(MAX),    
+                                                @next_pic_id NVARCHAR(MAX),    
+                                                @next_pic_username NVARCHAR(MAX),    
+                                                @si_number NVARCHAR(MAX) = '',    
+                                                @ss_number NVARCHAR(MAX) = '',    
+                                                @req_number NVARCHAR(MAX) = '',    
+    
+            @CiplNo NVARCHAR(MAX) = '',    
+            @DO NVARCHAR(MAX) = '',    
+            @DA NVARCHAR(MAX) = '',    
+            @NoReference NVARCHAR(MAX) = '',    
+            @CIPLBranchName NVARCHAR(MAX) = '',    
+    
+            @PICPickupPoints NVARCHAR(MAX) = '',    
+            @PickupPointsArea NVARCHAR(MAX) = '',    
+                                                @npe_number NVARCHAR(MAX) = '',    
+                                                @peb_number NVARCHAR(MAX) = '',    
+                                                @bl_awb_number NVARCHAR(MAX) = '',    
+                                                @req_date NVARCHAR(MAX) = '',    
+                                                @superior_req_name nvarchar(max) = '',    
+                                                @superior_req_id nvarchar(max) = '',    
+            @employee_name nvarchar(max) = ''    
+                
+        IF (@lastPIC <> '')    
+        BEGIN    
+         SELECT @employee_name = employee_name     
+         FROM dbo.fn_get_employee_internal_ckb()     
+         WHERE AD_User = @lastPIC;    
+        END    
+                END    
+                    
+                ------------------------------------------------------------------    
+                -- 2. Query untuk mengisi data ke variable variable yang dibutuhkan    
+                ------------------------------------------------------------------    
+                BEGIN    
+                 -- Mengambil data dari fn request per flow    
+                                BEGIN    
+                                                IF (@requestType = 'CIPL')    
+                                                BEGIN    
+                                                                SET @flow = 'CIPL';    
+                   SELECT     
+                                                                                @requestor_id = t1.Employee_ID,    
+                                                                                @requestor_name = t1.Employee_Name,    
+                    @superior_req_name = t1.Superior_Name,    
+                                                                                @superior_req_id = t1.Superior_ID,    
+                                                                                @requestor_username = t1.AD_User,    
+                                                                                @last_pic_id = t2.Employee_ID,    
+                                                                                @last_pic_name = t2.Employee_Name,    
+                                                                                @last_pic_username = t2.AD_User,    
+                                                                                @next_pic_id = t3.Employee_ID,    
+                        
+                    @CiplNo = t4.CiplNo,    
+                    @DA = t4.Da ,    
+                    @NoReference = t4.ReferenceNo,    
+                    @CIPLBranchName = (SELECT C.Branch+' - '+MA.BAreaName FROM MasterArea MA inner join Cipl C ON C.Branch = MA.BAreaCode WHERE C.id=t0.IdCipl ),    
+                    @PICPickupPoints = t4.PickUpPic,    
+                    @PickupPointsArea = t4.PickUpArea,    
+                                                                                @next_pic_name =     
+                                                                                                CASE    
+                                                                                                                WHEN t0.Status = 'Revise' OR t0.Status = 'Reject' OR (t0.Status = 'Approve' AND t0.NextAssignType IS NULL) THEN t5.Employee_Name    
+                                                                                                                WHEN t0.NextAssignType = 'Group' THEN t0.NextAssignTo    
+                                                                                                                ELSE t3.Employee_Name    
+                                                                                                END,    
+                                                                                @next_pic_username = t3.AD_User,    
+                                                                                @req_number = IIF(@typeDoc = 'CKB', ISNULL(t4.EdoNo,''), t4.CiplNo),    
+                                                                                @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)    
+                                                                FROM     
+                                                                                dbo.fn_get_cipl_request_list_all() t0     
+                                                                                INNER JOIN dbo.Cipl t4 on t4.id = t0.IdCipl    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = t0.CreateBy    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User = t0.Pic    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t3 on t3.AD_User = t0.NextAssignTo    
+                                    LEFT JOIN dbo.fn_get_employee_internal_ckb() t5 on t5.AD_User = t0.UpdateBy    
+                                                                WHERE     
+                                                    t0.IdCipl = @requestId;    
+                                                END    
+    
+                                                --IF (@requestType IN ('CL', 'BLAWB', 'PEB_NPE'))    
+            IF (@requestType = 'CL') OR (@requestType = 'BLAWB') OR (@requestType = 'PEB_NPE')     
+                                                BEGIN    
+                                                                SET @flow = @requestType;    
+                                                                SELECT     
+                                                                                @requestor_id = t5.Employee_ID,    
+                                                                                @requestor_name = t5.Employee_Name,    
+                                                                                @superior_req_name = t5.Superior_Name,    
+                                                                       @superior_req_id = t5.Superior_ID,    
+                                                                                @requestor_username = t5.AD_User,    
+                                                                                @last_pic_id = t6.Employee_ID,    
+                                                                                @last_pic_name = t6.Employee_Name,    
+                                                                                @last_pic_username = t6.AD_User,    
+                                                                                @next_pic_id = t7.Employee_ID,    
+                                                                                @next_pic_name = t7.Employee_Name,    
+                                                                                @next_pic_username = t7.AD_User,    
+                                                                                @req_number = t1.ClNo,    
+                                                                                @ss_number = t1.SsNo,    
+                                                                                @si_number = t2.SlNo,    
+                                                                                @npe_number = t3.NpeNumber,    
+                                                                                @peb_number = t3.PebNumber,    
+                    @DO = (SELECT STRING_AGG(EdoNumber, ', ')     
+                    FROM CargoCipl WHERE IdCargo = t0.IdCl),    
+                    @CIPLBranchName = 
+					(SELECT C.Branch+' - '+MA.BAreaName FROM MasterArea MA inner join Cipl C ON C.Branch = MA.BAreaCode WHERE C.id in (SELECT IdCipl FROM CargoCipl     
+                    where IdCargo = t0.IdCl)),    
+                    @DA = (SELECT STRING_AGG(Da, ', ')     
+                    FROM Cipl WHERE id     
+                    in (SELECT IdCipl FROM CargoCipl     
+                    where IdCargo = t0.IdCl)),    
+                    @CiplNo = (SELECT STRING_AGG(CiplNo, ', ')     
+                    FROM Cipl WHERE id     
+                    in (SELECT IdCipl FROM CargoCipl     
+                    where IdCargo = t0.IdCl)),    
+                                                                                @bl_awb_number = t4.Number,    
+                                                                                @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)    
+                                                                FROM     
+                                                                                dbo.fn_get_cl_request_list_all() t0     
+                                                                                INNER JOIN dbo.Cargo t1 on t1.id = t0.IdCl    
+                                                                           INNER JOIN dbo.ShippingInstruction t2 on t2.IdCL = t0.IdCl    
+                                                                                LEFT JOIN dbo.NpePeb t3 on t3.IdCL = t0.IdCl    
+                                                                  LEFT JOIN dbo.BlAwb t4 on t4.IdCL = t0.IdCl    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t5 on t5.AD_User = t0.CreateBy    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t6 on t6.AD_User = t0.Pic    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t7 on t7.AD_User = t0.NextAssignTo    
+                                                                WHERE     
+                                                                                t0.IdCl = @requestId;                                                                         
+                                                END    
+    
+                                                IF (@requestType = 'RG')    
+                                                BEGIN    
+                                                                SET @flow = 'Receive Goods';    
+                                                                SELECT     
+                                                                                @requestor_id = t1.Employee_ID,    
+                                                                                @requestor_name = t1.Employee_Name,    
+                                                                                @superior_req_name = t1.Superior_Name,    
+                                                                                @superior_req_id = t1.Superior_ID,    
+																				@requestor_username = t1.AD_User,    
+                                                                                @last_pic_id = t2.Employee_ID,    
+                                                                                @last_pic_name = t2.Employee_Name,    
+                                                                                @last_pic_username = t2.AD_User,    
+                                                                                @next_pic_id = t3.Employee_ID,    
+                                                                                @next_pic_name = t3.Employee_Name,    
+                                                                                @next_pic_username = t3.AD_User,    
+                                                                                @req_number = t4.GrNo,    
+                                                                                @req_date = RIGHT('0' + DATENAME(DAY, t0.CreateDate), 2) + ' ' + DATENAME(MONTH, t0.CreateDate)+ ' ' + DATENAME(YEAR, t0.CreateDate)    
+                                                                FROM     
+                                                                                dbo.fn_get_gr_request_list_all() t0     
+                                                                                INNER JOIN dbo.GoodsReceive t4 on t4.id = t0.IdGr    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t1 on t1.AD_User = t0.CreateBy    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t2 on t2.AD_User = t0.Pic    
+                                                                                LEFT JOIN dbo.fn_get_employee_internal_ckb() t3 on t3.AD_User = t0.NextAssignTo    
+                                                                WHERE     
+                        t0.IdGr = @requestId;    
+                                                END    
+    
+                                                IF (@requestType = 'DELEGATION')    
+                                                BEGIN    
+                                                                SET @flow = 'Delegation';                                                                  --SELECT * FROM dbo.fn_get_gr_request_list_all() t0 where t0.Id = @requestId;    
+                                                END    
+    
+                                                INSERT     
+                                                                INTO     
+                                                                                @variable_table     
+                                                                VALUES     
+                                                                                 ('@RequestorName', ISNULL(@requestor_name, '-'))    
+                                                                                ,('@RequestNo', ISNULL(@req_number, '-'))    
+                                                                                ,('@CreatedDate', ISNULL(@req_date, '-'))    
+                    ,('@CiplNo', ISNULL(@CiplNo, '-'))    
+                    ,('@CIPLBranchName', ISNULL(@CIPLBranchName, '-'))    
+                    ,('@PICPickupPoints', ISNULL(@PICPickupPoints, '-'))    
+      ,('@DO', ISNULL(@DO, '-'))    
+       ,('@DA', ISNULL(@DA, '-'))    
+                    ,('@PickupPointsArea', ISNULL(@PickupPointsArea, '-'))    
+                                                                                ,('@SuperiorEmpID', ISNULL(@superior_req_id, '-'))    
+                                                                                ,('@SuperiorName', ISNULL(@superior_req_name, '-'))    
+                                                                                ,('@MobileLink', 'http://pis.trakindo.co.id')    
+                                                                                ,('@DesktopLink', 'http://pis.trakindo.co.id')    
+                                                                                ,('@ApproverPosition', ISNULL(@flow, '-'))    
+                                                                                ,('@ApproverName', ISNULL(@next_pic_name, ISNULL(@employee_name,'-')))    
+                                                                                ,('@RequestorEmpID', ISNULL(@requestor_id, '-'))    
+                                                                                ,('@flow', ISNULL(@flow, '-'))    
+                                                                                ,('@requestor_name', ISNULL(@requestor_name, '-'))    
+                                                                                ,('@requestor_id', ISNULL(@requestor_id, '-'))    
+                                                                                ,('@last_pic_name', ISNULL(@last_pic_name, '-'))    
+                                                                                ,('@last_pic_id', ISNULL(@last_pic_id, '-'))    
+                                                                                ,('@next_pic_name', ISNULL(@next_pic_name, '-'))    
+                                                                                ,('@next_pic_id', ISNULL(@next_pic_id, '-'))    
+                                                                                ,('@si_number', ISNULL(@si_number, '-'))    
+                                                                                ,('@ss_number', ISNULL(@ss_number, '-'))    
+                                                                                ,('@req_number', ISNULL(@req_number, '-'))    
+                                                                                ,('@npe_number', ISNULL(@npe_number, '-'))    
+           ,('@peb_number', ISNULL(@peb_number, '-'))    
+                                                                                ,('@bl_awb_number', ISNULL(@bl_awb_number, '-'))    
+                                                                                ,('@req_date', ISNULL(@req_date, '-'))    
+                                                                                ,('@superior_req_name', ISNULL(@superior_req_name, '-'))    
+                                               ,('@superior_req_id', ISNULL(@superior_req_id, '-'))    
+                                END    
+                END    
+                    
+                ------------------------------------------------------------------    
+                -- 3. Melakukan Replace terhadap data yang di petakan di template dgn menggunakan perulangan    
+                ------------------------------------------------------------------    
+                BEGIN    
+                                DECLARE cursor_variable CURSOR    
+                                FOR     
+                                                SELECT     
+                                                                key_data,     
+                                                                val_data     
+                                                FROM     
+                                                                @variable_table;    
+                                                                                                    
+                                OPEN cursor_variable;     
+                                FETCH NEXT FROM cursor_variable INTO @key, @val;     
+                                WHILE @@FETCH_STATUS = 0    
+                                    BEGIN    
+                                                                -- Melakukan Replace terhadap variable di template dengan value dari hasil pencarian data diata.    
+                                                                IF ISNULL(@key, '') <> ''    
+                                                                BEGIN    
+          SET @template = REPLACE(@template, @key, @val);    
+                                                   END    
+    
+                                                                FETCH NEXT FROM cursor_variable INTO     
+                                            @key,     
+                                           @val;    
+                                    END;    
+                                    
+                                CLOSE cursor_variable;     
+                                DEALLOCATE cursor_variable;    
+                END    
+                    
+                ------------------------------------------------------------------    
+                -- 4. Menampilkan hasil dari proses replace    
+                ------------------------------------------------------------------    
+                BEGIN    
+                                RETURN @template;    
+                END    
+END    
+    
+============== Master Menu & Role Access Menu ==========================================
+>>>>>>> ee00956 (SQL update for Master menu & Role access menu)
 GO
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (242, 126, N'Shipping Instruction List', N'EMCS/ShippingInstructionList', 5, N'fa fa-check-square', 0, 1, CAST(N'2022-04-11T12:24:59.937' AS DateTime), NULL, N'ict.bpm', NULL)
 GO
@@ -14630,6 +14911,7 @@ INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], 
 GO
 INSERT [dbo].[Master_Menu] ([ID], [ParentID], [Name], [URL], [OrderNo], [Icon], [isDefault], [isActive], [EntryDate], [ModifiedDate], [EntryBy], [ModifiedBy]) VALUES (245, 126, N'BL & AWB List', N'EMCS/BLAWBList', 7, N'fa fa-check-square', 0, 1, CAST(N'2022-04-11T12:28:55.650' AS DateTime), NULL, N'ict.bpm', NULL)
 GO
+<<<<<<< HEAD
 INSERT [dbo].[Role_Access_Menu] ([ID], [RoleID], [MenuID], [isRead], [isCreate], [isUpdated], [isDeleted], [EntryDate], [EntryBy]) VALUES (2232, 9, 2, 1, 0, 0, 0, CAST(N'2017-05-31T08:42:38.750' AS DateTime), N'ict.bpm')
 GO
 INSERT [dbo].[Role_Access_Menu] ([ID], [RoleID], [MenuID], [isRead], [isCreate], [isUpdated], [isDeleted], [EntryDate], [EntryBy]) VALUES (2233, 9, 3, 1, 1, 1, 1, CAST(N'2017-05-31T08:42:39.170' AS DateTime), N'ict.bpm')
@@ -24009,6 +24291,1194 @@ GO
 INSERT [dbo].[Role_Access_Menu] ([ID], [RoleID], [MenuID], [isRead], [isCreate], [isUpdated], [isDeleted], [EntryDate], [EntryBy]) VALUES (12618, 54, 243, 1, 1, NULL, 1, NULL, NULL)
 GO
 <<<<<<< HEAD
+=======
+
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+11, 24, 242, 1, 1, 1, 1
+);
+
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12, 24, 243, 1, 1, 1, 1
+);
+
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+13, 24, 244, 1, 1, 1, 1
+);
+
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+14, 24, 245, 1, 1, 1, 1
+);
+
+
+/* INSERT QUERY NO: 1 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12455, 1, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 2 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12456, 2, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 3 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12457, 3, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 4 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12458, 4, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 5 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12459, 5, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 6 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12460, 6, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 7 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12461, 7, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 8 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12462, 8, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 9 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12463, 9, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 10 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12464, 10, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 11 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12465, 11, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 12 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12466, 12, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 13 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12467, 13, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 14 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12468, 14, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 15 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12469, 15, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 16 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12470, 16, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 17 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12471, 17, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 18 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12472, 18, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 19 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12473, 19, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 20 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12474, 20, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 21 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12475, 21, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 22 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12476, 22, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 23 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12477, 23, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 24 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12478, 25, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 25 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12479, 26, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 26 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12480, 27, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 27 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12481, 40, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 28 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12482, 41, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 29 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12483, 42, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 30 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12484, 43, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 31 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12485, 44, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 32 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12486, 45, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 33 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12487, 46, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 34 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12488, 47, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 35 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12489, 48, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 36 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12490, 49, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 37 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12491, 50, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 38 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12492, 51, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 39 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12493, 52, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 40 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12494, 53, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 41 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12495, 54, 244, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 42 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12496, 1, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 43 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12497, 2, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 44 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12498, 3, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 45 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12499, 4, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 46 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12500, 5, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 47 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12501, 6, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 48 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12502, 7, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 49 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12503, 8, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 50 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12504, 9, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 51 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12505, 10, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 52 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12506, 11, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 53 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12507, 12, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 54 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12508, 13, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 55 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12509, 14, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 56 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12510, 15, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 57 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12511, 16, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 58 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12512, 17, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 59 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12513, 18, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 60 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12514, 19, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 61 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12515, 20, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 62 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12516, 21, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 63 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12517, 22, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 64 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12518, 23, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 65 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12519, 25, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 66 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12520, 26, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 67 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12521, 27, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 68 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12522, 40, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 69 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12523, 41, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 70 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12524, 42, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 71 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12525, 43, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 72 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12526, 44, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 73 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12527, 45, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 74 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12528, 46, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 75 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12529, 47, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 76 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12530, 48, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 77 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12531, 49, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 78 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12532, 50, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 79 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12533, 51, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 80 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12534, 52, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 81 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12535, 53, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 82 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12536, 54, 245, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 83 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12537, 1, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 84 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12538, 2, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 85 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12539, 3, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 86 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12540, 4, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 87 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12541, 5, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 88 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12542, 6, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 89 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12543, 7, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 90 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12544, 8, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 91 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12545, 9, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 92 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12546, 10, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 93 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12547, 11, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 94 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12548, 12, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 95 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12549, 13, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 96 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12550, 14, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 97 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12551, 15, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 98 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12552, 16, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 99 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12553, 17, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 100 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12554, 18, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 101 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12555, 19, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 102 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12556, 20, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 103 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12557, 21, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 104 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12558, 22, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 105 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12559, 23, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 106 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12560, 25, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 107 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12561, 26, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 108 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12562, 27, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 109 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12563, 40, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 110 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12564, 41, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 111 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12565, 42, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 112 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12566, 43, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 113 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12567, 44, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 114 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12568, 45, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 115 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12569, 46, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 116 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12570, 47, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 117 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12571, 48, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 118 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12572, 49, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 119 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12573, 50, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 120 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12574, 51, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 121 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12575, 52, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 122 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12576, 53, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 123 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12577, 54, 242, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 124 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12578, 1, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 125 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12579, 2, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 126 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12580, 3, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 127 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12581, 4, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 128 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12582, 5, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 129 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12583, 6, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 130 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12584, 7, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 131 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12585, 8, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 132 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12586, 9, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 133 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12587, 10, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 134 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12588, 11, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 135 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12589, 12, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 136 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12590, 13, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 137 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12591, 14, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 138 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12592, 15, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 139 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12593, 16, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 140 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12594, 17, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 141 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12595, 18, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 142 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12596, 19, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 143 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12597, 20, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 144 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12598, 21, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 145 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12599, 22, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 146 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12600, 23, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 147 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12601, 25, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 148 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12602, 26, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 149 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12603, 27, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 150 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12604, 40, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 151 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12605, 41, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 152 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12606, 42, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 153 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12607, 43, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 154 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12608, 44, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 155 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12609, 45, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 156 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12610, 46, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 157 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12611, 47, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 158 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12612, 48, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 159 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12613, 49, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 160 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12614, 50, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 161 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12615, 51, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 162 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12616, 52, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 163 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12617, 53, 243, 1, 1, 1, 1
+);
+
+/* INSERT QUERY NO: 164 */
+INSERT INTO [Role_Access_Menu](ID, RoleID, MenuID, isRead, isUpdated, isCreate, isDeleted)
+VALUES
+(
+12618, 54, 243, 1, 1, 1, 1
+);
+
+
+GO
+
+
+>>>>>>> ee00956 (SQL update for Master menu & Role access menu)
 
 
 
