@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "Report Outstanding Cipl";
 }
+<style>
+    .tableFixHead thead {
+        position: sticky;
+        top: 0;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-12">
@@ -52,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered table-striped" data-toolbar=".toolbar" id="tbl-outstandingcipl"></table>
+                <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-outstandingcipl"></table>
             </div>
         </div>
     </div>

@@ -5,6 +5,12 @@
     .select2-container {
         width: 100% !important;
     }
+
+    .tableFixHead thead {
+        position: sticky;
+        top: 0;
+    }
+
 </style>
 
 <div class="row">
@@ -88,7 +94,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-striped" data-toolbar=".toolbar" id="tbl-detailstracking"></table>
+                        <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-detailstracking"></table>
                     </div>
                 </div>
             </div>
