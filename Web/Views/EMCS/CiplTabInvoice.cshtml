@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<div class="card mb-8">
     <div class="p-0">
         <div class="flex gap-x-10 p-6">
@@ -7,58 +6,30 @@
                     <div class="form-group hide">
                         <label class="control-label col-lg-4 col-xs-4">ID</label>
                         <div class="col-lg-8 col-xs-8">
-=======
-﻿<div class="row">
-    <div id="header">
-        <div class="col-lg-12">
-            <fieldset class="scheduler-border">
-                <legend class="scheduler-border"></legend>
-                <div class="col-lg-6">
-                    <div class="form-group hide">
-                        <label class="control-label col-lg-4 col-xs-4">ID</label>
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" id="idCipl" name="idCipl" placeholder="ID CIPL" value="@Model.Data.Id">
                         </div>
                     </div>
                     <div class="form-group hide">
                         <label class="control-label col-lg-4 col-xs-4">Status</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" id="statuscipl" value="@Model.DataRequest.Status" name="statuscipl" placeholder="Cipl No" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">CIPL No</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" id="noCipl" value="@Model.Data.CiplNo" name="noCipl" placeholder="Cipl No" disabled>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Category</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" disabled id="jenisBarangCipl" value="@Model.Data.Category" />
                         </div>
                     </div>
                     <div class="form-group">
-<<<<<<< HEAD
                         <label class="control-label col-lg-4 col-xs-4">&nbsp;</label>
                         <div class="categoryspareparts col-lg-8 col-xs-8">
-=======
-                        <label class="col-md-4">&nbsp;</label>
-                        <div class="input-group categoryspareparts col-md-8">
->>>>>>> 639d8d0 (Intial commit)
                             @if (Model.Data.Category == "CATERPILLAR SPAREPARTS")
                             {
                                 <input type="text" class="form-control" disabled id="sparepartsCipl" value="@Model.Data.CategoriItem" />
@@ -76,11 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Export Type</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" disabled name="exportremarkscipl" value="@Model.Data.ExportType" />
                         </div>
                     </div>
@@ -88,18 +55,13 @@
                     {
                         <div class="form-group">
                             <label class="control-label col-lg-4 hidden-xs">&nbsp;</label>
-<<<<<<< HEAD
                             <div class="col-lg-8 col-xs-8">
-=======
-                            <div class="input-group col-lg-8">
->>>>>>> 639d8d0 (Intial commit)
                                 <div class="exportRemarks mt-4">
                                     <input type="text" class="form-control" readonly name="exportremarksCipl" value="@Model.Data.ExportTypeItem" />
                                 </div>
 
                             </div>
                         </div>
-<<<<<<< HEAD
                     }    
                 </div>        
             </div>
@@ -120,30 +82,6 @@
                             {
                                 <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
                             }
-=======
-                    }
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="control-label col-lg-4 col-xs-4">Date</label>
-                        <div class="input-group col-lg-8 col-xs-8">
-                            @if (Model.Data.UpdateDate != Convert.ToDateTime("1/1/1900 00:00:00") && Model.DataRequest.Status == "Submit")
-                            {
-                                <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.UpdateDate.ToString("dd MMM yyyy")">
-                            }
-                            @if (Model.Data.UpdateDate != Convert.ToDateTime("1/1/1900 00:00:00") && Model.DataRequest.Status != "Submit")
-                            {
-                                <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
-                            }
-                            @if (Model.Data.UpdateDate == Convert.ToDateTime("1/1/1900 00:00:00") && Model.DataRequest.Status != "Submit")
-                            {
-                                <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
-                            }
-                            <div class="input-group-addon cal">
-                                <i class="fa fa-calendar"></i>
-                            </div>
->>>>>>> 639d8d0 (Intial commit)
                         </div>
                     </div>
                     <div class="form-group hide">
@@ -157,32 +95,20 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Reference No</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" rows="3" cols="3" class="form-control" name="refCipl" value="@(ViewBag.refs)" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Customer ID</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" name="idCustomerCipl" readonly value="@(!string.IsNullOrEmpty(ViewBag.IdCust) ? ViewBag.IdCust : "-")" />
                             <select id="idCustomerCipl" class="hidden" style="display:none;"> </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">PickUp Area</label>
-<<<<<<< HEAD
                         <div class="col-lg-8 col-xs-8">
-=======
-                        <div class="input-group col-lg-8 col-xs-8">
->>>>>>> 639d8d0 (Intial commit)
                             <input type="text" class="form-control" name="pickUpArea" readonly value="@Model.Data.PickUpArea" />
                         </div>
                     </div>
@@ -308,10 +234,20 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
-
+            </div>
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border"></legend>
+                <div class="col-lg-6">
+
+                </div>
+
+                <div class="col-lg-6">
+
+                </div>
+            </fieldset>
+            <div class="row">
+                @*<fieldset class="scheduler-border">
+            <legend class="scheduler-border"></legend>*@
                 <div class="form-group col-md-6">
                     <label class="control-label col-lg-12">@Model.Data.SoldConsignee</label>
                     <label class="control-label col-lg-4">Name</label>
@@ -390,10 +326,10 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+                @*</fieldset>*@
 
-            <fieldset class="scheduler-border">
-                <legend class="scheduler-border"></legend>
+                @*<fieldset class="scheduler-border">
+            <legend class="scheduler-border"></legend>*@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">For (Business Area)</label>
@@ -542,10 +478,12 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+                @*</fieldset>*@
+            </div>
 
-            <fieldset class="scheduler-border">
-                <legend class="scheduler-border"></legend>
+            @*<fieldset class="scheduler-border">
+        <legend class="scheduler-border"></legend>*@
+            <div class="col-md-10">
                 <div class="form-group">
                     <div>
                         @if (Model.Data.Category == "CATERPILLAR NEW EQUIPMENT")
@@ -590,6 +528,11 @@
                     </div>
                 </div>
                 <br />
+            </div>
+
+            @*</fieldset>*@
+
+            <div class="row">
                 <div class="col-md-6 tableItem">
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4">Shipping Mark & Nos</label>
@@ -649,8 +592,12 @@
                     </div>
                     <br /><br />
                 </div>
+<<<<<<< HEAD
             </fieldset>
 >>>>>>> 639d8d0 (Intial commit)
+=======
+            </div>
         </div>
-    </div>
+>>>>>>> 0aa0fef (new template)
+        </div>
 </div>

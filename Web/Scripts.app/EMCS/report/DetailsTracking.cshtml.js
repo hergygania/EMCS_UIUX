@@ -128,14 +128,20 @@ $(function () {
             valign: "middle"
         }, {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0aa0fef (new template)
             field: "CustomerFacilityArea",
             title: "Customer Facility Area",
             rowspan: 3,
             align: "center",
             valign: "middle"
         }, {
+<<<<<<< HEAD
 =======
 >>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 0aa0fef (new template)
             title: "Commercial Invoice & Packing List <br/> (CIPL)",
             colspan: 3,
             rowspan: 2,

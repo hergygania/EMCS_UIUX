@@ -87,41 +87,64 @@
 }
 
 <div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="col-md-4">Start Period</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    @*<input id="inp-start-date" type="text" class=" datepickr form-control" value="" name="email">*@
+                    <input class="form-control date required" id="inp-start-date" name="inp-start-date" placeholder="Start Period" style="background:white;" value="@DateTime.Now.ToString("01 Jan yyyy")">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="col-md-4" style="text-align: left;">End Period</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    @*<input id="inp-end-date" type="text" class=" datepickr form-control" name="email">*@
+                    <input class="form-control date required" id="inp-end-date" name="inp-end-date" placeholder="End Period" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="col-md-3">Category</label>
+            <div class="col-md-9">
+                <select class="select2" id="jenisBarangCipl" required></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="col-md-3" style="text-align: left;">Type</label>
+            <div class="col-md-9">
+                <select class="form-control" id="type" name="type">
+                    <option value="">--All--</option>
+                    <option value="">Sales</option>
+                    <option value="">Non Sales</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
         <div class="form-horizontal">
             <div class="col-md-3">
-                <div class="form-group">
-                    <label class="col-md-4">Start Period</label>
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            @*<input id="inp-start-date" type="text" class=" datepickr form-control" value="" name="email">*@
-                            <input class="form-control date required" id="inp-start-date" name="inp-start-date" placeholder="Start Period" style="background:white;" value="@DateTime.Now.ToString("01 Jan yyyy")">
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="col-md-3">
-                <div class="form-group">
-                    <label class="col-md-4" style="text-align: left;">End Period</label>
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            @*<input id="inp-end-date" type="text" class=" datepickr form-control" name="email">*@
-                            <input class="form-control date required" id="inp-end-date" name="inp-end-date" placeholder="End Period" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="col-md-3">
-                <div class="form-group">
-                    <label class="col-md-3">Category</label>
-                    <div class="col-md-9">
-                        <select class="select2" id="jenisBarangCipl" required></select>
-                    </div>
-                </div>
+
             </div>
             <div class="col-md-3">
+<<<<<<< HEAD
                 <div class="form-group">
                     <label class="col-md-3" style="text-align: left;">Type</label>
                     <div class="col-md-9">
@@ -133,6 +156,9 @@
                     </div>
                 </div>
 >>>>>>> 639d8d0 (Intial commit)
+=======
+                
+>>>>>>> 0aa0fef (new template)
             </div>
         </div>
         <div class="form-horizontal">

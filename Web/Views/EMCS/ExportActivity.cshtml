@@ -511,66 +511,85 @@
 @{
     ViewBag.Title = "Export Transactions";
 }
+<style>
+    .card-chart .dropdown {
+        position: absolute;
+        right: 120px;
+        top: 20px;
+    }
+</style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <div class="row">
-    <div class="col-md-6 pull-left">
-        <div class="box box-primary box-shadow">
-            <div class="box-header with-border">
+    <div class="col-md-6 col-sm-12 pull-left">
+        <div class="card card-chart">
+            <div class="card-header">
                 <div class="pull-right">
-                    <div class="pull-right" style="padding:0px;margin-left:2px;">
-                        <button class="btn btn-secondary btn-sm" onclick="TrendExportDownload()"><i class="fa fa-file-excel-o"></i></button>
-                    </div>
-                    <div class="dropdown pull-right">
-                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="TrendExportButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="TrendExportButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-th"></i>
                         </button>
-                        <ul id="TrendExportFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
-                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Interval</label>
-                                        <select class="pull-right select2 form-control" id="TrendExportYearInterval"></select>
+                        <div class="dropdown-menu" aria-labelledby="TrendExportButton">
+                            <ul id="TrendExportFilter" class="dropdown-menu" style="width:200px;">
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">Interval</label>
+                                            <select class="pull-right select2 form-control" id="TrendExportYearInterval"></select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Start Year</label>
-                                        <input class="form-control" id="TrendExportStartYear" placeholder="Please Choose Start Year" readonly="readonly" style="background:white;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">Start Year</label>
+                                            <input class="form-control" id="TrendExportStartYear" placeholder="Please Choose Start Year" readonly="readonly" style="background:white;">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label class="control-label">End Year</label>
-                                        <input class="form-control" id="TrendExportEndYear" placeholder="End Year" readonly="readonly" style="background:white;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">End Year</label>
+                                            <input class="form-control" id="TrendExportEndYear" placeholder="End Year" readonly="readonly" style="background:white;">
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button class="btn btn-default btn-sm" onclick="TrendExportSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
-                                    </div>                                    
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-default btn-sm" onclick="TrendExportSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pull-right" style="padding:0px;margin-left:2px;">
+                        <button class="btn btn-secondary btn-md" onclick="TrendExportDownload()"><i class="fa fa-file-excel"></i></button>
+                    </div>
+                    <div class="dropdown">
+
+
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div id="container_trend"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 pull-left">
-        <div class="box box-primary box-shadow">
-            <div class="box-header with-border">
+    <div class="col-md-6 col-sm-12 pull-left">
+        <div class="card card-chart">
+            <div class="card-header">
                 <div class="pull-right">
                     <div class="pull-right" style="padding:0px;margin-left:2px;">
-                        <button class="btn btn-secondary btn-sm"  onclick="ExportByCategoryDownload()"><i class="fa fa-file-excel-o"></i></button>
+                        <button class="btn btn-secondary" onclick="ExportByCategoryDownload()"><i class="fa fa-file-excel"></i></button>
                     </div>
                     <div class="dropdown pull-right">
-                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="ExportByCategoryButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
                             <i class="fa fa-th"></i>
                         </button>
-                        <ul id="ExportByCategoryFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                        <ul id="ExportByCategoryFilter" class="dropdown-menu keep-open" aria-labelledby="dropdownMenuButton" style="width:200px;z-index:1">
                             <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -599,25 +618,28 @@
                                 </div>
                             </li>
                         </ul>
+
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div id="container_trend_pie"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 pull-left">
-        <div class="box box-primary box-shadow">
-            <div class="box-header with-border">
+    <div class="col-md-6 col-sm-12 pull-left">
+        <div class="card card-chart">
+            <div class="card-header">
                 <div class="pull-right">
                     <div class="pull-right" style="padding:0px;margin-left:2px;">
-                        <button class="btn btn-secondary btn-sm" id="btn-big-5-commodities-download"><i class="fa fa-file-excel-o"></i></button>
+                        <button class="btn btn-secondary" id="btn-big-5-commodities-download"><i class="fa fa-file-excel"></i></button>
                     </div>
                     <div class="dropdown pull-right">
 
-                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="btn-big-5-commodities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
                             <i class="fa fa-cog"></i>
                         </button>
-                        <ul class="dropdown-menu" id="ul-big-5-commodities">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="ul-big-5-commodities">
                             <form class="form-horizontal" id="form-export-today">
                                 <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
                                     <div class="input-group col-lg-12 col-xs-12">
@@ -645,22 +667,24 @@
 
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div id="container_bigest"></div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 pull-left">
-        <div class="box box-primary box-shadow">
-            <div class="box-header with-border">
+    <div class="col-md-6 col-sm-12 pull-left">
+        <div class="card card-chart">
+            <div class="card-header">
                 <div class="pull-right">
                     <div class="pull-right" style="padding:0px;margin-left:2px;">
-                        <button class="btn btn-secondary btn-sm"  onclick="SalesVSNonSalesDownload()"><i class="fa fa-file-excel-o"></i></button>
+                        <button class="btn btn-secondary" onclick="SalesVSNonSalesDownload()"><i class="fa fa-file-excel"></i></button>
                     </div>
                     <div class="dropdown pull-right">
-                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="SalesVSNonSalesButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
                             <i class="fa fa-th"></i>
                         </button>
-                        <ul id="SalesVSNonSalesFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                        <ul id="SalesVSNonSalesFilter" class="dropdown-menu keep-open" aria-labelledby="dropdownMenuButton" style="width:200px;z-index:1">
                             <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -685,22 +709,24 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div id="container_compare_sales"></div>
             </div>
         </div>
     </div>
     <div class="col-md-12 pull-left">
-        <div class="box box-primary box-shadow">
-            <div class="box-header with-border">
+        <div class="card card-chart">
+            <div class="card-header">
                 <div class="pull-right">
                     <div class="pull-right" style="padding:0px;margin-left:2px;">
-                        <button class="btn btn-secondary btn-sm" onclick="TotalExportDownload()"><i class="fa fa-file-excel-o"></i></button>
+                        <button class="btn btn-secondary" onclick="TotalExportDownload()"><i class="fa fa-file-excel"></i></button>
                     </div>
                     <div class="dropdown pull-right">
-                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="TotalExportButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:5px;">
                             <i class="fa fa-th"></i>
                         </button>
-                        <ul id="TotalExportFilter" class="dropdown-menu keep-open" style="width:200px;z-index:1">
+                        <ul id="TotalExportFilter" class="dropdown-menu keep-open" aria-labelledby="dropdownMenuButton" style="width:200px;z-index:1">
                             <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -714,11 +740,13 @@
                                     <div class="col-md-12">
                                         <button class="btn btn-default btn-sm" onclick="TotalExportSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
                                     </div>
-                                </div>                              
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div id="container"></div>
             </div>
         </div>

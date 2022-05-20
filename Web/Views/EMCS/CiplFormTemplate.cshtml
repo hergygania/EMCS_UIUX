@@ -1472,7 +1472,7 @@
 >>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <div class="col-md-12">
         <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
-            <form id="FormCipl">
+            <fom id="FormCipl">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab">CIPL</a>
@@ -1488,219 +1488,421 @@
                 <div class="tab-content tabs-custom">
                     <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
                         <div class="row mt-15">
-                            <div class="col-lg-12">
-                                <fieldset class="scheduler-border">
-                                    <legend style="display: none;">&nbsp;</legend>
-                                    <div class="col-lg-6">
-                                        <div class="form-group hide">
-                                            <label class="control-label col-lg-4 col-xs-4">ID</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" id="idCipl" name="idCipl" placeholder="ID CIPL">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group hide">
+                                        <label class="control-label col-lg-4 col-xs-4">ID</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" id="idCipl" name="idCipl" placeholder="ID CIPL">
+                                        </div>
+                                    </div>
+                                    <div class="form-group hide">
+                                        <label class="control-label col-lg-4 col-xs-4">Status</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" id="statusCipl" name="statusCipl" placeholder="ID CIPL">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">CIPL No</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" id="noCipl" name="noCipl" data-table="Cipl" data-name="CiplNo" data-lable="CIPL No" placeholder="Cipl No" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Category</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" id="jenisBarangCipl" data-name="Category" data-table="Cipl" data-lable="Category" name="Category" required></select>
+                                            <div class="categoryspareparts mt-4">
+                                                <select class="mt-4 " id="sparepartsCipl" name="sparepartsCipl" required></select>
+                                            </div>
+                                            <div class="categoryunit mt-4">
+                                                <select class="mt-4" id="unitCipl" name="unitCipl" required></select>
+                                            </div>
+                                            <div class="categorymisc mt-4">
+                                                <input type="text" class="form-control" id="permanentCipl" name="permanentCipl" placeholder="Keterangan" required>
                                             </div>
                                         </div>
-                                        <div class="form-group hide">
-                                            <label class="control-label col-lg-4 col-xs-4">Status</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Export Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2" id="exportCipl" required></select>
+                                            <div class="exportRemarks mt-4">
+                                                <select class="select2" id="exportremarksCipl" name="exportremarksCipl" data-table="Cipl" data-lable="Export Type" data-name="ExportTypeItem" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="dateCipl" name="dateCipl" data-table="Cipl" data-name="dateCipl" data-lable="Date" placeholder="Date" disabled>
+                                            <div class="input-group-addon cal" style="background: #00C0EF; border-color: #00ACD6;">
+                                                <i class="fa fa-calendar" style="color: #FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="divReferenceNo">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Reference No</label>
+                                        <div class="input-group">
+                                            <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2" required></select>
+                                            <div class="input-group-addon" style="padding: 6px 1px !important;"></div>
+                                            <div id="divRefCipl"><select id="refCipl" class="select2" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group div-idCustomerCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Id Customer</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control" id="idCustomerCipl" data-lable="Id Customer" data-name="" name="idCustomerCipl" placeholder="Id Customer" disabled>
+                                            @*<select id="idCustomerCipl"></select>*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Pickup Area</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select id="idPickupArea" data-lable="Pickup Area" data-name="PickUpArea"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Pickup Pic</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select id="idPickupPic" data-lable="Pickup Pic" data-name="PickUpPic"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 col-xs-4">&nbsp;</label>
+                                        <div class="input-group col-lg-8 col-xs-8 offset-3">
+                                            <select id="soldConsigneeCipl" data-lable="Cosignee" data-name="SoldConsignee" class="inpConsignee" required>
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="div-sales-consignee">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4" required>Name</label>
                                             <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" id="statusCipl" name="statusCipl" placeholder="ID CIPL">
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Name" data-name="SoldToName" id="consigneeNameCipl" name="consigneeNameCipl" placeholder="Consignee Name" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4">CIPL No</label>
+                                            <label class="control-label col-lg-4 col-xs-4" required>Address</label>
                                             <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" id="noCipl" name="noCipl" data-table="Cipl" data-name="CiplNo" data-lable="CIPL No" placeholder="Cipl No" disabled>
+                                                <textarea type="text" class="form-control inpConsignee requestChange" data-lable="Address" data-name="SoldToAddress" id="consigneeAddressCipl" name="consigneeAddressCipl" placeholder="Address" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Category</label>
+                                            <label class="control-label col-lg-4 col-xs-4" required>Country</label>
                                             <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" id="jenisBarangCipl" data-name="Category" data-table="Cipl" data-lable="Category" name="Category" required></select>
-                                                <div class="categoryspareparts mt-4">
-                                                    <select class="mt-4 " id="sparepartsCipl" name="sparepartsCipl" required></select>
-                                                </div>
-                                                <div class="categoryunit mt-4">
-                                                    <select class="mt-4" id="unitCipl" name="unitCipl" required></select>
-                                                </div>
-                                                <div class="categorymisc mt-4">
-                                                    <input type="text" class="form-control" id="permanentCipl" name="permanentCipl" placeholder="Keterangan" required>
-                                                </div>
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Country" data-name="SoldToCountry" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Export Type</label>
+                                            <label class="control-label col-lg-4 col-xs-4" required>Telephone</label>
                                             <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2" id="exportCipl" required></select>
-                                                <div class="exportRemarks mt-4">
-                                                    <select class="select2" id="exportremarksCipl" name="exportremarksCipl" data-table="Cipl" data-lable="Export Type" data-name="ExportTypeItem" required></select>
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Telephone" data-name="SoldToTelephone" id="consigneeTelpCipl" name="consigneeTelpCipl" placeholder="Telephone" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4" required>Fax</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Fax" data-name="SoldToFax" id="consigneeFaxCipl" name="consigneeFaxCipl" placeholder="Fax" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4" required>Pic</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Pic" data-name="SoldToPic" id="consigneePicCipl" name="consigneePicCipl" placeholder="PIC" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4" required>Email</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpConsignee requestChange" data-lable="Email" data-name="SoldToEmail" id="consigneeEmailCipl" name="consigneeEmailCipl" placeholder="Email" required>
+                                                <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 col-xs-4">&nbsp;</label>
+                                        <div class="input-group col-lg-8 col-xs-8 offset-3">
+                                            <select id="shipDeliveryCipl" data-lable="Delivery type" data-name="ShipDelivery" class="inpConsignee requestChange" required>
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-md-4">&nbsp;</div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group">
+                                                    <div id="div-radio-notify" class="btn-group btn-group-justified">
+                                                        <span class="btn btn-default btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-success" data-notactive-notify="btn-default">Same As</span>
+                                                        <span class="btn btn-default btn-sm notactive-notify notifyDifferentCipl" data-toggle="notifychange" data-value="D" data-active="btn-info" data-notactive-notify="btn-default">Different</span>
+                                                    </div>
+                                                    <input type="hidden" name="NotifyPartySameConsignee" id="NotifyPartySameConsignee" data-name="NotifyPartySameConsignee" required>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="notify">
                                         <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4">Date</label>
+                                            <label class="control-label col-lg-4 col-xs-4">Name</label>
                                             <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control" id="dateCipl" name="dateCipl" data-table="Cipl" data-name="dateCipl" data-lable="Date" placeholder="Date" disabled>
-                                                <div class="input-group-addon cal" style="background: #00C0EF; border-color: #00ACD6;">
-                                                    <i class="fa fa-calendar" style="color: #FFFFFF;"></i>
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Name" data-name="NotifyName" id="notifyNameCipl" placeholder="Consignee Name" name="notifyNameCipl" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Address</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <textarea type="text" class="form-control inpNotify requestChange" data-lable="Notify Address" data-name="NotifyAddress" id="notifyAddressCipl" placeholder="Address" name="notifyAddressCipl" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Country</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Country" data-name="NotifyCountry" id="notifyCountryCipl" placeholder="Country" name="notifyCountryCipl" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Telephone</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Telephone" data-name="NotifyTelephone" id="notifyTelpCipl" placeholder="Telephone" name="notifyTelpCipl" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Fax</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Fax" data-name="NotifyFax" id="notifyFaxCipl" placeholder="Fax" name="notifyFaxCipl" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Pic</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Pic" data-name="NotifyPic" id="notifyPicCipl" placeholder="PIC" name="notifyPicCipl" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Email</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Email" data-name="NotifyEmail" id="notifyEmailCipl" placeholder="Email" name="notifyEmailCipl" required>
+                                                <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Plant (Business Area)</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" id="areaCipl" data-lable="Plant (Business Area)" data-name="Area" name="areaCipl" required><option></option></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Branch</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-lable="Branch" data-name="Branch" id="cabangCipl" name="cabangCipl" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Consolidate</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" id="ConsolidateCipl" data-lable="Consolidate" data-name="Consolidate" name="ConsolidateCipl" required>
+                                                <option></option>
+                                                <option value=true>Yes</option>
+                                                <option value=false>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Currency</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" id="currencyCipl" data-lable="Currency" data-name="Currency" name="currencyCipl" required><option></option></select>
+                                            @*<input type="text" class="form-control select2" id="currencyCipl" name="currencyCipl" placeholder="Currency" required>*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group hide">
+                                        <label class="control-label col-lg-4 col-xs-4">Lastest Kurs in USD</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control select2 requestChange" data-lable="Lastest Kurs in USD" data-name="Rate" id="RateCipl" name="RateCipl" placeholder="Kurs" required disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Payment Terms</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="PaymentTerms" data-lable="Payment Terms" name="paymentCipl" id="paymentCipl" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Shipping Method</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="ShippingMethod" data-lable="Shipping Method" id="shippingCipl" name="shippingCipl" required></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Country Of Origin</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="CountryOfOrigin" data-lable="Country Of Origin" id="countryCipl" name="countryCipl"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group divStatusEdit">
+                                        <label class="control-label col-lg-4 col-xs-4">Loading Port</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="LoadingPort" data-lable="Loading Por" id="loadingCipl" name="loadingCipl"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group divStatusEdit">
+                                        <label class="control-label col-lg-4 col-xs-4">Destination Port</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="DestinationPort" data-lable="Destination Port" id="destinationCipl" name="destinationCipl"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>LC No & Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="input-group double-input">
+                                                <input type="text" class="form-contro requestChangel" id="lcnoCipl" data-lable="LC No & Date" name="lcnoCipl" placeholder="LC No & Date" required style="width: 75%; border-right-width: 0px;">
+                                                <input type="text" class="form-control date requestChange" id="lcDateCipl" name="lcDateCipl" placeholder="Date" style="width: 25%; border-right-width: 0px;">
+                                                <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="divReferenceNo">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Reference No</label>
-                                            <div class="input-group">
-                                                <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2" required></select>
-                                                <div class="input-group-addon" style="padding: 6px 1px !important;"></div>
-                                                <div id="divRefCipl"><select id="refCipl"  class="select2" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Inco Terms</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="IncoTerm" data-lable="Inco Terms" id="incoCipl" required>
+                                                <option></option>
+                                            </select>
+                                            <div class="descriptionIncoTerms" style="line-height: 17px;" required></div>
                                         </div>
-                                        <div class="form-group div-idCustomerCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Id Customer</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control" id="idCustomerCipl"  data-lable="Id Customer" data-name="" name="idCustomerCipl" placeholder="Id Customer" disabled>
-                                                @*<select id="idCustomerCipl"></select>*@
-                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Freight Payment</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="select2 requestChange" data-name="FreightPayment" id="freightCipl" data-lable="Freight Payment" name="freightCipl" required></select>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Pickup Area</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select id="idPickupArea"  data-lable="Pickup Area" data-name="PickUpArea"></select>
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8" id="ActType/">
+                                            <select class="select2 requestChange" data-name="Type" id="typeCipl" data-lable="Type" name="typeCipl" required></select>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Pickup Pic</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select id="idPickupPic" data-lable="Pickup Pic" data-name="PickUpPic"></select>
-                                            </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Forwarder</label>
+                                        <div class="input-group col-lg-8 col-xs-8" id="ActForwader/">
+                                            <select class="select2 requestChange" data-name="Forwader" data-lable="Forwarder" id="forwaderCipl" name="forwaderCipl" required></select>
                                         </div>
+                                    </div>
+
+                                    <div class="form-group divCkbBranchCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Branch Ckb</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select id="CkbBranchCipl" data-name="Branch" name="CkbBranchCipl" data-lable="Branch Ckb" class="select2 requestChange" required style="width:100%;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderCompanyCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Company Name</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="Company" data-lable="Company Name" id="forwaderCompanyCipl" placeholder="Company Name" value="PT.Cipta Krida Bahari" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderForwadingCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Subcon Company</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="SubconCompany" data-lable="Subcon Company" id="forwaderForwadingCipl" placeholder="Subcon Company" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderAddressCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Address</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <textarea type="text" class="form-control requestChange" data-name="Address" data-lable="Address" id="forwaderAddressCipl" placeholder="Address" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderAreaCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Area</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="Area" data-lable="Area" id="forwaderAreaCipl" placeholder="Area" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderCityCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>City</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="City" data-lable="City" id="forwaderCityCipl" placeholder="City" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderContactCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Postal Code</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="PostalCode" data-lable="Postal Code" id="forwaderPostalCodeCipl" placeholder="Postal Code" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderContactCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Contact Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="Contact" data-lable="Contact Number" id="forwaderContactCipl" placeholder="Contact" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderFaxCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Fax Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="FaxNumber" data-lable="Fax Number" id="forwaderFaxCipl" placeholder="Fax" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderAttentionCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Attention</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="Attention" data-lable="Attention" id="forwaderAttentionCipl" placeholder="Attention" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group forwaderEmailCipl">
+                                        <label class="control-label col-lg-4 col-xs-4" required>Email</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type="text" class="form-control requestChange" data-name="Email" data-lable="Email" id="forwaderEmailCipl" placeholder="Email" required>
+                                            <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <fieldset class="scheduler-border">
+                                    <legend style="display: none;">&nbsp;</legend>
+                                    <div class="col-lg-6">
+
+                                    </div>
+                                    <div class="col-lg-6">
+
                                     </div>
                                 </fieldset>
                                 <hr style="margin-bottom: 15px; margin-top: 10px;">
                                 <fieldset class="scheduler-border field-2">
                                     <legend style="display: none;">&nbsp;</legend>
                                     <div class="col-md-6 col-ship-to">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 col-xs-4">&nbsp;</label>
-                                            <div class="input-group col-lg-8 col-xs-8 offset-3">
-                                                <select id="soldConsigneeCipl" data-lable="Cosignee" data-name="SoldConsignee" class="inpConsignee" required>
-                                                    <option></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="div-sales-consignee">
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Name</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Name" data-name="SoldToName" id="consigneeNameCipl" name="consigneeNameCipl" placeholder="Consignee Name" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Address</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <textarea type="text" class="form-control inpConsignee requestChange" data-lable="Address" data-name="SoldToAddress" id="consigneeAddressCipl" name="consigneeAddressCipl" placeholder="Address" required></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Country</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Country" data-name="SoldToCountry" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Telephone</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Telephone" data-name="SoldToTelephone" id="consigneeTelpCipl" name="consigneeTelpCipl" placeholder="Telephone" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Fax</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Fax" data-name="SoldToFax" id="consigneeFaxCipl" name="consigneeFaxCipl" placeholder="Fax" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Pic</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange" data-lable="Pic" data-name="SoldToPic" id="consigneePicCipl" name="consigneePicCipl" placeholder="PIC" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4" required>Email</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpConsignee requestChange"  data-lable="Email" data-name="SoldToEmail" id="consigneeEmailCipl" name="consigneeEmailCipl" placeholder="Email" required>
-                                                    <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
 
                                     <div class="col-md-6 col-notify-party">
-                                        <div class="form-group">
-                                            <label class="col-lg-4 col-xs-4">&nbsp;</label>
-                                            <div class="input-group col-lg-8 col-xs-8 offset-3">
-                                                <select id="shipDeliveryCipl" data-lable="Delivery type" data-name="ShipDelivery" class="inpConsignee requestChange" required>
-                                                    <option></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-md-4">&nbsp;</div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group">
-                                                        <div id="div-radio-notify" class="btn-group btn-group-justified">
-                                                            <span class="btn btn-default btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-success" data-notactive-notify="btn-default">Same As</span>
-                                                            <span class="btn btn-default btn-sm notactive-notify notifyDifferentCipl" data-toggle="notifychange" data-value="D" data-active="btn-info" data-notactive-notify="btn-default">Different</span>
-                                                        </div>
-                                                        <input type="hidden" name="NotifyPartySameConsignee" id="NotifyPartySameConsignee" data-name="NotifyPartySameConsignee" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="notify">
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Name</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Name" data-name="NotifyName" id="notifyNameCipl" placeholder="Consignee Name" name="notifyNameCipl" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Address</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <textarea type="text" class="form-control inpNotify requestChange" data-lable="Notify Address" data-name="NotifyAddress" id="notifyAddressCipl" placeholder="Address" name="notifyAddressCipl" required></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Country</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Country" data-name="NotifyCountry" id="notifyCountryCipl" placeholder="Country" name="notifyCountryCipl" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Telephone</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Telephone" data-name="NotifyTelephone" id="notifyTelpCipl" placeholder="Telephone" name="notifyTelpCipl" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Fax</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Fax" data-name="NotifyFax" id="notifyFaxCipl" placeholder="Fax" name="notifyFaxCipl" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Pic</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Pic" data-name="NotifyPic" id="notifyPicCipl" placeholder="PIC" name="notifyPicCipl" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4 col-xs-4">Email</label>
-                                                <div class="input-group col-lg-8 col-xs-8">
-                                                    <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Email" data-name="NotifyEmail" id="notifyEmailCipl" placeholder="Email" name="notifyEmailCipl" required>
-                                                    <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
 
                                 </fieldset>
@@ -1708,180 +1910,10 @@
                                 <fieldset class="scheduler-border">
                                     @*<legend class="scheduler-border"></legend>*@
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Plant (Business Area)</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" id="areaCipl" data-lable="Plant (Business Area)" data-name="Area" name="areaCipl" required><option></option></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Branch</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-lable="Branch" data-name="Branch" id="cabangCipl" name="cabangCipl" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Consolidate</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" id="ConsolidateCipl" data-lable="Consolidate" data-name="Consolidate" name="ConsolidateCipl" required>
-                                                    <option></option>
-                                                    <option value=true>Yes</option>
-                                                    <option value=false>No</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Currency</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" id="currencyCipl" data-lable="Currency" data-name="Currency" name="currencyCipl" required><option></option></select>
-                                                @*<input type="text" class="form-control select2" id="currencyCipl" name="currencyCipl" placeholder="Currency" required>*@
-                                            </div>
-                                        </div>
-                                        <div class="form-group hide">
-                                            <label class="control-label col-lg-4 col-xs-4">Lastest Kurs in USD</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control select2 requestChange" data-lable="Lastest Kurs in USD" data-name="Rate" id="RateCipl" name="RateCipl" placeholder="Kurs" required disabled>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Payment Terms</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="PaymentTerms" data-lable="Payment Terms" name="paymentCipl" id="paymentCipl" required></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Shipping Method</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="ShippingMethod" data-lable="Shipping Method" id="shippingCipl" name="shippingCipl" required></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4">Country Of Origin</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="CountryOfOrigin" data-lable="Country Of Origin" id="countryCipl" name="countryCipl"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group divStatusEdit">
-                                            <label class="control-label col-lg-4 col-xs-4">Loading Port</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="LoadingPort" data-lable="Loading Por" id="loadingCipl" name="loadingCipl"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group divStatusEdit">
-                                            <label class="control-label col-lg-4 col-xs-4">Destination Port</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="DestinationPort" data-lable="Destination Port" id="destinationCipl" name="destinationCipl"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>LC No & Date</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <div class="input-group double-input">
-                                                    <input type="text" class="form-contro requestChangel" id="lcnoCipl" data-lable="LC No & Date" name="lcnoCipl" placeholder="LC No & Date" required style="width: 75%; border-right-width: 0px;">
-                                                    <input type="text" class="form-control date requestChange"  id="lcDateCipl" name="lcDateCipl" placeholder="Date" style="width: 25%; border-right-width: 0px;">
-                                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
-                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Inco Terms</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="IncoTerm" data-lable="Inco Terms" id="incoCipl" required>
-                                                    <option></option>
-                                                </select>
-                                                <div class="descriptionIncoTerms" style="line-height: 17px;" required></div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Freight Payment</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select class="select2 requestChange" data-name="FreightPayment" id="freightCipl" data-lable="Freight Payment" name="freightCipl" required></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Type</label>
-                                            <div class="input-group col-lg-8 col-xs-8" id="ActType/">
-                                                <select class="select2 requestChange" data-name="Type" id="typeCipl" data-lable="Type" name="typeCipl" required></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Forwarder</label>
-                                            <div class="input-group col-lg-8 col-xs-8" id="ActForwader/">
-                                                <select class="select2 requestChange" data-name="Forwader" data-lable="Forwarder" id="forwaderCipl" name="forwaderCipl" required></select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group divCkbBranchCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Branch Ckb</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <select id="CkbBranchCipl" data-name="Branch" name="CkbBranchCipl" data-lable="Branch Ckb" class="select2 requestChange" required style="width:100%;"></select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderCompanyCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Company Name</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="Company" data-lable="Company Name" id="forwaderCompanyCipl" placeholder="Company Name" value="PT.Cipta Krida Bahari" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderForwadingCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Subcon Company</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="SubconCompany" data-lable="Subcon Company" id="forwaderForwadingCipl" placeholder="Subcon Company" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderAddressCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Address</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <textarea type="text" class="form-control requestChange" data-name="Address" data-lable="Address" id="forwaderAddressCipl" placeholder="Address" required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderAreaCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Area</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="Area" data-lable="Area" id="forwaderAreaCipl" placeholder="Area" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderCityCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>City</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="City" data-lable="City" id="forwaderCityCipl" placeholder="City" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderContactCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Postal Code</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="PostalCode" data-lable="Postal Code" id="forwaderPostalCodeCipl" placeholder="Postal Code" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderContactCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Contact Number</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="Contact" data-lable="Contact Number" id="forwaderContactCipl" placeholder="Contact" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderFaxCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Fax Number</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="FaxNumber" data-lable="Fax Number" id="forwaderFaxCipl" placeholder="Fax" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderAttentionCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Attention</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="Attention" data-lable="Attention" id="forwaderAttentionCipl" placeholder="Attention" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group forwaderEmailCipl">
-                                            <label class="control-label col-lg-4 col-xs-4" required>Email</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
-                                                <input type="text" class="form-control requestChange" data-name="Email" data-lable="Email" id="forwaderEmailCipl" placeholder="Email" required>
-                                                <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </fieldset>
                                 <fieldset class="scheduler-border">
@@ -1894,45 +1926,45 @@
                                                     <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModaldownloadFile" id="partDownloadFile" style="min-width:120px;display :none" value="DownloadFile"><i class="fa fa-plus-circle"></i> DOWNLOAD FILE</button>
                                                     @*<button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModaldownloadFile" id="submit" style="min-width:120px" value="UploadFile"><i class="fa fa-plus-circle"></i> UPLOAD FILE</button>*@
                                                 </div>
-                                                 <div class="col-md-12">
+                                                <div class="col-md-12">
 
                                                     <div class="col-md-4">
-                                                         <div class="row text-center divUploadFile dropzone" style="border: 1px dotted; font-style:italic; color:#808080; font-size:inherit" title="Drop the Import File Here or Click this Section for Browse the Import File." id="partUploadFile">
-                                                         </div>
-                                                     </div>
-                                                <div id="template-dropzone" class="hidden">
-                                                    <div id="template" class="file-row text-left" style="padding:20px;">
-                                                        <!-- This is used as the file preview template -->
-                                                        <div class="col-md-2">
-                                                            <div class="row">
-                                                                <span class="preview">
-                                                                    <img alt="Excel Icon" style="width:65%;height:auto;" src="~/Images/EMCS/excel.png">
-                                                                </span>
-                                                            </div>
+                                                        <div class="row text-center divUploadFile dropzone" style="border: 1px dotted; font-style:italic; color:#808080; font-size:inherit" title="Drop the Import File Here or Click this Section for Browse the Import File." id="partUploadFile">
                                                         </div>
-                                                        <div>
-                                                            <p class="name" data-dz-name></p>
-                                                            <strong class="error text-danger" data-dz-errormessage></strong>
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            <div class="row">
-                                                                <p class="size" data-dz-size></p>
+                                                    </div>
+                                                    <div id="template-dropzone" class="hidden">
+                                                        <div id="template" class="file-row text-left" style="padding:20px;">
+                                                            <!-- This is used as the file preview template -->
+                                                            <div class="col-md-2">
                                                                 <div class="row">
-                                                                    <div class="col-md-8">
-                                                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                                    <span class="preview">
+                                                                        <img alt="Excel Icon" style="width:65%;height:auto;" src="~/Images/EMCS/excel.png">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <p class="name" data-dz-name></p>
+                                                                <strong class="error text-danger" data-dz-errormessage></strong>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <div class="row">
+                                                                    <p class="size" data-dz-size></p>
+                                                                    <div class="row">
+                                                                        <div class="col-md-8">
+                                                                            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                                                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                                                        <div class="col-md-4">
+                                                                            <span data-dz-uploadprogress id="progressPercent"></span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                                 <table class="table table-bordered" data-toolbar=".toolbarParts" id="tablepartCipl"></table>
                                             </div>
                                             <div class="tableItemUnit">
@@ -2017,32 +2049,32 @@
                                     <div class="col-md-12">
                                         <a href="~/EMCS/CiplList" class="btn btn-warning" style="min-width:120px;"><i class="fa fa-arrow-left"></i>&nbsp;Back</a>
                                         @*@if (ViewBag.GroupName.Contains("Imex"))
-                                        {*@
-                                            <button type="button" hidden class="btn btn-info" data-toggle="modal" id="RequestForChangeHistoryCIPL"  data-target="#myModalRequestForChangeReason" style="min-width:120px;" ><i class='fa fa-save'></i>&nbsp;Request for change history</button>
+                    {*@
+                                        <button type="button" hidden class="btn btn-info" data-toggle="modal" id="RequestForChangeHistoryCIPL" data-target="#myModalRequestForChangeReason" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Request for change history</button>
                                         @*}*@
-                                            <button class="btn btn-info" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
-                                            <button type="button" class="btn btn-success" id="btnSubmitCipl" value="Submit" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                        <button class="btn btn-info" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
+                                        <button type="button" class="btn btn-success" id="btnSubmitCipl" value="Submit" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="tab-documents">
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                        <div class="toolbarDocument" id="toolbarDocument">
+                                            <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
                                         </div>
+                                        <table id="tableCiplFormDocuments" data-toolbar=".toolbarDocument" class="table table-bordered"></table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="tab-task-problem-cipl">
+                                <div class="mt-15 table-responsive">
+                                    <table id="tableCiplProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="tab-documents">
-                        <div class="row">
-                            <div class="col-xs-12 table-responsive">
-                                <div class="toolbarDocument" id="toolbarDocument">
-                                    <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
-                                </div>
-                                <table id="tableCiplFormDocuments" data-toolbar=".toolbarDocument" class="table table-bordered"></table>
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="tab-task-problem-cipl">
-                        <div class="mt-15 table-responsive">
-                            <table id="tableCiplProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
