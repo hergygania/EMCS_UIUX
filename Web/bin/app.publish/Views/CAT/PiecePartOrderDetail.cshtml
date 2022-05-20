@@ -1,0 +1,104 @@
+﻿@using System.Web.Mvc
+@using App.Web
+
+@model App.Web.Models.CAT.RptPiecePartOrderSummaryFilter
+@{
+    ViewBag.Title = "Report Piece Part Order Detail";
+}
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:555px">
+            <div id="parent">
+                <form id="form" role="form">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Ref. Part Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.ref_part_no, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Applicable Model</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.model, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Prefix</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.prefix, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Range Week</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.DropDownListFor(m => m.RangeWeek, new SelectList(Model.RangeWeek, "ID", "TEXT"), new { @id = "DateFilter", @class = "js-states form-control", @style = "display:none" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">SMCS</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.smcs, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Component</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.component, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">MOD</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.mod, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>                                                               
+                            </div>
+                            <div class="col-lg-12" style="text-align:right;padding-right:30px;">
+                                <button type="button" id="btn-filter" class="btn btn-success" style="width:125px;"><i class="fa fa-search"></i> Filter</button>
+                                <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                            </div> 
+                            <div class="col-lg-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <div class="toolbar">
+                                    <a href="#" class="btn btn-info downloadExcel" style="width:150px;">
+                                        <i class="fa fa-download"></i> Download
+                                    </a>
+                                </div>
+                                <table class="table table-bordered table2excel" id="table-piece-partorder-detail" style="width:1300px;" data-show-filter="true"></table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div id="detail" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts.app/cat/PiecePartOrderDetail.cshtml.js"></script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+}
+

@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "InboundEviz";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Inbound Eviz</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Sales Model</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchSalesModel" name="SalesModel"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Serial Number</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchSerialNumber" name="Serial Number"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Ship Source</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchShipSource" name="Ship source"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Plant Ship Start Date</label>
+                                <div class="col-md-9">
+                                    <input class="form-control date" name="StartDate" id="StartDate"
+                                           required placeholder="Start Date" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Plant Ship End Date </label>
+                                <div class="col-md-9">
+                                    <input class="form-control date" name="EndDate" id="EndDate"
+                                           required placeholder="End Date" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">ETA Start Date</label>
+                                <div class="col-md-9">
+                                    <input class="form-control date" name="StartDate" id="ETAStartDate"
+                                           required placeholder="Start Date" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">ETA End Date </label>
+                                <div class="col-md-9">
+                                    <input class="form-control date" name="EndDate" id="ETAEndDate"
+                                           required placeholder="End Date" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <button class="pull-right btn btn-primary" onclick="showList()" style="margin-left:10px;" id="BtnFilter"><i class="fa fa-search"></i> Search</button>
+                            @*<button class="pull-right btn btn-success" onclick="Save()" id="BtnSave"><i class="fa fa-save"></i> Save</button>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-responsive" id="tableOutboundNonCkb" style="width:100%;"></table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/InboundEviz.js")"></script>
+}
+
+

@@ -26,7 +26,7 @@ namespace App.Web.Controllers.POST
             return data;
         }
 
-        public ActionResult HomeVendor(int tab = 0)
+        public ActionResult HomeVendor(int tab = 0, int landingpage = 0)
         {
             var userLogin = GetUserLogin();
             var Group = Service.POST.Global.GetGroupByUserId(userLogin);
@@ -38,11 +38,43 @@ namespace App.Web.Controllers.POST
             int Active = tab == 0 ? 1 : tab;
             ViewBag.TabDefault = Group == "POSTVENDOR" ? tab : Active;
 
+            ViewBag.LandingPage = landingpage;
+
             var param = new SearchHeader();
             ViewBag.CountPOIncoming = Service.POST.PO.GetTotalList(userLogin, param, "INCOMING");
             ViewBag.CountPOProgress = Service.POST.PO.GetTotalList(userLogin, param, "PROGRESS");
             ViewBag.CountPODone = Service.POST.PO.GetTotalList(userLogin, param, "DONE");
             ViewBag.CountPOReject = Service.POST.PO.GetTotalList(userLogin, param, "REJECT");
+
+            ViewBag.Group = Group;
+            //ViewBag.CountPOIncoming = GetCountPO(userLogin).po_incoming;
+            //ViewBag.CountPOProgress = GetCountPO(userLogin).po_progress;
+            //ViewBag.CountPODone = GetCountPO(userLogin).po_done;
+            //ViewBag.CountPOReject = GetCountPO(userLogin).po_reject;
+            ViewBag.UserLogin = userLogin;
+            PaginatorBoot.Remove("SessionTRN");
+            return View();
+        }
+
+        public ActionResult HomeFinance(int tab = 0)
+        {
+            var userLogin = GetUserLogin();
+            var Group = Service.POST.Global.GetGroupByUserId(userLogin);
+            ApplicationTitle();
+            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            int Active = tab == 0 ? 1 : tab;
+            ViewBag.TabDefault = Group == "POSTFINANCE" ? tab : Active;
+
+            var param = new SearchHeaderInvoice();
+            //Service.POST.Invoice.GetCountInvoiceInComing(userLogin, param);
+
+            ViewBag.CountInvoiceIncoming = Service.POST.Invoice.GetCountInvoiceInComing(userLogin, param);
+            ViewBag.CountInvoiceProgress = Service.POST.Invoice.CountInvoiceInProgress(userLogin, param);
+            ViewBag.CountInvoiceDone = Service.POST.Invoice.CountInvoiceComplete(userLogin, param);
+            ViewBag.CountInvoiceReject = Service.POST.Invoice.CountInvoiceReject(userLogin, param);
 
             ViewBag.Group = Group;
             //ViewBag.CountPOIncoming = GetCountPO(userLogin).po_incoming;
@@ -554,7 +586,8 @@ namespace App.Web.Controllers.POST
             {
                 return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
-        }
+        }    
+
         public JsonResult SaveItem(UpdateTrItem item, string saveType)
         {
             try
@@ -562,11 +595,11 @@ namespace App.Web.Controllers.POST
                 string itemId;
                 if (saveType == "NOTES")
                 {
-                    itemId = Service.POST.Transaction.UpadateItemNotes(item);
+                    itemId = Service.POST.Transaction.UpdateItemNotes(item);
                 }
                 else
                 {
-                    itemId = Service.POST.Transaction.UpadateItem(item);
+                    itemId = Service.POST.Transaction.UpdateItem(item);
                 }
 
 
@@ -578,6 +611,21 @@ namespace App.Web.Controllers.POST
             }
         }
 
+        public JsonResult SaveHardCopy(UpdateInvoiceHardCopy hardcopy)
+        {
+            try
+            {
+                Int64 hardcopyId;
+
+                hardcopyId = Service.POST.Transaction.UpdateHardCopy(hardcopy);
+
+                return Json(new { status = "SUCCESS", result = hardcopyId }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
         public JsonResult UpadateItemQtyPartial(string idItem, string qtyPartial)
@@ -693,20 +741,59 @@ namespace App.Web.Controllers.POST
             }
         }
 
+        public ActionResult DownloadGRData(string PoNo,string ItemId ="")
+        {
+            Guid guid = Guid.NewGuid();
+            Session[guid.ToString()] = DownloadToExcelGR(PoNo, ItemId);
+
+            return Json(guid.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
+        public FileResult DownloadResultGRData(string guid)
+        {
+            return Session[guid] as FileResult;
+        }
+
+
+        private FileResult DownloadToExcelGR(string PoNo, string ItemId = "")
+        {
+            try
+            {
+                
+                var output = Service.POST.AdvanceSearh.DownloadToExcelGR(PoNo, "");
+                return File(output.ToArray(),
+                 "application/vnd.ms-excel",
+                 "ReportGR.xlsx");
+            }
+            catch (Exception ex)
+            {
+                //Write the Workbook to a memory stream
+                MemoryStream output = new MemoryStream();
+
+                //Return the result to the end user
+                return File(output.ToArray(),   //The binary data of the XLS file
+                 "application/vnd.ms-excel",//MIME type of Excel files
+                 "ReportGR.xlsx");    //Suggested file name in the "Save as" dialog which will be displayed to the end user
+            }
+        }
+
+
         public FileResult DownloadFileRequest(int id)
         {
             var data = Service.POST.Transaction.GetDataRequestAttachmentById(id);
+            byte[] fileBytes;
             if (data != null)
             {
                 var pathFile = data.Path;
                 var fileNameOri = data.FileNameOri;
 
-                var fileBytes = System.IO.File.ReadAllBytes(pathFile);
+                fileBytes = System.IO.File.ReadAllBytes(pathFile);
                 return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileNameOri);
             }
             else
                 return null;
         }
+
         public FileResult DownloadFileRequestAll(int requestid)
         {
 
@@ -723,7 +810,7 @@ namespace App.Web.Controllers.POST
                 for (int i = 0; i < data.Count; i++)
                 {
                     var pathFile = data[i].Path;
-                   
+
                     if (fileNameOri != data[i].FileNameOri)
                     {
                         ZipEntry entry = new ZipEntry(Path.GetFileName(pathFile));
@@ -760,7 +847,7 @@ namespace App.Web.Controllers.POST
             return File(finalResult, "application/zip", fileName);
 
         }
-      
+
         public JsonResult UpdateNameAttachment(int id, string name)
         {
             try
@@ -907,6 +994,7 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", msg = ex.InnerException.Message, result = data }, JsonRequestBehavior.AllowGet);
             }
         }
+        #region ListPO
         public JsonResult GetListPOInComing(string user, SearchHeader param)
         {
             try
@@ -979,6 +1067,91 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+
+        #region ListInvoiceFinance
+        public JsonResult GetListInvoiceIncoming (string user,SearchHeaderInvoice param)
+        {
+            {
+                try
+                {
+                    param.limit = param.limit == 0 ? 10 : param.limit;
+                    param.offset = param.offset == 0 ? 0 : param.offset;
+
+                    var userLogin = HttpContext.User.Identity.Name;
+                    var rows = Service.POST.Invoice.GetListInvoiceInComing(userLogin,param).ToList();
+                    var total = Service.POST.Invoice.GetCountInvoiceInComing(userLogin, param);
+                    return Json(new { status = "SUCCESS", rows, total, offset = param.offset }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult GetListInvoiceProgress(string user, SearchHeaderInvoice param)
+        {
+            {
+                try
+                {
+                    param.limit = param.limit == 0 ? 10 : param.limit;
+                    param.offset = param.offset == 0 ? 0 : param.offset;
+
+                    var userLogin = HttpContext.User.Identity.Name;
+                    var rows = Service.POST.Invoice.GetListInvoiceInProgress(userLogin, param).ToList();
+                    var total = Service.POST.Invoice.CountInvoiceInProgress(userLogin, param);
+                    return Json(new { status = "SUCCESS", rows, total, offset = param.offset }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult GetListInvoiceComplete(string user, SearchHeaderInvoice param)
+        {
+            {
+                try
+                {
+                    param.limit = param.limit == 0 ? 10 : param.limit;
+                    param.offset = param.offset == 0 ? 0 : param.offset;
+
+                    var userLogin = HttpContext.User.Identity.Name;
+                    var rows = Service.POST.Invoice.GetListInvoiceComplete(userLogin, param).ToList();
+                    var total = Service.POST.Invoice.CountInvoiceComplete(userLogin, param);
+                    return Json(new { status = "SUCCESS", rows, total, offset = param.offset }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+        public JsonResult GetListInvoiceReject(string user, SearchHeaderInvoice param)
+        {
+            {
+                try
+                {
+                    param.limit = param.limit == 0 ? 10 : param.limit;
+                    param.offset = param.offset == 0 ? 0 : param.offset;
+
+                    var userLogin = HttpContext.User.Identity.Name;
+                    var rows = Service.POST.Invoice.GetListInvoiceReject(userLogin, param).ToList();
+                    var total = Service.POST.Invoice.CountInvoiceReject(userLogin, param);
+                    return Json(new { status = "SUCCESS", rows, total, offset = param.offset }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+
+
+        #endregion
 
         public JsonResult GetListItemByRequestId(int requestId, SearchDetail param)
         {
@@ -1157,6 +1330,18 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult HarcopyInvoiceDelete(int Id)
+        {
+            try
+            {
+                var data = Service.POST.PO.RemoveHarcopyInvoiceById(Id);
+                return Json(new { status = "SUCCESS", result = data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public JsonResult GetItemPartialListById(int Id)
         {
             try
@@ -1170,6 +1355,31 @@ namespace App.Web.Controllers.POST
             }
         }
 
+        public JsonResult GetHardCopyInvoiceByInvoiceId(int Id)
+        {
+            try
+            {
+                var data = Service.POST.PO.GetHardCopyInvoiceByInvoiceId(Id);
+                return Json(new { status = "SUCCESS", result = data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetHardCopyInvoiceById(int Id)
+        {
+            try
+            {
+                var data = Service.POST.PO.GetHardCopyInvoiceById(Id);
+                return Json(new { status = "SUCCESS", result = data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public JsonResult GetItemPartialById(int Id)
         {
@@ -1240,6 +1450,18 @@ namespace App.Web.Controllers.POST
         }
         #endregion
 
+        public JsonResult GetSelectFileNameInvoice(Int64 id)
+        {
+            try
+            {
+                var data = Service.POST.Global.GetSelectFileNameInvoice(id);
+                return Json(new { status = "SUCCESS", result = data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         #region checking Request
         public JsonResult IsTaskByUser(int id)
         {
@@ -1283,7 +1505,7 @@ namespace App.Web.Controllers.POST
                
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1298,7 +1520,7 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1314,7 +1536,7 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
@@ -1330,7 +1552,7 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);

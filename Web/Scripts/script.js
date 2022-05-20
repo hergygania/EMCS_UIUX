@@ -229,7 +229,32 @@ function newDateFormatter(dt) {
         return '-';
     }
 }
+function dateFormatterV2(dt) {
+    if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
+    jsonDate = dt;
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+    var d = new Date(parseInt(jsonDate.substr(6)));
+    var m, day, monthIndex = d.getMonth();
+    var mmm = monthNames[monthIndex];
+
+    m = monthIndex + 1;
+    if (m < 10)
+        m = '0' + m
+    if (d.getDate() < 10)
+        day = '0' + d.getDate()
+    else
+        day = d.getDate();
+
+    //var formattedDate = m + "-" + day + "-" + d.getFullYear();
+    var formattedDate = d.getFullYear() + "-" + m + "-" + day;
+    var formattedString = day + " " + mmm + " " + d.getFullYear();
+    var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+    var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+    var formattedTime = hours + ":" + minutes + ":" + d.getSeconds();
+    formattedDate = formattedDate;// + " " + formattedTime;
+    return formattedDate == undefined ? '-' : formattedDate;
+};
 function dateFormatter(dt) {
     if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
     jsonDate = dt;

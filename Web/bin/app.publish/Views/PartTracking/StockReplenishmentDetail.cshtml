@@ -1,0 +1,95 @@
+﻿@model App.Data.Domain.V_STOCKORDER_HEADER
+@{
+	ViewBag.Title = "Detail By Document";
+}
+
+@Html.HiddenFor(m => m.RPORNE)
+@Html.HiddenFor(m => m.ORDSOS)
+@Html.HiddenFor(m => m.store_no)
+
+@Html.HiddenFor(m => m.supply_docinv, new { id = "supply_docinv_det" })
+@Html.HiddenFor(m => m.supply_docinv_date, new { id = "supply_docinv_date_det" })
+@Html.HiddenFor(m => m.receiveDate, new { id = "receiveDate_det" })
+@Html.HiddenFor(m => m.tracking_id, new { id = "tracking_id_det" })
+@Html.HiddenFor(m => m.podDate, new { id = "podDate_det" })
+@Html.HiddenFor(m => m.pupDate, new { id = "pupDate_det" })
+
+<div class="box-header" style="margin-top:-9px; margin-bottom:-8px"><h3 class="box-title">@ViewBag.Title</h3>
+	<button type="button" class="btn btn-danger" onclick="cancelDetail()" style="float:right; margin-right:2%"><i class="fa fa-mail-reply"></i> Back</button>
+</div>
+<form role="form" id="frmDetail">
+	<div class="box-body">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Order Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.order_number, new {id="order_number_det", @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Document Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.doc_date, "{0:dd MMM yyyy}", new { id = "doc_date_det", @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Store Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.store_name, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Status</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.doc_status, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                <table class="table table-bordered table2excel" id="tableDet" style="width:3000px;table-layout:fixed;" 
+                       data-show-footer="true" data-show-export="true"></table>
+			</div>
+			<div class="col-md-12">
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" onclick="cancelDetail()"><i class="fa fa-mail-reply"></i> Back</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" id="det_qty" />
+	<input type="hidden" id="det_weight" />
+</form>
+
+<div class="modal fade bs-example-modal-lg" id="milestonemodal" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
+
+<style type="text/css">
+	.fixed-table-body {
+		max-height: 444px;
+	}
+</style>
+
+@Html.Partial("PopupPartDetail")
+@Html.Partial("PopupMilestone")
+
+<script>
+	function cancelDetail() {
+		$("#detail").empty();
+		$("#detail").hide();
+		$("#parent").show();
+	}
+</script>
+<script src="@Url.Content("~/Scripts.app/PartTracking/StockReplenishmentDetail.cshtml.js")"></script>
+

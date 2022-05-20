@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Npe Peb List";
+}
+
+@using System.Web.Mvc
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+
+            <form role="form">
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="toolbar">
+
+                                <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                    <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                                </div>
+                            </div>
+                            <table class="table table-bordered" id="tableNpePeb"></table>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/NpePeb.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+
+}

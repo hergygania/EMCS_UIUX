@@ -18,7 +18,7 @@
 
 <style type="text/css">
     .fontbold {
-        font-family: SF UI Text;
+        font-family: Calibri;
         font-size: 14px;
         font-style: normal;
         font-weight: 700;
@@ -28,13 +28,30 @@
     }
 
     .fontnormal {
-        font-family: SF UI Text;
+        font-family: Calibri;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: 17px;
         letter-spacing: 0em;
         text-align: left;
+    }
+
+    .displaymid {
+        position: absolute;
+        top: 40%; /* position the top  edge of the element at the middle of the parent */
+        left: 50%; /* position the left edge of the element at the middle of the parent */
+        transform: translate(-50%, -50%);
+        border: 1px solid #BFBFBF;
+        background-color: white;
+        box-shadow: 1px 1px 2px #aaaaaa;
+    }
+    .fonthardcopy {
+        height: 456px;
+        width: 614px;
+        left: 421px;
+        top: 146px;
+        border-radius: 1 px;
     }
 </style>
 <input type="hidden" id="BaseUrl" name="BaseUrl" value="@(FullBaseUrl)" />
@@ -116,6 +133,113 @@
     </div>
 </div>
 
+<div id="idpopUpHardCopyInvoice" >
+    <div class="displaymid" style="margin-top: 57px;">
+        
+        <div>
+            <div class="modal-body mx-3" >
+                <div style="margin-top:2px;">
+
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label> Pengiriman Hardcopy Invoice/Invoice asli </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Dear Bapak/Ibu Rekanan</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Dengan ini kami informasikan seluruh Rekanan <b>WAJIB</b> mengisi data/proses pengiriman hardcopy invoice di POST  setelah meng-upload softcopy invoice di POST. Jika hardcopy invoice dan supporting document yang lengkap belum kami terima setelah tanggal 25 setiap bulannya, dan Bapak/Ibu tidak melakukan pengisian data informasi pengiriman invoice di POST, maka pembayaran akan tertunda 2 bulan berikutnya.
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Silakan segera di update dan di akses menu/feature <b>“Submit Hardcopy Invoice“</b> yang ada di POST setelah pengiriman hard copy invoice dilakukan : </label>
+                        <br />
+                        <img src="~/Images/hardcopyinvoice.png" />
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Per 01 February 2022, Bapak / Ibu Rekanan akan menerima email Reminder ke alamat email Perusahaan Bapak/Ibu yang terdaftar di system kami jika Hardcopy invoice belum dikirim dan belum mengupdate informasi “submit hardcopy invoice” di POST.</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Terima Kasih untuk perhatiannya.</label>
+                    </div>
+                    <br />
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label>PT Trakindo Utama - Supplier & Procurement </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="padding-left:50%">
+                        <button class="btn btn-succes" onclick="SavePopUpHardCopy()">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="idpopUpPPN">
+    <div  class="displaymid" style="margin-top: 57px;">      
+        <div>
+            <div class="modal-body mx-3">
+                <div style="margin-top:2px;">
+
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label> Perubahan PPN. </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Sehubungan dengan adanya kenaikan tarif Pajak Pertambahan Nilai (PPN) yang dimuat dalam UU HPP terkait perubahan tarif PPN dari 10 % menjadi 11 % yang berlaku mulai 1 April 2022, dengan ini PT Trakindo Utama memberitahukan kepada seluruh Rekanan yang bekerjasama  agar menjalankan proses administrasi sesuai dengan peraturan pajak yang berlaku.
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Untuk itu penerbitan invoice dan Faktur Pajak untuk PT Trakindo Utama agar mengikuti aturan sebagai berikut :
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Invoice dan Faktur Pajak dengan tanggal dokumen sebelum tanggal 1 April 2022 menggunakan tarif PPN 10% </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Invoice dan Faktur Pajak dengan tanggal dokumen setelah tanggal 1 April 2022 menggunakan tarif PPN 11%</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Tanggal Faktur Pajak mengacu pada tanggal BAST/Surat Jalan di tandatangani PT Trakindo Utama </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Terima Kasih untuk perhatiannya </label>
+                    </div>
+                    <br />
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label>PT Trakindo Utama – PPH & PPN Mgmt. & Operation  </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="padding-left:50%">
+                        <button class="btn btn-succes" onclick="SavePopUpPPN()">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="idhome">
     <div class="navbar tab fixed-top flex-column navbar-expand container-fluid flex-lg-row bd-navbar" style="margin-top: 57px;">
         <div class="navbar-nav-scroll">
@@ -186,6 +310,9 @@
 <script src="~/Scripts/bootstrap-table.min.js"></script>
 @section scripts{
     <script src="~/Scripts.app/POST/Custom.js?_id=@(unixTimestamp)"></script>
+    <script>
+        var landingPage = @ViewBag.LandingPage;
+    </script>
     <script src="~/Scripts.app/POST/VendorHome.js?_id=@(unixTimestamp)"></script>
     <script src="~/Scripts/tinymce/tinymce.min.js"></script>
     @*<script src="~/Scripts/tinymce/tiny_mce.js"></script>*@

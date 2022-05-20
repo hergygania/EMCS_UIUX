@@ -10,6 +10,9 @@ var AtaVisible = AtaVisible ?? true;
 var GRVisible = GRVisible ?? true;
 var canEdit = canEdit ?? false;
 
+
+
+
 if (($('#Role').val() === "Administrator,POSTEXPEDITOR") && $("#Shipment").val() === "PTTU") {
     canEdit = true;
 }
@@ -28,6 +31,10 @@ var IdItem = 0;
 var PrePayment = $('#PrePayment').val();
 var Shipment = $('#Shipment').val();
 var BastVisible = BastVisible ?? false;
+var RemoveHCVisible = RemoveHCVisible ?? false;
+if (Role == "Administrator,POSTVENDOR") {
+    RemoveHCVisible = true
+}
 var InvoiceVisible = InvoiceVisible ?? false;
 if (Shipment == "") {
     if (PrePayment == 1) {
@@ -659,12 +666,21 @@ function InitTableInProgress() {
             events: operateEventHeader
         },
         {
-            title: 'Invoice Approved',
-            field: 'CountReviewInvoice',
+            title: 'Invoice Validation',
+            field: 'CountKOFAXUpload',
             class: 'text-center',
             align: 'center',
             width: '100px',
-            formatter: GetProcessFlowChecklistInvoiceFinance,
+            formatter: GetProcessFlowChecklistInvoiceKOFAX,
+            events: operateEventHeader
+        },
+        {
+            title: 'Invoice Hardcopy',
+            field: 'CountInvoiceHardcopy',
+            class: 'text-center',
+            align: 'center',
+            width: '100px',
+            formatter: GetProcessFlowChecklistInvoiceHardcopy,
             events: operateEventHeader
         },
         {
@@ -727,7 +743,7 @@ function InitTableItem() {
                     if (Role === "Administrator,POSTEXPEDITOR" || Role === "Administrator,POSTVENDOR") {
                         console.log(Role);
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
-                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;
+                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
                     }
                     else {
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
@@ -797,6 +813,20 @@ function InitTableItem() {
                         btnUpload = `<a class="btn ` + color + ` btn-xs" data-toggle="tooltip" data-placement="bottom" title="Enable if BAST is Uploaded" onClick="InitModalUploadInvoice(${Item_Id},${Vendor_Id})"  title="View Notes"><i class="fa fa-upload" title="View Notes"></i></a>`;
                     }
                     var ActionItem1 = [btnUpload].join('&nbsp;');
+
+                    return ActionItem1
+                }
+            }, {
+                title: 'HardCopy Invoice',
+                class: 'text-nowrap',
+                align: 'center',
+                width: '110',
+                visible: InvoiceVisible,
+                formatter: function () {                   
+                    var btnHardCopy = '';
+             
+                    btnHardCopy = `<a class="btn btn-light btn-xs" id="updateHardCopy" onClick="InitModalHardCopy()" title=" Submit Hardcopy Invoice" data-role="hardcopyinvoice"><i class="fa fa-file" title="Submit HardCopy Invoice"></i></a>`;
+                    var ActionItem1 = [btnHardCopy].join('&nbsp;');
 
                     return ActionItem1
                 }
@@ -1277,16 +1307,17 @@ function DeleteFileUpload(id, type) {
 
 
 }
+
 function DownloadFileUpload(id) {
     url = "/POST/DownloadFileRequest?id=" + id;
     window.open(url, '_blank');
 }
+
 function DownloadFileRequestAll() {
     var requestId = parseInt($('#requestId').val());
     url = "/POST/DownloadFileRequestAll?requestid=" + requestId;
     window.open(url, '_blank');
 }
-
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -1418,7 +1449,69 @@ function InitTablepartialQty() {
         ]
     })
 }
+function InitTablehardcopyInvoice() {
+    $('#table-hardcopyinvoice').bootstrapTable({
+        detailView: false,
+        url: '/Post/GetHardCopyInvoiceById',
+        queryParams: function (params) {
+            var query = {
+                id: requestId,
+            }
+            return query;
+        },
+        responseHandler: function (res) {
+            return res.result;
+        },
+        columns: [{
+            field: 'Id',
+            title: 'Action',
+            align: 'center',
+            class: 'clickable-row',
+            visible: RemoveHCVisible,
+            events: EventsFormatter,
+            width: '10',
+            formatter: function (row, data, index) {
 
+                var btnViewNote6 = `<a class="removehardcopy btn btn-light btn-xs"" title="Remove"><i class="fa fa-trash" title="Remove"></i></a>`;
+                var ActionItem6 = [btnViewNote6].join('&nbsp;');
+                return ActionItem6
+            }
+        },
+
+        {
+            title: 'PO_Number',
+            field: 'PO_Number',            
+            align: 'center',
+            width: '120'
+        },
+        {
+            title: 'FileName',
+            field: 'FileNameOri',           
+            align: 'center',
+            width: '120'
+        },
+        {
+            title: 'Recipients Name/ Receipt Number',
+            field: 'ReceiptNameOrNumber',           
+            align: 'center',
+            width: '120'
+        },
+        {
+            title: 'Submission Type',
+            field: 'SubmissionType',
+            align: 'center',
+            width: '120'
+        },
+        {
+            title: 'Submission Date',
+            field: 'SubmissionDate',
+            align: 'center',
+            width: '120',
+            formatter: dateSAPFormatter
+        }
+        ]
+    })
+}
 
 $('#table-partialQty tr').click(function (event) {
     if (event.target.type !== 'radio') {
@@ -1447,6 +1540,29 @@ window.EventsFormatter = {
             }
             });
        
+    },
+
+    'click .removehardcopy': function (e, value, row, index) {
+        var HardCopyId = row.Id;
+        swal({
+            title: "Are you sure want to delete this data?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#F56954",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                sweetAlert.close();
+                deleteHarcopyInvoice(HardCopyId);
+                $("#table-hardcopyinvoice").bootstrapTable('destroy')
+                return InitTablehardcopyInvoice();
+
+            }
+        });
+
     },
 }
 $(":radio[name=radios]").change(function () {
@@ -1478,6 +1594,22 @@ function deletePartialQty(ID) {
             //    sAlert('Success', d.Msg, 'success');
             //}
             //$("[name=refresh]").trigger('click');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
+        }
+    });
+}
+function deleteHarcopyInvoice(ID) {
+    $.ajax({
+        type: "POST",
+        url: '/Post/HarcopyInvoiceDelete',
+       
+        data: { ID: ID },
+        dataType: "json",
+        success: function (d) {
+            swalSuccess("Success Remove");
+           
         },
         error: function (jqXHR, textStatus, errorThrown) {
             sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
@@ -1727,6 +1859,26 @@ function InitModalUpdateStatus(id) {
 
         })
 }
+
+function InitModalHardCopy(id) {   
+    if (Role.includes("Administrator,POSTVENDOR")) {
+        $('#btnSave').show();
+    }
+    else {
+        $('#btnSave').hide();
+    }
+   
+    $('#modalhardCopyInvoiceForm').modal('show');
+    $('#modalhardCopyInvoiceForm').modal({ backdrop: "static" });
+    InitSelect2filenameinvoice();
+
+    $("#table-hardcopyinvoice").bootstrapTable('refresh', {
+        query: { id: requestId }
+    });
+}
+
+
+
 function InitModalViewNotes(id) {
     $.getJSON("GetItemListById?Id=" + id)
         .then(function (data) {
@@ -1740,7 +1892,35 @@ function InitModalViewNotes(id) {
         })
 }
 
-
+function InitSelect2Destination() {
+    $('#select2Destination').select2({
+        placeholder: "Destination",
+        id: "id",
+        ajax: {
+            url: 'GetSelectBranch',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    type: 'public'
+                }
+                return query;
+            },
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                var newData = $.map(data.result, function (obj) {
+                    return obj;
+                });
+                return {
+                    results: newData
+                };
+            },
+            cache: true
+        }
+    }).on("select2:select", function (obj) {
+        return;
+    });
+}
 function InitSelect2StatusPO(POType) {
     var StatusPO = [];
     if (POType == '') {
@@ -1797,7 +1977,9 @@ function InitDateRange() {
     $('#ata').datepicker({
         format: 'dd.mm.yyyy',
     });
-
+    $('#submissiondate').datepicker({
+        format: 'dd.mm.yyyy',
+    });
 
 }
 function clearSearchDetail() {
@@ -1808,15 +1990,15 @@ function clearSearchDetail() {
     $("#table-item").bootstrapTable('refresh');
 
 }
-function InitSelect2Destination() {
-    $('#select2Destination').select2({
-        placeholder: "Destination",
-        id: "id",
+function InitSelect2filenameinvoice() {
+    $('#select2file').select2({
+        placeholder: "File Name Invoice",
+        id: requestId,
         ajax: {
-            url: 'GetSelectBranch',
+            url: 'GetSelectFileNameInvoice',
             data: function (params) {
                 var query = {
-                    search: params.term,
+                    id: requestId,
                     type: 'public'
                 }
                 return query;
@@ -1989,8 +2171,16 @@ function ClickSubmitWithComment(FlowProcessStatusID, OldFlowProcessStatusID, man
 
 }
 function ClickSubmitDelivery() {
-    UpdateShipment();
     var Shipment = $('#Select2Shipment').val();
+    if (Shipment == null || Shipment == '' ) {
+        swalWarning('Please Choose Shipment');
+        return false;
+    }
+    else {
+        UpdateShipment();
+    }
+  
+   
     var FlowProcessStatusID = 4217//Default Forwarder
     if (Shipment == 'CKB') {
         FlowProcessStatusID = 2499
@@ -2129,6 +2319,42 @@ function UpdateShipment() {
         }
     })
 }
+
+function UpdateHardCopy() { 
+    var attachmentId = $('#select2file').val();
+  
+
+    var data = {
+        "hardcopy": {
+            "requestId": requestId,
+            "attachmentId": attachmentId,
+            "submissionDate": datePickerSAPFormatter($('#submissiondate').val()),
+            "submissiontype": $('#submissiontype').val(),
+            "receiptnameornumber": $('#ReceiptNameOrNumber').val(),
+           
+        },
+       
+    }
+
+    $.ajax({
+        cache: false,
+        async: false,
+        url: 'SaveHardCopy',
+        method: 'POST',
+        data: data,
+        success: function (res) {
+            if (res.status == "SUCCESS") {
+                swalSuccess('HardCopy Data Successfully Saved!');
+            } else {
+                swalWarning('HardCopy failed save!');
+            }           
+        },
+        error: function (err) {
+            swalWarning('HardCopy failed save!');
+        }
+    })
+}
+
 function UpdateItem() {
     var ApplyFor = $('#ApplyFor').val();
     var idItem = $('#item_id').val();
@@ -2304,11 +2530,11 @@ function InitDropZoneBast() {
         thumbnailHeight: 100,
         thumbnailWeight: 100,
         method: 'POST',
-        acceptedFiles: ".pdf,.zip,.rar",
+        acceptedFiles: ".pdf",
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 10,
-        maxFilesize: 20, // MB
+        maxFilesize: 2, // MB
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2380,7 +2606,7 @@ function InitDropZoneInvoice() {
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 1,
-        maxFilesize: 10, // MB
+        maxFilesize: 2, // MB
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2531,8 +2757,8 @@ function InitModalUploadBast(id, statusItem) {
     if (parseInt(isTaskUser) == 0) {
         document.getElementById("BtnSaveBast").style.display = "none";
 
-        if (Role.includes('POSTBRANCH') || Role.includes('POSTFINANCEVIEWERBRANCH') || Role.includes('POSTFINANCEVIEWER') || Role.includes('POSTVIEWER')) {
-            document.getElementById("BtnApproveBAST").style.display = "block";
+        if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
+            document.getElementById("FormUploadBAST").style.display = "none";
         }
     }
 
@@ -2579,6 +2805,7 @@ function ViewPopup() {
 }
 
 function InitData(id) {
+
     IdItem = id;
     $.getJSON("GetListAttachment?id=" + IdItem + "&type=BAST", function (data) {
         var countBastUpload = data.result.length;
@@ -2600,7 +2827,13 @@ function InitData(id) {
                 document.getElementById("FormUploadInvoice").style.display = "none";
             }
             else {
-                document.getElementById("FormUploadInvoice").style.display = "block";
+                if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
+                    document.getElementById("FormUploadInvoice").style.display = "none";
+                 }
+                else {
+                    document.getElementById("FormUploadInvoice").style.display = "block";
+                 }
+             
             }
 
             if (parseInt(isTaskUser) == 0) {
@@ -2614,7 +2847,7 @@ function InitData(id) {
             }
 
         });
-
+      
         $('#modalUploadInvoicing').modal();
         $('#table-uploadInvoice').bootstrapTable('refresh', {
             query: {
@@ -2623,6 +2856,7 @@ function InitData(id) {
             }
         });
     })
+ 
 }
 
 function InitModalUploadPO() {
@@ -3056,7 +3290,9 @@ function InitTableUploadInvoice() {
                         return [btnDownload, btnDelete].join('&nbsp;');
                     } else {
                         btnDownload = `<a href="#" onclick="DownloadFileUpload(${data.ID});" class="btn btn-light btn-xs" title="Download"><span class="fa fa-download"></span></a>&nbsp;`;
-                        if (Role.includes('POSTTAX') || Role.includes('POSTFINANCE') || Role.includes('POSTFINANCEBRANCH')) {
+                        //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
+
+                        if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
                             if (data.CountItemHasInvoiceSAP == 0) {
                                 if (data.IsRejected == 0 && IsApprove == 0) {
 
@@ -3092,27 +3328,6 @@ function InitTableUploadInvoice() {
                     return `<select id="${data.ID}_Progress"  class="Select2Progress form-control gosearch">`
                 }
             },
-            //{
-            //    title: 'Doc Type Mandatory',
-            //    width: '300',
-            //    class: 'align-top',
-            //    align: 'left',
-            //    halign: 'center',
-            //    formatter: function (row, data, index) {
-            //        return '<ul class="list-inline"><li class="list-inline-item">Invoice</li></ul>'
-            //    }
-            //},
-            //{
-            //    title: 'Doc Type',
-            //    width: '250',
-            //    align: 'left',
-            //    halign: 'center',
-            //    class: 'align-top',
-            //    formatter: function (row, data, index) {
-            //        return `<select id="${data.ID}_DocType"   multiple="multiple"  class="Select2DocType form-control gosearch">`
-            //    }
-            //},
-
             {
                 title: 'Refer to BAST',
                 width: '300',
@@ -3154,7 +3369,7 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Approve Date Finance',
-                field: 'ApproveDateFinance',
+                field: 'CreateDate',
                 class: 'align-top',
                 halign: 'center',
                 align: 'left',
@@ -3164,10 +3379,27 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Status',
-                field: 'ApproveStatus',
+                field: 'Status',
                 class: 'align-top',
                 align: 'center',
-                halign: 'center'
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
+
+            }, {
+                title: 'Validation Message',
+                field: 'StatusMessage',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
+
+            }, {
+                title: 'WithHolding Tax',
+                field: 'WHTaxAmount',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
 
             }
         ]
@@ -3422,6 +3654,33 @@ function InitTableUploadPO() {
     });
 }
 
+function DownloadGR() {
+
+    var param = {
+        "poNo": $("#PoNo").val(),
+        "ItemId" : $("#ItemId").val()
+    };
+    $.ajax({
+        cache: false,
+        //async: false,
+        url: 'DownloadGRData',
+        method: 'GET',
+        data: param,
+        success: function (res) {
+            setTimeout(function () {
+                closeLoading();
+            }, 3000);
+            url = "/POST/DownloadResultGRData?guid=" + res
+            window.open(url, '_blank');
+        },
+        error: function (err) {
+            setTimeout(function () {
+                closeLoading();
+            }, 3000);
+            swalSuccess(' failed Download!');
+        }
+    })
+}
 
 
 
@@ -3445,7 +3704,7 @@ $(document).ready(function () {
     InitDropZonePO();
     InitTableViewNotes();
     InitTablepartialQty();
-
+    InitTablehardcopyInvoice();
     //InitTableGr();
     //InitTableInvoice();
 })

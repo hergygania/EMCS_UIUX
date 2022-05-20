@@ -1,0 +1,527 @@
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    ViewBag.Title = "BAST " + title;
+    ViewBag.Page = "rg";
+    ViewBag.Id = Model.Data.Id.ToString();
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormGR" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Receipt Goods List</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:3;">History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#problem" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:2;">Problem History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#preview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:1;">Preview</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content tabs-custom">
+                        <div role="tabpanel" class="tab-pane active" id="invoice">
+                            <div class="row">
+                                <div id="header">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.GrNo, new { @class = "form-control", @readonly = "readonly", placeholder = "Goods Receive Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driver Name</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.PicName, new { @class = "form-control required", @readonly = "readonly", placeholder = "PIC Name" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.PhoneNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "Phone Name" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card#</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.KtpNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "KTP Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License#</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.SimNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "SIM Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date#</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.EditorFor(m => m.Data.SimExpiryDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", placeholder = "License Expire Date" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor #ID & Name</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.Vendor, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vendor Name" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor Address</label>
+                                                <div class="input-group col-md-9">
+                                                    <textarea class="form-control" id="VendorAddress" readonly="readonly" name="VendorAddress" placeholder="Vendor Address" rows="3" cols="3">@(Model.Data.VendorAddress != "" ? Model.Data.VendorAddress : "") </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Type</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Type" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Brand</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Merk" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.StnkNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "STNK Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.KirNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "KIR Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.EditorFor(m => m.Data.KirExpire, new { htmlAttributes = new { @class = "form-control required", @readonly = "readonly", placeholder = "KIR Expire Date" } })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.NopolNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "NOPOL Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.EditorFor(m => m.Data.EstimationTimePickup, new { htmlAttributes = new { @class = "form-control required date", @readonly = "readonly", autocomplete = "off", placeholder = "Estimation Time Pickup Date" } })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" class="form-control" readonly name="Apar" value="@((Model.Data.Apar.HasValue && Model.Data.Apar.Value) ? "Yes" : "No")" />
+                                                    @*@Html.TextBoxFor(m => m.data.Apar, new { @class = "form-control required", @readonly = "readonly", placeholder = "APAR" })*@
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" class="form-control" readonly name="Apar" value="@((Model.Data.Apd.HasValue && Model.Data.Apd.Value) ? "Yes" : "No")" />
+                                                    @*@Html.TextBoxFor(m => m.data.Apd, new { @class = "form-control required", @readonly = "readonly", placeholder = "APAR" })*@
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point ( Area )</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PlantCode - @Model.Data.PlantName" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point PIC</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PickupPic - @Model.Data.PickupPicName" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @rows = "4", @readonly = "readonly", @cols = "4" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">&nbsp;</div>
+                                        <table class="table table-bordered" id="TblGoodReceive"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <input type="hidden" name="IdGR" id="IdGR" value="@Model.Data.Id" />
+                                    <table id="tableGoodReceiveHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="problem">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <table id="tableGoodReceiveProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="preview">
+                            <div class="row" style="margin-top:15px;margin-bottom:15px;padding-left:139px">
+                                <div class="col-md-12">
+                                    <strong>
+                                        @*<a class="btn btn-info" href="~/EMCS/ReportRG?RGId=@Model.Id"><i class="fa fa-file-pdf-o"></i>Export RG</a>*@
+                                        <strong>@Html.ActionLink("Export RG", "DownloadRg", "Download", new { id = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-info" })</strong>
+                                        @*<strong>@Html.ActionLink("Export RG", "ReportGr", new { GRId = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-info" })</strong>*@
+                                    </strong>
+                                </div>
+                            </div>
+                            <div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
+                                <div class="row" style="padding-left:4px;padding-right:4px">
+                                    <div style="padding:10px">
+                                        <table class="table-document">
+                                            <tr>
+                                                <td style="width:3%"></td>
+                                                <td style="width:9%"></td>
+                                                <td style="width:4%"></td>
+                                                <td style="width:10%"></td>
+                                                <td style="width:12%"></td>
+                                                <td style="width:7%"></td>
+                                                <td style="width:8%"></td>
+                                                <td style="width:11%"></td>
+                                                <td style="width:13%"></td>
+                                                <td style="width:1%"></td>
+                                                <td style="width:10%"></td>
+                                                <td style="width:1%"></td>
+                                                <td style="width:11%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13"><img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5" class="text_bold">PT. TRAKINDO UTAMA</td>
+                                                <td colspan="5" class="border_left border_top border_right border_bottom text_bold header_title" style="height:30px">RECEIPT OF GOODS</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                                                <td class="border_left">Number</td>
+                                                <td class="border_bottom">:</td>
+                                                <td colspan="3" class="border_right text_bold text_docno_big">@Model.Data.GrNo</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
+                                                <td class="border_left border_bottom">Date</td>
+                                                <td class="border_bottom">:</td>
+                                                <td colspan="3" class="border_bottom border_right">@Model.Data.CreateDate.ToString("dd MMM yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">INDONESIA - 12560</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">Tel. : (62-21) 29976620</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">Fax. : (62-21) 29976612</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_bottom text_bold" style="height:20px"></td>
+                                                <td colspan="10" class=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_right border_top border_bottom text_bold">TRANSPORTER DETAILS</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VENDOR</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">NAME:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ID#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ADDRESS:</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.VendorName</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VendorCode</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VendorAddress</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">DRIVER</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">NAME:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ID CARD#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">DRIVING LICENSE#:</td>
+                                                <td colspan="4" class="text_bold border_right">DRIVING LICENSE EXPIRY DATE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.PicName</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.KtpNumber</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.SimNumber</td>
+                                                <td colspan="3">@(Model.Data.SimExpiryDate.HasValue ? @Model.Data.SimExpiryDate.Value.ToString("dd MMM yyyy") : "")</td>
+                                                <td class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VEHICLE</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">TYPE:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">BRAND#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">KIR#:</td>
+                                                <td colspan="4" class="text_bold border_right">KIR EXPIRY DATE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.VehicleType</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VehicleMerk</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.KirNumber</td>
+                                                <td colspan="4" class="border_right">@(Model.Data.KirExpire.HasValue ? Model.Data.KirExpire.Value.ToString("dd MMM yyyy") : "")</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">LICENSE PLATE:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold"></td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold"></td>
+                                                <td></td>
+                                                <td colspan="4" class="text_bold border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.NopolNumber</td>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">COMPLETENESS</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">APAR:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">APD:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">Others:</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left border_bottom text_bold"></td>
+                                                <td colspan="2" class="border_bottom">@((Model.Data.Apar.Value) ? "Yes" : "No")</td>
+                                                <td class="border_bottom"></td>
+                                                <td colspan="2" class="border_bottom">@((Model.Data.Apd.Value) ? "Yes" : "No")</td>
+                                                <td class="border_bottom"></td>
+                                                <td colspan="2" class="border_bottom">@Model.Data.Notes</td>
+                                                <td colspan="4" class="border_right border_bottom"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="6"></td>
+                                                <td colspan="7"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="4"></td>
+                                                <td colspan="9"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_top border_right border_bottom text_bold">ITEM LIST</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left border_bottom text_bold">No</td>
+                                                <td colspan="4" class="border_bottom text_bold" style="text-align: center">NAME OF GOODS</td>
+                                                <td colspan="4" class="border_top border_bottom text_bold" style="text-align: center">EDI NUMBER</td>
+                                                <td colspan="4" class="border_top border_bottom border_right text_bold" style="text-align: center">DO Reference</td>
+                                            </tr>
+                                            @{ var i = 0; }
+                                            @foreach (var item in Model.DetailGr)
+                                            {
+                                                i++;
+                                                <tr>
+                                                    <td class="border_left border_bottom">@i</td>
+                                                    <td colspan="4" class="border_bottom">@item.GoodsName</td>
+                                                    <td colspan="4" class="border_bottom">@item.DoNo</td>
+                                                    <td colspan="4" class="border_bottom border_right">@item.DaNo.Replace("'", "")</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL PACKAGES</b></td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalPackages</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL NET WEIGHT</b> (KGS)</td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalNetWeight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL GROSS WEIGHT</b> (KGS)</td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalGrossWeight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left border_bottom"><b>TOTAL VOLUME</b> (M3)</td>
+                                                <td class="border_bottom">:</td>
+                                                <td class="border_right border_bottom" style="text-align: right">@Model.Data.TotalVolume</td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="4"></td>
+                                                <td colspan="9"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_top border_right border_bottom text_bold">PICKUP POINT</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="6" class="border_left"></td>
+                                                <td colspan="7" class="border_top border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" class="border_left border_right">@Model.Data.PlantName</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left">ESTIMATION TIME OF PICKUP :</td>
+                                                <td colspan="3">@(Model.Data.EstimationTimePickup.HasValue ? Model.Data.EstimationTimePickup.Value.ToString("dd MMM yyyy hh:ss:mm") : "") </td>
+                                                <td colspan="6" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left">ACTUAL TIME OF PICKUP :</td>
+                                                <td colspan="3">@(Model.Data.UpdateDate.HasValue ? Model.Data.UpdateDate.Value.ToString("dd MMM yyyy hh:mm:ss") : "") </td>
+                                                <td colspan="6" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" style="height:20px"></td>
+                                            </tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_top border_right"></td></tr>
+                                            <tr>
+                                                <td colspan="11" class="border_left"></td>
+                                                <td colspan="2" class="border_right" style="text-align: right">APPROVED BY:</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">PT. Trakindo Utama - Warehouse</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedName</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedPosition</td>
+                                            </tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_right"></td></tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td></tr>
+                                            <tr><td colspan="13" style="height:20px"></td></tr>
+                                            <tr>
+                                                <td colspan="13">Signature is not necessary due to this document is an electronic document which printed and generated by computer integrated system. We hereby certify that the information on this invoice is true and correct, and that the contents of this shipment as stated above.</td>
+                                            </tr>
+                                        </table>
+                                        <table class="">
+                                            <tr>
+                                                <td><img src="@ViewBag.QrCodeUrlGR" height="150px" width="150px" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-12 text-right">
+                            @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
+                            <input type="hidden" id="Status" name="Status" value="Draft" />
+                            @Html.HiddenFor(m => m.Data.Id)
+                            <a href="~/emcs/Grlist" class="btn btn-primary btn-outline-secondary" style="width:120px;"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/EMCS/DownloadGrItem/1" class="downloadFile hidden">
+        <i class="fa fa-edit"></i> Download Item
+    </a>
+    @Html.HiddenFor(m => m.Data.CreateBy)
+    @Html.HiddenFor(m => m.Data.CreateDate)
+    @Html.HiddenFor(m => m.Data.UpdateBy)
+    @Html.HiddenFor(m => m.Data.UpdateDate)
+    @Html.HiddenFor(m => m.Data.IsDelete)
+}
+
+@Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
+@Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+
+<input type="hidden" name="HideAction" id="HideAction" value="false" />
+@section Scripts{
+    <script>
+        var wizardState = @ViewBag.WizardData.Progress;
+        var $hideAction = $("#HideAction").val();
+    </script>
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/GoodReceiveHistory.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/GoodsReceivePreviewForm.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/Custom.js")
+}

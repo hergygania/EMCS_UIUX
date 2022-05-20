@@ -1,0 +1,31 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "id": 1,
+      "inv": "E.53100119011",
+      "SI": "SI.260218041FG",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for BL / AWB Document",
+      "date": "16-Jan-19"
+    },
+    {
+      "id": 2,
+      "inv": "E.53100119011",
+      "PEB": "000000-121234-20180918-31213456",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for BL / AWB Approval",
+      "date": "16-Jan-19"
+    }
+  ]
+}

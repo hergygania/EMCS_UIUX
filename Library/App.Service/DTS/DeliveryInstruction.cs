@@ -79,7 +79,7 @@ namespace App.Service.DTS
         /// Get List from Shipment inbound data
         /// </summary>
         /// <returns></returns>
-        public static List<Data.Domain.DeliveryInstruction> GetListFilter(App.Data.Domain.DTS.DeliveryInstructionFilter filter)
+        public static List<Data.Domain.DeliveryInstructionView> GetListFilter(App.Data.Domain.DTS.DeliveryInstructionFilter filter)
         {
             string key = string.Format(cacheName);
 
@@ -99,7 +99,7 @@ namespace App.Service.DTS
 
                 SqlParameter[] parameters = parameterList.ToArray();
 
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryInstruction>
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryInstructionView>
                     (@"exec [dbo].[SP_GetDataDeliveryInstruction] @searchName, @requestor, @createdby", parameters).ToList();
 
                 return data;

@@ -1,0 +1,584 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Dashboard.css?id=" + DateTime.Now.ToString("yyyyMMddhhmmtt"))
+
+<style>
+    .wrapper {
+        min-height: 100% !important;
+    }
+
+    .container-icon {
+        display: none;
+    }
+
+    thead th {
+        text-align: left !important;
+    }
+
+    thead td {
+        text-align: left !important;
+    }
+
+    thead th, thead td {
+        color: rgb(255, 192, 0);
+    }
+
+    .content-header {
+        display: none !important;
+    }
+
+    .right-side {
+        margin-top: 44px;
+    }
+
+    .content {
+        padding-left: 0;
+    }
+
+    body {
+        background-color: #252525 !important;
+    }
+
+    .skin-custom .right-side {
+        margin-top: 70px;
+    }
+
+    /* MODAL OVERLAY */
+    .overlay {
+        background: rgba(0,0,0,0.4);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        opacity: 0;
+        height: 2px;
+        width: 225px;
+        margin: 0 auto;
+        left: 50%;
+        top: 50%;
+        margin-left: -112.5px;
+        -webkit-transition: all 1s linear;
+        -moz-transition: all 1s linear;
+        transition: all 1s linear;
+        color: white;
+        box-sizing: border-box;
+        overflow: hidden;
+        z-index: 1030;
+        position: fixed;
+    }
+
+    .glyphicon {
+        color: white;
+        font-size: 2em;
+        margin: 20px;
+    }
+
+        .glyphicon:hover {
+            color: white;
+        }
+
+    #modal-content h1,
+    #modal-content p,
+    #modal-content h2,
+    #modal-content h3 {
+        text-align: center;
+    }
+
+    #modal-content header {
+        margin-bottom: 100px;
+        margin-top: 50px;
+    }
+    /* END MODAL OVERLAY */
+
+    /*TABLE MODAL OVERLAY*/
+
+    .container-table-modal .table-modal {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+    }
+
+    .container-table-modal th, .container-table-modal td {
+        padding: 10px;
+        /*background-color: rgba(255, 255, 255, 0.2);*/
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+    }
+
+    .container-table-modal th {
+        /*text-align: left;*/
+        color: rgb(255, 192, 0);
+    }
+
+    .container-table-modal thead th {
+        /*background-color: rgb(85, 96, 143, 0.3);*/
+        background-color: rgb(85, 96, 143, 0.6);
+    }
+
+    .container-table-modal tbody tr:hover {
+        background-color: rgb(85, 96, 143, 0.1);
+    }
+
+    .container-table-modal tbody td {
+        position: relative;
+        /*font-weight: 800;*/
+        font-weight: 700;
+        color: rgb(0, 176, 240);
+        /*color: rgb(227, 227, 227);*/
+    }
+
+        .container-table-modal tbody td:hover:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
+
+    .container-table-modal tr:nth-child(even) {
+        background-color: transparent !important;
+    }
+</style>
+
+
+<div class="row" style="margin-bottom:20px !important;">
+    <div class="overlay">
+        <div class="col-md-12" style="background-color:black;">
+            <div class="row">
+                <div class="col-md-2">
+                    <img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border: solid 2px white; width: 175px; margin-top: 8px;">
+                </div>
+                <div class="col-md-10">
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-warning btn-lg mb-0" id="btn-outstanding-branch" style="z-index:0;">Branch</button>
+                        <button class="btn btn-warning btn-lg" id="btn-outstanding-port" style="z-index:0; margin: 20px 20px 20px 0px;">Port</button>
+                        <span class='close glyphicon glyphicon-remove'></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="container-table-modal" style="padding-top: 6%;">
+                <div class="table-responsive" id="Div-Table-Oustanding-Branch" style="width: 100%!important">
+                    <table class="table-modal" id="Table-Oustanding-Branch">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:5% !important;">No CIPL</th>
+                                <th class="text-center" style="width:5% !important;">Branch</th>
+                                <th class="text-center" style="width:5% !important;">Loading Port</th>
+                                <th class="text-center" style="width:5% !important;">Destination Port</th>
+                                <th class="text-center" style="width:5% !important;">ETD</th>
+                                <th class="text-center" style="width:5% !important;">ETA</th>
+                                <th class="text-center" style="width:5% !important;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-branch"></tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" id="Div-Table-Oustanding-Port">
+                    <table class="table-modal" id="Table-Oustanding-Port" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th class="text-center">AJU Number</th>
+                                <th class="text-center">Branch</th>
+                                <th class="text-center">Loading Port</th>
+                                <th class="text-center">Destination Port</th>
+                                <th class="text-center">ETD</th>
+                                <th class="text-center">ETA</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-port"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12 content-dash-1 col-sm-12 col-xs-12 pull-left">
+        <div class="box" style="height: 483px;">
+            <div class="dashboardhighcharts" style="margin-bottom: 10px;">
+                <div class="box-body" style="padding: 0px;">
+                    <div id="container-map" style="overflow: none !important;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="col-md-12">
+    <section class="demo-section-box" style="background-color: #fafafa;">
+        <div class="section-container" style="z-index: 1030">
+            <div class="demo-box">
+                <!-- DEMO6 HTML STARTS HERE *-->
+                <!-- *********************** -->
+                <div class="breaking-news-ticker" id="newsTicker1">
+                    <div class="bn-label" id="jam"></div>
+                    <div class="bn-news">
+                        <ul id="ul-news"></ul>
+                    </div>
+                </div>
+                <div class="container-icon">
+                    <div class="menu-toggle">
+                        <span class="fa fa-plus"></span>
+                    </div>
+                    <div class="menu-line">
+                        <div class="btn-app btn-tv btn-non-active" title="TV NEWS">
+                            <div class="fa fa-tv" tooltip="TV"></div>
+                        </div>
+                        <div class="btn-app btn-paint btn-non-active" title="DARK MODE">
+                            <div class="fa fa-paint-brush"></div>
+                        </div>
+                        <div class="btn-app btn-menu btn-non-active" title="FULL SCREEN">
+                            <div class="fa fa-indent"></div>
+                        </div>
+                        <div class="btn-app btn-video-trakindo btn-non-active" title="TRAKINDO VIDEO">
+                            <div class="fa fa-video-camera"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *********************** -->
+                <!-- DEMO6 HTML END HERE *** -->
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/breaking-news-ticker.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/proj4.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/no-data-to-display.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-more.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/map.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/data.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/id-all.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/circliful/jquery.circliful.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script>
+        $(function () {
+            $('#Div-Table-Oustanding-Port').hide();
+            $('.skin-black').addClass('skin-custom');
+            localStorage.setItem('MapType', 'Branch');
+
+            Map();
+            BreakingNews();
+
+            $('.overlay').css({
+                "width": '100%',
+                'margin-left': 0,
+                'opacity': 1,
+                'left': 0,
+                'right': 0
+            });//end of css
+
+            setTimeout(function () {
+                $('.overlay').css({
+                    'height': "94%",
+                    'top': 0
+                });
+            }, 1000);
+
+            var CountOutstanding = 1;
+            var RowOutstanding = 8;
+            Outstanding(CountOutstanding, RowOutstanding);
+
+            // 2 Menit
+            var singleCount = 9;
+
+            setInterval(function () {
+                var OutstandingData = Outstanding(singleCount, 1);
+                if (OutstandingData.length === 0) {
+                    singleCount = 1;
+                } else {
+                    ++singleCount;
+                }
+            }, 10000);
+
+            jam();
+
+            // 6 Menit
+            setInterval(function () {
+                Map();
+                BreakingNews();
+            }, 60000);
+
+            $('#newsTicker1').breakingNews({
+                position: 'fixed-bottom',
+                borderWidth: 3,
+                height: 50,
+                themeColor: ''
+            });
+        })
+
+        $('.close').click(function () {
+            $('.overlay').css({
+                'height': '2px',
+                'top': '50%'
+            });
+
+            setTimeout(function () {
+                $('.overlay').css({
+                    'width': '225px',
+                    'left': '50%',
+                    'margin-left': '-112.5px',
+                    'opacity': 0
+                });
+            }, 1000);
+
+            setTimeout(function () {
+                window.location.href = "/EMCS/Dashboard";
+            }, 2000);
+
+        });
+
+        $('#btn-outstanding-port').on('click', function () {
+            $('#Div-Table-Oustanding-Branch').hide('slow');
+            $('#Div-Table-Oustanding-Port').show('slow');
+            localStorage.setItem('MapType', 'Port');
+            Map();
+        })
+        $('#btn-outstanding-branch').on('click', function () {
+            $('#Div-Table-Oustanding-Branch').show('slow');
+            $('#Div-Table-Oustanding-Port').hide('slow');
+            localStorage.setItem('MapType', 'Branch');
+            Map();
+        })
+
+        function Map() {
+            var H = Highcharts,
+                map = H.maps['countries/id/id-all'],
+                chart;
+            // Add series with state capital bubbles
+            Highcharts.getJSON('/EMCS/GetMapData?type=' + localStorage.getItem('MapType') + '&user=' + localStorage.getItem('Area'), function (json) {
+                var data = [];
+                data = [];
+                json.data.forEach(function (p) {
+                    p.lat = p.Lat;
+                    p.lon = p.Lon;
+                    p.province = p.Province;
+                    p.data = p.Data;
+                    p.z = p.Total;
+                    data.push(p);
+                })
+                chart = Highcharts.mapChart('container-map', {
+                    credits: false,
+                    chart: {
+                        map: 'countries/id/id-all',
+                        backgroundColor: '#F0F0F0',
+                        height: 550
+                    },
+                    title: {
+                        text: ''
+                    },
+
+                    tooltip: {
+                        useHTML: true,
+                        pointFormat: '<div><b>{point.province}</b> : <br> {point.data}</div>',
+                        //'Population: {point.lon}'
+                        headerFormat: ''
+                    },
+
+                    xAxis: {
+                        crosshair: {
+                            zIndex: 5,
+                            dashStyle: 'dot',
+                            snap: false,
+                            color: 'gray'
+                        }
+                    },
+
+                    yAxis: {
+                        crosshair: {
+                            zIndex: 5,
+                            dashStyle: 'dot',
+                            snap: false,
+                            color: 'gray'
+                        }
+                    },
+
+                    series: [
+                        {
+                            name: 'Basemap',
+                            mapData: map,
+                            borderColor: '#F0F0F0',
+                            nullColor: '#fe9d01',
+                            showInLegend: false
+                        }, {
+                            name: 'Separators',
+                            type: 'mapline',
+                            data: H.geojson(map, 'mapline'),
+                            color: '#101010',
+                            enableMouseTracking: false,
+                            showInLegend: false
+                        }, {
+                            type: 'mapbubble',
+                            name: 'Province',
+                            data: data,
+                            maxSize: '5%',
+                            nullColor: '#fe9d01',
+                            borderColor: '#F0F0F0',
+                            states: {
+                                hover: {
+                                    color: '#BADA55'
+                                }
+                            }
+                        }]
+                });
+            });
+
+            document.getElementById('container-map').addEventListener('mouseout', function () {
+                if (chart && chart.lab) {
+                    chart.lab.destroy();
+                    chart.lab = null;
+                }
+            });
+
+
+        }
+
+        function Outstanding(Id, Rows) {
+            var OutstandingData = [];
+            $.ajax({
+                url: "/emcs/Oustanding",
+                async: false,
+                data: {
+                    searchId: Id,
+                    searchId2: Rows,
+                    searchCode: localStorage.getItem('Area')
+                },
+                success: function (data) {
+                    var branch = data.branch;
+                    if (branch.length > 0) {
+                        var $target = $("#tbody-branch tr:first-child");
+                        $target.hide('slow', function () { $target.remove(); });
+                        $.each(branch, function (index, element) {
+                            console.log(element.Branch);
+                            var Branch = element.Branch.split('-');
+                            var BranchName = element.Branch;
+                            var LastNameBranch = element.Branch.split(' ');
+                            var GetBranch = BranchName.includes('Transit') || BranchName.includes('Yard') ? LastNameBranch[LastNameBranch.length - 1] : Branch[0].substring(0, 15);
+                            var ETD;
+                            if (element.ETD == null) {
+                                ETD += '<td>-</td>'
+                            }
+                            else {
+                                ETD += '<td>' + moment(element.ETD).format("DD MMM YY") + '</td>'
+                            }
+                            var ETA;
+                            if (element.ETA == null) {
+                                ETA += '<td>-</td>'
+                            }
+                            else {
+                                ETA += '<td>' + moment(element.ETA).format("DD MMM YY") + '</td>'
+                            }
+                            var html = '<tr><td>' + element.No + '</td>' +
+                                '<td>' + GetBranch + '</td>' +
+                                '<td>' + element.PortOfLoading.split('-')[1] + '</td>' +
+                                '<td>' + element.PortOfDestination.split('-')[1] + '</td>' +
+                                ETD +
+                                ETA +                             
+                                '<td>' + element.ViewByUser + '</td></tr>';
+                            $('#tbody-branch').append(html);
+
+                            OutstandingData.push(element);
+                        })
+                    }
+
+                    var port = data.port;
+                    if (port.length > 0) {
+                        var $targetPort = $("#tbody-port tr:first-child");
+                        $targetPort.hide('slow', function () { $targetPort.remove(); });
+                        $.each(port, function (index, element) {
+                            var Branch = element.Branch.split('-');
+                            var BranchName = element.Branch;
+                            var LastNameBranch = element.Branch.split(' ');
+                            var GetBranch = BranchName.includes('Transit') || BranchName.includes('Yard') ? LastNameBranch[LastNameBranch.length - 1] : Branch[0].substring(0, 15);
+
+                            var html = '<tr><td>' + element.No + '</td>' +
+                                '<td>' + GetBranch + '</td>' +
+                                '<td>' + element.PortOfLoading.split('-')[1] + '</td>' +
+                                '<td>' + element.PortOfDestination.split('-')[1] + '</td>' +
+                                '<td>' + moment(element.ETD).format("DD MMM YY") + '</td>' +
+                                '<td>' + moment(element.ETA).format("DD MMM YY") + '</td>' +
+                                '<td>' + element.ViewByUser + '</td></tr>';
+                            $('#tbody-port').append(html);
+                        });
+                    }
+                }
+            });
+            return OutstandingData;
+        }
+
+        function BreakingNews() {
+            $.ajax({
+                url: myApp.fullPath + "/EMCS/getRss",
+                async: false,
+                success: function (data) {
+                    var json = data.data;
+                    $.each(json, function (index, element) {
+                        var icon = "/Images/favicon.ico";
+                        switch (element.Source) {
+                            case "detik":
+                                icon = "/Images/detik.png";
+                                break;
+                            case "cnn":
+                                icon = "/Images/emcs/cnn_badge.png";
+                                break;
+                            default:
+                                icon = "/Images/favicon.ico";
+                        }
+
+                        var html = '<li><img src="' + icon + '" style="width:20px;" /> <span class="bn-loader-text" style="font-size: 19px !important;">' + element.Title + '</span></li>';
+                        $('#ul-news').append(html);
+                    });
+                }
+            });
+        }
+
+        function set(e) {
+            e = e < 10 ? '0' + e : e;
+            return e;
+        }
+        function jam() {
+            var e = document.getElementById('jam'),
+                d = new Date();
+            var weekdays = new Array(7);
+            weekdays[0] = "Sunday";
+            weekdays[1] = "Monday";
+            weekdays[2] = "Tuesday";
+            weekdays[3] = "Wednesday";
+            weekdays[4] = "Thursday";
+            weekdays[5] = "Friday";
+            weekdays[6] = "Saturday";
+            var r = weekdays[d.getDay()];
+            date_format = dateFormatterCAT(d);
+            var tanggalbaru = moment().format("DD MMM YY");
+            var hari = moment().format("ddd");
+            h = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
+            m = set(d.getMinutes());
+            s = set(d.getSeconds());
+            var newformat = h >= 12 ? 'PM' : 'AM';
+
+            //e.innerHTML = '<div style="transform-origin: left center 0;transform: perspective(6px) rotateX(-1deg);position:fixed;left:10px;bottom:0;"><strong><h5 style="font-size: 18px; margin-bottom: 0px;">' + date_format + '</h5></strong>' + r.substring(0, 3) + ', ' + h + ':' + m + ' ' + newformat + '</div>';
+            e.innerHTML = '<div style="padding-left:6px;position: fixed; left: 4px;align:left;text-align:left;bottom: 0;">'
+                + '<div style="font-size: 10px; margin-bottom: 0px; "><strong></strong>' + hari + '</strong></div>'
+                + '<div style="font-size: 22px;font-weight:800; margin-bottom: 0px; "><strong>' + tanggalbaru + '</strong></div>'
+                + '<div style="font-size: 12px;">' + h + ': ' + m + ' ' + newformat + '</div>' + '</div > ';
+
+            setTimeout('jam()', 60000);
+        }
+    </script>
+}

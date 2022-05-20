@@ -1,0 +1,103 @@
+@model App.Web.Models.RegulationManagementView
+@{
+	string message = ViewBag.Message + "";
+}
+
+<form role="form">
+	<div class="box-body">
+		<div class="row">
+			<div class="col-lg-12">
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">Regulation</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							@Html.TextAreaFor(m => m.table.Regulation, new { @class = "form-control", @readonly = "readonly", row = 3 })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">Description</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							@Html.TextAreaFor(m => m.table.Description, new { @class = "form-control", @readonly = "readonly", row = 3 })
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+
+					@*<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">Lartas</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							<input type="text" class="form-control" readonly="readonly" value="@Model.table.LartasDesc" />
+						</div>
+					</div>*@
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">OM</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							<input type="text" class="form-control" readonly="readonly" value="@Model.table.OMCode" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">Issued By</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							<input type="text" class="form-control" readonly="readonly" value="@Model.table.IssuedBy" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-xs-3">Issued Date</label>
+						<div class="input-group col-lg-9 col-xs-9">
+							<input type="text" class="form-control" readonly="readonly" value="@Model.table.IssuedDate.ToString("dd MMM yyyy")" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-12">
+				<hr>
+				<h3 class="box-title">HS Code</h3>
+				<div class="toolbarDet">
+					<button type="button" class="btn btn-warning" onclick="loadModal('/imex/RegulationManagDetailAdd?regid=@Model.table.RegulationManagementID')" style="width:150px;">
+						<i class="fa fa-plus"></i> New
+					</button>
+					<a href="#" class="btn btn-info" onclick="document.getElementById('file2xls').click(); return false" style="width:150px;">
+						<i class="fa fa-upload"></i> Import/Upload
+					</a>
+					<a href="#" class="btn btn-info download2Excel" style="width:150px;">
+						<i class="fa fa-download"></i> Download to Excel
+					</a>
+                    <a href="/temp/template-hsMapping.xlsx" class="btn btn-info" style="width:150px;">
+                        <i class="fa fa-download"></i> Download Template
+                    </a>
+				</div>
+			</div>
+
+			<div class="col-lg-12">
+				<table class="table table-bordered table2excel2" id="tblDetail" style="width: 100%"></table>
+
+				<div id="divResult2" class="table2excel3" style="display:none; margin-left:30px">
+					<hr />
+					<a href="#" class="btn btn-default downloadExcel3"><i class="fa fa-download"></i> Download to Excel</a>
+					<div id="uploadResult2" class="table2excel3" style="overflow:auto;width:50%; max-height:333px; overflow:auto;">></div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" onclick="cancelDetail()"><i class="fa fa-mail-reply"></i> Back</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<form id="submit2Excel" action="/Imex/HsRegulationUploadExcel" method="post" enctype="multipart/form-data">
+	<input type="file" id="file2xls" name="upload" style="visibility: hidden;" onchange="$('#submit2Excel').submit();" />
+</form>
+
+<script>
+	var msg = '@message', regId = '@Model.table.RegulationManagementID';
+	if (msg != '') {
+		sAlert('', msg, '');
+	}
+</script>
+<script src="@Url.Content("~/scripts.app/imex/regulation-management.detail.cshtml.js")"></script>

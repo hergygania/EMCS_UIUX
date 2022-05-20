@@ -1,0 +1,100 @@
+@model  App.Data.Domain.TeamProfile
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title"><i class="fa fa-list"></i> @title Team Profile</h4>
+</div>
+
+@using(Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group">
+					<label class="control-label col-md-2 col-xs-2">Profile Name</label>
+					<div class="input-group col-md-10 col-xs-10">
+						@Html.TextBoxFor(m => m.ProfileName, new { @class = "form-control required", placeholder = "Profile ..." })
+						<div>@Html.ValidationMessageFor(m => m.ProfileName)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-2 col-xs-2">Description</label>
+					<div class="input-group col-md-10 col-xs-10">
+						@Html.EditorFor(m => m.Description, "RichEditor", new { @class = "form-control required editor", style = "width:99%", placeholder = "Description" })
+						@*@Html.TextAreaFor(m => m.Description, new { @class = "form-control required editor", style = "width:99%", placeholder = "Description" })*@
+						<div>@Html.ValidationMessageFor(m => m.Description)</div>
+					</div>
+				</div>
+				@if(mode != "I")
+				{
+					<div class="form-group">
+						<label class="control-label col-md-2 col-xs-2">Status</label>
+						<div class="input-group col-md-10 col-xs-10">
+							<select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+								<option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+								<option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+							</select>
+						</div>
+					</div>
+				}
+				else
+				{
+					<input type="hidden" name="Status" value="@Model.Status" />
+				}
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<span id="progress" class="text-center" style="display: none;">
+			<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+			Wait..
+		</span>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		@if(mode == "I")
+		{
+			<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+		}
+		else if(mode == "U")
+		{
+			<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+		}
+		else
+		{
+			<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+		}
+
+	</div>
+
+	<input type="hidden" name="ID" value="@Model.ID" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+}
+<script>
+
+	$(".modal-dialog").css("width", "1111px").css("height", "666px");
+
+	$(document).ready(function () {
+
+
+		$('#myModalPlace').on('hidden.bs.modal', function () {
+			tinymce.remove("#Description");
+			$(this).removeData("bs.modal").find(".modal-content").empty();
+		});
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+</script>

@@ -1,0 +1,712 @@
+﻿<!--
+ ******ALL MODAL IN MY TASK PAGE******
+-->
+<!-- -----------------------------------******** MODAL PEB ********----------------------------------- -->
+@*<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload PEB Document</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            No AJU PEB
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="noAJU" name="noAJU" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">
+                            Tanggal & Jam AJU
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="datePEB" name="datePEB" placeholder="Date">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" id="timePEB" name="timePEB" placeholder="Time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Upload Document
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="PebDoc" id="PebDoc" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-rotate" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>*@
+<!-- -----------------------------------******** MODAL NPE ********----------------------------------- -->
+
+<!-- -----------------------------------******** MODAL BL ********----------------------------------- -->
+
+<!-- -----------------------------------******** MODAL INSTRUCTION ********----------------------------------- -->
+<div id="InputInstruction" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Input Special Instruction</h4>
+            </div>
+            <form id="my-awesome-dropzone" class="dropzone">
+                <div class="modal-body">
+                    <div class="form-group hide">
+                        <label class="col-sm-4">
+                            Description
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="idCL" name="idCL" placeholder="ID" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Description
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="descriptionSI" name="descriptionSI" placeholder="Special Instruction">
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label class="col-sm-4 mt-4">
+                            Special Instruction
+                        </label>
+                        <div class="col-sm-8 mt-4">
+                            <input type="text" class="form-control" id="specialInstructionSI" name="specialInstructionSI" placeholder="Special Instruction">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 mt-4">
+                            Document Required
+                        </label>
+                        <div class="col-sm-8 mt-4">
+                            <span class="btn btn-primary fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Upload Document</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="submit"><i class="far fa-check-circle"></i>Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL APPROVE CARGO LIST ********----------------------------------- -->
+<div id="ApprovalCARGO" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="far fa-check-circle"></i> APRROVE CARGO LIST</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="#">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            CARGO NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="E.192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">DESCRIPTION</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="8" placeholder="" id="" name=""></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-rotate" data-dismiss="modal">APPROVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL REJECT CARGO LIST ********----------------------------------- -->
+<div id="RejectCARGO" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content ">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="fa fa-ban"></i> REJECT CARGO LIST</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            CARGO NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="E.192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">PROBLEM CATEGORY</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value=""> -- Pilih --</option>
+                                <option value=""> DOCUMENT </option>
+                                <option value=""> SHIPPING </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            REASONS
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-rotate" data-dismiss="modal">REJECT</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL REVISE CARGO LIST ********----------------------------------- -->
+<div id="ReviseCARGO" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="fa fa-history"></i> REVISE CARGO LIST</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            CARGO NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="E.192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">PROBLEM CATEGORY</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value=""> -- Pilih --</option>
+                                <option value=""> DOCUMENT </option>
+                                <option value=""> SHIPPING </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            REASONS
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning btn-rotate" data-dismiss="modal">REVISE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="InputReceiveInstruction" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Input Receive Instruction</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Date & Time Receive
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" id="timePickup" name="timePickup" placeholder="Time Pickup">
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="col-sm-4">
+                                BAST No
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="noBAST" name="noBAST" placeholder="BAST No">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4">
+                                BAST Document
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="file" class="form-control" id="noBAST" name="noBAST" placeholder="BAST No">
+                            </div>
+                        </div>*@
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-rotate" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="ModalTemporary" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Temporary Export Application - Upload Document</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Surat Kuasa *
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control" name="suratKuasa" id="suratKuasa" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Surat Ijin Export Sementara *
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="suratIjinExportSementara" id="suratIjinExportSementara" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Surat Permohonan reImport *
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="suratPermohonanReImport" id="suratPermohonanReImport" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Surat Keterangan Fungsi Barang *
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="suratFungsiBarang" id="suratFungsiBarang" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Letter of Non Dangerous Goods
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="letterNonDangerousGoods" id="letterNonDangerousGoods" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            MSDS
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="msds" id="msds" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Shipment Declaration
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="shipmentDeclaration" id="shipmentDeclaration" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Others
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="othersDoc" id="othersDoc" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-rotate" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="InputDepartureSchedule" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Input Departure Schedule</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Terms of Delivery Export
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="incoTerm" name="incoTerm" placeholder="Terms of Delivery Export" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Stuffing Date (started)
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="startedDate" name="startedDate" placeholder="Stuffing Date (started)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Stuffing Date (finish)
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="incoTerm" name="incoTerm" placeholder="Stuffing Date (finish)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Vessel / Flight
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="vesselFlight" name="vesselFlight" placeholder="Vessel/Flight">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Connection Vessel
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="connectingVessel" name="connectingVessel" placeholder="Connection Vessel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Port of Loading
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="portOfLoading" name="portOfLoading" placeholder="Port of Loading">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Port of Discharge/Destination
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="portOfDest" name="portOfDest" placeholder="Port of Discharge/Destination">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Flight/Sailing Schedule
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="flightSailingSchedule" name="flightSailingSchedule" placeholder="Flight/Sailing Schedule">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Estimation Time of Arrival
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="estimationArrival" name="estimationArrival" placeholder="Estimation Time of Arrival">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Booking Number
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="bookingNumber" name="bookingNumber" placeholder="Booking Number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Booking Date
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="bookingDate" name="bookingDate" placeholder="Booking Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Liner
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="liner" name="liner" placeholder="Liner">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-rotate" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- -----------------------------------******** MODAL PDF PEB ********----------------------------------- -->
+<div id="modalPdf" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">PEB DOCUMENT</h4>
+            </div>
+            <div class="modal-body" style=" height:100vh ">
+                <embed src="~/Content/Templates/NPEPEB.pdf" width="100%" height="100%"></embed>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL PDF NPE ********----------------------------------- -->
+<div id="modalNpe" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">PEB DOCUMENT</h4>
+            </div>
+            <div class="modal-body" style=" height:100vh ">
+                <embed src="~/Content/Templates/NPEPEB.pdf" width="100%" height="100%"></embed>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL PDF BL/AWB ********----------------------------------- -->
+<div id="modalViewBL" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">PEB DOCUMENT</h4>
+            </div>
+            <div class="modal-body" style=" height:100vh ">
+                <embed src="~/Content/Templates/BL.pdf" width="100%" height="100%"></embed>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL APPROVE PEB LIST ********----------------------------------- -->
+<div id="ApprovalPeb" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="far fa-check-circle"></i> APRROVE PEB</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="#">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            PEB NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">DESCRIPTION</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="8" placeholder="" id="" name=""></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-rotate" data-dismiss="modal">APPROVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL REJECT PEB LIST ********----------------------------------- -->
+<div id="RejectPeb" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content ">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="fa fa-ban"></i> REJECT PEB</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            PEB NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">PROBLEM CATEGORY</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value=""> -- Pilih --</option>
+                                <option value=""> DOCUMENT </option>
+                                <option value=""> SHIPPING </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            REASONS
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-rotate" data-dismiss="modal">REJECT</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -----------------------------------******** MODAL REVISE PEB LIST ********----------------------------------- -->
+<div id="RevisePeb" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5><i class="fa fa-history"></i> REVISE PEB</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            PEB NUMBER
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="192382898290182" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            DATE
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="datePickup" name="datePickup" placeholder="Date Pickup" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">PROBLEM CATEGORY</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value=""> -- Pilih --</option>
+                                <option value=""> DOCUMENT </option>
+                                <option value=""> SHIPPING </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            REASONS
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="" name="" placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning btn-rotate" data-dismiss="modal">REVISE</button>
+            </div>
+        </div>
+    </div>
+</div>

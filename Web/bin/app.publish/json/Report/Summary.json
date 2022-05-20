@@ -1,0 +1,612 @@
+﻿[
+  {
+    "id": 1,
+    "colVal": "",
+    "FgNr": 500122,
+    "pid": 0,
+    "status": 1,
+    "lvl": 0,
+    "name": "FrieslandCampina Ha Nam Co. Ltd",
+    "permissionValue": "open:system:get",
+    "val": "",
+    "children": [
+      {
+        "id": 2,
+        "colVal": "",
+        "FgNr": 793805,
+        "pid": 1,
+        "lvl": 1,
+        "status": 1,
+        "name": "FrF Milk Pwdr Base Ifr121 Bag 25kg",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 3,
+            "colVal": "40ft",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Container type",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 4,
+            "colVal": "960",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Container contained (cu/container)",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 5,
+            "colVal": "3,651,796",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Standard Cost Price",
+            "permissionValue": "open:system:delete",
+            "val": "",
+            "children": [
+              {
+                "id": 2,
+                "colVal": "",
+                "1LvlMat": "579059",
+                "FgNr": 3611,
+                "pid": 1,
+                "lvl": 2,
+                "MatDesc": "Raw",
+                "status": 1,
+                "name": "Raw",
+                "permissionValue": "open:system:add",
+                "val": "",
+                "children": [
+                  {
+                    "id": 3,
+                    "colVal": "40ft",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Raw Material",
+                    "status": 1,
+                    "name": "Raw Material",
+                    "permissionValue": "open:system:edit",
+                    "val": ""
+                  },
+                  {
+                    "id": 4,
+                    "colVal": "960",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Raw Material",
+                    "status": 1,
+                    "name": "Raw Material",
+                    "permissionValue": "open:system:delete",
+                    "val": ""
+                  },
+                  {
+                    "id": 5,
+                    "colVal": "3,651,796",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Raw Material",
+                    "status": 1,
+                    "name": "Raw Material",
+                    "permissionValue": "open:system:delete",
+                    "val": ""
+                  }
+                ]
+              },
+              {
+                "id": 6,
+                "colVal": "",
+                "1LvlMat": "579059",
+                "FgNr": 3611,
+                "pid": 1,
+                "lvl": 2,
+                "MatDesc": "Pack",
+                "status": 1,
+                "name": "Pack",
+                "permissionValue": "open:system:add",
+                "val": "",
+                "children": [
+                  {
+                    "id": 7,
+                    "colVal": "40ft",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Raw Material",
+                    "status": 1,
+                    "name": "Pack Material",
+                    "permissionValue": "open:system:edit",
+                    "val": ""
+                  },
+                  {
+                    "id": 8,
+                    "colVal": "960",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Pack Material",
+                    "status": 1,
+                    "name": "Pack Material",
+                    "permissionValue": "open:system:delete",
+                    "val": ""
+                  },
+                  {
+                    "id": 9,
+                    "colVal": "3,651,796",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Pack Material",
+                    "status": 1,
+                    "name": "Pack Material",
+                    "permissionValue": "open:system:delete",
+                    "val": ""
+                  }
+                ]
+              },
+              {
+                "id": 10,
+                "colVal": "",
+                "1LvlMat": "579059",
+                "FgNr": 3611,
+                "pid": 1,
+                "lvl": 2,
+                "MatDesc": "Conv Cost",
+                "status": 1,
+                "name": "Conv Cost",
+                "permissionValue": "open:system:add",
+                "val": "",
+                "children": [
+                  {
+                    "id": 11,
+                    "colVal": "40ft",
+                    "1LvlMat": "579059",
+                    "FgNr": 3611,
+                    "pid": 20,
+                    "lvl": 1,
+                    "MatDesc": "Finish Goods",
+                    "status": 1,
+                    "name": "Finish Goods",
+                    "permissionValue": "open:system:edit",
+                    "val": ""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 6,
+            "colVal": "9,272",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Handling Cost from FFI to Jkt Port ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 7,
+            "colVal": "2,000",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "External Warehouse ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 8,
+            "colVal": "1,979",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Certification/Legal Fee",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 9,
+            "colVal": "14,660",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Overhead",
+            "permissionValue": "open:system:delete",
+            "val": "0.4%"
+          },
+          {
+            "id": 10,
+            "colVal": "1,472",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>FOB Price</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 11,
+            "colVal": "7,952",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Insurance",
+            "permissionValue": "open:system:delete",
+            "val": "0.04%"
+          },
+          {
+            "id": 12,
+            "colVal": "7,952",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Sea Freight ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 13,
+            "colVal": "3,849,134",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>Cost of Good Sold</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 14,
+            "colVal": "3,689,133 ",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>CIF Price</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 15,
+            "colVal": "83,758",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Technical Assistance",
+            "permissionValue": "open:system:delete",
+            "val": "2.22%"
+          },
+          {
+            "id": 16,
+            "colVal": "116,687",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Mark-up",
+            "permissionValue": "open:system:delete",
+            "val": "3.00%"
+          },
+          {
+            "id": 17,
+            "colVal": "25",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Converter",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 18,
+            "colVal": "3,889,578",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (IDR)",
+            "permissionValue": "open:system:delete",
+            "val": "Bag"
+          },
+          {
+            "id": 19,
+            "colVal": "288.89",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (USD)",
+            "permissionValue": "open:system:delete",
+            "val": "Bag"
+          },
+          {
+            "id": 20,
+            "colVal": "155,583,122",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (IDR)",
+            "permissionValue": "open:system:delete",
+            "val": "000 Kg"
+
+          },
+          {
+            "id": 21,
+            "colVal": "11,555",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (USD)",
+            "permissionValue": "open:system:delete",
+            "val": "000 Kg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "colVal": "",
+    "FgNr": 500078,
+    "pid": 0,
+    "lvl": 0,
+    "status": 1,
+    "name": "FrieslandCampina Vietnam Co. Ltd",
+    "permissionValue": "open:dict:get",
+    "val": "",
+    "children": [
+      {
+        "id": 23,
+        "colVal": "",
+        "FgNr": 794062,
+        "pid": 1,
+        "lvl": 1,
+        "status": 1,
+        "name": "Scm Excellence Sachet 120x40Gr",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 3,
+            "colVal": "40ft",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Container type",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 4,
+            "colVal": "960",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Container contained (cu/container)",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 5,
+            "colVal": "3,651,796",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Standard Cost Price",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 6,
+            "colVal": "9,272",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Handling Cost from FFI to Jkt Port ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 7,
+            "colVal": "2,000",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "External Warehouse ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 8,
+            "colVal": "1,979",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Certification/Legal Fee",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 9,
+            "colVal": "14,660",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Overhead",
+            "permissionValue": "open:system:delete",
+            "val": "0.4%"
+          },
+          {
+            "id": 10,
+            "colVal": "1,472",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>FOB Price</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 11,
+            "colVal": "7,952",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Insurance",
+            "permissionValue": "open:system:delete",
+            "val": "0.04%"
+          },
+          {
+            "id": 12,
+            "colVal": "7,952",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Sea Freight ",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 13,
+            "colVal": "3,849,134",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>Cost of Good Sold</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 14,
+            "colVal": "3,689,133 ",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "<b>CIF Price</b>",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 15,
+            "colVal": "83,758",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Technical Assistance",
+            "permissionValue": "open:system:delete",
+            "val": "2.22%"
+          },
+          {
+            "id": 16,
+            "colVal": "116,687",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Mark-up",
+            "permissionValue": "open:system:delete",
+            "val": "3.00%"
+          },
+          {
+            "id": 17,
+            "colVal": "25",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Converter",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 18,
+            "colVal": "3,889,578",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (IDR)",
+            "permissionValue": "open:system:delete",
+            "val": "Bag"
+          },
+          {
+            "id": 19,
+            "colVal": "288.89",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (USD)",
+            "permissionValue": "open:system:delete",
+            "val": "Bag"
+          },
+          {
+            "id": 20,
+            "colVal": "155,583,122",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (IDR)",
+            "permissionValue": "open:system:delete",
+            "val": "000 Kg"
+
+          },
+          {
+            "id": 21,
+            "colVal": "11,555",
+            "FgNr": 1,
+            "pid": 20,
+            "lvl": 2,
+            "status": 1,
+            "name": "Transfer Price (USD)",
+            "permissionValue": "open:system:delete",
+            "val": "000 Kg"
+          }
+        ]
+      }
+    ]
+  }
+]

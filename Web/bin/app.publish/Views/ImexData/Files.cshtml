@@ -1,0 +1,68 @@
+@{
+	ViewBag.Title = "Imex Files";
+}
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowCreate)
+    {
+        <input type="hidden" name="AllowCreate" id="AllowCreate" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowRead)
+    {
+        <input type="hidden" name="AllowRead" id="AllowRead" class="form-control" value="True">
+    }
+}
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-warning" style="height:525px">
+			<div class="box-header"><h3 class="box-title"></h3></div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="col-lg-12" style="height:505px;">
+						<iframe class="col-lg-12 col-md-12 col-sm-12" style="height:505px; border:none" src="/content/Roxy_Fileman/index.html" id="_iframe"></iframe>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var $AllowDelete = $('#AllowDelete').val();
+        var $AllowUpdate = $('#AllowUpdate').val();
+        var $AllowCreate = $('#AllowCreate').val();
+        var fr = $('#_iframe');
+        
+
+        if (($AllowCreate == 'True') && ($AllowUpdate == 'True') && ($AllowDelete == 'True'))
+        {
+            fr.contents().find('#btnAddDir, #btnRenameDir, #btnAddFile, #btnPreviewFile, #btnRenameFile, #btnDownloadFile, #btnSelectFile').show();
+        }
+        else
+        {
+            fr.contents().find('#btnAddDir, #btnRenameDir, #btnAddFile, #btnPreviewFile, #btnRenameFile').hide();
+        }
+
+		if (myApp.isReadOnly == 'true') {
+			var f = $('#_iframe');
+			f.load(function () {
+				f.contents().find('#btnAddDir, #btnRenameDir, #btnAddFile, #btnRenameFile').hide();
+			})
+		}
+
+	});
+
+</script>

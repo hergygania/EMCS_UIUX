@@ -1,0 +1,361 @@
+﻿@{
+    Layout = "~/Views/Post/_Layout.cshtml";
+    var Group = ViewBag.GroupID; //19 sales
+    ViewBag.Title = "Dashboard";
+}
+<input id="GroupID" value="@Group" style="display:none;">
+
+@section styles{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <style>
+        svg.highcharts-root {
+            font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        .gradient-45deg-light-blue-cyan {
+            background: #0288d1;
+            background: -webkit-linear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: -moz- oldlinear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: -o-linear-gradient(45deg, #0288d1, #26c6da) !important;
+            background: linear-gradient(45deg, #0288d1, #26c6da) !important;
+        }
+
+            .gradient-45deg-light-blue-cyan.gradient-shadow {
+                -webkit-box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+                box-shadow: 0 6px 20px 0 rgba(38, 198, 218, .5) !important;
+            }
+
+        .border-abu {
+            border-top: 5px solid #ada8a8;
+        }
+
+        .border-kuning {
+            border-top: 5px solid #ffd800;
+        }
+
+        .border-merah {
+            border-top: 5px solid #ff0000;
+        }
+
+        .border-hijau {
+            border-top: 5px solid #2ffb20;
+        }
+
+        .card-footer {
+            line-height: 38px;
+        }
+
+        .bg-abu {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-abu.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-kuning {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-kuning.png");
+            background-position-y: bottom;
+            background-size: 100% 50px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-merah {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-merah.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .bg-hijau {
+            background-image: url("../Scripts.app/POST/wwwroot/images/dashboard/bg-hijau.png");
+            background-position-y: bottom;
+            background-size: 100% 80px;
+            background-repeat: no-repeat;
+        }
+
+        .content-count {
+            font-size: 30px;
+        }
+
+        .label {
+            padding: 1.2em .6em .3em;
+            font-size: 90%;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .card-counter {
+            box-shadow: 2px 2px 10px #DADADA;
+            margin: 5px;
+            padding: 20px 10px;
+            background-color: #fff;
+            height: 100px;
+            border-radius: 5px;
+            transition: .3s linear all;
+        }
+
+            .card-counter:hover {
+                box-shadow: 4px 4px 20px #DADADA;
+                transition: .3s linear all;
+            }
+
+            .card-counter.primary {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.trak {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.danger {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.success {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter.info {
+                background-color: #FE9D01;
+                color: #FFF;
+            }
+
+            .card-counter i {
+                font-size: 5em;
+                opacity: 0.8;
+            }
+
+            .card-counter .count-numbers {
+                position: absolute;
+                right: 35px;
+                top: 20px;
+                font-size: 32px;
+                display: block;
+            }
+
+            .card-counter .count-name {
+                position: absolute;
+                right: 35px;
+                top: 65px;
+                font-style: italic;
+                text-transform: capitalize;
+                opacity: 0.8;
+                display: block;
+                font-size: 18px;
+            }
+
+
+        .card {
+            position: relative !important;
+            margin: .5rem 0 1rem 0 !important;
+            -webkit-transition: -webkit-box-shadow .25s !important;
+            -moz-transition: box-shadow .25s !important;
+            -o-transition: box-shadow .25s !important;
+            transition: -webkit-box-shadow .25s !important;
+            transition: box-shadow .25s !important;
+            transition: box-shadow .25s, -webkit-box-shadow .25s !important;
+            border-radius: 2px !important;
+            background-color: #fff !important;
+        }
+
+        .padding-4 {
+            padding: 4% !important;
+        }
+
+        .center, .center-align {
+            text-align: center;
+        }
+
+        .min-height-100 {
+            min-height: 100px !important;
+        }
+    </style>
+}
+
+
+<div class="align-middle row" style="margin-top:70px;">
+    <div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="year5VendorDelay" onchange="InitChartTopVendorDelay()"></select>
+                            <select id="month5VendorDelay" style="display:none"></select>
+                            <select id="day5VendorDelay" style="display:none"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container1" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="col-md-6 card">
+        <p></p>
+        <form>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <select class="form-control input-sm" id="year5VendorDelay" onchange="InitChartTopVendorDelay()"></select>
+                    <select id="month5VendorDelay" style="display:none"></select>
+                    <select id="day5VendorDelay" style="display:none"></select>
+                </div>
+            </div>
+        </form>
+        <div class="">
+            <div id="container1" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+        </div>
+    </div>*@
+
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card min-height-100 animate fadeLeft border-abu bg-abu">
+                    <div class="col-md-12 center-align card-footer">
+                        <div class="col-md-12 center-align">
+                            <label>POD is not BAST yet</label>
+                        </div>
+                        <div class="col-md-12 center-align">
+                            <label class="mb-0 content-count" id="TotalNewRequest">@ViewBag.CountPODNotBAST</label>
+                        </div>
+                        <label class="no-margin">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card min-height-100 animate fadeLeft border-kuning bg-kuning">
+                    <div class="col-md-12 center-align card-footer">
+                        <div class="col-md-12 center-align">
+                            <label>BAST is not GR yet</label>
+                        </div>
+                        <div class="col-md-12 center-align">
+                            <label class="mb-0 content-count" id="TotalNewRequest">@ViewBag.CountBASTNotGR</label>
+                        </div>
+                        <label class="no-margin">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card min-height-100 animate fadeLeft border-merah bg-merah">
+                    <div class="col-md-12 center-align card-footer">
+                        <div class="col-md-12 center-align">
+                            <label>GR is not Invoice yet</label>
+                        </div>
+                        <div class="col-md-12 center-align">
+                            <label class="mb-0 content-count" id="TotalNewRequest">@ViewBag.CountGRNotInvoice</label>
+                        </div>
+                        <label class="no-margin">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card min-height-100 animate fadeLeft border-hijau bg-hijau">
+                    <div class="col-md-12 center-align card-footer">
+                        <div class="col-md-12 center-align">
+                            <label>Invoice is not Payment yet</label>
+                        </div>
+                        <div class="col-md-12 center-align">
+                            <label class="mb-0 content-count" id="TotalNewRequest">@ViewBag.CountInvoiceNotPayment</label>
+                        </div>
+                        <label class="no-margin">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="year5PODelay" onchange="InitChartTopPODelay()"></select>
+                            <select id="month5Delay" style="display:none"></select>
+                            <select id="day5PODelay" style="display:none"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container3" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="yearVendorActice" onchange="InitChartActiveVendor()"></select>
+
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-control input-sm" id="monthVendorActice" onchange="InitChartActiveVendor()"></select>
+                            <select id="dayVendorActice" style="display:none"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="">
+                    <div id="container2" class="card" style="min-width: 310px; height: 270px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">col-8</div>
+    <div class="col-4">col-4</div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartjs/chart.min.js"></script>
+    <script src="~/Scripts.app/POST/chartjs-plugin-datalabels.min.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist.min.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist-plugin-tooltip.js"></script>
+    <script src="~/Scripts.app/POST/wwwroot/lib/chartist-js/chartist-plugin-fill-donut.min.js"></script>
+    <script src="~/Scripts.app/POST/Dashboard.js"></script>
+    <script>
+        $("#add_request").removeClass("gradient-45deg-light-blue-cyan");
+        $("#add_request").addClass("gradient-45deg-amber-amber");
+
+        $(".nav-link").on("click", function () {
+            setTimeout(function () {
+                chart1.setSize(null);
+                chart2.setSize(null);
+                chart3.setSize(null);
+                chart4.setSize(null);
+            }, 400);
+        })
+
+
+
+        function SearchReadyToPay() {
+            window.location.href = baseUrl + '/Request?Dashboard=readytopay';
+        }
+        function SearchProccessing() {
+            window.location.href = baseUrl + '/Request?Dashboard=processing';
+        }
+        function SearchNewRequest() {
+            window.location.href = baseUrl + '/Request?Dashboard=newrequest';
+        }
+        function SearchCompleted() {
+            window.location.href = baseUrl + '/Request?Dashboard=complete';
+        }
+    </script>
+}

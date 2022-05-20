@@ -33,7 +33,7 @@
                 </li>
             }
             <li role="presentation">
-                <a style="z-index:6;" href="#documents" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
+                <a style="z-index:6;" href="#documents" id="listgetforview" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
             </li>
         </ul>
         <!-- Tab panes -->
@@ -299,11 +299,11 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="documents">
-                <div class="row">
-                    <div class="col-xs-12 table-responsive">
-                        <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered"></table>
-                    </div>
-                </div>
+                @*<div class="row">
+                    <div class="col-xs-12 table-responsive">*@
+                @Html.Partial("CargoTabDocuments")
+                @*</div>
+                    </div>*@
             </div>
             @if (Model.TemplateHeader != null)
             {
@@ -556,4 +556,5 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/Cargo.cshtml.js")"></script>
 }

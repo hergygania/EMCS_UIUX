@@ -43,7 +43,18 @@
 
 <div class="row" style="margin-top:75px;">
     <div class="custom-grid-style">
-        <a class="btn btn-primary" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>&nbsp;
+        @{
+            if (Role.Contains("POSTFINANCEBRANCH") || Role.Contains("POSTPLANTVIEWERFINANCE"))
+            {
+                <a class="btn btn-primary" href="~/Post/HomeFinance?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+            }
+        }
+
+
         <a onclick="DownloadFileRequestAll()" class="btn btn-warning confirm float-right" style="margin-left:10px;" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-download "></i>&nbsp;Download All Doc</a>&nbsp;
         @{
             switch (StepName)
@@ -160,6 +171,7 @@
 @Html.Partial("~/Views/Post/ModalFormCKB.cshtml")
 @Html.Partial("~/Views/Post/ModalConfirm.cshtml")
 @Html.Partial("~/Views/Post/ModalStatusUpdate.cshtml")
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
 @Html.Partial("~/Views/Post/ModalStatusList.cshtml")
 @Html.Partial("~/Views/Post/ModalDocBast.cshtml")
 @Html.Partial("~/Views/Post/ModalDocInv.cshtml")
@@ -171,8 +183,8 @@
 @Html.Partial("~/Views/Post/ModalInvList.cshtml")
 
 @section styles {
-    @Styles.Render("~/Content/POST/Custom.css?_id=" + unixTimestamp)   
-    @Styles.Render("~/Content/POST/bootstrap-table.min.css") 
+    @Styles.Render("~/Content/POST/Custom.css?_id=" + unixTimestamp)
+    @Styles.Render("~/Content/POST/bootstrap-table.min.css")
 }
 
 @section scripts{

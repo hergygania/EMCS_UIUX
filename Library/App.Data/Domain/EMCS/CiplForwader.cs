@@ -29,6 +29,7 @@
         public DateTime? UpdateDate { get; set; }
         public bool IsDelete { get; set; }
         public string Type { get; set; }
+        public string ExportShipmentType { get; set; }
     }
                                                 
 }

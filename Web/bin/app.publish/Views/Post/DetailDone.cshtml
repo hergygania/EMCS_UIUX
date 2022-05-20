@@ -1,0 +1,473 @@
+﻿@{ViewBag.Title = "Detail Po No : 14500124422";}
+<div class="row">
+    <div class="col-md-9">&nbsp;</div>
+    <div class="col-md-3">
+        <div style="border-bottom:1px solid #e8e8e8;width:300px;"><strong>Welcome Back,</strong> PT. MEORA PRIMA SOLUSINDO</div>
+        <div style="width:300px;"><strong>@DateTime.Now.ToString("dd.MM.yyyy HH.mm.ss")</strong></div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12" style="background:white;">
+        <div style="margin-top:10px;">
+            <table id="table-done" class="table table-bordered table-striped" style="background:white;">
+                @*<thead>
+                        <tr>
+                            <th class="text-center" style="vertical-align:middle;">PO No</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">PO Date</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivery Date</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Status</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivery Type</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Confirmation</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Processing</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Delivering</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">BAST</th>
+                            <th class="text-center" style="vertical-align:middle;width:110px;">Invoicing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">14500124422</td>
+                            <td class="text-center">31.01.2020</td>
+                            <td class="text-center">02.02.2020</td>
+                            <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:red;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:red;"><i class="text-primary fa fa-check-circle" /></td>
+                            <td class="text-center text-primary" style="color:red;"><i class="text-primary fa fa-check-circle" /></td>
+                        </tr>
+                    </tbody>*@
+            </table>
+
+            <div style="align-content:center;">
+                <div class="col-md-12" style="margin-top:10px;background:#e8e8e8;padding:10px;margin-bottom:10px;">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control input-sm" name="name" placeholder="Item Name" />
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control input-sm select2" name="status">
+                            <option value="this">On Schedule</option>
+                            <option value="this">Risk Delay</option>
+                            <option value="this">Delay</option>
+                            <option value="this">POD</option>
+                            <option value="this">BAST</option>
+                        </select>
+                    </div>
+
+
+
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-control input-sm select2" name="branch">
+                            <option value="" selected>Branch </option>
+                            <option value="this">BATU HIJAU 1 - TU </option>
+                            <option value="this">BENGKULU - TU</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-2 justify-content-center">
+                        <button class="btn btn-danger bg-gray" style="color:black">Search</button>
+                        <button class="btn btn-primary bg-gray text-black-50" style="color:black;">Refresh</button>
+                        <button class="btn btn-warning bg-gray text-black-50" style="color:black;">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:20px">
+                <div id="table-inprogress">
+                    <table id="table-item" class="table table-bordered" style="width:100%;">
+                        @*<thead>
+                                <tr>
+                                    <td style="height:30px;" class="text-center">Action</td>
+                                    <td style="height:30px;" class="text-center">Item</td>
+                                    <td style="height:30px;" class="text-center">Status</td>
+                                    <td style="height:30px;" class="text-center">Delivery Type</td>
+                                    <td style="height:30px;" class="text-center">Forwarder</td>
+                                    <td style="height:30px;" class="text-center">ETD</td>
+                                    <td style="height:30px;" class="text-center">ATD</td>
+                                    <td style="height:30px;" class="text-center">Original QTY</td>
+                                    <td style="height:30px;" class="text-center">QTY</td>
+                                    <td style="height:30px;" class="text-center">UOM</td>
+                                    <td style="height:30px;" class="text-center">Price / Item</td>
+                                    <td style="height:30px;" class="text-center">Total</td>
+                                    <td style="height:30px;" class="text-center">Destination</td>
+                                    <td style="height:30px;" class="text-center">User</td>
+                                    <td style="height:30px;" class="text-center">Position</td>
+                                    <td style="height:30px;" class="text-center">Notes</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                        <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                    </td>
+                                    <td>Cartridge HP CE285A BLACK / HP 85A</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">FULLY DELIVERY</td>
+                                    <td class="text-center">CKB</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center">5</td>
+                                    <td>EA</td>
+                                    <td class="text-right">800.000</td>
+                                    <td class="text-right">4.000.000</td>
+                                    <td>BATU HIJAU 1 - TU</td>
+                                    <td>SUMIATI</td>
+                                    <td>TOL MERAK</td>
+                                    <td>N/A</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <a class="btn btn-default btn-xs viewNotes" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                    </td>
+                                    <td>Cartridge HP CF287A</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">FULLY DELIVERY</td>
+                                    <td class="text-center">CKB</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">30.07.2020</td>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">2</td>
+                                    <td>EA</td>
+                                    <td class="text-right">2.600.000</td>
+                                    <td class="text-right">3.200.000</td>
+                                    <td>BENGKULU - TU</td>
+                                    <td>FAJRIANSYAH</td>
+                                    <td>BANDUNG</td>
+                                    <td>N/A</td>
+                                </tr>
+                            </tbody>*@
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- Section Tab Third -->
+    </div>
+    <div class="col-md-12">
+        <a href="HomeVendor" class="btn btn-sm"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalViewStatusForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">View Status Notes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top:-20px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-auto">
+                <div class="row">
+                    <div class="col-md-12" style="background-color:white;">
+                        <table id="table-inprogress" class="table table-bordered table-striped" style="background:white;">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="vertical-align:middle;">Date</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Status</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">02.02.2020</td>
+                                    <td class="text-center"><label class="label label-success">ON SCHEDULE</label></td>
+                                    <td class="text-center">N/A</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script>
+        $("#table-po").bootstrapTable();
+        var $tableDone = $('#table-done').bootstrapTable({
+            detailView: false,
+            columns: [
+                {
+                    title: 'No',
+                    field: 'No',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '50',
+
+                },
+
+                {
+                    title: 'PO No',
+                    field: 'PONo',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110'
+
+                },
+                {
+                    title: 'PO Date',
+                    field: 'PODate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Status PO',
+                    field: 'StatusPO',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivery Type',
+                    field: 'DeliveryType',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Confirmation',
+                    field: 'Confirmation',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Processing',
+                    field: 'Processing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivering',
+                    field: 'Delivering',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: ' BAST',
+                    field: 'Bast',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Invoicing',
+                    field: 'Invoicing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Document',
+                    field: 'Document',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+            ],
+            data: dataDone
+        });
+
+        var $tableItem = $('#table-item').bootstrapTable({
+            detailView: false,
+            pagination: true,
+            serverSort: false,
+            columns: [
+                {
+                    title: 'Action',
+                    field: 'Action',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+
+                {
+                    title: 'Item',
+                    field: 'Item',
+                    class: 'text-left',
+                    align: 'left',
+                    width: '350'
+
+                },
+                {
+                    title: 'Status',
+                    field: 'Status',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivery Type',
+                    field: 'DeliveryType',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '180',
+
+                },
+                {
+                    title: 'Forwarder',
+                    field: 'Forwarder',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'ETD',
+                    field: 'ETD',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'ATD',
+                    field: 'ATD',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Original QTY',
+                    field: 'OriginalQty',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: ' QTY',
+                    field: 'Qty',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'UOM',
+                    field: 'Uom',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Price / Item',
+                    field: 'Price',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Total',
+                    field: 'Total',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Destination',
+                    field: 'Destination',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '200',
+
+                },
+                {
+                    title: 'User',
+                    field: 'User',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Position',
+                    field: 'Position',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Notes',
+                    field: 'Notes',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+            ],
+            data: dataItem
+        });
+
+
+        $('.select2').select2();
+        var $tableInprogress = $('#table-done').bootstrapTable({
+            detailView: true,
+            onExpandRow: function (index, row, e) {
+                /* eslint no-use-before-define: ["error", { "functions": false }]*/
+                var childTable = $("#child-table-done").html();
+                e.html(childTable);
+            }
+        })
+
+        $('.deliveryDate').daterangepicker({
+            opens: 'right',
+            locale: {
+                format: 'DD.MMM.YYYY'
+            },
+
+        }, function (start, end) {
+            console.log('start', start._d);
+            var start_date = moment(start._d).format("DD.MM.YYYY");
+            var end_date = moment(end._d).format("DD.MM.YYYY");
+
+            $('.deliveryDate').val(start_date + '-' + end_date);
+        });
+        $('#modalViewStatusForm').hide();
+        $('.viewNotes').click(function () {
+            $('#modalViewStatusForm').modal();
+        })
+    </script>
+}

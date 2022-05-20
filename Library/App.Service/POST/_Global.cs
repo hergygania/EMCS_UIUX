@@ -7,6 +7,10 @@ using System.Data.SqlClient;
 using System.Security.Permissions;
 using System.IO;
 using System.Web;
+using System.Net;
+using System.Text;
+using System.Configuration;
+using App.Data.Domain.POST;
 
 namespace App.Service.POST
 {
@@ -86,6 +90,21 @@ namespace App.Service.POST
 
                 // ReSharper disable once CoVariantArrayConversion
                 var data = db.DbContext.Database.SqlQuery<Select2Result>(@"exec [dbo].[SP_INVNUMBER_SELECT]@Search", parameters).ToList();
+                return data;
+            }
+        }
+        public static List<Select2Result3> GetSelectFileNameInvoice(Int64 id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
+            {
+            
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", id ));
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                // ReSharper disable once CoVariantArrayConversion
+                var data = db.DbContext.Database.SqlQuery<Select2Result3>(@"exec [dbo].[SP_FileNameInvoice_SELECT]@id", parameters).ToList();
                 return data;
             }
         }
@@ -191,6 +210,59 @@ namespace App.Service.POST
             return "";
         }
 
+        public static string UploadFiletoShareFolderKOFAX(HttpPostedFileBase theFile,string path,string FileNameKOFAX,string fileName, Int64 AttachmentId)
+        {
+            string ShareFolderKOFAX = "";            
+            string UserNameFolderKOFAX = ConfigurationManager.AppSettings["UserNameFolderKOFAX"];
+            string PasswordFolderKOFAX =  ConfigurationManager.AppSettings["PasswordFolderKOFAX"];
+            string ApplicationDevelopment = ConfigurationManager.AppSettings["ApplicationDevelopment"];
+            if (ApplicationDevelopment == "True")
+            {
+                ShareFolderKOFAX =  @"\\tuhov036.tu.tmt.co.id\POST\";
+            }
+            else
+            {
+                ShareFolderKOFAX = @"\\tuhov036.tu.tmt.co.id\POST\Production\";
+            }
+            string message = "";
+            bool status = true;
+            string CreateBy = "Application";
+            try
+            {
+                App.Service.Helper.NetworkShare.DisconnectFromShare(ShareFolderKOFAX, true); //Disconnect in case we are currently connected with our credentials;
+
+                App.Service.Helper.NetworkShare.ConnectToShare(ShareFolderKOFAX, UserNameFolderKOFAX, PasswordFolderKOFAX); //Connect with the new credentials
+
+                if (!Directory.Exists(ShareFolderKOFAX))
+                    Directory.CreateDirectory(ShareFolderKOFAX + theFile);
+
+                File.Copy(path + fileName, ShareFolderKOFAX + FileNameKOFAX);
+
+                App.Service.Helper.NetworkShare.DisconnectFromShare(ShareFolderKOFAX, false); //Disconnect from the server.
+                status = true;
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                status = false;
+            }
+
+            using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@AttachmentId", AttachmentId));
+                parameterList.Add(new SqlParameter("@CreateBy", CreateBy));
+                parameterList.Add(new SqlParameter("@Message", message));
+                parameterList.Add(new SqlParameter("@Status", status));
+                SqlParameter[] parameters = parameterList.ToArray();
+                var data = db.DbContext.Database.SqlQuery<string>(@"exec [dbo].[SP_SaveKOFAXLog]  @AttachmentId,@CreateBy,@Message,@Status", parameters).FirstOrDefault();
+            }
+
+            return "";
+        }
+
+
         [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
         public static string CreateShareFolderBupot(string rootFolder, DateTime uploadDate, string code)
         {
@@ -212,6 +284,31 @@ namespace App.Service.POST
             {
                 return ex.Message;
             }
+        }
+
+
+        public static string SaveErrorUploadKOFAX(Int64 AttachmentId, string ErrorMessage)
+        {
+
+            using (var db = new Data.POSTContext())
+            {
+                var failedkofax = new KOFAXUploadLog();
+                var data = (from p in db.KOFAXUploadLog where p.AttachmentId == AttachmentId select p).FirstOrDefault();
+                if (data != null)
+                {
+                    data.ErrorMessage = ErrorMessage;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    failedkofax.AttachmentId = AttachmentId;
+                    failedkofax.ErrorMessage = ErrorMessage;
+                    failedkofax.CreatedDate = DateTime.Now;
+                    db.KOFAXUploadLog.Add(failedkofax);
+                    db.SaveChanges();
+                }
+            }
+            return "";
         }
 
     }

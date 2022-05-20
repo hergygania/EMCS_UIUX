@@ -1,0 +1,308 @@
+﻿@model  App.Data.Domain.MasterCustomer
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title Master Customer</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Default input -->
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">Customer Name</label>
+                    <div class="input-group col-md-7">
+                        @Html.TextBoxFor(m => m.CUSTOMERNAME, new { @class = "form-control required", placeholder = "Customer Name" })
+
+                        <div>@Html.ValidationMessageFor(m => m.CUSTOMERNAME)</div>
+                        @Html.TextBoxFor(m => m.CUSTOMER_ID, new { @class = "form-control required", placeholder = "Customer ID", })
+                    </div>
+                </div>
+
+                <!-- Default input -->
+            </div>
+        </div>
+        <div class="row" id="custdetailselect">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Add Customer Detail</label>
+                    <div class="input-group col-md-7">
+                        <select id="CustomerDetail" multiple="multiple" name="CustomerDetail" style="width:230px" data-placeholder="Select.."></select>
+                        @*@Html.DropDownListFor(m => m.CustomerID2, new SelectList(Enumerable.Empty<SelectListItem>()), "", new { @class = "js-states form-control", @style = "display:none" })*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="custdetailform">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div id="toolbar">
+                    <button type="button" class="btn btn-warning" onclick="SaveCustDetail();" id="btnCreate" style="width:200px;">
+                        <i class="fa fa-plus-square"></i> Add Customer Detail
+                    </button>
+                </div>
+                <div class="">
+                    <table id="GUserrole"
+                           class="table table-bordered"
+                           data-toolbar="#toolbar"></table>
+                </div>
+                <!-- /.box -->
+
+            </div>
+        </div>
+        <div class="nav-tabs-custom nav-justified">
+
+            <!-- /.tab-content -->
+        </div>
+
+    </div>
+
+
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" id="btnCloseiudcust" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+}
+
+<script>
+    var mode = '@mode';
+    if (mode != 'I') $("#ID").attr('readonly', 'readonly');
+    window.operateEvents2 = {
+        'click .Delete': function (e, value, row, index) {
+            swal({
+                title: "Are you sure want to delete this data?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F56954",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    sweetAlert.close();
+                    return deleteDetailThis(row.CUSTOMER_ID);
+                }
+            });
+        }
+    };
+    $(document).ready(function () {
+        $('#CUSTOMER_ID').hide()
+        if ($('#CUSTOMER_ID').val() > 0) {
+            $('#custdetailform').show();
+            $('#custdetailselect').show();
+
+        }
+        else {
+            $('#custdetailform').hide();
+            $('#custdetailselect').hide();
+        }
+        selectAll = function (obj, fld) {
+            $("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+        };
+
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        CreateTableMasterCustomerDetail();
+        //$('#CustomerDetail').select2({
+        //    data: [{ id: 1 + '#' + 'Group Head', text: 'Arcd Prod 1' }, { id: 2+ '#' + 'Division Head', text: 'Arcd Prod 2' }, { id: 3+ '#' + 'Sales Lead', text: 'Arcd Prod 3' }]//, { id: 4, text: 'Sales' }
+        //});
+        var customer = new mySelect2({
+            id: 'CustomerDetail',
+            url: '/Picker/SelectToCustomerDBS'
+        }).load();
+
+    });
+
+   
+    function CreateTableMasterCustomerDetail() {
+        var $table = $('#GUserrole');
+        $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
+
+        //Date picker
+        $('#datePicker').daterangepicker();
+        $('.date').datepicker({
+            container: '#boxdate'
+        });
+
+        var width = $(".select2-container--default").width() - 5;
+        $(".select2-container--default").css('width', width + 'px');
+
+
+        $table.bootstrapTable({
+            cache: false,
+            pagination: false,
+            search: false,
+            striped: true,
+            clickToSelect: true,
+            reorderableColumns: true,
+            toolbarAlign: 'left',
+            onClickRow: selectRow,
+            sidePagination: 'server',
+            showColumns: false,
+            showRefresh: true,
+            smartDisplay: false,
+            pageSize: '5',
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [{
+                field: 'action',
+                title: 'Action',
+                width: '180px',
+                align: 'center',
+                formatter: operateFormatter({ Delete: Boolean($AllowDelete) }),
+                events: operateEvents2,
+                switchable: false
+            }, {
+                field: 'CUSTOMER_ID',
+                title: 'Customer ID',
+                halign: 'center',
+                align: 'center',
+                sortable: true
+            }, {
+                field: 'CUSTOMERNAME',
+                title: 'Customer Name',
+                halign: 'center',
+                align: 'left',
+                sortable: true
+            }]
+        });
+
+        window.pis.table({
+            objTable: $table,
+            urlSearch: '/cat/MasterCustomerDetailPage?headerid=' + $('#CUSTOMER_ID').val(),
+            urlPaging: '/cat/MasterCustomerDetailPageXt?headerid=' + $('#CUSTOMER_ID').val(),
+            autoLoad: true
+        });
+        $("#mySearch").insertBefore($("[name=refresh]"))
+
+
+    }
+
+    function operateFormatter(options) {
+        var btn = [];
+
+        btn.push('<div class="btn-group">');
+       
+        if (options.Delete == true)
+            btn.push('<button type="button" class="btn btn-danger Delete" title="Delete"><i class="fa fa-trash-o"></i></button>');
+
+        btn.push('</div>');
+
+        return btn.join('');
+    }
+
+    operateFormatter.DEFAULTS = {
+        Add: false,
+        Edit: false,
+        Delete: false,
+        Info: false,
+        View: false,
+        History: false
+    }
+
+    
+
+
+    function deleteDetailThis(id) {
+        var data = {
+            'id': id,
+            'headerid': $('#CUSTOMER_ID').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: myApp.root + 'cat/MasterCustomerDetailDelete',
+            beforeSend: function () { $('.fixed-table-toolbar').hide(); $('.fixed-table-loading').show(); },
+            complete: function () { $('.fixed-table-toolbar').show(); $('.fixed-table-loading').hide(); },
+            data: data,
+            dataType: "json",
+            success: function (d) {
+                if (d.Msg != undefined) {
+                    sAlert('Success', d.Msg, 'success');
+                }
+                $("[name=refresh]").trigger('click');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
+            }
+        });
+
+    };
+
+    function SaveCustDetail() {
+
+        var CustomerDetail = $("#CustomerDetail option:selected").text();
+        if (CustomerDetail != null) {
+            CustomerDetail = CustomerDetail.toString();
+        }
+        else {
+            sAlert('Validation Info', 'Please Select Customer', 'info');
+            return;
+        }
+
+        var data = {
+            'custdetailid': CustomerDetail,
+            'headerid': $('#CUSTOMER_ID').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: myApp.root + 'cat/MasterCustomerDetailCreate',
+            beforeSend: function () { $('.fixed-table-toolbar').hide(); $('.fixed-table-loading').show(); },
+            complete: function () { $('.fixed-table-toolbar').show(); $('.fixed-table-loading').hide(); },
+            data: data,
+            dataType: "json",
+            success: function (d) {
+                if (d.Msg != undefined) {
+                    sAlert('Success', d.Msg, 'success');
+
+                }
+                $("[name=refresh]").trigger('click');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
+            }
+        });
+    }
+
+</script>

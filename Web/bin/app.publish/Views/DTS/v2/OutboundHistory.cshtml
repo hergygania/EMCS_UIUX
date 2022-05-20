@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "Outbound Tracking";
+}
+
+@using System.Web.Mvc
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Outbound Tracking History</h4>
+</div>
+
+<div class="modal-body" style="min-height:470px;">
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="box box-custom delivery-profile">
+                            <div class="box-header with-border">
+                                <span class="box-title">DELIVERY PROFILE</span>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">UNIT TYPE<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">Machine</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">SN<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">WE208240</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">MODEL<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">305.5E2</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">BATCH<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">305.5E2</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">ETD<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">19-Jun-2019</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">ATD<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">19-Jun-2019</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">ETA<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">19-Jun-2019</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 col-xs-12 control-label">ATA<span class="hidden-xs pull-right">: </span></label>
+                                            <div class="col-md-8 col-xs-12">
+                                                <label class="control-label DetailView">19-Jun-2019</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="bootstrap-table">
+                            <div class="fixed-table-toolbar"></div>
+                            <div class="fixed-table-container" style="padding-bottom: 0px;">
+                                <div class="fixed-table-header" style="display: none;">
+                                    <table></table>
+                                </div>
+                                <div class="fixed-table-body">
+                                    <div class="fixed-table-loading" style="top: 43px;">Loading, please wait...</div>
+                                    <table id="tableOuboundUnit0" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-nowrap" style="text-align: center; width: 75px; " data-field="ID">
+                                                    <div class="th-inner sortable both">No</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="Type">
+                                                    <div class="th-inner sortable both">ACTION</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="SN">
+                                                    <div class="th-inner sortable both">STATUS</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="Model">
+                                                    <div class="th-inner sortable both">POSITION</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="Batch">
+                                                    <div class="th-inner sortable both">NOTES</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="Batch">
+                                                    <div class="th-inner sortable both">ATTACHMENT</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="ETD">
+                                                    <div class="th-inner sortable both">UPDATED ON</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th class="text-nowrap" style="text-align: left; " data-field="ATD">
+                                                    <div class="th-inner sortable both">APDATED BY</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-index="0">
+                                                <td class="text-nowrap" style="text-align: center; width: 75px; ">1</td>
+                                                <td class="text-nowrap" style="text-align: left; ">PICK UP</td>
+                                                <td class="text-nowrap" style="text-align: left; ">On Schedule</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Banjarmasin</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">19-Jun-19 10:30</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Teddy Sinaga</td>
+                                            </tr>
+                                            <tr data-index="0">
+                                                <td class="text-nowrap" style="text-align: center; width: 75px; ">2</td>
+                                                <td class="text-nowrap" style="text-align: left; ">PICK UP</td>
+                                                <td class="text-nowrap" style="text-align: left; ">On Schedule</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Banjarmasin</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">19-Jun-19 10:30</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Teddy Sinaga</td>
+                                            </tr>
+                                            <tr data-index="0">
+                                                <td class="text-nowrap" style="text-align: center; width: 75px; ">3</td>
+                                                <td class="text-nowrap" style="text-align: left; ">PICK UP</td>
+                                                <td class="text-nowrap" style="text-align: left; ">On Schedule</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Banjarmasin</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">19-Jun-19 10:30</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Teddy Sinaga</td>
+                                            </tr>
+                                            <tr data-index="0">
+                                                <td class="text-nowrap" style="text-align: center; width: 75px; ">4</td>
+                                                <td class="text-nowrap" style="text-align: left; ">PICK UP</td>
+                                                <td class="text-nowrap" style="text-align: left; ">On Schedule</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Banjarmasin</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">19-Jun-19 10:30</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Teddy Sinaga</td>
+                                            </tr>
+                                            <tr data-index="0">
+                                                <td class="text-nowrap" style="text-align: center; width: 75px; ">5</td>
+                                                <td class="text-nowrap" style="text-align: left; ">PICK UP</td>
+                                                <td class="text-nowrap" style="text-align: left; ">On Schedule</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Banjarmasin</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">-</td>
+                                                <td class="text-nowrap" style="text-align: left; ">19-Jun-19 10:30</td>
+                                                <td class="text-nowrap" style="text-align: left; ">Teddy Sinaga</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="fixed-table-footer" style="display: none;">
+                                    <table style="table-layout:fixed">
+                                        <tbody>
+                                            <tr></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="fixed-table-pagination">
+                                    <div class="pull-right pagination-detail">
+                                        <span class="pagination-info">Displaying 1 to 5 of 10 rows</span><span class="page-list">
+                                            <span class="btn-group dropup">
+                                                <button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown"><span class="page-size">5</span> <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu" onchange="undefined">
+                                                    <li><a href="javascript:void(0)">5</a></li>
+                                                    <li><a href="javascript:void(0)">10</a></li>
+                                                    <li><a href="javascript:void(0)">25</a></li>
+                                                    <li><a href="javascript:void(0)">50</a></li>
+                                                    <li><a href="javascript:void(0)">100</a></li>
+                                                </ul>
+                                            </span> rows/page
+                                        </span>
+                                    </div>
+                                    <div class="pull-left pagination">
+                                        <ul class="pagination">
+                                            <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
+                                            <li class="page-pre disabled"><a href="javascript:void(0)">‹</a></li>
+                                            <li class="page-number"><a style="padding:0.5px">&nbsp;&nbsp; Page : <input id="page" type="text" value="1" min="1" max="2">&nbsp; of 2 &nbsp;&nbsp;</a></li>
+                                            <li class="page-next"><a href="javascript:void(0)">›</a></li>
+                                            <li class="page-last"><a href="javascript:void(0)">»</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

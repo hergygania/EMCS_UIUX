@@ -125,6 +125,7 @@
                     <span class="input-group-btn btn-refNo">
                         <button type="button" class="btn btn-warning btn-flat" onclick="referenceClick()"><i class="fa fa-search"></i></button>
                         <button type="button" class="btn btn-default btn-flat" onclick="referenceReset()">Clear</button>
+                        <button type="button" id ="btnhistory"class="btn btn-default btn-flat" onclick="viewhistoryreroute()"><i class="fa fa-history"></i></button>
                     </span>
                 </div>
                 @*<div for="refNo" id="refDate">DATE:</div>*@
@@ -212,7 +213,7 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-7">
-                                            <div class="form-group">
+                                            <div class="form-group" id="newcustName">
                                                 <label for="CustID" class="control-label col-md-4 col-xs-12">Customer Name</label>
                                                 <div class="input-group col-md-8 col-xs-12">
                                                     <select id="CustID" required name="CustID" class="select2Field"></select>
@@ -220,10 +221,17 @@
                                                     <div for="CustID" class="error">This field is required</div>
                                                 </div>
                                             </div>
+                                            <div class="form-group" id="oldcustNamegroup" hidden="hidden">
+                                                <label for="PicName" class="control-label col-md-4 col-xs-12">Customer Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control"  id="OldCustName" name="OldCustName"  />
+                                                   
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="PicName" class="control-label col-md-4 col-xs-12">Customer PIC Name*</label>
                                                 <div class="input-group col-md-8 col-xs-12">
-                                                    <input class="form-control" id="PicName" name="PicName" required  placeholder="Nama PIC customer/penerima unit" />
+                                                    <input class="form-control" id="PicName" name="PicName" required placeholder="Nama PIC customer/penerima unit" />
                                                     <div for="PicName" class="error">This field is required</div>
                                                 </div>
                                             </div>
@@ -435,8 +443,8 @@
                                             <div class="form-group">
                                                 <label for="IsDemob" class="control-label">Mobilization/Demobilization*</label>
                                                 <div class="radio">
-                                                    <label><input name="IsDemob" id="IsDemob" required value="true" type="radio" /> YES</label><br />
-                                                    <label><input name="IsDemob" id="IsDemob" required value="false" type="radio" /> NO</label><br />
+                                                    <label><input name="IsDemob" id="IsDemob" required value="true" type="radio" /> YES ( Unit RUE / UE ) </label><br />
+                                                    <label><input name="IsDemob" id="IsDemob" required value="false" type="radio" /> NO { Unit PP ) </label><br />
                                                 </div>
                                                 <div for="IsDemob" class="error">This field is required</div>
                                             </div>
@@ -705,6 +713,7 @@
                                                     <label><input name="SendEmailToServiceTUBatuLicin" value="true" type="checkbox" /> MAIL TO SERVICE TU BATU LICIN</label><br />
                                                     <label><input name="SendEmailToServiceTUSangatta" value="true" type="checkbox" /> MAIL TO SERVICE TU SANGATTA</label><br />
                                                     <label><input name="SendEmailToServiceTUKendari" value="true" type="checkbox" /> MAIL TO SERVICE TU KENDARI</label><br />
+                                                    <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -813,7 +822,7 @@
                 <button id="Revise" name="Revise" class="processForm btn-form btn btn-info" type="button"><i class="fa fa-reply"></i> Revise</button>
                 <button id="Approve" name="Approve" class="processForm btn-form btn btn-primary" type="button"><i class="fa fa-cog"></i> Approve</button>
                 <button id="Complete" name="Complete" class="processForm btn-form btn btn-success" type="button"><i class="fa fa-check-circle"></i> Complete</button>
-                <button id="ReRoute" name="ReRoute" class="processForm btn-form btn btn-success" type="button" disabled="disabled"><i class="fa fa-check-circle"></i> Re-Route</button>
+                <button id="ReRoute" name="ReRoute" class="processForm btn-form btn btn-success" type="button" disabled="disabled"><i class="fa fa-check-circle"></i>Request Re-Route</button>
                 <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModal();"><i class="fa fa-arrow-left"></i> Close</button>
             </div>
         </div>

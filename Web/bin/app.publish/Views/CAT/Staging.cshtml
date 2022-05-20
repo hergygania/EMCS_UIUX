@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Staging History";
+}
+
+@using System.Web.Mvc
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Select Table Staging</label>
+                                <div class="input-group col-lg-4 col-xs-4">
+                                    <select class="js-states form-control" id="selectstagingtable">
+                                        <option value="BLANK">Blank</option>
+                                        <option value="Staging4Bn48R">4B</option>
+                                        <option value="StagingInventoryAdjustment">Inventory Adjustment</option>
+                                        <option value="StagingCORE">CORE</option>
+                                        <option value="StagingCreateBER">BER</option>
+                                        <option value="StagingCreateJC">CreateJC</option>
+                                        <option value="StagingCreateMO">CreateMO</option>
+                                        <option value="StagingCreateSQ">CreateSQ</option>
+                                        <option value="StagingCreateST">CreateST</option>
+                                        <option value="StagingCreateWIP">CreateWIP</option>
+                                        <option value="StagingDeleteDocRW">DeleteDocRW</option>
+                                        <option value="StagingDeleteMO">DeleteMO</option>
+                                        <option value="StagingReceivedMO">ReceivedMO</option>
+                                        <option value="StagingReceivedST">ReceivedST</option>
+                                        <option value="StagingSales500">Sales 500</option>
+                                        <option value="StagingSales800">Sales 800</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Select Table Staging</label>
+                                <div class="col-lg-4 col-xs-4">
+                                    <input id="StagingDateid" name="StagingDateid" type="text" onchange="datechange()" class="form-control" placeholder="Last Update Date">
+                                    <div class="input-group-addon StagingDate" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="col-md-12" id="div4Bn48R">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableStaging"></table>
+                        </div>
+                        <div class="col-md-12" id="divIA">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableIA"></table>
+                        </div>
+                        <div class="col-md-12" id="divCore">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableCORE"></table>
+                        </div>
+                        <div class="col-md-12" id="divBER">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableBER"></table>
+                        </div>
+                        <div class="col-md-12" id="divJC">
+                            @*<hr>*@
+                          
+                            <table class="table table-bordered" id="tableJC"></table>
+                        </div>
+                        <div class="col-md-12" id="divMO">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableMO"></table>
+                        </div>
+                        <div class="col-md-12" id="divSQ">
+                            @*<hr>*@
+                           
+                            <table class="table table-bordered" id="tableSQ"></table>
+                        </div>
+                        <div class="col-md-12" id="divST">
+                            @*<hr>*@
+                           
+                            <table class="table table-bordered" id="tableST"></table>
+                        </div>
+                        <div class="col-md-12" id="divWIP">
+                            @*<hr>*@
+                           
+                            <table class="table table-bordered" id="tableWIP"></table>
+                        </div>
+                        <div class="col-md-12" id="divDelRW">
+                            @*<hr>*@
+                           
+                            <table class="table table-bordered" id="tableDelRW"></table>
+                        </div>
+                        <div class="col-md-12" id="divDelMO">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableDelMO"></table>
+                        </div>
+                        <div class="col-md-12" id="divReceivedMO">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableReceivedMO"></table>
+                        </div>
+                        <div class="col-md-12" id="divReceivedST">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="tableReceivedST"></table>
+                        </div>
+                        <div class="col-md-12" id="div500">
+                            @*<hr>*@
+                            
+                            <table class="table table-bordered" id="table500"></table>
+                        </div>
+                        <div class="col-md-12" id="div800">
+                            @*<hr>*@
+                           
+                            <table class="table table-bordered" id="table800"></table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/CAT/StagingHistory.js")"></script>
+}
+

@@ -1,0 +1,30 @@
+﻿@model System.Text.StringBuilder
+@{
+    Layout = null;
+		string title= ViewBag.Title+"";
+		string filenm =  title.Replace(" ","_")+".xls";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="Excel Workbook Frameset">
+	<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<meta http-equiv=Content-Disposition content="attachment; filename=@filenm">
+	<title>@title</title>
+</head>
+<body>
+		@{
+			Response.ClearHeaders();
+			Response.ClearContent();
+			Response.Cache.SetCacheability(HttpCacheability.NoCache);
+			//Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			Response.ContentType = "application/vnd.ms-excel;";
+			Response.AddHeader("content-disposition", "attachment; filename=" + filenm);
+			Response.Charset = "";
+			Response.Write(Model.ToString());
+			Response.Flush();
+			Response.End();
+			}
+</body>
+</html>

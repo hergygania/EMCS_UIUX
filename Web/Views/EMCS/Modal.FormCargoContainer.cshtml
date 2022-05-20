@@ -17,7 +17,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="modal-body">
+    <div class="modal-body" id="checkcn">
         <div class="row">
             <div class="form-group" style="margin-bottom:40px !important;">
                 <div class="col-md-6">
@@ -30,14 +30,14 @@
                     <div class="form-group">
                         <label class="col-md-3">Container Type</label>
                         <div class="input-group col-md-9">
-                            <select id="ContainerType" name="ContainerType" readonly class="select2" required style="width:100%;"></select>
+                            <select id="ContainerType" name="ContainerType" readonly class="select2" style="width:100%;"></select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-md-3">Seal Number</label>
-                        <div class="input-group col-md-9">
+                        <div class="input-group col-md-9" id="disablesealno">  
                             @Html.TextBoxFor(m => m.Container.SealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
                         </div>
                     </div>
@@ -84,12 +84,14 @@
     $tableContainer = $("#tableAddCargo");
     var mode = '@mode';
     var IdCargo = $("#CargoId").val();
-
+    $('#ContainerSealNumber').val('');
     if (mode != 'I')
         $("#ID").attr('readonly', 'readonly');
 
     $(document).ready(function () {
+
         $(".btnAddItem").on("click", function (e) {
+            debugger;
             e.preventDefault();
             var value = $("#ItemListData").select2('data')[0];
             console.log('alimutasal line 95 :', value);
@@ -450,4 +452,105 @@
             }
         });
     });
+
+    //let timeoutID = null;
+
+    //     function findMember(str) {
+    //        console.log('search: ' + str)
+    //    }
+
+    $('#ContainerNumber').keyup('click', function (e) {
+        debugger
+
+        var obj = "";
+        let IdCargo = $('#CargoID').val();
+        let ContainerNumber = $('#ContainerNumber').val();
+
+
+        $.ajax({
+            url: "/emcs/CheckCNNo",
+            type: 'POST',
+            data: {
+                IdCargo,
+                ContainerNumber,
+
+            },
+            cache: false,
+            async: false,
+            success: function (data, response) {
+                debugger;
+                if(data.length == 0)
+                {
+                    $("#ContainerSealNumber").val(null);
+                    $('#select2-ContainerType-container')[0].innerText = null;
+                }
+                else
+                {
+                    $("#CargoID").val(data[0].IdCargo),
+                    $("#CargoId").val(data[0].IdCargo),
+
+                    $("#ContainerNumber").val(data[0].ContainerNumber),
+                    //$("#ContainerType").val(data[0].ContainerType),
+                    // $('#ContainerType').append('<option selected value="20' Fuel Tank Container">' + data[0].ContainerType + '</option>'),
+                    //$('#ContainerType option:contains(' + data[0].ContainerType + ')').attr('selected', 'selected');
+                    $("#ContainerSealNumber").val(data[0].ContainerSealNumber)
+                    debugger;
+                    if(($('#ContainerSealNumber').val()) != null) {
+                    $('#disablesealno').prop('disabled', true)
+        }
+        $('#ContainerType option:eq(' + data[0].ContainerType + ')').attr('selected', 'selected');
+        $('#select2-ContainerType-container')[0].innerText = data[0].ContainerType;
+        if (($('#select2-ContainerType-container')[0].innerText) == null) {
+            $('#disablesealno').prop('disabled', true)
+        }
+            }
+               
+                
+            },
+            error: function (e) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Fail Get Data ContainerNumber',
+                })
+            }
+
+        });
+    });
+    //function getcargotype(val) {
+    //    debugger
+    //    let cargotype = val;
+
+    //    $.ajax({
+    //        url: "/emcs/GetCargotype",
+    //        data: {
+    //            cargotype
+    //        },
+    //        success: function (data, response) {
+    //            debugger;
+    //            $("#ContainerType").val(data[0].Desciption),
+    //                $('#ContainerType').val(data)
+    //        },
+    //        error: function (e) {
+    //            debugger;
+    //            Swal.fire({
+    //                type: 'error',
+    //                title: 'Oops...',
+    //                text: 'Something went wrong! Fail Get Data getcargotype' ,
+    //            })
+
+    //        }
+    //    })
+
+
+    //};
 </script>
+@section scripts
+{
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/Cargo.cshtml.js")
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoForm.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

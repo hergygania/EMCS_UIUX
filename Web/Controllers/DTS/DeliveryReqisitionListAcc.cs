@@ -52,9 +52,9 @@ namespace App.Web.Controllers.DTS
         public ActionResult DeliveryRequisitionListView()
         {
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
-            ViewBag.AllowCreate = false; // AuthorizeAcces.AllowCreated;
-            ViewBag.AllowUpdate = false; //AuthorizeAcces.AllowUpdated;
-            ViewBag.AllowDelete = false; //AuthorizeAcces.AllowDeleted;
+            ViewBag.AllowCreate = false; 
+            ViewBag.AllowUpdate = false; 
+            ViewBag.AllowDelete = false;
 
             Session["AllowRead_DeliveryRequisitionAcc"] = AuthorizeAcces.AllowRead;
             Session["AllowCreated_DeliveryRequisitionAcc"] = AuthorizeAcces.AllowCreated;
@@ -98,7 +98,16 @@ namespace App.Web.Controllers.DTS
                 {
                     item.IsDemob = true;
                 }
-                item.Status = status.ToLower();
+                if (item.Status == "rerouted")
+                {
+                    item.Status = "request rerouted";
+                }
+                else
+                {
+                    item.Status = status.ToLower();
+                }
+
+               
                 item.ExpectedTimeLoading = formColl.ExpectedTimeLoading;
                 item.ExpectedTimeArrival = formColl.ExpectedTimeArrival;
                 if (item.Status.ToLower() == "reject" || item.Status.ToLower() == "revise")
@@ -115,8 +124,7 @@ namespace App.Web.Controllers.DTS
                     
                 }
                 if (item.Status.ToLower() == "approve")
-                {
-                    //item.SendEmailToCkb = formColl.SendEmailToCkb;
+                {                   
                     item.SendEmailToCkbBalikpapan = formColl.SendEmailToCkbBalikpapan;
                     item.SendEmailToCkbBanjarmasin = formColl.SendEmailToCkbBanjarmasin;
                     item.SendEmailToCkbCakungStandartKit = formColl.SendEmailToCkbCakungStandartKit;
@@ -134,11 +142,9 @@ namespace App.Web.Controllers.DTS
                 item.SendEmailToSurabaya = formColl.SendEmailToSurabaya;
                 item.SendEmailToBanjarMasin = formColl.SendEmailToBanjarMasin;
                 item.SendEmailToCileungsi = formColl.SendEmailToCileungsi;
-                //item.SendEmailToPalembang = formColl.SendEmailToPalembang;
-                //item.SendEmailToPekanBaru = formColl.SendEmailToPekanBaru;
+              
                 //TU CKB
-                //item.SendEmailToCkbAllArea = formColl.SendEmailToCkbAllArea;
-                //item.SendEmailToCKBCakung = formColl.SendEmailToCKBCakung;
+               
                 item.SendEmailToCkbSurabaya = formColl.SendEmailToCkbSurabaya;
                 item.SendEmailToCkbMakassar = formColl.SendEmailToCkbMakassar;         
                 item.SendEmailToCkbCakungStandartKit = formColl.SendEmailToCkbCakungStandartKit;        
@@ -167,12 +173,13 @@ namespace App.Web.Controllers.DTS
                 item.SendEmailToServiceTUBatuLicin = formColl.SendEmailToServiceTUBatuLicin;
                 item.SendEmailToServiceTUSangatta = formColl.SendEmailToServiceTUSangatta;
                 item.SendEmailToServiceTUKendari = formColl.SendEmailToServiceTUKendari;
+                item.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;
                 if (ModelState.IsValid)
                 {
                     Service.DTS.DeliveryRequisition.crud(item, "U");
                     ViewBag.crudMode = "U";
                     sendingEmailDR(item.Status, item.ID);
-                    //if (item.Status.ToLower() == "approve" && item.SendEmailToCkb == true)
+                   
                     if (item.Status.ToLower() == "approve" )
                     {
                         sendingEmailDR(item.ID, "APPROVE_CKB_DR");
@@ -219,12 +226,31 @@ namespace App.Web.Controllers.DTS
                         header.SupportingDocument3 = Attachment1;
                         header.SupportingDocument4 = Attachment2;
                     }
+                    if (header.Status == "rerouted")
+                    {
 
+                        Tuple<bool, Object> result1 = DoUpload(Request.Files["SDOC"], null, header.ID.ToString());
+                        if (result1.Item1 == true)
+                        {
+                            header.SupportingDocument2 = result1.Item2.ToString();
+                        }
+
+                        result1 = DoUpload(Request.Files["SDOC1"], null, header.ID.ToString());
+                        if (result1.Item1 == true)
+                        {
+                            header.SupportingDocument2 = result1.Item2.ToString();
+                        }
+
+                        result1 = DoUpload(Request.Files["SDOC2"], null, header.ID.ToString());
+                        if (result.Item1 == true)
+                        {
+                            header.SupportingDocument2 = result1.Item2.ToString();
+                        }
+                    }
                     header.ModaTransport = formColl.ModaTransport;
-                    //header.SendEmailToCkb = formColl.SendEmailToCkb;
+                   
                     //CKB
-                    //header.SendEmailToCkbAllArea = formColl.SendEmailToCkbAllArea;
-                    //header.SendEmailToCKBCakung = formColl.SendEmailToCKBCakung;
+                  
                     header.ExpectedTimeArrival = formColl.ExpectedTimeArrival;
                     header.ExpectedTimeLoading = formColl.ExpectedTimeLoading;
                     header.SendEmailToCkbSurabaya = formColl.SendEmailToCkbSurabaya;
@@ -264,7 +290,7 @@ namespace App.Web.Controllers.DTS
                     header.SendEmailToServiceTUBatuLicin = formColl.SendEmailToServiceTUBatuLicin;
                     header.SendEmailToServiceTUSangatta = formColl.SendEmailToServiceTUSangatta;
                     header.SendEmailToServiceTUKendari = formColl.SendEmailToServiceTUKendari;
-
+                    header.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;                   
                     header.SendEmailNotes = formColl.SendEmailNotes;
                     header.ForceComplete = formColl.ForceComplete;
                     header.ActivityTracking = "Pick Up";
@@ -278,7 +304,12 @@ namespace App.Web.Controllers.DTS
                 {
                     var item = Service.DTS.DeliveryRequisition.GetId(id);
                     var status = "";
-                    if (item.Status == "approve" || item.Status == "booked" || item.Status == "rerouted")
+                    if (item.Status == "approve" || item.Status == "booked")
+                    {
+                        status = "complete";
+                        item.Status = status.ToLower();
+                    }
+                    else if (item.Status == "rerouted")
                     {
                         status = "complete";
                         item.Status = status.ToLower();
@@ -322,7 +353,7 @@ namespace App.Web.Controllers.DTS
         {
             try
             {
-                var formType = "U"; // formColl.formType;
+                var formType = "U";
                 formColl.ExpectedTimeLoading = (formColl.ExpectedTimeLoading == null) ? DateTime.Now : formColl.ExpectedTimeLoading;
                 formColl.ExpectedTimeArrival = (formColl.ExpectedTimeArrival == null) ? DateTime.Now : formColl.ExpectedTimeArrival;
 
@@ -331,10 +362,6 @@ namespace App.Web.Controllers.DTS
                 header.RefNo = formColl.RefNo;
                 header.SoNo = formColl.SoNo;
                 header.SoDate = formColl.SoDate;
-                //header.STRNo = formColl.STRNo;
-                //header.STRDate = formColl.STRDate;
-                //header.DINo = formColl.DINo;
-                //header.DIDate = formColl.DIDate;
                 header.CustID = formColl.CustID;
                 header.CustName = formColl.CustName;
                 header.CustAddress = formColl.CustAddress;

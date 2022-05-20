@@ -28,4 +28,26 @@ namespace App.Data.Domain.POST
 
         public bool isTotal { get; set; }
     }
+
+    public class SearchHeaderInvoice
+    {
+        public string PoNo { get; set; }
+
+        public string startInvoiceUploadDate { get; set; }
+
+        public string endInvoiceUploadDate { get; set; }
+
+        public string startInvoicePostingDate { get; set; }
+
+        public string endDateInvoicePostingDate { get; set; }
+
+        public int limit { get; set; }
+
+        public int offset { get; set; }
+
+        public string sort { get; set; }
+
+        public string order { get; set; }
+       
+    }
 }

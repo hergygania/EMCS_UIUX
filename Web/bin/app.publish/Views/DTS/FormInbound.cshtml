@@ -1,0 +1,300 @@
+﻿@{
+    ViewBag.Title = "Create Inbound Shipment";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    .btn-form {
+        width: 100px;
+    }
+</style>
+<div class="row" id="formType" data-value="@(ViewBag.formType)">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="box-body">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <form class="form-horizontal" method="post" id="formCreateInbound">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12 box-body">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="ajuNo" class="col-md-3 col-xs-12 control-label">AJU No</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input id="formTypeName" class="hidden" value="@(ViewBag.formType)" />
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.AjuNo : "")" class="form-control" id="AjuNo" name="AjuNo" placeholder="AJU Number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="msoNo" class="col-md-3 col-xs-12 control-label">MSO No</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.MSONo : "")" class="form-control" id="MSONo" name="MSONo" placeholder="MSO Number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">PO No</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.PONo : "")" class="form-control" id="PONo" name="PONo" placeholder="PO Number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">PO Date</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input class="form-control date" value="@(ViewBag.formType == "edit" ? ViewBag.detail.PODate : "")" id="PODate" name="PODate" placeholder="PO Date" />
+                                                            @*<input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.PONo : "")" class="form-control" id="PONo" name="PONo" placeholder="PO Number">*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Loading Port</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.LoadingPort : "")" class="form-control" id="LoadingPort" name="LoadingPort" placeholder="POL">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Discharge Port</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DischargePort : "")" class="form-control" id="DischargePort" name="DischargePort" placeholder="Discharge Port">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Status</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Status : "")" class="form-control" id="Status" name="Status" placeholder="Status Shipment">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Serial Number</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.SerialNumber : "")" class="form-control" name="SerialNumber" placeholder="Serial Number" id="SerialNumber">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Batch Number</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.BatchNumber : "")" class="form-control" name="BatchNumber" placeholder="Batch Number" id="BatchNumber">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Model</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Model : "")" class="form-control" id="Model" name="Model" placeholder="Model">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Plant</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Plant : "")" class="form-control" id="Plant" name="Plant" placeholder="Plant">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Model Description</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.ModelDescription : "")" class="form-control" id="ModelDescription" name="ModelDescription" placeholder="Model Description">
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="form-group">
+                                                            <label for="email" class="col-md-3 col-xs-12 control-label">ATA Port</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <input type="text" value="@(ViewBag.formType == "edit" ? Convert.ToDateTime(ViewBag.detail.ATAPort).ToString("dd MMM yyyy") : "")" class="form-control date" name="ATAPort" placeholder="ATA Port" id="ATAPort">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email" class="col-md-3 col-xs-12 control-label">ETA Port</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <input type="text" value="@(ViewBag.formType == "edit" ? Convert.ToDateTime(ViewBag.detail.ETAPort).ToString("dd MMM yyyy") : "")" class="form-control date" name="ETAPort" placeholder="ETA Port" id="ETAPort">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email" class="col-md-3 col-xs-12 control-label">ATA Cakung</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <input type="text" value="@(ViewBag.formType == "edit" ? Convert.ToDateTime(ViewBag.detail.ATACakung).ToString("dd MMM yyyy") : "")" class="form-control date" name="ATACakung" placeholder="ATA Cakung" id="ATACakung">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email" class="col-md-3 col-xs-12 control-label">ETA Cakung</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <input type="text" value="@(ViewBag.formType == "edit" ? Convert.ToDateTime(ViewBag.detail.ETACakung).ToString("dd MMM yyyy") : "")" class="form-control date" name="ETACakung" placeholder="ETA Cakung" id="ETACakung">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email" class="col-md-3 col-xs-12 control-label">Position</label>
+                                                            <div class="col-md-9 col-xs-12">
+                                                                <input type="text" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Position : "")" class="form-control" name="Position" placeholder="Position" id="Position">
+                                                            </div>
+                                                        </div>*@
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Notes 1</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <input type="text" class="form-control" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Notes : "")" name="Notes" placeholder="Notes 1" id="Notes">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="col-md-3 col-xs-12 control-label">Notes 2</label>
+                                                        <div class="col-md-9 col-xs-12">
+                                                            <textarea name="Remark" class="form-control" placeholder="Notes 2" id="Remarks" rows="5" cols="5">@(ViewBag.formType == "edit" ? ViewBag.detail.Remark : "")</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 box-body">
+                                                <div id="toolbar" class="col-md-2 toolbarBtn">
+                                                    <div class="row">
+                                                        <button style="margin-bottom:10px;" class="btn btn-primary" type="button" onclick="showDetailForm()" id="btnAddDetail">
+                                                            <i class="fa fa-plus-circle"></i> Detail
+                                                        </button>
+                                                        <button style="margin-bottom:10px;" class="btn btn-primary" type="button" onclick="showHistoryForm()" id="btnAddHistory">
+                                                            <i class="fa fa-plus-circle"></i> Detail
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <table class="table table-bordered" data-toolbar="#toolbar" id="tableFormInbound"></table>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer text-right">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="~/DTS/InboundNonCkb" class="btn btn-warning btn-form"><i class="fa fa-chevron-circle-left"></i> Back</a>
+                        <button class="btn btn-default btn-form" onclick="resetForm()"><i class="fa fa-refresh"></i> Reset</button>
+                        <button class="btn btn-success btn-form" id="submitShipmentInbound"><i class="fa fa-save"></i> Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Inbound Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="formAddHistory" action="#">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">&nbsp;</label>
+                                <div class="col-md-4 text-center">
+                                    <label class="control-label">Plan</label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <label class="control-label">Actual</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">RTS</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="RTSPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="RTSActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">On Board Vessel</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="OnBoardVesselActual" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="OnBoardVesselPlan" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">Port In</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PortInPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PortInActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">Port Out</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PortOutPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PortOutActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">PLB In</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PLBInPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PLBInActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">PLB Out</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PLBOutPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="PLBOutActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">Yard In</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="YardInPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="YardInActual" placeholder="Date" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">Yard Out</label>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="YardOutPlan" placeholder="Date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control date" name="YardOutActual" placeholder="Date" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning btn-form" data-dismiss="modal"><i class="fa fa-remove"></i> Close</button>
+                <button class="btn btn-success btn-form" id="btnSubmitHistory"><i class="fa fa-save"></i> Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/FormInbound.cshtml.js")"></script>
+}
+

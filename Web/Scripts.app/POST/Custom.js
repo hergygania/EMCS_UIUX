@@ -265,6 +265,30 @@ function GetProcessFlowChecklistPaidPO(data, row, index) {
         return uncheck;
     }
 }
+function GetProcessFlowChecklistInvoiceHardcopy(data, row, index) {
+    if (row.CountHasSubmitHardcopyInvoice == 0) {
+        return uncheck;
+    }
+    else if (row.CountNotSubmitHardcopyInvoice == 0) {
+        return '<span class="showSubmithardcopy">' + uploadInDone + '</span>';//attachmentInvoice;
+    }
+    else {
+        return '<span class="showSubmithardcopy">' + uploadInProgress + '</span>';
+    }
+
+}
+function GetProcessFlowChecklistInvoiceKOFAX(data, row, index) {
+    if (row.CountKOFAXHasUpload == 0) {
+        return uncheck;
+    }
+    else if (row.CountKOFAXNotUpload == 0) {
+        return '<span class="showUploadedKOFAX">' + uploadInDone + '</span>';//attachmentInvoice;
+    }
+    else {
+        return '<span class="showUploadedKOFAX">' + uploadInProgress + '</span>';
+    }
+
+}
 function GetProcessFlowChecklistBast(data, row, index) {
     if (row.POType == "D") {
         if (row.CountHasUploadedBAST == 0) {

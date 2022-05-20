@@ -1,0 +1,148 @@
+@model App.Data.Domain.HSCodeList
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title HSCodeList</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- Default input -->
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">HSCode List Id</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.HSID, new { @class = "form-control required", @readonly = "readonly", @required = "required", placeholder = "HSCode List ID" })
+                        <div>@Html.ValidationMessageFor(m => m.HSID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">HS Code</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.HSCode, new { @class = "form-control required", @onkeypress = "return numberOnly(event)", @onkeyup = "addReformatNumber()", @maxlength = 8, placeholder = "HS Code" })
+                        <div>@Html.ValidationMessageFor(m => m.HSCode)</div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <label class="control-label col-md-3 col-xs-12">Code Reformat</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.HSCodeReformat, new { @class = "form-control required", @readonly = "readonly", placeholder = "" })
+                            <div>@Html.ValidationMessageFor(m => m.HSCodeReformat)</div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Bea Masuk</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.BeaMasuk, new { @type = "number", @class = "form-control required", placeholder = "Bea Masuk" })
+                        <div>@Html.ValidationMessageFor(m => m.BeaMasuk)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Description</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+                        <div>@Html.ValidationMessageFor(m => m.Description)</div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <label class="control-label col-md-3 col-xs-12">Order Method</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            @Html.DropDownListFor(m => m.OrderMethodID, new SelectList(Model.OrderMethods, "OMID", "OMCode"), "--Select OM-- ", new { @class = "form-control" })
+                            <div>@Html.ValidationMessageFor(m => m.OrderMethodID)</div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Active</label>
+                    <div class="input-group col-md-1 col-xs-12">
+                        @Html.CheckBoxFor(m => m.SelectedStatus, new { @class = "form-control", @style = "width:auto;" })
+                        <div>@Html.ValidationMessageFor(m => m.SelectedStatus)</div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Change OM</label>
+                    <div class="col-md-2 col-xs-12" style="padding-left:0;">
+                        @Html.CheckBoxFor(m => m.ChangeOM, new { @class = "form-control", @style = "width:auto;" })
+                        <div>@Html.ValidationMessageFor(m => m.ChangeOM)</div>
+                    </div>
+                    <div class="input-group col-md-7 col-xs-12" style="padding:0;">
+                        @Html.DropDownListFor(m => m.ChangedOMCode, new SelectList(Model.OrderMethods.Where(o => o.OMCode == "PT" || o.OMCode == "TB"), "OMCode", "Description"), "--Select OM-- ", new { @class = "form-control", @style = "display:none;" })
+                        <div>@Html.ValidationMessageFor(m => m.ChangedOMCode)</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Default input -->
+        </div>
+
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" onclick="return IsChangeOM();" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" onclick="return IsChangeOM();"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+    @Html.HiddenFor(a => a.ModifiedDate)
+    @Html.HiddenFor(a => a.ModifiedBy)
+    @Html.HiddenFor(a => a.EntryBy)
+    @Html.HiddenFor(a => a.EntryDate)
+    @Html.HiddenFor(a => a.HSCodeReformat)
+
+}
+<script>
+    var mode = '@mode';
+    if (mode != 'I') $("#HSID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+
+        selectAll = function (obj, fld) {
+            $("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+        };
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        if ($("#ChangedOMCode").val() !== "") {
+            $('#ChangeOM').attr('checked', true);
+            $('#ChangedOMCode').show();
+        }
+        
+        $('#ChangeOM').change(function () {
+            if (this.checked)
+                $('#ChangedOMCode').show();
+            else
+                $('#ChangedOMCode').hide();
+        });
+    });
+
+
+</script>

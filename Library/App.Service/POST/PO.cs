@@ -260,7 +260,7 @@ namespace App.Service.POST
             {
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@RequestId", requestId));
+                parameterList.Add(new SqlParameter("@RequestId", requestId ));
                 parameterList.Add(new SqlParameter("@ItemName", param.Item ?? ""));
                 parameterList.Add(new SqlParameter("@StartDateDeliveryDate", param.StartDateDeliveryDate ?? ""));
                 parameterList.Add(new SqlParameter("@EndDateDeliveryDate", param.EndDateDeliveryDate ?? ""));
@@ -445,6 +445,32 @@ namespace App.Service.POST
                 return data;
             }
         }
+        public static List<InvoiceHardCopy_List> GetHardCopyInvoiceById(int id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", id));
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                var data = db.DbContext.Database.SqlQuery<InvoiceHardCopy_List>(@"exec [dbo].[SP_HardCopyInvoiceById_LIST]@Id", parameters).ToList();
+                return data;
+            }
+        }
+        public static List<InvoiceHardCopy_List> GetHardCopyInvoiceByInvoiceId(int invoiceid)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", invoiceid));
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                var data = db.DbContext.Database.SqlQuery<InvoiceHardCopy_List>(@"exec [dbo].[SP_HardCopyInvoiceByInvoiceId_LIST]@Id", parameters).ToList();
+                return data;
+            }
+        }
         //public static int RemovePartialListById(int Id)
         //{
         //    using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -452,7 +478,7 @@ namespace App.Service.POST
         //        var data = db.DbContext.Database.SqlQuery<ItemById_LIST>(@"exec [dbo].[SP_ItemPartialById_LIST]@Id", Id).ToList();
         //        return 1;
         //    }
-     
+
         //}
 
         public static int RemovePartialListById(int Id)
@@ -460,6 +486,16 @@ namespace App.Service.POST
             using (var db = new Data.POSTContext())
             {
                 var data = (from p in db.TrItemPartialQty where p.Id == Id select p).FirstOrDefault();
+                data.IsActive = false;
+                db.SaveChanges();
+            }
+            return 1;
+        }
+        public static int RemoveHarcopyInvoiceById(int Id)
+        {
+            using (var db = new Data.POSTContext())
+            {
+                var data = (from p in db.InvoiceHardCopy where p.Id == Id select p).FirstOrDefault();
                 data.IsActive = false;
                 db.SaveChanges();
             }

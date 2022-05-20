@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+    ViewBag.Title = "Delivery Instruction List";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+    var viewMode = "@(ViewBag.ViewMode)";
+</script>
+<link href="/Scripts/kartik-v-bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    button.btn {
+        margin-left: 2px;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tableDeliveryInstruction" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalRequest' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @Html.Partial("~/Views/DTS/v2/_FormDI.cshtml")
+        </div>
+    </div>
+</div>
+
+<div id='myModalUnitInfo' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Delivery Instruction Unit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tableDeliveryInstructionUnitInfo" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="/Scripts/kartik-v-bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="/Scripts/adminlte.js"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/v2/_FormDI.cshtml.js?v=1")"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/v2/DIListAcc.cshtml.js?v=1")"></script>
+}
+

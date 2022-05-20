@@ -1,0 +1,66 @@
+﻿{
+    "total": 100,
+    "rows": [
+        {
+            "no": "1",
+            "no_identifikasi": 3397317153,
+            "npwp": "0202587377564534",
+            "penerima_hde": "TRAKINDO UTAMA",
+            "sandi": "070100",
+            "no_pendaftaran": 163451,
+            "date_peb": "25-06-2017",
+            "valuta": "USD",
+            "nilai_dhe": "578,778.20",
+            "nilai_peb": "578,778.20",
+            "sandi_ket": null,
+            "kelengkapan_dokumen": null,
+            "jenis_valuta": "USD"
+        },
+      {
+        "no": "2",
+        "no_identifikasi": 3397317153,
+        "npwp": "0202587377564537",
+        "penerima_hde": "TRAKINDO UTAMA",
+        "sandi": "NNNNNN",
+        "no_pendaftaran": "NNNNNN",
+        "date_peb": "25-06-2017",
+        "valuta": "USD",
+        "nilai_dhe": " 4,490,674.95 ",
+        "nilai_peb": "578,778.20",
+        "sandi_ket": null,
+        "kelengkapan_dokumen": null,
+        "jenis_valuta": "USD"
+      },
+      {
+        "no": "3",
+        "no_identifikasi": 3397317153,
+        "npwp": "0202587377564589",
+        "penerima_hde": "TRAKINDO UTAMA",
+        "sandi": "177137",
+        "no_pendaftaran": 177137,
+        "date_peb": "26-10-2017",
+        "valuta": "USD",
+        "nilai_dhe": "637,651.40",
+        "nilai_peb": "637,651.40",
+        "sandi_ket": null,
+        "kelengkapan_dokumen": null,
+        "jenis_valuta": "USD"
+      },
+      {
+        "no": "4",
+        "no_identifikasi": 3397317153,
+        "npwp": "0202587377564578",
+        "penerima_hde": "TRAKINDO UTAMA",
+        "sandi": "NNNNNN",
+        "no_pendaftaran": "NNNNNN",
+        "date_peb": "28-10-2017",
+        "valuta": "USD",
+        "nilai_dhe": "3,853,023.55",
+        "nilai_peb": "578,778.20",
+        "sandi_ket": null,
+        "kelengkapan_dokumen": null,
+        "jenis_valuta": "USD"
+      }
+
+    ]
+}

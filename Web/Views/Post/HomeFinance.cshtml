@@ -1,0 +1,119 @@
+﻿@using App.Web
+@{
+    ViewBag.Title = "_Layout";
+    Layout = "~/Views/Post/_Layout.cshtml";
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    string Role = "";
+    Role = User.Identity.GetUserRoles();
+
+    if (Role.Contains("POSTFINANCE") || Role.Contains("POSTFINANCEVIEWER") || Role.Contains("POSTFINANCEBRANCH")
+        || Role.Contains("POSTPLANTVIEWERFINANCE") || Role.Contains("POSTTAX"))
+    {
+        ViewBag.TabDefault = ViewBag.TabDefault;
+    }
+    var BaseUrl = ViewBag.BaseUrl;
+    var FullBaseUrl = BaseUrl + "/POST/";
+}
+
+@{ViewBag.Title = "Home Finance";}
+
+<style type="text/css">
+    .fontbold {
+        font-family: SF UI Text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    .fontnormal {
+        font-family: SF UI Text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+</style>
+<input type="hidden" id="BaseUrl" name="BaseUrl" value="@(FullBaseUrl)" />
+
+
+<div>
+    <div class="navbar tab fixed-top flex-column navbar-expand container-fluid flex-lg-row bd-navbar" style="margin-top: 57px;">
+        <div class="navbar-nav-scroll">
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+                @*@if (Role.Contains("POSTVENDOR"))
+                    {*@
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 0) ? "active" : "")" data-content="tabInvoiceIncoming" href="javascript:void(0);" data-toggle="tab">Invoice Incoming <span class="badge badge-warning">@ViewBag.CountInvoiceIncoming</span></a>
+                </li>
+                @*}*@
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 1) ? "active" : "")" data-content="tabInvoiceInprogress" href="javascript:void(0);" data-toggle="tab">Invoice In-Progress <span class="badge badge-primary">@ViewBag.CountInvoiceProgress</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 2) ? "active" : "")" data-content="tabInvoiceDone" href="javascript:void(0);" data-toggle="tab">Invoice Complete <span class="badge badge-success">@ViewBag.CountInvoiceDone</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 3) ? "active" : "")" data-content="tabInvoiceReject" href="javascript:void(0);" data-toggle="tab">Invoice Reject <span class="badge badge-danger">@ViewBag.CountInvoiceReject</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="margin-top:110px;">
+        <div class="tab-content" style="width:100%;">
+            <!-- Section Tab First -->
+            @Html.Partial("~/Views/Post/NavFinanceSearch.cshtml")
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 0) ? "show active" : "")" id="tabInvoiceIncoming" data-tab="0" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-InvoiceIncoming" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Second -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 1) ? "show active" : "")" id="tabInvoiceInprogress" data-tab="1" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-InvoiceInprogress" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Third -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 2) ? "show active" : "")" id="tabInvoiceDone" data-tab="2" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-InvoiceDone" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Third -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 3) ? "show active" : "")" id="tabInvoiceReject" data-tab="3" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-InvoiceReject" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@Html.Partial("~/Views/Post/ModalGrList.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadPO.cshtml")
+@Html.Partial("~/Views/Post/ModalViewInv.cshtml")
+@Html.Partial("~/Views/Post/ModalViewBast.cshtml")
+@Html.Partial("~/Views/Post/ModalComment.cshtml")
+@Html.Partial("~/Views/Post/ModalHistory.cshtml")
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
+
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/Custom.js?_id=@(unixTimestamp)"></script>
+    <script src="~/Scripts.app/POST/FinanceHome.js?_id=@(unixTimestamp)"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    @*<script src="~/Scripts/tinymce/tiny_mce.js"></script>*@
+    @*<script src="~/Scripts.app/POST/DataVendorHome.js"></script>*@
+    <script src="~/Scripts.app/POST/Comment.js?_id=@(unixTimestamp)"></script>
+
+}

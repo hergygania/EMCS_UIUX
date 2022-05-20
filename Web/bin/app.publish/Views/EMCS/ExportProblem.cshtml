@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Export Problem Category";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="form-horizontal toolbar">
+                    <div class="row">
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group">
+                                <label class="col-md-3">Start Period</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input id="inp-start-date" type="text" class="form-control date" placeholder="Start Period" value="1 Jan @DateTime.Now.Year" readonly>
+                                        <span class="input-group-addon cal-start-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 pull-right">
+                            <div class="form-group">
+                                <label class="col-md-3" style="text-align: left;">End Period</label>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input id="inp-end-date" type="text" class="form-control date" placeholder="End Period" value="30 Dec @DateTime.Now.Year" readonly>
+                                        <span class="input-group-addon cal-end-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-4 pull-right">
+                                <div class="form-group text-right">
+                                    <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-warning" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-lg-12">
+                        <table class="easyui-treegrid" id="ExportProblemList"></table>
+                    </div>
+                </div> 
+                <div class="row" style="margin-top:10px">
+                    <div class="col-lg-12">
+                        <div class="box box-primary box-shadow">
+                            <div class="box-header with-border">
+                                <div id="chart_container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+@Styles.Render("~/Content/EMCS/JeasyUI/themes/default/easyui.css")
+@Styles.Render("~/Content/EMCS/JeasyUI/themes/default/tree.css")
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    .datagrid-header .datagrid-cell span {
+        font-size: 11px;
+    }
+
+    .tree-title {
+        font-size: 11px;
+    }
+
+    .panel-title {
+        font-size: 12px;
+    }
+
+    .datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber {
+        font-size: 11px;
+    }
+</style>
+@section Scripts{    
+    @Scripts.Render("~/Content/EMCS/JeasyUI/jquery.easyui.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/report/ExportProblemCategory.cshtml.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>  
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

@@ -167,6 +167,7 @@
         public bool? SendEmailToServiceTUBatuLicin { get; set; }
         public bool? SendEmailToServiceTUSangatta { get; set; }
         public bool? SendEmailToServiceTUKendari { get; set; }
+        public bool? SendEmailToServiceTUMeulaboh { get; set; }        
 
         public string RequestNotes { get; set; }
         public string SendEmailNotes { get; set; }

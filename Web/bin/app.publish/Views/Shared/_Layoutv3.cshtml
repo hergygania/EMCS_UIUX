@@ -1,0 +1,608 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{ 
+
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {      
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <style type="text/css"></style>
+ 
+    <link href="~/Content/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    @*<link href="~/Content/Dropzone/css/dropzone.css" rel="stylesheet" />*@
+
+
+    @Styles.Render("~/Content/postbundle");   
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AppScript")
+    @Scripts.Render("~/Scripts/daterangepicker.js")  
+
+    <link href="~/Content/site.css" rel="stylesheet" />
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+    <link href="~/Content/customdts.css" rel="stylesheet" />
+  
+    <style type="text/css">
+        .notif {
+            height: 25px;
+            width: 25px;
+            background-color: #FA8108;
+            border-radius: 100%;
+            display: inline-block;
+        }
+        .fixed-table-body {
+            max-height: 577px;
+            overflow-y: auto;
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+        }
+
+        a.label:hover,
+        a.label:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .label:empty {
+            display: none;
+        }
+
+        .btn .label {
+            position: relative;
+            top: -1px;
+        }
+
+        .label-default {
+            background-color: #777;
+        }
+
+            .label-default[href]:hover,
+            .label-default[href]:focus {
+                background-color: #5e5e5e;
+            }
+
+        .label-primary {
+            background-color: #337ab7;
+        }
+
+            .label-primary[href]:hover,
+            .label-primary[href]:focus {
+                background-color: #286090;
+            }
+
+        .label-success {
+            background-color: #5cb85c;
+        }
+
+            .label-success[href]:hover,
+            .label-success[href]:focus {
+                background-color: #449d44;
+            }
+
+        .label-info {
+            background-color: #5bc0de;
+        }
+
+            .label-info[href]:hover,
+            .label-info[href]:focus {
+                background-color: #31b0d5;
+            }
+
+        .label-warning {
+            background-color: #f0ad4e;
+        }
+
+            .label-warning[href]:hover,
+            .label-warning[href]:focus {
+                background-color: #ec971f;
+            }
+
+        .label-danger {
+            background-color: #d9534f;
+        }
+
+            .label-danger[href]:hover,
+            .label-danger[href]:focus {
+                background-color: #c9302c;
+            }
+
+        .form-horizontal .control-label {
+            text-align: left !important;
+        }
+
+        .toolbarBtn {
+            margin-top: 10px;
+        }
+
+        .pagination .page-pre .page-link,
+        .pagination .page-next .page-link {
+            padding: 0 12px !important;
+        }
+
+        .modal {
+            overflow: auto !important;
+        }
+        /*tes*/
+
+        html, body {
+            background: #fbfbfb;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        html, body {
+            font-family: Roboto, Consolas, Arial;
+            font-size: 12px;
+        }
+
+            body > .header .navbar {
+                margin-bottom: 0;
+                margin-left: 220px;
+                height: 63px;
+                background: #FFFFFF;
+                border-bottom: none;
+            }
+
+        .btn-box-tool {
+            padding: 5px;
+            font-size: 12px;
+            background: transparent;
+            color: #97a0b3;
+            box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        pre {
+            display: none !important;
+        }
+
+        body.skin-post {
+            background: #FFFFFF;
+        }
+
+        .modalUpload {
+            width: 100%;
+            height: 100px;
+            /* margin-left: 20px; */
+            border: 2px solid #000;
+        }
+
+        .text-drop-file {
+            color: #ccc;
+            padding-top: 40px;
+            padding-left: 190px;
+        }
+        /* Your local CSS File */
+        @@font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto'), local('Roboto'), url(../../Content/POST/Fonts/Roboto-Regular.ttf) format('truetype');
+        }
+
+        @@font-face {
+            font-family: 'Roboto-Italic';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto Italic'), local('Roboto-Italic'), url(../../Content/POST/Fonts/Roboto-Italic.ttf) format('truetype');
+        }
+
+        @@font-face {
+            font-family: 'Roboto-Bold';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto Bold'), local('Roboto-Italic'), url(../../Content/POST/Fonts/Roboto-Bold.ttf) format('truetype');
+        }
+
+        .navbar {
+            padding: 0px;
+            padding-left: 30px;
+            padding-right: 20px;
+            font-size: 16px;
+            background: white;
+            border-bottom: 1px solid #EDEDED;
+        }
+
+            .navbar.tab {
+                padding: 0px;
+                font-size: 14px;
+                background: white;
+                padding-left: 35px;
+                border-bottom: 1px solid #EDEDED;
+            }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgb(64 58 58 / 50%);
+        }
+
+            .navbar-dark .navbar-nav .show > .nav-link, .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .nav-link.active {
+                color: #272525;
+                border-bottom: 2px solid #262626;
+            }
+
+        .bordered {
+            border: 1px solid black;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #272525;
+        }
+
+        .nav-item {
+            line-height: 40px;
+        }
+
+        .nav-link a {
+            color: black;
+        }
+
+        .navbar-expand .navbar-nav .nav-link {
+            padding-right: 1.2rem;
+            padding-left: 1.2rem;
+        }
+
+        .container-fluid {
+            width: 100%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+
+        /*.row {
+            margin-right: -8px;
+            margin-left: -8px;
+        }*/
+
+        .navbar.tab a {
+            color: black;
+        }
+
+        .navbar.tab .nav-item .active {
+            border-bottom: 2px #262626 solid;
+        }
+
+        .table th {
+            font-family: Roboto-Bold, Consolas, Arial;
+        }
+
+        strong, b, label {
+            font-family: Roboto-Bold, Consolas, Arial;
+        }
+
+        .table th, .table td {
+            padding: 0.65rem;
+        }
+
+        .custom-grid-style {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+
+        .table th, .table td {
+            font-size: 12px;
+        }
+
+        .table-striped > tbody > tr:nth-child(even) > td,
+        .table-striped > tbody > tr:nth-child(even) > th {
+            background-color: #F7F7F7;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td,
+        .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: white;
+        }
+
+        .page-item.active .page-link {
+            background: #ffc107
+        }
+
+        .page-item.active .page-link {
+            border-color: #F7F7F7;
+        }
+
+        .page-link {
+            color: #272525;
+        }
+
+        #table-item thead th {
+            background: #F7F7F7;
+            font-weight: 700;
+        }
+
+        #table-item thead .th-inner {
+            font-weight: 700;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 33px;
+            padding-top: 3px;
+            font-size: 12px;
+            border: 1px solid #CED4DA;
+            background: #FFFFFF;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid white !important;
+        }
+
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                font-size: 12px;
+            }
+
+        .btn-xs, .btn-group-xs > .btn {
+            padding: 0.25rem 0.5rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+
+        .form-control {
+            font-size: 12px;
+        }
+
+        .btn {
+            font-size: 12px;
+        }
+
+        .btn-outline-primary {
+            height: 33px;
+        }
+
+        .input-group {
+            height: 33px;
+        }
+
+        .bootstrap-table .fixed-table-container {
+            overflow: hidden;
+        }
+
+        .navbar {
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .navbar.tab {
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+        input {
+            background: #FFFFFF;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid white !important;
+        }
+
+        .modal-content input {
+            background: #FFFFFF;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        .modal-content .select2-selection--single {
+            background: #FFFFFF;
+            box-shadow: none !important;
+            border: 1px solid #CED4DA !important;
+        }
+
+        .modal-content .table {
+            box-shadow: none !important;
+        }
+
+        .input-group-append {
+            background: #FFFFFF;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline-primary {
+            color: black;
+            background: linear-gradient(338.4deg, #FFC52B 7.31%, #FFE59F 114.91%);
+            box-shadow: 0px 4px 10px rgba(252, 186, 18, 0.2);
+            border: none !important;
+        }
+
+        .btn {
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+            border: none !important;
+        }
+
+        .btn-outline-warning {
+            box-shadow: 0px 4px 10px rgba(252, 186, 18, 0.2);
+        }
+
+        .table {
+            background: #FFFFFF;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+        }
+
+        .fixed-table-container {
+            background: #FFFFFF;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+        }
+
+        .table th, .table td {
+            border-top: 1px solid white;
+        }
+
+        .card {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-circle {
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .select2-column .select2-selection--single {
+            box-shadow: none !important;
+            border: 1px solid #CED4DA !important;
+        }
+    </style>
+</head>
+<body>
+    @if (ViewBag.isSPChain == true)
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts.app/DTS/v2/HomeSPChain.cshtml.js")"></script>
+
+    }
+    else
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts.app/DTS/v2/Home.cshtml.js")"></script>
+    }
+
+    <div class="container-fluid">
+        <div class="navbar fixed-top navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+            <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+                <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:175px;" />
+            </a>
+            @*<div class="navbar-nav-scroll">
+                <ul class="navbar-nav bd-navbar-nav flex-row">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="~/DTS/Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="imageDeliveryTracking">Delivery Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" id="imageDailyReport">Daily Report</a>
+                        </li>
+                </ul>
+            </div>*@
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+
+
+                <li class="nav-item">
+                    <a style="border:1px solid #EDEDED;text-align: center;padding: 3px;margin-top:8px;border-radius:50%;width:40px;height:40px;" class="nav-item nav-link mr-md-2" href="#" id="bd-icon" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle fa-2x"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" style="margin-left:-15px;line-height:21px;padding-top:5px;">
+                    <a style="line-height:17px;" class="nav-link mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        <div style="text-transform: uppercase">
+                            <b>@userName</b>
+
+                        </div>
+
+                        <div style="font-size :12px">
+                            @ViewBag.RoleName
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                        <a class="dropdown-item" href="@Url.Action("SignOut", "account", new { area = "" })">Sign Out</a>
+                    </div>
+                </li>
+                <li class="nav-item separator" style="border-right: 1px solid #EDEDED;height: 34px;margin-top: 11px;margin-right: 10px;">
+                    @*<a href="#" style="height:30px;">&nbsp;</a>*@
+                </li>
+                <li class="nav-item">
+
+                    <img src="~/Images/Vector.png" style="height:20px">
+
+                    <text id="allnotifrequestor" class="notif" style="text-align:center"><sup style="text-align:center"> @ViewBag.CountNotifAll</sup> </text>
+
+
+
+                </li>
+            </ul>
+        </div>
+        @{
+            ViewBag.TypePage = "HasTabs";
+        }
+
+
+        @if (ViewBag.TypePage == "HasTabs")
+        {
+            @RenderBody()
+        }
+        else
+        {
+            <!-- Main content -->
+            <div class="row" style="margin-top:110px;">
+                @RenderBody()
+            </div>
+        }
+    </div>
+    <!-- modal placeholder content -->
+    <div id='myModalPlace' class='modal fade'>
+        <div class="modal-dialog modal-lg">
+            <div id="myModalContent" class="modal-content"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var myApp = {};
+        myApp.root = '@(Url.Content("~/"))';
+        //myApp.fullPath = 'http://' + document.location.host + myApp.root;
+        myApp.fullPath = document.location.protocol + "//" + document.location.host + myApp.root;
+        myApp.firstMonth = '@DateTime.Today.AddMonths(-1).ToString("dd MMM yyyy")';
+        myApp.lastMonth = '@DateTime.Today.ToString("dd MMM yyyy")';
+        myApp.controller = '@controllerName';
+        myApp.isAdmin = '@isAdmin';
+        myApp.isReadOnly = '@isReadOnly';
+        myApp.Loading = null;
+       var allowCreate = "@(ViewBag.allowCreate)";
+        var allowUpdate = "@(ViewBag.allowUpdate)";
+        var allowDelete = "@(ViewBag.allowDelete)";
+        var allowRead = "@(ViewBag.AllowRead)";
+
+
+    </script>
+
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="~/Content/POST/Bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/POST/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/POST/BootstrapTable/bootstrap-table-group-by.min.js"></script>
+    <script src="~/Content/POST/BootstrapTable/bootstrap-table.min.js"></script>
+    <script src="~/Scripts/app/pis-bootstrap-table.js"></script>
+    @*<script src="~/Content/Dropzone/js/dropzone.js"></script>*@
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/select2.full.js" type="text/javascript"></script>
+    <script src="~/Scripts.app/DTS/v2/App.js"></script>
+    <script src="~/Scripts/sweetalert-dev.js"></script>
+    <script src="~/Scripts/ScriptV2.js"></script>
+    <link href="/Scripts/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <script src="~/Scripts/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    @RenderSection("scripts", required: false)
+    <link href="~/Content/Highcharts/Highcharts.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/highchart.js")
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/highcharts-more.js")
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/solid-gauge.js")
+
+
+</body>
+</html>

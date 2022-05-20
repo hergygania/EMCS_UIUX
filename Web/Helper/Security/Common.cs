@@ -45,7 +45,7 @@ namespace App.Web.Helper
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
 

@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Change Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = ViewBag.Message + "";
+
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+        var request = HttpContext.Current.Request;
+        var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+
+        if (appUrl == "/")
+        {
+            appUrl = "";
+        }
+
+        var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+        ViewBag.baseUrl = baseUrl + "/";
+    }
+    catch { }
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:555px">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+
+            <div class="box-body">
+                <div class="row">
+
+                    <!-- top navigasi-->
+                    <div class="col-lg-12">
+                        <div class="nav-tabs-custom tabs-left">
+                            <!--switch-collapse!-->
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="active">
+                                    <a href="#newest" data-toggle="tab">
+                                        @*<span class="fa fa-new-circle"></span>*@
+                                        Newest
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#daily" data-toggle="tab">
+                                        @*<span class="fa fa-time-circle"></span>*@
+                                        Daily
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#weekly" data-toggle="tab">
+                                        @*<span class="fa fa-time-circle"></span>*@
+                                        Weekly
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#monthly" data-toggle="tab">
+                                        @*<span class="fa fa-minus-circle"></span>*@
+                                        Monthly
+                                    </a>
+                                </li>
+                                <li role="presentation" class="nav nav-pills">
+                                    <a href="#customFilter" data-toggle="tab">
+                                        <span class="fa fa-cog"></span>
+                                        Range Date
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- left navigasi & tab-pane-->
+
+                    <div class="col-lg-12xxx">
+                        <div class="tab-content">
+
+                            <div class="tab-pane active" id="newest">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <div class="toolbar">
+                                        <a href="#" class="btn btn-info downloadExcel" style="width:150px;" onclick="DownloadChangeLog('mp.spGetChangeLogNewest');">
+                                            <i class="fa fa-download"></i> Download to Excel
+                                        </a>
+                                    </div>
+
+                                    <table class="table-bordered table2excel" id="tableNewest" style="width:100%"></table>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="daily">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <div class="toolbar">
+                                        <a href="#" class="btn btn-info downloadExcel" style="width:150px;" onclick="DownloadChangeLog('mp.spGetChangeLogDaily');">
+                                            <i class="fa fa-download"></i> Download to Excel
+                                        </a>
+                                    </div>
+
+                                    <table class="table-bordered table2excel" id="tableDaily" style="width:100%"></table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="weekly">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <div class="toolbar">
+                                        <a href="#" class="btn btn-info downloadExcel" style="width:150px;" onclick="DownloadChangeLog('mp.spGetChangeLogWeekly');">
+                                            <i class="fa fa-download"></i> Download to Excel
+                                        </a>
+                                    </div>
+
+                                    <table class="table-bordered table2excel" id="tableWeekly" style="width:100%"></table>
+                                </div>
+                            </div>
+                            <!-- END TAB SURVEY-->
+                            <!-- ISI TAB MIX-->
+                            <div class="tab-pane" id="monthly">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <div class="toolbar">
+                                        <a href="#" class="btn btn-info downloadExcel" style="width:150px;" onclick="DownloadChangeLog('mp.spGetChangeLogMonthly');">
+                                            <i class="fa fa-download"></i> Download to Excel
+                                        </a>
+                                    </div>
+
+                                    <table class="table-bordered table2excel" id="tableMonthly" style="width:100%"></table>
+                                </div>
+                            </div>
+                            <!-- END TAB MIX-->
+                            <!-- ISI TAB GENERATOR-->
+                            <div class="tab-pane col-md-12" id="customFilter">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Date From</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control date" readonly id="dateFrom" name="dateFrom" />
+                                                <div class="input-group-addon calInv" style="background:#00C0EF;border-color:#00ACD6;">
+                                                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Date To</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <input type="text" class="form-control date" readonly id="dateTo" name="dateTo" />
+                                                <div class="input-group-addon calInv" style="background:#00C0EF;border-color:#00ACD6;">
+                                                    <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <button type="button" id="btnSearch" class="btn btn-success" onclick="getData()"><i class="fa fa-search" ></i> Search</button>
+                                            @*<button type="button" id="btnclose" class="btn btn-danger" onclick="ClearForm();" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>*@
+                                            <button type="button" id="btnDownloadExcel" class="btn btn-info" onclick="DownloadChangeLogByDate();"><i class="fa fa-download" ></i> Download</button>
+                                        </div>
+                                    </div>
+
+
+                                    <hr>
+
+                                    <br />
+                                    <br />
+                                    <table class="table-bordered table2excel" id="tableRange" style="width:100%; margin-top:10px;"></table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+
+                            </div>
+                                <!-- END TAB GENERATOR-->
+
+
+                            </div>
+
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var msg = '@message';
+        if (msg != '') {
+            sAlert('', msg, '');
+        }
+
+    </script>
+    <script type="text/javascript">
+        var baseUrl = '@ViewBag.baseUrl';
+    </script>
+    <script src="@Url.Content("~/Scripts.app/imex/ChangeLog.js")"></script>
+}

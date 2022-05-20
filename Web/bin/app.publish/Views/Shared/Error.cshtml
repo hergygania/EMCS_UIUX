@@ -1,0 +1,34 @@
+﻿@model string
+@{
+	var msg = Model + "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>{@string.IsNullOrEmpty(msg) ? "Error" : ""} </title>
+	<script>
+		$('.content').empty();
+		$('.content').html('<div style="text-align:center;min-height:345px; margin-top:2%;color:red;font-size: 14pt;">@Html.Raw(msg)</div>')
+		//$('.content').css('color', 'red');
+	</script>
+</head>
+<body>
+	@if(string.IsNullOrEmpty(msg))
+	{
+		<hgroup>
+			<h1>Error.</h1>
+			<h2>An error occurred while processing your request.</h2>
+		</hgroup>
+	}
+	else
+	{
+		@*<div style="min-height:345px; margin-top:2%">@Html.Raw(msg)</div>*@
+		@*<script>
+		$('.content').empty();
+		$('.content').html('<div style="text-align:center;min-height:345px; margin-top:2%;">Html.Raw(msg)</div>')
+		$('.content').css('color', 'red');
+		</script>*@
+	}
+</body>
+</html>

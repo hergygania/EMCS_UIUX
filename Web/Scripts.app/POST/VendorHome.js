@@ -22,7 +22,18 @@ var baseUrl = location.origin;
 Dropzone.autoDiscover = false;
 
 $(document).ready(function () {
-    CheckPopUpHomePage();
+
+    if (landingPage == 1) {
+        CheckPopUpHomePage();
+    }
+
+    else {
+        $("#idpopUp").hide();
+        $("#idpopUpHardCopyInvoice").hide();
+        $("#idpopUpPPN").hide();
+        $("#idhome").show();
+    }
+
     initDateRange();
     InitTableViewHistory();
     $('[data-toggle="tooltip"]').tooltip()
@@ -463,7 +474,17 @@ $(document).ready(function () {
                 align: 'center',
                 width: '100px',
                 formatter: GetProcessFlowChecklistGRSA,
-            },  
+            },
+            //{
+            //    title: 'Document Finance',
+            //    field: 'DocumentFinance',
+            //    class: 'text-center',
+            //    align: 'center',
+            //    width: '100px',
+            //    visible: VisibleColumnFinance,
+            //    formatter: GetProcessFlowChecklistInvoiceDocument,
+            //},
+           
             {
                 title: 'Invoice Submit',
                 field: 'Invoice_Date',
@@ -482,8 +503,8 @@ $(document).ready(function () {
                 visible: VisibleColumnFinance,              
             },
             {
-                title: 'Invoice Submitted',
-                field: 'Invoicing',
+                title: 'Invoice Date',
+                field: 'Invoice_Date',
                 class: 'text-center',
                 align: 'center',
                 width: '100px',
@@ -1354,21 +1375,7 @@ function GetDeliveryFlowChecklist(data, row, index) {
             return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + check + '</span>';
         }
         else
-            return CurrentProgress;
-
-
-        // if (row.TotalNotPOD == 0) {
-        // return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + check + '</span>';
-
-        // } else if (row.TotalNotPOD > 0) {
-        // if (data == 'current') {
-        // return PartialInProgress;
-        // } else {
-        // return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + uncheck + '</span>';
-        // }
-        // } else {
-        // return current;
-        // }
+            return CurrentProgress;        
     }
 }
 
@@ -1475,10 +1482,14 @@ function CheckPopUpHomePage() {
     $.getJSON("CheckPopUp", function (data) {
         if (data.IsAgreeHomePage == true) {
             $("#idpopUp").hide();
-            $("#idhome").show();
+            $("#idpopUpHardCopyInvoice").show();   
+            $("#idpopUpPPN").hide();
+            $("#idhome").hide();
         }
         else {
             $("#idpopUp").show();
+            $("#idhome").hide();
+             $("#idpopUpPPN").hide();
             $("#idhome").hide();
         }
     });
@@ -1489,7 +1500,20 @@ function SavePopUpHome() {
 
     $.getJSON("SavePopUp?isChecked=true&description=HomePage", function (data) {
         $("#idpopUp").hide();
-        $("#idhome").show();
-
+        $("#idpopUpHardCopyInvoice").hide();
+        $("#idpopUpPPN").show();       
+        $("#idhome").hide();
     });
+}
+function SavePopUpHardCopy() {   
+        $("#idpopUp").hide();
+        $("#idpopUpHardCopyInvoice").hide();
+        $("#idpopUpPPN").show();
+        $("#idhome").hide();
+}
+function SavePopUpPPN() {
+    $("#idpopUp").hide();
+    $("#idpopUpHardCopyInvoice").hide();
+    $("#idpopUpPPN").hide();
+    $("#idhome").show();
 }

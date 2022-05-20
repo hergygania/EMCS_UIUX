@@ -117,9 +117,38 @@
             <div class="modal-body mx-3">
                 <div class="modalUpload divUploadFile dropzone" id="FormUploadInvoice">
                 </div>
-                <div class="row " style="margin-top:20px;">
-                    <label>Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST.  (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25)</label>
+                @*<div class="row " style="margin-top:20px;">
+                    <label><b>Sebelum invoice di upload harap perhatikan hal berikut:</b></label>
+                </div>*@
+                <div class="row " style="margin-top:20px;font-size:14px">
+                    <label>
+                        <b>Sebelum invoice di upload harap perhatikan hal berikut:</b>
+                        <br />
+                        1. Untuk penamaan file softcopy invoice di POST, mohon menggunakan nomor invoice dan hindari penggunaan special karakter berikut: ( _ < > , .  ; ’)
+                        <br />
+                        2. File invoice yang di upload berupa (Form Qpay,Form GR,  Faktur Pajak, Form Kwitansi, Surat jalan/Bast, Copy PO) di compile menjadi 1 lampiran file pdf.
+                        <br />
+                        3. File Invoice dan dokumen pedukung lainnya yang di upload maksimal berukuran <b>2 MB (Megabyte).</b> 
+                        <br />
+                        <br />
+                        Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b>
+                        <br />
+                        <br />
+                        Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice dan hardcopy invoice dikirim ke kami paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST. (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25).
+                        <br />
+                        <br />
+                        Apabila pengiriman hardcopy invoice tidak kami terima dalam jangka waktu satu bulan kedepan, maka pembayaran akan ditunda oleh tim finance kami.
+                    </label>
                 </div>
+               
+                @*<div class="row " style="margin-top:20px;">
+                    <label>Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b> </label>
+                </div>
+                <div class="row " style="margin-top:20px;">
+                    <label>
+                        Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice dan hardcopy invoice dikirim ke kami paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST. (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25).
+                    </label>
+                </div>*@
                 <div class="row" style="margin-top:20px;">
                     <div class="addScroll">
                         <table id="table-uploadInvoice" class="table table-bordered table-striped" style="background:white;"></table>
@@ -129,8 +158,8 @@
                     <p>Untuk Jasa, apakah ada surat keterangan tidak potong pajak PPH? </p>
                 </div>
                 <div class="row" style="margin-top:20px;">
-                    <input type="radio" id="yespajak" name="pajak" value="YES"> Ya, (Silakan di upload dokumen bebas potong Pajak)                   
-                    
+                    <input type="radio" id="yespajak" name="pajak" value="YES"> Ya, (Silakan di upload dokumen bebas potong Pajak)
+
                 </div>
                 <div class="row" style="margin-top:20px;">
                     <input type="radio" id="nopajak" name="pajak" value="NO" checked> Tidak

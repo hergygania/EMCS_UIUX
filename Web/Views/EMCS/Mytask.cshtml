@@ -43,6 +43,12 @@
             <li role="presentation" class="nav-item">
                 <a href="#tab-task-delegation" style="z-index:4;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge"></span>&nbsp;Delegation</a>
             </li>
+            @if (ViewBag.IsImexUser)
+            {
+            <li role="presentation">
+                <a href="#tab-task-requestForChange" style="z-index:3;" aria-controls="test" role="tab" data-toggle="tab"> <span class="badge"></span>&nbsp;Request for change</a>
+            </li>
+            }
         </ul>
         <!-- Tab panes -->
         <div class="tab-content tabs-custom tab-space tab-subcategories">
@@ -67,7 +73,13 @@
             <div role="tabpanel" class="tab-pane" id="tab-task-delegation">
                 @Html.Partial("~/Views/EMCS/TaskDelegation.cshtml")
             </div>
-        </div>
+            @if (ViewBag.IsImexUser)
+            {
+                <div role="tabpanel" class="tab-pane" id="tab-task-requestForChange">
+                    @Html.Partial("~/Views/EMCS/TaskRequestForChange.cshtml")
+                </div>
+            }
+            </div>
     </div>
 </div>
 @*</div>*@
@@ -85,6 +97,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskBlAwb.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskDelegation.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskRequestForChangeHistory.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 
 }

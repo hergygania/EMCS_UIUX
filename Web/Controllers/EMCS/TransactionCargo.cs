@@ -6,6 +6,10 @@ using App.Web.App_Start;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+using App.Data.Domain.EMCS;
+using App.Web.Models;
+using App.Data.Domain;
+using System.ComponentModel;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -37,6 +41,8 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.IsImexUser = false;
+            ViewBag.CanRequestForChange = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -60,13 +66,23 @@ namespace App.Web.Controllers.EMCS
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsUpdated, UrlMenu = "CargoList")]
         public ActionResult UpdateCargo(long cargoId)
         {
+
             ApplicationTitle();
             ViewBag.CargoID = cargoId;
+            string userRoles = User.Identity.GetUserRoles();
+            HttpContext.Session["Cargoid"] = cargoId;
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+                ViewBag.IsImexUser = true;
+            else
+                ViewBag.IsImexUser = false;
+            if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
+                ViewBag.CanRequestForChange = false;
+            else
+                ViewBag.CanRequestForChange = true;
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
             PaginatorBoot.Remove("SessionTRN");
@@ -91,7 +107,8 @@ namespace App.Web.Controllers.EMCS
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(filter.Cargoid);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(filter.Cargoid);
             ViewBag.IdCipl = filter.IdCipl;
-
+            HttpContext.Session["Cargoid"] = filter.Cargoid;
+            GetCargoDocumentList(filter);
             return View(detail);
         }
 
@@ -114,6 +131,12 @@ namespace App.Web.Controllers.EMCS
                 detail.DataRequest = Service.EMCS.SvcRequestCl.GetRequestCl(id);
                 detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
                 detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
+                //ViewBag.IdCipl = filter.IdCipl;
+
+                GridListFilter filter = new GridListFilter();
+                filter.Cargoid = id;
+                GetCargoDocumentList(filter);
+
 
                 return View(detail);
             }
@@ -216,10 +239,11 @@ namespace App.Web.Controllers.EMCS
         public JsonResult InsertCargo(Data.Domain.EMCS.CargoFormData item)
         {
             try
-            {                
-                long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
-                var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
-                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(id);
+            {
+
+                item.Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
+                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
                 return JsonCRUDMessage("I", new { cargoData });
             }
             catch (Exception ex)
@@ -227,13 +251,136 @@ namespace App.Web.Controllers.EMCS
                 return JsonMessage("Error", 1, ex);
             }
         }
+        [HttpPost]
+        public ActionResult SaveChangeHistoryCL(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData item)
+        {
+            var requestForChange = new RequestForChange();
+            var model = Service.EMCS.SvcCargo.GetCargoFormDataById(item.Id);
+            var spCargoDetail = Service.EMCS.SvcCargo.GetCargoById(item.Id);
+            requestForChange.FormNo = spCargoDetail.ClNo;
+            requestForChange.FormType = form.FormType;
+            requestForChange.Status = form.Status;
+            requestForChange.FormId = form.FormId;
+            requestForChange.Reason = form.Reason;
 
+            var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
+
+            var listRfcItems = new List<Data.Domain.RFCItem>();
+            string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod","Status", "CreateDate" };
+            var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
+            foreach (PropertyDescriptor property in properties)
+            {
+                if (!_ignoreParameters.Contains(property.Name))
+                {
+                    var currentValue = property.GetValue(item);
+                    if (currentValue != null && property.GetValue(model) != null)
+                    {
+                        if (currentValue.ToString() != property.GetValue(model).ToString())
+                        {
+                            var rfcItem = new Data.Domain.RFCItem();
+
+                            rfcItem.RFCID = id;
+                            rfcItem.TableName = "CL";
+                            rfcItem.LableName = property.Name;
+                            rfcItem.FieldName = property.Name;
+                            rfcItem.BeforeValue = property.GetValue(model).ToString();
+                            rfcItem.AfterValue = currentValue.ToString();
+                            listRfcItems.Add(rfcItem);
+                        }
+                    }
+                }
+            }
+
+            Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+
+            return Json("");
+        }
+        [HttpPost]
+        public JsonResult ApproveChangeHistoryCl(string idTerm, string formId, string formtype)
+        {
+            try
+            {
+
+
+                var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
+                var cargo = Service.EMCS.SvcCargo.GetCargoFormDataById(Convert.ToInt32(formId));
+
+                var cargoHistory = data.Where(x => x.TableName == typeof(Data.Domain.EMCS.CargoFormData).Name).ToList();
+
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
+
+                string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
+
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignoreParameters.Contains(property.Name))
+                    {
+                        var historyProp = cargoHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                        if (historyProp != null)
+                        {
+                            System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                            switch (typeCode)
+                            {
+                                case TypeCode.Boolean:
+                                    property.SetValue(cargo, Convert.ToBoolean(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.String:
+                                    property.SetValue(cargo, Convert.ToString(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Char:
+                                    property.SetValue(cargo, Convert.ToChar(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Double:
+                                    property.SetValue(cargo, Convert.ToDouble(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Single:
+                                    property.SetValue(cargo, Convert.ToSingle(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int32:
+                                    property.SetValue(cargo, Convert.ToInt32(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Int16:
+                                    property.SetValue(cargo, Convert.ToInt16(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.DateTime:
+                                    property.SetValue(cargo, Convert.ToDateTime(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Decimal:
+                                    property.SetValue(cargo, Convert.ToDecimal(historyProp.AfterValue));
+                                    break;
+                                case TypeCode.Object:
+                                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                    break;
+                                default:
+                                    property.SetValue(cargo, historyProp.AfterValue);
+                                    break;
+                            }
+                            //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
+
+                        }
+                    }
+                }
+
+                Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
+                Service.EMCS.SvcCargo.CrudSp(cargo, "I");
+                var userId = User.Identity.GetUserId();
+                
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                _errorHelper.Error(ex.ToString());
+                throw ex;
+            }
+        }
         [HttpPost]
         public JsonResult InsertCargoAtBottom(Data.Domain.EMCS.CargoFormData item)
         {
             try
             {
-                if (Service.EMCS.SvcCargo.CiplItemAvailable(item.Id) || item.Status == "Draft")
+                var userId = User.Identity.GetUserId();
+                if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
                 {
                     long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                     var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
@@ -328,5 +475,187 @@ namespace App.Web.Controllers.EMCS
             MemoryStream output = Service.EMCS.DocumentStreamGenerator.GetStream(clId, fileExcel, filePath, reportType);
             return File(output.ToArray(), "application/pdf", "CLDocument_" + DateTime.Now.ToString("ddMMyyyyhhhmmss") + ".pdf");    //Suggested file name in the "Save as" dialog which will be displayed to the end user
         }
+        [HttpPost]
+        public bool CargoDocumentInsert(List<Data.Domain.EMCS.CargoDocument> data)
+        {
+
+            var id = Service.EMCS.SvcCargo.InsertCargoDocument(data);
+            return id;
+        }
+        public string GetdocFileName(System.Web.HttpPostedFileBase file, long id)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+
+            if (fileName != null)
+            {
+                var ext = Path.GetExtension(fileName);
+                var path = Server.MapPath("~/Upload/EMCS/Cargo/" + id);
+                bool isExists = Directory.Exists(path);
+                fileName = "DocCargo-" + id.ToString() + ext;
+
+                if (!isExists)
+                    Directory.CreateDirectory(path);
+
+                var fullPath = Path.Combine(path, fileName);
+
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                file.SaveAs(fullPath);
+
+            }
+
+            return fileName;
+        }
+        public string UploadDocumentCargo(long id)
+        {
+            string fileName = "";
+
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    return GetdocFileName(file, id);
+                }
+            }
+            return fileName;
+        }
+        [HttpPost]
+        public ActionResult CargoDocumentUpload(long id)
+        {
+            string fileResult = UploadDocumentCargo(id);
+            if (fileResult != "")
+            {
+                var result = Service.EMCS.SvcCargo.UpdateFileCargoDocument(id, fileResult);
+                return Json(new { status = true, msg = "Upload File Successfully" });
+            }
+            else
+            {
+                return Json(new { status = false, msg = "Upload File gagal" });
+            }
+        }
+
+
+        [HttpPost]
+        public long CargoDocumentDeleteById(long id)
+        {
+            id = Service.EMCS.SvcCargo.DeleteCargoDocumentById(id);
+            return id;
+        }
+        public FileResult DownloadCargoDocument(long id)
+        {
+            //var list = Service.EMCS.SvcCipl.CiplHistoryGetById(id);
+            var files = Service.EMCS.SvcCargo.CargoDocumentListById(id).FirstOrDefault();
+            string fullPath = Request.MapPath("~/Upload/EMCS/Dummy/NotFound.txt");
+
+            if (files != null)
+            {
+                //var fileData = files;
+                fullPath = Request.MapPath("~/Upload/EMCS/Cargo/" + files.Id + "/" + files.Filename);
+                var fileBytes = System.IO.File.ReadAllBytes(fullPath);
+                string fileName = files.Filename;
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            }
+
+            return File(fullPath, "text/plain", "NotFound.txt");
+        }
+        [HttpPost]
+        public JsonResult CheckCNNo(CargoItem cargoItem)
+        {
+
+            try
+            {
+                if (cargoItem.ContainerSealNumber == null)
+                {
+                    string gettype = "";
+                    List<CargoItem> data = new List<CargoItem>();
+                    
+                    if (cargoItem.ContainerNumber == null)
+                    {
+                        cargoItem.ContainerNumber = "";
+                        data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    }
+                    else
+                    {
+                        data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    }
+                    
+                    //if (data.Count == 0)
+                    //{
+                    //    //List<CargoItem> listcargo = new List<CargoItem>();
+                    //    //for (int i = 0; i == listcargo.Count; i++)
+                    //    //{
+                    //        data[0].ContainerType = "";
+                    //    //}
+                    //}
+                        foreach (var i in data)
+                    {
+                        gettype = i.ContainerType;
+                        
+                    }
+                
+                    ContainerFormModel a = new ContainerFormModel();
+                    App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
+                    if (data.Count > 0)
+                    {
+                        m = Service.EMCS.SvcCargo.GetCargoType(gettype);
+                        if (m.Description != null)
+                        {
+                            data[0].ContainerType = m.Description;
+                        }
+                    }
+                    //for(int i=0;i == data.Count; i++)
+                    //{   
+                        
+                    //    data = null;
+                       
+                    //}
+
+                    return Json(data);
+                }
+                else
+                {
+                    string gettype = "";
+                    var data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    foreach (var i in data)
+                    {
+                        gettype = i.ContainerType;
+                    }
+                    return Json(gettype);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        //public JsonResult GetCargotype(int  cargotype)
+        //{
+        //    string data = "";
+        //    App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
+        //    try
+        //    {
+
+
+        //        m = Service.EMCS.SvcCargo.GetCargoType(cargotype);
+        //        data = m.Description;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //         data = ex.Message;
+        //    }
+
+        //    return Json(data);
+
+
+
+
+        //}
     }
 }

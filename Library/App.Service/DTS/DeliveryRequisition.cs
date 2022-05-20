@@ -71,9 +71,7 @@ namespace App.Service.DTS
 
             item.UpdateBy = Domain.SiteConfiguration.UserName;
             item.UpdateDate = DateTime.Now;
-            item.Province = item.Province.Replace("-", "");
-            item.Kabupaten = item.Kabupaten.Replace("-", "");
-            item.Kecamatan = item.Kecamatan.Replace("-", "");
+   
             if (item.Status != null && (item.Status.ToLower() == "submit" && item.Status.ToLower() == "revised"))
             {
                 item.ActivityTracking = "DR CREATION";
@@ -84,6 +82,7 @@ namespace App.Service.DTS
             {
                 using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
                 {
+
                     using (System.Data.Entity.DbContextTransaction dbTran = db.DbContext.Database.BeginTransaction())
                     {
                         try
@@ -107,6 +106,7 @@ namespace App.Service.DTS
                                     }
                                 }
                             }
+
                             if (dataRes > 0)
                             {
                                 if (units != null && units.Count() > 0)
@@ -147,6 +147,71 @@ namespace App.Service.DTS
 
         }
 
+        public static int crudreroute(string dml, Data.Domain.DeliveryRequisition item, List<Data.Domain.DeliveryRequisitionUnit> units, App.Data.Domain.DeliveryRequisition_Reroute item_Reroute)
+        {
+     
+
+            _cacheManager.Remove(cacheName);
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
+                {
+
+                    using (System.Data.Entity.DbContextTransaction dbTran = db.DbContext.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            int dataRes = 0;
+                                dataRes = db.CreateRepository<Data.Domain.DeliveryRequisition>().CRUD(dml, item);
+                            //commit transaction  
+                            dbTran.Commit();
+                            return Convert.ToInt32(item.ID);
+                        }
+                        catch (Exception ex)
+                        {
+                            //Rollback transaction if exception occurs  
+                            dbTran.Rollback();
+                            throw ex;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public static String GetTerritoryName(string parameterId, string parametername)
+        {
+            string TerritoryValue = "";
+
+            try
+            {
+
+                using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@parameterId", parameterId));
+                    parameterList.Add(new SqlParameter("@parametername", parametername));
+
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    TerritoryValue = db.DbContext.Database.SqlQuery<string>
+                        (@"exec [dbo].[SP_GetTerritory] @parameterId, @parametername", parameters)
+                        .FirstOrDefault();
+                    return TerritoryValue;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
         public static int delete(Data.Domain.DeliveryRequisition item)
         {
             _cacheManager.Remove(cacheName);
@@ -290,8 +355,8 @@ namespace App.Service.DTS
                 parameterList.Add(new SqlParameter("@forReport", forReport));
                 parameterList.Add(new SqlParameter("@status", status == null ? "" : status));               
                 parameterList.Add(new SqlParameter("@today", filter.today == null ? "" : filter.today));
-               
-               
+                parameterList.Add(new SqlParameter("@typesearch", filter.typesearch == null ? "" : filter.typesearch));
+
                 string filterColumns = String.Empty;
                 if (filter.filterColumns != null && filter.filterColumns.Count > 0)
                 {
@@ -317,7 +382,7 @@ namespace App.Service.DTS
 
 
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryRequisition>
-                    (@"exec [dbo].[SP_GetDataDeliveryRequesition] @searchName, @requestor, @createdby, @filters, @forReport, @status,@today", parameters).ToList();
+                    (@"exec [dbo].[SP_GetDataDeliveryRequesition] @searchName, @requestor, @createdby, @filters, @forReport, @status,@today,@typesearch", parameters).ToList();
 
                 return data;
             }
@@ -383,67 +448,7 @@ namespace App.Service.DTS
                                 ItemId = q.RefItemId,
                                 Model = q.Model,
                                 SerialNumber = q.SerialNumber,
-                                Batch = q.Batch,
-                                //ReqID = p.ReqID,
-                                //ReqName = p.ReqName,
-                                //ReqHp = p.ReqHp,
-                                //Origin = p.Origin,
-                                //CustID = p.CustID,
-                                //CustName = p.CustName,
-                                //CustAddress = p.CustAddress,
-                                //Kecamatan = p.Kecamatan,
-                                //Kabupaten = p.Kabupaten,
-                                //Province = p.Province,
-                                //PicName = p.PicName,
-                                //PicHP = p.PicHP,
-                                //TermOfDelivery = p.TermOfDelivery,
-                                //Incoterm = p.Incoterm,
-                                //SupportingOfDelivery = p.SupportingOfDelivery,
-                                //Transportation = p.Transportation,
-                                //ModaTransport = p.ModaTransport,
-                                //PenaltyLateness = p.PenaltyLateness,
-                                //ExpectedTimeLoading = p.ExpectedTimeLoading,
-                                //ExpectedTimeArrival = p.ExpectedTimeArrival,
-                                //ActualTimeDeparture = p.ActualTimeDeparture,
-                                //ActualTimeArrival = p.ActualTimeArrival,
-                                //RejectNote = p.RejectNote,
-                                //SoNo = p.SoNo,
-                                //DoNo = p.DoNo,
-                                //OdDate = p.OdDate,
-                                //Status = p.Status,
-                                //Referrence = p.Referrence,
-                                //CreateBy = p.CreateBy,
-                                //CreateDate = p.CreateDate,
-                                //UpdateBy = p.UpdateBy,
-                                //UpdateDate = p.UpdateDate,
-                                //Unit = p.Unit,
-                                //DINo = p.DINo,
-                                //RefNoType = p.RefNoType,
-                                //RefNo = p.RefNo,
-                                //SoDate = p.SoDate,
-                                //STONo = p.STONo,
-                                //STODate = p.STODate,
-                                //DIDate = p.DIDate,
-                                //STRNo = p.STRNo,
-                                //SupportingDocument = p.SupportingDocument,
-                                //SupportingDocument1 = p.SupportingDocument1,
-                                //SupportingDocument2 = p.SupportingDocument2,
-                                //SupportingDocument3 = p.SupportingDocument3,
-                                //SupportingDocument4 = p.SupportingDocument4,
-                                //SupportingDocument5 = p.SupportingDocument5,
-                                //Sales1ID = p.Sales1ID,
-                                //Sales1Name = p.Sales1Name,
-                                //Sales1Hp = p.Sales1Hp,
-                                //Sales2ID = p.Sales2ID,
-                                //Sales2Name = p.Sales2Name,
-                                //Sales2Hp = p.Sales2Hp,
-                                //STRDate = p.STRDate,
-                                //UnitDimWeight = p.UnitDimWeight,
-                                //UnitDimWidth = p.UnitDimWidth,
-                                //UnitDimLength = p.UnitDimLength,
-                                //UnitDimHeight = p.UnitDimHeight,
-                                //UnitDimVol = p.UnitDimVol,
-                                //SendEmailToCkb = p.SendEmailToCkb
+                                Batch = q.Batch,                              
                             }
                             ).ToList();
 
@@ -531,7 +536,7 @@ namespace App.Service.DTS
                 if (isSPChain)
                 {
                     var data = (from p in db.DeliveryRequisition
-                                where p.Status == "submit" && p.CreateDate >= startDateTime && p.CreateDate <= endDateTime
+                                where (p.Status == "submit" || p.Status == "rerouted") && p.CreateDate >= startDateTime && p.CreateDate <= endDateTime
                                 select p
                                );
                     CountToday = data.Count();
@@ -605,7 +610,13 @@ namespace App.Service.DTS
             var item = tb.ToList().Where(i => i.RefNo == key && i.IsDemob == false && i.Status != "reject").FirstOrDefault();
             return item;
         }
-
+        public static Data.Domain.DeliveryRequisition GetStatusDR(Int64 Id)
+        {
+            var db = new Data.DTSContext();
+            var tb = db.DeliveryRequisition;
+            var item = tb.ToList().Where(i => i.ID == Id && i.IsDemob == false && i.Status != "reject").FirstOrDefault();
+            return item;
+        }
         public static Data.Domain.DeliveryRequisition GetByKeyCustom(string key)
         {
             var db = new Data.DTSContext();
@@ -635,12 +646,42 @@ namespace App.Service.DTS
             return item;
         }
 
-        public static List<Data.Domain.DeliveryRequisitionRef> GetReference(string keyType, string keyNumber)
+        public static List<Data.Domain.DeliveryRequisitionRef> GetReferenceReroute(string keyNumber)
         {
             string key = string.Format(cacheName);
             try
             {
                 
+                using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    if (keyNumber != null)
+                    {                        
+                        keyNumber = Regex.Replace(keyNumber, @"\s+\$|\s+(?=\w+$)", "");
+                    }
+                   
+                    parameterList.Add(new SqlParameter("@keyNumber", keyNumber == null ? "" : keyNumber));
+
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    var data = db.DbContext.Database.SqlQuery<Data.Domain.DeliveryRequisitionRef>
+                        (@"exec [dbo].[SP_GetDRReferenceReroute]  @keyNumber", parameters)
+                        .ToList();
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Data.Domain.DeliveryRequisitionRef> GetReference(string keyType, string keyNumber)
+        {
+            string key = string.Format(cacheName);
+            try
+            {
+
                 using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
                 {
                     db.DbContext.Database.CommandTimeout = 600;

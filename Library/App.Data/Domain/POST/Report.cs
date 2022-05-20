@@ -5,8 +5,7 @@ namespace App.Data.Domain.POST
     public class ReportSLAModel
     {
         public string PO_Number { get; set; }
-        public Nullable<System.DateTime> PO_Date { get; set; }
-        //public string Item_Category { get; set; }
+        public Nullable<System.DateTime> PO_Date { get; set; }       
         public string PO_lineitem { get; set; }
         public string QtyPO { get; set; }
         public string QtyDone { get; set; }
@@ -15,8 +14,7 @@ namespace App.Data.Domain.POST
         public string Plant { get; set; }
         public string Purchasing_Group { get; set; }
         public string VendorID { get; set; }
-        public string VendorName { get; set; }
-        //public string POsenttoVendor { get; set; }
+        public string VendorName { get; set; }      
         public Nullable<System.DateTime> PO_ConfirmDate { get; set; }
         public string PR_Number { get; set; }
         public string PR_lineitem { get; set; }
@@ -35,7 +33,7 @@ namespace App.Data.Domain.POST
         public string SA_Number { get; set; }
         public string SA_PostingDate { get; set; }
         public string SA_DocumentDate { get; set; }
-        //public string CostCenter { get; set; }
+        public string SA_Amount { get; set; }       
         public string Invoice_Number { get; set; }
         public Nullable<System.DateTime> Invoice_PostingDate { get; set; }
         public Nullable<System.DateTime> Invoice_Date { get; set; }
@@ -44,6 +42,6 @@ namespace App.Data.Domain.POST
         public string ActualCompleteDate { get; set; }
         public string PlanCompleteDate { get; set; }
         public string ActualFinishDate { get; set; }
-        public string SLA { get; set; }
+       
     }
 }

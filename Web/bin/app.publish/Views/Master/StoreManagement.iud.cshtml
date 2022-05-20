@@ -1,0 +1,148 @@
+@model App.Web.Models.StoreViewModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title Store</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- Default input -->
+            <div class="col-lg-8">
+                @if (mode == "U")
+                {
+                    @Html.HiddenFor(m => m.Store.StoreID)
+
+                }
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Plant</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @*  @Html.HiddenFor(m => m.Store.StoreID)*@
+                        @Html.TextBoxFor(m => m.Store.Plant, new { @class = "form-control required", placeholder = "Plant" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.Plant)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Store.Name, new { @class = "form-control required", placeholder = "Name" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.Name)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">C3LC</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Store.C3LC, new { @class = "form-control", placeholder = "C3LC" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.C3LC)</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Prev Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Store.PrevName, new { @class = "form-control", placeholder = "Prev Name" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.Name)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Description</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextAreaFor(m => m.Store.Description, new { @class = "form-control", placeholder = "Description" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.Description)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Area</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.Store.AreaID, new SelectList(Model.AreaList, "AreaId", "Name"), "--- Select Area ---", new { @class = "form-control" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.AreaID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Hub</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.Store.HubID, new SelectList(Model.HubList, "HubId", "Name"), "--- Select Hub ---", new { @class = "form-control" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.HubID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Region</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.Store.RegionID, new SelectList(Model.RegionList, "ID", "Name"), "--- Select Region ---", new { @class = "form-control" })
+                        <div>@Html.ValidationMessageFor(m => m.Store.RegionID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Time Adjustment</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="timezone" name="Store.TimeZone" style="width: 99%;">
+                            <option @(Model.Store.TimeZone == 0 ? "selected='selected" : "") value="0">WIB</option>
+                            <option @(Model.Store.TimeZone == 1 ? "selected='selected" : "") value="1">WITA</option>
+                            <option @(Model.Store.TimeZone == 2 ? "selected='selected" : "") value="2">WIT</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Default input -->
+        </div>
+
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+    @Html.HiddenFor(a => a.Store.EntryBy)
+    @Html.HiddenFor(a => a.Store.EntryDate)
+    @Html.HiddenFor(a => a.Store.ModifiedBy)
+    @Html.HiddenFor(a => a.Store.ModifiedDate)
+}
+<script>
+    var mode = '@mode';
+    if (mode != 'I') $("#Store_StoreID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+
+        selectAll = function (obj, fld) {
+            $("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+        };
+
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

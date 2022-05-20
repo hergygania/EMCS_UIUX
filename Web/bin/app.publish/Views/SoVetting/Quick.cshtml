@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "Quick";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var request = HttpContext.Current.Request;
+    string baseUrl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
+    DateTime lastupdate = DateTime.Now;
+    lastupdate = lastupdate.AddDays(-1);
+}
+<style>
+    .dps-table thead tr, table.dataTable thead th, table.dataTable thead td  {
+        background-color: #fff;
+        color: #000000;
+        border-bottom: 0px;
+    }
+
+    .dataTables_wrapper.no-footer .dataTables_scrollBody {
+       border-bottom: 0px;
+    }
+
+</style>
+<main class="body position-relative" style="margin-top: -5%;">
+    <div data-active-page="[0,2]" class="content-wrap py-4 bg-light">
+        <div class="container-fluid">
+            <header class="my-4">
+                <h4 class="m-0">@*PLEASE ENTER SO NUMBER OR CUSTOMER NAME*@</h4>
+            </header>
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="@baseUrl/so-vetting/quick" class="active h5 nav-link rounded-0 text-dark m-0 px-3"><span>Quick Search</span></a></li>
+                <li class="nav-item"><a href="@baseUrl/so-vetting/advanced" class="h5 nav-link rounded-0 text-dark m-0 px-3"><span>Advanced Search</span></a></li>
+            </ul>
+            <div class="tab-content bg-white border border-top-0 p-4">
+                <div class="tab-pane show active">
+                    <form id="quick-search-form">
+                        <div class="form-row mb-3">
+                            <div class="col-sm-6 col-lg-4">
+                                <input placeholder="Type SO Number" id="qs-so-no" name="quickSearch" type="text" class="form-control rounded-0">
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <input placeholder="Customer Name" id="qs-cn" name="quickSearchCustName" type="text" class="form-control rounded-0">
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="input-group input-daterange w-auto">
+                                    <input id="quick-search-date_start" placeholder="SO Creation Date Start" data-orientation="bottom" name="quickSearchDateStart" type="text" readonly="readonly" class="form-control bg-white rounded-0 border-right-0">
+                                    <div class="input-group-append">
+                                        <label for="quick-search-date_start" class="btn border-left-0 input-group-text bg-white rounded-0 rounded-right"><i class="fa fa-calendar-alt"></i></label>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text border-0 rounded-0 bg-transparent">to</div>
+                                    </div>
+                                    <input id="quick-search-date_end" placeholder="SO Creation Date End" name="quickSearchDateEnd" type="text" readonly="readonly" class="form-control bg-white border-right-0 rounded-0 rounded-left">
+                                    <div class="input-group-append">
+                                        <label for="quick-search-date_end" class="btn border-left-0 input-group-text rounded-0 bg-white"><i class="fa fa-calendar-alt"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-4">
+
+                            </div>
+                            <div class="col-4">
+                                <button id="btn-track-now" data-ajax_url="@baseUrl/So-Vetting/QuickFirst" data-ajax_empty="Please insert the SO Number" type="button" class="btn btn-lg btn-warning d-block w-100" style="border-radius:10px;">
+                                    <span>Search</span><i class="fa fa-search ml-3"></i>
+                                </button>
+                            </div>
+                            <div class="col-4">
+
+                            </div>
+                        </div>
+                    </form>
+                    <section id="quick-search-result" style="display: none;" class="position-relative z-index-5 mb-3">
+                        <div class="card rounded-0">
+                            <div class="card-body">
+                                <div id="table-quick-result-wrap" class="datatable-wrap table-column-filter hide-export-button">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <a href="javascript:void(0);" class="btn btn-warning btn-back-summer-to-form ">&lt; Back</a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                            <div>Latest Update: @Html.Raw(lastupdate.ToString("yyyy-MM-dd"))</div>
+                                            @*<button class="btn btn-transparent refresh-data-table text-muted btn-sm ml-3"><i class="fa fa-sync-alt"></i></button>*@
+                                        </div>
+                                        <div class="col-md-6 d-flex align-items-center justify-content-lg-end mb-3 mb-md-0">
+                                            <a href="@baseUrl/So-Vetting/QuickSummaryExportExcel" class="btn btn-transparent d-flex align-items-center border-0 p-0"><span>EXPORT TO :</span><i class="fa fa-file-excel fa-2x text-success ml-3"></i></a>
+                                        </div>
+                                    </div>
+                                    <table id="table-quick-result" class="table table-striped table-bordered dps-table table-text-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 80px;">NO</th>
+                                                <th>SO NO</th>
+                                                <th>SO DATE</th>
+                                                <th>PO NO</th>
+                                                <th>PO DATE</th>
+                                                <th>SHIP TO PARTY</th>
+                                                <th style="width: 80px;">ORDER ITEM</th>
+                                                <th>BO</th>
+                                                <th>SUBCON</th>
+                                                <th>ETA</th>
+                                                <th>NBD</th>
+                                                <th>COMPLETION DATE</th>
+                                                <th>COMPLETION</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div id="table-quick-order-wrap" data-ajax_url="@baseUrl/So-Vetting/Quickdua" style="display: none;" class="datatable-wrap table-column-filter hide-export-button">
+                                    <div class="row mb-3">
+                                        <div class="col-12">
+                                            <a href="javascript:void(0);" class="btn btn-warning btn-back-quick-item-to-summer ">&lt; Back</a>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12" align="center">
+                                            <h4 class="quicksdnumbershow">Sales Document Number</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6 d-flex align-items-center mb-3 mb-md-0">
+                                            <div>Latest Update: @Html.Raw(lastupdate.ToString("yyyy-MM-dd"))</div>
+                                            @*<button class="btn btn-transparent refresh-data-table text-muted btn-sm ml-3"><i class="fa fa-sync-alt"></i></button>*@
+                                        </div>
+                                        <div class="col-md-6 d-flex align-items-center justify-content-lg-end mb-3 mb-md-0">
+                                            <a href="@baseUrl/So-Vetting/QuickItemExportExcel" class="btn btn-transparent d-flex align-items-center border-0 p-0"><span>EXPORT TO :</span><i class="fa fa-file-excel fa-2x text-success ml-3"></i></a>
+                                        </div>
+                                    </div>
+                                    <table id="table-quick-order" class="table table-striped table-bordered dps-table table-text-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 80px;">ITEM</th>
+                                                <th style="width: 141px;">MATERIAL</th>
+                                                <th style="width: 141px;">DESCRIPTION</th>
+                                                <th style="width: 141px;">QTY</th>
+                                                <th style="width: 141px;">CONFIRM QTY</th>
+                                                <th style="width: 141px;">CLASS</th>
+                                                <th style="width: 141px;">SOURCE</th>
+                                                <th style="width: 141px;">ETA</th>
+                                                <th style="width: 141px;">SHIPMENT NO</th>
+                                                <th style="width: 141px;">GI SUPPLYING DATE</th>
+                                                <th style="width: 141px;">GR ORDERING DATE</th>
+                                                <th style="width: 141px;">GI ORDERING DATE</th>
+                                                <th style="width: 141px;">GATEPASS</th>
+                                                <th style="width: 200px;">SHIPMENT STATUS</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="preload-truck  position-absolute justify-content-center align-items-center w-100 h-100 z-index-10">
+        <div class="card  shadow position-relative z-index-10">
+            @*<div class="card-header bg-transparent">
+                <p class="mb-0">This process will take times</p>
+            </div>*@
+            <div class="card-body">
+                <img src="~/Content/SoVetting/images/repository/hzk6C.gif" alt="" class="mb-3">
+                @*<button id="btn-cancel-filter" type="button" class="btn btn-warning rounded-0 d-block w-100">CANCEL</button>*@
+            </div>
+        </div>
+        <div class="preload-truck-bg  position-absolute w-100 h-100 z-index-5"></div>
+    </div>
+</main>
+
+<script>
+    window.quickSearchColumns = [
+      { data: 'row_number' },
+      { data: 'so_number' },
+      { data: 'so_date' },
+      { data: 'po_number' },
+      { data: 'po_date' },
+      { data: 'ship_to_party' },
+
+      {
+          data: 'order_item',
+          render: function (data, type, row) {
+              var html = '<button type="button" data-order_item="' + data.row_id + '"  class="btn btn-transparent btn-open-order-table text-danger p-0">' + data.value + '</button>';
+              return html;
+          }
+      },
+      { data: 'bo' },
+
+      { data: 'sub_con' },
+      { data: 'eta' },
+      {
+          data: 'nbd'
+          //  ,
+          //render : function (data) {
+          //  var html = getDate_mdyyyy(data)
+          //  return html;
+          //}
+      },
+      { data: 'completion_date' },
+      { data: 'completion' },
+    ];
+
+    window.quickOrderColumns = [
+      { data: 'action' },
+      { data: 'material' },
+      { data: 'description' },
+      { data: 'qty' },
+      { data: 'confirm_qty' },
+      { data: 'classes' },
+      { data: 'suppl_plant' },
+      {
+          data: 'eta'
+          //  ,
+          //render : function (data) {
+          //  var html = getDate_mdyyyy(data)
+          //  return html;
+          //}
+      },
+      { data: 'shipment_no' },
+      //{
+      //    data: 'shipment_no',
+      //  render : function (data) {
+      //    var html = getDate_mdyyyy(data)
+      //    return html;
+      //  }
+      //},
+
+      { data: 'gi_date' },
+      { data: 'gr_date' },
+      { data: 'giOrdering' },
+      { data: 'gatepass' },
+      {
+          data: 'shipment_stat',////////////
+          render: function (data, type, row) {
+              console.log(row);
+              //console.log(data);
+              setShipmentStatus('#shipment-' + data.row_id + '-' + data.refer + '-' + row.shipment_no, data.row_id, data.refer, row.shipment_no);
+              var html = '<button type="button" data-target="#track-detail-stat-modal" data-to_send="{\'da\': ' + data.row_id + ', \'reference\': ' + data.refer + ' , \'shipmentNo\':\'' + row.shipment_no + '\'}" data-ajax_url="@baseUrl/So-Vetting/QuickThird" data-error_tracking="Data tidak ditemukan" class="btn btn-transparentflex align-items-center text-right btn-modal-shipment-stat w-100 p-0"><span id="shipment-' + data.row_id + '-' + data.refer + '-' + row.shipment_no +'"><div class="spinner-border spinner-border-sm text-center" role="status"> <span class="sr-only">Loading...</span></div></span><i class="fas fa-exclamation-circle text-warning ml-2"></i></button>';
+              return html;
+
+          }
+      },
+    ];
+
+    $('#table-quick-result_info').hide();
+
+    function setShipmentStatus(elementid, So, item, shipmentNo) {
+        var $this = $(elementid);
+        var settings = {
+            "url": "@baseUrl/So-Vetting/QuickLastTrackStatus",
+            "method": "POST",
+            "headers": {
+                "Content-Type": "application/json",
+                "cache-control": "no-cache",
+            },
+            "data": "{\"da\": " + So + ", \"reference\": " + item + " , \"shipmentNo\":\"" + shipmentNo+"\"}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            if (response.is_valid == true) {
+                $this.text(response.data.status);
+            } else {
+                $this.text(" ");
+            }
+            //console.log(response.data);
+           
+        });
+
+    }
+
+
+
+</script>
+
+@section soVetting {
+    <div id="track-detail-stat-modal" tabindex="-1" role="dialog" class="item-sourcing-modal modal">
+        <div class="modal-dialog modal-lg modal-dialog-centered" style="z-index: 2000;">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title"><strong>TRACKING DETAIL STATUS</strong></h5>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body border-0 p-3">
+                    <ul class="vertical-timeline"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

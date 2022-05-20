@@ -41,6 +41,16 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public JsonResult CreateCargoContainer(ContainerFormModel form)
         {
+
+            if(form.ContainerType == null)
+            {
+                CargoItem a = new CargoItem();
+                a.IdCargo = form.CargoId;
+                a.ContainerNumber = form.ContainerNumber;
+                a.ContainerSealNumber = form.ContainerSealNumber;
+                var containertype2 = CheckCNNo(a);
+                form.ContainerType = Convert.ToString(containertype2.Data);
+            }
             var cargo = Service.EMCS.SvcCargo.GetCargoById(form.CargoId);
 
             if (cargo != null)

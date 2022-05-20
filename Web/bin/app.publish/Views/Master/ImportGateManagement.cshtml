@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Import Gate Management";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            @*<div class="box-header">
+                    <h3 class="box-title">@ViewBag.Title</h3>
+                </div>*@
+            <form role="form">
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @*<hr>*@
+                            <div class="toolbar">
+                                @{
+                                    if (ViewBag.AllowCreate)
+                                    {
+                                        <button type="button" class="btn btn-warning" onclick="loadModal('/master/ImportGateManagementCreate')" id="btnCreate" style="width:150px;">
+                                            <i class="fa fa-plus"></i> Add Import Gate
+                                        </button>
+                                    }
+                                }
+
+                                <div class="fa-pull-left" id="mySearch" style="padding-right: 2px">
+                                    <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                                </div>
+                            </div>
+                            <table class="table table-bordered" data-response-handler="responseHandler" id="tableImportGate"></table>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/Master/ImportGateManagement.cshtml.js")"></script>
+}

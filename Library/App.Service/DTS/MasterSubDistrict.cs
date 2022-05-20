@@ -25,7 +25,7 @@ namespace App.Service.DTS
         /// Get List from Shipment inbound data
         /// </summary>
         /// <returns></returns>
-        public static List<Data.Domain.MasterSubDistrict> GetListFilter(string keySearch)
+        public static List<Data.Domain.MasterSubDistrict> GetListFilter(string keySearch,string districtid)
         {
             string key = string.Format(cacheName);
 
@@ -37,12 +37,12 @@ namespace App.Service.DTS
                 {
                     keySearch = Regex.Replace(keySearch, @"[^0-9a-zA-Z]+", "");
                 }
-                
+         
                 parameterList.Add(new SqlParameter("@key", keySearch == null ? "" : keySearch));
-
+                parameterList.Add(new SqlParameter("@districtid", districtid == null ? "" : districtid));
                 SqlParameter[] parameters = parameterList.ToArray();
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.MasterSubDistrict>
-                    (@"exec [dbo].[SP_GetSubDistrict] @key", parameters).ToList();
+                    (@"exec [dbo].[SP_GetSubDistrict] @key,@districtid", parameters).ToList();
                 return data;
             }
         }

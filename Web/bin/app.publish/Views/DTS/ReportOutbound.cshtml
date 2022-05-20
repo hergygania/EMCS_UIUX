@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "ReportOutbound";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <h5><strong>Check your Unit Here!</strong></h5>
+                            <p>Please input ( DA, DI or Serial Number ) for searching</p>
+                            <div class="input-group input-group-sm">
+                                <input type="text" id="SearchKeyParam" class="form-control" placeholder="Type any keys">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary" id="BtnFilter">
+                                        <i class="fa fa-search"></i>
+                                        Filter
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-horizontal" style="margin-top:20px;">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Moda</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="Moda" placeholder="Moda" id="FilterModa" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Unit Type</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="UnitType" placeholder="Unit Type" id="FilterUnitType" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Model</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="Model" placeholder="Model" id="FilterModel" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Status</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="Status" placeholder="Status" id="FilterStatus" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Position</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="Position" placeholder="Position" id="FilterPosition" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="">&nbsp;</div>
+                        <div class="col-md-12">
+                            <div id="toolbar" class="col-md-2 toolbarBtn">
+                                <div class="row">
+                                    <button class="btn btn-success" type="button" id="btnExportOutbound"><i class="fa fa-file-excel-o"></i> Export</button>
+                                </div>
+                            </div>
+                            <table id="tableOutbound" data-toolbar=".toolbar" class="table table-bordered"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="box-body">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px; display:none;">
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Moda</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Moda -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Unit Type</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Unit Type -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Model</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Model -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">&nbsp;</div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Status</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control">
+                                                <option>- Select Status -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Position</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control">
+                                                <option>- Select Position -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/Scripts.app/DTS/Outbound.cshtml.js")"></script>
+}

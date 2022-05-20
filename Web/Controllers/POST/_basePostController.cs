@@ -62,13 +62,7 @@ namespace App.Web.Controllers.POST
         }
 
         public void ApplicationTitle()
-        {
-
-            //var zTitle = HttpContext.C.Session["myData"] != null;
-            //if (zTitle == null)
-            //{
-            //    TempData["myData"] = "Test data";
-            //}
+        {        
 
             var userID = User.Identity.GetUserId();
             var userType = User.Identity.GetUserType().ToLower();

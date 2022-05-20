@@ -3,14 +3,43 @@ using System;
 using System.Web.Mvc;
 using App.Web.Models.EMCS;
 using System.IO;
+using App.Web.Helper;
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
+        public ActionResult ShippingSummaryList()
+        {
+            ApplicationTitle();
+            ViewBag.AllowRead = AuthorizeAcces.AllowRead;
+            ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
+            ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
+            ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            PaginatorBoot.Remove("SessionTRN");
+            return View();
+        }
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "ShippingSummaryList")]
+        public JsonResult GetShippingSummary(GridListFilterModel filter)
+        {
+            var dataFilter = new Data.Domain.EMCS.GridListFilter();
+            dataFilter.Limit = filter.Limit;
+            dataFilter.Order = filter.Order;
+            dataFilter.Term = filter.Term;
+            dataFilter.Sort = filter.Sort;
+            dataFilter.Offset = filter.Offset;
+
+            var data = Service.EMCS.SVCShippingSummary.SSList(dataFilter);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ShippingSummaryView(long cargoId = 1)
         {
             ApplicationTitle();
+            string strQrCodeUrlEDI = Common.GenerateQrCode(cargoId, "downloadss");
+            ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
+            TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
+            TempData.Peek("QrCodeUrlSS");
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;

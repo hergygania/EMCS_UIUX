@@ -90,7 +90,7 @@
                     }
                 }
                 <ul class="navbar-nav bd-navbar-nav flex-row">
-                    @if (Role.Contains("POSTEXPEDITOR")|| Role.Contains("POSTBRANCH"))
+                    @if (Role.Contains("POSTEXPEDITOR") || Role.Contains("POSTBRANCH"))
                     {
                         <li class="nav-item">
                             <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="~/Post/dashboard">Dashboard</a>
@@ -189,7 +189,7 @@
                             <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
                         </li>
                     }
-                    @if ( Role.Contains("POSTVIEWER") || Role.Contains("POSTFINANCEVIEWERBRANCH") || Role.Contains("POSTFINANCEVIEWER"))
+                    @if (Role.Contains("POSTVIEWER") || Role.Contains("POSTHOVIEWER"))
                     {
                         <li class="nav-item">
                             <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
@@ -205,28 +205,42 @@
                             <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
                         </li>
                     }
-                    @if (Role.Contains("POSTFINANCE") || Role.Contains("POSTTAX"))
+                    @if (Role.Split(',')[1].Contains("POSTPLANTVIEWERFINANCE") )
                     {
-                        if (Role.Split(',')[1].Contains("POSTFINANCE"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
-                            </li>
-                            <li class="nav-item" id="logout">
-                                <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeFinance">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
                     }
+                    @if (Role.Split(',')[1].Contains("POSTFINANCE") || Role.Split(',')[1].Contains("POSTTAX"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeFinance">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
+                    }
+
+
 
                 </ul>
             </div>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using App.Data.Domain.EMCS;
@@ -24,7 +25,56 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcGeneral.CiplDocumentList(filter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetCargoDocumentList(GridListFilter filter)
+        {
 
+            try
+            {
+                if (filter.Cargoid == 0)
+                {
+                    var a = HttpContext.Session["Cargoid"];
+                    if (a == null)
+                    {
+                        a = 0;
+                       
+                    }
+                    filter.Cargoid = Convert.ToInt32(a);
+                    HttpContext.Session.Remove("Cargoid");
+                }
+            }
+            catch(Exception ex)
+            {
+                var a = ex.Message;
+            }
+            var data = Service.EMCS.SvcCargo.CargoDocumentList(filter);
+            
+            return Json(data, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult GetGRDocumentList(GridListFilter filter)
+        {
+
+            try
+            {
+                var data = Service.EMCS.SvcGoodsReceive.GRDocumentList(filter);
+                return Json(data, JsonRequestBehavior.AllowGet);
+                //if (filter.Cargoid == 0)
+                //{
+                //    var a = HttpContext.Session["Cargoid"];
+                //    if (a == null)
+                //    {
+                //        a = 0;
+
+                //    }
+                //    filter.Cargoid = Convert.ToInt32(a);
+                //    HttpContext.Session.Remove("Cargoid");
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         [HttpGet]
         public JsonResult GetPlantList(Domain.MasterSearchForm crit)
         {

@@ -47,7 +47,9 @@ function setFormSisable(isdisabled, formType) {
             $("#refDINo").parent().removeClass('hidden');
         }
     } 
-
+    $("#newcustName").show();
+    $("#oldcustNamegroup").hide();
+    $("#btnhistory").hide();
     $('.btn-refNo button').attr("disabled", isdisabled);
     $("#refNo").attr("disabled", isdisabled);
     $("#refDate").attr("disabled", isdisabled);
@@ -64,17 +66,16 @@ function setFormSisable(isdisabled, formType) {
     $("#CustAddress").attr("disabled", isdisabled);
     $("#PicName").attr("disabled", isdisabled);
     $("#PicHP").attr("disabled", isdisabled);
-    //$("#Kecamatan").attr("disabled", isdisabled);
-    //$("#Kabupaten").attr("disabled", isdisabled);
-    //$("#Province").attr("disabled", isdisabled);
+   
     $("#ProvinceID").attr("disabled", isdisabled);
     $("#SubDistrictID").attr("disabled", isdisabled);
     $("#DistrictID").attr("disabled", isdisabled);  
     $("#Origin").attr("disabled", isdisabled);
-    $("#RequestNotes").attr("disabled", isdisabled);
-
+    $("#RequestNotes").attr("disabled", isdisabled);    
     $("#ExpectedTimeArrival").attr("disabled", isdisabled);
     $("#ExpectedTimeLoading").attr("disabled", isdisabled);
+    
+  
     $("#ActualTimeArrival").attr("disabled", isdisabled);
     $("#ActualTimeDeparture").attr("disabled", isdisabled);
 
@@ -113,7 +114,7 @@ function setFormSisable(isdisabled, formType) {
     $form.find("input[name=SendEmailToCkbCakungStandartKit]").attr("disabled", isdisabled);
     $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", isdisabled);
     $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", isdisabled);
-    //$form.find("input[name=SendEmailToCkb]").attr("disabled", "disabled");
+
 
     if (formType == 'R') {
         $("#refSONo").parent().removeClass('hidden');
@@ -121,7 +122,9 @@ function setFormSisable(isdisabled, formType) {
         $("button[name=ReRoute]").attr("disabled", false);
         $('.btn-refNo button').attr("disabled", false);
         $("#refNo").attr("disabled", false);
+        
     }
+  
 }
 
 function showFormRequisition() {
@@ -150,17 +153,18 @@ var referenceEvent = {
         SELF.fillData(result, formType);
     },
     fillData: function (dataRef, formType = 'I') {
+        $("#btnhistory").show();
         referenceEvent.formType = formType;
         referenceEvent.dataRef = dataRef;
         var isdisabled = dataRef.header.Status === "complete" || dataRef.header.Status === "reject" ? "disabled" : false;
         if (formType === "V" || formType === "R") {
-            isdisabled = true; // "disabled";
+            isdisabled = true;;
         }
         if (dataRef.header.Status === "reject" || dataRef.header.Status === "revise") {
             $("#RejectNoteSpace").show();
             $("textarea[name=RejectNote]").val(dataRef.header.RejectNote);
         }
-        //console.log(formType);
+       
         if (formType == 'I') {
             $form.find("input[name=formType]").val("I");
         } else {
@@ -212,8 +216,7 @@ var referenceEvent = {
         }
         if (formatDate(dataRef.header.ActualTimeDeparture) !== '01 JAN 1900') {
             $("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
-        }
-        //$("#ActualTimeDeparture").val(formatDate(dataRef.header.ActualTimeDeparture));
+        }      
 
         $("#RequestNotes").val(dataRef.header.RequestNotes);
 
@@ -222,8 +225,7 @@ var referenceEvent = {
             $.each(Unit, function (index, itemTod) {
                 $form.find("input[name=unit][value='" + itemTod + "']").prop("checked", true);
             });
-            if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {
-                //console.log(dataRef.header.Unit);
+            if (dataRef.header.Unit === "ATTACHMENT CAT" || dataRef.header.Unit === "ATTACHMENT NON CAT") {                
                 $("#section-dimension").show();
                 $("#on_pondation").hide();
                 $('#u-weight').val(dataRef.header.UnitDimWeight);
@@ -273,8 +275,7 @@ var referenceEvent = {
 
             });
         }
-
-        //console.log(dataRef.header.Incoterm);
+       
         if (dataRef.header.Incoterm && dataRef.header.Incoterm != 'null') {
             var INCTs = dataRef.header.Incoterm.split(',');
             $.each(INCTs, function (index, itemInct) {
@@ -334,7 +335,6 @@ var referenceEvent = {
             $form.find("input[name=IsDemob][value=false]").prop('checked', true).attr("disabled", isdisabled);
         }
 
-        //console.log(dataRef.header);
         $("#SoNo").val(dataRef.header.SoNo);
         $("#SoDate").val(formatDate(dataRef.header.SoDate));
         $("#STRNo").val(dataRef.header.STRNo);
@@ -369,19 +369,27 @@ var referenceEvent = {
                 $("#DIDateSAP").val(dataRef.header.DIDateSAP);
             }
         }
-       
-        //$("#DIDateSAP").val(dataRef.header.DIDateSAP);
         $('.SDOC-container').show();
         $('.SDOC-container .row .upload').show();
         $('.SDOC-container .row.preview').show();
         $("button[name=ReRoute]").attr("disabled", true);
 
-        if (['U', 'I'].indexOf(formType) > -1) {
-            $('.SDOC-container .row .upload').show();
-            $('.SDOC-container .row.preview').hide();
+        if (['U', 'I'].indexOf(formType) > -1) {            
+            if (dataRef.header.Status !== "request rerouted") {
+                $('.SDOC-container .row .upload').show();
+                $('.SDOC-container .row.preview').hide();
+            }
+             
         } else if (formType === 'R') {
-            $('.SDOC-container .row .upload').show();
-            $('.SDOC-container .row.preview').show();
+            if (dataRef.header.Status === 'complete') {
+                $('.SDOC-container .row .upload').hide();
+                $('.SDOC-container .row.preview').show();
+            }
+            else {
+                $('.SDOC-container .row .upload').show();
+                $('.SDOC-container .row.preview').show();
+            }
+           
             showFilePreview(dataRef.header);
         } else if (formType === 'V') {
             $('.SDOC-container .row .upload').hide();
@@ -391,6 +399,30 @@ var referenceEvent = {
         }
         $('.fileinput-remove span').hide();
         setFormSisable(isdisabled, formType);
+        if (formType == 'U' && dataRef.header.Status === "request rerouted") {
+            $("#ExpectedTimeArrival").attr("disabled", true);
+            $("#ExpectedTimeLoading").attr("disabled", true);
+            $("#CustID").attr("disabled", false);
+            $("#CustName").attr("disabled", false);
+            $("#CustAddress").attr("disabled", false);  
+            $("#refDINo").attr("disabled", true);
+            $("#Sales1ID").attr("disabled", true);
+            $("#Sales1Name").attr("disabled", true);
+            $("#Sales1Hp").attr("disabled", true);
+            $("#Sales2ID").attr("disabled", true);
+            $("#Sales2Name").attr("disabled", true);
+            $("#Sales2Hp").attr("disabled", true);
+            $("#RequestHP").attr("disabled", true);   
+            $('.SDOC-container .row.upload').hide();
+            $('.SDOC-container .row.preview').show();
+            showFilePreview(dataRef.header);
+            $form.find("input[name=unit]").attr("disabled", true);
+                     
+        }
+        if (formType == 'V' && dataRef.header.Status === "rerouted") {
+            $("#btnhistory").show();  
+            $("#btnhistory").attr("disabled", false);
+        }
         requestingForm.initTableUnit(dataRef.details, formType, isdisabled);
         showFormRequisition();
     }
@@ -402,7 +434,7 @@ function invalidRef() {
 function viewDR(refNo,refUrl) {
      $.ajax({
         type: "GET",
-        url: refUrl,
+         url: refUrl,       
         beforeSend: function () { },
         complete: function () { },
         dataType: "json",
@@ -417,26 +449,12 @@ function viewDR(refNo,refUrl) {
                     $('#CustID').append(newOption2).trigger('change');
                     $("#CustID").val(d.header.CustID).trigger("change");
                     $("#CustName").val(formatUpperCase(d.header.CustName || ''));
-                    $("#CustAddress").val(formatUpperCase(d.header.CustAddress));
-                    //$("#ActualTimeArrival").val(formatUpperCase(d.header.ATA));
-                    //$('#ProvinceID').append(newOption2).trigger('change');
-                    //$("#ProvinceID").val(d.header.ProvinceID).trigger("change");
-                    //$("#ProvinceName").val(formatUpperCase(d.header.Province || ''));
-                    //$('#DistrictID').append(newOption2).trigger('change');
-                    //$("#DistrictID").val(d.header.ProvinceID).trigger("change");
-                    //$("#DistrictName").val(formatUpperCase(d.header.Kabupaten || ''));               
-                    //$('#SubDistrictID').append(newOption2).trigger('change');
-                    //$("#SubDistrictID").val(d.header.SubDistrictID).trigger("change");
-                    //$("#SubdistrictName").val(formatUpperCase(d.header.Kabupaten || ''));
+                    $("#CustAddress").val(formatUpperCase(d.header.CustAddress));                
                     $("#PicName").val(formatUpperCase(d.header.PicName));
-                    $("#PicHP").val(formatUpperCase(d.header.PicHP));
-                    //$("#SubDistrictID").val(formatUpperCase(d.header.Kecamatan));
-                    //$("#DistrictID").val(formatUpperCase(d.header.Kabupaten));
-                    //$("#ProvinceID").val(formatUpperCase(d.header.Province));
+                    $("#PicHP").val(formatUpperCase(d.header.PicHP));                  
                     $("#RefNo").val(d.header.RefNo);
                     $("#SoNo").val(d.header.SoNo);
                     $("#SoDate").val(formatDate(d.header.SoDate));
-
                     $("button[name=ReRoute]").attr("disabled", false);
                     $("#CustID").attr("disabled", false);
                     $("#CustName").attr("disabled", false);
@@ -446,14 +464,20 @@ function viewDR(refNo,refUrl) {
                     $("#SubDistrictID").attr("disabled", false);
                     $("#DistrictID").attr("disabled", false);
                     $("#ProvinceID").attr("disabled", false);
+                    $("#ExpectedTimeLoading").attr("disabled", false);
+                    $("#ExpectedTimeArrival").attr("disabled", false);
                     $("#ActualTimeArrival").attr("disabled", false);
                     $("#ActualTimeDeparture").attr("disabled", false);
                     $('.btn-refNo button').attr("disabled", false);
                     $("#refNo").attr("disabled", false);
                 } else {
                     if ($("#refSONo").parent().hasClass('active')) {
-                        d.header.ExpectedTimeArrival = "";
-                        d.header.ExpectedTimeLoading = "";
+                        if (d.header.Status != 'request rerouted')
+                        {
+                            d.header.ExpectedTimeArrival = "";
+                            d.header.ExpectedTimeLoading = "";
+                        }
+                        
                         referenceEvent.fillFromSo(d, $form.find("input[name=formType]").val());
                     } else if ($("#refSTRNo").parent().hasClass('active')) {
                         d.header.ExpectedTimeArrival = "";
@@ -466,9 +490,16 @@ function viewDR(refNo,refUrl) {
                     } else if ($("#refDINo").parent().hasClass('active')) {
                         d.header.ExpectedTimeArrival = "";
                         referenceEvent.fillFromDI(d, $form.find("input[name=formType]").val());
+
+                    }
+                    if (d.header.Status == 'request rerouted') {
+                        $("button[name=SaveAsDraft]").hide();
+                    }
+                    else {
+                        $("button[name=SaveAsDraft]").show();
                     }
                     $("button[name=Cancel]").show();
-                    $("button[name=SaveAsDraft]").show();
+                   
                     $("button[name=SubmitForm]").show();
                     $("button[name=SaveAsRevised]").hide();
                     $("button[name=ReRoute]").hide();
@@ -484,6 +515,50 @@ function viewDR(refNo,refUrl) {
         }
     });
 }
+
+function viewhistoryreroute() {
+    var refNo = $("#refNo").val();
+    var refUrl;
+    refUrl = myApp.root + 'DTS/GetHistoryReroute?number=' + refNo
+
+    $.ajax({
+        type: "GET",
+        url: refUrl,
+        beforeSend: function () { },
+        complete: function () { },
+        dataType: "json",
+        success: function (d) {
+            if (d && d.header.RefNo != null && d.header.RefNo != 'null' && d.header.RefNo != '') {
+                $("#OldCustName").val(d.header.CustName || '');
+                $("#OldCustName").attr("disabled", true);
+                $("#newcustName").hide();
+                $("#oldcustNamegroup").show();
+                $("#CustAddress").val(d.header.CustAddress);
+                $("#PicName").val(d.header.PicName);
+                $("#PicHP").val(d.header.PicHP);
+                $("#Kecamatan").val(d.header.Kecamatan);
+                $("#Kabupaten").val(d.header.Kabupaten);
+                $("#Province").val(d.header.Province);
+                $("#RefNo").val(d.header.RefNo);
+                $("#SoNo").val(d.header.SoNo);
+                $("#SoDate").val(formatDate(d.header.SoDate));
+                $("button[name=ReRoute]").attr("disabled", false);
+                $('.SDOC-container .row .upload').hide();
+                $('.SDOC-container .row.preview').hide();
+               
+            } else {
+                invalidRef();
+                sAlert('Error', 'REF NO ' + refNo + " Not Found!", "error");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            invalidRef();
+            sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
+
+        }
+    });
+}
+
 function referenceClick() {
     var refNo = $("#refNo").val();
     var refUrl;
@@ -508,45 +583,91 @@ function referenceClick() {
             return;
         }
     }    
- 
-    if ($("#refSONo").parent().hasClass('active')) {
-      
-        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "SO" + "&number=" + refNo;
-    }
-    else if ($("#refSTRNo").parent().hasClass('active')) {      
-        
-        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "STR" + "&number=" + refNo;
-    }
-    else if ($("#refPONo").parent().hasClass('active')) {      
-        
-        isExist = refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "PO" + "&number=" + refNo;
-    }
-    else if ($("#refDINo").parent().hasClass('active')) {        
-        refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "DI" + "&number=" + refNo;
+    var DRID = $form.find("input[name=ID]").val();
+    if (DRID > 0) {
+        var CheckStatusDR;
+        CheckStatusDR = myApp.root + 'DTS/GetStatusDR?ID=' + DRID;
+        $.ajax({
+            type: "GET",
+            url: CheckStatusDR,
+            beforeSend: function () { },
+            complete: function () { },
+            dataType: "json",
+            success: function (d) {
+                if (d.header != null) {
+                    statusDR = d.header.Status;
+                    if ($("#refSONo").parent().hasClass('active')) {
+
+                        if (statusDR == 'request rerouted') {
+                            refUrl = myApp.root + 'DTS/GetDRReferenceRerouteNo?keyType=' + "SO" + "&number=" + refNo + "&ID=" + DRID;
+                        }
+                    }
+
+                    var CheckUrl;
+                    CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
+                    $.ajax({
+                        type: "GET",
+                        url: CheckUrl,
+                        beforeSend: function () { },
+                        complete: function () { },
+                        dataType: "json",
+                        success: function (d) {
+                            if (d.header != null) {
+                                sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
+                                return;
+                            }
+                            else {
+                                viewDR(refNo, refUrl);
+                            }
+                        }
+                    })
+                }
+            }
+        })
     }
     else {
-        invalidRef();
-        return;
-    }
-    var CheckUrl;
-    CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
-    $.ajax({
-        type: "GET",
-        url: CheckUrl,
-        beforeSend: function () { },
-        complete: function () { },
-        dataType: "json",
-        success: function (d) {
-            if (d.header != null) {
-                sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
-                return;
-            }
-            else {
-                viewDR(refNo,refUrl);
-            }            
+        if ($("#refSONo").parent().hasClass('active')) {
+            
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "SO" + "&number=" + refNo;
+            
         }
-    })
+       else if ($("#refSTRNo").parent().hasClass('active')) {
+
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "STR" + "&number=" + refNo;
+        }
+        else if ($("#refPONo").parent().hasClass('active')) {
+
+            isExist = refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "PO" + "&number=" + refNo;
+        }
+        else if ($("#refDINo").parent().hasClass('active')) {
+            refUrl = myApp.root + 'DTS/GetDRReferenceNo?keyType=' + "DI" + "&number=" + refNo;
+        }
+        else {
+            invalidRef();
+            return;
+        }
+
+        var CheckUrl;
+        CheckUrl = myApp.root + 'DTS/GetDRExist?refNo=' + refNo;
+        $.ajax({
+            type: "GET",
+            url: CheckUrl,
+            beforeSend: function () { },
+            complete: function () { },
+            dataType: "json",
+            success: function (d) {
+                if (d.header != null) {
+                    sAlert('Warning', "SO/RO/STR had been assigned on " + d.header.KeyCustom + "", "warning");
+                    return;
+                }
+                else {
+                    viewDR(refNo, refUrl);
+                }
+            }
+        })
+    }        
 }
+
 function resetForm() {
     $form[0].reset();
     resetReference();
@@ -612,24 +733,28 @@ function submitForm(ActType) {
         dataForm['RefNoType'] = "DI";
     }
 
+
     if (!$("#refNo").val() || $("#refNo").val() === '') {
         invalidRef();
         sAlert('Error', "Please fill " + dataForm['RefNoType'] + " Number", "error");
         return;
     }
     if ($("#PicHP").val().length > 16) {
-        alert("Maximum of 16 characters for HP PIC");
+        sAlert('Error',"Maximum of 16 characters for HP PIC","error");
         return;
     }
-
+    if ($("#CustAddress").val().length > 255) {
+        sAlert('Error', "Maximum of 255 characters for Destination", "error");
+        return;
+    }
     dataForm['status'] = htmlEncode(ActType);
     
-    dataForm['Province'] = htmlEncode($("#ProvinceID").text().trim().replace('-', ''));
-    dataForm['Kabupaten'] = htmlEncode($("#DistrictID").text().trim().replace('-', ''));
-    dataForm['Kecamatan'] = htmlEncode($("#SubDistrictID").text().trim().replace('-', ''));
-    dataForm['ProvinceName'] = htmlEncode($("#ProvinceID").text().replace('-', ''));
-    dataForm['DistrictName'] = htmlEncode($("#DistrictID").text().replace('-', ''));
-    dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").text().replace('-',''));
+    dataForm['Province'] = htmlEncode($("#ProvinceID").val());
+    dataForm['Kabupaten'] = htmlEncode($("#DistrictID").val());
+    dataForm['Kecamatan'] = htmlEncode($("#SubDistrictID").val());
+    dataForm['ProvinceName'] = htmlEncode($("#ProvinceID").val());
+    dataForm['DistrictName'] = htmlEncode($("#DistrictID").val());
+    dataForm['SubDistrictName'] = htmlEncode($("#SubDistrictID").val());
     dataForm['UnitDimWeight'] = htmlEncode($('#u-weight').val());
     dataForm['UnitDimWidth'] = htmlEncode($('#u-width').val());
     dataForm['UnitDimLength'] = htmlEncode($('#u-length').val());
@@ -704,7 +829,13 @@ function submitForm(ActType) {
                 if (ActType === 'draft') {
                     message = 'Save as Draft NO ' + DRNo + ' Success';
                 } else if (ActType === 'submit') {
-                    message = 'Submit NO ' + DRNo + ' Success';
+                    if (DRNo ==='') {
+                        message = 'Reroute Success';
+                    }
+                    else {
+                        message = 'Submit NO ' + DRNo + ' Success';
+                    }
+                    
                 } else if (ActType === 'revised') {
                     message = 'Save as Revised NO ' + DRNo + ' Success';
                 }
@@ -754,6 +885,7 @@ function resetReference() {
 }
 function resetFormRequisition() {
     $("#formRequest")[0].reset();
+   
     $(".error").hide();
     $("#formRequest").find('input').attr('disabled', false);
     $("select[name=Sales1Name]").attr("disabled", false);
@@ -823,6 +955,11 @@ function sendReRoute() {
     formData.append("Province", $('#ProvinceID').text());
     formData.append("RefNo", $('#refNo').val());
 
+    //if ($("#refSTRNo").parent().hasClass('active')) {
+    //    sAlert('Error',"Please Input SO # to Change STR # DR Re-Route", 'error');
+    //    return;
+    //}
+
     if ($("#refSONo").parent().hasClass('active')) {
         formData.append("RefNoType", "SO");
         formData.append("SoNo", $('#SoNo').val());
@@ -841,11 +978,12 @@ function sendReRoute() {
         formData.append("DINo", $('#DINo').val());
         formData.append("DIDate", $('#DIDate').val());
     }
-    formData.append("Status", 'rerouted');
+    formData.append("Status", 'request rerouted');
     formData.append("SDOC", $('#SDOC')[0].files[0]);
     formData.append("SDOC1", $('#SDOC1')[0].files[0]);
     formData.append("SDOC2", $('#SDOC2')[0].files[0]);
-
+    var modaTransport = $('#formRequest input[name="ModaTransport"]:checked').val();
+    formData.append("SDOC2", modaTransport)
     $.ajax({
         type: "POST",
         url: myApp.root + 'DTS/DeliveryRequisitionReRouteForm',
@@ -870,7 +1008,7 @@ function sendReRoute() {
                 if (d.result !== null) {
                     DRNo = d.result.KeyCustom;
                 }
-                sAlert('Success', 'Reroute NO ' + DRNo + ' Success', 'success');
+                sAlert('Success', 'Request Reroute NO ' + DRNo + ' Success', 'success');
                 resetForm();
                 hideModal();
             } else {
@@ -974,7 +1112,7 @@ var requestingForm = {
                 $("#TODOthers").attr('readonly', true);
             }
         });
-
+        $("#btnhistory").hide();
         $('input[type=radio][name=SupportingOfDelivery]').change(function () {
             $("#SODOthers").val('');
             $("#FOT").attr("disabled", false);
@@ -1123,7 +1261,7 @@ function showFilePreview(header) {
 
 $(function () {
     $("#CustID").select2({
-        placeholder: 'Nama Customer (Sudah terisi otomatis daari SAP)',
+        placeholder: 'Nama Customer (Sudah terisi otomatis dari SAP)',
         dropdownParent: $('#myModalRequest'),
         minimumInputLength: 3,
         ajax: {
@@ -1161,41 +1299,13 @@ $(function () {
         $("input[name=Province]").val('');
      
     });
+  
     $("#ProvinceID").select2({
         placeholder: 'Select Provinsi',
+        allowClear: true,
         minimumInputLength: 3,
         ajax: {
-            url: myApp.root + 'DTS/getMasterProvince',
-            async: false,
-            dataType: 'json',
-            data: function (params) {
-                var query = {
-                    key: params.term,
-                    type: 'public'
-                };
-                return query;
-            },
-            processResults: function (data) {
-                console.log(data);
-                var newData = $.map(data, function (obj) {
-                    obj.id = obj.ProvinsiId;
-                    obj.text = obj.ProvinsiName;
-                    return obj;
-                });
-                // Tranforms the top-level key of the response object from 'items' to 'results'
-                return {
-                    results: newData
-                };
-            }
-            // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-        }
-    });
-    $("#ProvinceID").select2({
-        placeholder: 'Select Provinsi',
-        minimumInputLength: 3,
-        ajax: {
-            url: myApp.root + 'DTS/getMasterProvince',
-            async: false,
+            url: myApp.root + 'DTS/getMasterProvince',          
             dataType: 'json',
             data: null,
             data: function (params) {
@@ -1216,7 +1326,8 @@ $(function () {
                 return {
                     results: newData
                 };
-            }
+            },
+            cache: true
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1228,6 +1339,7 @@ $(function () {
 
     $("#DistrictID").select2({
         placeholder: 'Select Kabupaten',
+        allowClear: true,
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterDistrict',
@@ -1237,9 +1349,11 @@ $(function () {
             data: function (params) {             
                 console.log(params);
                 var query = {
-                    key: params.term
+                    key: params.term,
+                    provinsiid: $('#ProvinceID').val(),
+                    type: 'public'
                 };
-                    type: 'public';
+                   
                 return query;
             },
             processResults: function (data) {
@@ -1253,7 +1367,8 @@ $(function () {
                 return {
                     results: newData
                 };
-            }
+            },
+            cache: true
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });
@@ -1266,6 +1381,7 @@ $(function () {
     $("#SubDistrictID").select2({
         
         placeholder: 'Select Kecamatan',
+        allowClear: true,
         minimumInputLength: 3,
         ajax: {
             url: myApp.root + 'DTS/getMasterSubDistrict',
@@ -1275,6 +1391,7 @@ $(function () {
             data: function (params) {
                 var query = {
                     key: params.term,
+                    districtid: $('#DistrictID').val(),
                     type: 'public'
                 };
                 return query;
@@ -1290,7 +1407,8 @@ $(function () {
                 return {
                     results: newData
                 };
-            }
+            },
+            cache: true
             // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
         }
     });

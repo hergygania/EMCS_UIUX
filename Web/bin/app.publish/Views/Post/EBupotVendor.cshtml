@@ -1,0 +1,76 @@
+﻿@{
+
+    ViewBag.Title = "E-Bupot";
+    Layout = "~/Views/Post/_Layout2.cshtml";
+}
+
+<div class="row" style="margin-top:70px;">
+    <div class="col-6">
+        <div class="form-group row">
+            <label class="col-form-label col-md-4">No Bukti Potong</label>
+            <div class="col-md-8">
+                <input type="text" id="noBuktiPotong" name="NoBuktiPotong" class="form-control" placeholder="No Bukti Potong" style="border:1px solid #ccc!important;">
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group row">
+            <label class="col-form-label col-md-4">Masa Pajak</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" id="masaPajak" name="MasaPajak" class="daterange form-control input-sm masaPajak" placeholder="" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        &nbsp;
+        <div class="form-group row">
+            <div class="col-md-8">
+                <div class="input-group">
+
+                    <button class="btn col btn btn-outline-primary" style="color:black" onclick="search()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;
+                    <button class="btn col btn btn-secondary" onclick="download()"><i class="fa fa-download"></i>&nbsp;User Manual</button>&nbsp;
+                    <button class="btn col btn btn-outline-warning" style="color:black;" onclick="clearSearchFilter()"><i class="fa fa-recycle"></i>&nbsp;Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="col-md-12">&nbsp;</div>
+    <div class="toolbar">
+        <button type="button" class="pull-right btn btn-success" onclick="DownloadAdvanceSearch();"><i class="fa fa-file"></i>&nbsp;Export to Excel</button>
+        <button type="button" class="pull-right btn btn-warning" onclick="RefreshTableAdvanceSearch();" style="margin-left:10px;"><i class="fa fa-filter"></i>&nbsp;Filter Data</button>
+        <select class="input-sm" id="sortBy" style="width:150px !important;margin-left:8px;height:27px;border:1px solid #efe9e9;border-radius:3px;padding-left:2px;" alt="Sort by" title="Sort by">
+        </select>
+        <select class="input-sm select2-order" id="orderBy" style="width:100px !important;margin-left:8px;height:27px;border:1px solid #efe9e9;border-radius:3px;padding-left:2px;" alt="Order by" title="Order by">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+    </div>*@
+    </div>
+
+<div class="col-md-12">&nbsp;</div>
+<div class="col-md-12" id="result-multiple">
+    <button class="btn btn-success float-right" style="margin-bottom:5px;" type="button" onclick="DownloadMultiFile()"><i class="fa fa-download"></i>&nbsp;Download</button>&nbsp;
+    <table id="table-ebupot" class="table table-bordered table-striped" style="background:white;"></table>
+</div>
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />
+    <link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/POST/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+<script src="~/Scripts/sweetalert.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/EbupotVendor.js" type="text/javascript"></script>
+}

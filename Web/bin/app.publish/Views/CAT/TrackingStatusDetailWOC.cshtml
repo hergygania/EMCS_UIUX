@@ -1,0 +1,166 @@
+﻿@model App.Data.Domain.SP_TrackingStatusDetailWOC
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Status Waiting Old Core</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Doc Sales</label>
+                        <div class="col-md-8">
+                            <input name="DocSale" id="DocSale" class="form-control" value="@Model.DocSales" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Used SN</label>
+                        <div class="col-md-8">
+                            <input name="UsedSN" id="UsedSN" class="form-control" value="@Model.UsedSN" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Equipment No</label>
+                        <div class="col-md-8">
+                            <input name="EquipmentNo" id="EquipmentNo" class="form-control" value="@Model.EquipmentNo" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Customer</label>
+                        <div class="col-md-8">
+                            <input name="Customer" id="Customer" class="form-control" value="@Model.Customer" disabled="disabled" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Store Supplied Date</label>
+                        <div class="col-md-8">
+                            <input name="StoreSuppliedDate" id="StoreSuppliedDate" class="form-control" value="@Model.StoreSuppliedDate" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">TUID</label>
+                        <div class="col-md-8">
+                            <input name="TUID" id="TUID" class="form-control" value="@Model.TUID" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">WO Number</label>
+                        <div class="col-md-8">
+                            <input name="WONO" id="WONO" class="form-control" value="@Model.WONumber" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Elapsed Customer Date</label>
+                        <div class="col-md-8">
+                            <input name="ElapsedCustomerDate" id="ElapsedCustomerDate" class="form-control" value="@Model.ElapsedCustomerDate" disabled="disabled" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="box box-warning" style="min-height: 220px; margin-top: 5px;">
+                        <div class="box-header">
+                            <h5 class="box-title">Outstanding CRR</h5>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <form role="form" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Stand ID</label>
+                                        <div class="col-md-8">
+                                            <input name="StandID" id="StandID" class="form-control" value="@Model.StandID" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">CRR Date Issued</label>
+                                        <div class="col-md-8">
+                                            <input name="CRRDateIssued" id="CRRDateIssued" class="form-control" value="@Model.CRRDateIssued" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Elapsed Day</label>
+                                        <div class="col-md-8">
+                                            <input name="ElapsedDya" id="ElapsedDya" class="form-control" value="@Model.ElapsedDay" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Status</label>
+                                        <div class="col-md-8">
+                                            <input name="Status" id="Status" class="form-control" value="@Model.Status" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="box box-warning" style="min-height: 220px; ; margin-top: 5px;">
+                        <div class="box-header">
+                            <h5 class="box-title">Outstanding Receiving</h5>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-lg-12">
+                                <form role="form" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">CRR Created</label>
+                                        <div class="col-md-8">
+                                            <input name="CRRCreated" id="CRRCreated" class="form-control" value="@Model.CRRCreated" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Remark Received</label>
+                                        <div class="col-md-8">
+                                            <input name="RemarkReceived" id="RemarkReceived" class="form-control" value="@Model.RemarkReceived" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Remark Follow Up CRR</label>
+                                        <div class="col-md-8">
+                                            <input name="RemarkFollowUpCRR" id="RemarkFollowUpCRR" class="form-control" value="@Model.RemarkFollowUpCRR" disabled="disabled" />
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+        
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".modal-dialog").css("width", "95%");
+    });
+</script>

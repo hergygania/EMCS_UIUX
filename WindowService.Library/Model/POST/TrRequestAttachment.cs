@@ -22,6 +22,7 @@
         public bool IsApprove { get; set; }
         public string Notes { get; set; }
         public string QtyPartial { get; set; }
+        public string FileNameKOFAX { get; set; }
     }
     
 

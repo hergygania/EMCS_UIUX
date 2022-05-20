@@ -1,0 +1,190 @@
+@model  App.Data.Domain.Shipment
+@{
+	var mode = Convert.ToString(ViewBag.crudMode + "");
+	string _url = "/vetting-process/ShipmentAdd";
+	if(mode == "U")
+	{
+		_url = "/vetting-process/ShipmentEdit";
+	}
+	string folderdoc = (System.Configuration.ConfigurationManager.AppSettings["ImagesData.document"] + "/").Replace("~/", "/");
+}
+
+<form method="post" action="@_url" id="frmShipment" onsubmit="return frmShipmentSubmit(this)">
+	<div class="shipment-form-detail col-lg-12" style="margin-bottom:40px;">
+		<div class="col-lg-6">
+			<div class="form-group">
+				<label class="control-label col-lg-4 col-xs-4">BL / AWB #</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.BLAWB, new { @class = "form-control required", id = "_blawb" })
+					<div>@Html.ValidationMessageFor(m => m.BLAWB)</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-4 col-xs-4">Vessel / Voyage *</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.Vessel, new { @class = "form-control required", placeholder = "" })
+					<div>@Html.ValidationMessageFor(m => m.Vessel)</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-4 col-xs-4">Loading Port *</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.SelectPorts("LoadingPortID", Model.IsSeaFreight, Model.LoadingPortID, "loading port", new { @id = "LoadingPortID", @class = "js-states form-control required", @style = "width: 95%; display: none" })
+					<div>@Html.ValidationMessageFor(m => m.LoadingPortID)</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-4 col-xs-4">Destination Port *</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.SelectPorts("DestinationPortID", Model.IsSeaFreight, Model.DestinationPortID, "destination port", new { @class = "js-states form-control required", style = "width: 95%; display: none" })
+					<div>@Html.ValidationMessageFor(m => m.DestinationPortID)</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="form-group sv-rfi">
+				<label class="control-label col-lg-4 col-xs-4">ETD *</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.ETD, Model.ETD.ToString("dd MMM yyyy"), new { @class = "form-control pull-left date required", placeholder = "" })
+					<div>@Html.ValidationMessageFor(m => m.ETD)</div>
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+				</div>
+			</div>
+			<div class="form-group sv-rfi">
+				<label class="control-label col-lg-4 col-xs-4">ETA *</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.ETA, Model.ETA.ToString("dd MMM yyyy"), new { @class = "form-control pull-left date required", placeholder = "" })
+					<div>@Html.ValidationMessageFor(m => m.ETA)</div>
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+				</div>
+			</div>
+			<div class="form-group sv-rfi">
+				<label class="control-label col-lg-4 col-xs-4">ATD</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.ATD, (Model.ATD.HasValue ? Model.ATD.Value.ToString("dd MMM yyyy") : null), new { @class = "form-control pull-left date", placeholder = "" })
+					<div class="input-group-addon">
+						<i class="fa fa-calendar"></i>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-lg-4 col-xs-4">Total Packages</label>
+				<div class="input-group col-lg-8 col-xs-8">
+					@Html.TextBoxFor(m => m.totPackage, new { @class = "form-control required", @disabled = "disabled" })
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-12" style="display:inherit">
+			<hr>
+			@*<button id="btnSubmit" type="submit" class="btn btn-success">@(mode == "I" ? "Save" : "Update") </button>*@
+			<button type="button" onclick="cancelShipment()" class="btn btn-danger">Cancel</button>
+		</div>
+	</div>
+
+	<input type="hidden" id="ShipmentID" name="ShipmentID" value="@Model.ShipmentID" />
+	<input type="hidden" id="VettingRoute" name="VettingRoute" value="@Model.VettingRoute" />
+	<input type="hidden" name="ShippingInstructionID" value="@Model.ShippingInstructionID" />
+	<input type="hidden" id="Freight" name="Freight" value="@Model.Freight" />
+	
+	<input type="hidden" name="Status" value="@Model.Status" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+	<input type="hidden" name="ModifiedBy" value="@Model.ModifiedBy" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="ModifiedDate" value="@Model.ModifiedDate" />
+</form>
+
+<div class="nr-csh col-lg-12">
+
+	<div class="nav-tabs-custom">
+		<ul class="nav nav-tabs nav-justified">
+			<li class="active"><a href="#tab_container" data-toggle="tab">Manifest</a></li>
+			<li><a href="#tab_attachment" data-toggle="tab">Attachment</a></li>
+		</ul>
+
+		<br />
+		<div class="tab-content" style="height:310px">
+
+			<div class="tab-pane active" id="tab_container">
+				<div class="toolbarShipmentManifest">
+					@*<button type="button" class="btn btn-default" onclick="loadModal('/vetting-process/manifestAdd')">
+						<i class="fa fa-upload"></i> Add Manifest
+					</button>*@
+				</div>
+
+				<table class="table table-bordered" id="tableManifest" style="width:100%"></table>
+			</div>
+
+
+			<div class="tab-pane" id="tab_attachment">
+
+				<div class="toolbarAttachment">
+					@*<button type="button" class="btn btn-default" onclick="loadModal('/vetting-process/ShipmentDocumentAdd')">
+						<i class="fa fa-files-o"></i> Add Attachment
+					</button>*@
+				</div>
+
+				<table class="table table-bordered" id="tableAttachment" style="width:100%"></table>
+			</div>
+		</div>
+	</div>
+</div>
+
+@Html.Partial("../vetting/PartsOrder.listCheck")
+
+<script>
+	var folderdoc = '@folderdoc', freight = $('#Freight').val(), vettingRoute = $('#VettingRoute').val(), shipmentMode = (vettingRoute == '2' ? 'survey' : '');
+
+	$(function () {
+		$(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
+		var width = $(".select2-container--default").width() - 5;
+		$(".select2-container--default").css('width', width + 'px');
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+
+
+	function frmShipmentSubmit(frm) {
+		if (!$("form#" + frm.id).valid()) { return; }
+		$('#progress').show();
+		enableLink(false);
+
+		$.ajax({
+			url: frm.action,
+			type: frm.method,
+			data: $(frm).serialize(),
+			success: function (result) {
+
+				enableLink(true);
+
+				if (result.Status == 0) {
+					$('#progress').hide();
+					if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+					cancelShipment();
+
+					$('#BLAWB').val(result.result);
+					refreshShipment();
+				}
+				else {
+					if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+					$('#progress').hide();
+				}
+			}
+		});
+		return false;
+	}
+
+	function cancelShipment() {
+		$("#detail").empty();
+		$("#detail").hide();
+		$("#parent").show();
+	}
+</script>
+<script src="@Url.Content("~/scripts.app/imex/shipmentData.iud.cshtml.js")"></script>
+

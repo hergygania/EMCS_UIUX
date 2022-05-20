@@ -61,6 +61,41 @@ namespace App.Service.EMCS
             }
         }
 
+        public static Data.Domain.EMCS.CargoFormData GetCargoFormDataById(long cargoId)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                db.Database.CommandTimeout = 600;
+                var sql = "select * from cargo where id = " + cargoId;
+                Data.Domain.EMCS.CargoFormData data = db.Database.SqlQuery<Data.Domain.EMCS.CargoFormData>(sql).FirstOrDefault();
+                return data;
+            }
+        }
+		
+		public static bool CargoHisOwned(long id, string userId)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var result = false;
+
+                    var tb = db.CargoData.FirstOrDefault(a => a.Id == id && a.CreateBy == userId);
+                    if (tb != null)
+                    {
+                        result = true;
+                    }
+
+                    return result;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+
         public static CargoHeaderData GetCargoHeaderData(long cargoId)
         {
             using (var db = new Data.EmcsContext())
@@ -343,44 +378,51 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@CargoId", item.Id));
-                parameterList.Add(new SqlParameter("@Consignee", item.Consignee ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyParty", item.NotifyParty ?? ""));
-                parameterList.Add(new SqlParameter("@ExportType", item.ExportType ?? ""));
-                parameterList.Add(new SqlParameter("@Category", item.Category ?? ""));
-                parameterList.Add(new SqlParameter("@Incoterms", item.Incoterms ?? ""));
-                parameterList.Add(new SqlParameter("@StuffingDateStarted", item.StuffingDateStarted.HasValue ? (object)item.StuffingDateStarted : DBNull.Value));
-                parameterList.Add(new SqlParameter("@StuffingDateFinished", item.StuffingDateFinished.HasValue ? (object)item.StuffingDateFinished : DBNull.Value));
-                parameterList.Add(new SqlParameter("@ETA", item.Eta.HasValue ? (object)item.Eta : DBNull.Value));
-                parameterList.Add(new SqlParameter("@ETD", item.Etd.HasValue ? (object)item.Eta : DBNull.Value));
-                parameterList.Add(new SqlParameter("@VesselFlight", item.VesselFlight ?? ""));
-                parameterList.Add(new SqlParameter("@ConnectingVesselFlight", item.ConnectingVesselFlight ?? ""));
-                parameterList.Add(new SqlParameter("@VoyageVesselFlight", item.VoyageVesselFlight ?? ""));
-                parameterList.Add(new SqlParameter("@VoyageConnectingVessel", item.VoyageConnectingVessel ?? ""));
-                parameterList.Add(new SqlParameter("@PortOfLoading", item.PortOfLoading ?? ""));
-                parameterList.Add(new SqlParameter("@PortOfDestination", item.PortOfDestination ?? ""));
-                parameterList.Add(new SqlParameter("@SailingSchedule", item.SailingSchedule.HasValue ? (object)item.SailingSchedule : DBNull.Value));
-                parameterList.Add(new SqlParameter("@ArrivalDestination", item.ArrivalDestination.HasValue ? (object)item.ArrivalDestination : DBNull.Value));
-                parameterList.Add(new SqlParameter("@BookingNumber", item.BookingNumber ?? ""));
-                parameterList.Add(new SqlParameter("@BookingDate", item.BookingDate.HasValue ? (object)item.BookingDate : DBNull.Value));
-                parameterList.Add(new SqlParameter("@Liner", item.Liner ?? ""));
-                parameterList.Add(new SqlParameter("@Status", item.Status ?? ""));
-                parameterList.Add(new SqlParameter("@ActionBy", SiteConfiguration.UserName));
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@CargoId", item.Id));
+                    parameterList.Add(new SqlParameter("@Consignee", item.Consignee ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyParty", item.NotifyParty ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportType", item.ExportType ?? ""));
+                    parameterList.Add(new SqlParameter("@Category", item.Category ?? ""));
+                    parameterList.Add(new SqlParameter("@Incoterms", item.Incoterms ?? ""));
+                    parameterList.Add(new SqlParameter("@StuffingDateStarted", item.StuffingDateStarted.HasValue ? (object)item.StuffingDateStarted : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@StuffingDateFinished", item.StuffingDateFinished.HasValue ? (object)item.StuffingDateFinished : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ETA", item.Eta.HasValue ? (object)item.Eta : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ETD", item.Etd.HasValue ? (object)item.Eta : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@VesselFlight", item.VesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@ConnectingVesselFlight", item.ConnectingVesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@VoyageVesselFlight", item.VoyageVesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@VoyageConnectingVessel", item.VoyageConnectingVessel ?? ""));
+                    parameterList.Add(new SqlParameter("@PortOfLoading", item.PortOfLoading ?? ""));
+                    parameterList.Add(new SqlParameter("@PortOfDestination", item.PortOfDestination ?? ""));
+                    parameterList.Add(new SqlParameter("@SailingSchedule", item.SailingSchedule.HasValue ? (object)item.SailingSchedule : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ArrivalDestination", item.ArrivalDestination.HasValue ? (object)item.ArrivalDestination : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@BookingNumber", item.BookingNumber ?? ""));
+                    parameterList.Add(new SqlParameter("@BookingDate", item.BookingDate.HasValue ? (object)item.BookingDate : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@Liner", item.Liner ?? ""));
+                    parameterList.Add(new SqlParameter("@Status", item.Status ?? ""));
+                    parameterList.Add(new SqlParameter("@ActionBy", SiteConfiguration.UserName));
 
-                if (item.Referrence != null)
-                    parameterList.Add(new SqlParameter("@Referrence", string.Join(",", item.Referrence.ToArray())));
-                else
-                    parameterList.Add(new SqlParameter("@Referrence", ""));
+                    if (item.Referrence != null)
+                        parameterList.Add(new SqlParameter("@Referrence", string.Join(",", item.Referrence.ToArray())));
+                    else
+                        parameterList.Add(new SqlParameter("@Referrence", ""));
 
-                parameterList.Add(new SqlParameter("@CargoType", item.CargoType ?? ""));
-                parameterList.Add(new SqlParameter("@ShippingMethod", item.ShippingMethod ?? ""));
-                SqlParameter[] parameters = parameterList.ToArray();
+                    parameterList.Add(new SqlParameter("@CargoType", item.CargoType ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMethod", item.ShippingMethod ?? ""));
+                    SqlParameter[] parameters = parameterList.ToArray();
 
-                // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<IdData>(" exec [dbo].[sp_insert_update_cargo] @CargoId, @Consignee, @NotifyParty, @ExportType, @Category, @Incoterms, @StuffingDateStarted, @StuffingDateFinished, @ETA, @ETD, @VesselFlight, @ConnectingVesselFlight, @VoyageVesselFlight, @VoyageConnectingVessel, @PortOfLoading, @PortOfDestination, @SailingSchedule, @ArrivalDestination, @BookingNumber, @BookingDate, @Liner, @Status, @ActionBy, @Referrence, @CargoType, @ShippingMethod", parameters).FirstOrDefault();
-                if (data != null) return data.Id;
+                    // ReSharper disable once CoVariantArrayConversion
+                    var data = db.DbContext.Database.SqlQuery<IdData>(" exec [dbo].[sp_insert_update_cargo] @CargoId, @Consignee, @NotifyParty, @ExportType, @Category, @Incoterms, @StuffingDateStarted, @StuffingDateFinished, @ETA, @ETD, @VesselFlight, @ConnectingVesselFlight, @VoyageVesselFlight, @VoyageConnectingVessel, @PortOfLoading, @PortOfDestination, @SailingSchedule, @ArrivalDestination, @BookingNumber, @BookingDate, @Liner, @Status, @ActionBy, @Referrence, @CargoType, @ShippingMethod", parameters).FirstOrDefault();
+                    if (data != null) return data.Id;
+                }
+                catch(Exception ex)
+                {
+                    string a = ex.Message;
+                }
             }
 
             return 0;
@@ -640,5 +682,184 @@ namespace App.Service.EMCS
                 return 1;
             }
         }
+        public static bool InsertCargoDocument(List<CargoDocument> data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                try
+                {
+                    
+                    for (var i = 0; i < data.Count; i++)
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        List<SqlParameter> parameters = new List<SqlParameter>();
+                        parameters.Add(new SqlParameter("@Id", data[i].Id));
+                        parameters.Add(new SqlParameter("@IdCargo", data[i].IdCargo));
+                        parameters.Add(new SqlParameter("@DocumentDate", data[i].DocumentDate));
+                        parameters.Add(new SqlParameter("@DocumentName", data[i].DocumentName ?? ""));
+                        parameters.Add(new SqlParameter("@Filename", data[i].Filename ?? ""));
+                        parameters.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                        parameters.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                        parameters.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                        parameters.Add(new SqlParameter("@UpdateDate", ""));
+                        parameters.Add(new SqlParameter("@IsDelete", false));
+                        SqlParameter[] sql = parameters.ToArray();
+                        db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CargoDocumentAdd] @Id,@IdCargo,@DocumentDate,@DocumentName,@Filename,@CreateBy,@CreateDate,@UpdateBy,@UpdateDate,@IsDelete", sql);
+
+                    }
+                    
+                }
+                catch(Exception ex)
+                {
+                    var a = ex.Message;
+                }
+                return true;
+            }
+            
+        }
+        public static dynamic CargoDocumentList(GridListFilter filter)
+        {
+            using(var db = new Data.EmcsContext())
+            {
+                //CargoDocument a = ewn 
+                //filter.Cargoid =
+                try
+                {
+                    filter.Sort = filter.Sort ?? "Id";
+                    db.Database.CommandTimeout = 600;
+                    var sql = @"[dbo].[sp_get_cargo_document_list] @IdCargo = '" + filter.Cargoid + "'";
+                    var data = db.Database.SqlQuery<CargoDocument>(sql).ToList();
+
+                    return data;
+                }
+                catch(Exception ex)
+                {
+                    var a = ex.Message;
+                    return a;
+                }
+            }
+        }
+        public static long DeleteCargoDocumentById(long idDocument)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", idDocument));
+                parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+                parameterList.Add(new SqlParameter("@IsDelete", true));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CargoDocumentDelete] @id, @UpdateBy, @UpdateDate, @IsDelete", parameters);
+                return 1;
+            }
+        }
+        public static bool UpdateFileCargoDocument(long id, string filename)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", id));
+                parameterList.Add(new SqlParameter("@Filename", filename));
+                parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                SqlParameter[] parameters = parameterList.ToArray();
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CargoDocumentUpdateFile] @Id, @Filename, @UpdateBy", parameters);
+            }
+            return true;
+        }
+        public static List<CargoDocument> CargoDocumentListById(long id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@id", id));
+                    SqlParameter[] parameters = parameterList.ToArray();
+
+                    var data = db.DbContext.Database.SqlQuery<CargoDocument>("[dbo].[sp_get_cargo_document_list_byid] @id", parameters).ToList();
+                    return data;
+                }
+                catch(Exception ex)
+                {
+                    var b = ex.Message;
+                    var a = db.DbContext.Database.SqlQuery<CargoDocument>("[dbo].[sp_get_cargo_document_list_byid] @id").ToList();
+                    return a;
+                }
+                
+            }
+            //using (var db = new Data.EmcsContext())
+            //{
+            //    var data = db.CiplD.Where(a => a.IdRequest == id && a.IsDelete == false);
+            //    return data.ToList();
+            //}
+        }
+        public static dynamic SearchContainNumber(CargoItem cargoItem)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@IdCargo", cargoItem.IdCargo));
+                    parameterList.Add(new SqlParameter("@ContainerNumber", cargoItem.ContainerNumber));
+                    SqlParameter[] parameters = parameterList.ToArray();
+
+                    var data = db.DbContext.Database.SqlQuery<CargoItem>("[dbo].[sp_searchContainerNumber]  @IdCargo, @ContainerNumber", parameters).ToList();
+                    
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    var b = ex.Message;
+                    var a = db.DbContext.Database.SqlQuery<CargoItem>("[dbo].[sp_searchContainerNumber] @IdCargo, @ContainerNumber").ToList();
+                    return a;
+                }
+
+            }
+            
+        }
+        public static dynamic GetCargoType(string  id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@ContainerType", "ContainerType"));
+                    parameterList.Add(new SqlParameter("@Value", id));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
+                    var data = db.DbContext.Database.SqlQuery<App.Data.Domain.EMCS.MasterParameter>("[dbo].[sp_getcontainertype]  @ContainerType, @Value", parameters).ToList();
+                    foreach(var i in data)
+                    {
+                        m.Description = i.Description;
+                        
+                        
+                        
+                    }
+                    
+                    return m;
+                }
+                catch (Exception ex)
+                {
+                    var b = ex.Message;
+                    var a = db.DbContext.Database.SqlQuery<MasterParameter>("[dbo].[sp_getcontainertype] @ContainerType, @Value").ToList();
+                    return a;
+                }
+
+            }
+
+        }
+
     }
 }

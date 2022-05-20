@@ -1,0 +1,127 @@
+@model App.Data.Domain.ImportGate
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title" id="myModalLabel">@title ImportGate</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="col-lg-12">
+			<!-- Default input -->
+			<div class="col-lg-8">
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">J Code</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.TextBoxFor(m => m.JCode, new { @class = "form-control required", placeholder = "J Code" })
+						<div>@Html.ValidationMessageFor(m => m.JCode)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">Store Name</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.TextBoxFor(m => m.StoreName, new { @class = "form-control", placeholder = "Store Name" })
+						<div>@Html.ValidationMessageFor(m => m.StoreName)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">3 Code</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.TextBoxFor(m => m.C3Code, new { @class = "form-control", placeholder = "3 Code" })
+						<div>@Html.ValidationMessageFor(m => m.C3Code)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">Sea Port</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.DropDownListFor(m => m.SeaPortID, new SelectList(Model.SeaPorts, "PortID", "PortNameCap"),"--- Select Sea Port ---", new { @class = "form-control js-states " })
+						<div>@Html.ValidationMessageFor(m => m.SeaPorts)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">Air Port</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.DropDownListFor(m => m.AirPortID, new SelectList(Model.AirPorts, "PortID", "PortNameCap"), "--- Select Sea Port ---", new { @class = "form-control js-states " })
+						<div>@Html.ValidationMessageFor(m => m.SeaPorts)</div>
+					</div>
+				</div>
+				@if (mode != "I")
+								{
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Status</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<select class="js-states form-control" id="Status" name="Status" style="width: 95%;">
+								<option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+								<option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+							</select>
+						</div>
+					</div>
+				}
+				else
+				{
+					<input type="hidden" name="Status" value="@Model.Status" />
+				}
+
+			</div>
+			<!-- Default input -->
+		</div>
+
+		<div class="nav-tabs-custom nav-justified tabs-style-underline">
+			<ul class="nav nav-justified nav-tabs "></ul>
+			<!-- /.tab-content -->
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<span id="progress" class="text-center" style="display: none;">
+			<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+			Wait..
+		</span>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		@if (mode == "I")
+				{
+			<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+				}
+				else if (mode == "U")
+				{
+			<button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Update</button>
+				}
+				else
+				{
+			<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i>Delete</button>
+				}
+
+	</div>
+	<input type="hidden" name="GateID" value="@Model.GateID" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+
+}
+<script>
+	var mode = '@mode';
+	if (mode != 'I') $("#GateID").attr('readonly', 'readonly');
+
+	if (typeof window.rebindCSS == "undefined")
+		$.getScript("/scripts/script.js");
+	else
+		rebindCSS();
+
+	$(document).ready(function () {
+
+		selectAll = function (obj, fld) {
+			$("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+		};
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+</script>

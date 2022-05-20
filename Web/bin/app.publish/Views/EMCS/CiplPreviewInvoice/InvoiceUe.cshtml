@@ -1,0 +1,43 @@
+﻿<table class="table-data">
+    <thead>
+        <tr>
+            <th class="text_center text_bold border_bottom" style="height:2.5em;width:4%">No.</th>
+            <th class="text_center text_bold border_bottom" style="width:15%">Model</th>
+            <th class="text_center text_bold border_bottom" style="width:10%">SN</th>
+            <th class="text_center text_bold border_bottom" style="width:10%">ID Number</th>
+            <th class="text_center text_bold border_bottom" style="width:10%">Year Made</th>
+            <th class="text_center text_bold border_bottom" style="width:5%">Qty</th>
+            <th class="text_center text_bold border_bottom" style="width:15%">Unit Price</th>
+            <th class="text_center text_bold border_bottom border_right" style="width:15%">Extended Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TemplateDetail)
+        {
+            <tr>
+                <td class="tabledata_spacing text_center">@item.ItemNo</td>
+                <td class="tabledata_spacing">@item.Name</td>
+                <td class="tabledata_spacing text_center">@item.Sn</td>
+                <td class="tabledata_spacing text_center">@item.IdNo</td>
+                <td class="tabledata_spacing text_center">@item.YearMade</td>
+                <td class="tabledata_spacing text_center">@item.Quantity</td>
+                <td class="tabledata_spacing text_right">@item.UnitPrice</td>
+                <td class="tabledata_spacing text_right border_right">@item.ExtendedValue</td>
+            </tr>
+        }
+        @{
+            if (Model.TemplateDetail.Count <= 2)
+            {
+                int dummy = 5;
+                for (int no = 1; no <= dummy; no++)
+                {
+                    <tr><td colspan="10" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                    if (no == 5)
+                    {
+                        <tr><td colspan="10" class="border_top">&nbsp;</td></tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

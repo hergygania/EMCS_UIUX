@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Inbound Non CKB";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<script type="text/javascript">
+    var allowRead = "@(ViewBag.allowRead)";
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .btnForm {
+        min-width: 100px;
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div id="toolbar" class="col-md-8 toolbarBtn">
+                    <div class="row">
+                        @{
+                            if (ViewBag.AllowCreate)
+                            {
+                                <a href="~/DTS/FormInbound" class="btn btnForm btn-primary" id="btnCreateInbound"><i class="fa fa-plus-circle"></i> New</a>
+                            }
+                        }
+                        @*<button type="button" class="btn btn-success btnForm" onclick="exportDataExcel()" id="btnExport"><i class="fa fa-file-excel-o"></i> Download to Excel</button>*@
+                        <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                            <input name="searchText" class="form-control" type="text" placeholder="Search Inbound Data" style="height: 32px;">
+                        </div>
+                    </div>
+                </div>
+                <table id="tableInboundNonCkb" data-toolbar=".toolbar" data-show-export="true" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/InboundNonCkb.cshtml.js")"></script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+}

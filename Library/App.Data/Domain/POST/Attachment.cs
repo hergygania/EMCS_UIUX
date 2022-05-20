@@ -25,8 +25,12 @@ namespace App.Data.Domain.POST
         public int CountItemHasInvoiceSAP { get; set; }
         public string ItemDescription { get; set; }
         public string ApproveStatus { get; set; }
-
-
+        public string SAPDocNumber { get; set; }
+        public string WHTaxCode { get; set; }
+        public Int64? WHTaxAmount { get; set; }
+        public string Status { get; set; }
+        public string StatusMessage { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     }
     public class AttachmentListSAP
     {

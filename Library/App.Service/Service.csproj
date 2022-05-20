@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App.Service</RootNamespace>
     <AssemblyName>App.Service</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -136,6 +137,7 @@
     <Compile Include="DTS\DeliveryInstructionUnit.cs" />
     <Compile Include="DTS\DeliveryRequisitionStatus.cs" />
     <Compile Include="DTS\DeliveryRequisitionUnit.cs" />
+    <Compile Include="DTS\DeliveryRequisition_Reroute.cs" />
     <Compile Include="DTS\ExportToPDF.cs" />
     <Compile Include="DTS\InboundEviz.cs" />
     <Compile Include="DTS\MasterDistrict.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="EMCS\SvcRPTTUBranch.cs" />
     <Compile Include="EMCS\SvcRSailingEstimation.cs" />
     <Compile Include="EMCS\SvcRTaxAudit.cs" />
+    <Compile Include="EMCS\SVCShippingSummary.cs" />
     <Compile Include="EMCS\SvcTotalCipl.cs" />
     <Compile Include="EMCS\SvcUserLog.cs" />
     <Compile Include="EMCS\SvcWizard.cs" />
@@ -218,6 +221,7 @@
     <Compile Include="FreightCost\MasterModaOfConditionTruckingRateImport.cs" />
     <Compile Include="FreightCost\MasterRateImport.cs" />
     <Compile Include="FreightCost\MasterSurchargeImport.cs" />
+    <Compile Include="Helper\NetworkShare.cs" />
     <Compile Include="ImexVetting\ManualVetting.cs" />
     <Compile Include="ImexVetting\ReadDataManualVetting.cs" />
     <Compile Include="Imex\ChangeLogBLL.cs" />
@@ -251,6 +255,7 @@
     <Compile Include="POST\Dashboard.cs" />
     <Compile Include="POST\Ebupot.cs" />
     <Compile Include="POST\IntegrasiEproc.cs" />
+    <Compile Include="POST\Invoice.cs" />
     <Compile Include="POST\MasterMappingUser.cs" />
     <Compile Include="POST\Report.cs" />
     <Compile Include="POST\QuickSearch.cs" />

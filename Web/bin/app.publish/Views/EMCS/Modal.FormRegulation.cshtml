@@ -1,0 +1,160 @@
+﻿@model  App.Web.Models.EMCS.RegulationModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    var statusList = new List<string>();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Regulation</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Instansi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Instansi, new { @class = "form-control required", placeholder = "Instansi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Instansi)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Nomor</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Nomor, new { @class = "form-control required", placeholder = "Nomor" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Nomor)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">No Regulasi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.RegulationNo, new { @class = "form-control required", placeholder = "No Regulation" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.RegulationNo)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Kategori</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.DropDownListFor(m => m.Regulation.Category, new SelectList(Model.CategoryList, "Value", "Name"), new { @class = "form-control", id = "Category" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Category)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Jenis Regulasi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.RegulationType, new { @class = "form-control required", placeholder = "Jenis Regulasi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.RegulationType)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Deskripsi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Description, new { @class = "form-control required", row = 5, cols = 5, placeholder = "Deskripsi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Description)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Referensi</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextBoxFor(m => m.Regulation.Reference, new { @class = "form-control required", placeholder = "Referensi" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Reference)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Penetapan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalPenetapan, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Penetapan" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalPenetapan)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Diundangkan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalDiUndangkan, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Diundangkan" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalDiUndangkan)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Berlaku</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalBerlaku, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Berlaku" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalBerlaku)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Tanggal Berakhir</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.EditorFor(m => m.Regulation.TanggalBerakhir, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Tanggal Berakhir" } })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.TanggalBerakhir)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-5 col-xs-12">Keterangan</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            @Html.TextAreaFor(m => m.Regulation.Keterangan, new { @class = "form-control required", placeholder = "Keterangan" })
+                            <div>@Html.ValidationMessageFor(m => m.Regulation.Keterangan)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+    @Html.HiddenFor(a => a.Regulation.Id)
+    @*@Html.HiddenFor(a => a.Menu.EntryBy)
+        @Html.HiddenFor(a => a.Menu.ModifiedBy)
+        @Html.HiddenFor(a => a.Menu.EntryDate)
+        @Html.HiddenFor(a => a.Menu.ModifiedDate)*@
+    @*@Html.HiddenFor(a => a.Menu.IsActive)
+        @Html.HiddenFor(a => a.Menu.IsDefault)*@
+
+
+}
+
+<script>
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+        $(".date").datepicker({
+            autoclose: true,
+            format: "dd M yyyy"
+        });
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>
+
+
+
+
