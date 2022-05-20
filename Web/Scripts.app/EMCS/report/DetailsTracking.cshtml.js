@@ -114,6 +114,12 @@ $(function () {
             align: "left",
             valign: "middle"
         }, {
+            field: "CustomerFacilityArea",
+            title: "Customer Facility Area",
+            rowspan: 3,
+            align: "center",
+            valign: "middle"
+        }, {
             title: "Commercial Invoice & Packing List <br/> (CIPL)",
             colspan: 3,
             rowspan: 2,

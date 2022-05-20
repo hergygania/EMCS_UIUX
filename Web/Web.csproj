@@ -200,6 +200,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="MvcMenuEMCSHelpers.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracyDetail.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracySummary.cs" />
@@ -554,6 +555,52 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\AdminLTE.css" />
+    <Content Include="Content\Assets\core\js\bootstrap.min.js" />
+    <Content Include="Content\Assets\core\js\jquery.min.js" />
+    <Content Include="Content\Assets\core\js\popper.min.js" />
+    <Content Include="Content\Assets\css\black-dashboard.css" />
+    <Content Include="Content\Assets\css\demo.css" />
+    <Content Include="Content\Assets\css\nucleo-icons.css" />
+    <Content Include="Content\Assets\demo\demo.css" />
+    <Content Include="Content\Assets\demo\demo.js" />
+    <Content Include="Content\Assets\demo\docs.css" />
+    <Content Include="Content\Assets\demo\docs.min.css" />
+    <Content Include="Content\Assets\demo\docs.min.js" />
+    <Content Include="Content\Assets\demo\jquery.sharrre.js" />
+    <Content Include="Content\Assets\demo\src\application.js" />
+    <Content Include="Content\Assets\demo\vendor\anchor.min.js" />
+    <Content Include="Content\Assets\demo\vendor\clipboard.min.js" />
+    <Content Include="Content\Assets\demo\vendor\holder.min.js" />
+    <Content Include="Content\Assets\demo\vendor\split.min.js" />
+    <Content Include="Content\Assets\js\black-dashboard.js" />
+    <Content Include="Content\Assets\js\black-dashboard.min.js" />
+    <Content Include="Content\Assets\js\bootstrap-notify.js" />
+    <Content Include="Content\Assets\js\chartjs.min.js" />
+    <Content Include="Content\Assets\js\core\bootstrap.min.js" />
+    <Content Include="Content\Assets\js\core\jquery.min.js" />
+    <Content Include="Content\Assets\js\core\popper.min.js" />
+    <Content Include="Content\Assets\js\demo.js" />
+    <Content Include="Content\Assets\js\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Content\Assets\js\plugins\bootstrap-datetimepicker.js" />
+    <Content Include="Content\Assets\js\plugins\bootstrap-notify.js" />
+    <Content Include="Content\Assets\js\plugins\bootstrap-selectpicker.js" />
+    <Content Include="Content\Assets\js\plugins\bootstrap-switch.js" />
+    <Content Include="Content\Assets\js\plugins\bootstrap-tagsinput.js" />
+    <Content Include="Content\Assets\js\plugins\chartjs.min.js" />
+    <Content Include="Content\Assets\js\plugins\fullcalendar\daygrid.min.js" />
+    <Content Include="Content\Assets\js\plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\Assets\js\plugins\fullcalendar\interaction.min.js" />
+    <Content Include="Content\Assets\js\plugins\fullcalendar\timegrid.min.js" />
+    <Content Include="Content\Assets\js\plugins\jasny-bootstrap.min.js" />
+    <Content Include="Content\Assets\js\plugins\jquery-jvectormap.js" />
+    <Content Include="Content\Assets\js\plugins\jquery.bootstrap-wizard.js" />
+    <Content Include="Content\Assets\js\plugins\jquery.dataTables.min.js" />
+    <Content Include="Content\Assets\js\plugins\jquery.tablesorter.js" />
+    <Content Include="Content\Assets\js\plugins\jquery.validate.min.js" />
+    <Content Include="Content\Assets\js\plugins\moment.min.js" />
+    <Content Include="Content\Assets\js\plugins\nouislider.min.js" />
+    <Content Include="Content\Assets\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Content\Assets\js\plugins\sweetalert2.min.js" />
     <Content Include="Content\customdts.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-table-fixed-columns.css" />
@@ -5716,6 +5763,15 @@
     </Content>
     <Content Include="Content\E-BUPOT\Manual\UserManual_EBUPOT.pdf" />
     <Content Include="Content\DTS\UserManual.pptx" />
+    <Content Include="Content\Assets\fonts\nucleo.eot" />
+    <Content Include="Content\Assets\fonts\nucleo.ttf" />
+    <Content Include="Content\Assets\fonts\nucleo.woff" />
+    <Content Include="Content\Assets\fonts\nucleo.woff2" />
+    <Content Include="Content\Assets\css\dashboard-free.css.map" />
+    <Content Include="Content\Assets\scss\black-dashboard.scss" />
+    <Content Include="Content\Assets\scss\black-dashboard\_buttons.scss" />
+    <Content Include="Content\Assets\scss\black-dashboard\_typography.scss" />
+    <Content Include="Content\Assets\js\black-dashboard.js.map" />
     <None Include="Content\EMCS\Templates\New_Template_Problem_History.xls" />
     <Content Include="Content\EMCS\Templates\Template_DHE_BI.xls" />
     <Content Include="Content\EMCS\Templates\Template_EstimationTime.xls" />
@@ -6958,6 +7014,8 @@
     <Content Include="Views\Post\ModalMappingUser.cshtml" />
     <Content Include="Temp\export_pdf_di_manual.xlsx" />
     <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
+    <Content Include="Views\EMCS\_Layout.cshtml" />
+    <Content Include="Views\EMCS\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

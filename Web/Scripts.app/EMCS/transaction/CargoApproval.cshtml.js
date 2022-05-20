@@ -350,7 +350,13 @@ function ApproveCargo(obj) {
             }
         },
         success: function (resp) {
-            location.href = "/EMCS/CargoList";
+            Swal.fire({
+                title: 'Approve!',
+                text: 'Data Confirmed Successfully',
+                type: 'success'
+            }).then((result) => {
+                location.href = "/EMCS/CargoList";
+            });
         }
     });
 }

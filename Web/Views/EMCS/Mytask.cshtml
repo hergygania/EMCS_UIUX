@@ -8,34 +8,44 @@
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 
 @*<div class="row">*@
+<style>
+    .tab-content .tab-pane {
+        border: 1px solid transparent !important;
+        padding: 0px !important;
+        background: transparent !important;
+    }
+    tr:nth-child(even) {
+        background-color: transparent !important;
+    }
+</style>
 <div class="col-md-12">
     <div class="tab" role="tabpanel" style="margin-top: 15px;box-shadow:none !important;background:none;">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
+        <ul class="nav-pills-info nav-pills-icons justify-content-center nav nav-pills nav-tabs" role="tablist">
+            <li role="presentation" class="active nav-item">
                 <a href="#tab-task-cipl" style="z-index:9;" aria-controls="home" role="tab" data-toggle="tab"><span class="badge">@(Model.Cipl != 0 ? Model.Cipl : "")</span>&nbsp;CIPL</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-gr" style="z-index:8;" aria-controls="gr" role="tab" data-toggle="tab"><span class="badge">@(Model.Gr != 0 ? Model.Gr : "")</span>&nbsp;Receipt Goods</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-cargo" style="z-index:7;" aria-controls="profile" role="tab" data-toggle="tab"> <span class="badge">@(Model.Cl != 0 ? Model.Cl : "")</span>&nbsp;Cargo</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-si" style="z-index:6;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Si != 0 ? Model.Si : "")</span>&nbsp;Shipping Instruction</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-npe_peb" style="z-index:5;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Npe != 0 ? Model.Npe : "")</span>&nbsp;PEB & NPE</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-bl_awb" style="z-index:4;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Bl != 0 ? Model.Bl : "")</span>&nbsp;BL / AWB</a>
             </li>
-            <li role="presentation">
+            <li role="presentation" class="nav-item">
                 <a href="#tab-task-delegation" style="z-index:4;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge"></span>&nbsp;Delegation</a>
             </li>
         </ul>
         <!-- Tab panes -->
-        <div class="tab-content tabs-custom">
+        <div class="tab-content tabs-custom tab-space tab-subcategories">
             <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
                 @Html.Partial("~/Views/EMCS/TaskCipl.cshtml")
             </div>

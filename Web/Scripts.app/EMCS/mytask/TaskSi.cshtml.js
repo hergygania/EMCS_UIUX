@@ -1,15 +1,17 @@
 ﻿$(function () {
 
     window.operateEvents = {
-        'click .si-submit': function (e, value, row, index) {
+        'click #si-submit': function (e, value, row, index) {
             //$('#idCL').val(row.Id);
             //$("#")
-            location.href = myApp.fullPath + "EMCS/SubmitSi?Id=" + parseInt(row.IdCl);
+            //location.href = myApp.fullPath + "EMCS/SubmitSi?Id=" + parseInt(row.IdCl);
+            //location.href = myApp.fullPath + "EMCS/SubmitSi?Id=" + row.IdCl;
+            location.href = "/EMCS/SubmitSi/" + row.IdCl;
         }
     };
     var columns_si = [
         {
-            field: "id",
+            field: "IdCl",
             formatter: runningFormatter,
             title: "No",
             align: 'center'
@@ -24,7 +26,7 @@
                 var btn = [];
                 btn.push('<div class="btn-group">');
                 //btn.push("<button class='btn btn-xs btn-primary si-submit' title='Input' data-target='#InputInstruction' data-toggle='modal'><i class='fa fa-search'></i></button>");
-                btn.push("<button class='btn btn-xs btn-info si-submit' title='Input' ><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-xs btn-info' id='si-submit' title='Info' ><i class='fa fa-search'></i></button>");
                 btn.push('</div>');
                 return btn.join('');
             }

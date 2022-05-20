@@ -356,7 +356,8 @@ function getTrendExport() {
                         type: 'column'
                     },
                     title: {
-                        text: 'Trend Export'
+                        text: 'Trend Export',
+                        align: 'left'
                     },
                     xAxis: {
                         categories: categories_yearly
@@ -379,7 +380,9 @@ function getTrendExport() {
                         opposite: true
                     }],
                     legend: {
-                        shadow: false
+                        layout: 'horizontal',
+                        align: 'right',
+                        verticalAlign: 'top'
                     },
                     tooltip: {
                         shared: true
@@ -411,14 +414,16 @@ function getTrendExport() {
                                 valueSuffix: ' M'
                             },
                             pointPadding: 0.3,
-                            pointPlacement: -0.2
+                            pointPlacement: -0.2,
+                            borderRadius: 10
                         }, {
                             name: 'Total PEB',
-                            color: '#000000',
+                            color: '#FF9900',
                             data: data_totalPeb,
                             pointPadding: 0.3,
                             pointPlacement: 0.2,
-                            yAxis: 1
+                            yAxis: 1,
+                            borderRadius: 10
                         }]
                 });
             TrendExportChart.reflow();
@@ -449,34 +454,52 @@ function getExportByCategory(startYear, endYear) {
 
             var ExportByCategoryChart = Highcharts.chart('container_trend_pie', {
                 chart: {
-                    type: 'pie',
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                        beta: 0
-                    }
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                    //options3d: {
+                    //    enabled: true,
+                    //    alpha: 45,
+                    //    beta: 0
+                    //}
                 },
-                colors: ['#ffca22', '#9dd45d', '#05beff', '#ff696a', '#c63bff'],
+                colors: ['#ffca22', '#f7fbfb', '#05beff', '#ff696a', '#c63bff'],
                 title: {
-                    text: 'Export by Category'
+                    text: 'Export by Category',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '<b>65%</b><br>Total new<br>customers',
+                    align: 'left',
+                    verticalAlign: 'middle',
+                    x: 170,
+                    y: 30
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 },
                 plotOptions: {
                     pie: {
-                        allowPointSelect: true,
+                        innerSize: 150,
+                        allowPointSelect: false,
                         cursor: 'pointer',
-                        depth: 35,
+                        //depth: 35,
                         dataLabels: {
-                            enabled: true,
-                            format: '{point.name}'
-                        }
+                            enabled: false
+                            //format: '{point.name}'
+                        },
+                        showInLegend: true
                     }
                 },
-                credits: {
-                    enabled: false
+                legend: {
+                    layout: 'horizontal',
+                    align: 'right',
+                    verticalAlign: 'middle'
                 },
+                //credits: {
+                //    enabled: false
+                //},
                 series: byCategory
             });
             ExportByCategoryChart.reflow();
@@ -491,8 +514,8 @@ function getSalesVSNonSales() {
             var startYear = parseInt($("#SalesVSNonSalesStartYear").val());
             var byExpType =
                 [
-                    { name: 'Sales', data: [] },
-                    { name: 'Non Sales', data: [] }
+                    { name: 'Sales', type: 'spline', data: [] },
+                    { name: 'Non Sales', type: 'spline', data: [] }
                 ];
 
             $.each(data, function (i, data) {
@@ -501,9 +524,10 @@ function getSalesVSNonSales() {
             })
 
             var SalesVSNonSalesChart = Highcharts.chart('container_compare_sales', {
-                colors: ['#ffca22', '#000'],
+                colors: ['#7f39fb', '#ffca22'],
                 title: {
-                    text: 'Sales vs Non Sales'
+                    text: 'Sales vs Non Sales',
+                    align: 'left'
                 },
                 yAxis: {
                     title: {
@@ -519,28 +543,32 @@ function getSalesVSNonSales() {
                     enabled: false
                 },
                 plotOptions: {
-                    series: {
-                        label: {
-                            connectorAllowed: false
-                        },
-                        pointStart: startYear
+                    //series: {
+                    //    label: {
+                    //        connectorAllowed: false
+                    //    },
+                    //    pointStart: startYear
+                    //}
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
                     }
                 },
-                series: byExpType,
-                responsive: {
-                    rules: [{
-                        condition: {
-                            maxWidth: 500
-                        },
-                        chartOptions: {
-                            legend: {
-                                layout: 'horizontal',
-                                align: 'center',
-                                verticalAlign: 'bottom'
-                            }
-                        }
-                    }]
-                }
+                series: byExpType
+                //responsive: {
+                //    rules: [{
+                //        condition: {
+                //            maxWidth: 500
+                //        },
+                //        chartOptions: {
+                //            legend: {
+                //                layout: 'horizontal',
+                //                align: 'center',
+                //                verticalAlign: 'bottom'
+                //            }
+                //        }
+                //    }]
+                //}
 
             });
             SalesVSNonSalesChart.reflow();
@@ -554,27 +582,35 @@ function getTotalExport() {
     $.ajax({
         url: 'getTotalExport?year=' + parseInt($("#TotalExportYear").val()),
         success: function (data) {
+            var datasales = [0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var datanonsales = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
             var outstandingCipl = [
-                { name: 'Total Invoice & Packing List', type: 'column', data: [] },
-                { name: 'Total PEB', type: 'column', data: [] },
-                { name: 'Outstanding', type: 'spline', data: [] }
+                { name: 'Total Invoice', type: 'spline', data: [] },
+                //{ name: 'Total PEB', type: 'column', data: [] },
+                { name: 'Outstanding', type: 'spline', data: [] },
+                { name: 'Sales', type: 'column', data: datasales, borderRadius: 10 },
+                { name: 'Non Sales', type: 'column', data: datanonsales, borderRadius: 10 }
             ];
+            
             var x_categories = [];
 
             $.each(data, function (i, data) {
                 x_categories.push(data.Month);
                 outstandingCipl[0].data.push(data.Invoice);
-                outstandingCipl[1].data.push(data.Peb);
-                outstandingCipl[2].data.push(data.Outstanding);
+                //outstandingCipl[1].data.push(data.Peb);
+                outstandingCipl[1].data.push(data.Outstanding);
             });
+            console.log(outstandingCipl);
 
             var TotalExportChart = Highcharts.chart('container', {
                 chart: {
                     type: 'column'
                 },
-                colors: ['#ffca22', '#000'],
+                colors: ['#7f39fb', '#ffca22', '#a478f1', '#a478f1'],
                 title: {
-                    text: 'Total Export Transaction'
+                    text: 'Total Export Transaction',
+                    align: 'left'
                 },
                 subtitle: {
                     //text: 'Source: WorldClimate.com'
@@ -591,6 +627,11 @@ function getTotalExport() {
                     title: {
                         text: 'Transaction'
                     }
+                },
+                legend: {
+                    layout: 'horizontal',
+                    align: 'right',
+                    verticalAlign: 'top'
                 },
                 //tooltip: {
                 //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
@@ -633,9 +674,10 @@ function BigesCommoditiesCategory() {
                 chart: {
                     type: 'column'
                 },
-                colors: ['#ffca22', '#9dd45d', '#05beff', '#ff696a', '#c63bff'],
+                colors: ['#ffeed5', '#ffeed5', '#ffeed5', '#ffeed5', '#ffeed5'],
                 title: {
-                    text: '5 Bigest Commodities Category'
+                    text: '5 Bigest Commodities Category',
+                    align: 'left'
                 },
                 subtitle: {
                     //text: '2019'
@@ -677,7 +719,8 @@ function BigesCommoditiesCategory() {
                     {
                         name: "Browsers",
                         colorByPoint: true,
-                        data: category
+                        data: category,
+                        borderRadius: 10
                     }
                 ],
 

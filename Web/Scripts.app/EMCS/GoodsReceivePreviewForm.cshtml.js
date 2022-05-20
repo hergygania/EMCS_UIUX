@@ -228,7 +228,13 @@ function ApproveGR(obj) {
             }
         },
         success: function () {
-            location.href = "/EMCS/GrList";
+            Swal.fire({
+                title: 'Approve!',
+                text: 'Data Confirmed Successfully',
+                type: 'success'
+            }).then((result) => {
+                location.href = "/EMCS/GrList";
+            });
         }
     });
 }
