@@ -509,13 +509,20 @@
 =======
 ﻿
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Export Transactions";
 }
 <style>
     .card-chart .dropdown {
         position: absolute;
-        right: 120px;
-        top: 20px;
+        right: 60px;
+        top: 15px;
+    }
+    .dropdown-menu.dropdown-menu-right {
+        left: 0 !important;
+    }
+    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
+        margin-left: 0 !important;
     }
 </style>
 

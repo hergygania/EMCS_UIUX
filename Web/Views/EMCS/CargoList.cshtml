@@ -1,27 +1,16 @@
 ﻿
 @{
-<<<<<<< HEAD
-<<<<<<< HEAD
     Layout = "~/Views/EMCS/_Layout.cshtml";
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    Layout = "~/Views/EMCS/_Layout.cshtml";
->>>>>>> 0aa0fef (new template)
     ViewBag.Title = "Cargo List";
 }
 
 @using System.Web.Mvc
-<<<<<<< HEAD
 @Styles.Render("~/Content/EMCS/Custom.css")
-=======
->>>>>>> 639d8d0 (Intial commit)
 @*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
 <style type="text/css">
     .form-horizontal .control-label {
         text-align: left !important;
     }
-<<<<<<< HEAD
 
     .dropdown-menu.dropdown-menu-right {
         left: 0 !important;
@@ -30,8 +19,12 @@
     .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
         margin-left: 0 !important;
     }
-=======
->>>>>>> 639d8d0 (Intial commit)
+    .dropdown-menu.dropdown-menu-right {
+        left: 0 !important;
+    }
+    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
+        margin-left: 0 !important;
+    }
 </style>
 @{
     if (ViewBag.AllowDelete)
@@ -45,35 +38,7 @@
     }
 
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="toolbar">
-            @{
-                if (ViewBag.AllowCreate)
-                {
-                    <a class="btn btn-success animation-on-hover btn-round" href="/EMCS/CargoForm" id="btnCreate">
-                        <i class="fa fa-plus"></i> Add new
-                    </a>
-                }
-            }
-            <div class="fa-pull-left" id="mySearch" style="padding-right: 4px">
-                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: auto;">
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="" id="tableCargo"></table>
-
-                </div>
-            </div>
-=======
-=======
-
->>>>>>> 0aa0fef (new template)
 <div class="row">
     <div class="col-md-12">
         <div class="toolbar">
@@ -85,8 +50,8 @@
                     </a>
                 }
             }
-            <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
-                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+            <div class="fa-pull-left" id="mySearch" style="padding-right: 4px">
+                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: auto;">
             </div>
         </div>
         <div class="card">
@@ -95,12 +60,8 @@
                     <table class="table tablesorter table-bordered" id="tableCargo"></table>
 
                 </div>
-<<<<<<< HEAD
             </form>
->>>>>>> 639d8d0 (Intial commit)
-=======
             </div>
->>>>>>> 0aa0fef (new template)
         </div>
     </div>
 </div>
