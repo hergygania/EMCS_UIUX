@@ -1467,6 +1467,9 @@
         padding: 10px;
         font-size: 14px;
     }
+    .email-warning {
+        margin-left: 16px;
+    }
 </style>   
  <div class="row">
 >>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
@@ -1489,29 +1492,29 @@
                     <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
                         <div class="row mt-15">
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group hide">
                                         <label class="control-label col-lg-4 col-xs-4">ID</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control requestChange" id="idCipl" name="idCipl" placeholder="ID CIPL">
                                         </div>
                                     </div>
                                     <div class="form-group hide">
                                         <label class="control-label col-lg-4 col-xs-4">Status</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control requestChange" id="statusCipl" name="statusCipl" placeholder="ID CIPL">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">CIPL No</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control requestChange" id="noCipl" name="noCipl" data-table="Cipl" data-name="CiplNo" data-lable="CIPL No" placeholder="Cipl No" disabled>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Category</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" id="jenisBarangCipl" data-name="Category" data-table="Cipl" data-lable="Category" name="Category" required></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" id="jenisBarangCipl" data-name="Category" data-table="Cipl" data-lable="Category" name="Category" required></select>
                                             <div class="categoryspareparts mt-4">
                                                 <select class="mt-4 " id="sparepartsCipl" name="sparepartsCipl" required></select>
                                             </div>
@@ -1525,8 +1528,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Export Type</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2" id="exportCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control" id="exportCipl" required></select>
                                             <div class="exportRemarks mt-4">
                                                 <select class="select2" id="exportremarksCipl" name="exportremarksCipl" data-table="Cipl" data-lable="Export Type" data-name="ExportTypeItem" required></select>
                                             </div>
@@ -1535,7 +1538,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">Date</label>
                                         <div class="input-group col-lg-8 col-xs-8">
@@ -1547,40 +1550,38 @@
                                     </div>
                                     <div class="form-group" id="divReferenceNo">
                                         <label class="control-label col-lg-4 col-xs-4" required>Reference No</label>
-                                        <div class="input-group">
-                                            <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2" required></select>
-                                            <div class="input-group-addon" style="padding: 6px 1px !important;"></div>
-                                            <div id="divRefCipl"><select id="refCipl" class="select2" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2 form-control" required></select>
+                                            <div id="divRefCipl"><select id="refCipl" class="select2 form-control" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
                                         </div>
                                     </div>
                                     <div class="form-group div-idCustomerCipl">
                                         <label class="control-label col-lg-4 col-xs-4" required>Id Customer</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control" id="idCustomerCipl" data-lable="Id Customer" data-name="" name="idCustomerCipl" placeholder="Id Customer" disabled>
                                             @*<select id="idCustomerCipl"></select>*@
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Pickup Area</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select id="idPickupArea" data-lable="Pickup Area" data-name="PickUpArea"></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="form-control" id="idPickupArea" data-lable="Pickup Area" data-name="PickUpArea"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Pickup Pic</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select id="idPickupPic" data-lable="Pickup Pic" data-name="PickUpPic"></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="form-control" id="idPickupPic" data-lable="Pickup Pic" data-name="PickUpPic"></select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group">
-                                        <label class="col-lg-4 col-xs-4">&nbsp;</label>
-                                        <div class="input-group col-lg-8 col-xs-8 offset-3">
-                                            <select id="soldConsigneeCipl" data-lable="Cosignee" data-name="SoldConsignee" class="inpConsignee" required>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select id="soldConsigneeCipl" data-lable="Cosignee" data-name="SoldConsignee" class="inpConsignee form-control" required>
                                                 <option></option>
                                             </select>
                                         </div>
@@ -1588,64 +1589,62 @@
                                     <div class="div-sales-consignee">
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Name</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Name" data-name="SoldToName" id="consigneeNameCipl" name="consigneeNameCipl" placeholder="Consignee Name" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Address</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <textarea type="text" class="form-control inpConsignee requestChange" data-lable="Address" data-name="SoldToAddress" id="consigneeAddressCipl" name="consigneeAddressCipl" placeholder="Address" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Country</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Country" data-name="SoldToCountry" id="consigneeCountryCipl" name="consigneeCountryCipl" placeholder="Country" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Telephone</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Telephone" data-name="SoldToTelephone" id="consigneeTelpCipl" name="consigneeTelpCipl" placeholder="Telephone" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Fax</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Fax" data-name="SoldToFax" id="consigneeFaxCipl" name="consigneeFaxCipl" placeholder="Fax" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Pic</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Pic" data-name="SoldToPic" id="consigneePicCipl" name="consigneePicCipl" placeholder="PIC" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Email</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpConsignee requestChange" data-lable="Email" data-name="SoldToEmail" id="consigneeEmailCipl" name="consigneeEmailCipl" placeholder="Email" required>
-                                                <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
                                             </div>
+                                            <label class="email-warning" style="color:blue">*If multiple emails, please separate using the sign (;)</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group">
-                                        <label class="col-lg-4 col-xs-4">&nbsp;</label>
-                                        <div class="input-group col-lg-8 col-xs-8 offset-3">
-                                            <select id="shipDeliveryCipl" data-lable="Delivery type" data-name="ShipDelivery" class="inpConsignee requestChange" required>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select id="shipDeliveryCipl" data-lable="Delivery type" data-name="ShipDelivery" class="inpConsignee requestChange form-control" required>
                                                 <option></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="col-md-4">&nbsp;</div>
                                         <div class="form-group">
-                                            <div class="input-group">
+                                            <div class="input-group col-lg-8 col-xs-8">
                                                 <div class="input-group">
                                                     <div id="div-radio-notify" class="btn-group btn-group-justified">
                                                         <span class="btn btn-default btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-success" data-notactive-notify="btn-default">Same As</span>
@@ -1659,69 +1658,69 @@
                                     <div class="notify">
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Name</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Name" data-name="NotifyName" id="notifyNameCipl" placeholder="Consignee Name" name="notifyNameCipl" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Address</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <textarea type="text" class="form-control inpNotify requestChange" data-lable="Notify Address" data-name="NotifyAddress" id="notifyAddressCipl" placeholder="Address" name="notifyAddressCipl" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Country</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Country" data-name="NotifyCountry" id="notifyCountryCipl" placeholder="Country" name="notifyCountryCipl" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Telephone</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Telephone" data-name="NotifyTelephone" id="notifyTelpCipl" placeholder="Telephone" name="notifyTelpCipl" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Fax</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Fax" data-name="NotifyFax" id="notifyFaxCipl" placeholder="Fax" name="notifyFaxCipl" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Pic</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Pic" data-name="NotifyPic" id="notifyPicCipl" placeholder="PIC" name="notifyPicCipl" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4">Email</label>
-                                            <div class="input-group col-lg-8 col-xs-8">
+                                            <div class="col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control inpNotify requestChange" data-lable="Notify Email" data-name="NotifyEmail" id="notifyEmailCipl" placeholder="Email" name="notifyEmailCipl" required>
-                                                <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
                                             </div>
+                                            <label class="email-warning" style="color:blue">*If multiple emails, please separate using the sign (;)</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Plant (Business Area)</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" id="areaCipl" data-lable="Plant (Business Area)" data-name="Area" name="areaCipl" required><option></option></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" id="areaCipl" data-lable="Plant (Business Area)" data-name="Area" name="areaCipl" required><option></option></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Branch</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control requestChange" data-lable="Branch" data-name="Branch" id="cabangCipl" name="cabangCipl" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Consolidate</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" id="ConsolidateCipl" data-lable="Consolidate" data-name="Consolidate" name="ConsolidateCipl" required>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" id="ConsolidateCipl" data-lable="Consolidate" data-name="Consolidate" name="ConsolidateCipl" required>
                                                 <option></option>
                                                 <option value=true>Yes</option>
                                                 <option value=false>No</option>
@@ -1730,52 +1729,52 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Currency</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" id="currencyCipl" data-lable="Currency" data-name="Currency" name="currencyCipl" required><option></option></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" id="currencyCipl" data-lable="Currency" data-name="Currency" name="currencyCipl" required><option></option></select>
                                             @*<input type="text" class="form-control select2" id="currencyCipl" name="currencyCipl" placeholder="Currency" required>*@
                                         </div>
                                     </div>
                                     <div class="form-group hide">
                                         <label class="control-label col-lg-4 col-xs-4">Lastest Kurs in USD</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
+                                        <div class="col-lg-8 col-xs-8">
                                             <input type="text" class="form-control select2 requestChange" data-lable="Lastest Kurs in USD" data-name="Rate" id="RateCipl" name="RateCipl" placeholder="Kurs" required disabled>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Payment Terms</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="PaymentTerms" data-lable="Payment Terms" name="paymentCipl" id="paymentCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="PaymentTerms" data-lable="Payment Terms" name="paymentCipl" id="paymentCipl" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Shipping Method</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="ShippingMethod" data-lable="Shipping Method" id="shippingCipl" name="shippingCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="ShippingMethod" data-lable="Shipping Method" id="shippingCipl" name="shippingCipl" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4">Country Of Origin</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="CountryOfOrigin" data-lable="Country Of Origin" id="countryCipl" name="countryCipl"></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="CountryOfOrigin" data-lable="Country Of Origin" id="countryCipl" name="countryCipl"></select>
                                         </div>
                                     </div>
                                     <div class="form-group divStatusEdit">
                                         <label class="control-label col-lg-4 col-xs-4">Loading Port</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="LoadingPort" data-lable="Loading Por" id="loadingCipl" name="loadingCipl"></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="LoadingPort" data-lable="Loading Por" id="loadingCipl" name="loadingCipl"></select>
                                         </div>
                                     </div>
                                     <div class="form-group divStatusEdit">
                                         <label class="control-label col-lg-4 col-xs-4">Destination Port</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="DestinationPort" data-lable="Destination Port" id="destinationCipl" name="destinationCipl"></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="DestinationPort" data-lable="Destination Port" id="destinationCipl" name="destinationCipl"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>LC No & Date</label>
                                         <div class="input-group col-lg-8 col-xs-8">
                                             <div class="input-group double-input">
-                                                <input type="text" class="form-contro requestChangel" id="lcnoCipl" data-lable="LC No & Date" name="lcnoCipl" placeholder="LC No & Date" required style="width: 75%; border-right-width: 0px;">
+                                                <input type="text" class="form-control requestChangel" id="lcnoCipl" data-lable="LC No & Date" name="lcnoCipl" placeholder="LC No & Date" required style="width: 75%; border-right-width: 0px;">
                                                 <input type="text" class="form-control date requestChange" id="lcDateCipl" name="lcDateCipl" placeholder="Date" style="width: 25%; border-right-width: 0px;">
                                                 <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
                                                     <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
@@ -1785,8 +1784,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Inco Terms</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="IncoTerm" data-lable="Inco Terms" id="incoCipl" required>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="IncoTerm" data-lable="Inco Terms" id="incoCipl" required>
                                                 <option></option>
                                             </select>
                                             <div class="descriptionIncoTerms" style="line-height: 17px;" required></div>
@@ -1795,23 +1794,23 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="card">
+                                <div class="">
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Freight Payment</label>
-                                        <div class="input-group col-lg-8 col-xs-8">
-                                            <select class="select2 requestChange" data-name="FreightPayment" id="freightCipl" data-lable="Freight Payment" name="freightCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8">
+                                            <select class="select2 form-control requestChange" data-name="FreightPayment" id="freightCipl" data-lable="Freight Payment" name="freightCipl" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Type</label>
-                                        <div class="input-group col-lg-8 col-xs-8" id="ActType/">
-                                            <select class="select2 requestChange" data-name="Type" id="typeCipl" data-lable="Type" name="typeCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8" id="ActType/">
+                                            <select class="select2 form-control requestChange" data-name="Type" id="typeCipl" data-lable="Type" name="typeCipl" required></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-lg-4 col-xs-4" required>Forwarder</label>
-                                        <div class="input-group col-lg-8 col-xs-8" id="ActForwader/">
-                                            <select class="select2 requestChange" data-name="Forwader" data-lable="Forwarder" id="forwaderCipl" name="forwaderCipl" required></select>
+                                        <div class="col-lg-8 col-xs-8" id="ActForwader/">
+                                            <select class="select2 form-control requestChange" data-name="Forwader" data-lable="Forwarder" id="forwaderCipl" name="forwaderCipl" required></select>
                                         </div>
                                     </div>
 
@@ -2843,7 +2842,6 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts.app/EMCS/dropzone.js"></script>
 <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 <script src="/Scripts/loadingoverlay.min.js"></script>
 
