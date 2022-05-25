@@ -121,19 +121,20 @@ namespace App.Web
 
                 if (menu.children.Count() <= 0)
                 {
-                    sb.AppendLine("<i class=\"" + menu.icon + "\"></i><p>" + menu.Name + "</p>");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
                     sb.AppendLine("</a>");
                 }
                 else
                 {
                     sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"collapsed\" aria-expanded=\"false\">");
-                    sb.AppendLine("<i class=\"" + menu.icon + "\"></i><p>" + menu.Name + "<b class=\"caret\"></b></p>");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "<b class=\"caret\"></b></p>");
                     sb.AppendLine("</a>");
                     sb.AppendLine("<div class=\"collapse\" id=\"menu" + menu.ID + "\">");
                     sb.AppendLine("<ul class=\"nav\">");
                     CreateHTMLMenu(menu.children, sClass, 1);
                     sb.AppendLine("</ul>");
                 }
+                sb.AppendLine("</li>");
                 sb.AppendLine("</li>");
             }
         }
