@@ -2,6 +2,7 @@
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "BAST " + title;
 }
 @Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.css")
@@ -13,7 +14,7 @@
 <div class="row">
     <div class="col-md-6">
         <form>
-            <div class="card">
+            <div class="">
                 <div class="form-group">
                     <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
                     <div class="col-md-8">
@@ -94,7 +95,7 @@
     </div>
     <div class="col-md-6">
         <form id="LoginValidation">
-            <div class="card">
+            <div class="">
                 <div class="form-group">
                     <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK <span class="text-danger">*</span></label>
                     <div class="col-md-8">
@@ -205,7 +206,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-footer text-right">
+                <div class="box-footer text-right" style="margin-top: 20px;">
                     <input type="hidden" id="Status" name="data.Status" value="Draft" />
                     @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
                     @Html.HiddenFor(m => m.Data.Id, new { @class = "Id", @Id = "Id" })
