@@ -1,6 +1,5 @@
-﻿@model dynamic
+﻿﻿@model dynamic
 @{
-<<<<<<< HEAD
   Layout = "~/Views/EMCS/_Layout.cshtml";
   ViewBag.Title = "My Task";
 }
@@ -93,95 +92,11 @@
       }
     </div>
   </div>
-=======
-    ViewBag.Title = "My Task";
-}
-@*@Styles.Render("~/Content/EMCS/FontAwesome/css/all.css")*@
-@Styles.Render("~/Content/EMCS/Custom.css")
-@Styles.Render("~/Content/EMCS/dropzone.css")
-@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
-
-@*<div class="row">*@
-<style>
-    .tab-content .tab-pane {
-        border: 1px solid transparent !important;
-        padding: 0px !important;
-        background: transparent !important;
-    }
-    tr:nth-child(even) {
-        background-color: transparent !important;
-    }
-</style>
-<div class="col-md-12">
-    <div class="tab" role="tabpanel" style="margin-top: 15px;box-shadow:none !important;background:none;">
-        <!-- Nav tabs -->
-        <ul class="nav-pills-info nav-pills-icons justify-content-center nav nav-pills nav-tabs" role="tablist">
-            <li role="presentation" class="active nav-item">
-                <a href="#tab-task-cipl" style="z-index:9;" aria-controls="home" role="tab" data-toggle="tab"><span class="badge">@(Model.Cipl != 0 ? Model.Cipl : "")</span>&nbsp;CIPL</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-gr" style="z-index:8;" aria-controls="gr" role="tab" data-toggle="tab"><span class="badge">@(Model.Gr != 0 ? Model.Gr : "")</span>&nbsp;Receipt Goods</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-cargo" style="z-index:7;" aria-controls="profile" role="tab" data-toggle="tab"> <span class="badge">@(Model.Cl != 0 ? Model.Cl : "")</span>&nbsp;Cargo</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-si" style="z-index:6;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Si != 0 ? Model.Si : "")</span>&nbsp;Shipping Instruction</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-npe_peb" style="z-index:5;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Npe != 0 ? Model.Npe : "")</span>&nbsp;PEB & NPE</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-bl_awb" style="z-index:4;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge">@(Model.Bl != 0 ? Model.Bl : "")</span>&nbsp;BL / AWB</a>
-            </li>
-            <li role="presentation" class="nav-item">
-                <a href="#tab-task-delegation" style="z-index:4;" aria-controls="messages" role="tab" data-toggle="tab"> <span class="badge"></span>&nbsp;Delegation</a>
-            </li>
-            @if (ViewBag.IsImexUser)
-            {
-            <li role="presentation">
-                <a href="#tab-task-requestForChange" style="z-index:3;" aria-controls="test" role="tab" data-toggle="tab"> <span class="badge"></span>&nbsp;Request for change</a>
-            </li>
-            }
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content tabs-custom tab-space tab-subcategories">
-            <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
-                @Html.Partial("~/Views/EMCS/TaskCipl.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-gr">
-                @Html.Partial("~/Views/EMCS/TaskGr.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-cargo">
-                @Html.Partial("~/Views/EMCS/TaskCl.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-si">
-                @Html.Partial("~/Views/EMCS/TaskSi.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-npe_peb">
-                @Html.Partial("~/Views/EMCS/TaskNpePeb.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-bl_awb">
-                @Html.Partial("~/Views/EMCS/TaskBlAwb.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-delegation">
-                @Html.Partial("~/Views/EMCS/TaskDelegation.cshtml")
-            </div>
-            @if (ViewBag.IsImexUser)
-            {
-                <div role="tabpanel" class="tab-pane" id="tab-task-requestForChange">
-                    @Html.Partial("~/Views/EMCS/TaskRequestForChange.cshtml")
-                </div>
-            }
-            </div>
-    </div>
->>>>>>> 639d8d0 (Intial commit)
 </div>
 @*</div>*@
 
 @Html.Partial("MytaskModal")
 
-<<<<<<< HEAD
 @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
 
 @section scripts
@@ -227,20 +142,3 @@
     }, 500);
   });
 </script>
-=======
-@section scripts
-{
-    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/Mytask.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCipl.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskGr.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCl.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskSi.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskBlAwb.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskDelegation.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskRequestForChangeHistory.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
-
-}
->>>>>>> 639d8d0 (Intial commit)
