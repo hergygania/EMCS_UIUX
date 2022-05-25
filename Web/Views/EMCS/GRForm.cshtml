@@ -1,5 +1,6 @@
 ﻿@model  App.Web.Models.EMCS.GoodReceiveModel
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
     Layout = "~/Views/EMCS/_Layout.cshtml";

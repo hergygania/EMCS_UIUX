@@ -1,0 +1,204 @@
+﻿<error errorId="8530f669-40ac-4701-b848-9e83f3b952d3" application="/LM/W3SVC/2/ROOT" host="DESKTOP-CDBF09D" type="System.Xml.XmlException" message="The 'meta' start tag on line 3 position 4 does not match the end tag of 'head'. Line 16, position 12." source="System.Xml" detail="System.Xml.XmlException: The 'meta' start tag on line 3 position 4 does not match the end tag of 'head'. Line 16, position 12.&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.Throw(Exception e)&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.Throw(String res, String[] args)&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.ThrowTagMismatch(NodeData startTag)&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.ParseEndElement()&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.ParseElementContent()&#xD;&#xA;   at System.Xml.XmlTextReaderImpl.Read()&#xD;&#xA;   at System.Xml.Linq.XContainer.ReadContentFrom(XmlReader r)&#xD;&#xA;   at System.Xml.Linq.XContainer.ReadContentFrom(XmlReader r, LoadOptions o)&#xD;&#xA;   at System.Xml.Linq.XDocument.Load(XmlReader reader, LoadOptions options)&#xD;&#xA;   at System.Xml.Linq.XDocument.Parse(String text, LoadOptions options)&#xD;&#xA;   at System.Xml.Linq.XDocument.Parse(String text)&#xD;&#xA;   at App.Web.Controllers.EMCS.EmcsController.GetRssSource(String url) in C:\project\EMCS_New_Git\Web\Controllers\EMCS\Dashboard.cs:line 97&#xD;&#xA;   at App.Web.Controllers.EMCS.EmcsController.GetRss() in C:\project\EMCS_New_Git\Web\Controllers\EMCS\Dashboard.cs:line 66&#xD;&#xA;   at App.Web.Controllers.EMCS.EmcsController.Dashboard() in C:\project\EMCS_New_Git\Web\Controllers\EMCS\Dashboard.cs:line 24&#xD;&#xA;   at lambda_method(Closure , ControllerBase , Object[] )&#xD;&#xA;   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;BeginInvokeSynchronousActionMethod&gt;b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3d()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecuteCore&gt;b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.&lt;BeginExecute&gt;b__15(IAsyncResult asyncResult, Controller controller)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.&lt;BeginProcessRequest&gt;b__5(IAsyncResult asyncResult, ProcessRequestState innerState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="XUPJ21WDN" time="2022-05-24T06:32:13.5346091Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,ms;q=0.5&#xD;&#xA;HTTP_COOKIE:_ga=GA1.1.1038271149.1632736208; trakindo__pis_localhost1400_202204=1B90FEA34D58D1E57EFFFE37378AF0A3528F960A0DE37E3BFA07A1C5FF3985DEE63D1CB23554C7E577367181BE62DDCD3D167585F859E9CCEB47F10A60C5B7B16D4192A8690A5B0D9D3D52328619FB2D4EB496045A141EDAD97180984BA3CF3848ABB8840D98EBD8B4F203A25E4F4E9C7A76C0679AED244068C2F8ACC8109BB3B493B3113E72212EA6A1FF0AE36DB619F6AB85CBDE8B502CA557B4206E9B9D9195CECEBAE79FCFF48CB30B535C516B1DAB6DC2BF31C1F021346C176292BC03CA786F987E9E8547F3304B35145F62B0AC7BA1A58EF74BEE1D41B229837BCCD3E57A3C72AA356737371224FE8F68C01D4BA1C37D90E5D1C4C59F1A6C1E4D02D44B899C0652C0237EC2BCDC97A558090C0733839C716AB62E4D378A2D76CF95BD22A05B67F5818E9DFA8D971060B9CB9A61BB6C41F7C5F1054C64069CEF6C3AC1447FA187BB18C8519E345F5D0F9628CD2CAB41F80E9371BAC72410BD06972C9A69FB9D206A17CAFF370277F202CFFADB98; ASP.NET_SessionId=r2wfj2vqeq22owxxb2y0vkmy; __RequestVerificationToken=gDLaIYqCkDFGS2IBNt4mlk7Up4JKXi83SDhVX8jYY5K92y-8G4q9Ex4gQGF_EnfoVfUWmrl5yDZnLAtHDD39L3FfSJqmC3F5pYxvsV7Yk5U1; .ASPXAUTH=586423C4F5F453EF0D2AC2414DEE98E48401FC28B5D36C400209FB2986571127D0F8A834C9063EFA6736531BCC2E317D670F38C71E2956D3B55207869504DA4CF0636830647A3194555C240F2E22050740F869A7C5AE30A13AFB850B3ED87DFC; trakindo__pis_localhost1400_202205=5D097D8C6D9FB02ECEA79AB3753704DF28A8232CF3A7F8DD97563DB2521EB400DF72AB17D622991A1C9207EC6C227F13CBFE3A4EBCBFD391C629C6324DB39B36429BC245AF8EEF873E2FDD09C62D776C0142EA177338CFD44D2552925DF7F71B2CB55E100BFBDD5E0413B18E5A561F05409690E357B147E3C304C06867197DF4D2A116859AD1869E26089DFC06044010EAFC8FBB1E9E1F1BC84243F44CD96AECB96BB79D78D65876E66306C78352690D9CB140D9B668A84FFE9B0D3AE0DEF963A0226172DC6536C9BFEE82FFA5416AB9E447964F920A1E8D54C9901A816A2E635245A52E47A20A474C3E396FD5277F97047FF9346B16DD8BCB1CBBFC1909A182A3476C2680D189373BCD2DACAD7561137480B89FA2B78C83DA3A6789DDD751E7B77A6057A102612618181ACD1D96D2474BE8991F796044E75B6086F4CFFF65C80758FE34801359809804F17A41DB436A5E0FEC15DA34E50669B20AC8D923D58F4D4CC649E9755835A98329BBB1512299; nav-item=1&#xD;&#xA;HTTP_HOST:localhost:1400&#xD;&#xA;HTTP_REFERER:http://localhost:1400/&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36&#xD;&#xA;HTTP_SEC_CH_UA:&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;&#xD;&#xA;HTTP_SEC_CH_UA_MOBILE:?0&#xD;&#xA;HTTP_SEC_CH_UA_PLATFORM:&quot;Windows&quot;&#xD;&#xA;HTTP_UPGRADE_INSECURE_REQUESTS:1&#xD;&#xA;HTTP_SEC_FETCH_SITE:same-origin&#xD;&#xA;HTTP_SEC_FETCH_MODE:navigate&#xD;&#xA;HTTP_SEC_FETCH_USER:?1&#xD;&#xA;HTTP_SEC_FETCH_DEST:document&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,ms;q=0.5&#xD;&#xA;Cookie: _ga=GA1.1.1038271149.1632736208; trakindo__pis_localhost1400_202204=1B90FEA34D58D1E57EFFFE37378AF0A3528F960A0DE37E3BFA07A1C5FF3985DEE63D1CB23554C7E577367181BE62DDCD3D167585F859E9CCEB47F10A60C5B7B16D4192A8690A5B0D9D3D52328619FB2D4EB496045A141EDAD97180984BA3CF3848ABB8840D98EBD8B4F203A25E4F4E9C7A76C0679AED244068C2F8ACC8109BB3B493B3113E72212EA6A1FF0AE36DB619F6AB85CBDE8B502CA557B4206E9B9D9195CECEBAE79FCFF48CB30B535C516B1DAB6DC2BF31C1F021346C176292BC03CA786F987E9E8547F3304B35145F62B0AC7BA1A58EF74BEE1D41B229837BCCD3E57A3C72AA356737371224FE8F68C01D4BA1C37D90E5D1C4C59F1A6C1E4D02D44B899C0652C0237EC2BCDC97A558090C0733839C716AB62E4D378A2D76CF95BD22A05B67F5818E9DFA8D971060B9CB9A61BB6C41F7C5F1054C64069CEF6C3AC1447FA187BB18C8519E345F5D0F9628CD2CAB41F80E9371BAC72410BD06972C9A69FB9D206A17CAFF370277F202CFFADB98; ASP.NET_SessionId=r2wfj2vqeq22owxxb2y0vkmy; __RequestVerificationToken=gDLaIYqCkDFGS2IBNt4mlk7Up4JKXi83SDhVX8jYY5K92y-8G4q9Ex4gQGF_EnfoVfUWmrl5yDZnLAtHDD39L3FfSJqmC3F5pYxvsV7Yk5U1; .ASPXAUTH=586423C4F5F453EF0D2AC2414DEE98E48401FC28B5D36C400209FB2986571127D0F8A834C9063EFA6736531BCC2E317D670F38C71E2956D3B55207869504DA4CF0636830647A3194555C240F2E22050740F869A7C5AE30A13AFB850B3ED87DFC; trakindo__pis_localhost1400_202205=5D097D8C6D9FB02ECEA79AB3753704DF28A8232CF3A7F8DD97563DB2521EB400DF72AB17D622991A1C9207EC6C227F13CBFE3A4EBCBFD391C629C6324DB39B36429BC245AF8EEF873E2FDD09C62D776C0142EA177338CFD44D2552925DF7F71B2CB55E100BFBDD5E0413B18E5A561F05409690E357B147E3C304C06867197DF4D2A116859AD1869E26089DFC06044010EAFC8FBB1E9E1F1BC84243F44CD96AECB96BB79D78D65876E66306C78352690D9CB140D9B668A84FFE9B0D3AE0DEF963A0226172DC6536C9BFEE82FFA5416AB9E447964F920A1E8D54C9901A816A2E635245A52E47A20A474C3E396FD5277F97047FF9346B16DD8BCB1CBBFC1909A182A3476C2680D189373BCD2DACAD7561137480B89FA2B78C83DA3A6789DDD751E7B77A6057A102612618181ACD1D96D2474BE8991F796044E75B6086F4CFFF65C80758FE34801359809804F17A41DB436A5E0FEC15DA34E50669B20AC8D923D58F4D4CC649E9755835A98329BBB1512299; nav-item=1&#xD;&#xA;Host: localhost:1400&#xD;&#xA;Referer: http://localhost:1400/&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36&#xD;&#xA;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;&#xD;&#xA;sec-ch-ua-mobile: ?0&#xD;&#xA;sec-ch-ua-platform: &quot;Windows&quot;&#xD;&#xA;Upgrade-Insecure-Requests: 1&#xD;&#xA;Sec-Fetch-Site: same-origin&#xD;&#xA;Sec-Fetch-Mode: navigate&#xD;&#xA;Sec-Fetch-User: ?1&#xD;&#xA;Sec-Fetch-Dest: document&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\project\EMCS_New_Git\Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/EMCS/Dashboard" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\project\EMCS_New_Git\Web\EMCS\Dashboard" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="51818" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/EMCS/Dashboard" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="1400" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/EMCS/Dashboard" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,fr;q=0.6,ms;q=0.5" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="_ga=GA1.1.1038271149.1632736208; trakindo__pis_localhost1400_202204=1B90FEA34D58D1E57EFFFE37378AF0A3528F960A0DE37E3BFA07A1C5FF3985DEE63D1CB23554C7E577367181BE62DDCD3D167585F859E9CCEB47F10A60C5B7B16D4192A8690A5B0D9D3D52328619FB2D4EB496045A141EDAD97180984BA3CF3848ABB8840D98EBD8B4F203A25E4F4E9C7A76C0679AED244068C2F8ACC8109BB3B493B3113E72212EA6A1FF0AE36DB619F6AB85CBDE8B502CA557B4206E9B9D9195CECEBAE79FCFF48CB30B535C516B1DAB6DC2BF31C1F021346C176292BC03CA786F987E9E8547F3304B35145F62B0AC7BA1A58EF74BEE1D41B229837BCCD3E57A3C72AA356737371224FE8F68C01D4BA1C37D90E5D1C4C59F1A6C1E4D02D44B899C0652C0237EC2BCDC97A558090C0733839C716AB62E4D378A2D76CF95BD22A05B67F5818E9DFA8D971060B9CB9A61BB6C41F7C5F1054C64069CEF6C3AC1447FA187BB18C8519E345F5D0F9628CD2CAB41F80E9371BAC72410BD06972C9A69FB9D206A17CAFF370277F202CFFADB98; ASP.NET_SessionId=r2wfj2vqeq22owxxb2y0vkmy; __RequestVerificationToken=gDLaIYqCkDFGS2IBNt4mlk7Up4JKXi83SDhVX8jYY5K92y-8G4q9Ex4gQGF_EnfoVfUWmrl5yDZnLAtHDD39L3FfSJqmC3F5pYxvsV7Yk5U1; .ASPXAUTH=586423C4F5F453EF0D2AC2414DEE98E48401FC28B5D36C400209FB2986571127D0F8A834C9063EFA6736531BCC2E317D670F38C71E2956D3B55207869504DA4CF0636830647A3194555C240F2E22050740F869A7C5AE30A13AFB850B3ED87DFC; trakindo__pis_localhost1400_202205=5D097D8C6D9FB02ECEA79AB3753704DF28A8232CF3A7F8DD97563DB2521EB400DF72AB17D622991A1C9207EC6C227F13CBFE3A4EBCBFD391C629C6324DB39B36429BC245AF8EEF873E2FDD09C62D776C0142EA177338CFD44D2552925DF7F71B2CB55E100BFBDD5E0413B18E5A561F05409690E357B147E3C304C06867197DF4D2A116859AD1869E26089DFC06044010EAFC8FBB1E9E1F1BC84243F44CD96AECB96BB79D78D65876E66306C78352690D9CB140D9B668A84FFE9B0D3AE0DEF963A0226172DC6536C9BFEE82FFA5416AB9E447964F920A1E8D54C9901A816A2E635245A52E47A20A474C3E396FD5277F97047FF9346B16DD8BCB1CBBFC1909A182A3476C2680D189373BCD2DACAD7561137480B89FA2B78C83DA3A6789DDD751E7B77A6057A102612618181ACD1D96D2474BE8991F796044E75B6086F4CFFF65C80758FE34801359809804F17A41DB436A5E0FEC15DA34E50669B20AC8D923D58F4D4CC649E9755835A98329BBB1512299; nav-item=1" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:1400" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:1400/" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36" />
+    </item>
+    <item name="HTTP_SEC_CH_UA">
+      <value string="&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_MOBILE">
+      <value string="?0" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_PLATFORM">
+      <value string="&quot;Windows&quot;" />
+    </item>
+    <item name="HTTP_UPGRADE_INSECURE_REQUESTS">
+      <value string="1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_SITE">
+      <value string="same-origin" />
+    </item>
+    <item name="HTTP_SEC_FETCH_MODE">
+      <value string="navigate" />
+    </item>
+    <item name="HTTP_SEC_FETCH_USER">
+      <value string="?1" />
+    </item>
+    <item name="HTTP_SEC_FETCH_DEST">
+      <value string="document" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="_ga">
+      <value string="GA1.1.1038271149.1632736208" />
+    </item>
+    <item name="trakindo__pis_localhost1400_202204">
+      <value string="1B90FEA34D58D1E57EFFFE37378AF0A3528F960A0DE37E3BFA07A1C5FF3985DEE63D1CB23554C7E577367181BE62DDCD3D167585F859E9CCEB47F10A60C5B7B16D4192A8690A5B0D9D3D52328619FB2D4EB496045A141EDAD97180984BA3CF3848ABB8840D98EBD8B4F203A25E4F4E9C7A76C0679AED244068C2F8ACC8109BB3B493B3113E72212EA6A1FF0AE36DB619F6AB85CBDE8B502CA557B4206E9B9D9195CECEBAE79FCFF48CB30B535C516B1DAB6DC2BF31C1F021346C176292BC03CA786F987E9E8547F3304B35145F62B0AC7BA1A58EF74BEE1D41B229837BCCD3E57A3C72AA356737371224FE8F68C01D4BA1C37D90E5D1C4C59F1A6C1E4D02D44B899C0652C0237EC2BCDC97A558090C0733839C716AB62E4D378A2D76CF95BD22A05B67F5818E9DFA8D971060B9CB9A61BB6C41F7C5F1054C64069CEF6C3AC1447FA187BB18C8519E345F5D0F9628CD2CAB41F80E9371BAC72410BD06972C9A69FB9D206A17CAFF370277F202CFFADB98" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="r2wfj2vqeq22owxxb2y0vkmy" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="gDLaIYqCkDFGS2IBNt4mlk7Up4JKXi83SDhVX8jYY5K92y-8G4q9Ex4gQGF_EnfoVfUWmrl5yDZnLAtHDD39L3FfSJqmC3F5pYxvsV7Yk5U1" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="586423C4F5F453EF0D2AC2414DEE98E48401FC28B5D36C400209FB2986571127D0F8A834C9063EFA6736531BCC2E317D670F38C71E2956D3B55207869504DA4CF0636830647A3194555C240F2E22050740F869A7C5AE30A13AFB850B3ED87DFC" />
+    </item>
+    <item name="trakindo__pis_localhost1400_202205">
+      <value string="5D097D8C6D9FB02ECEA79AB3753704DF28A8232CF3A7F8DD97563DB2521EB400DF72AB17D622991A1C9207EC6C227F13CBFE3A4EBCBFD391C629C6324DB39B36429BC245AF8EEF873E2FDD09C62D776C0142EA177338CFD44D2552925DF7F71B2CB55E100BFBDD5E0413B18E5A561F05409690E357B147E3C304C06867197DF4D2A116859AD1869E26089DFC06044010EAFC8FBB1E9E1F1BC84243F44CD96AECB96BB79D78D65876E66306C78352690D9CB140D9B668A84FFE9B0D3AE0DEF963A0226172DC6536C9BFEE82FFA5416AB9E447964F920A1E8D54C9901A816A2E635245A52E47A20A474C3E396FD5277F97047FF9346B16DD8BCB1CBBFC1909A182A3476C2680D189373BCD2DACAD7561137480B89FA2B78C83DA3A6789DDD751E7B77A6057A102612618181ACD1D96D2474BE8991F796044E75B6086F4CFFF65C80758FE34801359809804F17A41DB436A5E0FEC15DA34E50669B20AC8D923D58F4D4CC649E9755835A98329BBB1512299" />
+    </item>
+    <item name="nav-item">
+      <value string="1" />
+    </item>
+  </cookies>
+</error>

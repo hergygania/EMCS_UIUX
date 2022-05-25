@@ -1,5 +1,6 @@
 ﻿@model dynamic
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "My Task";
 }
 @*@Styles.Render("~/Content/EMCS/FontAwesome/css/all.css")*@
@@ -16,6 +17,17 @@
     }
     tr:nth-child(even) {
         background-color: transparent !important;
+    }
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .dropdown-menu.dropdown-menu-right {
+        left: 0 !important;
+    }
+
+    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
+        margin-left: 0 !important;
     }
 </style>
 <div class="col-md-12">
