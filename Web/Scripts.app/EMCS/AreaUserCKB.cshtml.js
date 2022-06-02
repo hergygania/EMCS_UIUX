@@ -1,4 +1,4 @@
-﻿var $table = $("#tableAreaUserCKB");
+﻿﻿var $table = $("#tableAreaUserCKB");
 var $searchInput = $("#txtSearchData").val();
 var $AllowDelete = $("#AllowDelete").val();
 var $AllowUpdate = $("#AllowUpdate").val();
@@ -6,7 +6,6 @@ var $AllowUpdate = $("#AllowUpdate").val();
 function operateFormatter(options) {
     const btn = [];
 
-<<<<<<< HEAD
     btn.push('<div class="">');
     if (options.Edit === true)
         btn.push(
@@ -14,15 +13,6 @@ function operateFormatter(options) {
     if (options.Delete === true)
         btn.push(
             '<button type="button" class="btn btn-sm btn-link btn-danger remove" title="Delete"><i class="tim-icons icon-simple-remove"></i></button>');
-=======
-    btn.push('<div class="btn-group">');
-    if (options.Edit === true)
-        btn.push(
-            '<button type="button" class="btn btn-sm btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
-    if (options.Delete === true)
-        btn.push(
-            '<button type="button" class="btn btn-sm btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
->>>>>>> 639d8d0 (Intial commit)
     btn.push("</div>");
 
     return btn.join("");

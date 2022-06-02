@@ -87,25 +87,23 @@
             align-items: center;
             margin: 18px 0 36px 0;
         }
-        .ul-bars li{
-            color: #bdbdbd !important;
-        }
-        .ul-sidebars {
-            list-style: none;
-            font-size: 18px;
-            padding: 0;
-            margin: 0 25px; 
-        }
-        .ul-sidebars li{
-            margin: 30px 0;
-        }   
-        .text-logo{
-            color: #1d253b;
+
+            .ul-bars li {
+                color: #bdbdbd !important;
+            }
+
+        .text-logo {
+            color: rgba(255, 255, 255, 0.8);
             margin-left: 8px;
             font-size: 16px;
             font-weight: 500;
         }
-        .main-panel{
+
+        .white-content .text-logo {
+            color: #1d253b;
+        }
+
+        .main-panel {
             border-top: none !important;
         }
         .main-panel > .content {
@@ -157,9 +155,65 @@
             background: #fff !important;
         }
         .white-content .card {
-            box-shadow: 0px 6px 16px -8px #00000040;
-            border: 1px solid #0000000f;
+            box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+            border: 1px solid rgba(26, 54, 126, 0.125);
         }
+        form .card {
+            flex-direction: row !important;
+            padding: 30px 18px;
+            margin: 10px 40px 10px 40px;
+        }
+        .box {
+            background: #27293d;
+            box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+            border: 1px solid rgba(26, 54, 126, 0.125);
+            padding: 30px 18px;
+            border-radius: 6px;
+        }
+        .white-content .box{
+            background: #fff;
+        }
+        .sidebar{
+            box-shadow: none !important;
+        }
+        .sidebar-wrapper {
+            background: #1e1e2d;
+        }
+        .white-content .sidebar-wrapper{
+            background: #fff;
+        }
+        .breadcrumb{
+            margin-bottom: 2rem !important;
+        }
+        .hide {
+            display: none !important;
+        }
+        .dropzone {
+            font-size: inherit;
+            background: #e6e6e6 !important;
+            border: 1px solid #dadada !important;
+            border-radius: 10px !important;
+            box-shadow: 0 1px 20px 0px rgb(0 0 0 / 10%);
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .mt-30{
+            margin-top: 30px;
+        }
+        .has-success:after {
+            right: 75px !important;
+            top: 34px !important;
+            font-size: 14px !important;
+            color: #13c272 !important;
+        }
+        .has-success .control-label{
+            color: #13c272 !important;
+        }
+        .has-error .control-label {
+            color: #ff3535 !important;
+        }
+
         /*====indra added====*/
         .sidebars {
             width: 95px;
@@ -169,9 +223,9 @@
             background: linear-gradient(0deg, #fff 0%, #fff 100%) !important;
         }
         .btn-warning {
-            background: #fe9d00 !important;
+            /*background: #fe9d00 !important;
             background-image: linear-gradient(to bottom left, #cacaca, #fe9d00, #fe9d00) !important;
-            background-color: #fe9d00 !important;
+            background-color: #fe9d00 !important;*/
         }
         .page-item.active .page-link {
             background-color: #fe9d00 !important;
@@ -180,12 +234,24 @@
         .white-content .sidebar {
             box-shadow: 0 2px 22px 0 rgb(0 0 0 / 0%), 0 4px 20px 0 rgb(0 0 0 / 0%) !important;
         }
+        textarea.form-control {
+            border: 1px solid rgba(29, 37, 59, 0.5) !important;
+            border-radius: 0.4285rem !important;
+        }
+        .double-input {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="~/Content/Assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="~/Content/Assets/css/black-dashboard.css" rel="stylesheet" />
-    <link href="~/Content/Assets/demo/demo.css" rel="stylesheet" />
+    <link href="/Content/select2.min.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-timepicker.css" rel="stylesheet" />
+    <link href="/Content/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-datepicker.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />*@
     @*@Styles.Render("~/Content/css");*@
     @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
@@ -264,6 +330,7 @@
                 </div>
             </div>
         </header>
+
         <div class="sidebar">
             @*@if(User.Identity.IsAuthenticated)
                 {*@
@@ -298,11 +365,32 @@
       document.documentElement.classList.remove('dark')
     }
 
-    $(function () {
-      /*
-      * Sidebar navigation
-      */
-      $("#main-container").toggleClass(localStorage.sidebarCollapsed);
+    <script src="~/Content/Assets/js/core/popper.min.js"></script>
+    <script src="~/Content/Assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/moment.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="~/Content/Assets/js/plugins/sweetalert2.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.tablesorter.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.validate.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-selectpicker.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/Assets/js/plugins/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/daygrid.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/timegrid.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/interaction.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery-jvectormap.js"></script>
+    <script src="~/Content/Assets/js/plugins/nouislider.min.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
+    <script src="~/Content/Assets/js/plugins/chartjs.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-notify.js"></script>
+    <script src="~/Content/Assets/js/black-dashboard.min.js"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
 
       $("#sidebar-toggle").on("click", function (e) {
         e.preventDefault();

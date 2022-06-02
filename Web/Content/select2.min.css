@@ -24,21 +24,13 @@
     box-sizing:border-box;
     cursor:pointer;
     display:block;
-<<<<<<< HEAD
     height:32px;
-=======
-    height:28px;
->>>>>>> 639d8d0 (Intial commit)
     user-select:none;
     -webkit-user-select:none;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
     display:block;
-<<<<<<< HEAD
     padding-left:18px;
-=======
-    padding-left:8px;
->>>>>>> 639d8d0 (Intial commit)
     padding-right:20px;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -158,16 +150,10 @@
     width:1px;
 }
 .select2-container--default .select2-selection--single {
-<<<<<<< HEAD
     background-color: #fff;
     border: 1px solid #aaa;
     border-radius: 0.4285rem;
     p
-=======
-    background-color:#fff;
-    border:1px solid #aaa;
-    border-radius:4px;
->>>>>>> 639d8d0 (Intial commit)
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color:#444;
@@ -219,26 +205,16 @@
     border-width:0 4px 5px 4px;
 }
 .select2-container--default .select2-selection--multiple {
-<<<<<<< HEAD
     background-color: white;
     border: 1px solid #908F8F;
     cursor: text;
     border-radius: 0.4285rem;
-=======
-    background-color:white;
-    border:1px solid #908F8F;
-    cursor:text;
->>>>>>> 639d8d0 (Intial commit)
 }
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
     box-sizing:border-box;
     list-style:none;
     margin:0;
-<<<<<<< HEAD
     padding:0 16px;
-=======
-    padding:0 5px;
->>>>>>> 639d8d0 (Intial commit)
     width:100%;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__placeholder {

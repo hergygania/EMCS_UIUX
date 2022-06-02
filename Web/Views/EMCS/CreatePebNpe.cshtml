@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.PebNpeModel
+﻿﻿@model  App.Web.Models.EMCS.PebNpeModel
 @{
     ViewBag.Title = "Create PEB NPE";
     Layout = "~/Views/EMCS/_Layout.cshtml";
@@ -374,7 +374,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/mytask/PebNpe.cshtml.js")"></script>
     <script>
-        $('#DraftDocumentNpePeb').on('click', function () {           
+        $('#DraftDocumentNpePeb').on('click', function () {
             $.ajax({
                 url: '/EMCS/DraftNpePeb',
                 type: 'POST',
@@ -401,17 +401,8 @@
                     DescriptionPassword: $('#NpeDescPass').val(),
                     FreightPayment: removeformatCurrency($('#NpeFreightPayment').val()), /*$('#NpeFreightPayment').val(),*/
                     InsuranceAmount: removeformatCurrency($('#NpeInsuranceAmount').val()), /*$('#NpeInsuranceAmount').val(),*/
-<<<<<<< HEAD
-<<<<<<< HEAD
                     Status: $(this).val(),
                     NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
-=======
-                    Status: $(this).val()
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    Status: $(this).val(),
-                    NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 },
                 cache: false,
                 async: false,
@@ -434,8 +425,6 @@
 
         });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         $("#RequestForChange").click(function () {
             Swal.fire({
                 title: 'Request this change?',
@@ -523,12 +512,7 @@
             });
         });
 
-=======
->>>>>>> 639d8d0 (Intial commit)
         $('#ApproveNpePeb').on('click', function () {
-=======
-        $('#ApproveNpePeb').on('click', function () {          
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             var isValid = $('#FormUploadNpePeb').valid();
             if (isValid) {
                 Swal.fire({
@@ -566,17 +550,8 @@
                                 DescriptionPassword: $('#NpeDescPass').val(),
                                 FreightPayment: removeformatCurrency($('#NpeFreightPayment').val()), /*$('#NpeFreightPayment').val(),*/
                                 InsuranceAmount: removeformatCurrency($('#NpeInsuranceAmount').val()), /*$('#NpeInsuranceAmount').val(),*/
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 Status: $(this).val(),
                                 NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
-=======
-                                Status: $(this).val()
->>>>>>> 639d8d0 (Intial commit)
-=======
-                                Status: $(this).val(),
-                                NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                             },
                             cache: false,
                             async: false,
@@ -608,7 +583,6 @@
 
 
     </script>
-<<<<<<< HEAD
 }
 
 <script>
@@ -634,6 +608,3 @@
         });
     });
 </script>
-=======
-}
->>>>>>> 639d8d0 (Intial commit)

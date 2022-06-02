@@ -1,5 +1,4 @@
-﻿@{
-<<<<<<< HEAD
+﻿﻿@{
     Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Master Area User CKB";
     Layout = "~/Views/EMCS/_Layout.cshtml";
@@ -11,14 +10,6 @@
 
 @Styles.Render("~/Content/EMCS/Custom.css")
 
-=======
-    ViewBag.Title = "Master Area User CKB";
-}
-
-@using System.Web.Mvc
-@*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
-
->>>>>>> 639d8d0 (Intial commit)
 <script type="text/javascript">
     var allowCreate = "@(ViewBag.allowCreate)";
     var allowUpdate = "@(ViewBag.allowUpdate)";
@@ -54,11 +45,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-<<<<<<< HEAD
                             <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/AreaUserCKBCreate" id="btnCreate">
-=======
-                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/AreaUserCKBCreate" id="btnCreate">
->>>>>>> 639d8d0 (Intial commit)
                                 <i class="fa fa-plus"></i> Add New
                             </a>
                         }
@@ -77,11 +64,7 @@
     <i class="fa fa-edit"></i> Update Area CKB
 </a>
 
-<<<<<<< HEAD
 <div id='myModalPlace' class='modal'>
-=======
-<div id='myModalPlace' class='modal fade in'>
->>>>>>> 639d8d0 (Intial commit)
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>
@@ -95,4 +78,3 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/AreaUserCKB.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
-
