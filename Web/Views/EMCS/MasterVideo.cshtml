@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Master Video";
+    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 
 @using System.Web.Mvc
@@ -9,6 +10,8 @@
     var allowUpdate = "@(ViewBag.allowUpdate)";
     var allowDelete = "@(ViewBag.allowDelete)";
 </script>
+
+@Styles.Render("~/Content/EMCS/Custom.css")
 
 @{
     if (ViewBag.AllowDelete)
@@ -32,15 +35,15 @@
 </style>
 
 
-<div class="box box-warning">
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
+<div class="col-md-12">
+    <div class="box box-warning">
+        <div class="box-body">
+            <div class="">
                 <div class="toolbar">
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/VideoCreate" id="btnCreate">
+                            <a class="btn btn-success btn-round" data-modal="" href="/EMCS/VideoCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add Video
                             </a>
                         }

@@ -1,9 +1,12 @@
 ﻿@{
     ViewBag.Title = "Master Area User CKB";
+    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 
 @using System.Web.Mvc
 @*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
+
+@Styles.Render("~/Content/EMCS/Custom.css")
 
 <script type="text/javascript">
     var allowCreate = "@(ViewBag.allowCreate)";
@@ -40,7 +43,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/AreaUserCKBCreate" id="btnCreate">
+                            <a class="btn btn-success btn-round" data-modal="" href="/EMCS/AreaUserCKBCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add New
                             </a>
                         }

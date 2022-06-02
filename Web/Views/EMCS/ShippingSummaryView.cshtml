@@ -3,16 +3,17 @@
     ViewBag.Title = "View Shipping Summary";
     ViewBag.Page = "ss";
     ViewBag.Id = @ViewBag.CargoID.ToString();
+    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
 
-<div class="row">
+<div class="col-md-12">
     <div class="col-md-12">
         @Html.Partial("~/Views/EMCS/Wizard.cshtml")
     </div>
-    <div style="width:900px !important;margin:100px auto;">
+    <div class="col-md-12 mt-5">
         <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -23,17 +24,18 @@
             <!-- Tab panes -->
             <div class="tab-content tabs-custom">
                 <div role="tabpanel" class="tab-pane active" id="invoice">
+                    <div class="box">
                     <div class="row" style="margin-top:15px;margin-bottom:10px;padding-left:10px">
                         <div class="col-md-12">
                             <strong>
                                 @*<a class="btn btn-info" href="~/EMCS/ReportSS?CLId=@ViewBag.CargoID&reportType=SS"><i class="fa fa-file-pdf-o"></i> Export SS</a>*@
-                                <a class="btn btn-info" href="~/download/DownloadSs/@ViewBag.CargoID"><i class="fa fa-file-pdf-o"></i> Export SS</a>
+                                <a class="btn btn-success btn-round" href="~/download/DownloadSs/@ViewBag.CargoID"><i class="fa fa-file-pdf-o"></i> Export SS</a>
 
                             </strong>
                         </div>
                     </div>
 
-                    <div style="padding:10px">
+                    <div style="width: 950px !important; border: 1px solid; border-color: darkgray; padding: 10px 10px 10px 10px; margin: 20px auto;">
                         <table class="table-document">
                             <tr>
                                 <td style="width:3%"></td>
@@ -258,6 +260,7 @@
                                 <td><img src="@ViewBag.QrCodeUrlSS" height="150px" width="150px" /></td>
                             </tr>
                         </table>
+                    </div>
                     </div>
                     
                 </div>
