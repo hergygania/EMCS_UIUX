@@ -219,6 +219,10 @@
             color: #ff3535 !important;
         }
 
+        .sidebar:hover{
+            top: -70px !important;
+        }
+
         /*====indra added====*/
         .sidebars {
             display: block;
@@ -231,9 +235,9 @@
             border-right: 1px solid #00000010;
         }
         .sidebar, .off-canvas-sidebar {
-            margin-left: 7px !important;
+            left: -12px !important;
             top: -12px !important;
-            background: linear-gradient(0deg, #fff 0%, #fff 100%) !important;
+            background: #fff !important;
         }
         .btn-warning {
             /*background: #fe9d00 !important;
@@ -263,6 +267,10 @@
             flex-wrap: wrap;
             align-items: stretch;
         }
+        .collapse.in{
+            display: block !important;
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -312,29 +320,12 @@
         </header>
 
         <div class="sidebar">
-            @*@if(User.Identity.IsAuthenticated)
-                {*@
-            <div id="aass" class="sidebar-wrapper">
+
+            <div class="sidebar-wrapper ps ps--active-x ps--active-y">
+
                 @Html.Partial("_Menu")
-                <!--<div id="menu-content-neo" class="sidebar iin" style="background-color:#000000;">
-                <div class="menu-enhance">-->
-                @*@if(userType == "ext-part")
-                    {
-                        @Html.Partial("_Menu.ext.part")
-                    }
-                    else if(userType == "ext-imex")
-                    {
-                        @Html.Partial("_Menu.ext.imex")
-                    }
-                    else*@
-                @*if(userType == "internal")
-                    {*@
-                @*}*@
-                <!--</div>
-                </div>-->
-                @*<div id="menu-container-neo"></div>*@
+                
             </div>
-            @*}*@
 
         </div>
 
