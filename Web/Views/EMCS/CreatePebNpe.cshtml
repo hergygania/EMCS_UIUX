@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4 required">No Aju PEB</label>
                                             <div class="col-xs-8 col-lg-10">
-                                                10                                          @Html.TextBoxFor(m => m.NpePeb.AjuNumber, new { @class = "form-control required", @id = "AjuNumber", @placeholder = "Format : xxxxxx-xxxxxx-xxxxxxxx-xxxxxx", @name = "AjuNo" })
+                                                @Html.TextBoxFor(m => m.NpePeb.AjuNumber, new { @class = "form-control required", @id = "AjuNumber", @placeholder = "Format : xxxxxx-xxxxxx-xxxxxxxx-xxxxxx", @name = "AjuNo" })
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -279,10 +279,10 @@
                                         <iframe title="Document Show" id="DocumentShow" src="" style="width: 100%; height: 550px;"></iframe>
                                     </div>
                                 </div>
-                                <div class="box-footer text-right">
-                                    <a href="~/EMCS/MyTask" class="btn btn-default" style="min-width:120px;"><i class="fa fa-chevron-left"></i>&nbsp;Back</a>
-                                    <button id="DraftDocumentNpePeb" type="button" class="btn btn-info" value="Draft" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Draft</button>
-                                    <button id="ApproveNpePeb" type="button" class="btn btn-success" value="Submit" style="min-width:120px;"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                                <div class="box-footer text-right mt-5">
+                                    <a href="~/EMCS/MyTask" class="btn btn-warning btn-round" style="min-width:120px;"><i class="fa fa-chevron-left"></i>&nbsp;Back</a>
+                                    <button id="DraftDocumentNpePeb" type="button" class="btn btn-info btn-round" value="Draft" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Draft</button>
+                                    <button id="ApproveNpePeb" type="button" class="btn btn-success btn-round" value="Submit" style="min-width:120px;"><i class="fa fa-save"></i>&nbsp;Submit</button>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="tab-task-document">

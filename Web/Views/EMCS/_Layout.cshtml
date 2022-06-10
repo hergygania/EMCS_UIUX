@@ -30,10 +30,12 @@
     <title>.:: PT. TRAKINDO UTAMA ::.</title>
     @*<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
     <style type="text/css">
         a {
             color: #fe9d00;
         }
+
         .btn-box-tool {
             padding: 5px;
             font-size: 12px;
@@ -69,8 +71,13 @@
         }
 
         .header {
+            background: transparent;
             padding: 15px 0px 15px 115px;
             border-bottom: 1px solid #00000010;
+        }
+
+        .white-content .header {
+            background: #fff;
         }
 
         .ul-bars {
@@ -102,7 +109,7 @@
         }
 
             .main-panel > .content {
-                padding: 30px 30px 120px 115px !important;
+                padding: 30px 34px 120px 128px !important;
             }
 
         .table .btn {
@@ -157,17 +164,20 @@
         }
 
         .white-content, .white-content .main-panel {
-            background: #fff !important;
+            background: #f7f7f7 !important;
         }
-        .white-content .card {
-            box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
-            border: 1px solid rgba(26, 54, 126, 0.125);
-        }
+
+            .white-content .card {
+                box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+                border: 1px solid rgba(26, 54, 126, 0.125);
+            }
+
         form .card {
             flex-direction: row !important;
             padding: 30px 18px;
             margin: 10px 40px 10px 40px;
         }
+
         .box {
             background: #27293d;
             box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
@@ -175,24 +185,31 @@
             padding: 30px 18px;
             border-radius: 6px;
         }
-        .white-content .box{
+
+        .white-content .box {
             background: #fff;
         }
-        .sidebar{
+
+        .sidebar {
             box-shadow: none !important;
         }
+
         .sidebar-wrapper {
             background: #1e1e2d;
         }
-        .white-content .sidebar-wrapper{
+
+        .white-content .sidebar-wrapper {
             background: #fff;
         }
-        .breadcrumb{
+
+        .breadcrumb {
             margin-bottom: 2rem !important;
         }
+
         .hide {
             display: none !important;
         }
+
         .dropzone {
             font-size: inherit;
             background: #e6e6e6 !important;
@@ -200,31 +217,82 @@
             border-radius: 10px !important;
             box-shadow: 0 1px 20px 0px rgb(0 0 0 / 10%);
         }
+
         .mt-20 {
             margin-top: 20px;
         }
-        .mt-30{
+
+        .mt-30 {
             margin-top: 30px;
         }
+
         .has-success:after {
             right: 75px !important;
             top: 34px !important;
             font-size: 14px !important;
             color: #13c272 !important;
         }
-        .has-success .control-label{
+
+        .has-success .control-label {
             color: #13c272 !important;
         }
+
         .has-error .control-label {
             color: #ff3535 !important;
         }
 
-        .sidebar:hover{
-            top: -70px !important;
+        .sidebar:hover {
+            /*top: -70px !important;*/
+        }
+        /*.sidebar:hover::after{
+            content: '';
+            background: #00000050;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }*/
+
+        .input-validation-error {
+            border: 1px solid #ff0000 !important;
+        }
+        .field-validation-error {
+            color: #ff0000;
+        }
+        .collapse.in {
+            display: block !important;
+        }
+
+        .fade.in{
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .modal{
+            background: #00000015 !important;
+        }
+
+        .modal.in .modal-dialog {
+            -webkit-transform: translate(0, 30%) !important;
+            transform: translate(0, 30%) !important;
+        }
+        .modal.show .modal-dialog, .modal.in .modal-dialog{
+            transform: none !important;
+        }
+        .modal-content .modal-header {
+            border-bottom: 1px solid #e9ecef !important;
+            padding: 24px 24px 24px 24px !important;
+        }
+        .modal-content .modal-footer {
+            justify-content: flex-end !important;
+            border-top: 1px solid #e9ecef !important;
+            padding-top: 20px !important;
         }
 
         /*====indra added====*/
         .sidebars {
+            background: transparent;
             display: block;
             position: absolute;
             left: 0;
@@ -234,44 +302,59 @@
             z-index: 100;
             border-right: 1px solid #00000010;
         }
+
+        .white-content .sidebars {
+            background: #fff;
+        }
+
         .sidebar, .off-canvas-sidebar {
-            left: -12px !important;
-            top: -12px !important;
+            left: -13px !important;
+            top: -13px !important;
             background: #fff !important;
         }
+
         .btn-warning {
             /*background: #fe9d00 !important;
             background-image: linear-gradient(to bottom left, #cacaca, #fe9d00, #fe9d00) !important;
             background-color: #fe9d00 !important;*/
         }
+
         .page-item.active .page-link {
             background-color: #fe9d00 !important;
             border-color: #fe9d00 !important;
         }
+
         .white-content .sidebar {
             box-shadow: none !important;
         }
+
         .sidebar-mini .sidebar {
             box-shadow: none;
             background: #1e1e2d;
         }
-        .sidebar-mini .sidebar:hover {
-            width: 360px !important;
-        }
+
+            .sidebar-mini .sidebar:hover {
+                box-shadow: 8px 12px 20px -8px #00000020 !important;
+                width: 360px !important;
+            }
+
         textarea.form-control {
             border: 1px solid rgba(29, 37, 59, 0.5) !important;
             border-radius: 0.4285rem !important;
         }
+
         .double-input {
             display: flex;
             flex-wrap: wrap;
             align-items: stretch;
         }
-        .collapse.in{
-            display: block !important;
-        }
 
+        .fixed-table-body {
+            max-height: 577px;
+            overflow-y: auto;
+        }
     </style>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="~/Content/Assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -280,9 +363,13 @@
     <link href="/Content/bootstrap-timepicker.css" rel="stylesheet" />
     <link href="/Content/daterangepicker-bs3.css" rel="stylesheet" />
     <link href="/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
     @*<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />*@
     @*@Styles.Render("~/Content/css");*@
+
     <script src="~/Content/Assets/js/core/jquery.min.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+
 
     @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
     {
@@ -294,6 +381,8 @@
     }
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/AppScript")*@
+
+
 
 </head>
 <body class="sidebar-mini white-content ">
@@ -324,7 +413,7 @@
             <div class="sidebar-wrapper ps ps--active-x ps--active-y">
 
                 @Html.Partial("_Menu")
-                
+
             </div>
 
         </div>
@@ -351,7 +440,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                    }   
+                    }
 
                     <h3>Supply Chain Information System</h3>
 
@@ -432,7 +521,7 @@
                     <span class="badge light-badge mr-2"></span>
                     <span class="badge dark-badge ml-2"></span>
                     <span class="color-label">DARK MODE</span>
-                </li>   
+                </li>
             </ul>
         </div>
     </div>
@@ -443,6 +532,34 @@
             <div id="myModalContent" class="modal-content"></div>
         </div>
     </div>
+
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Scripts.Render("~/bundles/js", "~/bundles/bootstrap");
+        @*@Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")*@
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+    }
+
+    <script src="~/Content/Assets/js/core/popper.min.js"></script>
+    <script src="~/Content/Assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/moment.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="~/Content/Assets/js/plugins/sweetalert2.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.tablesorter.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/Assets/js/plugins/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery-jvectormap.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
+    <script src="~/Content/Assets/js/plugins/bootstrap-notify.js"></script>
+    <script src="~/Content/Assets/js/black-dashboard.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+
 
     <script>
         var myApp = {};
@@ -490,55 +607,9 @@
         })(jQuery);
     </script>
 
-    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
-    {
-        @Scripts.Render("~/bundles/js", "~/bundles/bootstrap");
-        @*@Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")*@
-    }
-    else
-    {
-        @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
-    }
 
-    <script src="~/Content/Assets/js/core/popper.min.js"></script>
-    <script src="~/Content/Assets/js/core/bootstrap.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/moment.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/bootstrap-switch.js"></script>
-    <script src="~/Content/Assets/js/plugins/sweetalert2.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/jquery.tablesorter.js"></script>
-    <script src="~/Content/Assets/js/plugins/jquery.validate.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/jquery.bootstrap-wizard.js"></script>
-    <script src="~/Content/Assets/js/plugins/bootstrap-selectpicker.js"></script>
-    <script src="~/Content/Assets/js/plugins/bootstrap-datetimepicker.js"></script>
-    <script src="~/Content/Assets/js/plugins/jquery.dataTables.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/bootstrap-tagsinput.js"></script>
-    <script src="~/Content/Assets/js/plugins/jasny-bootstrap.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/fullcalendar/daygrid.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/fullcalendar/timegrid.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/fullcalendar/interaction.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/jquery-jvectormap.js"></script>
-    <script src="~/Content/Assets/js/plugins/nouislider.min.js"></script>
-    @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
-    <script src="~/Content/Assets/js/plugins/chartjs.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/bootstrap-notify.js"></script>
-    <script src="~/Content/Assets/js/black-dashboard.min.js"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
-    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
-
-
-
-
-
-
-    <style type="text/css">
-        .fixed-table-body {
-            max-height: 577px;
-            overflow-y: auto;
-        }
-    </style>
     @RenderSection("scripts", required: false)
+
     <script>
         $(function () {
             if (myApp.isReadOnly == 'true') {
@@ -709,6 +780,12 @@
                     $('body').removeClass('white-content');
                 });
             });
+        });
+    </script>
+
+    <script>
+        $(".close").click(function () {
+            $(".modal").removeClass("in");
         });
     </script>
 

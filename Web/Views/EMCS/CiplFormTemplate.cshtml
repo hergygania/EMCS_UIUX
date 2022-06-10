@@ -475,7 +475,7 @@
                                                     </div>
                                                     <div class="col-md-12">
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-4 mt-2 mb-2">
                                                             <div class="row text-center divUploadFile dropzone" title="Drop the Import File Here or Click this Section for Browse the Import File." id="partUploadFile">
                                                             </div>
                                                         </div>
@@ -632,33 +632,35 @@
     </div>
 </div>
 
-<div id="myModalDocument" class="modal fade in" role="dialog">
+<div id="myModalDocument" class="modal fade " role="dialog">
     <div class="modal-dialog modal-lg" style="width:800px">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title-document">Add Document</h4>
-            </div>
-            <form id="FormDocument">
+            <form id="FormDocument" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Document</h4>
+                </div>
                 <div class="modal-body">
                     <div class="row" id="formeditreference">
                         <div class="col-lg-12">
                             <div class="form-group hidden">
                                 <label class="control-label col-md-3 col-xs-12">IdDocument</label>
                                 <div class="input-group col-md-9 col-xs-12">
-                                    <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                                    <input type="text" class="form-control" id="Id" name="Id">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-xs-12">Document Date</label>
-                                <div class="input-group col-md-9 col-xs-12">
-                                    <span class="input-group-addon cal-doc-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <div class="input-group col-md-10 col-xs-12">
                                     <input class="form-control date required" id="inp-doc-date" name="inp-doc-date" placeholder="Date" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                    <div class="input-group-addon cal-doc-date" style="background: #00C0EF; border-color: #00ACD6;">
+                                        <i class="fa fa-calendar" style="color: #FFFFFF;"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-xs-12">Document Name</label>
-                                <div class="input-group col-md-9 col-xs-12">
+                                <div class="col-md-10 col-xs-12">
                                     <input type="text" class="form-control" id="DocumentName" name="DocumentName">
                                 </div>
                             </div>
@@ -666,14 +668,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                    <button type="button" class="btn btn-success btn-round btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<div id='myModalUploadPlace' class='modal fade in'>
+<div id='myModalUploadPlace' class='modal fade '>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -737,7 +739,7 @@
     </div>
 </div>
 
-<div id='myModalUploadPreview' class='modal fade in'>
+<div id='myModalUploadPreview' class='modal fade '>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -773,7 +775,7 @@
 </div>
 
 <div id="ModalAddNewReference" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -786,42 +788,42 @@
                     <div class="row" id="FormOldCore">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="control-label col-lg-4 col-xs-4">Packaging Type</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Packaging Type</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <select class="select2" name="PackagingTypeParts" id="PackagingTypeParts" required></select>
                                 </div>
                             </div>
                             <div class="form-group" id="div-CaseNumberParts">
-                                <label class="control-label col-lg-4 col-xs-4">Case Number</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Case Number</label>
+                                <div class="col-lg-10 col-xs-10">
                                     <input type="text" class="form-control" id="CaseNumberParts" name="CaseNumberParts" placeholder="Case Number" required>
                                 </div>
                             </div>
                             <div class="form-group" id="div-ASNNumberParts">
-                                <label class="control-label col-lg-4 col-xs-4">ASN Number</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">ASN Number</label>
+                                <div class="col-lg-10 col-xs-10">
                                     <input type="text" class="form-control" id="ASNNumberParts" name="ASNNumberParts" placeholder="ASN Number" required>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="control-label col-lg-4 col-xs-4">Length</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Length</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control SumVolumenOldCore decimal" id="LengthParts" name="LengthParts" placeholder="Length" value="0">
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">cm</div>
                                 </div>
                             </div>
                             <div class="form-group" id="div-WidthParts">
-                                <label class="control-label col-lg-4 col-xs-4">Width</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Width</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control SumVolumenOldCore decimal" id="WidthParts" name="WidthParts" placeholder="Width" value=0>
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">cm</div>
                                 </div>
                             </div>
                             <div class="form-group" id="div-HeightParts">
-                                <label class="control-label col-lg-4 col-xs-4">Height</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Height</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control SumVolumenOldCore decimal" id="HeightParts" name="HeightParts" placeholder="Height" value=0>
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">cm</div>
                                 </div>
@@ -829,22 +831,22 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group" id="div-VolumeParts">
-                                <label class="control-label col-lg-4 col-xs-4">Volume</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Volume</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control decimal" id="VolumeParts" name="VolumeParts" placeholder="Volume" disabled value=0>
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">m3</div>
                                 </div>
                             </div>
                             <div class="form-group" id="div-GrossWeightParts">
-                                <label class="control-label col-lg-4 col-xs-4">Gross Weight</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Gross Weight</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control decimal" id="GrossWeightParts" name="GrossWeightParts" placeholder="Gross Weight" value=0>
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
                                 </div>
                             </div>
                             <div class="form-group" id="div-NetWeightParts">
-                                <label class="control-label col-lg-4 col-xs-4">Net Weight</label>
-                                <div class="input-group col-lg-8 col-xs-8">
+                                <label class="control-label col-lg-12 col-xs-12">Net Weight</label>
+                                <div class="input-group col-lg-10 col-xs-10">
                                     <input type="text" class="form-control decimal" id="NetWeightParts" name="NetWeightParts" placeholder="Net Weight" value=0>
                                     <div class="input-group-addon" style="width: 50px; background:#00C0EF;border-color:#00ACD6; color:white;">KGs</div>
                                 </div>
@@ -873,7 +875,6 @@
                     @*<table class="table table-bordered" id="tablereference" data-checkbox="true" data-pagination="true" data-side-pagination="server" data-maintain-selected="true"></table>*@
                 </form>
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary btnAddReference" data-dismiss="modal" id="btnAddReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
             </div>
@@ -1123,7 +1124,7 @@
         </div>
     </div>
 </div>
-<div id="myModalRequestForChangeReason" class="modal fade in" role="dialog">
+<div id="myModalRequestForChangeReason" class="modal fade " role="dialog">
     <div class="modal-dialog modal-lg" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -1149,6 +1150,5 @@
         </div>
     </div>
 </div>
-<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 <script src="/Scripts/loadingoverlay.min.js"></script>
 

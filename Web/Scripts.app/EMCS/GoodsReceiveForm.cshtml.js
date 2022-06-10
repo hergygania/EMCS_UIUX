@@ -122,6 +122,7 @@ var columns = [
 
     }];
 
+Dropzone.autoDiscover = false;
 $(function () {
 
     $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
