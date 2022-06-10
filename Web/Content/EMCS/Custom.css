@@ -149,7 +149,7 @@
 }
 
 .form-control {
-    height: auto;
+    height: 38px;
 }
 
 .content-wrapper, .main-footer {
@@ -485,7 +485,7 @@ svg .icon {
     }
 
 .modal-footer {
-    /*padding: 7px 15px 7px 15px;*/
+    padding: 20px 24px 20px 24px;
 }
 
 /*.cs-bg-red {

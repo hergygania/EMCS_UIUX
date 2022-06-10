@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.ContainerModel
+﻿﻿@model  App.Web.Models.EMCS.ContainerModel
 @{
     ViewBag.crudMode = "I";
     var mode = ViewBag.crudMode;
@@ -13,12 +13,11 @@
     <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
 </div>
 
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="modal-body" id="checkcn">
         <div class="row">
             <div class="col-md-6">
@@ -64,59 +63,12 @@
             </div>
             <table data-toolbar=".toolbarContainer" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
         </div>
-=======
-    <div class="modal-body">
-=======
-    <div class="modal-body" id="checkcn">
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-        <div class="row">
-            <div class="form-group" style="margin-bottom:40px !important;">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-3">Container Number</label>
-                        <div class="input-group col-md-9">
-                            @Html.TextBoxFor(m => m.Container.Number, new { @class = "form-control required", @id = "ContainerNumber", placeholder = "Container Number", @maxlength = "12" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3">Container Type</label>
-                        <div class="input-group col-md-9">
-                            <select id="ContainerType" name="ContainerType" readonly class="select2" style="width:100%;"></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-3">Seal Number</label>
-                        <div class="input-group col-md-9" id="disablesealno">  
-                            @Html.TextBoxFor(m => m.Container.SealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
-                        </div>
-                    </div>
-                    <div class="form-group hidden">
-                        <label class="col-md-3">Select Item</label>
-                        <div class="input-group col-md-9">
-                            <div class="col-md-11 row">
-                                <select class="select2" id="ItemListData"></select>
-                            </div>
-                            <button class="btn btn-sm btn-primary pull-left btnAddItem" style="margin-left:5px;padding-top:6px;"><i class="fa fa-plus-circle"></i>&nbsp;Add</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="row toolbarContainer form-horizontal">
-                    </div>
-                    <table data-toolbar=".toolbarContainer" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
-                </div>
-            </div>
-        </div>
->>>>>>> 639d8d0 (Intial commit)
     </div>
     <div class="modal-footer">
         <span id="progress" class="text-center" style="display: none;">
             <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
             Wait..
         </span>
-<<<<<<< HEAD
         <button type="button" class="btn btn-warning btn-round mr-2" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
         @if (mode == "I")
         {
@@ -132,54 +84,19 @@
         }
     </div>
     <input type="hidden" id="CargoId" name="CargoId" value="@(ViewBag.CargoID)" />
-=======
-        <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
-        @if (mode == "I")
-        {
-            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Create</button>
-        }
-        else if (mode == "U")
-        {
-            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Update</button>
-        }
-        else
-        {
-            <button type="submit" class="btn btn-danger" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
-        }
-    </div>
-    <input type="hidden" id="CargoId" name="CargoId" value="@(Model.Cargo.Id)" />
->>>>>>> 639d8d0 (Intial commit)
 }
 <script>
     $tableContainer = $("#tableAddCargo");
     var mode = '@mode';
     var IdCargo = $("#CargoId").val();
-<<<<<<< HEAD
-<<<<<<< HEAD
     $('#ContainerSealNumber').val('');
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-    $('#ContainerSealNumber').val('');
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     if (mode != 'I')
         $("#ID").attr('readonly', 'readonly');
 
     $(document).ready(function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         $(".btnAddItem").on("click", function (e) {
             debugger;
-=======
-        $(".btnAddItem").on("click", function (e) {
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-        $(".btnAddItem").on("click", function (e) {
-            debugger;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             e.preventDefault();
             var value = $("#ItemListData").select2('data')[0];
             console.log('alimutasal line 95 :', value);
@@ -540,17 +457,12 @@
             }
         });
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
     //let timeoutID = null;
 
     //     function findMember(str) {
     //        console.log('search: ' + str)
     //    }
-<<<<<<< HEAD
     $('#ContainerNumber').on('click', function (e) {
 
         var obj = "";
@@ -605,11 +517,6 @@
         });
     });
     $('#ContainerNumber').keyup( function (e) {
-=======
-
-    $('#ContainerNumber').keyup('click', function (e) {
-        debugger
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         var obj = "";
         let IdCargo = $('#CargoID').val();
@@ -627,10 +534,6 @@
             cache: false,
             async: false,
             success: function (data, response) {
-<<<<<<< HEAD
-=======
-                debugger;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 if(data.length == 0)
                 {
                     $("#ContainerSealNumber").val(null);
@@ -656,13 +559,8 @@
             $('#disablesealno').prop('disabled', true)
         }
             }
-<<<<<<< HEAD
 
 
-=======
-               
-                
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             },
             error: function (e) {
                 Swal.fire({
@@ -674,10 +572,7 @@
 
         });
     });
-<<<<<<< HEAD
    
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     //function getcargotype(val) {
     //    debugger
     //    let cargotype = val;
@@ -714,11 +609,4 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoForm.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
-<<<<<<< HEAD
 }
-=======
-</script>
->>>>>>> 639d8d0 (Intial commit)
-=======
-}
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)

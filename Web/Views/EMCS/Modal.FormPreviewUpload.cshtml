@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.GoodReceiveItemModel
+﻿﻿@model  App.Web.Models.EMCS.GoodReceiveItemModel
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
@@ -25,14 +25,9 @@
     </div>
 
     <div class="modal-footer">
-<<<<<<< HEAD
         <button type="button" class="btn btn-warning btn-round" data-dismiss="modal">Close</button>
-=======
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
->>>>>>> 639d8d0 (Intial commit)
     </div>
 
     @Html.HiddenFor(a => a.Id, new { @class = "hidden", @Id = "ItemIdGr" })
 }
-
 
