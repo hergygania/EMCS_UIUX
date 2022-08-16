@@ -1,16 +1,10 @@
-﻿@{
-<<<<<<< HEAD
+﻿﻿@{
     Layout = "~/Views/EMCS/_Layout.cshtml";
-=======
->>>>>>> 639d8d0 (Intial commit)
     ViewBag.Title = "Master Running Text";
 }
 
 @using System.Web.Mvc
-<<<<<<< HEAD
 @Styles.Render("~/Content/EMCS/Custom.css")
-=======
->>>>>>> 639d8d0 (Intial commit)
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 <script type="text/javascript">
     var allowCreate = "@(ViewBag.allowCreate)";
@@ -93,11 +87,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-<<<<<<< HEAD
                             <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/RunningTextCreate" id="btnCreate">
-=======
-                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/RunningTextCreate" id="btnCreate">
->>>>>>> 639d8d0 (Intial commit)
                                 <i class="fa fa-plus"></i> Add New
                             </a>
                         }
@@ -130,4 +120,3 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/RunningTextList.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
-

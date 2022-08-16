@@ -95,15 +95,7 @@ $(function () {
     var columns = [
         [{
             field: "PebMonth",
-<<<<<<< HEAD
-<<<<<<< HEAD
             title: "&nbsp;MONTH &nbsp;&nbsp;",
-=======
-            title: "MONTH &nbsp;&nbsp;&nbsp;",
->>>>>>> 639d8d0 (Intial commit)
-=======
-            title: "&nbsp;MONTH &nbsp;&nbsp;",
->>>>>>> 7bf5852 (first commit)
             rowspan: 3,
             valign: "middle",
             align: "center",
@@ -115,33 +107,19 @@ $(function () {
             valign: "middle",
             align: "center"
         }, {
-<<<<<<< HEAD
             field: "CustomsFacilityArea",
             title: "Custom Facility Area",
-=======
-            field: "ReferenceNo",
-            title: "Reference No",
->>>>>>> 639d8d0 (Intial commit)
             rowspan: 3,
             sortable: true,
             align: "left",
             valign: "middle"
         }, {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0aa0fef (new template)
             field: "CustomerFacilityArea",
             title: "Customer Facility Area",
             rowspan: 3,
             align: "center",
             valign: "middle"
         }, {
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 0aa0fef (new template)
             title: "Commercial Invoice & Packing List <br/> (CIPL)",
             colspan: 3,
             rowspan: 2,

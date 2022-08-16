@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -89,10 +89,7 @@ namespace App.Web.Controllers.EMCS
 
         public List<RssFeed> GetRssSource(string url)
         {
-<<<<<<< HEAD
             url = "https://www.antaranews.com/rss/top-news";
-=======
->>>>>>> 639d8d0 (Intial commit)
             using (var wclient = new WebClient())
             {
                 string urlString = url;

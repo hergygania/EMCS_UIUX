@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.CargoModel
+﻿﻿@model  App.Web.Models.EMCS.CargoModel
 @{
     Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Shipping Instruction Form";
@@ -1003,18 +1003,8 @@
                         var SpecialInstruction = $("#SpecialInstruction").val();
                         var DocumentRequired = $("#SiDocumentRequired").val();
                         var PicBlAwb = $('#PicBlAwb').val();
-<<<<<<< HEAD
-<<<<<<< HEAD
                         var Type = $('#Type').val();
                         var data = { Id: Id, IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
-=======
-
-                        var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb };
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        var Type = $('#Type').val();
-                        var data = { IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         ApproveCargo(data);
                     }
                     return false;
@@ -1032,7 +1022,6 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")"></script>
-<<<<<<< HEAD
 }
 
 <script>
@@ -1058,6 +1047,3 @@
         });
     });
 </script>
-=======
-}
->>>>>>> 639d8d0 (Intial commit)

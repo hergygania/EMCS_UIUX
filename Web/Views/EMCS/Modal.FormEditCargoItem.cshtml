@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 ﻿@model  List<App.Web.Models.EMCS.CargoItemModel>
-=======
-﻿@model  App.Web.Models.EMCS.CargoItemModel
->>>>>>> 639d8d0 (Intial commit)
-=======
-﻿@model  List<App.Web.Models.EMCS.CargoItemModel>
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 @{
     ViewBag.crudMode = "U";
     var mode = ViewBag.crudMode;
@@ -21,9 +13,6 @@
     <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
 </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 @using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo", @style = " max-height: 500px;overflow-y: scroll;" }))
 {
 
@@ -237,133 +226,6 @@
         }
 
     }
-=======
-@using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo" }))
-=======
-@using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo",@style= " max-height: 500px;overflow-y: scroll;" }))
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-@using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo", @style = " max-height: 500px;overflow-y: scroll;" }))
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-{
-
-
-    for (int i = 0; i < Model.Count; i++)
-    {
-        if (i == 0)
-        {
-            @Html.AntiForgeryToken()
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group" style="margin-bottom:40px !important;">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-3">Container Number</label>
-                                <div class="input-group col-md-9">
-                                    <input type="text" name="Id" style="display:none;" id="IdCargoItem" value="@Model[i].Id" />
-                                    @Html.HiddenFor(m => m[i].Id)
-                                    @Html.HiddenFor(m => m[i].IdCargo)
-                                    @Html.TextBoxFor(m => m[i].ContainerNumber, new { @class = "form-control required", @id = "ContainerNumber", placeholder = "Container Number" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3">Container Type </label>
-                                <div class="input-group col-md-9">
-                                    @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            @if (ViewBag.SingleItem)
-                            {
-                                <div class="form-group">
-                                    <label class="col-md-3">Length</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Length, new { @class = "form-control", @id = "Length", placeholder = "Length" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Width</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Width" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Height</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Height, new { @class = "form-control", @id = "Height", placeholder = "Height" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Net Weight</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Net, new { @class = "form-control", @id = "Net", placeholder = "Net Weight" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Gross Weight</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Gross, new { @class = "form-control", @id = "Gross", placeholder = "Gross Weight" })
-                                    </div>
-                                </div>
-                            }
-                        </div>
-
-                        <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label class="col-md-3">Seal Number</label>
-                                <div class="input-group col-md-9">
-                                    @Html.TextBoxFor(m => m[i].ContainerSealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
-                                </div>
-                            </div>
-                            @if (ViewBag.SingleItem)
-                            {
-                                <div class="form-group">
-                                    <label class="col-md-3">Case Number</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].CaseNumber, new { @class = "form-control", @readonly = "readonly", @id = "CaseNumber", placeholder = "Case Number" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Item Name</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].ItemName, new { @class = "form-control", @readonly = "readonly", @id = "ItemName", placeholder = "Item Name" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">EDI</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Ea, new { @class = "form-control", @readonly = "readonly", @id = "EDI", placeholder = "EDI Number" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Inbound Da</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].InBoundDa, new { @class = "form-control", @readonly = "readonly", @id = "Da", placeholder = "Inbond DA" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3">Cargo Description</label>
-                                    <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].CargoDescription, new { @class = "form-control", @readonly = "readonly", @id = "CargoDescription", placeholder = "Cargo Description" })
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-<<<<<<< HEAD
-        </div>
-<<<<<<< HEAD
-    </div>
->>>>>>> 639d8d0 (Intial commit)
-=======
-=======
-        }
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-
-    }
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     <div class="modal-footer">
         <span id="progress" class="text-center" style="display: none;">
             <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
@@ -490,7 +352,6 @@
                 $tableContainer.bootstrapTable('remove', { field: 'Id', values: value });
             }
         };
-<<<<<<< HEAD
         $('#ContainerNumber').keyup('click', function (e) {
             var obj = "";
             let IdCargo = $('#CargoID').val();
@@ -537,8 +398,6 @@
 
             });
         });
-=======
->>>>>>> 639d8d0 (Intial commit)
 
         //var columns = [[
         //    {

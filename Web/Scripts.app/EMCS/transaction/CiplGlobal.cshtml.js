@@ -1,4 +1,4 @@
-﻿var $AllowDelete = $('#AllowDelete').val();
+﻿﻿var $AllowDelete = $('#AllowDelete').val();
 var $AllowUpdate = $('#AllowUpdate').val();
 
 var $tablepart = $('#tablepartCipl');
@@ -49,14 +49,7 @@ function load_data() {
     if ($('#refCipl') !== null) {
         $('.btnAddItem').prop("disabled", false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
     
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     $('#jenisBarangCipl').on('change', function () {
         GetReferenceNo();
 
@@ -70,26 +63,12 @@ function load_data() {
         $('.tableItem, .div-idCustomerCipl').show();
 
         $("#exportCipl option[value='Non Sales - Exhibition (Temporary)']").remove();
-<<<<<<< HEAD
-<<<<<<< HEAD
      
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-     
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         if ($(this).val() === 'CATERPILLAR SPAREPARTS') { // Spareparts
             $('#divReferenceNo, .div-idCustomerCipl').show();
             $('.tableItemSpareparts, .categoryspareparts').show();
             $('#forwaderCipl').val('CKB').trigger('change.select2').prop('disabled', false);
-<<<<<<< HEAD
-<<<<<<< HEAD
           
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-          
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             //$('#forwaderAttentionCipl, #divCkbBranchCipl, #forwaderAddressCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderEmailCipl').show("slow");
             $('.forwaderAttentionCipl, .divCkbBranchCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderEmailCipl, .forwaderCompanyCipl, .forwaderForwadingCipl').show("slow");
         } else {
@@ -325,14 +304,7 @@ function load_data() {
             $('#notifyNameCipl').val($('#consigneeNameCipl').val());
             $('#notifyAddressCipl').val($('#consigneeAddressCipl').val());
             $('#notifyCountryCipl').val($('#consigneeCountryCipl').val());
-<<<<<<< HEAD
-<<<<<<< HEAD
             $('#select2-notifyCountryCipl-container').text($('#notifyCountryCipl').val());
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-            $('#select2-notifyCountryCipl-container').text($('#notifyCountryCipl').val());
->>>>>>> 7e56358 (Commit work of CIPL)
             $('#notifyTelpCipl').val($('#consigneeTelpCipl').val());
             $('#notifyFaxCipl').val($('#consigneeFaxCipl').val());
             $('#notifyPicCipl').val($('#consigneePicCipl').val());
@@ -428,10 +400,6 @@ function load_data() {
             $tablereference.bootstrapTable('refresh');
         }
     })
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
     $('#documentAddButton').on('click', function () {
         $('.modal-title-document').text("Add Document");
         $('.btnAddDocument').text("Add");
@@ -439,16 +407,7 @@ function load_data() {
 
     window.operateEvents = {
         'click .EditReferenceItem': function (e, value, row, index) {
-<<<<<<< HEAD
             
-=======
-
-    window.operateEvents = {
-        'click .EditReferenceItem': function (e, value, row, index) {
->>>>>>> 639d8d0 (Intial commit)
-=======
-            debugger;
->>>>>>> 26aafb4 (Changes of P1-CIPL)
             if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 if ($(this).val() !== 'Add') {
@@ -459,19 +418,7 @@ function load_data() {
                 $('#IdItem').val(row.Id);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
-=======
-                $('#UomItemCipl').val(row.UnitUom);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
->>>>>>> 26aafb4 (Changes of P1-CIPL)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -490,27 +437,9 @@ function load_data() {
                 $('#SnItemCipl').prop('disabled', true);
                 $('#CcrItemCipl, #JcodeItemCipl, #IdCustomerItemCipl').prop('disabled', false);
                 $('#PartItemCipl, #UnitItemCipl').prop('disabled', false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-=======
-
-                $('#IdItem').val(row.Id);
-                $('#NameItemCipl').val(row.Name);
-                $('#QuantityItemCipl').val(row.Quantity);
-                $('#UomItemCipl').val(row.UnitUom);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
-=======
-                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
->>>>>>> 26aafb4 (Changes of P1-CIPL)
-                $('#NameItemCipl').val(row.Name);
-                $('#QuantityItemCipl').val(row.Quantity);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#LengthItemCipl').val(row.Length).prop('disabled', false);
                 $('#WidthItemCipl').val(row.Width).prop('disabled', false);
@@ -539,33 +468,14 @@ function load_data() {
                 } else {
                     $('.btnUpdateReference').show();
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
                 $('#UomItemCipl').val(null).trigger('change');
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                $('#UomItemCipl').val(null).trigger('change');
->>>>>>> 26aafb4 (Changes of P1-CIPL)
                 $('#IdItem').val(row.Id);
                 $('#IdReference').val(row.IdReference);
                 $('#IdCustomerItemCipl').val(row.IdCustomer);
                 $('#ReferenceItemCipl').val(row.ReferenceNo);
                 $('#NameItemCipl').val(row.Name);
                 $('#QuantityItemCipl').val(row.Quantity);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
-=======
-                $('#UomItemCipl').val(row.UnitUom);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                $('#UomItemCipl').val(uomtypes.find(x => x.text === (row.UnitUom)).id).trigger('change');
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-                $('#UomItemCipl').val(row.UnitUom == null ? uomtypes[0].id : uomtypes.find(x => x.text === row.UnitUom).id).trigger('change');
->>>>>>> 26aafb4 (Changes of P1-CIPL)
                 $('#PartItemCipl').val(row.PartNumber);
                 $('#SnItemCipl').val(row.Sn);
                 $('#JcodeItemCipl').val(row.JCode);
@@ -614,18 +524,9 @@ function load_data() {
             $('#IdDocument').val(row.Id);
             $('#inp-doc-date').val(row.DocumentDate);
             $('#DocumentName').val(row.DocumentName);
-<<<<<<< HEAD
-<<<<<<< HEAD
             $('.modal-title-document').text("Update Document");
             $('.btnAddDocument').text("Update");
             
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-            $('.modal-title-document').text("Update Document");
-            $('.btnAddDocument').text("Update");
-            
->>>>>>> 26aafb4 (Changes of P1-CIPL)
         },
         'click .remove': function (e, value, row, index) {
             CiplDocumentDeleteById(row.Id);
@@ -652,11 +553,7 @@ function load_data() {
                 class: "text-nowrap",
                 events: window.operateEvents,
                 formatter: function (value, row, index) {
-<<<<<<< HEAD
                     return "<button class='btn btn-success btn-link btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='tim-icons icon-pencil'></i></button> <button class='btn btn-danger btn-link btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='tim-icons icon-simple-remove'></i></button>";
-=======
-                    return "<button class='btn btn-default btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='fa fa-pencil'></i></button> <button class='btn btn-danger btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='fa fa-trash'></i></button>";
->>>>>>> 639d8d0 (Intial commit)
                 }
             }, {
                 field: "Id",
@@ -1680,14 +1577,7 @@ $('#btnAddReference').on('click', function (e) {
     var UnitName = $('#NameItemCipl').valid();
     var Unit = ValidateAddReference();
     if (Unit) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        debugger;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -2278,10 +2168,6 @@ function removeSingleAttributeDuplicates(array, key) {
     }
     return result;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function removeSingleAttributeDuplicatesNew(array, key,key2) {
     let lookup = {};
     let result = [];
@@ -2294,21 +2180,12 @@ function removeSingleAttributeDuplicatesNew(array, key,key2) {
     }
     return result;
 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function removeDoubleAttributeDuplicates(array) {
     jsonObject = array.map(JSON.stringify);
     uniqueSet = new Set(jsonObject);
     uniqueArray = Array.from(uniqueSet).map(JSON.parse);
     return uniqueArray;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
 function getUniqueNumberOfCollies(array) {
     result = array.filter(function (a) {
         var key = a.CaseNumber + '|' + a.Type;
@@ -2320,11 +2197,6 @@ function getUniqueNumberOfCollies(array) {
 
     return result;
 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
 function SumReferenceItem() {
     var SumGross = 0;
     var SumNet = 0;
@@ -2340,15 +2212,7 @@ function SumReferenceItem() {
     if (Category === 'SIB') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-<<<<<<< HEAD
-<<<<<<< HEAD
             CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
-=======
-            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length;
->>>>>>> 639d8d0 (Intial commit)
-=======
-            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2359,24 +2223,7 @@ function SumReferenceItem() {
     } else if (Category === 'PRA' || Category === 'REMAN') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             CountJCode = getUniqueNumberOfCollies(data).length;;
-=======
-            CountJCode = removeSingleAttributeDuplicates(data, 'CaseNumber').length;
->>>>>>> 639d8d0 (Intial commit)
-=======
-            debugger;
-            var UniqueCaseNumber = removeSingleAttributeDuplicates(data, 'CaseNumber');
-            var UniqueType = removeSingleAttributeDuplicates(data, 'Type');
-            var Uniqueitems = UniqueCaseNumber.push(UniqueType);
-                /* UniqueCaseNumber.length == 1 && UniqueType.length == 1 ? 1 : UniqueCaseNumber.length + UniqueType.length - 1;*/
-            CountJCode = Uniqueitems - 1;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-            CountJCode = getUniqueNumberOfCollies(data).length;;
->>>>>>> 26aafb4 (Changes of P1-CIPL)
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2500,18 +2347,8 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
     var ExtendedValue = UnitPrice * Quantity;
     $('#ExtendedItemCipl').val(formatCurrency(ExtendedValue, ".", ",", 2));
 })
-<<<<<<< HEAD
-<<<<<<< HEAD
 function GetDestinationPort() {
     var country = $("#consigneeCountryCipl").val();
-=======
-function GetDestinationPort() {
-<<<<<<< HEAD
-    var country = $("#countryCipl").val();
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-    var country = $("#consigneeCountryCipl").val();
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
    
         $('#destinationCipl').select2({
             placeholder: "Select Destination Port",
@@ -2543,12 +2380,6 @@ function GetDestinationPort() {
 
     
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function GetReferenceNo() {
     var Category = GetCategoryUsed();
     var item = {
@@ -2632,25 +2463,11 @@ function GetReferenceNo() {
             url: "/emcs/GetLocalPortData",
             dataType: 'json',
             data: function (params) {
-<<<<<<< HEAD
-<<<<<<< HEAD
                
                 return {
                    
                     Name: params.term
 
-=======
-=======
-               
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                return {
-                   
-                    Name: params.term
-<<<<<<< HEAD
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 };
             },
             success: function (data, response) {
@@ -2668,41 +2485,8 @@ function GetReferenceNo() {
         }
     })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     
     
-=======
-    $('#destinationCipl').select2({
-        placeholder: "Select Destination Port",
-        ajax: {
-            url: "/emcs/GetPortData",
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    Name: params.term
-                };
-            },
-            success: function (data, response) {
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data.data, function (item) {
-                        return {
-                            text: item.Text,
-                            id: item.Id
-                        }
-                    })
-                }
-            }
-        }
-    })
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-    
-    
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     $('#CkbBranchCipl').select2({
         placeholder: 'Select CKB Branch',
         width: "100%",
@@ -2750,19 +2534,9 @@ function get_used_table_cipl_item() {
         table = $tablepart;
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
         table = $tablemisc;
-<<<<<<< HEAD
-<<<<<<< HEAD
     }
     
     else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
-=======
-    } else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
->>>>>>> 639d8d0 (Intial commit)
-=======
-    }
-    
-    else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
->>>>>>> 7e56358 (Commit work of CIPL)
         table = $tableunit;
     } else if ($('#idCategoryReference').val() === 'Other') {
         table = $tableemail;
@@ -2770,14 +2544,7 @@ function get_used_table_cipl_item() {
     return table;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 function UpdateQuantityReference(Data, Status) {
     var Item = Data;
     $.ajax({
@@ -3087,15 +2854,7 @@ $('#btnSubmitCipl').on('click', function (event) {
             } else {
                 Swal.fire({
                     title: "Confirmation",
-<<<<<<< HEAD
-<<<<<<< HEAD
                     text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
-=======
-                    text: "Are you sure want to submit this data?",
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    text: "By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?",
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -3191,18 +2950,8 @@ function post_insert_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
-<<<<<<< HEAD
-<<<<<<< HEAD
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-            Type: $('#typeCipl').val(),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -3243,9 +2992,6 @@ function post_insert_cipl(status) {
         }
     });
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 function RequestForChangeCIPL(formdata,status) {
     var modelObj = {
         FormType: "CIPL",
@@ -3253,19 +2999,6 @@ function RequestForChangeCIPL(formdata,status) {
         Reason: formdata.Notes,
         Status: status
     }
-=======
-
-$("#RequestChange").click(function () {
-    debugger;
-=======
-function RequestForChangeCIPL(formdata) {
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-    var modelObj = {
-        FormType: "CIPL",
-        FormId: $('#idCipl').val(),
-        Reason: formdata.Notes,
-        /*rfcList: requestForChange*/
-    }
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
@@ -3344,178 +3077,6 @@ function RequestForChangeCIPL(formdata) {
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
-            ExportShipmentType: $('#ExportShipmentType').val(),
-            Branch: $('#CkbBranchCipl').val(),
-            Attention: $('#forwaderAttentionCipl').val(),
-            Company: $('#forwaderCompanyCipl').val(),
-            SubconCompany: $('#forwaderForwadingCipl').val(),
-            Address: $('#forwaderAddressCipl').val(),
-            Area: $('#forwaderAreaCipl').val(),
-            City: $('#forwaderCityCipl').val(),
-            PostalCode: $('#forwaderPostalCodeCipl').val(),
-            Contact: $('#forwaderContactCipl').val(),
-            FaxNumber: $('#forwaderFaxCipl').val(),
-            Forwading: $('#forwaderForwadingCipl').val(),
-            Email: $('#forwaderEmailCipl').val()
-        }
-    }
-
-    $.ajax({
-        url: '/EMCS/SaveChangeHistory',
-        type: 'POST',
-        data: {
-            form: modelObj,
-            item: item
-        },
-        cache: false,
-        async: false,
-        success: function (data, response) {
-            Swal.fire({
-                type: 'success',
-                title: 'Success',
-                text: 'Request for change is sent for approval',
-            }).then((result) => {
-                window.location.href = "/EMCS/CiplList";
-                });
-        },
-        error: function (e) {
-            Swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong! Fail Update Data',
-            })
-        }
-    });
-   
-}
-$("#RequestForChangeHistoryCIPL").click(function () {
-    Swal.fire({
-        title: 'Request this change?',
-        text: 'By approving this changes, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this request of change?',
-        type: 'question',
-        showCancelButton: true,
-        cancelButtonColor: '#d33',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, Request!',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        showCloseButton: true
-    }).then((result) => {
-        if (result.value) {
-            Swal.fire({
-                input: 'textarea',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                inputPlaceholder: 'Please add reason for this request for change...',
-                inputAttributes: {
-                    'aria-label': 'Please add reason for this request for change...'
-                },
-                showCancelButton: false
-            }).then((result) => {
-                if (result.value !== '') {
-                    var Notes = result.value;
-                    var Status = "Approve";
-                    var Id = $('#RFCId').val();
-                    var formdata = { Notes: Notes, Status: Status, Id: Id };
-                    RequestForChangeCIPL(formdata);
-                }
-                else {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Please add request for change reason',
-                    })
-                }
-            });
-        }
-        return false;
-    });
-
-   
-});
-function post_update_cipl(status) {
-  
->>>>>>> 26aafb4 (Changes of P1-CIPL)
-    if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
-        var CategoryItem = $('#sparepartsCipl').val();
-    } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
-        var CategoryItem = $('#permanentCipl').val();
-    } else if ($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') {
-        var CategoryItem = $('#unitCipl').val();
-    }
-    var item = {
-        Data: {
-            Id: $('#idCipl').val(),
-            CiplNo: $('#noCipl').val(),
-            dateCipl: $('#dateCipl').val(),
-            Category: $('#jenisBarangCipl').val(),
-            ReferenceNo: $('#refCipl').val() === null ? "" : $('#refCipl').val().toString(),
-            CategoriItem: CategoryItem,
-            ExportType: $('#exportCipl').val(),
-            ExportTypeItem: $('#exportremarksCipl').val(),
-            refCipl: $('#refCipl').val(),
-            SoldConsignee: $('#soldConsigneeCipl').val(),
-            SoldToName: $('#consigneeNameCipl').val(),
-            SoldToAddress: $('#consigneeAddressCipl').val(),
-            SoldToCountry: $('#consigneeCountryCipl').val(),
-            SoldToTelephone: $('#consigneeTelpCipl').val(),
-            SoldToFax: $('#consigneeFaxCipl').val(),
-            SoldToPic: $('#consigneePicCipl').val(),
-            SoldToEmail: $('#consigneeEmailCipl').val(),
-
-            //SoldToName: $('#salesNameCipl').val(),
-            //SoldToAddress: $('#salesAddressCipl').val(),
-            //SoldToCountry: $('#salesCountryCipl').val(),
-            //SoldToTelephone: $('#salesTelpCipl').val(),
-            //SoldToFax: $('#salesFaxCipl').val(),
-            //SoldToPic: $('#salesPicCipl').val(),
-            //SoldToEmail: $('#salesEmailCipl').val(),
-
-            ShipDelivery: $('#shipDeliveryCipl').val(),
-            ConsigneeSameSoldTo: $('#ConsigneeSameSoldTo').val(),
-            ConsigneeName: $('#consigneeNameCipl').val(),
-            ConsigneeAddress: $('#consigneeAddressCipl').val(),
-            ConsigneeCountry: $("#consigneeCountryCipl").val(),
-            ConsigneeTelephone: $('#consigneeTelpCipl').val(),
-            ConsigneeFax: $('#consigneeFaxCipl').val(),
-            ConsigneePic: $('#consigneePicCipl').val(),
-            ConsigneeEmail: $('#consigneeEmailCipl').val(),
-            //consigneeCipl: $('#consigneeCipl').val(),
-            NotifyPartySameConsignee: $('#NotifyPartySameConsignee').val(),
-            NotifyName: $('#notifyNameCipl').val(),
-            NotifyAddress: $('#notifyAddressCipl').val(),
-            NotifyCountry: $('#notifyCountryCipl').val(),
-            NotifyTelephone: $('#notifyTelpCipl').val(),
-            NotifyFax: $('#notifyFaxCipl').val(),
-            NotifyPic: $('#notifyPicCipl').val(),
-            NotifyEmail: $('#notifyEmailCipl').val(),
-            Area: $('#areaCipl').val().split('-')[0].trim(),
-            Branch: $('#cabangCipl').val().split('-')[0].trim(),
-            Currency: $('#currencyCipl').val(),
-            Rate: $('#RateCipl').val(),
-            LcNoDate: $('#lcnoCipl').val() + ' - ' + $('#lcDateCipl').val(),
-            PaymentTerms: $('#paymentCipl').val(),
-            LoadingPort: $('#loadingCipl').val(),
-            DestinationPort: $('#destinationCipl').val(),
-            IncoTerm: $('#incoCipl').val(),
-            ShippingMethod: $('#shippingCipl').val(),
-            FreightPayment: $('#freightCipl').val(),
-            CountryOfOrigin: $('#countryCipl').val(),
-            ShippingMarks: $('#shippingMarkCipl').val(),
-            Remarks: $('#remarksCipl').val(),
-            inspectionCipl: $('#inspectionCipl').val(),
-            SpecialInstruction: $('#txtSpecialInscCipl').val(),
-            Status: status,
-            PickUpPic: $('#idPickupPic').val() === null || $('#idPickupPic').val() === "" ? "" : $('#idPickupPic').val().split('-')[0].trim(),
-            PickUpArea: $('#idPickupArea').val() === null || $('#idPickupArea').val() === "" ? "" : $('#idPickupArea').val().split('-')[0].trim(),
-            CategoryReference: $('#idCategoryReference').val(),
-            Consolidate: $('#ConsolidateCipl').val()
-        },
-        Forwader: {
-            Forwader: $('#forwaderCipl').val(),
-            Type: $('#typeCipl').val(),
-<<<<<<< HEAD
-<<<<<<< HEAD
             ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
@@ -3607,10 +3168,6 @@ $("#RequestForChangeHistoryCIPL").click(function () {
 });
 function post_update_cipl(status) {
   
-=======
-
-function post_update_cipl(status) {
->>>>>>> 639d8d0 (Intial commit)
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
@@ -3688,16 +3245,8 @@ function post_update_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
-<<<<<<< HEAD
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-            ExportShipmentType: $('#ExportShipmentType').val(),
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             Branch: $('#CkbBranchCipl').val(),
             Attention: $('#forwaderAttentionCipl').val(),
             Company: $('#forwaderCompanyCipl').val(),
@@ -3852,4 +3401,3 @@ function post_update_cipl_item(id, status) {
         }
     })
 }
-

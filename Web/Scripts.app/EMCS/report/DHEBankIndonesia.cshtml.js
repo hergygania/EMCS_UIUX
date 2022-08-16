@@ -1,25 +1,16 @@
-﻿var $table = $("#tbl-dhebi");
+﻿﻿var $table = $("#tbl-dhebi");
 
 $(function () {
     get_parameter_select();
        
     var columns = [
         {
-<<<<<<< HEAD
         //    field: "no",
         //    title: "No",
         //    align: 'center',
         //    valign: "middle",
         //    formatter: runningFormatter
         //}, {
-=======
-            field: "no",
-            title: "No",
-            align: 'center',
-            valign: "middle",
-            formatter: runningFormatter
-        }, {
->>>>>>> 639d8d0 (Intial commit)
             field: "NomorIdentifikasi",
             title: "No Identifikasi <br> (Transaction Reference)",
             align: "left",

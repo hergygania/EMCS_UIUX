@@ -1,4 +1,4 @@
-﻿using App.Data.Caching;
+﻿﻿using App.Data.Caching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +19,6 @@ namespace App.Service.EMCS
 
         public static Data.Domain.EMCS.ReturnSpInsert InsertSi(Data.Domain.EMCS.TaskSi item)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             try
             {
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -77,72 +75,6 @@ namespace App.Service.EMCS
             {
                 Console.WriteLine(err);
                 throw;
-=======
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-=======
-            try
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            {
-                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-                {
-                    db.DbContext.Database.CommandTimeout = 600;
-                    List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(new SqlParameter("@ID", item.Id));
-                    parameterList.Add(new SqlParameter("@IdCL", item.IdCl));
-                    parameterList.Add(new SqlParameter("@Description", item.Description ?? ""));
-                    parameterList.Add(new SqlParameter("@SpecialInstruction", item.SpecialInstruction ?? ""));
-                    parameterList.Add(new SqlParameter("@DocumentRequired", item.DocumentRequired ?? ""));
-                    parameterList.Add(new SqlParameter("@PicBlAwb", item.PicBlAwb ?? ""));
-                    parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
-                    parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
-                    parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
-                    parameterList.Add(new SqlParameter("@UpdateDate", ""));
-                    parameterList.Add(new SqlParameter("@IsDelete", false));
-                    parameterList.Add(new SqlParameter("@ExportType", "" ?? ""));
-                    SqlParameter[] parameters = parameterList.ToArray();
-                    // ReSharper disable once CoVariantArrayConversion
-
-                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete,@ExportType", parameters).FirstOrDefault();
-                    var gettype = GetExportShipmentType(item.IdCl);
-                    var exporttype = gettype.ExportShipmentType;
-                    var Status = "Submit";
-                    var actionBy = SiteConfiguration.UserName;
-                    var comment = item.Description;
-                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "', @exporttype='" + exporttype + "'");
-
-<<<<<<< HEAD
-                return data;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    return data;
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            
-
-        }
-        public static Data.Domain.EMCS.CiplForwader GetExportShipmentType(long id)
-        {
-            try
-            {
-                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-                {
-                    db.DbContext.Database.CommandTimeout = 600;
-                    List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(new SqlParameter("@IdCL", id ));
-                    SqlParameter[] parameters = parameterList.ToArray();
-                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.CiplForwader>(" exec [dbo].[SP_GetSiExportShipmentType] @IdCL", parameters).FirstOrDefault();
-                    return data;
-                }
-            }
-            catch (Exception err)
-            {
-                Console.WriteLine(err);
-                throw;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             }
         }
 
@@ -181,11 +113,7 @@ namespace App.Service.EMCS
                 return db.CreateRepository<Data.Domain.EMCS.ShippingInstructions>().CRUD(dml, itm);
             }
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 639d8d0 (Intial commit)
         public static Data.Domain.EMCS.ReturnSpInsert InsertBlAwb(Data.Domain.EMCS.TaskBlAwb item, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -210,7 +138,6 @@ namespace App.Service.EMCS
                 return data;
             }
         }
-<<<<<<< HEAD
         public static int SubmtiSI(Data.Domain.EMCS.TaskSi item)
         {
             try
@@ -232,7 +159,5 @@ namespace App.Service.EMCS
 
 
         }
-=======
->>>>>>> 639d8d0 (Intial commit)
     }
 }

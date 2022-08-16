@@ -1,4 +1,4 @@
-﻿$tableChangeHistory = $("#tableRequestForChangeDetail");
+﻿﻿$tableChangeHistory = $("#tableRequestForChangeDetail");
 
 var columnChangeHistory = [
   {

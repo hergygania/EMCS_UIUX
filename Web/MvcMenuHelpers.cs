@@ -1,4 +1,4 @@
-﻿using App.Data.Caching;
+﻿﻿using App.Data.Caching;
 using App.Data.Domain.Extensions;
 using System;
 using System.Collections.Generic;
@@ -95,7 +95,6 @@ namespace App.Web
 
             if (appUrl == "/")
                 appUrl = "";
-<<<<<<< HEAD
             string url = HttpContext.Current.Request.Url.AbsoluteUri;
             Uri url1 = new Uri(url);
             string host = url1.GetLeftPart(UriPartial.Authority);
@@ -110,26 +109,6 @@ namespace App.Web
                 baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
             }
             //baseUrl = string.Format("{0}://{1}:{2}{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, appUrl);
-=======
-
-<<<<<<< HEAD
-            baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
-<<<<<<< HEAD
->>>>>>> 639d8d0 (Intial commit)
-=======
-=======
-            if (!request.Url.Authority.Contains("localhost"))
-            {
-
-                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, "staging.mkindo.com:5181", appUrl);
-            }
-            else
-            {
-                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
-            }
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            //baseUrl = string.Format("{0}://{1}:{2}{3}", request.Url.Scheme, request.Url.Host, request.Url.Port, appUrl);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
             foreach (var menu in Menus)
             {
@@ -183,28 +162,12 @@ namespace App.Web
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public List<RoleAccessDetailsMenu> CreateDataMenu(int RoleID, int ViewHome)
-=======
-        public List<RoleAccessDetailsMenu> CreateDataMenu(int RoleID,int ViewHome)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public List<RoleAccessDetailsMenu> CreateDataMenu(int RoleID, int ViewHome)
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         {
             if (RoleID == 24)
                 ViewHome = 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             var menus = GetListMenuAccess(RoleID, ViewHome).OrderBy(p => p.OrderNo).ToList();
-=======
-            var menus = GetListMenuAccess(RoleID,ViewHome).OrderBy(p => p.OrderNo).ToList();
->>>>>>> 639d8d0 (Intial commit)
-=======
-            var menus = GetListMenuAccess(RoleID, ViewHome).OrderBy(p => p.OrderNo).ToList();
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
             List<RoleAccessDetailsMenu> hierarchy = new List<RoleAccessDetailsMenu>();
 

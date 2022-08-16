@@ -237,11 +237,11 @@
       
     var columns_peb = [
         {
-            field: "id",
-            title: "No",
-            formatter: runningFormatter,
-            align: 'center'
-        },{
+        //    field: "id",
+        //    title: "No",
+        //    formatter: runningFormatter,
+        //    align: 'center'
+        //},{
             field: "IdCl",
             title: "IdCl",
             visible: false,
@@ -251,19 +251,20 @@
             title: "Action",
             align: "center",
             sortable: true,
+            class: "text-nowrap",
             width: "160",
             events: window.operateEvents,
             formatter: function (data, row, index) {
                 var btn = [];
                 btn.push('<div class="">');
                 if (row.StatusViewByUser === 'Waiting NPE & PEB approval' || row.StatusViewByUser === 'Waiting approval draft PEB' || row.StatusViewByUser === 'Waiting approval NPE') {
-                    btn.push("<button class='btn btn-xs btn-success btn-approve-npe' data-toggle='tooltip' data-placement='top' title='Approve & Reject Npe Peb'><i class='fa fa-check'></i></button>");
-                    btn.push("<button class='btn btn-xs btn-info btn-view-npe' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>")
+                    btn.push("<button class='btn btn-success btn-link btn-sm btn-approve-npe' data-toggle='tooltip' data-placement='top' title='Approve & Reject Npe Peb'><i class='fa fa-check'></i></button>");
+                    btn.push("<button class='btn btn-info btn-link btn-sm btn-view-npe' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>")
                     //btn.push("<button class='btn btn-xs btn-warning btn-revise-npe' data-toggle='tooltip' data-placement='top' title='Revise Npe Peb'><i class='fa fa-pencil'></i></button>")
                 } else if (row.StatusViewByUser === 'Waiting for NPE & PEB' || row.StatusViewByUser === 'Need revision review by imex' || row.StatusViewByUser === 'Waiting NPE document') {
-                    btn.push("<button class='btn btn-xs btn-default btn-create-npe' data-toggle='tooltip' data-placement='top' title='Create Npe Peb'><i class='fa fa-pencil'></i></button>");
+                    btn.push("<button class='btn btn-xs btn-success btn-link btn-create-npe' data-toggle='tooltip' data-placement='top' title='Create Npe Peb'><i class='tim-icons icon-simple-add'></i></button>");
                 } else {
-                    btn.push("<button class='btn btn-xs btn-info btn-view-npe btn-info' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>")
+                    btn.push("<button class='btn btn-xs btn-info btn-link btn-sm btn-view-npe' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>")
                 }
                 
                 btn.push('</div>');

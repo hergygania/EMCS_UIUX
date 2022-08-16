@@ -1,35 +1,21 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using App.Web.App_Start;
 using System.IO;
 using App.Web.Models.EMCS;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using App.Web.Helper;
 using App.Domain;
 using App.Data.Domain;
 using System.ComponentModel;
 using App.Data.Domain.EMCS;
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-using App.Web.Helper;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult ShippingInstructionList()
         {
             ApplicationTitle();
@@ -40,10 +26,6 @@ namespace App.Web.Controllers.EMCS
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "ShippingInstructionList")]
         public JsonResult GetShippingInstructionList(GridListFilterModel filter)
         {
@@ -57,11 +39,6 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcShippingInstruction.SIList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         public ActionResult SubmitSi(Data.Domain.EMCS.GridListFilter filter)
         {
@@ -79,7 +56,6 @@ namespace App.Web.Controllers.EMCS
             var detail = new CargoModel();
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(id);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
-<<<<<<< HEAD
 
             var DataSi = Service.EMCS.SvcShippingInstruction.GetById(id.ToString());
             if (DataSi != null)
@@ -87,8 +63,6 @@ namespace App.Web.Controllers.EMCS
             else
                 detail.DataSi = new ShippingInstructions();
 
-=======
->>>>>>> 639d8d0 (Intial commit)
             return View(detail);
         }
 
@@ -134,8 +108,6 @@ namespace App.Web.Controllers.EMCS
             return View();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public ActionResult ShippingInstructionView(long cargoId = 1 )
         {
 
@@ -175,59 +147,6 @@ namespace App.Web.Controllers.EMCS
             {
                 throw ex;
             }
-=======
-        public ActionResult ShippingInstructionView(long cargoId = 1)
-=======
-        public ActionResult ShippingInstructionView(long cargoId = 1 )
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-        {
-
-            try
-            {
-<<<<<<< HEAD
-                Header = Service.EMCS.DocumentStreamGenerator.GetCargoSiHeader(NewCargoId),
-                Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId),
-                Item = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetailItem(NewCargoId),
-                ContainerTypes = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId).Select(i=>i.ContainerDescription).Distinct().ToList()
-            };
-            return View(data);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                ApplicationTitle();
-                string strQrCodeUrlEDI = Common.GenerateQrCode(cargoId, "downloadsl");
-                ViewBag.QrCodeUrlSI = strQrCodeUrlEDI;
-                TempData["QrCodeUrlSI"] = strQrCodeUrlEDI;
-                TempData.Peek("QrCodeUrlSI");
-                ViewBag.AllowRead = AuthorizeAcces.AllowRead;
-                ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
-                ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
-                ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-                ViewBag.CargoID = cargoId;
-                var GetCargoId = Service.EMCS.SvcShippingInstruction.GetIdSi(cargoId);
-                long NewCargoId = Convert.ToInt64(GetCargoId.IdCl);
-                ViewBag.IdCargo = NewCargoId;
-                ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("si", cargoId);
-                PaginatorBoot.Remove("SessionTRN");
-
-                Service.EMCS.DocumentStreamGenerator.GetCargoSi(NewCargoId);
-                ViewBag.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(NewCargoId);
-                ViewBag.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(NewCargoId);
-
-                CargoSiModel data = new CargoSiModel
-                {
-                    Header = Service.EMCS.DocumentStreamGenerator.GetCargoSiHeader(NewCargoId),
-                    Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId),
-                    Item = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetailItem(NewCargoId),
-                    ContainerTypes = Service.EMCS.DocumentStreamGenerator.GetCargoSiDetail(NewCargoId).Select(i => i.ContainerDescription).Distinct().ToList()
-                };
-                return View(data);
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         }
 
         public ActionResult ReportSi(long clId, string reportType)
@@ -251,7 +170,6 @@ namespace App.Web.Controllers.EMCS
         {
             ViewBag.crudMode = "U";
             var item = Service.EMCS.SvcShippingInstruction.GetById(form.IdCl);
-<<<<<<< HEAD
             if(SiteConfiguration.UserName != item.CreateBy)
             {
                 var requestForChange = new RequestForChange();
@@ -296,8 +214,6 @@ namespace App.Web.Controllers.EMCS
         {
             ViewBag.crudMode = "U";
             var item = Service.EMCS.SvcShippingInstruction.GetById(form.IdCl);
-=======
->>>>>>> 639d8d0 (Intial commit)
             item.DocumentRequired = form.DocumentRequired;
             item.SpecialInstruction = form.SpecialInstruction;
             Service.EMCS.SvcRequestSi.Update(item, ViewBag.crudMode);

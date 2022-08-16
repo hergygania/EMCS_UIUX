@@ -1,4 +1,4 @@
-﻿var $table = $('#tableProblemCategory');
+﻿﻿var $table = $('#tableProblemCategory');
 
 $(function () {
 
@@ -73,7 +73,6 @@ function operateFormatter(options) {
     var btn = [];
     btn.push('<div class="btn-group">');
     if (options.Add === true)
-<<<<<<< HEAD
         btn.push('<button type="button" class="btn btn-success btn-link new" title="Add"><i class="tim-icons icon-simple-add"></i></button>');
     if (options.Edit === true)
         btn.push('<button type="button" class="btn btn-info btn-link edit" title="Edit"><i class="tim-icons icon-pencil"></i></button>');
@@ -83,17 +82,6 @@ function operateFormatter(options) {
         btn.push('<button type="button" class="btn btn-primary btn-link upload" title="Upload"><i class="tim-icons icon-cloud-upload-94"></i></button>');
     if (options.Delete === true)
         btn.push('<button type="button" class="btn btn-danger btn-link remove" title="Delete"><i class="tim-icons icon-simple-remove"></i></button>');
-=======
-        btn.push('<button type="button" class="btn btn-success new" title="Add"><i class="fa fa-plus"></i></button>');
-    if (options.Edit === true)
-        btn.push('<button type="button" class="btn btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
-    //if (options.Preview === true)
-    //    btn.push('<button type="button" class="btn btn-default info" title="Info"><i class="fa fa-eye"></i></button>');
-    if (options.Upload === true)
-        btn.push('<button type="button" class="btn btn-primary upload" title="Upload"><i class="fa fa-upload"></i></button>');
-    if (options.Delete === true)
-        btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
->>>>>>> 639d8d0 (Intial commit)
     btn.push('</div>');
     return btn.join('');
 }

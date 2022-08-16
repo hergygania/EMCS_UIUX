@@ -1,4 +1,4 @@
-﻿$table = $('#TblGoodReceive');
+﻿﻿$table = $('#TblGoodReceive');
 $searchInput = $("#txtSearchData").val();
 
 window.operateEvents = {
@@ -55,24 +55,16 @@ function formatterGR(data, row, index) {
     var btnDelete = "";
     var btnPreview = "";
     if (row.Status === "Draft" || row.Status === "Revise") {
-<<<<<<< HEAD
         btnEdit = "<button class='btn edit btn-xs btn-link btn-info'><i class='tim-icons icon-pencil'></i></button>";
         btnDelete = "<button class='btn delete btn-xs btn-link btn-danger remove'><i class='tim-icons icon-simple-remove'></i></button>";
     } else {
         btnPreview = "<button class='btn preview btn-xs btn-link btn-success'><i class='tim-icons icon-zoom-split'></i></button>";
-=======
-        btnEdit = "<button class='btn edit btn-xs btn-primary'><i class='fa fa-edit'></i></button>";
-        btnDelete = "<button class='btn delete btn-xs btn-danger remove'><i class='fa fa-times'></i></button>";
-    } else {
-        btnPreview = "<button class='btn preview btn-xs btn-default'><i class='fa fa-search'></i></button>";
->>>>>>> 639d8d0 (Intial commit)
     }
     return ["<div>", btnEdit, btnDelete, btnPreview, "</div>"].join(" ");
 }
 
 var columnList = [
     {
-<<<<<<< HEAD
     //    field: '',
     //    title: 'No',
     //    halign: 'center',
@@ -81,16 +73,6 @@ var columnList = [
     //    formatter: runningFormatter,
     //    sortable: true
     //}, {
-=======
-        field: '',
-        title: 'No',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        formatter: runningFormatter,
-        sortable: true
-    }, {
->>>>>>> 639d8d0 (Intial commit)
         field: 'Id',
         title: 'Action',
         halign: 'center',

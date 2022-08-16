@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -36,8 +36,6 @@ namespace App.Web.Controllers.EMCS
 
             var filter = new GridListFilter();
             filter.Username = SiteConfiguration.UserName;
-<<<<<<< HEAD
-<<<<<<< HEAD
             ViewBag.IsImexUser = false;
             string userRoles = User.Identity.GetUserRoles();
             if (userRoles.Contains("EMCSRequestor") || userRoles.Contains("Imex"))
@@ -47,20 +45,11 @@ namespace App.Web.Controllers.EMCS
                 ViewBag.IsEditAllowed = true;
             else
                 ViewBag.IsEditAllowed = false;
-=======
->>>>>>> 639d8d0 (Intial commit)
 
-=======
-            ViewBag.IsImexUser = false;
-            if(User.Identity.GetUserRoles().Contains("EMCSRequestor") || User.Identity.GetUserRoles().Contains("Imex"))
-                ViewBag.IsImexUser = true;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             dynamic allCount = new ExpandoObject();
             allCount.Cipl = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             allCount.Gr = Service.EMCS.SvcRequestGr.GetTotalList(filter);
             allCount.Cl = Service.EMCS.SvcRequestCl.GetTotalList(filter);
-<<<<<<< HEAD
-<<<<<<< HEAD
             allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
             allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
             allCount.Bl = Service.EMCS.SvcRequestCl.GetBlTotalList(filter);
@@ -75,29 +64,6 @@ namespace App.Web.Controllers.EMCS
             ViewBag.FormId = formid;
             return View();
         }
-=======
-            allCount.Npe = Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
-=======
-            allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
-            allCount.Bl = Service.EMCS.SvcRequestCl.GetBlTotalList(filter);
-            //allCount.RFC = Service.EMCS.SvcRequestCl.GetRFCTotalList();
-            return View(allCount);
-        }
-<<<<<<< HEAD
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public ActionResult RequestForChangeDetail(string formtype,int id,int formid)
-        {
-            ViewBag.AppTitle = "Request For Change";
-            ViewBag.FormType = formtype;
-            ViewBag.RFCId = id;
-            ViewBag.FormId = formid;
-            return View();
-        }
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult TaskCipl()
         {
             ViewBag.AppTitle = "Export Monitoring & Control System";
@@ -114,10 +80,6 @@ namespace App.Web.Controllers.EMCS
             var total = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             return Json(new { total, rows = data }, JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public JsonResult RejectChangeHistory(string idterm,string reason)
         {
@@ -125,11 +87,6 @@ namespace App.Web.Controllers.EMCS
             Service.EMCS.SvcCipl.RejectRequestForChangeHistory(Convert.ToInt32(idterm), reason);
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public JsonResult GetTaskClData(GridListFilter filter)
@@ -191,10 +148,6 @@ namespace App.Web.Controllers.EMCS
             string fileName = "";
             if (Request.Files.Count > 0)
             {
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
                 var file = Request.Files[0];
 
                 if (file != null && file.ContentLength > 0)
@@ -230,7 +183,6 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-<<<<<<< HEAD
         public ActionResult SubmitSi(TaskSi form)
         {
             try
@@ -245,8 +197,6 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-=======
->>>>>>> 639d8d0 (Intial commit)
         public ActionResult TaskSi(TaskSi form)
         {
             try

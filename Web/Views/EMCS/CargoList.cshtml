@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 @{
     Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Cargo List";
@@ -16,12 +16,6 @@
         left: 0 !important;
     }
 
-    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
-        margin-left: 0 !important;
-    }
-    .dropdown-menu.dropdown-menu-right {
-        left: 0 !important;
-    }
     .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
         margin-left: 0 !important;
     }
@@ -45,8 +39,8 @@
             @{
                 if (ViewBag.AllowCreate)
                 {
-                    <a class="btn btn-success" href="/EMCS/CargoForm" id="btnCreate">
-                        <i class="fa fa-plus"></i> Add New
+                    <a class="btn btn-success animation-on-hover btn-round" href="/EMCS/CargoForm" id="btnCreate">
+                        <i class="fa fa-plus"></i> Add new
                     </a>
                 }
             }
@@ -54,13 +48,12 @@
                 <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: auto;">
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
+        <div class="box">
+            <div class="box-body">
                 <div class="table-responsive">
-                    <table class="table tablesorter table-bordered" id="tableCargo"></table>
+                    <table class="" id="tableCargo"></table>
 
                 </div>
-            </form>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-﻿using App.Data.Caching;
+﻿﻿using App.Data.Caching;
 using App.Data.Domain.Extensions;
 using System;
 using System.Collections.Generic;
@@ -121,13 +121,13 @@ namespace App.Web
 
                 if (menu.children.Count() <= 0)
                 {
-                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p class=\"\" style=\"color: #666d7d;\">" + menu.Name + "</p>");
                     sb.AppendLine("</a>");
                 }
                 else
                 {
-                    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"collapsed\" aria-expanded=\"false\">");
-                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "<b class=\"caret\"></b></p>");
+                    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"\" aria-expanded=\"false\">");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
                     sb.AppendLine("</a>");
                     sb.AppendLine("<div class=\"\" id=\"menu" + menu.ID + "\">");
                     sb.AppendLine("<ul class=\"\">");

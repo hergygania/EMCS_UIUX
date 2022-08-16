@@ -244,11 +244,11 @@
     };
     var columns_si = [
         {
-            field: "IdCl",
-            formatter: runningFormatter,
-            title: "No",
-            align: 'center'
-        }, {
+        //    field: "IdCl",
+        //    formatter: runningFormatter,
+        //    title: "No",
+        //    align: 'center'
+        //}, {
             field: "",
             title: "Action",
             align: "center",
@@ -259,7 +259,7 @@
                 var btn = [];
                 btn.push('<div class="btn-group">');
                 //btn.push("<button class='btn btn-xs btn-primary si-submit' title='Input' data-target='#InputInstruction' data-toggle='modal'><i class='fa fa-search'></i></button>");
-                btn.push("<button class='btn btn-xs btn-info' id='si-submit' title='Info' ><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-success btn-link btn-sm' id='si-submit' title='Info' ><i class='tim-icons icon-zoom-split'></i></button>");
                 btn.push('</div>');
                 return btn.join('');
             }

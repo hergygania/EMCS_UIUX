@@ -1,4 +1,4 @@
-﻿$tableChangeHistory = $("#tbl-task-rfc");
+﻿﻿$tableChangeHistory = $("#tbl-task-rfc");
 
 var columnChangeHistory = [
   {

@@ -547,6 +547,59 @@ namespace App.Service.EMCS
 
             return 0;
         }
+        public static long UpdateCargoByApprover(CargoFormData item, string dml)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@CargoId", item.Id));
+                    parameterList.Add(new SqlParameter("@Consignee", item.Consignee ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyParty", item.NotifyParty ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportType", item.ExportType ?? ""));
+                    parameterList.Add(new SqlParameter("@Category", item.Category ?? ""));
+                    parameterList.Add(new SqlParameter("@Incoterms", item.Incoterms ?? ""));
+                    parameterList.Add(new SqlParameter("@StuffingDateStarted", item.StuffingDateStarted.HasValue ? (object)item.StuffingDateStarted : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@StuffingDateFinished", item.StuffingDateFinished.HasValue ? (object)item.StuffingDateFinished : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ETA", item.Eta.HasValue ? (object)item.Eta : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ETD", item.Etd.HasValue ? (object)item.Eta : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@VesselFlight", item.VesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@ConnectingVesselFlight", item.ConnectingVesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@VoyageVesselFlight", item.VoyageVesselFlight ?? ""));
+                    parameterList.Add(new SqlParameter("@VoyageConnectingVessel", item.VoyageConnectingVessel ?? ""));
+                    parameterList.Add(new SqlParameter("@PortOfLoading", item.PortOfLoading ?? ""));
+                    parameterList.Add(new SqlParameter("@PortOfDestination", item.PortOfDestination ?? ""));
+                    parameterList.Add(new SqlParameter("@SailingSchedule", item.SailingSchedule.HasValue ? (object)item.SailingSchedule : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@ArrivalDestination", item.ArrivalDestination.HasValue ? (object)item.ArrivalDestination : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@BookingNumber", item.BookingNumber ?? ""));
+                    parameterList.Add(new SqlParameter("@BookingDate", item.BookingDate.HasValue ? (object)item.BookingDate : DBNull.Value));
+                    parameterList.Add(new SqlParameter("@Liner", item.Liner ?? ""));
+                    parameterList.Add(new SqlParameter("@Status", item.Status ?? ""));
+                    parameterList.Add(new SqlParameter("@ActionBy", SiteConfiguration.UserName));
+
+                    if (item.Referrence != null)
+                        parameterList.Add(new SqlParameter("@Referrence", string.Join(",", item.Referrence.ToArray())));
+                    else
+                        parameterList.Add(new SqlParameter("@Referrence", ""));
+
+                    parameterList.Add(new SqlParameter("@CargoType", item.CargoType ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMethod", item.ShippingMethod ?? ""));
+                    SqlParameter[] parameters = parameterList.ToArray();
+
+                    // ReSharper disable once CoVariantArrayConversion
+                    var data = db.DbContext.Database.SqlQuery<IdData>(" exec [dbo].[sp_update_cargo_ByApprover] @CargoId, @Consignee, @NotifyParty, @ExportType, @Category, @Incoterms, @StuffingDateStarted, @StuffingDateFinished, @ETA, @ETD, @VesselFlight, @ConnectingVesselFlight, @VoyageVesselFlight, @VoyageConnectingVessel, @PortOfLoading, @PortOfDestination, @SailingSchedule, @ArrivalDestination, @BookingNumber, @BookingDate, @Liner, @Status, @ActionBy, @Referrence, @CargoType, @ShippingMethod", parameters).FirstOrDefault();
+                    if (data != null) return data.Id;
+                }
+                catch (Exception ex)
+                {
+                    string a = ex.Message;
+                }
+            }
+
+            return 0;
+        }
 
         public static long ApprovalRequest(CargoFormData item, string dml)
         {

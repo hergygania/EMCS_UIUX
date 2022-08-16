@@ -1,4 +1,5 @@
 ﻿var visible = false;
+
 if (CargoTypeName === "Full Container Load") {
     visible = true;
 }
@@ -21,6 +22,7 @@ getTotalData();
 
 
 function ReviseProblem(Status, IdRequest, Notes, statusName) {
+
     $.ajax({
         url: myApp.fullPath + "EMCS/CargoApprove",
         type: "Post",

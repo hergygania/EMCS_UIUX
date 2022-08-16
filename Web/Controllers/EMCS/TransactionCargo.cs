@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -66,19 +66,9 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsUpdated, UrlMenu = "CargoList")]
-
         public ActionResult UpdateCargo(long cargoId, bool rfc = false)
         {
             var userId = User.Identity.GetUserId();
-            ApplicationTitle();
-            ViewBag.CargoID = cargoId;
-            string userRoles = User.Identity.GetUserRoles();
-            HttpContext.Session["Cargoid"] = cargoId;
-        }
-
-        public ActionResult UpdateCargo(long cargoId)
-        {
-
             ApplicationTitle();
             ViewBag.CargoID = cargoId;
             string userRoles = User.Identity.GetUserRoles();
@@ -87,6 +77,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+
             ViewBag.IsApprover = false;
             ViewBag.CanRequestForChange = false;
             if (Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId))
@@ -101,6 +92,7 @@ namespace App.Web.Controllers.EMCS
                 else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex")))
                     ViewBag.IsApprover = true;
             }
+
             if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
@@ -109,10 +101,6 @@ namespace App.Web.Controllers.EMCS
             if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
                 ViewBag.CanRequestForChange = false;
             else if(rfc)
-                ViewBag.CanRequestForChange = true;
-            if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
-                ViewBag.CanRequestForChange = false;
-            else
                 ViewBag.CanRequestForChange = true;
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
@@ -271,18 +259,10 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
+
                 var Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                 if (item.Id == 0)
                     item.Id = Id;
-                var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
-                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
-                long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
-                CargoItem a = new CargoItem();
-                a.IdCargo = id;
-                CheckCNNo(a);
-                var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
-                var ss = Service.EMCS.SvcCargo.CiplItemAvailable(id);
-                item.Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                 var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
                 var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
                 return JsonCRUDMessage("I", new { cargoData });
@@ -541,19 +521,6 @@ namespace App.Web.Controllers.EMCS
                 //{
                 //    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
                 //}
-                if (Service.EMCS.SvcCargo.CiplItemAvailable(item.Id) || item.Status == "Draft")
-
-                var userId = User.Identity.GetUserId();
-                if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
-                {
-                    long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
-                    var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
-                    return JsonCRUDMessage("I", new { cargoData });
-                }
-                else
-                {
-                    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
-                }
             }
             catch (Exception ex)
             {
@@ -930,13 +897,14 @@ namespace App.Web.Controllers.EMCS
             }
 
         }
-        
         //public JsonResult GetCargotype(int  cargotype)
         //{
         //    string data = "";
         //    App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
         //    try
         //    {
+
+
         //        m = Service.EMCS.SvcCargo.GetCargoType(cargotype);
         //        data = m.Description;
         //    }
@@ -944,7 +912,12 @@ namespace App.Web.Controllers.EMCS
         //    {
         //         data = ex.Message;
         //    }
+
         //    return Json(data);
+
+
+
+
         //}
     }
 }

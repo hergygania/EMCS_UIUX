@@ -1,16 +1,10 @@
-﻿@{
-<<<<<<< HEAD
+﻿﻿@{
     Layout = "~/Views/EMCS/_Layout.cshtml";
-=======
->>>>>>> 639d8d0 (Intial commit)
     ViewBag.Title = "Master Superior";
 }
 
 @using System.Web.Mvc
-<<<<<<< HEAD
 @Styles.Render("~/Content/EMCS/Custom.css")
-=======
->>>>>>> 639d8d0 (Intial commit)
 @*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
 
 <script type="text/javascript">
@@ -48,11 +42,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-<<<<<<< HEAD
                             <a class="btn btn-success btn-round animation-on-hover" data-modal="" href="/EMCS/SuperiorCreate" id="btnCreate">
-=======
-                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/SuperiorCreate" id="btnCreate">
->>>>>>> 639d8d0 (Intial commit)
                                 <i class="fa fa-plus"></i> Add New
                             </a>
                         }
@@ -71,11 +61,7 @@
     <i class="fa fa-edit"></i> Update Superior
 </a>
 
-<<<<<<< HEAD
 <div id='myModalPlace' class='modal'>
-=======
-<div id='myModalPlace' class='modal fade in'>
->>>>>>> 639d8d0 (Intial commit)
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>
@@ -89,4 +75,3 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/SuperiorList.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
-

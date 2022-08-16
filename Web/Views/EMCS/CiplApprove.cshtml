@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.CiplModel
+﻿﻿@model  App.Web.Models.EMCS.CiplModel
 @{
     Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Commercial Invoice Packing List Approve";
@@ -64,7 +64,6 @@
     <div class="col-md-12">
         @Html.Partial("~/Views/EMCS/Wizard.cshtml")
     </div>
-<<<<<<< HEAD
     <div class="col-md-12 pt-3">
         <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
             <nav class="tabs">
@@ -91,54 +90,6 @@
                 <div role="tabpanel" class="tab-pane" id="changehistory">
                     @Html.Partial("CiplTabChangeHistory")
                 </div>
-=======
-    <div class="col-md-12">
-        <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                </li>
-                <li role="presentation">
-                    <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                </li>
-                <li role="presentation">
-                    <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                </li>
-                <li role="presentation">
-                    <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                </li>
-                <li role="presentation">
-                    <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                </li>
-                <li role="presentation">
-                    <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                </li>
-                <li role="presentation">
-                    <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                </li>
-                <li class="hidden" role="presentation">
-                    <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content tabs-custom">
-                <div role="tabpanel" class="tab-pane active" id="invoice">
-                    @Html.Partial("CiplTabInvoice", Model)
-                </div>
-
-                <div role="tabpanel" class="tab-pane" id="history">
-                    @Html.Partial("CiplTabHistory")
-                </div>
-<<<<<<< HEAD
-                <div role="tabpanel" class="tab-pane" id="Changehistory">
-                    @Html.Partial("CiplTabChangeHistory")
-                </div>
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-               
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 <div role="tabpanel" class="tab-pane" id="problemhistory">
                     @Html.Partial("CiplTabProblemHistory")
                 </div>
@@ -165,21 +116,12 @@
             </div>
             <div class="row">
                 <div class="col-md-6 pull-right">
-<<<<<<< HEAD
                     <div class="form-group" style="margin-top:20px">
                         <div class="" role="group">
                             <button type="button" class="btn btn-round btn-success" id="btnApprove"><i class="fa fa-paper-plane"></i> Approve</button>
                             <button type="button" class="btn btn-round btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
                             <button type="button" class="btn btn-round btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
                             <a href="/emcs/mytask" class="btn btn-round btn-danger"><i class="fa fa-times"></i> Cancel</a>
-=======
-                    <div class="form-group pull-right" style="margin-top:20px">
-                        <div class="" role="group">
-                            <button type="button" class="btn btn-success" id="btnApprove"><i class="fa fa-paper-plane"></i> Approve</button>
-                            <button type="button" class="btn btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
-                            <button type="button" class="btn btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
-                            <a href="/emcs/mytask" class="btn btn-primary"><i class="fa fa-times"></i> Cancel</a>
->>>>>>> 639d8d0 (Intial commit)
                         </div>
                     </div>
                 </div>
@@ -260,14 +202,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplHistory.cshtml.js")"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/ChangeHistory.cshtml.js")"></script>
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplChangeHistory.cshtml.js")"></script>
->>>>>>> 26aafb4 (Changes of P1-CIPL)
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplDocuments.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplItem.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")"></script>
@@ -366,7 +301,6 @@
 
     </script>
 }
-<<<<<<< HEAD
 
 <script>
     var tabs = $('.tabs');
@@ -391,5 +325,3 @@
         });
     });
 </script>
-=======
->>>>>>> 639d8d0 (Intial commit)

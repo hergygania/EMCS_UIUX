@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.CargoModel
+﻿﻿@model  App.Web.Models.EMCS.CargoModel
 @{
     ViewBag.Title = "Cargo View";
     ViewBag.TypeReq = "Cargo";
@@ -9,11 +9,7 @@
 
 @Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
-<<<<<<< HEAD
 <input type="hidden" name="formType" id="formType" value="Cargo" />
-=======
-
->>>>>>> 639d8d0 (Intial commit)
 @*<div class="row">*@
 <div class="col-md-12">
     @Html.Partial("~/Views/EMCS/Wizard.cshtml")
@@ -23,11 +19,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-<<<<<<< HEAD
                 <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" da ta-toggle="tab">Cargo List</a>
-=======
-                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Cargo List</a>
->>>>>>> 639d8d0 (Intial commit)
             </li>
             <li role="presentation">
                 <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Cargo History</a>
@@ -35,12 +27,9 @@
             <li role="presentation">
                 <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
             </li>
-<<<<<<< HEAD
             <li role="presentation">
                 <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
             </li>
-=======
->>>>>>> 639d8d0 (Intial commit)
             @if (Model.TemplateHeader != null)
             {
                 <li role="presentation">
@@ -92,19 +81,11 @@
                                         </div>
                                     </div>
                                     @*<div class="form-group">
-<<<<<<< HEAD
                                     <label class="col-sm-4">Kppbc</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
                                     </div>
                                 </div>*@
-=======
-                                            <label class="col-sm-4">Kppbc</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
-                                            </div>
-                                        </div>*@
->>>>>>> 639d8d0 (Intial commit)
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -230,19 +211,11 @@
                                 </div>
                                 <div class="col-lg-6">
                                     @*<div class="form-group">
-<<<<<<< HEAD
                                     <label class="col-sm-4">ETA</label>
                                     <div class="col-sm-8">
                                         <input class="form-control" id="eta" name="eta" value="@Model.data.ETA.Value.ToString("dd MMM yyyy")" disabled>
                                     </div>
                                 </div>*@
-=======
-                                            <label class="col-sm-4">ETA</label>
-                                            <div class="col-sm-8">
-                                                <input class="form-control" id="eta" name="eta" value="@Model.data.ETA.Value.ToString("dd MMM yyyy")" disabled>
-                                            </div>
-                                        </div>*@
->>>>>>> 639d8d0 (Intial commit)
                                     <div class="form-group">
                                         <label class="col-sm-4">Liner</label>
                                         <div class="col-sm-8">
@@ -324,13 +297,9 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div role="tabpanel" class="tab-pane" id="changehistory">
                 @Html.Partial("CiplTabChangeHistory")
             </div>
-=======
-
->>>>>>> 639d8d0 (Intial commit)
             <div role="tabpanel" class="tab-pane" id="documents">
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
@@ -673,10 +642,7 @@
 @Styles.Render("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")
 @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
 <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
-<<<<<<< HEAD
 <script src="@Url.Content("~/Scripts.app/EMCS/transaction/ChangeHistory.cshtml.js")"></script>
-=======
->>>>>>> 639d8d0 (Intial commit)
 <script>
     var wizardState = "@ViewBag.WizardData.Progress";
     var CargoTypeName = "@Model.Data.CargoTypeName";
@@ -692,10 +658,7 @@
     @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
     @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
     @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoApproval.cshtml.js")

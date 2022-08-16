@@ -1,4 +1,4 @@
-﻿function ApproveBlAwb(obj) {
+﻿﻿function ApproveBlAwb(obj) {
     $.ajax({
         url: "/EMCS/BlAwbApproval",
         type: "POST",
@@ -33,7 +33,6 @@ window.operateEvents = {
 
 var columns_bl = [
     {
-<<<<<<< HEAD
     //    field: "id",
     //    title: "No",
     //    align: 'center',
@@ -44,23 +43,11 @@ var columns_bl = [
         align: "left",
         sortable: true,
         class: "text-nowrap",
-=======
-        field: "id",
-        title: "No",
-        align: 'center',
-        formatter: runningFormatter
-    }, {
-        field: "",
-        title: "Action",
-        align: "center",
-        sortable: true,
->>>>>>> 639d8d0 (Intial commit)
         width: "160",
         events: window.operateEvents,
         formatter: function (data, row, index) {
             console.log(row);
             var btn = [];
-<<<<<<< HEAD
             btn.push('<div class="flex gap-x-1.5 items-center">'); 
             if (row['StatusViewByUser'] === 'Waiting for BL or AWB' || row['StatusViewByUser'] === 'Need revision review by imex' || row['StatusViewByUser'] === 'BL or AWB need revision') {
                 btn.push("<button class='btn-action btn-amber btn-create-bl'><i class='uil uil-edit'></i></button>");
@@ -70,17 +57,6 @@ var columns_bl = [
                 btn.push("<button class='btn-action btn-blue btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='uil uil-search'></i></button>");
             } else {
                 btn.push("<button class='btn-action btn-blue btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='uil uil-search'></i></button>");
-=======
-            btn.push('<div>'); 
-            if (row['StatusViewByUser'] === 'Waiting for BL or AWB' || row['StatusViewByUser'] === 'Need revision review by imex' || row['StatusViewByUser'] === 'BL or AWB need revision') {
-                btn.push("<button class='btn btn-info btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
-            } else if (row['StatusViewByUser'] === 'Waiting for BL or AWB approval') {
-                btn.push("<button class='btn btn-success btn-xs btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
-                //btn.push("<button class='btn btn-warning btn-xs btn-revise-bl' data-toggle='tooltip' title='Revise'><i class='fa fa-pencil'></i></button>");
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl btn-info' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
-            } else {
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl btn-info' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
->>>>>>> 639d8d0 (Intial commit)
             }  
             
             btn.push('</div>');
@@ -111,7 +87,6 @@ var columns_bl = [
         title: "Forwarder",
         sortable: true
     }, {
-<<<<<<< HEAD
         field: "SlNo",
         title: "SL No.",
         sortable: true
@@ -121,8 +96,6 @@ var columns_bl = [
         sortable: true
     },
     {
-=======
->>>>>>> 639d8d0 (Intial commit)
         field: "PortOfLoading",
         title: "Loading Port",
         sortable: true
@@ -154,7 +127,6 @@ $("#tbl-task-bl").bootstrapTable({
     showRefresh: true,
     smartDisplay: false,
     pageSize: '5',
-<<<<<<< HEAD
     loadingFontSize: "16px",
     classes: "",
     icons: {
@@ -168,8 +140,6 @@ $("#tbl-task-bl").bootstrapTable({
       detailOpen: "uil uil-plus",
       detailClose: "uil uil-minus",
     },
-=======
->>>>>>> 639d8d0 (Intial commit)
     formatNoMatches: function () {
         return '<span class="noMatches">-</span>';
     },

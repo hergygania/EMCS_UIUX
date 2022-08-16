@@ -191,11 +191,11 @@
 =======
     var columnsCargo = [
         {
-            field: "Id",
-            title: "No",
-            align: 'center',
-            formatter: runningFormatter
-        }, {
+        //    field: "Id",
+        //    title: "No",
+        //    align: 'center',
+        //    formatter: runningFormatter
+        //}, {
             field: "IdCl",
             title: "IdCl",
             visible: false,
@@ -211,14 +211,14 @@
                 console.log(row);
                 var btn = [];
                 btn.push('<div class="btn-group">');
-                btn.push('<div class="btn-group">');
                 if (row.Status === "Revise") {
-
-                    btn.push('<a href="/EMCS/UpdateCargo?CargoID=' + row.IdCl + '" class="btn btn-info btn-xs"><i class="fa fa-edit" alt="Show GR"></i></a>');
+                    if (Boolean($("#IsEditAllowed").val())) {
+                        btn.push('<a href="/EMCS/UpdateCargo?CargoID=' + row.IdCl + '" class="btn btn-info btn-link btn-xs"><i class="tim-icons icon-pencil" alt="Show GR"></i></a>');
+                    }
                 } else {
-                    btn.push('<a href="/EMCS/CargoApproval/?Id=' + parseInt(row.IdCl) + '" class="btn btn-info btn-xs"><i class="fa fa-search" alt="Show GR"></i></a>');
+                    btn.push('<a href="/EMCS/CargoApproval/?Id=' + parseInt(row.IdCl) + '" class="btn btn-info btn-link btn-xs"><i class="tim-icons icon-zoom-split" alt="Show GR"></i></a>');
                 }
-                btn.push('</div>');
+                
                 btn.push('</div>');
                 return btn.join('');
             }

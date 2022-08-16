@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,10 +22,6 @@ namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult BLAWBList()
@@ -35,10 +31,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
-<<<<<<< HEAD
 
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -55,11 +48,6 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcBlAwb.BLAWBList(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult BlAwbRevise(Data.Domain.EMCS.GridListFilter filter)
         {
             ApplicationTitle();
@@ -87,13 +75,10 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             var data = new BlAwbModel();
-<<<<<<< HEAD
             if (filter.Rfc)
                 ViewBag.CanRequestForChange = true;
             else
                 ViewBag.CanRequestForChange = false;
-=======
->>>>>>> 639d8d0 (Intial commit)
             data.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Id);
             data.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(filter.Id);
             data.Request = Service.EMCS.SvcRequestCl.GetRequestCl(filter.Id);
@@ -191,8 +176,6 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public ActionResult DraftBlAwb(Data.Domain.EMCS.BlAwb form, string status)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             if (form.Id > 0 && form.CreateBy != SiteConfiguration.UserName)
             {
                 var model = new BlAwbModel();
@@ -287,24 +270,6 @@ namespace App.Web.Controllers.EMCS
                 Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
             }
             return Json(new { data }, JsonRequestBehavior.AllowGet);
-=======
-            long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
-            return JsonMessage("This ticket has been " + status, 0, data);
->>>>>>> 639d8d0 (Intial commit)
-=======
-            var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcBlAwb.BlAwbHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
-            {
-                long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
-                return JsonMessage("This ticket has been " + status, 0, data);
-            }
-            else
-            {
-                return JsonMessage("This ticket has been " + status, 0,null);
-            }
-            
-
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         }
 
     }
