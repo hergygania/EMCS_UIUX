@@ -82,9 +82,6 @@
                             {
                                 <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
                             }
-                            <div class="input-group-addon cal">
-                                <i class="fa fa-calendar"></i>
-                            </div>
                         </div>
                     </div>
                     <div class="form-group hide">
@@ -307,8 +304,8 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label col-lg-4 col-xs-4" required>Export Shipment Type</label>
-                        <div class="col-lg-10 col-xs-10">
-                            <input type="text" class="form-control" disabled id="Type" value="@(string.IsNullOrEmpty(Model.Forwarder.ExportShipmentType) ? "-" : Model.Forwarder.ExportShipmentType)" name="Type" placeholder="Type">
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="ExportShipmentType" value="@(string.IsNullOrEmpty(Model.Forwarder.ExportShipmentType) ? "-" : Model.Forwarder.ExportShipmentType)" name="Type" placeholder="Type">
                         </div>
                     </div>
                     <div class="form-group">

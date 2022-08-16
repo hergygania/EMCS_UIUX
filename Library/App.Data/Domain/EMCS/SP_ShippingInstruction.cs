@@ -17,14 +17,15 @@ namespace App.Data.Domain.EMCS
         public string Referrence   { get; set; }
         public string BookingNumber  { get; set; }
         public DateTime? BookingDate  { get; set; }
-        public DateTime? ETA  { get; set; }
-        public DateTime? ETD  { get; set; }
+        public DateTime? ArrivalDestination  { get; set; }
+        public DateTime? SailingSchedule  { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
         public string DocumentRequired { get; set; }
         public string SpecialInstruction { get; set; }    
         public DateTime? UpdateDate { get; set; }
         public string UpdateBy { get; set; }
+        public string StatusViewByUser { get; set; }
         public bool IsDelete { get; set; }
     }
 }

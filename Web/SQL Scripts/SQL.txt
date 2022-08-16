@@ -6677,244 +6677,6 @@ END
 Go
 
 
-USE [EMCS]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_update_request_cl]    Script Date: 13-04-2022 17:54:21 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[sp_update_request_cl] -- exec sp_update_request_cl 1, 'CKB1', 'Submit', 'Testing Notes'
-(
-	@IdCl bigint,
-	@Username nvarchar(100),
-	@NewStatus nvarchar(100),
-	@Notes nvarchar(100) = '',
-	@exporttype nvarchar(max)
-	
-)
-AS
-BEGIN
-	DECLARE @NewStepId bigint;
-	DECLARE @IdFlow bigint;
-	DECLARE @FlowName nvarchar(100);
-	DECLARE @NextStepName nvarchar(100);
-	DECLARE @Now datetime;
-	DECLARE @GroupId nvarchar(100);
-	DECLARE @UserType nvarchar(100);
-	DECLARE @NextStepIdSystem bigint;
-
-	DECLARE @CurrentStepId bigint;
-	DECLARE @CurrentStatus nvarchar(100);
-		
-	SET @Now = GETDATE();
-	select @UserType = [Group] From dbo.fn_get_employee_internal_ckb() WHERE AD_User = @Username
-
-	IF @UserType <> 'internal' AND @UserType = 'CKB'
-	BEGIN
-		SET @GroupId = 'CKB';
-	END
-	ELSE 
-	BEGIN
-		SELECT @GroupId = hce.Organization_Name 
-		FROM employee hce 
-		WHERE hce.AD_User = @Username;
-	END
-
-	--select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list(@Username, @GroupId) t0 where t0.IdCl = @IdCl;
-	--select * from dbo.fn_get_cl_request_list_all() where IdCl = 3;
-
-	Select @CurrentStepId = IdStep, @CurrentStatus = [Status] From [dbo].[RequestCl] WHERE IdCl = @IdCl
-
-	IF @CurrentStepId = 30069
-    BEGIN
-        IF @NewStatus = 'Approve'
-        BEGIN
-            SET @NewStepId = 30070
-            SET @NextStepName = 'Waiting NPE Document'
-            SET @FlowName = 'CL'
-        END
-        ELSE IF @NewStatus = 'Revise'
-        BEGIN
-            SET @NewStepId = 30070
-            SET @NextStepName = 'Need revision review by imex'
-            SET @FlowName = 'CL'
-            SET @NewStatus = 'Revise'
-        END		
-        ELSE IF @NewStatus = 'Reject'
-        BEGIN
-            SET @NewStepId = 30070
-            SET @NextStepName = 'Reject by imex'
-            SET @FlowName = 'CL'
-            SET @NewStatus = 'Reject'
-        END		
-
-        UPDATE [dbo].[RequestCl]
-        SET [IdStep] = @NewStepId
-            ,[Status] = @NewStatus
-            --,[Pic] = @Username
-            ,[UpdateBy] = @Username
-            ,[UpdateDate] = GETDATE()
-        WHERE IdCl = @IdCl
-    END
-	ELSE IF @CurrentStepId = 30071
-    BEGIN
-        IF @NewStatus = 'Approve'
-        BEGIN
-            SET @NewStepId = 10020
-            SET @NextStepName = 'Waiting for BL or AWB'
-            SET @FlowName = 'CL'
-        END
-        ELSE IF @NewStatus = 'Revise'
-        BEGIN
-            SET @NewStepId = 30072
-            SET @NextStepName = 'Need revision review by imex'
-            SET @FlowName = 'CL'
-            SET @NewStatus = 'Revise'
-        END
-        ELSE IF @NewStatus = 'Reject'
-        BEGIN
-            SET @NewStepId = 30072
-            SET @NextStepName = 'Need revision review by imex'
-            SET @FlowName = 'CL'
-            SET @NewStatus = 'Reject'
-        END
-
-        UPDATE [dbo].[RequestCl]
-        SET [IdStep] = @NewStepId
-            ,[Status] = @NewStatus
-            --,[Pic] = @Username
-            ,[UpdateBy] = @Username
-            ,[UpdateDate] = GETDATE()
-        WHERE IdCl = @IdCl
-    END
-	ELSE
-    BEGIN
-        select @IdFlow = IdFlow, @FlowName = upper(FlowName), @NewStepId = IdNextStep, @NextStepName = NextStepName from fn_get_cl_request_list_all() t0 where t0.IdCl = @IdCl;
-        --PRINT 'NewStepId ' + CAST(@NewStepId AS VARCHAR(10));
-        --		PRINT 'NewStatus ' + CAST(@NewStatus AS VARCHAR(10));
-        --		PRINT 'CurrentStepId ' + CAST(@CurrentStepId AS VARCHAR(10));
-        --		PRINT 'NextStepName ' + CAST(@NextStepName AS VARCHAR(10));
-                IF @CurrentStepId = 12 
-                BEGIN
-                IF @NewStepId = 10017 AND @NewStatus = 'Submit'
-                BEGIN
-                --declare @exportType nvarchar(10)=''
-                --SET @exportType = (select top 1 exporttype from dbo.ShippingInstruction where IdCL =@IdCl)
-                IF (@exportType ='PJT')
-                BEGIN
-                SET @NewStepId =10020
-                SET @NextStepName = 'Waiting for BL or AWB'
-                SET @FlowName = 'CL'
-                SET @NewStatus = 'Approve'
-                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-                END
-                --PRINT 'exporttype ' + CAST(@exporttype AS VARCHAR(10));
-                END 
-                END 
-        UPDATE [dbo].[RequestCl]
-            SET [IdStep] = @NewStepId
-                ,[Status] = @NewStatus
-                ,[Pic] = @Username
-                ,[UpdateBy] = @Username
-                ,[UpdateDate] = GETDATE()
-        WHERE IdCl = @IdCl
-    END
-	
-	-- Hasni Procedure Cancel PEB
-	IF  @NewStatus = 'Request Cancel'
-	BEGIN
-		SET @NewStepId = 30041
-
-		UPDATE [dbo].[RequestCl]
-		SET [IdStep] = @NewStepId
-	     ,[Status] = @NewStatus
-	     ,[Pic] = @Username
-		 ,[UpdateBy] = @Username
-		 ,[UpdateDate] = GETDATE()
-	WHERE IdCl = @IdCl
-	END
-
-	IF  @NewStatus = 'Draft NPE'
-	BEGIN
-		SET @NewStepId = 30069
-		SET @NewStatus = 'Submit'
-		SET @NextStepName = 'Waiting approve draft NPE'
-		SET @FlowName = 'CL'
-
-		UPDATE [dbo].[RequestCl]
-		SET [IdStep] = @NewStepId
-	     ,[Status] = @NewStatus
-	     ,[Pic] = @Username
-		 ,[UpdateBy] = @Username
-		 ,[UpdateDate] = GETDATE()
-		WHERE IdCl = @IdCl
-	END
-
-	IF  @NewStatus = 'Create NPE'
-	BEGIN
-		SET @NewStepId = 30071
-		SET @NewStatus = 'Submit'
-		SET @NextStepName = 'Waiting approval NPE'
-		SET @FlowName = 'CL'
-
-		UPDATE [dbo].[RequestCl]
-		SET [IdStep] = @NewStepId
-	     ,[Status] = @NewStatus
-	     ,[Pic] = @Username
-		 ,[UpdateBy] = @Username
-		 ,[UpdateDate] = GETDATE()
-		WHERE IdCl = @IdCl
-	END
-
-	IF @NewStepId = 30042 AND @NewStatus = 'Approve'
-	BEGIN
-		UPDATE dbo.NpePeb SET IsDelete = 1 WHERE IdCl = @IdCl;
-	END 
-
-	--======================================================
-	--- Kondisi jika cl akan melanjutkan proses ke system
-	--======================================================
-	IF @NewStepId = 11 AND @NewStatus = 'Submit'
-	BEGIN
-		select @NextStepIdSystem = x.IdNextStep from dbo.fn_get_cl_request_list_all() x where x.IdCl = @IdCl;
-
-		UPDATE [dbo].[RequestCl]
-		SET [IdStep] = @NextStepIdSystem
-	     ,[Status] = @NewStatus
-	     ,[Pic] = @Username
-		 ,[UpdateBy] = @Username
-		 ,[UpdateDate] = GETDATE()
-		WHERE IdCl = @IdCl
-
-		exec sp_set_ss_number @IdCl = @IdCl
-		exec sp_update_cipl_to_revise @IdCl
-	END
-
-	IF @NewStepId = 20033 AND @NewStatus = 'Approve'
-	BEGIN
-		select @NextStepIdSystem = x.IdNextStep from dbo.fn_get_cl_request_list_all() x where x.IdCl = @IdCl;
-
-		UPDATE [dbo].[RequestCl]
-		SET [IdStep] = @NewStepId
-	     ,[Status] = @NewStatus
-	     ,[Pic] = @Username
-		 ,[UpdateBy] = @Username
-		 ,[UpdateDate] = GETDATE()
-		WHERE IdCl = @IdCl
-
-		exec sp_update_cipl_to_revise @IdCl
-	END
-	--======================================================
-
-	exec [dbo].[sp_insert_cl_history]@id=@IdCl, @Flow=@FlowName, @Step=@NextStepName, @Status=@NewStatus, @Notes=@Notes, @CreateBy=@Username, @CreateDate=@Now;
-
-	--IF((select Status from RequestCl where IdCl = @IdCl) <> 'DRAFT')
-	--BEGIN
-	--	--EXEC [sp_send_email_notification] @IdCl, 'Cargo'
-	--	EXEC [sp_proccess_email] @IdCl, 'CL'
-	--END
-END
 
 Go
 
@@ -8831,8 +8593,647 @@ VALUES
 
 GO
 
+CREATE PROCEDURE [dbo].[SP_CiplChangeHistoryGetByFormType] -- exec [dbo].[SP_CiplChangeHistoryGetById] '33433','CIPL',0,'CreateDate','asc','0','10'              
+(              
+ @id NVARCHAR(10),             
+ @formtype NVARCHAR(100),             
+ @IsTotal bit = 0,              
+ @sort nvarchar(100) = 'CreateDate',              
+ @order nvarchar(100) = 'DESC',              
+ @offset nvarchar(100) = '0',              
+ @limit nvarchar(100) = '10'              
+)               
+AS              
+BEGIN              
+ DECLARE @sql nvarchar(max);                
+            
+              
+ SET @sql = 'SELECT ';              
+ SET @sort = 'RF.'+@sort;              
+              
+ IF (@IsTotal <> 0)              
+ BEGIN              
+  SET @sql += 'count(*) total'              
+ END               
+ ELSE              
+ BEGIN              
+ SET @sql += 'R.FieldName,            
+R.BeforeValue,            
+R.AfterValue,        
+RF.ID,        
+RF.FormNo,          
+RF.CreateBy,            
+RF.CreateDate,            
+RF.Reason'              
+ END              
+ SET @sql +=' FROM RequestForChange RF            
+ INNER JOIN RFCItem R ON R.RFCID = RF.ID              
+     WHERE  RF.FormId = '''+@id+ ''' AND RF.FormType = '''+@formtype+ '''';              
+ IF @isTotal = 0               
+ BEGIN              
+ SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';              
+ END               
+               
+ EXECUTE(@sql);              
+               
+END
+
+GO
+
+CREATE PROC Sp_ChangeHistory_Insert          
+@FormType nvarchar(300)          
+,@FormNo nvarchar(300)         
+,@FormId int         
+,@Reason nvarchar(MAX)          
+,@CreateBy nvarchar(300)          
+AS          
+BEGIN          
+        
+DECLARE @Approver NVARCHAR(150)    
+    
+       
+DECLARE @ResultId INT          
+INSERT INTO RequestForChange (FormType,          
+FormNo,        
+RFCNumber,        
+FormId,        
+Reason,          
+CreateBy,Approver,[Status]) VALUES (@FormType,@FormNo,'',@FormId,@Reason,@CreateBy,'',1)          
+          
+SET @ResultId = SCOPE_IDENTITY()      
+        
+SELECT @ResultId          
+END
+
+GO
 
 
+==============================================================================================================================================
+From DATE 26/April/2022
+==============================================================================================================================================
 
+GO
+  
+CREATE PROCEDURE [dbo].[SP_CiplUpdate_ByApprover]  
+(  
+ @id bigint,  
+ @Category NVARCHAR(100),  
+ @CategoryItem NVARCHAR(50),  
+ @ExportType NVARCHAR(100),  
+ @ExportTypeItem NVARCHAR(50),  
+ @SoldConsignee NVARCHAR(30),  
+ @SoldToName NVARCHAR(200),  
+ @SoldToAddress NVARCHAR(MAX),  
+ @SoldToCountry NVARCHAR(100),  
+ @SoldToTelephone NVARCHAR(100),  
+ @SoldToFax NVARCHAR(100),  
+ @SoldToPic NVARCHAR(200),  
+ @SoldToEmail NVARCHAR(200),  
+ @ShipDelivery NVARCHAR(30),  
+ @ConsigneeName NVARCHAR(200),  
+ @ConsigneeAddress NVARCHAR(MAX),  
+ @ConsigneeCountry NVARCHAR(100),  
+ @ConsigneeTelephone NVARCHAR(100),  
+ @ConsigneeFax NVARCHAR(100),  
+ @ConsigneePic NVARCHAR(200),  
+ @ConsigneeEmail NVARCHAR(200),  
+ @NotifyName NVARCHAR(200),  
+ @NotifyAddress NVARCHAR(MAX),  
+ @NotifyCountry NVARCHAR(100),  
+ @NotifyTelephone NVARCHAR(100),  
+ @NotifyFax NVARCHAR(100),  
+ @NotifyPic NVARCHAR(200),  
+ @NotifyEmail NVARCHAR(200),  
+ @ConsigneeSameSoldTo BIGINT,  
+ @NotifyPartySameConsignee BIGINT,  
+ @Area NVARCHAR(100),  
+ @Branch NVARCHAR(100),  
+ @Currency NVARCHAR(20),  
+ @Rate DECIMAL(18,2),  
+ @PaymentTerms NVARCHAR(50),  
+ @ShippingMethod NVARCHAR(30),  
+ @CountryOfOrigin NVARCHAR(30),  
+ @LcNoDate NVARCHAR(30),  
+ @IncoTerm NVARCHAR(50),  
+ @FreightPayment NVARCHAR(30),  
+ @ShippingMarks NVARCHAR(MAX),  
+ @Remarks NVARCHAR(200),  
+ @SpecialInstruction NVARCHAR(MAX),  
+ @CreateBy NVARCHAR(50),  
+ @CreateDate datetime,  
+ @UpdateBy NVARCHAR(50),  
+ @UpdateDate datetime,  
+ @Status NVARCHAR(10),  
+ @IsDelete BIT,  
+ @LoadingPort NVARCHAR(200),  
+ @DestinationPort NVARCHAR(200),  
+ @PickUpPic NVARCHAR(200),  
+ @PickUpArea NVARCHAR(200),  
+ @CategoryReference NVARCHAR(50),  
+ @ReferenceNo NVARCHAR(50),  
+ @Consolidate NVARCHAR(20),  
+ @Forwader NVARCHAR(200),  
+ @BranchForwarder NVARCHAR(200),  
+ @Attention NVARCHAR(200),  
+ @Company NVARCHAR(200),  
+ @SubconCompany NVARCHAR(200),  
+ @Address NVARCHAR(MAX),  
+ @AreaForwarder NVARCHAR(100),  
+ @City NVARCHAR(100),  
+ @PostalCode NVARCHAR(100),  
+ @Contact NVARCHAR(200),  
+ @FaxNumber NVARCHAR(200),  
+ @Forwading NVARCHAR(200),  
+ @Email NVARCHAR(200),  
+ @Type VARCHAR(10),  
+ @ExportShipmentType NVARCHAR(Max)  
+)  
+AS  
+BEGIN  
+ UPDATE dbo.Cipl   
+  SET Category = @Category   
+           ,CategoriItem = @CategoryItem  
+           ,ExportType = @ExportType  
+           ,ExportTypeItem = @ExportTypeItem  
+     ,SoldConsignee = @SoldConsignee  
+           ,SoldToName = @SoldToName  
+           ,SoldToAddress = @SoldToAddress  
+           ,SoldToCountry = @SoldToCountry  
+           ,SoldToTelephone = @SoldToTelephone  
+           ,SoldToFax = @SoldToFax  
+           ,SoldToPic = @SoldToPic  
+           ,SoldToEmail = @SoldToEmail  
+     ,ShipDelivery = @ShipDelivery  
+           ,ConsigneeName = @ConsigneeName  
+           ,ConsigneeAddress = @ConsigneeAddress  
+           ,ConsigneeCountry = @ConsigneeCountry  
+           ,ConsigneeTelephone = @ConsigneeTelephone  
+           ,ConsigneeFax = @ConsigneeFax  
+           ,ConsigneePic = @ConsigneePic  
+           ,ConsigneeEmail = @ConsigneeEmail  
+           ,NotifyName = @NotifyName  
+           ,NotifyAddress = @NotifyAddress  
+           ,NotifyCountry = @NotifyCountry  
+           ,NotifyTelephone = @NotifyTelephone  
+           ,NotifyFax = @NotifyFax  
+           ,NotifyPic = @NotifyPic  
+           ,NotifyEmail = @NotifyEmail  
+           ,ConsigneeSameSoldTo = @ConsigneeSameSoldTo  
+           ,NotifyPartySameConsignee = @NotifyPartySameConsignee  
+     ,Area = @Area  
+     ,Branch = @Branch  
+     ,Currency = @Currency  
+           ,PaymentTerms = @PaymentTerms  
+           ,ShippingMethod = @ShippingMethod  
+           ,CountryOfOrigin = @CountryOfOrigin  
+           ,LcNoDate = @LcNoDate  
+           ,IncoTerm = @IncoTerm  
+           ,FreightPayment = @FreightPayment  
+           ,ShippingMarks = @ShippingMarks  
+           ,Remarks = @Remarks  
+           ,SpecialInstruction = @SpecialInstruction  
+           --,UpdateBy = @UpdateBy  
+           ,UpdateDate = @UpdateDate  
+           ,IsDelete = @IsDelete  
+     ,LoadingPort = @LoadingPort  
+     ,DestinationPort = @DestinationPort  
+     ,PickUpPic = @PickUpPic  
+     ,PickUpArea = @PickUpArea  
+     ,CategoryReference = @CategoryReference  
+     ,ReferenceNo = @ReferenceNo  
+     ,Consolidate = @Consolidate  
+ WHERE id = @id;  
+  
+ UPDATE dbo.CiplForwader  
+ SET Forwader = @Forwader  
+  ,Branch = @BranchForwarder  
+  ,Attention = @Attention  
+  ,Company = @Company  
+  ,SubconCompany = @SubconCompany  
+  ,Address = @Address  
+  ,Area = @AreaForwarder  
+  ,City = @City  
+  ,PostalCode = @PostalCode  
+  ,Contact = @Contact  
+  ,FaxNumber = @FaxNumber  
+  ,Forwading = @Forwading  
+  ,Email = @Email  
+  --,UpdateBy = @UpdateBy  
+  ,UpdateDate = @UpdateDate  
+  ,IsDelete = @IsDelete  
+  ,[Type]=@Type  
+  ,ExportShipmentType=@ExportShipmentType   
+ WHERE IdCipl = @id;  
+  
 
- 
+  
+END  
+  
+GO
+
+  
+CREATE PROCEDURE [dbo].[sp_update_cargo_ByApprover]    
+(    
+ @CargoID BIGINT,    
+ @Consignee NVARCHAR(200),    
+ @NotifyParty NVARCHAR(200),    
+ @ExportType NVARCHAR(200),    
+ @Category NVARCHAR(200),    
+ @Incoterms NVARCHAR(200),    
+ @StuffingDateStarted datetime = NULL,--='02-02-2019',    
+ @StuffingDateFinished datetime = NULL,--='12-12-2019',    
+ @ETA datetime = NULL,--='02-02-2019',    
+ @ETD datetime = NULL,--='12-12-2019',    
+ @VesselFlight NVARCHAR(30),--='vessel',    
+ @ConnectingVesselFlight NVARCHAR(30),--='con vessel',    
+ @VoyageVesselFlight NVARCHAR(30),--='voy vessel',    
+ @VoyageConnectingVessel NVARCHAR(30),--='voy con',    
+ @PortOfLoading NVARCHAR(30),--='start',    
+ @PortOfDestination NVARCHAR(30),--='end',    
+ @SailingSchedule datetime = NULL,--='09-09-2019',    
+ @ArrivalDestination datetime = NULL,--='10-10-2019',    
+ @BookingNumber NVARCHAR(20) = '',--='1122',    
+ @BookingDate datetime = NULL,--='11-11-2019',    
+ @Liner NVARCHAR(20) = '',--='linear'    
+ @Status NVARCHAR(20) = '',    
+ @ActionBy NVARCHAR(20) = '',    
+ @Referrence NVARCHAR(MAX) = '',    
+ @CargoType NVARCHAR(50) = '',    
+ @ShippingMethod NVARCHAR(50) = ''    
+)    
+AS    
+BEGIN    
+     
+ declare @ID BIGINT;    
+     
+  UPDATE [dbo].[Cargo]    
+  SET [Consignee] = @Consignee    
+   ,[NotifyParty] = @NotifyParty    
+   ,[ExportType] = @ExportType    
+   ,[Category] = @Category    
+   ,[Incoterms] = @Incoterms    
+   ,[StuffingDateStarted] = @StuffingDateStarted    
+   ,[StuffingDateFinished] = @StuffingDateFinished    
+   ,[ETA] = @ETA    
+   ,[ETD] = @ETD    
+   ,[VesselFlight] = @VesselFlight    
+   ,[ConnectingVesselFlight] = @ConnectingVesselFlight    
+   ,[VoyageVesselFlight] = @VoyageVesselFlight    
+   ,[VoyageConnectingVessel] = @VoyageConnectingVessel    
+   ,[PortOfLoading] = @PortOfLoading    
+   ,[PortOfDestination] = @PortOfDestination    
+   ,[SailingSchedule] = @SailingSchedule    
+   ,[ArrivalDestination] = @ArrivalDestination    
+   ,[BookingNumber] = @BookingNumber    
+   ,[BookingDate] = @BookingDate    
+   ,[Liner] = @Liner    
+   ,[UpdateDate] = GETDATE()    
+   ,[UpdateBy] = @ActionBy    
+   ,[Referrence] = @Referrence    
+   ,[ShippingMethod] = @ShippingMethod    
+   ,[CargoType] = @CargoType    
+  WHERE Id = @CargoID    
+    
+  SET @ID = @CargoID    
+    
+ SELECT CAST(@ID as BIGINT) as ID    
+    
+END    
+
+GO
+
+CREATE PROCEDURE [dbo].SP_NpePeb_Update    
+(    
+ @Id BIGINT,    
+ @IdCl BIGINT,    
+ @AjuNumber NVARCHAR(200),    
+ @AjuDate datetime,    
+ @NpeNumber NVARCHAR(200),    
+ @NpeDate datetime,    
+ @Npwp NVARCHAR(50),    
+ @ReceiverName NVARCHAR(100),    
+ @PassPabeanOffice NVARCHAR(100),    
+ @Dhe DECIMAL(20,2),    
+ @PebFob DECIMAL(18,4),    
+ @Valuta NVARCHAR(20),    
+ @DescriptionPassword NVARCHAR(100),    
+ @DocumentComplete BIT,    
+ @Rate Decimal(20,2),    
+ @WarehouseLocation NVARCHAR(50),    
+ @FreightPayment Decimal(20,2),      
+ @InsuranceAmount Decimal(20,2),    
+ @DraftPeb BIT,    
+ @CreateBy NVARCHAR(50),    
+ @CreateDate datetime,    
+ @UpdateBy NVARCHAR(50),    
+ @UpdateDate datetime,    
+ @IsDelete BIT,    
+ @RegistrationNumber NVARCHAR(MAX),    
+    @NpeDateSubmitToCustomOffice datetime    
+)    
+AS    
+BEGIN    
+ DECLARE @LASTID bigint    
+   
+ UPDATE [dbo].[NpePeb]    
+  SET [AjuNumber] = @AjuNumber    
+     ,[AjuDate] = @AjuDate    
+     ,[PebNumber] = @AjuNumber    
+     ,[PebDate] = @AjuDate    
+     ,[NpeNumber] = @NpeNumber    
+     ,[NpeDate] = @NpeDate    
+     ,[Npwp] = @Npwp    
+     ,[ReceiverName] = @ReceiverName    
+     ,[PassPabeanOffice] = @PassPabeanOffice    
+     ,[Dhe] = @Dhe    
+     ,[PebFob] = @PebFob    
+     ,[Valuta] = @Valuta    
+     ,[DescriptionPassword] = @DescriptionPassword    
+     ,[DocumentComplete] = @DocumentComplete    
+     ,[Rate] = @Rate    
+     ,[WarehouseLocation] = @WarehouseLocation    
+     ,[FreightPayment] = @FreightPayment    
+     ,[InsuranceAmount] = @InsuranceAmount    
+     ,[DraftPeb] = @DraftPeb    
+           ,[CreateBy] = @CreateBy    
+           ,[CreateDate] = @CreateDate    
+           ,[UpdateBy] = @CreateBy    
+           ,[UpdateDate] = @CreateDate    
+           ,[IsDelete] = @IsDelete    
+     ,[RegistrationNumber] = @RegistrationNumber    
+    ,[NpeDateSubmitToCustomOffice] = @NpeDateSubmitToCustomOffice    
+     WHERE Id = @Id    
+     SELECT C.Id as ID, CAST(C.IdCl AS nvarchar) as [NO], C.CreateDate as CREATEDATE FROM NpePeb C WHERE C.id = @Id    
+END
+
+GO
+
+  
+    
+CREATE PROCEDURE [dbo].[SP_Update_BlAwb]    
+(    
+ @Id BIGINT,    
+ @Number NVARCHAR(100),    
+ @MasterBlDate datetime,    
+ @HouseBlNumber NVARCHAR(200),    
+ @HouseBlDate datetime,    
+ @Description NVARCHAR(50),    
+ @FileName NVARCHAR(max),    
+ @Publisher NVARCHAR(50),    
+ @UpdateBy NVARCHAR(50),    
+ @UpdateDate datetime,    
+ @IdCl BIGINT    
+)    
+AS    
+BEGIN    
+ DECLARE @LASTID bigint    
+ UPDATE [dbo].[BlAwb]    
+  SET [Number] = @Number     
+     ,[MasterBlDate] = @MasterBlDate    
+     ,[HouseBlNumber] = @HouseBlNumber    
+     ,[HouseBlDate] = @HouseBlDate    
+     ,[Description] = @Description    
+     ,[FileName] = @FileName    
+     ,[Publisher] = @Publisher    
+  ,[UpdateBy] = @UpdateBy    
+  ,[UpdateDate] = @UpdateDate    
+     WHERE Id = @Id    
+     SELECT C.Id as ID, CONVERT(nvarchar(5), C.IdCl) as [NO], C.CreateDate as CREATEDATE FROM BlAwb C WHERE C.id = @Id      
+    
+END 
+
+GO
+ALTER PROCEDURE [dbo].[sp_get_blawb_list]   
+(  
+ @Username nvarchar(100),  
+ @Search nvarchar(100),  
+ @isTotal bit = 0,  
+ @sort nvarchar(100) = 'Id',  
+ @order nvarchar(100) = 'ASC',  
+ @offset nvarchar(100) = '0',  
+ @limit nvarchar(100) = '10'  
+)  
+AS  
+BEGIN  
+    SET NOCOUNT ON;  
+    DECLARE @sql nvarchar(max);    
+ DECLARE @WhereSql nvarchar(max) = '';  
+ DECLARE @GroupId nvarchar(100);  
+ DECLARE @RoleID bigint;  
+ DECLARE @area NVARCHAR(max);  
+ DECLARE @role NVARCHAR(max) = '';   
+ SET @sort = 't0.'+@sort;  
+  
+ select @GroupId = Organization_Name from employee where Employee_Status = 'Active' AND AD_User = @Username;  
+  
+  
+ SELECT @area = U.Business_Area  
+  ,@role = U.[Role]  
+ FROM dbo.fn_get_employee_internal_ckb() U  
+ WHERE U.AD_User = @Username;  
+  
+ if @role !=''  
+ BEGIN  
+  
+  
+ IF (@role !='EMCS IMEX' and @Username !='ict.bpm')  
+ BEGIN  
+  SET @WhereSql = ' AND t0.CreateBy='''+@Username+''' ';  
+ END  
+  
+ SET @sql = 'SELECT ';  
+ IF (@isTotal <> 0)  
+ BEGIN  
+  SET @sql += 'count(*) total '  
+ END   
+ ELSE  
+ BEGIN  
+   
+  SET @sql += ' t0.Id  
+      , t0.IdCl  
+      , t0.Number  
+      , t0.MasterBlDate  
+      , t0.HouseBlNumber  
+      , t0.HouseBlDate   
+      , t0.Publisher  
+      , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Employee_Name ELSE t3.FullName END PreparedBy  
+      , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Email ELSE t3.Email END Email         
+      , STUFF((SELECT '', ''+ISNULL(tx1.EdoNo, ''-'')  
+       FROM dbo.CargoItem tx0  
+       JOIN dbo.Cipl tx1 on tx1.id = tx0.IdCipl  
+       WHERE tx0.IdCargo = tx0.Id  
+       GROUP BY tx1.EdoNo  
+       FOR XML PATH(''''),type).value(''.'',''nvarchar(max)''),1,1,'''') [RefEdo]  
+      , t8.ClNo  
+      , t8.CargoType 
+	  ,ISNULL((select TOP 1(Id) from RequestForChange WHERE FormId = t0.IdCl AND FormType = ''BlAwb'' AND [Status] = 0),0) AS PendingRFC'
+ END  
+ SET @sql +='  FROM BlAwb t0  
+     JOIN dbo.Cargo t8 on t8.Id = t0.IdCl  
+    JOIN PartsInformationSystem.dbo.[UserAccess] t3 on t3.UserID = t0.CreateBy  
+    LEFT JOIN employee t2 on t2.AD_User = t0.CreateBy  
+    WHERE 1=1 AND t0.IsDelete = 0  AND t8.CargoType != ''''' + @WhereSql+ ' AND (t0.Number like ''%'+@Search+'%'' OR t0.HouseBlNumber like ''%'+@Search+'%'')';  
+  
+ IF @isTotal = 0   
+ BEGIN  
+  SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';  
+ END   
+  
+ --select @sql;  
+ EXECUTE(@sql);  
+ END  
+END  
+  
+GO
+  
+ALTER PROCEDURE [dbo].[sp_get_npepeb_list]     
+(    
+ @Username nvarchar(100),    
+ @Search nvarchar(100),    
+ @isTotal bit = 0,    
+ @sort nvarchar(100) = 'Id',    
+ @order nvarchar(100) = 'ASC',    
+ @offset nvarchar(100) = '0',    
+ @limit nvarchar(100) = '10'    
+)    
+AS    
+BEGIN    
+    SET NOCOUNT ON;    
+    DECLARE @sql nvarchar(max);      
+ DECLARE @WhereSql nvarchar(max) = '';    
+ DECLARE @GroupId nvarchar(100);    
+ DECLARE @RoleID bigint;    
+ DECLARE @area NVARCHAR(max);    
+ DECLARE @role NVARCHAR(max) = '';     
+ SET @sort = 't0.'+@sort;    
+    
+ select @GroupId = Organization_Name from employee where Employee_Status = 'Active' AND AD_User = @Username;    
+    
+    
+ SELECT @area = U.Business_Area    
+  ,@role = U.[Role]    
+ FROM dbo.fn_get_employee_internal_ckb() U    
+ WHERE U.AD_User = @Username;    
+    
+ if @role !=''    
+ BEGIN    
+    
+    
+ IF (@role !='EMCS IMEX' and @Username !='ict.bpm')    
+ BEGIN    
+  SET @WhereSql = ' AND t0.CreateBy='''+@Username+''' ';    
+ END    
+    
+ SET @sql = 'SELECT ';    
+ IF (@isTotal <> 0)    
+ BEGIN    
+  SET @sql += 'count(*) total '    
+ END     
+ ELSE    
+ BEGIN    
+     
+  SET @sql += ' t0.Id    
+      , t0.IdCl    
+      , t0.AjuNumber    
+      , t0.AjuDate    
+      , t0.PebNumber    
+      , t0.NpeNumber     
+      , t0.NpeDate    
+      , t0.PassPabeanOffice    
+      , t0.Valuta     
+      , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Employee_Name ELSE t3.FullName END PreparedBy    
+      , CASE WHEN t2.Employee_Name IS NOT NULL THEN t2.Email ELSE t3.Email END Email           
+      , STUFF((SELECT '', ''+ISNULL(tx1.EdoNo, ''-'')    
+       FROM dbo.CargoItem tx0    
+       JOIN dbo.Cipl tx1 on tx1.id = tx0.IdCipl    
+       WHERE tx0.IdCargo = tx0.Id    
+       GROUP BY tx1.EdoNo    
+       FOR XML PATH(''''),type).value(''.'',''nvarchar(max)''),1,1,'''') [RefEdo]    
+      , t8.ClNo    
+      , t8.CargoType  
+   ,ISNULL((select TOP 1(Id) from RequestForChange WHERE FormId = t0.IdCl AND FormType = ''NpePeb'' AND [Status] = 0),0) AS PendingRFC'    
+ END    
+ SET @sql +='  FROM NpePeb t0    
+     JOIN dbo.Cargo t8 on t8.Id = t0.IdCl    
+    JOIN PartsInformationSystem.dbo.[UserAccess] t3 on t3.UserID = t0.CreateBy    
+    LEFT JOIN employee t2 on t2.AD_User = t0.CreateBy    
+    WHERE 1=1 AND t0.IsDelete = 0  AND t8.CargoType != ''''' + @WhereSql+ ' AND (t0.IdCl like ''%'+@Search+'%'' OR t8.ClNo like ''%'+@Search+'%'')';    
+    
+ IF @isTotal = 0     
+ BEGIN    
+  SET @sql += ' ORDER BY '+@sort+' '+@order+' OFFSET '+@offset+' ROWS FETCH NEXT '+@limit+' ROWS ONLY';    
+ END     
+    
+ Print(@sql);    
+ EXECUTE(@sql);    
+ END    
+END 
+
+Go
+  
+ALTER PROCEDURE [dbo].[SP_SIInsert]  
+(  
+ @ID BIGINT,  
+ @IdCL BIGINT,  
+ @Description NVARCHAR(MAX),  
+ @SpecialInstruction NVARCHAR(MAX),  
+ @DocumentRequired NVARCHAR(MAX),  
+ @PicBlAwb NVARCHAR(10),  
+ @CreateBy NVARCHAR(50),  
+ @CreateDate datetime,  
+ @UpdateBy NVARCHAR(50),  
+ @UpdateDate datetime,  
+ @IsDelete BIT,  
+ @ExportType NVARCHAR(10)  
+)  
+AS  
+BEGIN  
+DECLARE @LASTID bigint  
+ IF @Id <= 0  
+ BEGIN  
+ INSERT INTO [dbo].[ShippingInstruction]  
+           ([Description]  
+     ,[IdCL]  
+           ,[SpecialInstruction]  
+     ,[PicBlAwb]  
+     ,[CreateBy]  
+           ,[CreateDate]  
+           ,[UpdateBy]  
+           ,[UpdateDate]  
+           ,[IsDelete]  
+     ,[ExportType]  
+           )  
+     VALUES  
+           (@Description  
+     ,@IdCL  
+           ,@SpecialInstruction  
+     ,@PicBlAwb  
+           ,@CreateBy  
+           ,@CreateDate  
+           ,@UpdateBy  
+           ,@UpdateDate  
+           ,@IsDelete  
+     ,@ExportType)  
+  
+ SELECT @LASTID = CAST(SCOPE_IDENTITY() as bigint)  
+ EXEC dbo.GenerateShippingInstructionNumber @LASTID, @CreateBy;  
+
+ SELECT @LASTID = CAST(SCOPE_IDENTITY() as bigint)  
+SELECT C.id as ID, C.SlNo as [NO], C.CreateDate as CREATEDATE FROM ShippingInstruction C WHERE C.id = @LASTID   
+ END  
+ ELSE   
+ BEGIN  
+ UPDATE [ShippingInstruction] SET
+ [Description] = @Description,
+ [SpecialInstruction] = @SpecialInstruction,
+ PicBlAwb = @PicBlAwb,
+ [UpdateBy] = @UpdateBy,
+ [UpdateDate] = @UpdateDate
+ WHERE Id = @ID
+     SELECT C.id as ID, C.SlNo as [NO], C.CreateDate as CREATEDATE FROM ShippingInstruction C WHERE C.id = @ID    
+ END  
+END  
+
+================================================================================================
+
+================================================================================================

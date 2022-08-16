@@ -114,19 +114,19 @@ namespace App.Web
                 else
                     sb.AppendLine("<li>");
 
-                sb.AppendLine("<a " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
+                sb.AppendLine("<a class=\"zoomTextMenuEMCS\" " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
                     : (menu.URL.Trim().Substring(0, 1) != "/" && menu.URL.Trim().Substring(0, 1) != @"\")
                     ? "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"
                     : "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"));
 
                 if (menu.children.Count() <= 0)
                 {
-                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p class=\"animation-on-hover\" style=\"color: #666d7d;\">" + menu.Name + "</p>");
                     sb.AppendLine("</a>");
                 }
                 else
                 {
-                    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"collapsed\" aria-expanded=\"false\">");
+                    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"collapsed zoomTextMenuEMCS\" aria-expanded=\"false\">");
                     sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "<b class=\"caret\"></b></p>");
                     sb.AppendLine("</a>");
                     sb.AppendLine("<div class=\"collapse\" id=\"menu" + menu.ID + "\">");

@@ -6,6 +6,10 @@ using App.Web.App_Start;
 using System.IO;
 using App.Web.Models.EMCS;
 using App.Web.Helper;
+using App.Domain;
+using App.Data.Domain;
+using System.ComponentModel;
+using App.Data.Domain.EMCS;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -52,6 +56,13 @@ namespace App.Web.Controllers.EMCS
             var detail = new CargoModel();
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(id);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
+
+            var DataSi = Service.EMCS.SvcShippingInstruction.GetById(id.ToString());
+            if (DataSi != null)
+                detail.DataSi = DataSi;
+            else
+                detail.DataSi = new ShippingInstructions();
+
             return View(detail);
         }
 
@@ -156,6 +167,50 @@ namespace App.Web.Controllers.EMCS
 
         [HttpPost]
         public ActionResult UpdateSi(Data.Domain.EMCS.ShippingInstructions form)
+        {
+            ViewBag.crudMode = "U";
+            var item = Service.EMCS.SvcShippingInstruction.GetById(form.IdCl);
+            if(SiteConfiguration.UserName != item.CreateBy)
+            {
+                var requestForChange = new RequestForChange();
+                requestForChange.FormNo = item.SlNo;
+                requestForChange.FormType = "ShippingInstructions";
+                requestForChange.Status = 1;
+                requestForChange.FormId = Convert.ToInt32(form.IdCl);
+                requestForChange.Reason = "";
+
+                var id = Service.EMCS.SvcCipl.InsertChangeHistory(requestForChange);
+
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+
+                var rfcItemDocumentRequired = new Data.Domain.RFCItem();
+                rfcItemDocumentRequired.RFCID = id;
+                rfcItemDocumentRequired.TableName = "ShippingInstructions";
+                rfcItemDocumentRequired.LableName = "DocumentRequired";
+                rfcItemDocumentRequired.FieldName = "DocumentRequired";
+                rfcItemDocumentRequired.BeforeValue = item.DocumentRequired;
+                rfcItemDocumentRequired.AfterValue = form.DocumentRequired;
+                listRfcItems.Add(rfcItemDocumentRequired);
+
+                var rfcItemSpecialInstruction = new Data.Domain.RFCItem();
+                rfcItemSpecialInstruction.RFCID = id;
+                rfcItemSpecialInstruction.TableName = "ShippingInstructions";
+                rfcItemSpecialInstruction.LableName = "SpecialInstruction";
+                rfcItemSpecialInstruction.FieldName = "SpecialInstruction";
+                rfcItemSpecialInstruction.BeforeValue = item.SpecialInstruction;
+                rfcItemSpecialInstruction.AfterValue = form.SpecialInstruction;
+                listRfcItems.Add(rfcItemSpecialInstruction);
+
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+            }
+            item.DocumentRequired = form.DocumentRequired;
+            item.SpecialInstruction = form.SpecialInstruction;
+            Service.EMCS.SvcRequestSi.Update(item, ViewBag.crudMode);
+
+            return JsonCRUDMessage(ViewBag.crudMode);
+        }
+        [HttpPost]
+        public ActionResult SaveAndApproveSi(Data.Domain.EMCS.ShippingInstructions form)
         {
             ViewBag.crudMode = "U";
             var item = Service.EMCS.SvcShippingInstruction.GetById(form.IdCl);

@@ -94,6 +94,31 @@ namespace App.Service.EMCS
                 return 1;
             }
         }
+        public static long UpdateBlAwb(Data.Domain.EMCS.BlAwb item)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", item.Id));
+                parameterList.Add(new SqlParameter("@Number", item.Number ?? ""));
+                parameterList.Add(new SqlParameter("@MasterBlDate", item.MasterBlDate));
+                parameterList.Add(new SqlParameter("@HouseBlNumber", item.HouseBlNumber ?? ""));
+                parameterList.Add(new SqlParameter("@HouseBlDate", item.HouseBlDate));
+                parameterList.Add(new SqlParameter("@Description", item.Description ?? ""));
+                parameterList.Add(new SqlParameter("@Filename", item.FileName ?? ""));
+                parameterList.Add(new SqlParameter("@Publisher", item.Publisher ?? ""));
+                parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+                parameterList.Add(new SqlParameter("@IdCl", item.IdCl));
+                
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                // ReSharper disable once CoVariantArrayConversion
+                db.DbContext.Database.ExecuteSqlCommand(@"[dbo].[SP_Update_BlAwb] @Id, @Number, @MasterBlDate, @HouseBlNumber, @HouseBlDate, @Description, @Filename, @Publisher, @UpdateBy, @UpdateDate, @IdCl", parameters);
+                return 1;
+            }
+        }
 
         public static long ApprovalBlAwb(Data.Domain.EMCS.BlAwb itm, Data.Domain.EMCS.CiplApprove item, string dml)
         {

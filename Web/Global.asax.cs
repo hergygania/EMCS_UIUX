@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Web.Helper;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -14,10 +15,11 @@ namespace App.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-
+        public ErrorHelper _errorHelper = new ErrorHelper();
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
+            _errorHelper.Error(ex.ToString());
             if (ex is ThreadAbortException)
                 return;
             //Server.Transfer("/Shared/BadRequest", true);

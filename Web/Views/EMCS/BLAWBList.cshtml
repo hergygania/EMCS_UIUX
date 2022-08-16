@@ -4,10 +4,12 @@
 }
 
 @using System.Web.Mvc
+@Styles.Render("~/Content/EMCS/Custom.css")
 <style type="text/css">
     .form-horizontal .control-label {
         text-align: left !important;
     }
+
     .dropdown-menu.dropdown-menu-right {
         left: 0 !important;
     }
@@ -57,7 +59,7 @@
 
 @section scripts
 {
-    
+
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/BLAWBList.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 

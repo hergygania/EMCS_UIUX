@@ -17,11 +17,13 @@ using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Dynamic;
+using App.Web.Helper;
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+        
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public ActionResult Mytask()
         {
@@ -35,8 +37,15 @@ namespace App.Web.Controllers.EMCS
             var filter = new GridListFilter();
             filter.Username = SiteConfiguration.UserName;
             ViewBag.IsImexUser = false;
-            if(User.Identity.GetUserRoles().Contains("EMCSRequestor") || User.Identity.GetUserRoles().Contains("Imex"))
+            string userRoles = User.Identity.GetUserRoles();
+            if (userRoles.Contains("EMCSRequestor") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
+
+            if (userRoles.Contains("EMCSImex"))
+                ViewBag.IsEditAllowed = true;
+            else
+                ViewBag.IsEditAllowed = false;
+
             dynamic allCount = new ExpandoObject();
             allCount.Cipl = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             allCount.Gr = Service.EMCS.SvcRequestGr.GetTotalList(filter);
@@ -139,7 +148,6 @@ namespace App.Web.Controllers.EMCS
             string fileName = "";
             if (Request.Files.Count > 0)
             {
-
                 var file = Request.Files[0];
 
                 if (file != null && file.ContentLength > 0)
@@ -172,6 +180,20 @@ namespace App.Web.Controllers.EMCS
                 }
             }
             return fileName;
+        }
+
+        [HttpPost]
+        public ActionResult SubmitSi(TaskSi form)
+        {
+            try
+            {
+                Service.EMCS.SvcRequestSi.SubmtiSI(form);
+                return JsonCRUDMessage("I");
+            }
+            catch (Exception err)
+            {
+                return Json(new { status = 1, msg = err.Message });
+            }
         }
 
         [HttpPost]

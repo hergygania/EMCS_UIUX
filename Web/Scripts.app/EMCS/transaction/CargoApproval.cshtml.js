@@ -1,4 +1,5 @@
 ﻿var visible = false;
+
 if (CargoTypeName === "Full Container Load") {
     visible = true;
 }
@@ -21,6 +22,7 @@ getTotalData();
 
 
 function ReviseProblem(Status, IdRequest, Notes, statusName) {
+
     $.ajax({
         url: myApp.fullPath + "EMCS/CargoApprove",
         type: "Post",
@@ -201,7 +203,7 @@ var tableCargoForm = [
         align: 'right',
         formatter: currencyFormatter,
         sortable: true
-    },  {
+    }, {
         field: "newweight",
         title: "New Weight",
         colspan: 2,
@@ -351,11 +353,13 @@ function ApproveCargo(obj) {
         },
         success: function (resp) {
             Swal.fire({
-                title: 'Approve!',
+                title: 'Submit!',
                 text: 'Data Confirmed Successfully',
                 type: 'success'
             }).then((result) => {
-                location.href = "/EMCS/CargoList";
+                if (result.value) {
+                    location.href = "/EMCS/CargoList";
+                }
             });
         }
     });

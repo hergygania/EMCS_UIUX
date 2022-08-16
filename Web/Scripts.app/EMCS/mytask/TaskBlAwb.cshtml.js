@@ -33,15 +33,16 @@ window.operateEvents = {
 
 var columns_bl = [
     {
-        field: "id",
-        title: "No",
-        align: 'center',
-        formatter: runningFormatter
-    }, {
+    //    field: "id",
+    //    title: "No",
+    //    align: 'center',
+    //    formatter: runningFormatter
+    //}, {
         field: "",
         title: "Action",
         align: "center",
         sortable: true,
+        class: "text-nowrap",
         width: "160",
         events: window.operateEvents,
         formatter: function (data, row, index) {
@@ -49,13 +50,13 @@ var columns_bl = [
             var btn = [];
             btn.push('<div>'); 
             if (row['StatusViewByUser'] === 'Waiting for BL or AWB' || row['StatusViewByUser'] === 'Need revision review by imex' || row['StatusViewByUser'] === 'BL or AWB need revision') {
-                btn.push("<button class='btn btn-info btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
+                btn.push("<button class='btn btn-info btn-link btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
             } else if (row['StatusViewByUser'] === 'Waiting for BL or AWB approval') {
-                btn.push("<button class='btn btn-success btn-xs btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
+                btn.push("<button class='btn btn-success btn-link btn-sm btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
                 //btn.push("<button class='btn btn-warning btn-xs btn-revise-bl' data-toggle='tooltip' title='Revise'><i class='fa fa-pencil'></i></button>");
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl btn-info' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-xs btn-info btn-link btn-sm btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
             } else {
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl btn-info' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-xs btn-info btn-link btn-sm btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
             }  
             
             btn.push('</div>');
@@ -86,6 +87,15 @@ var columns_bl = [
         title: "Forwarder",
         sortable: true
     }, {
+        field: "SlNo",
+        title: "SL No.",
+        sortable: true
+    }, {
+        field: "ClNo",
+        title: "CL No.",
+        sortable: true
+    },
+    {
         field: "PortOfLoading",
         title: "Loading Port",
         sortable: true

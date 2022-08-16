@@ -5,12 +5,12 @@ $(function () {
        
     var columns = [
         {
-            field: "no",
-            title: "No",
-            align: 'center',
-            valign: "middle",
-            formatter: runningFormatter
-        }, {
+        //    field: "no",
+        //    title: "No",
+        //    align: 'center',
+        //    valign: "middle",
+        //    formatter: runningFormatter
+        //}, {
             field: "NomorIdentifikasi",
             title: "No Identifikasi <br> (Transaction Reference)",
             align: "left",

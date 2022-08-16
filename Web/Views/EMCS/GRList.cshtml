@@ -3,6 +3,7 @@
     Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Receipt Goods List";
 }
+@Styles.Render("~/Content/EMCS/Custom.css")
 @*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
 
 <div class="row">
@@ -12,7 +13,7 @@
                 <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
             </div>
 
-            <a href="~/EMCS/CreateGR" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add New</a>
+            <a href="~/EMCS/CreateGR" class="btn btn-success animation-on-hover btn-round"><i class="fa fa-plus-circle"></i>&nbsp;Add New</a>
         </div>
         <div class="card">
             <div class="card-body">

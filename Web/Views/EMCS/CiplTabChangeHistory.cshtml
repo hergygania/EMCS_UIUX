@@ -1,17 +1,6 @@
 ﻿<div class="row">
     <div class="col-xs-12 table-responsive">
-        <input type="hidden" name="idCipl" id="idCipl" value="@Model.Data.Id" />
-        <input type="hidden" name="formType" id="formType" value="CIPL" />
-        <table id="tableCiplChangeHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
-    </div>
-    <div class="col-xs-12">
-        <p><b>Reason :- </b></p><p><b id="changehistory"></b></p>
-        <div class="col-md-6 pull-right">
-            <div class="form-group pull-right" style="margin-top:20px">
-                <div class="" role="group">
-                    <button type="button" class="btn btn-success" id="btnApproveChangeHistory"><i class="fa fa-paper-plane"></i> Approve change</button>
-                </div>
-            </div>
-        </div>
+        <input type="hidden" name="IdTerm" id="IdTerm" value="@Model.Data.Id" />
+        <table id="tableChangeHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
     </div>
 </div>

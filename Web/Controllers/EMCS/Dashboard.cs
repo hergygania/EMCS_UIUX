@@ -89,6 +89,7 @@ namespace App.Web.Controllers.EMCS
 
         public List<RssFeed> GetRssSource(string url)
         {
+            url = "https://www.antaranews.com/rss/top-news";
             using (var wclient = new WebClient())
             {
                 string urlString = url;

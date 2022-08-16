@@ -16,5 +16,8 @@ namespace App.Data.Domain.EMCS
         public DateTime? HouseBlDate { get; set; }
         public string Publisher { get; set; }
         public long IdCl { get; set; }
+ 		public string StatusViewByUser { get; set; }
+        public string AjuNumber { get; set; }
+        public int PendingRFC { get; set; }
     }
 }

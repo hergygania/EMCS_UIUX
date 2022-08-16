@@ -107,8 +107,8 @@ $(function () {
             valign: "middle",
             align: "center"
         }, {
-            field: "ReferenceNo",
-            title: "Reference No",
+            field: "CustomsFacilityArea",
+            title: "Custom Facility Area",
             rowspan: 3,
             sortable: true,
             align: "left",

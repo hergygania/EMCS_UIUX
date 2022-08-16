@@ -37,8 +37,110 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Container Type </label>
+                                <div class="input-group col-md-9" id="ContainerType">
+                                    @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control", @id = "ContainerType" })
+                                </div>
+                            </div>
+                            @if (ViewBag.SingleItem)
+                            {
+                                <div class="form-group">
+                                    <label class="col-md-3">Length</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Length, new { @class = "form-control", @id = "Length", placeholder = "Length" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Width</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Width" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Height</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Height, new { @class = "form-control", @id = "Height", placeholder = "Height" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Net Weight</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Net, new { @class = "form-control", @id = "Net", placeholder = "Net Weight" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Gross Weight</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Gross, new { @class = "form-control", @id = "Gross", placeholder = "Gross Weight" })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="col-md-3">Seal Number</label>
                                 <div class="input-group col-md-9">
-                                    @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control" })
+                                    @Html.TextBoxFor(m => m[i].ContainerSealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
+                                </div>
+                            </div>
+                            @if (ViewBag.SingleItem)
+                            {
+                                <div class="form-group">
+                                    <label class="col-md-3">Case Number</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].CaseNumber, new { @class = "form-control", @readonly = "readonly", @id = "CaseNumber", placeholder = "Case Number" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Item Name</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].ItemName, new { @class = "form-control", @readonly = "readonly", @id = "ItemName", placeholder = "Item Name" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">EDI</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].Ea, new { @class = "form-control", @readonly = "readonly", @id = "EDI", placeholder = "EDI Number" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Inbound Da</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].InBoundDa, new { @class = "form-control", @readonly = "readonly", @id = "Da", placeholder = "Inbond DA" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3">Cargo Description</label>
+                                    <div class="input-group col-md-9">
+                                        @Html.TextBoxFor(m => m[i].CargoDescription, new { @class = "form-control", @readonly = "readonly", @id = "CargoDescription", placeholder = "Cargo Description" })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="modal-body" hidden>
+                <div class="row">
+                    <div class="form-group" style="margin-bottom:40px !important;">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3">Container Number</label>
+                                <div class="input-group col-md-9">
+                                    <input type="text" name="Id" style="display:none;" id="IdCargoItem" value="@Model[i].Id" />
+                                    @Html.HiddenFor(m => m[i].Id)
+                                    @Html.HiddenFor(m => m[i].IdCargo)
+                                    @Html.TextBoxFor(m => m[i].ContainerNumber, new { @class = "form-control required", @id = "ContainerNumber", placeholder = "Container Number" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3">Container Type </label>
+                                <div class="input-group col-md-9">
+                                    @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control ContainerType" })
                                 </div>
                             </div>
                             @if (ViewBag.SingleItem)
@@ -250,6 +352,52 @@
                 $tableContainer.bootstrapTable('remove', { field: 'Id', values: value });
             }
         };
+        $('#ContainerNumber').keyup('click', function (e) {
+            var obj = "";
+            let IdCargo = $('#CargoID').val();
+            let ContainerNumber = $('#ContainerNumber').val();
+
+
+
+            $.ajax({
+                url: "/emcs/CheckCNNo",
+                type: 'POST',
+                data: {
+                    IdCargo,
+                    ContainerNumber,
+
+                },
+                cache: false,
+                async: false,
+                success: function (data, response) {
+                    if (data.length == 0) {
+                        $("#ContainerSealNumber").val(null);
+                        $("#ContainerType option:selected").attr('selected', null);
+                    }
+                    else
+                    {
+                        $("#CargoID").val(data[0].IdCargo);
+                        $("#CargoId").val(data[0].IdCargo);
+                        $("#ContainerSealNumber").val(data[0].ContainerSealNumber);
+                        $("#ContainerNumber").val(data[0].ContainerNumber);
+                        $('[id=ContainerType] option').filter(function () {
+                            return ($(this).text() == data[0].ContainerType); //To select Green
+                        }).prop('selected', true);
+
+                    }
+
+
+                },
+                error: function (e) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Get Data ContainerNumber',
+                    })
+                }
+
+            });
+        });
 
         //var columns = [[
         //    {

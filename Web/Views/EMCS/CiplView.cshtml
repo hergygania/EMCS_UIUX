@@ -27,6 +27,51 @@
         align-items: center;
         border-radius: 0px 0.4285rem 0.4285rem 0px;
     }
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+    .tabs a {
+        text-decoration: none;
+        color: #777;
+        padding: 10px 20px;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        transition-duration: 0.6s;
+    }
+
+    .tabs a.active {
+        color: #fff;
+    }
+
+    .tabs a i {
+        margin-right: 5px;
+    }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 4px -4px #a8a8a8;
+        }
 </style>
 
 <div class="col-md-12">
@@ -36,84 +81,50 @@
     <div class="col-md-12 mt-5">
         <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <nav class="tabs mb-4">
+                <div class="selector"></div>
                 @if (!ViewBag.GroupName.Contains("CKB"))
                 {
-                    <li role="presentation" class="active">
-                        <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                    </li>
-                    <li class="hidden" role="presentation">
-                        <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
-                    </li>
+                    <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                    <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                    <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                    <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                    <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                    <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                    <a href="#uploaddoc" class="hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
                 }
                 else
                 {
 
                     if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
                     {
-                        <li role="presentation" class="active">
-                            <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                        </li>
-                        <li class="hidden" role="presentation">
-                            <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
-                        </li>
+                        <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                        <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                        <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                        <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                        <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                        <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                        <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                        <a href="#uploaddoc" class="hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+
                     }
                     else if (ViewBag.StepCargoId != 10020)
                     {
-                        <li role="presentation" class="active">
-                            <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                        </li>
+                        <a href="#edipreview" class="active" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+
                     }
                     else
                     {
                         if (ViewBag.StepCargoId == 10020)
                         {
-                            <li role="presentation" class="active">
-                                <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                            </li>
+                            <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                            <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+
                         }
                     }
                 }
-            </ul>
+            </nav>
             <!-- Tab panes -->
             <div class="tab-content tabs-custom">
                 @if (!ViewBag.GroupName.Contains("CKB"))
@@ -385,3 +396,27 @@
         });
     </script>
 }
+
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>

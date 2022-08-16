@@ -83,7 +83,7 @@
             <button type="submit" class="btn btn-danger btn-round mr-2" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
         }
     </div>
-    <input type="hidden" id="CargoId" name="CargoId" value="@(Model.Cargo.Id)" />
+    <input type="hidden" id="CargoId" name="CargoId" value="@(ViewBag.CargoID)" />
 }
 <script>
     $tableContainer = $("#tableAddCargo");
@@ -463,9 +463,7 @@
     //     function findMember(str) {
     //        console.log('search: ' + str)
     //    }
-
-    $('#ContainerNumber').keyup('click', function (e) {
-        debugger
+    $('#ContainerNumber').on('click', function (e) {
 
         var obj = "";
         let IdCargo = $('#CargoID').val();
@@ -483,7 +481,59 @@
             cache: false,
             async: false,
             success: function (data, response) {
-                debugger;
+                if (data.length == 0) {
+                    $("#ContainerSealNumber").val(null);
+                    $('#select2-ContainerType-container')[0].innerText = null;
+                }
+                else {
+                    $("#CargoID").val(data[0].IdCargo),
+                        $("#CargoId").val(data[0].IdCargo),
+
+                        $("#ContainerNumber").val(data[0].ContainerNumber),
+                        //$("#ContainerType").val(data[0].ContainerType),
+                        // $('#ContainerType').append('<option selected value="20' Fuel Tank Container">' + data[0].ContainerType + '</option>'),
+                        //$('#ContainerType option:contains(' + data[0].ContainerType + ')').attr('selected', 'selected');
+                        $("#ContainerSealNumber").val(data[0].ContainerSealNumber)
+                    if (($('#ContainerSealNumber').val()) != null) {
+                        $('#disablesealno').prop('disabled', true)
+                    }
+                    $('#ContainerType option:eq(' + data[0].ContainerType + ')').attr('selected', 'selected');
+                    $('#select2-ContainerType-container')[0].innerText = data[0].ContainerType;
+                    if (($('#select2-ContainerType-container')[0].innerText) == null) {
+                        $('#disablesealno').prop('disabled', true)
+                    }
+                }
+
+
+            },
+            error: function (e) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Fail Get Data ContainerNumber',
+                })
+            }
+
+        });
+    });
+    $('#ContainerNumber').keyup( function (e) {
+
+        var obj = "";
+        let IdCargo = $('#CargoID').val();
+        let ContainerNumber = $('#ContainerNumber').val();
+
+
+        $.ajax({
+            url: "/emcs/CheckCNNo",
+            type: 'POST',
+            data: {
+                IdCargo,
+                ContainerNumber,
+
+            },
+            cache: false,
+            async: false,
+            success: function (data, response) {
                 if(data.length == 0)
                 {
                     $("#ContainerSealNumber").val(null);
@@ -522,6 +572,7 @@
 
         });
     });
+   
     //function getcargotype(val) {
     //    debugger
     //    let cargotype = val;

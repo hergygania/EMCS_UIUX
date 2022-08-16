@@ -15,7 +15,7 @@ var columnChangeHistory = [
             var btnApprove = `<a href='/EMCS/RequestForChangeDetail?formtype=${row.FormType
                 }&id=${row.Id
                 }&formid=${row.FormId
-                }' class='btn btn-xs btn-info'><i class='fa fa-search'></i></a>`;
+                }' class='btn btn-xs btn-link btn-info'><i class='tim-icons icon-zoom-split'></i></a>`;
                 const div2 = "</div>";
             const btn = [div1, btnApprove, div2];
             return btn.join(" ");

@@ -42,23 +42,22 @@ namespace App.Service.EMCS
 
                     var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_SIInsert] @ID, @IdCL, @Description, @SpecialInstruction, @DocumentRequired, @PicBlAwb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete,@ExportType", parameters).FirstOrDefault();
                     var gettype = GetExportShipmentType(item.IdCl);
-                    var exporttype = gettype.ExportShipmentType;
                     var Status = "Submit";
                     var actionBy = SiteConfiguration.UserName;
                     var comment = item.Description;
-                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "', @exporttype='" + exporttype + "'");
+                    db.DbContext.Database.ExecuteSqlCommand("exec [sp_update_request_cl_for_si] @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "', @exportType='" + gettype + "'");
 
                     return data;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
 
         }
-        public static Data.Domain.EMCS.CiplForwader GetExportShipmentType(long id)
+        public static string GetExportShipmentType(long id)
         {
             try
             {
@@ -66,9 +65,9 @@ namespace App.Service.EMCS
                 {
                     db.DbContext.Database.CommandTimeout = 600;
                     List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(new SqlParameter("@IdCL", id ));
+                    parameterList.Add(new SqlParameter("@IdCL", id));
                     SqlParameter[] parameters = parameterList.ToArray();
-                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.CiplForwader>(" exec [dbo].[SP_GetSiExportShipmentType] @IdCL", parameters).FirstOrDefault();
+                    var data = db.DbContext.Database.SqlQuery<string>(" exec [dbo].[SP_GetSiExportShipmentType] @IdCL", parameters).FirstOrDefault();
                     return data;
                 }
             }
@@ -114,7 +113,7 @@ namespace App.Service.EMCS
                 return db.CreateRepository<Data.Domain.EMCS.ShippingInstructions>().CRUD(dml, itm);
             }
         }
-        
+
         public static Data.Domain.EMCS.ReturnSpInsert InsertBlAwb(Data.Domain.EMCS.TaskBlAwb item, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -138,6 +137,27 @@ namespace App.Service.EMCS
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_Insert_BlAwb] @Number, @Description, @Filename, @Publisher, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @IdCl, @Status", parameters).FirstOrDefault();
                 return data;
             }
+        }
+        public static int SubmtiSI(Data.Domain.EMCS.TaskSi item)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    var Status = "Submit";
+                    var actionBy = SiteConfiguration.UserName;
+                    var comment = item.Description;
+                    var data = (db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + Status + "', @Notes='" + comment + "'"));
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
         }
     }
 }

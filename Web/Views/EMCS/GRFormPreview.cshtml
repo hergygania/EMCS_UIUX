@@ -15,6 +15,51 @@
         display: none !important;
         visibility: hidden !important;
     }
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            padding: 10px 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition-duration: 0.6s;
+        }
+
+            .tabs a.active {
+                color: #fff;
+            }
+
+            .tabs a i {
+                margin-right: 5px;
+            }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 4px -4px #a8a8a8;
+        }
 </style>
 
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormGR" }))
@@ -29,20 +74,14 @@
                 <div class="col-md-12">
                     <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
                         <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Receipt Goods List</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:3;">History</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#problem" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:2;">Problem History</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#preview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:1;">Preview</a>
-                            </li>
-                        </ul>
+                        
+                        <nav class="tabs mb-4">
+                            <div class="selector"></div>
+                            <a href="#invoice" class="animation-on-hover active" aria-controls="home" role="tab" data-toggle="tab">Receipt Goods List</a>
+                            <a href="#history" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:3;">History</a>
+                            <a href="#problem" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:2;">Problem History</a>
+                            <a href="#preview" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:1;">Preview</a>
+                        </nav>
                         <!-- Tab panes -->
                         <div class="tab-content tabs-custom">
                             <div role="tabpanel" class="tab-pane active" id="invoice">
@@ -507,7 +546,7 @@
                                 @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
                                 <input type="hidden" id="Status" name="Status" value="Draft" />
                                 @Html.HiddenFor(m => m.Data.Id)
-                                <a href="~/emcs/Grlist" class="btn btn-primary warning"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                                <a href="~/emcs/Grlist" class="btn btn-warning btn-round warning"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
                             </div>
                         </div>
                     </div>
@@ -534,7 +573,33 @@
         var wizardState = @ViewBag.WizardData.Progress;
         var $hideAction = $("#HideAction").val();
     </script>
+    <script src="~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js"></script>
+
+    <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
     @Scripts.Render("~/Scripts.app/EMCS/transaction/GoodReceiveHistory.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/GoodsReceivePreviewForm.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/Custom.js")
 }
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>

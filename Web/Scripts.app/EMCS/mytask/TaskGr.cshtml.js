@@ -1,12 +1,12 @@
 ﻿$(function () {
     var columns_gr = [
         {
-            field: "id",
-            title: "No",
-            halign: "center",
-            align: 'center',
-            formatter: runningFormatter
-        }, {
+        //    field: "id",
+        //    title: "No",
+        //    halign: "center",
+        //    align: 'center',
+        //    formatter: runningFormatter
+        //}, {
             field: "",
             title: "Action",
             align: "center",
@@ -17,10 +17,11 @@
             formatter: function (data, row, index) {
                 var btn = [];
                 btn.push('<div class="btn-toolbar row">');
+                btn.push('<a href="/EMCS/EditGRForm/' + row.Id + '" class="btn btn-xs btn-primary"><i class="fa fa-pencil" alt="Edit GR"></i></a>');
                 if (row.Status === "Waiting Approval") {
-                    btn.push('<a href="/EMCS/ApprovalGR/' + row.Id + '" class="btn btn-xs btn-default"><i class="fa fa-search" alt="Show GR"></i></a>');
+                    btn.push('<a href="/EMCS/ApprovalGR/' + row.Id + '" class="btn btn-success btn-link btn-sm"><i class="tim-icons icon-zoom-split" alt="Show GR"></i></a>');
                 } else if (row.Status === "Revise") {
-                    btn.push('<a href="/EMCS/EditGRForm/' + row.Id + '" class="btn btn-xs btn-primary"><i class="fa fa-pencil" alt="Edit GR"></i></a>');
+                    btn.push('<a href="/EMCS/EditGRForm/' + row.Id + '" class="btn btn-primary btn-link btn-sm"><i class="tim-icons icon-pencil" alt="Edit GR"></i></a>');
                 } else {
                     btn.push("-");
                 }

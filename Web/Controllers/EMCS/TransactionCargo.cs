@@ -37,12 +37,14 @@ namespace App.Web.Controllers.EMCS
         public ActionResult CargoForm()
         {
             ApplicationTitle();
+            ViewBag.IsOwned = true;
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
             ViewBag.IsImexUser = false;
             ViewBag.CanRequestForChange = false;
+            ViewBag.IsApprover = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -64,9 +66,9 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsUpdated, UrlMenu = "CargoList")]
-        public ActionResult UpdateCargo(long cargoId)
+        public ActionResult UpdateCargo(long cargoId, bool rfc = false)
         {
-
+            var userId = User.Identity.GetUserId();
             ApplicationTitle();
             ViewBag.CargoID = cargoId;
             string userRoles = User.Identity.GetUserRoles();
@@ -75,13 +77,30 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+
+            ViewBag.IsApprover = false;
+            ViewBag.CanRequestForChange = false;
+            if (Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId))
+			ViewBag.IsOwned = true;
+            else
+            ViewBag.IsOwned = false;
+
+            if (Request.UrlReferrer != null)
+            {
+                if (Request.UrlReferrer.ToString().Contains("EMCS/CargoList"))
+                    ViewBag.IsApprover = false;
+                else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex")))
+                    ViewBag.IsApprover = true;
+            }
+
             if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
                 ViewBag.IsImexUser = false;
+
             if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
                 ViewBag.CanRequestForChange = false;
-            else
+            else if(rfc)
                 ViewBag.CanRequestForChange = true;
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
@@ -241,7 +260,9 @@ namespace App.Web.Controllers.EMCS
             try
             {
 
-                item.Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                if (item.Id == 0)
+                    item.Id = Id;
                 var cargoData = Service.EMCS.SvcCargo.GetCargoById(item.Id);
                 var ss = Service.EMCS.SvcCargo.CiplItemAvailable(item.Id);
                 return JsonCRUDMessage("I", new { cargoData });
@@ -266,7 +287,7 @@ namespace App.Web.Controllers.EMCS
             var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
 
             var listRfcItems = new List<Data.Domain.RFCItem>();
-            string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod","Status", "CreateDate" };
+            string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
             var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
             foreach (PropertyDescriptor property in properties)
             {
@@ -280,7 +301,7 @@ namespace App.Web.Controllers.EMCS
                             var rfcItem = new Data.Domain.RFCItem();
 
                             rfcItem.RFCID = id;
-                            rfcItem.TableName = "CL";
+                            rfcItem.TableName = "Cargo";
                             rfcItem.LableName = property.Name;
                             rfcItem.FieldName = property.Name;
                             rfcItem.BeforeValue = property.GetValue(model).ToString();
@@ -300,72 +321,182 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-
-
                 var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
-                var cargo = Service.EMCS.SvcCargo.GetCargoFormDataById(Convert.ToInt32(formId));
+                if (formtype == "Cargo") {
 
-                var cargoHistory = data.Where(x => x.TableName == typeof(Data.Domain.EMCS.CargoFormData).Name).ToList();
+                    var cargo = Service.EMCS.SvcCargo.GetCargoFormDataById(Convert.ToInt32(formId));
 
-                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
+                    var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
 
-                string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
+                    string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
 
-                foreach (PropertyDescriptor property in properties)
-                {
-                    if (!_ignoreParameters.Contains(property.Name))
+                    foreach (PropertyDescriptor property in properties)
                     {
-                        var historyProp = cargoHistory.Where(x => x.FieldName == property.Name).FirstOrDefault();
-                        if (historyProp != null)
+                        if (!_ignoreParameters.Contains(property.Name))
                         {
-                            System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
-                            switch (typeCode)
+                            var historyProp = data.Where(x => x.FieldName == property.Name).FirstOrDefault();
+                            if (historyProp != null)
                             {
-                                case TypeCode.Boolean:
-                                    property.SetValue(cargo, Convert.ToBoolean(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.String:
-                                    property.SetValue(cargo, Convert.ToString(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Char:
-                                    property.SetValue(cargo, Convert.ToChar(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Double:
-                                    property.SetValue(cargo, Convert.ToDouble(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Single:
-                                    property.SetValue(cargo, Convert.ToSingle(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Int32:
-                                    property.SetValue(cargo, Convert.ToInt32(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Int16:
-                                    property.SetValue(cargo, Convert.ToInt16(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.DateTime:
-                                    property.SetValue(cargo, Convert.ToDateTime(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Decimal:
-                                    property.SetValue(cargo, Convert.ToDecimal(historyProp.AfterValue));
-                                    break;
-                                case TypeCode.Object:
-                                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
-                                    break;
-                                default:
-                                    property.SetValue(cargo, historyProp.AfterValue);
-                                    break;
-                            }
-                            //Convert.ChangeType(historyProp.AfterValue, cipl.GetType());
+                                System.TypeCode typeCode = System.Type.GetTypeCode(property.PropertyType);
+                                switch (typeCode)
+                                {
+                                    case TypeCode.Boolean:
+                                        property.SetValue(cargo, Convert.ToBoolean(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.String:
+                                        property.SetValue(cargo, Convert.ToString(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Char:
+                                        property.SetValue(cargo, Convert.ToChar(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Double:
+                                        property.SetValue(cargo, Convert.ToDouble(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Single:
+                                        property.SetValue(cargo, Convert.ToSingle(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int32:
+                                        property.SetValue(cargo, Convert.ToInt32(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int16:
+                                        property.SetValue(cargo, Convert.ToInt16(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.DateTime:
+                                        property.SetValue(cargo, Convert.ToDateTime(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Decimal:
+                                        property.SetValue(cargo, Convert.ToDecimal(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Object:
+                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                        break;
+                                    default:
+                                        property.SetValue(cargo, historyProp.AfterValue);
+                                        break;
+                                }
 
+                            }
                         }
                     }
-                }
 
+                    Service.EMCS.SvcCargo.UpdateCargoByApprover(cargo, "I");
+                }
+                else if (formtype == "NpePeb") {
+
+                    var model = new PebNpeModel();
+                    model.NpePeb = Service.EMCS.SvcNpePeb.GetById(Convert.ToInt32(formId));
+
+                    string[] _ignnoreParametersNpePeb = { "Id", "IdCl", "CreateDate" };
+                    var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.NpePeb));
+                    foreach (PropertyDescriptor propertyNpePeb in properties)
+                    {
+                        if (!_ignnoreParametersNpePeb.Contains(propertyNpePeb.Name))
+                        {
+                            var historyProp = data.Where(x => x.FieldName == propertyNpePeb.Name).FirstOrDefault();
+                            if (historyProp != null)
+                            {
+                                System.TypeCode typeCode = System.Type.GetTypeCode(propertyNpePeb.PropertyType);
+                                switch (typeCode)
+                                {
+                                    case TypeCode.Boolean:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToBoolean(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.String:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToString(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Char:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToChar(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Double:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToDouble(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Single:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToSingle(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int32:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToInt32(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int16:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToInt16(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.DateTime:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToDateTime(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Decimal:
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToDecimal(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Object:
+                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                        break;
+                                    default:
+                                        propertyNpePeb.SetValue(model.NpePeb, historyProp.AfterValue);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                   Service.EMCS.SvcNpePeb.UpdateNpePeb(model.NpePeb);
+                }
+                else if (formtype == "BlAwb")
+                {
+                    var model = new BlAwbModel();
+                    model.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(Convert.ToInt32(formId));
+
+                    string[] _ignnoreParametersBlAwb = { "Id", "IdCl", "CreateDate" };
+
+                    var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.BlAwb));
+                    foreach (PropertyDescriptor propertyNpePeb in properties)
+                    {
+                        if (!_ignnoreParametersBlAwb.Contains(propertyNpePeb.Name))
+                        {
+                            var historyProp = data.Where(x => x.FieldName == propertyNpePeb.Name).FirstOrDefault();
+                            if (historyProp != null)
+                            {
+                                System.TypeCode typeCode = System.Type.GetTypeCode(propertyNpePeb.PropertyType);
+                                switch (typeCode)
+                                {
+                                    case TypeCode.Boolean:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToBoolean(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.String:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToString(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Char:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToChar(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Double:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDouble(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Single:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToSingle(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int32:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt32(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Int16:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt16(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.DateTime:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDateTime(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Decimal:
+                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDecimal(historyProp.AfterValue));
+                                        break;
+                                    case TypeCode.Object:
+                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                        break;
+                                    default:
+                                        propertyNpePeb.SetValue(model.BlAwb, historyProp.AfterValue);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    Service.EMCS.SvcBlAwb.UpdateBlAwb(model.BlAwb);
+                }
                 Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
-                Service.EMCS.SvcCargo.CrudSp(cargo, "I");
-                var userId = User.Identity.GetUserId();
-                
-                return Json(data, JsonRequestBehavior.AllowGet);
+
+                return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -380,16 +511,16 @@ namespace App.Web.Controllers.EMCS
             try
             {
                 var userId = User.Identity.GetUserId();
-                if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
-                {
+                //if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+                //{
                     long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                     var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
                     return JsonCRUDMessage("I", new { cargoData });
-                }
-                else
-                {
-                    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
-                }
+                //}
+                //else
+                //{
+                //    return Json(new { success = false, responseText = "Cargo Item is not complete !" });
+                //}
             }
             catch (Exception ex)
             {
@@ -466,6 +597,63 @@ namespace App.Web.Controllers.EMCS
                 throw;
             }
         }
+
+        [HttpPost]
+        public JsonResult CargoSaveAndApprove(RequestForChangeModel form, Data.Domain.EMCS.CargoFormData cargoform, Data.Domain.EMCS.CargoFormData approvalform)
+        {
+            try
+            {
+                var requestForChange = new RequestForChange();
+                var model = Service.EMCS.SvcCargo.GetCargoFormDataById(cargoform.Id);
+                var spCargoDetail = Service.EMCS.SvcCargo.GetCargoById(cargoform.Id);
+                requestForChange.FormNo = spCargoDetail.ClNo;
+                requestForChange.FormType = form.FormType;
+                requestForChange.Status = 1;
+                requestForChange.FormId = form.FormId;
+                requestForChange.Reason = form.Reason;
+
+                var id = Service.EMCS.SvcCipl.InsertChangeHistory(requestForChange);
+
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                string[] _ignoreParameters = { "Id", "CiNo", "Consignee", "NotifyParty", "ExportType", "Category", "Incoterms", "ShippingMethod", "Status", "CreateDate" };
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.CargoFormData));
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignoreParameters.Contains(property.Name))
+                    {
+                        var currentValue = property.GetValue(cargoform);
+                        if (currentValue != null && property.GetValue(model) != null)
+                        {
+                            if (currentValue.ToString() != property.GetValue(model).ToString())
+                            {
+                                var rfcItem = new Data.Domain.RFCItem();
+
+                                rfcItem.RFCID = id;
+                                rfcItem.TableName = "Cargo";
+                                rfcItem.LableName = property.Name;
+                                rfcItem.FieldName = property.Name;
+                                rfcItem.BeforeValue = property.GetValue(model).ToString();
+                                rfcItem.AfterValue = currentValue.ToString();
+                                listRfcItems.Add(rfcItem);
+                            }
+                        }
+                    }
+                }
+
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+                Service.EMCS.SvcCargo.UpdateCargoByApprover(cargoform, "I");
+                Service.EMCS.SvcCargo.ApprovalRequest(approvalform, "U");
+
+                var data = InitCargo(cargoform.Id);
+                return JsonCRUDMessage("U", data);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                throw;
+            }
+        }
+
 
         public ActionResult ReportCl(long clId, string reportType)
         {
@@ -613,6 +801,80 @@ namespace App.Web.Controllers.EMCS
                         
                     //    data = null;
                        
+                    //}
+
+                    return Json(data);
+                }
+                else
+                {
+                    string gettype = "";
+                    var data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    foreach (var i in data)
+                    {
+                        gettype = i.ContainerType;
+                    }
+                    return Json(gettype);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        [HttpPost]
+        public JsonResult CheckCNNoAndGetId(CargoItem cargoItem)
+        {
+
+            try
+            {
+                if (cargoItem.ContainerSealNumber == null)
+                {
+                    //string gettype = "";
+                    List<CargoItem> data = new List<CargoItem>();
+
+                    if (cargoItem.ContainerNumber == null)
+                    {
+                        cargoItem.ContainerNumber = "";
+                        data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    }
+                    else
+                    {
+                        data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
+                    }
+
+                    //if (data.Count == 0)
+                    //{
+                    //    //List<CargoItem> listcargo = new List<CargoItem>();
+                    //    //for (int i = 0; i == listcargo.Count; i++)
+                    //    //{
+                    //        data[0].ContainerType = "";
+                    //    //}
+                    //}
+                    //foreach (var i in data)
+                    //{
+                    //    gettype = i.ContainerType;
+                        
+
+                    //}
+                    //data[0].ContainerType = gettype;
+
+                    //ContainerFormModel a = new ContainerFormModel();
+                    //App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
+                    //if (data.Count > 0)
+                    //{
+                    //    m = Service.EMCS.SvcCargo.GetCargoType(gettype);
+                    //    if (m.Description != null)
+                    //    {
+                    //        data[0].ContainerType = m.Description;
+                    //    }
+                    //}
+                    //for(int i=0;i == data.Count; i++)
+                    //{   
+
+                    //    data = null;
+
                     //}
 
                     return Json(data);

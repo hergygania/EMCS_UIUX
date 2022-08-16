@@ -618,28 +618,31 @@ function Outstanding(id, rows) {
             if (port.length > 0) {
                 $('#tbody-port tr').remove();
                 $.each(port, function (index, element) {
-                    var html3 = '<tr>';
-                    html3 += '<td>' + element.No + '</td>';
-                    html3 += '<td>' + element.Branch + '</td>';
-                    html3 += '<td>' + element.PortOfLoading.split('-')[1] + '</td>';
-                    html3 += '<td>' + element.PortOfDestination.split('-')[1] + '</td>';
-                    if (element.ETD == null) {
-                        html3 += '<td>-</td>';
-                    }
-                    else {
-                        html3 += '<td>' + moment(element.ETD).format("DD MMM YY") + '</td>';
-                    }
-                    if (element.ETA == null) {
+                    if (element != null) {
+                        console.log(element);
+                        var html3 = '<tr>';
+                        html3 += '<td>' + element.No + '</td>';
+                        html3 += '<td>' + element.Branch + '</td>';
+                        html3 += '<td>' + element.PortOfLoading.split('-')[1] + '</td>';
+                        html3 += '<td>' + element.PortOfDestination.split('-')[1] + '</td>';
+                        if (element.ETD == null) {
+                            html3 += '<td>-</td>';
+                        }
+                        else {
+                            html3 += '<td>' + moment(element.ETD).format("DD MMM YY") + '</td>';
+                        }
+                        if (element.ETA == null) {
 
-                    }
-                    else {
-                        html3 += '<td>' + moment(element.ETA).format("DD MMM YY") + '</td>';
-                    }
-                   
+                        }
+                        else {
+                            html3 += '<td>' + moment(element.ETA).format("DD MMM YY") + '</td>';
+                        }
 
-                    html3 += '<td>' + element.ViewByUser + '</td>';
-                    html3 += '</tr>';
-                    $('#tbody-port').append(html3);
+
+                        html3 += '<td>' + element.ViewByUser + '</td>';
+                        html3 += '</tr>';
+                        $('#tbody-port').append(html3);
+                    }
                 });
             } else {
                 $('#tbody-port tr').remove();
@@ -690,7 +693,7 @@ function Shipment() {
             searchCode: $('#Area').val()
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var parts = data[3].Total;
             var machine = data[1].Total;
             var engine = data[0].Total;
@@ -777,16 +780,16 @@ function requestdata() {
             if (object.length > 0) {
                 var i = 1;
                 var array = [];
-                array.push('<div style="font-size: 18px; text-align:center; padding-bottom: 4px;">Export Cycle Steps</div>');
+                array.push('<div style="font-size: 15px; text-align:center; padding-bottom: 2px;">Export Cycle Steps</div>');
                 $.each(object,
                     function (index, element) {
                         var actual = element.Actual.split(" ");
                         var target = element.Target.split(" ");
 
-                        var html = '<div class="progress-group">';
+                        var html = '<div class="progress-group mr-3 ml-3">';
                         html += '<span class="progress-text"></span>';
                         html += '<span class="progress-number"><h5><b>' + element.Cycle + '</h5></span>';
-                        html += '<div class="progress" style="margin-bottom: 13px;">';
+                        html += '<div class="progress" style="margin-bottom: 15px;">';
                         html += '<div class="progress-bar progress-bar-striped active color-' + i + '" role="progressbar" aria-valuenow="' + (actual[0] / target[0]) * 100 + '" aria-valuemax="' + target[0] + '"></div>';
                         html += '<div class="progress-bar-title">' + actual[0] + '</b>/' + target[0] + '</div>';
                         html += '</div>';
@@ -1214,9 +1217,42 @@ function Map(type) {
                 text: title
             },
             tooltip: {
+                //enabled: false,
                 useHTML: true,
-                pointFormat: '<div><b>{point.province}</b> : <br> {point.data}</div>',
-                headerFormat: ''
+                pointFormat: '<div><b>{point.province}</b></div>',
+            },
+            //tooltip: {
+            //    useHTML: true,
+            //    //pointFormat: '<div><b>{point.province}</b> : <br> {point.data}</div>',
+            //    pointFormat: '<div style="color: #000;"><b><i class="fa fa-map-marker" aria-hidden="true"></i> {point.province}</b></div><table style="border:1px solid black;color: #000;"><tr><th style="border:1px solid black;">Data</th><th style="border:1px solid black;">Lat.</th><th style="border:1px solid black;">Long</th><th style="border:1px solid black;">Total</th></tr><tr><td style="border:1px solid black;">{point.data}</td><td style="border:1px solid black;">{point.Lat}</td><td style="border:1px solid black;">{point.Lon}</td><td style="border:1px solid black;">{point.Total}</td></tr></table>',
+            //    headerFormat: '',
+            //    style: {
+            //        color: '#fff',
+            //        fontFamily: 'poppins'
+            //    },
+            //    valueDecimals: 0,
+            //    backgroundColor: '#f0f0f0',
+            //    borderColor: '#fe9d01',
+            //    borderRadius: 30,
+            //    borderWidth: 5
+            //},
+            plotOptions: {
+                series: {
+                    point: {
+                        events: {
+                            click: function () {
+                                const pointData = {
+                                    "province": this.province,
+                                    "data": this.data,
+                                    "lat": this.lat,
+                                    "lon": this.lon,
+                                    "total": this.Total,
+                                }
+                                openMapModal(pointData);
+                            }
+                        }
+                    }
+                }
             },
             xAxis: {
                 crosshair: {
@@ -1234,7 +1270,6 @@ function Map(type) {
                     color: 'gray'
                 }
             },
-
             legend: {
                 enabled: false
             },
@@ -1242,7 +1277,8 @@ function Map(type) {
                 name: 'Basemap',
                 mapData: map,
                 borderColor: '#F0F0F0',
-                nullColor: '#fe9d01',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                nullColor: 'rgba(0, 0, 0, 0.3)',
                 showInLegend: false
             }, {
                 name: 'Separators',
@@ -1251,20 +1287,22 @@ function Map(type) {
                 color: '#101010',
                 enableMouseTracking: false,
                 showInLegend: false
-            }, {
+                }, {
+                cursor: 'pointer',
                 type: 'mapbubble',
                 name: 'Province',
                 data: data,
-                maxSize: '2%',
+                maxSize: '10%',
                 allowHTML: true,
                 useHTML: true,
-                nullColor: '#fe9d01',
+                nullColor: '#535353',
                 marker: {
-                    //symbol: "cross",
+                    //symbol: "url(https://upload.wikimedia.org/wikipedia/commons/b/b2/%EB%8D%95%EC%9D%B4%EB%91%98%EC%9D%B4.png)",
+                    symbol: "url(../../../Images/pin.png)",
                     useHTML: true,
                     style: {
                         useHTML: true
-                    },
+                    }
                 },
                 //text: '<div><svg width="15px" height="15px" viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>s</title><desc></desc><defs></defs><g id="black-icon-copy-6" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><g id="Download" transform="translate(8.000000, 8.000000)" stroke="#000000" stroke-width="16"><path d="M240.463235,188.294116 L240.463235,209.163945 C240.463235,226.444557 226.444557,240.463235 209.163945,240.463235 L31.7540284,240.463235 C14.4625072,240.463235 0.454738562,226.444557 0.454738562,209.163945 L0.454738562,188.294116" id="Shape"></path><path d="M120.458987,187.094073 L120.458987,0.454738562" id="Shape"></path><polyline id="Shape" points="196.825327 110.727733 120.458987 187.094073 44.0926471 110.727733"></polyline></g></g></svg></div>',
                 borderColor: '#F0F0F0',
@@ -1285,6 +1323,38 @@ function Map(type) {
         }
     });
 }
+
+function openMapModal(data) {
+    $('#map-popup-province').html(data.province);
+    let map_img = '';
+    if (data.province == 'Jakarta Raya') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-jakarta-raya.png" />';
+    } else if (data.province == 'Jawa Barat') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-jawa-barat.png" />';
+    } else if (data.province == 'Jawa Tengah') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-jawa-tengah.png" />';
+    } else if (data.province == 'Jawa Timur') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-jawa-timur.png" />';
+    } else if (data.province == 'Kalimantan Tengah') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-kalimantan-tengah.png" />';
+    } else if (data.province == 'NTT') {
+        map_img = '<img src="/Images/EMCS/Dashboard/map-ntt.png" />';
+    }
+    $('.map-popup-image').html(map_img);
+    const info = data.data;
+    const infoArray = info.split("<br>");
+    $('.map-popup-data--table-data').empty();
+    for (let i = 0; i < infoArray.length; i++) {
+        const str = infoArray[i].replace('- ', '');
+        const cipl = str.slice(0, 15);
+        const pic = str.slice(15);
+        $('.map-popup-data--table-data').append("<tr><td>" + cipl + "</td><td>" + pic + "</td></tr>");
+    }
+    $('.map-popup').toggleClass('open');
+};
+$('#map-popup-close').on('click', function () {
+    $('.map-popup').toggleClass('open');
+});
 
 $('#btn-port-container-map').on('click', function () {
     Map('Port');

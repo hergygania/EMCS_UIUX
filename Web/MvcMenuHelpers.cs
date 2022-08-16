@@ -95,11 +95,14 @@ namespace App.Web
 
             if (appUrl == "/")
                 appUrl = "";
+            string url = HttpContext.Current.Request.Url.AbsoluteUri;
+            Uri url1 = new Uri(url);
+            string host = url1.GetLeftPart(UriPartial.Authority);
 
             if (!request.Url.Authority.Contains("localhost"))
             {
 
-                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, "staging.mkindo.com:5181", appUrl);
+                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, host, appUrl);
             }
             else
             {

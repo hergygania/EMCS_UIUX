@@ -21,5 +21,6 @@
         public string Ciplno { get; set; }
         public string FormType { get; set; }
         public long Cargoid { get; set; }
+        public bool Rfc { get; set; }
     }
 }

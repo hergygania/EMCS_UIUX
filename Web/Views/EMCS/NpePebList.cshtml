@@ -5,10 +5,12 @@
 }
 
 @using System.Web.Mvc
+@Styles.Render("~/Content/EMCS/Custom.css")
 <style type="text/css">
     .form-horizontal .control-label {
         text-align: left !important;
     }
+
     .dropdown-menu.dropdown-menu-right {
         left: 0 !important;
     }
@@ -27,8 +29,6 @@
     {
         <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
     }
-
-
 }
 
 <div class="row">

@@ -320,10 +320,18 @@
         }
 
         .page-item.active .page-link {
-            background-color: #fe9d00 !important;
-            border-color: #fe9d00 !important;
+            /*background-color: #fe9d00 !important;
+            border-color: #fe9d00 !important;*/
+            background: #ff8d72 !important;
+            background-image: linear-gradient(to bottom left, #ffcc79, #ff9c01, #ffffff) !important;
+            background-size: 210% 210% !important;
+            background-position: top right !important;
+            border-radius: 20px;
         }
-
+        .page-link {
+            border: 0.0625rem solid #e3e3e300 !important;
+            border-radius: 20px !important;
+        }
         .white-content .sidebar {
             box-shadow: none !important;
         }
@@ -349,9 +357,37 @@
             align-items: stretch;
         }
 
+        .btn-secondary {
+            background: #ff8d72 !important;
+            background-image: linear-gradient(to bottom left, #ffc363, #ffb033, #ff8d72) !important;
+            background-size: 210% 210% !important;
+            background-position: top right !important;
+        }
+        .white-content .table > thead > tr > th, .white-content .table > tbody > tr > th, .white-content .table > tfoot > tr > th, .white-content .table > thead > tr > td, .white-content .table > tbody > tr > td, .white-content .table > tfoot > tr > td {
+            border-color: transparent !important;
+        }
+        .table-bordered th, .table-bordered td {
+            border: none !important;
+        }
+        .sidebar-mini .sidebar{
+            z-index: 9999 !important;
+        }
         .fixed-table-body {
             max-height: 577px;
             overflow-y: auto;
+        }
+
+        .btn-primary {
+            background-image: linear-gradient(to bottom left, #00ade5, #167fa3, #00d8d0) !important;
+        }
+        .btn-warning {
+            background-image: linear-gradient(to bottom left, #ffcf84, #ff9c02, #a16500) !important;
+        }
+        #btnApprove {
+            background-image: linear-gradient(to bottom left, #90ff67, #00c20b, #b5ff0a) !important;
+        }
+        #partDownloadFile {
+            background-image: linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
         }
     </style>
 
@@ -390,8 +426,13 @@
         <header class="header">
             <div class="sidebars">
                 <ul class="ul-bars">
-                    <li><i class="fas fa-bars"></i></li>
+                    <li>MENU</li>
                 </ul>
+            </div>
+            <div class="navbar-toggle d-inline">
+                <button type="button" class="navbar-toggler">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
             <a href="./" class="logo">
                 <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:130px;" />

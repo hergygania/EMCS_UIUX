@@ -34,10 +34,10 @@ namespace App.Service.EMCS
                 {
                     ConsigneeName = Regex.Replace(filter.ConsigneeName, @"[^0-9a-zA-Z.]+", "");
                 }
-              
+
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
-                
+
                 parameterList.Add(new SqlParameter("@ConsigneeName", ConsigneeName ?? ""));
                 parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
 
@@ -396,93 +396,195 @@ namespace App.Service.EMCS
                 return data;
             }
         }
-       
+
 
         public static long UpdateCipl(CiplForwader forwader, Cipl cipl, string status)
         {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            try
             {
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@id", cipl.Id));
-                parameterList.Add(new SqlParameter("@Category", cipl.Category ?? ""));
-                parameterList.Add(new SqlParameter("@CategoriItem", cipl.CategoriItem ?? ""));
-                parameterList.Add(new SqlParameter("@ExportType", cipl.ExportType ?? ""));
-                parameterList.Add(new SqlParameter("@ExportTypeItem", cipl.ExportTypeItem ?? ""));
-                parameterList.Add(new SqlParameter("@SoldConsignee", cipl.SoldConsignee ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToName", cipl.SoldToName ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToAddress", cipl.SoldToAddress ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToCountry", cipl.SoldToCountry ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToTelephone", cipl.SoldToTelephone ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToFax", cipl.SoldToFax ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToPic", cipl.SoldToPic ?? ""));
-                parameterList.Add(new SqlParameter("@SoldToEmail", cipl.SoldToEmail.Replace(",", ";") ?? ""));
-                parameterList.Add(new SqlParameter("@ShipDelivery", cipl.ShipDelivery ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeName", cipl.ConsigneeName ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeAddress", cipl.ConsigneeAddress ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeCountry", cipl.ConsigneeCountry ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeTelephone", cipl.ConsigneeTelephone ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeFax", cipl.ConsigneeFax ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneePic", cipl.ConsigneePic ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeEmail", cipl.ConsigneeEmail ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyName", cipl.NotifyName ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyAddress", cipl.NotifyAddress ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyCountry", cipl.NotifyCountry ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyTelephone", cipl.NotifyTelephone ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyFax", cipl.NotifyFax ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyPic", cipl.NotifyPic ?? ""));
-                parameterList.Add(new SqlParameter("@NotifyEmail", cipl.NotifyEmail.Replace(",", ";") ?? ""));
-                parameterList.Add(new SqlParameter("@ConsigneeSameSoldTo", cipl.ConsigneeSameSoldTo));
-                parameterList.Add(new SqlParameter("@NotifyPartySameConsignee", cipl.NotifyPartySameConsignee));
-                parameterList.Add(new SqlParameter("@Area", cipl.Area ?? ""));
-                parameterList.Add(new SqlParameter("@Branch", cipl.Branch ?? ""));
-                parameterList.Add(new SqlParameter("@Currency", cipl.Currency ?? ""));
-                parameterList.Add(new SqlParameter("@Rate", cipl.Rate));
-                parameterList.Add(new SqlParameter("@PaymentTerms", cipl.PaymentTerms ?? ""));
-                parameterList.Add(new SqlParameter("@ShippingMethod", cipl.ShippingMethod ?? ""));
-                parameterList.Add(new SqlParameter("@CountryOfOrigin", cipl.CountryOfOrigin ?? ""));
-                parameterList.Add(new SqlParameter("@LcNoDate", cipl.LcNoDate ?? ""));
-                parameterList.Add(new SqlParameter("@IncoTerm", cipl.IncoTerm ?? ""));
-                parameterList.Add(new SqlParameter("@FreightPayment", cipl.FreightPayment ?? ""));
-                parameterList.Add(new SqlParameter("@ShippingMarks", cipl.ShippingMarks ?? ""));
-                parameterList.Add(new SqlParameter("@Remarks", cipl.Remarks ?? ""));
-                parameterList.Add(new SqlParameter("@SpecialInstruction", cipl.SpecialInstruction ?? ""));
-                parameterList.Add(new SqlParameter("@CreateBy", DBNull.Value));
-                parameterList.Add(new SqlParameter("@CreateDate", DBNull.Value));
-                parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
-                parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
-                parameterList.Add(new SqlParameter("@Status", status));
-                parameterList.Add(new SqlParameter("@IsDelete", false));
-                parameterList.Add(new SqlParameter("@LoadingPort", cipl.LoadingPort ?? ""));
-                parameterList.Add(new SqlParameter("@DestinationPort", cipl.DestinationPort ?? ""));
-                parameterList.Add(new SqlParameter("@PickUpPic", cipl.PickUpPic ?? ""));
-                parameterList.Add(new SqlParameter("@PickUpArea", cipl.PickUpArea ?? ""));
-                parameterList.Add(new SqlParameter("@CategoryReference", cipl.CategoryReference ?? ""));
-                parameterList.Add(new SqlParameter("@ReferenceNo", cipl.ReferenceNo ?? ""));
-                parameterList.Add(new SqlParameter("@Consolidate", cipl.Consolidate));
-                // FORWADER
-                parameterList.Add(new SqlParameter("@Forwader", forwader.Forwader ?? ""));
-                parameterList.Add(new SqlParameter("@BranchForwarder", forwader.Branch ?? ""));
-                parameterList.Add(new SqlParameter("@Attention", forwader.Attention ?? ""));
-                parameterList.Add(new SqlParameter("@Company", forwader.Company ?? ""));
-                parameterList.Add(new SqlParameter("@SubconCompany", forwader.SubconCompany ?? ""));
-                parameterList.Add(new SqlParameter("@Address", forwader.Address ?? ""));
-                parameterList.Add(new SqlParameter("@AreaForwarder", forwader.Area ?? ""));
-                parameterList.Add(new SqlParameter("@City", forwader.City ?? ""));
-                parameterList.Add(new SqlParameter("@PostalCode", forwader.PostalCode ?? ""));
-                parameterList.Add(new SqlParameter("@Contact", forwader.Contact ?? ""));
-                parameterList.Add(new SqlParameter("@FaxNumber", forwader.FaxNumber ?? ""));
-                parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
-                parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
-                parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
-                parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
-                SqlParameter[] parameters = parameterList.ToArray();
-                // ReSharper disable once CoVariantArrayConversion
-                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters);
-                return 1;
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@id", cipl.Id));
+                    parameterList.Add(new SqlParameter("@Category", cipl.Category ?? ""));
+                    parameterList.Add(new SqlParameter("@CategoriItem", cipl.CategoriItem ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportType", cipl.ExportType ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportTypeItem", cipl.ExportTypeItem ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldConsignee", cipl.SoldConsignee ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToName", cipl.SoldToName ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToAddress", cipl.SoldToAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToCountry", cipl.SoldToCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToTelephone", cipl.SoldToTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToFax", cipl.SoldToFax ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToPic", cipl.SoldToPic ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToEmail", cipl.SoldToEmail.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@ShipDelivery", cipl.ShipDelivery ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeName", cipl.ConsigneeName ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeAddress", cipl.ConsigneeAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeCountry", cipl.ConsigneeCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeTelephone", cipl.ConsigneeTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeFax", cipl.ConsigneeFax ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneePic", cipl.ConsigneePic ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeEmail", cipl.ConsigneeEmail ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyName", cipl.NotifyName ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyAddress", cipl.NotifyAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyCountry", cipl.NotifyCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyTelephone", cipl.NotifyTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyFax", cipl.NotifyFax ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyPic", cipl.NotifyPic ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyEmail", cipl.NotifyEmail.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeSameSoldTo", cipl.ConsigneeSameSoldTo));
+                    parameterList.Add(new SqlParameter("@NotifyPartySameConsignee", cipl.NotifyPartySameConsignee));
+                    parameterList.Add(new SqlParameter("@Area", cipl.Area ?? ""));
+                    parameterList.Add(new SqlParameter("@Branch", cipl.Branch ?? ""));
+                    parameterList.Add(new SqlParameter("@Currency", cipl.Currency ?? ""));
+                    parameterList.Add(new SqlParameter("@Rate", cipl.Rate));
+                    parameterList.Add(new SqlParameter("@PaymentTerms", cipl.PaymentTerms ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMethod", cipl.ShippingMethod ?? ""));
+                    parameterList.Add(new SqlParameter("@CountryOfOrigin", cipl.CountryOfOrigin ?? ""));
+                    parameterList.Add(new SqlParameter("@LcNoDate", cipl.LcNoDate ?? ""));
+                    parameterList.Add(new SqlParameter("@IncoTerm", cipl.IncoTerm ?? ""));
+                    parameterList.Add(new SqlParameter("@FreightPayment", cipl.FreightPayment ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMarks", cipl.ShippingMarks ?? ""));
+                    parameterList.Add(new SqlParameter("@Remarks", cipl.Remarks ?? ""));
+                    parameterList.Add(new SqlParameter("@SpecialInstruction", cipl.SpecialInstruction ?? ""));
+                    parameterList.Add(new SqlParameter("@CreateBy", DBNull.Value));
+                    parameterList.Add(new SqlParameter("@CreateDate", DBNull.Value));
+                    parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
+                    parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+                    parameterList.Add(new SqlParameter("@Status", status));
+                    parameterList.Add(new SqlParameter("@IsDelete", false));
+                    parameterList.Add(new SqlParameter("@LoadingPort", cipl.LoadingPort ?? ""));
+                    parameterList.Add(new SqlParameter("@DestinationPort", cipl.DestinationPort ?? ""));
+                    parameterList.Add(new SqlParameter("@PickUpPic", cipl.PickUpPic ?? ""));
+                    parameterList.Add(new SqlParameter("@PickUpArea", cipl.PickUpArea ?? ""));
+                    parameterList.Add(new SqlParameter("@CategoryReference", cipl.CategoryReference ?? ""));
+                    parameterList.Add(new SqlParameter("@ReferenceNo", cipl.ReferenceNo ?? ""));
+                    parameterList.Add(new SqlParameter("@Consolidate", cipl.Consolidate));
+                    // FORWADER
+                    parameterList.Add(new SqlParameter("@Forwader", forwader.Forwader ?? ""));
+                    parameterList.Add(new SqlParameter("@BranchForwarder", forwader.Branch ?? ""));
+                    parameterList.Add(new SqlParameter("@Attention", forwader.Attention ?? ""));
+                    parameterList.Add(new SqlParameter("@Company", forwader.Company ?? ""));
+                    parameterList.Add(new SqlParameter("@SubconCompany", forwader.SubconCompany ?? ""));
+                    parameterList.Add(new SqlParameter("@Address", forwader.Address ?? ""));
+                    parameterList.Add(new SqlParameter("@AreaForwarder", forwader.Area ?? ""));
+                    parameterList.Add(new SqlParameter("@City", forwader.City ?? ""));
+                    parameterList.Add(new SqlParameter("@PostalCode", forwader.PostalCode ?? ""));
+                    parameterList.Add(new SqlParameter("@Contact", forwader.Contact ?? ""));
+                    parameterList.Add(new SqlParameter("@FaxNumber", forwader.FaxNumber ?? ""));
+                    parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
+                    parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters);
+                    return 1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 
+        public static long UpdateCiplByApprover(CiplForwader forwader, Cipl cipl, string status)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@id", cipl.Id));
+                    parameterList.Add(new SqlParameter("@Category", cipl.Category ?? ""));
+                    parameterList.Add(new SqlParameter("@CategoriItem", cipl.CategoriItem ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportType", cipl.ExportType ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportTypeItem", cipl.ExportTypeItem ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldConsignee", cipl.SoldConsignee ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToName", cipl.SoldToName ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToAddress", cipl.SoldToAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToCountry", cipl.SoldToCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToTelephone", cipl.SoldToTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToFax", cipl.SoldToFax ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToPic", cipl.SoldToPic ?? ""));
+                    parameterList.Add(new SqlParameter("@SoldToEmail", cipl.SoldToEmail.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@ShipDelivery", cipl.ShipDelivery ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeName", cipl.ConsigneeName ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeAddress", cipl.ConsigneeAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeCountry", cipl.ConsigneeCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeTelephone", cipl.ConsigneeTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeFax", cipl.ConsigneeFax ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneePic", cipl.ConsigneePic ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeEmail", cipl.ConsigneeEmail ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyName", cipl.NotifyName ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyAddress", cipl.NotifyAddress ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyCountry", cipl.NotifyCountry ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyTelephone", cipl.NotifyTelephone ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyFax", cipl.NotifyFax ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyPic", cipl.NotifyPic ?? ""));
+                    parameterList.Add(new SqlParameter("@NotifyEmail", cipl.NotifyEmail.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@ConsigneeSameSoldTo", cipl.ConsigneeSameSoldTo));
+                    parameterList.Add(new SqlParameter("@NotifyPartySameConsignee", cipl.NotifyPartySameConsignee));
+                    parameterList.Add(new SqlParameter("@Area", cipl.Area ?? ""));
+                    parameterList.Add(new SqlParameter("@Branch", cipl.Branch ?? ""));
+                    parameterList.Add(new SqlParameter("@Currency", cipl.Currency ?? ""));
+                    parameterList.Add(new SqlParameter("@Rate", cipl.Rate));
+                    parameterList.Add(new SqlParameter("@PaymentTerms", cipl.PaymentTerms ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMethod", cipl.ShippingMethod ?? ""));
+                    parameterList.Add(new SqlParameter("@CountryOfOrigin", cipl.CountryOfOrigin ?? ""));
+                    parameterList.Add(new SqlParameter("@LcNoDate", cipl.LcNoDate ?? ""));
+                    parameterList.Add(new SqlParameter("@IncoTerm", cipl.IncoTerm ?? ""));
+                    parameterList.Add(new SqlParameter("@FreightPayment", cipl.FreightPayment ?? ""));
+                    parameterList.Add(new SqlParameter("@ShippingMarks", cipl.ShippingMarks ?? ""));
+                    parameterList.Add(new SqlParameter("@Remarks", cipl.Remarks ?? ""));
+                    parameterList.Add(new SqlParameter("@SpecialInstruction", cipl.SpecialInstruction ?? ""));
+                    parameterList.Add(new SqlParameter("@CreateBy", DBNull.Value));
+                    parameterList.Add(new SqlParameter("@CreateDate", DBNull.Value));
+                    parameterList.Add(new SqlParameter("@UpdateBy", "Ariliago"));
+                    parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
+                    parameterList.Add(new SqlParameter("@Status", status));
+                    parameterList.Add(new SqlParameter("@IsDelete", false));
+                    parameterList.Add(new SqlParameter("@LoadingPort", cipl.LoadingPort ?? ""));
+                    parameterList.Add(new SqlParameter("@DestinationPort", cipl.DestinationPort ?? ""));
+                    parameterList.Add(new SqlParameter("@PickUpPic", cipl.PickUpPic ?? ""));
+                    parameterList.Add(new SqlParameter("@PickUpArea", cipl.PickUpArea ?? ""));
+                    parameterList.Add(new SqlParameter("@CategoryReference", cipl.CategoryReference ?? ""));
+                    parameterList.Add(new SqlParameter("@ReferenceNo", cipl.ReferenceNo ?? ""));
+                    parameterList.Add(new SqlParameter("@Consolidate", cipl.Consolidate));
+                    // FORWADER
+                    parameterList.Add(new SqlParameter("@Forwader", forwader.Forwader ?? ""));
+                    parameterList.Add(new SqlParameter("@BranchForwarder", forwader.Branch ?? ""));
+                    parameterList.Add(new SqlParameter("@Attention", forwader.Attention ?? ""));
+                    parameterList.Add(new SqlParameter("@Company", forwader.Company ?? ""));
+                    parameterList.Add(new SqlParameter("@SubconCompany", forwader.SubconCompany ?? ""));
+                    parameterList.Add(new SqlParameter("@Address", forwader.Address ?? ""));
+                    parameterList.Add(new SqlParameter("@AreaForwarder", forwader.Area ?? ""));
+                    parameterList.Add(new SqlParameter("@City", forwader.City ?? ""));
+                    parameterList.Add(new SqlParameter("@PostalCode", forwader.PostalCode ?? ""));
+                    parameterList.Add(new SqlParameter("@Contact", forwader.Contact ?? ""));
+                    parameterList.Add(new SqlParameter("@FaxNumber", forwader.FaxNumber ?? ""));
+                    parameterList.Add(new SqlParameter("@Forwading", forwader.Forwading ?? ""));
+                    parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
+                    parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
+                    parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate_ByApprover] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters);
+                    return 1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public static List<SPGetCiplDocument> CiplDocumentListById(long id)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -559,7 +661,7 @@ namespace App.Service.EMCS
                 var categoryReference2 = categoryReference ?? "";
                 var lastReference = crit.LastReference ?? "";
                 var idCustomer = crit.IdCustomer ?? "";
-                if (category!=null)
+                if (category != null)
                 {
                     category = Regex.Replace(category, @"[^0-9a-zA-Z]+", "");
                 }
@@ -572,7 +674,7 @@ namespace App.Service.EMCS
                     categoryReference2 = Regex.Replace(categoryReference2, @"[^0-9a-zA-Z]+", "");
                 }
 
-               
+
                 var tb = db.Database.SqlQuery<SpGetReference>("[dbo].[sp_get_reference_no]@Category='" + category + "', @ReferenceNo='" + reference + "', @CategoryReference='" + categoryReference2 + "', @LastReference='" + lastReference + "', @IdCustomer='" + idCustomer + "'").ToList();
                 return tb;
             }
@@ -592,7 +694,7 @@ namespace App.Service.EMCS
                 db.Database.CommandTimeout = 600;
                 column = column ?? "";
                 columnValue = columnValue ?? "";
-                if (category!=null)
+                if (category != null)
                 {
                     category = Regex.Replace(category, @"[^0-9a-zA-Z]+", "");
                 }
@@ -609,11 +711,11 @@ namespace App.Service.EMCS
                     Order = Regex.Replace(Order, @"[^0-9a-zA-Z]+", "");
                 }
 
-                
+
                 var sql = @"[dbo].[sp_get_reference_item] @Column = '" + column + "', @ColumnValue = '" + columnValue + "', @Category = '" + category + "' ";
                 //var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(SQL + ", @isTotal=0").FirstOrDefault();
                 var data = db.Database.SqlQuery<ReferenceToCiplItem>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit= 50000").ToList();
-               if(data.Count > 0)
+                if (data.Count > 0)
                 {
                     data.ToList().ForEach(c => c.PartNumber = c.PartNumber.Replace(@":AA", string.Empty));
                 }
@@ -764,11 +866,28 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+        public static dynamic GetListSpRequestForChangeByFormType(GridListFilter crit)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                crit.Sort = crit.Sort ?? "CreateDate";
+                db.Database.CommandTimeout = 600;
+                var sql = @"[dbo].[SP_CiplChangeHistoryGetByFormType] @id='" + crit.Term + "', @formtype='" + crit.FormType + "'";
+                var count = db.Database.SqlQuery<CountData>(sql + ", @IsTotal=0").FirstOrDefault();
+                var data = db.Database.SqlQuery<SPGetCiplChangeHistory>(sql + ", @IsTotal=0, @sort='" + crit.Sort + "',  @order='" + crit.Order + "', @offset='" + crit.Offset.ToString() + "', @limit='" + crit.Limit.ToString() + "'").ToList();
+
+                dynamic result = new ExpandoObject();
+                if (count != null) result.total = count.Total;
+                result.rows = data;
+                return result;
+            }
+        }
         public static dynamic GetRequestForChangeList(GridListFilter crit)
         {
             using (var db = new Data.EmcsContext())
             {
                 crit.Sort = crit.Sort ?? "CreateDate";
+                crit.Order = "DESC";
                 db.Database.CommandTimeout = 600;
                 var sql = @"[dbo].[sp_RequestForChangeHistory]";
                 var count = db.Database.SqlQuery<CountData>(sql + " @IsTotal=0,@Approver='" + SiteConfiguration.UserName + "'").FirstOrDefault();
@@ -780,7 +899,7 @@ namespace App.Service.EMCS
                 return result;
             }
         }
-        public static dynamic GetSpChangeHistoryReason(string idTerm,string formtype)
+        public static dynamic GetSpChangeHistoryReason(string idTerm, string formtype)
         {
             using (var db = new Data.EmcsContext())
             {
@@ -789,7 +908,7 @@ namespace App.Service.EMCS
                 return data;
             }
         }
-       
+
         public static dynamic CheckRequestExists(int formId, string formtype)
         {
             using (var db = new Data.EmcsContext())
@@ -833,7 +952,7 @@ namespace App.Service.EMCS
 
             return 0;
         }
-        public static long RejectRequestForChangeHistory(int formId,string reason)
+        public static long RejectRequestForChangeHistory(int formId, string reason)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
@@ -866,6 +985,25 @@ namespace App.Service.EMCS
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
                 var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_RequestForChange_Insert] @FormType, @FormNo,@FormId, @Reason, @CreateBy", parameters).First();
+                return obj;
+            }
+        }
+        public static int InsertChangeHistory(Data.Domain.RequestForChange data)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@FormType", data.FormType));
+                parameterList.Add(new SqlParameter("@FormNo", data.FormNo));
+                parameterList.Add(new SqlParameter("@FormId", data.FormId));
+                parameterList.Add(new SqlParameter("@Reason", data.Reason ?? ""));
+                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName ?? ""));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                var obj = db.DbContext.Database.SqlQuery<int>(@" exec [dbo].[Sp_ChangeHistory_Insert] @FormType, @FormNo,@FormId, @Reason, @CreateBy", parameters).First();
                 return obj;
             }
         }
@@ -944,28 +1082,38 @@ namespace App.Service.EMCS
 
         public static bool CrudSp(Cipl itm, CiplApprove status, string dml)
         {
-            if (dml == "I")
+            try
             {
-                itm.CreateBy = SiteConfiguration.UserName;
-                itm.CreateDate = DateTime.Now;
+
+                if (dml == "I")
+                {
+                    itm.CreateBy = SiteConfiguration.UserName;
+                    itm.CreateDate = DateTime.Now;
+                }
+
+                itm.UpdateBy = SiteConfiguration.UserName;
+                itm.UpdateDate = DateTime.Now;
+
+                CacheManager.Remove(CacheName);
+
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+
+                    db.DbContext.Database.CommandTimeout = 600;
+                    var sql = @"[dbo].[sp_update_request_cipl] @IdCipl='" + itm.Id + "'" +
+                              "," + "@Username='" + itm.UpdateBy + "'" +
+                              ", @NewStatus='" + status.Status + "'" +
+                              ", @Notes='" + status.Notes + "'";
+
+                    db.DbContext.Database.ExecuteSqlCommand(sql);
+                    return true;
+                }
+
             }
-
-            itm.UpdateBy = SiteConfiguration.UserName;
-            itm.UpdateDate = DateTime.Now;
-
-            CacheManager.Remove(CacheName);
-
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            catch (Exception ex)
             {
 
-                db.DbContext.Database.CommandTimeout = 600;
-                var sql = @"[dbo].[sp_update_request_cipl] @IdCipl='" + itm.Id + "'" +
-                          "," + "@Username='" + itm.UpdateBy + "'" +
-                          ", @NewStatus='" + status.Status + "'" +
-                          ", @Notes='" + status.Notes + "'";
-
-                db.DbContext.Database.ExecuteSqlCommand(sql);
-                return true;
+                throw ex;
             }
 
         }
@@ -1154,7 +1302,7 @@ namespace App.Service.EMCS
                 {
                     user = Regex.Replace(user, @"[^0-9a-zA-Z]+", "");
                 }
-                    
+
 
                 var sql = "SELECT Fn.AD_User id, Fn.Employee_Name text, Fn.BAreaName extra FROM [dbo].[fn_get_employee_internal_ckb]() Fn WHERE (Fn.Employee_Name LIKE '%" + user + "%' OR Fn.BAreaName LIKE '%" + user + "%') ORDER BY Fn.Employee_Name";
                 var data = db.Database.SqlQuery<SelectItem3>(sql).Skip(0).Take(50).AsQueryable().ToList();
@@ -1273,7 +1421,7 @@ namespace App.Service.EMCS
             {
                 rowname = "Gross Weigth ";
             }
-          
+
             return rowname;
         }
 
@@ -1294,7 +1442,7 @@ namespace App.Service.EMCS
             }
         }
 
-        
+
 
     }
 }

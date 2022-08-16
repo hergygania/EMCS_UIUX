@@ -9,6 +9,7 @@ $(function () {
             field: "Id",
             title: "Action",
             align: "center",
+            class: "text-nowrap",
             sortable: true,
             width: "125",
             formatter: function (data, row, index) {
@@ -16,12 +17,12 @@ $(function () {
             },
             events: operateEvents
         },
-        {
-            field: "IdCl",
-            title: "IdCl",
-            sortable: true,
-            visiable: false
-        },
+        //{
+        //    field: "IdCl",
+        //    title: "IdCl",
+        //    sortable: true,
+        //    visiable: false
+        //},
         {
             field: "AjuNumber",
             title: "Aju Number.",
@@ -71,11 +72,11 @@ $(function () {
                 }
             }
         },
-        {
-            field: "PebNumber",
-            title: "PebNumber.",
-            sortable: true
-        },
+        //{
+        //    field: "PebNumber",
+        //    title: "PebNumber.",
+        //    sortable: true
+        //},
         {
             field: "PassPabeanOffice",
             title: "PassPabeanOffice.",
@@ -84,6 +85,11 @@ $(function () {
         {
             field: "Valuta",
             title: "Type Of Currency(Valuta).",
+            sortable: true
+        },
+        {
+            field: "StatusViewByUser",
+            title: "Status",
             sortable: true
         }
     ]
@@ -132,7 +138,9 @@ function operateFormatter(options) {
 
     var btn = [];
     btn.push('<div class="btn-group">');
-    btn.push('<button type="button"  class="btn btn-info info" title="Info"><i class="fa fa-search""></i></button>')
+    if (options.Edit == true && options.Data.PendingRFC == 0)
+        btn.push('<button type="button" class="btn btn-xs btn-link edit" title="Edit"><i class="fa fa-edit"></i></button>');
+        btn.push('<button type="button"  class="btn btn-success btn-link info" title="Info"><i class="tim-icons icon-zoom-split""></i></button>')
 
     btn.push('</div>');
 
@@ -150,11 +158,11 @@ operateFormatter.DEFAULTS = {
 
 window.operateEvents = {
     'click .info': function (e, data, row, index) {
-      
         var page = "cargo";
         location.href = "/EMCS/ShowNpePeb?page=" + page + "&Id=" + row.IdCl;
-      
-    }
-   
+    },
+    'click .edit': function (e, value, row, index) {
+        location.href = "/EMCS/CreatePebNpe?Id=" + row.IdCl+"&rfc=true";
+    },
 };
 

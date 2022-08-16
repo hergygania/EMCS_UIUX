@@ -21,27 +21,70 @@
         align-items: center;
         border-radius: 0px 0.4285rem 0.4285rem 0px;
     }
+
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            padding: 10px 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition-duration: 0.6s;
+        }
+
+            .tabs a.active {
+                color: #fff;
+            }
+
+            .tabs a i {
+                margin-right: 5px;
+            }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 4px -4px #a8a8a8;
+        }
 </style>
 <div class="row">
     <div class="col-md-12">
+        
         <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
             <form id="FormCipl">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab">CIPL</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#tab-documents" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                    </li>
-                    <li role="presentation" class="hide" id="li-problem-cipl">
-                        <a id="tab-problem-cipl" href="#tab-task-problem-cipl" aria-controls="ph" role="tab" data-toggle="tab">Problem History</a>
-                    </li>
-                </ul>
+                <nav class="tabs ml-4">
+                    <div class="selector"></div>
+
+                    <a href="#tab-task-cipl" class="active" aria-controls="home" role="tab" data-toggle="tab">CIPL</a>
+                    <a href="#tab-documents" aria-controls="home" role="tab" data-toggle="tab">Documents</a>
+                    <a id="tab-problem-cipl" class="hide" href="#tab-task-problem-cipl" aria-controls="ph" role="tab" data-toggle="tab">Problem History</a>
+                </nav>
                 <!-- Tab panes -->
                 <div class="tab-content tabs-custom">
                     <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
                         <div class="row mt-15">
-                            <div class="card">
+                            <div class="card" style="flex-wrap: wrap;">
                                 <div class="col-md-6">
                                     <div class="">
                                         <div class="form-group hide">
@@ -66,7 +109,7 @@
                                             <label class="control-label col-lg-4 col-xs-4" required>Category</label>
                                             <div class="col-lg-10 col-xs-10">
                                                 <select class="select2 form-control requestChange" id="jenisBarangCipl" data-name="Category" data-table="Cipl" data-lable="Category" name="Category" required></select>
-                                                <div class="categoryspareparts mt-4">
+                                                <div class="categoryspareparts pt-2">
                                                     <select class="mt-4 " id="sparepartsCipl" name="sparepartsCipl" required></select>
                                                 </div>
                                                 <div class="categoryunit mt-4">
@@ -102,8 +145,9 @@
                                         <div class="form-group" id="divReferenceNo">
                                             <label class="control-label col-lg-4 col-xs-4" required>Reference No</label>
                                             <div class="col-lg-10 col-xs-10">
-                                                <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2 form-control" required></select>
-                                                <div id="divRefCipl"><select id="refCipl" class="select2 form-control" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
+                                                <select id="idCategoryReference" data-name="CategoryReference" data-table="Cipl" data-lable="Reference No" class="select2 form-control pb-2" required></select>
+                                                @*<div class="input-group-addon" style="padding: 6px 1px !important;"></div>*@
+                                                <div id="divRefCipl" class="pt-2"><select id="refCipl" class="select2 form-control" data-table="Cipl" data-lable="Reference No" data-name="ReferenceNo" multiple="multiple" style="width: 100%;" required name="refCipl"></select></div>
                                             </div>
                                         </div>
                                         <div class="form-group div-idCustomerCipl">
@@ -128,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
+                            <div class="card" style="flex-wrap: wrap;">
                                 <div class="col-md-6">
                                     <div class="">
                                         <div class="form-group">
@@ -177,7 +221,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4 col-xs-4" required>Email</label>
-                                                <div class="col-lg-10 col-xs-10">
+                                                <div class="input-group col-lg-10 col-xs-10">
                                                     <input type="text" class="form-control inpConsignee requestChange" data-lable="Email" data-name="SoldToEmail" id="consigneeEmailCipl" name="consigneeEmailCipl" placeholder="Email" required>
                                                 </div>
                                                 <label class="email-warning" style="color:blue">*If multiple emails, please separate using the sign (;)</label>
@@ -199,8 +243,8 @@
                                                 <div class="input-group col-lg-10 col-xs-10">
                                                     <div class="input-group">
                                                         <div id="div-radio-notify" class="btn-group btn-group-justified">
-                                                            <span class="btn btn-default btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-success" data-notactive-notify="btn-default">Same As</span>
-                                                            <span class="btn btn-default btn-sm notactive-notify notifyDifferentCipl" data-toggle="notifychange" data-value="D" data-active="btn-info" data-notactive-notify="btn-default">Different</span>
+                                                            <span class="btn btn-default btn-round btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-warning" data-notactive-notify="btn-default">Same As</span>
+                                                            <span class="btn btn-default btn-round btn-sm notactive-notify notifyDifferentCipl" data-toggle="notifychange" data-value="D" data-active="btn-warning" data-notactive-notify="btn-default">Different</span>
                                                         </div>
                                                         <input type="hidden" name="NotifyPartySameConsignee" id="NotifyPartySameConsignee" data-name="NotifyPartySameConsignee" required>
                                                     </div>
@@ -328,10 +372,23 @@
                                             <div class="col-lg-10 col-xs-10">
                                                 <div class="input-group double-input">
                                                     <input type="text" class="form-control requestChangel" id="lcnoCipl" data-lable="LC No & Date" name="lcnoCipl" placeholder="LC No & Date" required style="width: 75%; border-right-width: 0px;">
-                                                    <input type="text" class="form-control date requestChange" id="lcDateCipl" name="lcDateCipl" placeholder="Date" style="width: 25%;">
+                                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        @*<div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4" required>LC No & Date</label>
+                                            <div class="col-lg-10 col-xs-10">
+                                                <div class="input-group double-input">
+                                                    <input type="text" class="form-control date requestChange" id="lcDateCipl" name="lcDateCipl" placeholder="Date" style="width: 25%; border-right-width: 0px;">
+                                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
                                         <div class="form-group">
                                             <label class="control-label col-lg-4 col-xs-4" required>Inco Terms</label>
                                             <div class="col-lg-10 col-xs-10">
@@ -428,6 +485,8 @@
                                             <label class="control-label col-lg-4 col-xs-4" required>Email</label>
                                             <div class="input-group col-lg-8 col-xs-8">
                                                 <input type="text" class="form-control requestChange" data-name="Email" data-lable="Email" id="forwaderEmailCipl" placeholder="Email" required>
+                                            </div>
+                                            <div class="col-lg-8 col-xs-8">
                                                 <label style="color:blue">*If multiple emails, please separate using the sign (;)</label>
                                             </div>
                                         </div>
@@ -468,9 +527,9 @@
                                             <div>
                                                 <div class="tableItemSpareparts">
                                                     <div class="toolbarParts">
-                                                        <button type="button" class="btn btn-success btn-md btnAddItem btn-round" data-toggle="modal" data-target="#ModalAddNewReference" id="partAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
-                                                        <button type="button" class="btn btn-success btn-md btnAddItem btn-round" data-toggle="modal" data-target="#ModaldownloadTemplate" id="partDownloadTemplate" onClick="window.location.href='/Content/EMCS/Templates/CIPLItem/TemplateCatepillarSparePart.xlsx'" style="min-width:120px;" value="DownloadTemplate"><i class="fa fa-plus-circle"></i> DOWNLOAD TEMPLATE</button>
-                                                        <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModaldownloadFile" id="partDownloadFile" style="min-width:120px;display :none" value="DownloadFile"><i class="fa fa-plus-circle"></i> DOWNLOAD FILE</button>
+                                                        <button type="button" class="btn btn-success btn-md btnAddItem btn-round" data-toggle="modal" data-target="#ModalAddNewReference" id="partAddButton" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
+                                                        <button type="button" class="btn btn-primary btn-md btnAddItem btn-round" data-toggle="modal" data-target="#ModaldownloadTemplate" id="partDownloadTemplate" onClick="window.location.href='/Content/EMCS/Templates/CIPLItem/TemplateCatepillarSparePart.xlsx'" value="DownloadTemplate"><i class="tim-icons icon-cloud-download-93"></i> Download Template</button>
+                                                        <button type="button" class="btn btn-info btn-md btnAddItem btn-round" data-toggle="modal" data-target="#ModaldownloadFile" id="partDownloadFile" style="display :none" value="DownloadFile"><i class="tim-icons icon-cloud-download-93"></i> Download File</button>
                                                         @*<button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModaldownloadFile" id="submit" style="min-width:120px" value="UploadFile"><i class="fa fa-plus-circle"></i> UPLOAD FILE</button>*@
                                                     </div>
                                                     <div class="col-md-12">
@@ -516,19 +575,19 @@
                                                 </div>
                                                 <div class="tableItemUnit">
                                                     <div class="toolbarUnit">
-                                                        <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModalAddNewReference" id="unitAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                                        <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#ModalAddNewReference" id="unitAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
                                                     </div>
                                                     <table class="table table-bordered" data-toolbar=".toolbarUnit" id="tableunitCipl"></table>
                                                 </div>
                                                 <div class="tableItemMisc">
                                                     <div class="toolbarMisc">
-                                                        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#ModalUpdateReference" id="miscAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                                        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#ModalUpdateReference" id="miscAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
                                                     </div>
                                                     <table class="table table-bordered" data-toolbar=".toolbarMisc" id="tablemiscCipl"></table>
                                                 </div>
                                                 <div class="tableItemEmail">
                                                     <div class="toolbarEmail">
-                                                        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#ModalUpdateReference" id="emailAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                                        <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#ModalUpdateReference" id="emailAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
                                                     </div>
                                                     <table class="table table-bordered" data-toolbar=".toolbarEmail" id="tableemailCipl"></table>
                                                 </div>
@@ -596,12 +655,12 @@
                                     </fieldset>
                                     <div class="form-group pull-right mt-5">
                                         <div class="col-md-12">
-                                            <a href="~/EMCS/CiplList" class="btn btn-warning btn-round" style="min-width:120px;"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                                            <a href="~/EMCS/CiplList" class="btn btn-warning btn-round"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
                                             @*@if (ViewBag.GroupName.Contains("Imex"))
-                                                {*@
+                                    {*@
                                             <button type="button" hidden class="btn btn-info btn-round" data-toggle="modal" id="RequestForChangeHistoryCIPL" data-target="#myModalRequestForChangeReason" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Request for change history</button>
                                             @*}*@
-                                            <button class="btn btn-info btn-round" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
+                                            <button class="btn btn-primary btn-round" id="btnSaveCipl" value="Draft" style="min-width:120px;"><i class='fa fa-save'></i>&nbsp;Save as Draft</button>
                                             <button type="button" class="btn btn-success btn-round" id="btnSubmitCipl" value="Submit" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
                                         </div>
                                     </div>
@@ -614,7 +673,7 @@
                             <div class="card">
                                 <div class="col-xs-12 table-responsive">
                                     <div class="toolbarDocument" id="toolbarDocument">
-                                        <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                        <button type="button" class="btn btn-success btn-md btnAddItem btn-round" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
                                     </div>
                                     <table id="tableCiplFormDocuments" data-toolbar=".toolbarDocument" class="table table-bordered"></table>
                                 </div>
@@ -876,7 +935,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary btnAddReference" data-dismiss="modal" id="btnAddReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                <button type="button" class="btn btn-primary btn-round btnAddReference" data-dismiss="modal" id="btnAddReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
             </div>
         </div>
     </div>
@@ -895,7 +954,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary BtnAddNewParts" data-dismiss="modal" id="BtnAddNewParts" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                    <button type="button" class="btn btn-primary btn-round BtnAddNewParts" data-dismiss="modal" id="BtnAddNewParts" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
                 </div>
             </form>
         </div>
@@ -1116,9 +1175,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btnAddReference" data-dismiss="modal" id="btnAddReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
-                    <button type="button" class="btn btn-primary btnAddMisc" data-dismiss="modal" id="btnAddMisc" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
-                    <button type="button" class="btn btn-primary btnUpdateReference" data-dismiss="modal" id="btnUpdateReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Update</button>
+                    <button type="button" class="btn btn-primary btn-round btnAddReference" data-dismiss="modal" id="btnAddReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                    <button type="button" class="btn btn-primary btn-round btnAddMisc" data-dismiss="modal" id="btnAddMisc" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                    <button type="button" class="btn btn-primary btn-round btnUpdateReference" data-dismiss="modal" id="btnUpdateReference" style="min-width:120px;"><i class="fa fa-pencil"></i> Update</button>
                 </div>
             </form>
         </div>
@@ -1151,4 +1210,27 @@
     </div>
 </div>
 <script src="/Scripts/loadingoverlay.min.js"></script>
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>
 

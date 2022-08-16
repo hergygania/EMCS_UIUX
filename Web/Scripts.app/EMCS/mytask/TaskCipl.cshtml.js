@@ -1,12 +1,12 @@
 ﻿$(function () {
     const columnsCipl = [
         {
-            field: "id",
-            title: "No",
-            halign: "center",
-            align: "center",
-            formatter: runningFormatter
-        }, {
+        //    field: "id",
+        //    title: "No",
+        //    halign: "center",
+        //    align: "center",
+        //    formatter: runningFormatter
+        //}, {
             field: "",
             title: "Action",
             align: "center",
@@ -19,27 +19,28 @@
                 const div1 = "<div class=''>";
                 const id = row.IdCipl;
                 var btnApprove = (row.Status === "Approve" || row.Status.toLowerCase() === "submit")
-                    ? (`<a href='/EMCS/CiplApprove/${row.IdCipl
-                        }' class='btn btn-xs btn-info'><i class='fa fa-search'></i></a>`)
+                    ? (`<a href='/EMCS/CiplApprove/${row.IdCipl}' class='btn btn-success btn-link btn-sm info'><i class='tim-icons icon-zoom-split'></i></a>`)
                     : "";
-
+                var btnEdit = '';
+                if(Boolean($("#IsEditAllowed").val()))
+                { btnEdit = `<a href='/EMCS/CiplEdit?id=${row.IdCipl}&rfc=false' class='btn btn-link'><i class='fa fa-edit' style='color: #fe9d01;'></i></a>`; }
                 var btnRevise;
                 if (row.Status === "Revise") {
                     if (row.IdNextStep === 30066) {
-                        btnRevise = `<a href='/EMCS/CiplApprove/${row.IdCipl} ' class='btn btn-xs btn-info'><i class='fa fa-search'></i></a>`;
+                        btnRevise = `<a href='/EMCS/CiplApprove/${row.IdCipl} ' class='btn btn-xs btn-link btn-info'><i class='fa fa-search'></i></a>`;
                     } else {
-                        btnRevise = (row.Status === "Revise" ? `<a href='/EMCS/CiplEdit/${row.IdCipl}' class='btn btn-xs btn-default'><i class='fa fa-edit'></i></a>` : "");
+                        btnRevise = (row.Status === "Revise" ? `<a href='/EMCS/CiplEdit/${row.IdCipl}' class='btn btn-info btn-link btn-sm edit'><i class='tim-icons icon-pencil'></i></a>` : "");
                     }
                 }
 
                 if ((row.IdStep === 10033 || row.IdStep === 10032 || row.IdStep === 10035) && row.Status === "Submit") {
                     btnApprove =
                         `<a href='/EMCS/CiplApproveReviseDimension/?id=${id
-                        }' class='btn btn-xs btn-info'><i class='fa fa-search'></i></a>`;
+                        }' class='btn btn-xs btn-link btn-info'><i class='fa fa-search'></i></a>`;
                 }
 
                 const div2 = "</div>";
-                const btn = [div1, btnApprove, btnRevise, div2];
+                const btn = [div1, btnEdit,btnApprove, btnRevise, div2];
                 return btn.join(" ");
             }
         }, {

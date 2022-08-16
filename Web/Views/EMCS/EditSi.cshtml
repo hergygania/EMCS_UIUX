@@ -17,7 +17,7 @@
         font-weight: bold;
     }
 </style>
-
+<input type="hidden" name="formType" id="formType" value="ShippingInstructions" />
 <div class="col-md-12 slideRight">
     @Html.Partial("~/Views/EMCS/Wizard.cshtml")
 </div>
@@ -36,6 +36,9 @@
             </li>
             <li role="presentation">
                 <a style="z-index:2" href="#documents" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
+            </li>
+            <li role="presentation">
+                <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
             </li>
         </ul>
         <!-- Tab panes -->
@@ -85,11 +88,11 @@
                                         </div>
                                     </div>
                                     @*<div class="form-group">
-                                            <label class="col-sm-4">Kppbc</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
-                                            </div>
-                                        </div>*@
+                                    <label class="col-sm-4">Kppbc</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
+                                    </div>
+                                </div>*@
                                 </div>
                                 <div class="col-lg-4 col-xs-12">
                                     <div class="form-group">
@@ -153,15 +156,15 @@
                                             </div>
                                         </div>
                                         @*<div class="form-group">
-                                            <label class="col-sm-4">Type</label>
-                                            <div class="col-sm-8">
-                                                <select class="js-example-basic-single" name="Type" id="Type">
-                                                    <option value="NonPJT">Non PJT</option>
-                                                    <option value="PJT">PJT</option>
-                                                    
-                                                </select>
-                                            </div>
-                                        </div>*@
+                                        <label class="col-sm-4">Type</label>
+                                        <div class="col-sm-8">
+                                            <select class="js-example-basic-single" name="Type" id="Type">
+                                                <option value="NonPJT">Non PJT</option>
+                                                <option value="PJT">PJT</option>
+
+                                            </select>
+                                        </div>
+                                    </div>*@
                                     </form>
                                 </div>
                             </fieldset>
@@ -250,11 +253,11 @@
                                 </div>
                                 <div class="col-lg-6">
                                     @*<div class="form-group">
-                                            <label class="col-sm-4">ETA</label>
-                                            <div class="col-sm-8">
-                                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETA.HasValue ? Model.data.ETA.Value.ToString("dd MMM yyyy") : "-")" disabled>
-                                            </div>
-                                        </div>*@
+                                    <label class="col-sm-4">ETA</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="eta" name="eta" value="@(Model.data.ETA.HasValue ? Model.data.ETA.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                    </div>
+                                </div>*@
 
                                 </div>
                                 <div class="col-lg-6">
@@ -300,13 +303,13 @@
                                     </div>
                                 </div>
                                 @*<div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-4">ETD</label>
-                                            <div class="col-sm-8">
-                                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETD.HasValue ? Model.data.ETD.Value.ToString("dd MMM yyyy") : "-")" disabled>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                <div class="form-group">
+                                    <label class="col-sm-4">ETD</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="eta" name="eta" value="@(Model.data.ETD.HasValue ? Model.data.ETD.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                    </div>
+                                </div>
+                            </div>*@
                             </fieldset>
                         </div>
                         <div class="box-footer">
@@ -541,7 +544,9 @@
                     </div>
                 </div>
             </div>
-
+            <div role="tabpanel" class="tab-pane" id="changehistory">
+                @Html.Partial("CiplTabChangeHistory")
+            </div>
         </div>
     </div>
 </div>
@@ -550,6 +555,7 @@
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
 @Scripts.Render("~/Content/EMCS/DropZone/dropzone.js")
+<script src="@Url.Content("~/Scripts.app/EMCS/transaction/ChangeHistory.cshtml.js")"></script>
 @section scripts
 {
     <script>

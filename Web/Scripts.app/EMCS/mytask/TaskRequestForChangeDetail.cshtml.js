@@ -65,7 +65,7 @@ function ApproveRequestForChange() {
     var url = '';
     if ($('#FormType').val() === 'CIPL')
         url = '/EMCS/ApproveChangeHistory';
-    else if ($('#FormType').val() == 'Cargo')
+    else ($('#FormType').val() == 'Cargo')
         url = '/EMCS/ApproveChangeHistoryCl';
     paramSearch = {
         idTerm: $('#RFCId').val(),

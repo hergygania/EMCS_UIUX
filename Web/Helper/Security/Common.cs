@@ -20,11 +20,11 @@ namespace App.Web.Helper
                 // invoice = downloadInvoice
                 //PL =DownloadPl
 
-                //string url = HttpContext.Current.Request.Url.AbsoluteUri;
-                //Uri url1 = new Uri(url);
-                //string host = url1.GetLeftPart(UriPartial.Authority);
+                string url = HttpContext.Current.Request.Url.AbsoluteUri;
+                Uri url1 = new Uri(url);
+                string host = url1.GetLeftPart(UriPartial.Authority);
 
-                string docUrl = "staging.mkindo.com:5181" + "/download/" + doc + "/" + IdCipl;
+                string docUrl = host + "/download/" + doc + "/" + IdCipl;
                 string imgDataURL = string.Empty;
                 QRCodeGenerator ObjQr = new QRCodeGenerator();
                 QRCodeData qrCodeData = ObjQr.CreateQrCode(docUrl, QRCodeGenerator.ECCLevel.Q);

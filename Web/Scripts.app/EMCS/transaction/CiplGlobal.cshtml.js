@@ -407,7 +407,7 @@ function load_data() {
 
     window.operateEvents = {
         'click .EditReferenceItem': function (e, value, row, index) {
-            debugger;
+            
             if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 if ($(this).val() !== 'Add') {
@@ -553,7 +553,7 @@ function load_data() {
                 class: "text-nowrap",
                 events: window.operateEvents,
                 formatter: function (value, row, index) {
-                    return "<button class='btn btn-default btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='fa fa-pencil'></i></button> <button class='btn btn-danger btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='fa fa-trash'></i></button>";
+                    return "<button class='btn btn-success btn-link btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='tim-icons icon-pencil'></i></button> <button class='btn btn-danger btn-link btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='tim-icons icon-simple-remove'></i></button>";
                 }
             }, {
                 field: "Id",
@@ -1577,7 +1577,7 @@ $('#btnAddReference').on('click', function (e) {
     var UnitName = $('#NameItemCipl').valid();
     var Unit = ValidateAddReference();
     if (Unit) {
-        debugger;
+        
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -2992,12 +2992,12 @@ function post_insert_cipl(status) {
         }
     });
 }
-function RequestForChangeCIPL(formdata) {
+function RequestForChangeCIPL(formdata,status) {
     var modelObj = {
         FormType: "CIPL",
         FormId: $('#idCipl').val(),
         Reason: formdata.Notes,
-        /*rfcList: requestForChange*/
+        Status: status
     }
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
@@ -3149,8 +3149,8 @@ $("#RequestForChangeHistoryCIPL").click(function () {
                     var Notes = result.value;
                     var Status = "Approve";
                     var Id = $('#RFCId').val();
-                    var formdata = { Notes: Notes, Status: Status, Id: Id };
-                    RequestForChangeCIPL(formdata);
+                    var formdata = { Notes: Notes, Status: 0, Id: Id };
+                    RequestForChangeCIPL(formdata,0);
                 }
                 else {
                     Swal.fire({

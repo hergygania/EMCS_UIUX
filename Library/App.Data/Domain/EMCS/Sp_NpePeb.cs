@@ -18,5 +18,7 @@ namespace App.Data.Domain.EMCS
         public string PassPabeanOffice { get; set; }
         public string Valuta { get; set; }
         public string ClNo { get; set; }
+        public int PendingRFC { get; set; }
+		public string StatusViewByUser { get; set; }
     }
 }

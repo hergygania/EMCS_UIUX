@@ -266,4 +266,142 @@ $("#btnAddDocument").on("click", function () {
 
 })
 
+/*-------------------------------------------------------------------------------------*/
+
+$("#listgetforview").on('click', function () {
+   
+    get_Grdocumentviewlist();
+})
+$tableDocuments1 = $('#tableGrDocuments1');
+var columnDocument1 = [
+    {
+        field: '',
+        title: 'Action',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        formatter: function (data, row, index) {
+            return "-";
+        },
+
+    },
+    {
+        field: 'Id',
+        title: 'No',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        visible: false
+    },
+    {
+        field: 'IdGr',
+        title: 'RG Bast Id',
+        halign: 'center',
+        align: 'center',
+        class: 'text-nowrap',
+        sortable: true,
+        visible: false
+    },
+    {
+        field: 'DocumentDate',
+        title: 'Date',
+        halign: 'center',
+        align: 'left',
+        class: 'text-nowrap',
+        sortable: true,
+        formatter: function (data, row, index) {
+            return moment(data).format("DD MMM YYYY");
+        }
+    },
+    {
+        field: 'DocumentName',
+        title: 'Document Name',
+        halign: 'center',
+        align: 'left',
+        class: 'text-nowrap',
+        sortable: true
+    },
+    {
+        field: 'Filename',
+        title: 'Attachment',
+        align: 'center',
+        valign: 'center',
+        halign: "center",
+        class: 'text-nowrap',
+        sortable: true,
+        formatter: function (data, row) {
+            //if (row.Filename !== "") {
+            //    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+            //    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+            //    return [btnDownload, btnPreview].join(' ');
+            //} else {
+            return "-";
+            //}
+        },
+        class: 'text-nowrap'
+    }];
+$tableDocuments1.bootstrapTable({
+    columns: columnDocument1,
+    cache: false,
+    search: false,
+    striped: false,
+    clickToSelect: true,
+    reorderableColumns: true,
+    toolbar: '.toolbarDocument',
+    toolbarAlign: 'left',
+    onClickRow: selectRow,
+    showColumns: true,
+    showRefresh: false,
+    smartDisplay: false,
+    pagination: true,
+    sidePagination: 'client',
+    pageSize: '5',
+    formatNoMatches: function () {
+        return '<span class="noMatches">No data found</span>';
+    },
+});
+function get_Grdocumentviewlist() {
+
+    $.ajax({
+        url: '/EMCS/GetGRDocumentList',
+        type: 'POST',
+        data: {
+            IdGr: $('#IdGr').val(),
+
+        },
+
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            
+            var convert = GRDocumentConvert(data);
+            convert.Id = 0;
+            if (convert.length > 0) {
+                $tableDocuments1.bootstrapTable('removeAll');
+                $tableDocuments1.bootstrapTable('load', convert);
+                $tableDocuments1.bootstrapTable('remove', convert.Id);
+
+
+                //$tableDocuments.bootstrapTable('refresh');
+            } else {
+                $tableDocuments1.bootstrapTable('removeAll');
+            }
+            convert.Id = 0;
+        },
+
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Get Data',
+            })
+        }
+
+    })
+
+}
+
+
 

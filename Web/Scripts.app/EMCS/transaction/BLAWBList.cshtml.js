@@ -30,6 +30,12 @@ $(function () {
 
         },
         {
+            field: "AjuNumber",
+            title: "No Aju PEB.",
+            sortable: true,
+
+        },
+        {
             field: "MasterBlDate",
             title: "MasterBlDate.",
             sortable: true,
@@ -72,6 +78,11 @@ $(function () {
         {
             field: "Publisher",
             title: "Publisher",
+            sortable: true
+        },
+         {
+            field: "StatusViewByUser",
+            title: "Status",
             sortable: true
         }
         //{
@@ -152,12 +163,12 @@ function operateFormatter(options) {
     btn.push('<div class="btn-group">');
     //if (options.Add == true)
     //    btn.push('<button type="button" class="btn btn-success new" title="Add"><i class="fa fa-plus"></i></button>')
-    //if (options.Edit == true && options.Data.status === 'Draft')
-    //    btn.push('<button type="button" class="btn btn-primary edit" title="Edit"><i class="fa fa-edit"></i></button>');
+    if (options.Edit == true && options.Data.PendingRFC == 0)
+        btn.push('<button type="button" class="btn btn-xs btn-link edit" title="Edit"><i class="fa fa-edit"></i></button>');
     //if (options.Delete == true && options.Data.status === 'Draft')
     //    btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
     ////if (options.Info == true)
-    btn.push('<button type="button"  class="btn btn-info info" title="Info"><i class="fa fa-search""></i></button>')
+    btn.push('<button type="button"  class="btn btn-success btn-link info" title="Info"><i class="tim-icons icon-zoom-split""></i></button>')
 
     btn.push('</div>');
 
@@ -175,7 +186,11 @@ operateFormatter.DEFAULTS = {
 
 window.operateEvents = {
     'click .info': function (e, value, row, index) {
-        location.href = "/EMCS/BlAwbView?Id=" + parseInt(row.IdCl);    }
+        location.href = "/EMCS/BlAwbView?Id=" + parseInt(row.IdCl);
+    },
+    'click .edit': function (e, value, row, index) {
+        location.href = "/EMCS/CreateBlAwb?Id=" + row.IdCl + "&rfc=true";
+    }
 };
 
 //function deleteThis(id) {

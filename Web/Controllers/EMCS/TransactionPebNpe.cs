@@ -4,18 +4,12 @@ using System.Web;
 using System.Web.Mvc;
 using App.Data.Caching;
 using App.Data.Domain;
-using App.Domain;
-using App.Web.Models;
 using App.Web.App_Start;
-using System.Globalization;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Configuration;
-using System.Net;
-using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+using System;
+using System.ComponentModel;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -72,6 +66,10 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             var data = new PebNpeModel();
+            if (filter.Rfc)
+                ViewBag.CanRequestForChange = true;
+            else
+                ViewBag.CanRequestForChange = false;
             data.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Id);
             data.NpePeb = Service.EMCS.SvcNpePeb.GetById(filter.Id);
             data.Request = Service.EMCS.SvcRequestCl.GetRequestCl(filter.Id);
@@ -124,17 +122,156 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public ActionResult DraftNpePeb(Data.Domain.EMCS.NpePeb form, string status)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(form);
-            //} 
             Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
-            var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcNpePeb.NpePebHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+            if (form.Id > 0)
             {
-               data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
+                var model = new PebNpeModel();
+                model.Data = Service.EMCS.SvcCargo.GetCargoById(form.IdCl);
+                model.NpePeb = Service.EMCS.SvcNpePeb.GetById(form.IdCl);
+
+                var requestForChange = new RequestForChange();
+
+                requestForChange.FormNo = model.Data.ClNo;
+                requestForChange.FormType = "NpePeb";
+                requestForChange.Status = 1;
+                requestForChange.FormId = Convert.ToInt32(form.IdCl);
+                requestForChange.Reason = "";
+                int id = 0;
+                id = Service.EMCS.SvcCipl.InsertChangeHistory(requestForChange);
+                string[] _ignnoreParameters = { "Id" };
+
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.NpePeb));
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignnoreParameters.Contains(property.Name))
+                    {
+                        var currentValue = property.GetValue(form);
+                        if (currentValue != null && property.GetValue(model.NpePeb) != null)
+                        {
+                            if (currentValue.ToString() != property.GetValue(model.NpePeb).ToString())
+                            {
+                                var rfcItem = new Data.Domain.RFCItem();
+
+                                rfcItem.RFCID = id;
+                                rfcItem.TableName = "NpePeb";
+                                rfcItem.LableName = property.Name;
+                                rfcItem.FieldName = property.Name;
+                                rfcItem.BeforeValue = property.GetValue(model.NpePeb).ToString();
+                                rfcItem.AfterValue = currentValue.ToString();
+                                listRfcItems.Add(rfcItem);
+                            }
+                        }
+                    }
+                }
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
             }
-                return JsonMessage("This ticket has been " + status, 0, data);
+            data = Service.EMCS.SvcNpePeb.InsertNpePeb(form, status);
+            
+            return JsonMessage("This ticket has been " + status, 0, data);
+        }
+
+        [HttpPost]
+        public ActionResult RequestForChangeNpePeb(Data.Domain.EMCS.NpePeb form, string reason)
+        {
+            Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
+            if (form.Id > 0)
+            {
+                var model = new PebNpeModel();
+                model.Data = Service.EMCS.SvcCargo.GetCargoById(form.IdCl);
+                model.NpePeb = Service.EMCS.SvcNpePeb.GetById(form.IdCl);
+
+                var requestForChange = new RequestForChange();
+
+                requestForChange.FormNo = model.Data.ClNo;
+                requestForChange.FormType = "NpePeb";
+                requestForChange.Status = 0;
+                requestForChange.FormId = Convert.ToInt32(form.IdCl);
+                requestForChange.Reason = reason;
+                int id = 0;
+                id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
+                string[] _ignnoreParameters = { "Id", "IdCl", "CreateDate" };
+
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.NpePeb));
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignnoreParameters.Contains(property.Name))
+                    {
+                        var currentValue = property.GetValue(form);
+                        if (currentValue != null && property.GetValue(model.NpePeb) != null)
+                        {
+                            if (currentValue.ToString() != property.GetValue(model.NpePeb).ToString())
+                            {
+                                var rfcItem = new Data.Domain.RFCItem();
+
+                                rfcItem.RFCID = id;
+                                rfcItem.TableName = "NpePeb";
+                                rfcItem.LableName = property.Name;
+                                rfcItem.FieldName = property.Name;
+                                rfcItem.BeforeValue = property.GetValue(model.NpePeb).ToString();
+                                rfcItem.AfterValue = currentValue.ToString();
+                                listRfcItems.Add(rfcItem);
+                            }
+                        }
+                    }
+                }
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+            }
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveAndApproveNpePeb(Data.Domain.EMCS.NpePeb form, string status, Data.Domain.EMCS.CiplApprove approvalForm)
+        {
+            Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
+            
+            var model = new PebNpeModel();
+            model.Data = Service.EMCS.SvcCargo.GetCargoById(form.Id);
+            model.NpePeb = Service.EMCS.SvcNpePeb.GetById(form.Id);
+
+            var requestForChange = new RequestForChange();
+
+            requestForChange.FormNo = model.NpePeb.NpeNumber;
+            requestForChange.FormType = "NpePeb";
+            requestForChange.Status = 1;
+            requestForChange.FormId = Convert.ToInt32(model.NpePeb.Id);
+            requestForChange.Reason = "";
+            int id = 0;
+            id = Service.EMCS.SvcCipl.InsertChangeHistory(requestForChange);
+
+            string[] _ignnoreParameters = { "Id", "IdCl" };
+
+            var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.NpePeb));
+            var listRfcItems = new List<Data.Domain.RFCItem>();
+            foreach (PropertyDescriptor property in properties)
+            {
+                if (!_ignnoreParameters.Contains(property.Name))
+                {
+                    var currentValue = property.GetValue(form);
+                    if (currentValue != null && property.GetValue(model.NpePeb) != null)
+                    {
+                        if (currentValue.ToString() != property.GetValue(model).ToString())
+                        {
+                            var rfcItem = new Data.Domain.RFCItem();
+
+                            rfcItem.RFCID = id;
+                            rfcItem.TableName = "NpePeb";
+                            rfcItem.LableName = property.Name;
+                            rfcItem.FieldName = property.Name;
+                            rfcItem.BeforeValue = property.GetValue(model).ToString();
+                            rfcItem.AfterValue = currentValue.ToString();
+                            listRfcItems.Add(rfcItem);
+                        }
+                    }
+                }
+            }
+            Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+
+            data = Service.EMCS.SvcNpePeb.UpdateNpePeb(form);
+            Service.EMCS.SvcNpePeb.ApprovalNpePeb(form, approvalForm, "U");
+
+            return JsonMessage("This ticket has been " + status, 0, data);
         }
 
         [HttpPost]

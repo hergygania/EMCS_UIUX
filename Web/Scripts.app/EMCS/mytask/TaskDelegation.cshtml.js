@@ -26,11 +26,11 @@ window.operateDelegationEvents = {
 
 var columns_delegation = [
     {
-        field: "id",
-        title: "No",
-        align: 'center',
-        formatter: runningFormatter
-    }, {
+    //    field: "id",
+    //    title: "No",
+    //    align: 'center',
+    //    formatter: runningFormatter
+    //}, {
         field: "",
         title: "Action",
         align: "center",
@@ -41,12 +41,12 @@ var columns_delegation = [
             var btn = [];
             btn.push('<div>');
             if (row['StatusViewByUser'] === 'Waiting for BL or AWB' || row['StatusViewByUser'] === 'Need revision review by imex') {
-                btn.push("<button class='btn btn-info btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
+                btn.push("<button class='btn btn-info btn-link btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
             } else if (row['StatusViewByUser'] === 'Waiting for BL or AWB approval') {
-                btn.push("<button class='btn btn-success btn-xs btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-success btn-link btn-xs btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
+                btn.push("<button class='btn btn-info btn-link btn-xs btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
             } else {
-                btn.push("<button class='btn btn-details btn-xs btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='fa fa-search'></i></button>");
+                btn.push("<button class='btn btn-info btn-link btn-xs btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
             }
 
             btn.push('</div>');

@@ -186,11 +186,7 @@ namespace App.Web.Controllers.EMCS
 
                     item.Notes = form.Data.Notes;
                     item.EstimationTimePickup = form.Data.EstimationTimePickup;
-                    var userId = User.Identity.GetUserId();
-                    if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
-                    {
-                        id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
-                    }
+                    id = Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, ViewBag.crudMode);
                     var data = InitGoodReceive(id);
                     return JsonCRUDMessage(ViewBag.crudMode, data);
                 }
@@ -210,6 +206,7 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             ViewBag.crudMode = "I";
+            ViewBag.IsOwned = true;
             PaginatorBoot.Remove("SessionTRN");
             GoodReceiveModel data = InitGoodReceive(0);
             data.YesNo = YesNoList();
@@ -305,6 +302,10 @@ namespace App.Web.Controllers.EMCS
             {
                 ViewBag.crudMode = "U";
                 PaginatorBoot.Remove("SessionTRN");
+                string strQrCodeUrlGR = Common.GenerateQrCode(id, "DownloadRg");
+                ViewBag.QrCodeUrlGR = strQrCodeUrlGR;
+                TempData["QrCodeUrlGR"] = strQrCodeUrlGR;
+                TempData.Peek("QrCodeUrlGR");
                 var idReq = Service.EMCS.SvcRequestGr.GetRequestById(id);
                 var idGr = Convert.ToInt64(idReq.IdGr);
                 GoodReceiveModel data = InitGoodReceive(idGr);
@@ -325,6 +326,11 @@ namespace App.Web.Controllers.EMCS
         #region Update Form GR
         public ActionResult EditGrForm(long id)
         {
+			var userId = User.Identity.GetUserId();
+			if (Service.EMCS.SvcGoodsReceive.GRHisOwned(id, userId))
+			ViewBag.IsOwned = true;
+			else
+			ViewBag.IsOwned = false;
             ViewBag.crudMode = "U";
             PaginatorBoot.Remove("SessionTRN");
             GoodReceiveModel data = InitGoodReceive(id);
@@ -401,10 +407,9 @@ namespace App.Web.Controllers.EMCS
                 item.PickupPoint = form.Data.PickupPoint;
                 item.EstimationTimePickup = form.Data.EstimationTimePickup;
                 var userId = User.Identity.GetUserId();
-                if (Service.EMCS.SvcGoodsReceive.GRHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
-                {
+              
                     Service.EMCS.SvcGoodsReceive.CrudSp(item, form.Data.Status, "U");
-                }
+               
                 var detail = InitGoodReceive(form.Data.Id);
                 return JsonCRUDMessage("U", new { detail });
             }

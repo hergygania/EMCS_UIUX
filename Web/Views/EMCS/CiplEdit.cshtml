@@ -37,6 +37,7 @@
         line-height: 15px !important;
     }
 </style>
+<input type="hidden" id="idcipl" value="@ViewBag.Id" />
 @Html.Partial("~/Views/EMCS/CiplFormTemplate.cshtml")
 
 @section scripts
@@ -48,6 +49,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplEdit.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplApprove.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
     <script>
         var requestForChange = [];
@@ -71,7 +73,7 @@
                         requestForChange.push({ "FieldName": this.dataset.name, "LableName": this.dataset.lable, "BeforeValue": prev, "AfterValue": current });
                     }
                 }
-               
+
             }
         });
 
@@ -107,7 +109,7 @@
 
         $("#consigneeNameCipl").easyAutocomplete(optionsConsignee);
 
-       
+
         var optionsNotify = {
             url: myApp.fullPath + "EMCS/GetConsigneeHistory",
             listLocation: "data",

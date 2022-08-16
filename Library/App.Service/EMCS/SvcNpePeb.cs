@@ -123,6 +123,60 @@ namespace App.Service.EMCS
             }
         }
 
+        public static Data.Domain.EMCS.ReturnSpInsert UpdateNpePeb(Data.Domain.EMCS.NpePeb item)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                string strNpeDateSubmitToCustomOffice = "";
+                if (item.NpeDateSubmitToCustomOffice.HasValue)
+                {
+                    strNpeDateSubmitToCustomOffice = item.NpeDateSubmitToCustomOffice.Value.ToString();
+                }
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@Id", item.Id));
+                parameterList.Add(new SqlParameter("@IdCl", item.IdCl));
+                parameterList.Add(new SqlParameter("@AjuNumber", item.AjuNumber ?? ""));
+                parameterList.Add(new SqlParameter("@AjuDate", item.AjuDate.ToString()));
+                parameterList.Add(new SqlParameter("@NpeNumber", item.NpeNumber ?? ""));
+                parameterList.Add(new SqlParameter("@NpeDate", item.NpeDate.ToString()));
+                parameterList.Add(new SqlParameter("@Npwp", item.Npwp ?? ""));
+                parameterList.Add(new SqlParameter("@ReceiverName", item.ReceiverName ?? ""));
+                parameterList.Add(new SqlParameter("@PassPabeanOffice", item.PassPabeanOffice ?? ""));
+                parameterList.Add(new SqlParameter("@Dhe", item.Dhe));
+                parameterList.Add(new SqlParameter("@PebFob", item.PebFob));
+                parameterList.Add(new SqlParameter("@Valuta", item.Valuta ?? ""));
+                parameterList.Add(new SqlParameter("@DescriptionPassword", item.DescriptionPassword ?? ""));
+                parameterList.Add(new SqlParameter("@DocumentComplete", item.DocumentComplete.ToString()));
+                parameterList.Add(new SqlParameter("@Rate", item.Rate));
+                parameterList.Add(new SqlParameter("@WarehouseLocation", item.WarehouseLocation ?? ""));
+                parameterList.Add(new SqlParameter("@FreightPayment", item.FreightPayment));
+                parameterList.Add(new SqlParameter("@InsuranceAmount", item.InsuranceAmount));
+                parameterList.Add(new SqlParameter("@DraftPeb", item.DraftPeb));
+                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                parameterList.Add(new SqlParameter("@UpdateDate", ""));
+                parameterList.Add(new SqlParameter("@IsDelete", false));
+                parameterList.Add(new SqlParameter("@RegistrationNumber", item.RegistrationNumber ?? ""));
+                parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                try
+                {
+                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePeb_Update] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber , @NpeDateSubmitToCustomOffice", parameters).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
+        }
+
         public static long ApprovalNpePeb(Data.Domain.EMCS.NpePeb itm, Data.Domain.EMCS.CiplApprove item, string dml)
         {
             try

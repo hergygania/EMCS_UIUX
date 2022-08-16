@@ -10,6 +10,18 @@
     .tableFixHead thead {
         position: sticky;
         top: 0;
+        /*background-color: #fff !important;*/
+        z-index: 9999;
+    }
+    .input-group-addon {
+        width: 50px;
+        background: #00C0EF;
+        border-color: #00ACD6;
+        color: white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 0px 0.4285rem 0.4285rem 0px;
     }
 
 </style>
@@ -18,13 +30,13 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-body">
-                <div class="form-horizontal toolbar">
+                <div class="">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-4 pull-left">
+                        <div class="col-md-3">
+                            <div class="">
                                 <div class="form-group">
-                                    <label class="col-md-3">Category</label>
-                                    <div class="col-md-9" style="padding:0px">
+                                    <label class="col-md-12">Category</label>
+                                    <div class="col-md-12" style="">
                                         <select class="form-control" id="category"></select>
                                         <div class="categoryunit mt-4">
                                             <select class="mt-4" id="unitCipl" name="unitCipl" required></select>
@@ -39,42 +51,42 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4 pull-left">
+                        <div class="col-md-3">
+                            <div class="">
                                 <div class="form-group">
-                                    <label class="col-md-3">Key</label>
-                                    <div class="col-md-9" style="padding:0px">
-                                        <div class="keynum mt-4">
+                                    <label class="col-md-12">Key</label>
+                                    <div class="col-md-12" style="">
+                                        <div class="keynum">
                                             <input type="text" class="form-control" id="keynum" name="keynum" placeholder="Reference No/CIpl No/RG No/CL No/SS No/SI No/NOPEN" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4 pull-left">
+                        <div class="col-md-3">
+                            <div class="">
                                 <div class="form-group">
-                                    <label class="col-md-3">Start Period</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
+                                    <label class="col-md-12">Start Period</label>
+                                    <div class="col-md-12">
+                                        <div class="">
                                             <div class="input-group">
                                                 <input id="inp-start-date" type="text" class="form-control" name="email" placeholder="Start Period">
-                                                <span class="input-group-addon cal-start-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <span class="input-group-addon cal-start-date"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4 pull-left">
+                        <div class="col-md-3">
+                            <div class="">
                                 <div class="form-group">
-                                    <label class="col-md-3" style="text-align: left;">End Period</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
+                                    <label class="col-md-12" style="text-align: left;">End Period</label>
+                                    <div class="col-md-12">
+                                        <div class="">
                                             <div class="input-group">
                                                 <input id="inp-end-date" type="text" class="form-control" name="email" placeholder="End Period">
-                                                <span class="input-group-addon cal-end-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <span class="input-group-addon cal-end-date"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -85,25 +97,30 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-4 pull-left">
-                                <div class="form-group text-right">
-                                    <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
-                                    <button class="btn btn-warningt" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                                <div class="form-group">
+                                    <button class="btn btn-warning animation-on-hover btn-round" onclick="searchDataReport()" style="background:#fe9d01;"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-success animation-on-hover btn-round" onclick="exportDataReport()" style=""><i class="fa fa-file"></i> Export To Excel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-detailstracking"></table>
-                    </div>
-                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-4">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-detailstracking"></table>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts{
-    <script src="@Url.Content("~/Scripts.app/EMCS/report/DetailsTracking.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
-}
+        @section Scripts{
+            <script src="@Url.Content("~/Scripts.app/EMCS/report/DetailsTracking.cshtml.js")"></script>
+            <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+        }

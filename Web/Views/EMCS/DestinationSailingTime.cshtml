@@ -1,5 +1,6 @@
 ﻿
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Destination Country List & Sailing Time";
 }
 <style>
@@ -19,8 +20,8 @@
                             <div class="col-md-4 pull-right">
                                 <div class="form-group">
                                     <label class="col-md-3">Destination</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="">
                                             <div>
                                                 <select class="select2" id="destination" name="destination" style="width:100% !important;" required></select>
                                             </div>
@@ -33,8 +34,8 @@
                             <div class="col-md-4 pull-right">
                                 <div class="form-group">
                                     <label class="col-md-3" style="text-align: left;">Origin</label>
-                                    <div class="col-md-9">
-                                        <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="">
                                             <div>
                                                 <select class="select2" id="origin" name="origin" style="width:100% !important;" required></select>
                                             </div>
@@ -48,8 +49,8 @@
                         <div class="col-md-12">
                             <div class="col-md-4 pull-right">
                                 <div class="form-group text-right">
-                                    <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
-                                    <button class="btn btn-warning" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                                    <button class="btn btn-warning animation-on-hover btn-round" onclick="searchDataReport()" style="background:#fe9d01;"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-success animation-on-hover btn-round" onclick="exportDataReport()" style=""><i class="fa fa-file"></i> Export To Excel</button>
                                 </div>
                             </div>
                         </div>

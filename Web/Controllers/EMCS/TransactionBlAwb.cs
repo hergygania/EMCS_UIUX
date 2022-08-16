@@ -15,6 +15,8 @@ using System.Net;
 using App.Web.Models.EMCS;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -29,6 +31,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -72,6 +75,10 @@ namespace App.Web.Controllers.EMCS
         {
             ApplicationTitle();
             var data = new BlAwbModel();
+            if (filter.Rfc)
+                ViewBag.CanRequestForChange = true;
+            else
+                ViewBag.CanRequestForChange = false;
             data.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Id);
             data.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(filter.Id);
             data.Request = Service.EMCS.SvcRequestCl.GetRequestCl(filter.Id);
@@ -169,18 +176,100 @@ namespace App.Web.Controllers.EMCS
         [HttpPost]
         public ActionResult DraftBlAwb(Data.Domain.EMCS.BlAwb form, string status)
         {
-            var userId = User.Identity.GetUserId();
-            if (Service.EMCS.SvcBlAwb.BlAwbHisOwned(form.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
+            if (form.Id > 0 && form.CreateBy != SiteConfiguration.UserName)
             {
-                long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
-                return JsonMessage("This ticket has been " + status, 0, data);
-            }
-            else
-            {
-                return JsonMessage("This ticket has been " + status, 0,null);
-            }
-            
+                var model = new BlAwbModel();
+                model.Data = Service.EMCS.SvcCargo.GetCargoById(form.IdCl);
+                model.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(form.IdCl);
+                var requestForChange = new RequestForChange();
 
+                requestForChange.FormNo = model.Data.ClNo;
+                requestForChange.FormType = "BlAwb";
+                requestForChange.Status = 0;
+                requestForChange.FormId = Convert.ToInt32(form.IdCl);
+                requestForChange.Reason = "";
+                int id = 0;
+                id = Service.EMCS.SvcCipl.InsertChangeHistory(requestForChange);
+                string[] _ignnoreParameters = { "Id", "IdCl", "CreateDate" };
+
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.BlAwb));
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignnoreParameters.Contains(property.Name))
+                    {
+                        var currentValue = property.GetValue(form);
+                        if (currentValue != null && property.GetValue(model.BlAwb) != null)
+                        {
+                            if (currentValue.ToString() != property.GetValue(model.BlAwb).ToString())
+                            {
+                                var rfcItem = new Data.Domain.RFCItem();
+
+                                rfcItem.RFCID = id;
+                                rfcItem.TableName = "BlAwb";
+                                rfcItem.LableName = property.Name;
+                                rfcItem.FieldName = property.Name;
+                                rfcItem.BeforeValue = property.GetValue(model.BlAwb).ToString();
+                                rfcItem.AfterValue = currentValue.ToString();
+                                listRfcItems.Add(rfcItem);
+                            }
+                        }
+                    }
+                }
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+            }
+            long data = Service.EMCS.SvcBlAwb.InsertBlAwb(form, status);
+            return JsonMessage("This ticket has been " + status, 0, data);
+
+        }
+
+        [HttpPost]
+        public ActionResult RequestForChangeBlAwb(Data.Domain.EMCS.BlAwb form, string reason)
+        {
+            Data.Domain.EMCS.ReturnSpInsert data = new Data.Domain.EMCS.ReturnSpInsert();
+            if (form.Id > 0)
+            {
+                var model = new BlAwbModel();
+                model.Data = Service.EMCS.SvcCargo.GetCargoById(form.IdCl);
+                model.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(form.IdCl);
+                var requestForChange = new RequestForChange();
+
+                requestForChange.FormNo = model.Data.ClNo;
+                requestForChange.FormType = "BlAwb";
+                requestForChange.Status = 0;
+                requestForChange.FormId = Convert.ToInt32(form.IdCl);
+                requestForChange.Reason = reason;
+                int id = 0;
+                id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
+                string[] _ignnoreParameters = { "Id", "IdCl", "CreateDate" };
+
+                var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.BlAwb));
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                foreach (PropertyDescriptor property in properties)
+                {
+                    if (!_ignnoreParameters.Contains(property.Name))
+                    {
+                        var currentValue = property.GetValue(form);
+                        if (currentValue != null && property.GetValue(model.BlAwb) != null)
+                        {
+                            if (currentValue.ToString() != property.GetValue(model.BlAwb).ToString())
+                            {
+                                var rfcItem = new Data.Domain.RFCItem();
+
+                                rfcItem.RFCID = id;
+                                rfcItem.TableName = "BlAwb";
+                                rfcItem.LableName = property.Name;
+                                rfcItem.FieldName = property.Name;
+                                rfcItem.BeforeValue = property.GetValue(model.BlAwb).ToString();
+                                rfcItem.AfterValue = currentValue.ToString();
+                                listRfcItems.Add(rfcItem);
+                            }
+                        }
+                    }
+                }
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+            }
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
 
     }

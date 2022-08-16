@@ -10,7 +10,14 @@
         catch { }
     }*@
 
-
+<style>
+   /* .white-content .sidebar p:hover {
+        transform: scale(1.1) !important;
+    }*/
+    .zoomTextMenuEMCS:hover {
+        transform: scale(1.1) !important;
+    }
+</style>
 
 <ul class="nav">
 
@@ -20,7 +27,7 @@
     @obj.Menu("treeview");
 
     <li>
-        <a data-toggle="collapse" href="#pagesExamples">
+        <a data-toggle="collapse" href="#pagesExamples" class="zoomTextMenuEMCS">
             <i class="tim-icons icon-settings-gear-63" style="color: #666d7d;"></i>
             <p style="color: #666d7d;">
                 Settings
@@ -30,7 +37,7 @@
         <div class="collapse" id="pagesExamples">
             <ul class="nav">
                 <li>
-                    <a href="javascript:void(0);" onclick="return loadingPage('/sign-out')">
+                    <a href="javascript:void(0);" onclick="return loadingPage('/sign-out')" class="zoomTextMenuEMCS">
                         <i class="tim-icons icon-button-power" style="color: #666d7d;"></i><span style="color: #666d7d;">Sign out</span>
                     </a>
                 </li>

@@ -27,6 +27,51 @@
         align-items: center;
         border-radius: 0px 0.4285rem 0.4285rem 0px;
     }
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            padding: 10px 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition-duration: 0.6s;
+        }
+
+            .tabs a.active {
+                color: #fff;
+            }
+
+            .tabs a i {
+                margin-right: 5px;
+            }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 4px -4px #a8a8a8;
+        }
 </style>
 <div class="col-md-12">
     @Html.Partial("~/Views/EMCS/Wizard.cshtml")
@@ -34,24 +79,18 @@
 <div class="col-md-12 mt-30">
     <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">BL / AWB </a>
-            </li>
-            <li role="presentation">
-                <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
-            </li>
-            <li role="presentation">
-                <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
-            </li>
-        </ul>
-
+        <nav class="tabs mb-4">
+            <div class="selector"></div>
+            <a style="z-index:5" class="active" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">BL / AWB </a>
+            <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
+            <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+        </nav>
         <div class="tab-content tabs-custom">
             <div role="tabpanel" class="tab-pane active" id="invoice">
                 <form id="FormUploadBlAwb">
                     <div class="col-md-12">
                         <div class="box">
-                        <div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group hide">
                                         <label class="control-label col-lg-4 col-xs-4">ID</label>
@@ -107,8 +146,8 @@
                                     <table style="width:100%" border="0" class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th style="height:40px;vertical-align:middle;text-align:center;width:80%">Name</th>
-                                                <th style="height:40px;vertical-align:middle;text-align:center;width: 20%;">Action</th>
+                                                <th style="height:40px;vertical-align:middle;text-align:center;width:70%">Name</th>
+                                                <th style="height:40px;vertical-align:middle;text-align:center;width: 30%;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,9 +159,9 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-info btn-xs dz-clickable" id="document-DOC" type="button" data-toggle="tooltip" title="Upload!"><i class="fa fa-upload"></i></button>
-                                                    <button class="btn btn-default btn-xs preview-document" id="preview-document-DOC" type="button" data-toggle="tooltip" title="View Document!"><i class="fa fa-search"></i></button>
-                                                    <a href="#" class="btn btn-success btn-xs DownloadDocument" id="download-document-DOC" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="fa fa-download"></i></a>
+                                                    <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-DOC" type="button" data-toggle="tooltip" title="Upload!"><i class="tim-icons icon-cloud-upload-94"></i></button>
+                                                    <button class="btn btn-default btn-xs btn-link preview-document" id="preview-document-DOC" type="button" data-toggle="tooltip" title="View Document!"><i class="tim-icons icon-zoom-split"></i></button>
+                                                    <a href="#" class="btn btn-success btn-xs btn-link DownloadDocument" id="download-document-DOC" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
                                                     <div id="previews">
                                                         <div id="template" class="template file-row dz-image-preview">
                                                             <div>
@@ -144,12 +183,12 @@
 
             <div role="tabpanel" class="tab-pane" id="history">
                 <div class="col-md-12">
-                <div class="box">
-                    <div class="col-xs-12 table-responsive">
-                        <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
-                        <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                    <div class="box">
+                        <div class="col-xs-12 table-responsive">
+                            <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                            <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -160,10 +199,10 @@
                             <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
                         </div>
                     </div>
-                    </div>
                 </div>
-
             </div>
+
+        </div>
     </div>
 </div>
 <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
@@ -212,3 +251,26 @@
 
     </script>
 }
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>

@@ -38,6 +38,36 @@
             color: #97a0b3;
             box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.15) !important;
         }
+        /* FANCY COLLAPSE PANEL STYLES */
+        .fancy-collapse-panel .panel-default > .panel-heading {
+            padding: 0;
+        }
+
+        .fancy-collapse-panel .panel-heading a {
+            padding: 12px 35px 12px 15px;
+            display: inline-block;
+            width: 100%;
+            background-color: #000000;
+            color: #ffffff;
+            position: relative;
+            text-decoration: none;
+        }
+
+            .fancy-collapse-panel .panel-heading a:after {
+                font-family: "FontAwesome";
+                content: "\f147";
+                position: absolute;
+                right: 20px;
+                font-size: 20px;
+                font-weight: 400;
+                top: 50%;
+                line-height: 1;
+                margin-top: -10px;
+            }
+
+            .fancy-collapse-panel .panel-heading a.collapsed:after {
+                content: "\f196";
+            }
     </style>
     @Styles.Render("~/Content/css");
     @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")

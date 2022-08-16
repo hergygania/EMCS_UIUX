@@ -229,15 +229,17 @@ function ApproveGR(obj) {
         },
         success: function () {
             Swal.fire({
-                title: 'Approve!',
+                title: 'Submit!',
                 text: 'Data Confirmed Successfully',
                 type: 'success'
             }).then((result) => {
-                location.href = "/EMCS/GrList";
+                if (result.value) {
+                    location.href = "/EMCS/GrList";
+                }
             });
         }
-    });
-}
+        });
+};
 
 //#region Button Action
 $("#BtnApprove").on("click", function () {

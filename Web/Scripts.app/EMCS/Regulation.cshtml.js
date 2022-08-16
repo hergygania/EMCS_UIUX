@@ -147,13 +147,13 @@ function operateFormatter(e, value, row) {
     var btn = [];
     btn.push('<div class="text-center" style="width:180px;text-align:center;align:center;margin:0 auto;">');
     //btn.push('<button type="button" class="btn btn-xs btn-success new" title="Add"><i class="fa fa-plus"></i></button>')
-    btn.push('<button type="button" class="btn btn-xs btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
-    btn.push('<button type="button" class="btn btn-xs btn-default preview" title="Preview"><i class="fa fa-search"></i></button>');
+    btn.push('<button type="button" class="btn btn-xs btn-link btn-info edit" title="Edit"><i class="tim-icons icon-pencil"></i></button>');
+    btn.push('<button type="button" class="btn btn-xs btn-link btn-danger preview" title="Preview"><i class="tim-icons icon-zoom-split"></i></button>');
     if (row.Files !== "") {
-        btn.push('<button type="button" class="btn btn-xs btn-success download" title="Download"><i class="fa fa-download"></i></button>');
+        btn.push('<button type="button" class="btn btn-xs btn-link btn-success download" title="Download"><i class="tim-icons icon-cloud-download-93"></i></button>');
     }
-    btn.push('<button type="button" class="btn btn-xs btn-primary upload" title="Upload"><i class="fa fa-upload"></i></button>');
-    btn.push('<button type="button" class="btn btn-xs btn-danger remove" title="Delete"><i class="fa fa-trash"></i></button>');
+    btn.push('<button type="button" class="btn btn-xs btn-link btn-success upload" title="Upload"><i class="tim-icons icon-cloud-upload-94"></i></button>');
+    btn.push('<button type="button" class="btn btn-xs btn-link btn-danger remove" title="Delete"><i class="tim-icons icon-simple-remove"></i></button>');
     btn.push('</div>');
     return btn.join(' ');
 }

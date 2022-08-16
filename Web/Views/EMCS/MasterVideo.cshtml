@@ -1,8 +1,10 @@
 ﻿
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Master Video";
     Layout = "~/Views/EMCS/_Layout.cshtml";
 }
+@Styles.Render("~/Content/EMCS/Custom.css")
 
 @using System.Web.Mvc
 <script type="text/javascript">
@@ -43,7 +45,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-success btn-round" data-modal="" href="/EMCS/VideoCreate" id="btnCreate">
+                            <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/VideoCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add Video
                             </a>
                         }
@@ -71,7 +73,7 @@
 </a>
 
 
-<div id='myModalPlace' class='modal fade in'>
+<div id='myModalPlace' class='modal'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>
@@ -79,7 +81,7 @@
     </div>
 </div>
 
-<div id='myModalUploadPlace' class='modal fade in'>
+<div id='myModalUploadPlace' class='modal'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalUploadContent'>
@@ -89,7 +91,7 @@
     </div>
 </div>
 
-<div id='myModalPreviewPlace' class='modal fade in'>
+<div id='myModalPreviewPlace' class='modal'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalPreviewContent'>
