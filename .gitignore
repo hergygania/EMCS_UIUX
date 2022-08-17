@@ -348,6 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+<<<<<<< HEAD
 
 /Web/ErrorLog
 /Web/App_Data
@@ -376,3 +377,7 @@ Web/Views/EMCS/ExportActivity copy.cshtml
 Web/Views/EMCS/ExportActivity.cshtml
 Web/Views/EMCS/Wizard copy.cshtml
 Web/Content/EMCS/Dashboard copy.css
+=======
+/Web/ErrorLog
+/Web/App_Data
+>>>>>>> c293f00 (update gitignore)
