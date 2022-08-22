@@ -1,0 +1,163 @@
+.table-responsive {
+  @apply overflow-y-hidden;
+}
+.table {
+  @apply text-slate-900 text-[13px] leading-normal border-b-2 border-solid border-slate-200;
+  td,
+  th {
+    @apply border-t border-solid border-slate-200 px-4 py-3;
+  }
+  thead {
+    @apply bg-slate-100;
+    th {
+      @apply border-b-2 border-solid border-slate-200 font-semibold text-xs uppercase;
+    }
+  }
+  &.table-bordered {
+    @apply border-0 border-solid border-slate-500;
+    @apply border-y;
+  }
+  &.table-default {
+    thead {
+      @apply bg-slate-100;
+    }
+  }
+  .btn-action {
+    @apply inline-flex w-6 h-6 items-center justify-center rounded text-lg leading-none;
+    &.btn-green {
+      @apply text-green-500 bg-green-200 hover:bg-green-300 hover:text-green-500;
+    }
+    &.btn-amber {
+      @apply text-amber-500 bg-amber-200 hover:bg-amber-300 hover:text-amber-500;
+    }
+    &.btn-red {
+      @apply text-red-500 bg-red-200 hover:bg-red-300 hover:text-red-500;
+    }
+    &.btn-blue {
+      @apply text-blue-500 bg-blue-200 hover:bg-blue-300 hover:text-blue-500;
+    }
+  }
+}
+
+.bootstrap-table {
+  .table {
+    td,
+    th {
+      @apply whitespace-nowrap;
+    }
+    thead {
+      th {
+        @apply text-slate-500;
+        .th-inner {
+          @apply p-4;
+        }
+        .sortable {
+          background-position: 95% center;
+          padding-right: 30px !important;
+        }
+      }
+    }
+    tbody {
+      tr {
+        @apply hover:bg-amber-50;
+      }
+    }
+    &.table-fullwidth {
+      thead {
+        tr {
+          th:first-child {
+            @apply pl-8;
+          }
+          th:last-child {
+            @apply pr-8;
+            &.sortable {
+              padding-right: 62px !important;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td:first-child {
+            @apply pl-8;
+          }
+          td:last-child {
+            @apply pr-8;
+          }
+        }
+      }
+    }
+  }
+  .fixed-table-container {
+    .fixed-table-body {
+      .fixed-table-loading {
+        .loading-wrap {
+          @apply p-8;
+        }
+      }
+    }
+  }
+  .fixed-table-toolbar {
+    @apply px-4;
+    .columns {
+      label {
+        @apply py-2 px-4 leading-4 mb-0 flex gap-x-2 items-start;
+      }
+    }
+  }
+  .fixed-table-pagination {
+    @apply px-4;
+    > .pagination,
+    > .pagination-detail {
+      @apply text-sm my-4;
+    }
+  }
+  .fixed-table-toolbar,
+  .fixed-table-pagination {
+    .btn {
+      @apply text-sm font-normal py-1.5 px-3 leading-none;
+      &.btn-secondary {
+        @apply border border-slate-300 border-solid bg-white hover:bg-slate-100 text-slate-500 hover:text-slate-900 focus:shadow-none;
+      }
+      .uil {
+        @apply text-slate-400 font-normal text-base leading-none;
+      }
+      &:hover {
+        .uil {
+          @apply text-slate-900;
+        }
+      }
+    }
+    .dropdown-toggle:after {
+      border-top: 4px solid;
+      border-right: 4px solid transparent;
+      border-bottom: 0;
+      border-left: 4px solid transparent;
+      vertical-align: 0.255em;
+    }
+    .dropdown-menu {
+      @apply text-sm rounded-lg border border-solid border-slate-300 shadow-sm bg-white text-slate-800;
+    }
+    .dropdown-item {
+      @apply py-2 px-4 text-sm leading-4 text-slate-800 focus:bg-slate-100 hover:bg-slate-100 focus:text-slate-900 hover:text-slate-900;
+    }
+  }
+}
+
+.pagination {
+  @apply rounded-full;
+  .page-item:first-child .page-link {
+    @apply rounded-l-full;
+  }
+  .page-item:last-child .page-link {
+    @apply rounded-r-full;
+  }
+  .page-link {
+    @apply text-slate-900;
+    @apply border border-slate-300 border-solid;
+    @apply bg-white hover:bg-slate-100;
+  }
+  .page-item.active .page-link {
+    @apply border-primary bg-primary text-white;
+  }
+}

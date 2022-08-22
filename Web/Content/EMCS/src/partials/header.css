@@ -1,0 +1,3 @@
+.header-fixed {
+  @apply fixed top-0 left-0 w-full py-3 pl-2 pr-4 z-20 shadow-[inset_0_-1px_0_0_#E2E8F0];
+}

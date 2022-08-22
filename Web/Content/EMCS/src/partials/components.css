@@ -1,0 +1,5 @@
+@layer components {
+  .card {
+    @apply rounded-2xl bg-white border border-solid border-slate-200 shadow-sm overflow-clip;
+  }
+}

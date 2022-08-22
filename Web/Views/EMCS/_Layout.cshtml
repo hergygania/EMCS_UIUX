@@ -31,380 +31,27 @@
     @*<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-    <style type="text/css">
-        a {
-            color: #fe9d00;
-        }
-
-        .btn-box-tool {
-            padding: 5px;
-            font-size: 12px;
-            background: transparent;
-            color: #97a0b3;
-            box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.15) !important;
-        }
-
-        .navbar {
-            background: transparent !important;
-        }
-
-        .table thead tr th {
-            background-color: transparent !important;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        h3 {
-            margin-bottom: 0.5rem !important;
-        }
-
-        body {
-            overflow: hidden;
-            font-family: "Inter", sans-serif !important;
-            font-size: 12px !important;
-        }
-
-        .navbar {
-            padding: 0 !important;
-        }
-
-        .header {
-            background: transparent;
-            padding: 15px 0px 15px 115px;
-            border-bottom: 1px solid #00000010;
-        }
-
-        .white-content .header {
-            background: #fff;
-        }
-
-        .ul-bars {
-            list-style: none;
-            font-size: 20px;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            margin: 18px 0 18px 0;
-        }
-
-            .ul-bars li {
-                color: #bdbdbd !important;
-            }
-
-        .text-logo {
-            color: rgba(255, 255, 255, 0.8);
-            margin-left: 8px;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .white-content .text-logo {
-            color: #1d253b;
-        }
-
-        .main-panel {
-            border-top: none !important;
-        }
-
-            .main-panel > .content {
-                padding: 30px 34px 120px 128px !important;
-            }
-
-        .table .btn {
-            margin: 2px !important;
-            padding: 5px 10px;
-        }
-
-        .btn-secondary {
-            display: flex !important;
-            align-items: center !important;
-            margin: 0 !important;
-            padding: 10px 10px !important;
-            height: fit-content !important;
-        }
-
-        .dropdown-menu.dropdown-menu-right {
-            left: 0 !important;
-        }
-
-
-
-        .fixed-plugin {
-            top: 12px !important;
-        }
-
-            .fixed-plugin .dropdown.show .dropdown-menu {
-                top: -8px !important;
-                background: rgba(0, 0, 0, 0.3);
-            }
-
-            .fixed-plugin .dropdown .dropdown-menu:before, .fixed-plugin .dropdown .dropdown-menu:after {
-                top: 30px !important;
-                border-left-color: rgb(0 0 0 / 15%) !important;
-            }
-
-            .fixed-plugin li.adjustments-line {
-                height: 62px !important;
-            }
-
-        .page-link {
-            padding: 8px 14px !important;
-            font-weight: 500;
-            color: #707070 !important;
-        }
-
-        .page-item.active .page-link {
-            color: #fff !important;
-        }
-
-        .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
-            margin-left: 0 !important;
-        }
-
-        .white-content, .white-content .main-panel {
-            background: #f7f7f7 !important;
-        }
-
-            .white-content .card {
-                box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
-                border: 1px solid rgba(26, 54, 126, 0.125);
-            }
-
-        form .card {
-            flex-direction: row !important;
-            padding: 30px 18px;
-            margin: 10px 40px 10px 40px;
-        }
-
-        .box {
-            background: #27293d;
-            box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
-            border: 1px solid rgba(26, 54, 126, 0.125);
-            padding: 30px 18px;
-            border-radius: 6px;
-        }
-
-        .white-content .box {
-            background: #fff;
-        }
-
-        .sidebar {
-            box-shadow: none !important;
-        }
-
-        .sidebar-wrapper {
-            background: #1e1e2d;
-        }
-
-        .white-content .sidebar-wrapper {
-            background: #fff;
-        }
-
-        .breadcrumb {
-            margin-bottom: 2rem !important;
-        }
-
-        .hide {
-            display: none !important;
-        }
-
-        .dropzone {
-            font-size: inherit;
-            background: #e6e6e6 !important;
-            border: 1px solid #dadada !important;
-            border-radius: 10px !important;
-            box-shadow: 0 1px 20px 0px rgb(0 0 0 / 10%);
-        }
-
-        .mt-20 {
-            margin-top: 20px;
-        }
-
-        .mt-30 {
-            margin-top: 30px;
-        }
-
-        .has-success:after {
-            right: 75px !important;
-            top: 34px !important;
-            font-size: 14px !important;
-            color: #13c272 !important;
-        }
-
-        .has-success .control-label {
-            color: #13c272 !important;
-        }
-
-        .has-error .control-label {
-            color: #ff3535 !important;
-        }
-
-        .sidebar:hover {
-            /*top: -70px !important;*/
-        }
-        /*.sidebar:hover::after{
-            content: '';
-            background: #00000050;
-            width: 100%;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }*/
-
-        .input-validation-error {
-            border: 1px solid #ff0000 !important;
-        }
-        .field-validation-error {
-            color: #ff0000;
-        }
-        .collapse.in {
-            display: block !important;
-        }
-
-        .fade.in{
-            display: block !important;
-            opacity: 1 !important;
-        }
-
-        .modal{
-            background: #00000015 !important;
-        }
-
-        .modal.in .modal-dialog {
-            -webkit-transform: translate(0, 30%) !important;
-            transform: translate(0, 30%) !important;
-        }
-        .modal.show .modal-dialog, .modal.in .modal-dialog{
-            transform: none !important;
-        }
-        .modal-content .modal-header {
-            border-bottom: 1px solid #e9ecef !important;
-            padding: 24px 24px 24px 24px !important;
-        }
-        .modal-content .modal-footer {
-            justify-content: flex-end !important;
-            border-top: 1px solid #e9ecef !important;
-            padding-top: 20px !important;
-        }
-
-        /*====indra added====*/
-        .sidebars {
-            background: transparent;
-            display: block;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 95px;
-            height: 100vh;
-            z-index: 100;
-            border-right: 1px solid #00000010;
-        }
-
-        .white-content .sidebars {
-            background: #fff;
-        }
-
-        .sidebar, .off-canvas-sidebar {
-            left: -13px !important;
-            top: -13px !important;
-            background: #fff !important;
-        }
-
-        .btn-warning {
-            /*background: #fe9d00 !important;
-            background-image: linear-gradient(to bottom left, #cacaca, #fe9d00, #fe9d00) !important;
-            background-color: #fe9d00 !important;*/
-        }
-
-        .page-item.active .page-link {
-            /*background-color: #fe9d00 !important;
-            border-color: #fe9d00 !important;*/
-            background: #ff8d72 !important;
-            background-image: linear-gradient(to bottom left, #ffcc79, #ff9c01, #ffffff) !important;
-            background-size: 210% 210% !important;
-            background-position: top right !important;
-            border-radius: 20px;
-        }
-        .page-link {
-            border: 0.0625rem solid #e3e3e300 !important;
-            border-radius: 20px !important;
-        }
-        .white-content .sidebar {
-            box-shadow: none !important;
-        }
-
-        .sidebar-mini .sidebar {
-            box-shadow: none;
-            background: #1e1e2d;
-        }
-
-            .sidebar-mini .sidebar:hover {
-                box-shadow: 8px 12px 20px -8px #00000020 !important;
-                width: 360px !important;
-            }
-
-        textarea.form-control {
-            border: 1px solid rgba(29, 37, 59, 0.5) !important;
-            border-radius: 0.4285rem !important;
-        }
-
-        .double-input {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: stretch;
-        }
-
-        .btn-secondary {
-            background: #ff8d72 !important;
-            background-image: linear-gradient(to bottom left, #ffc363, #ffb033, #ff8d72) !important;
-            background-size: 210% 210% !important;
-            background-position: top right !important;
-        }
-        .white-content .table > thead > tr > th, .white-content .table > tbody > tr > th, .white-content .table > tfoot > tr > th, .white-content .table > thead > tr > td, .white-content .table > tbody > tr > td, .white-content .table > tfoot > tr > td {
-            border-color: transparent !important;
-        }
-        .table-bordered th, .table-bordered td {
-            border: none !important;
-        }
-        .sidebar-mini .sidebar{
-            z-index: 9999 !important;
-        }
-        .fixed-table-body {
-            max-height: 577px;
-            overflow-y: auto;
-        }
-
-        .btn-primary {
-            background-image: linear-gradient(to bottom left, #00ade5, #167fa3, #00d8d0) !important;
-        }
-        .btn-warning {
-            background-image: linear-gradient(to bottom left, #ffcf84, #ff9c02, #a16500) !important;
-        }
-        #btnApprove {
-            background-image: linear-gradient(to bottom left, #90ff67, #00c20b, #b5ff0a) !important;
-        }
-        #partDownloadFile {
-            background-image: linear-gradient(to bottom left, #e14eca, #ba54f5, #e14eca) !important;
-        }
-    </style>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="~/Content/Assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="~/Content/Assets/css/black-dashboard.css" rel="stylesheet" />
+    @* <link href="/Content/AdminLTE.css" rel="stylesheet" /> *@
+    @* <link href="~/Content/Assets/css/nucleo-icons.css" rel="stylesheet" /> *@
+    @* <link href="~/Content/Assets/css/black-dashboard.css" rel="stylesheet" /> *@
+    @* <link href="/Content/bootstrap.css" rel="stylesheet" /> *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="/Content/select2.min.css" rel="stylesheet" />
     <link href="/Content/bootstrap-timepicker.css" rel="stylesheet" />
     <link href="/Content/daterangepicker-bs3.css" rel="stylesheet" />
     <link href="/Content/bootstrap-datepicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
-    @*<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />*@
+    @* <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" /> *@
     @*@Styles.Render("~/Content/css");*@
+
+    <link href="~/Content/EMCS/app-tailwind.css" rel="stylesheet" />
 
     <script src="~/Content/Assets/js/core/jquery.min.js"></script>
     <script src="/Scripts/jquery.cookie.js"></script>
+    
 
 
     @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
@@ -418,153 +65,160 @@
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/AppScript")*@
 
+    <script>
+        // Dark / Light Mode
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
 
+        $(function () {
+            /*
+            * Sidebar navigation
+            */
+            $("#main-container").toggleClass(localStorage.sidebarCollapsed);
+
+            $("#sidebar-toggle").on("click", function (e) {
+                e.preventDefault();
+                $("#main-container").toggleClass("sidebar-collapsed");
+                if (localStorage.sidebarCollapsed != "sidebar-collapsed") {
+                $("#main-container").toggleClass("sidebar-collapsed", true);
+                localStorage.sidebarCollapsed = "sidebar-collapsed";
+                } else {
+                $("#main-container").toggleClass("sidebar-collapsed", false);
+                localStorage.sidebarCollapsed = "";
+                }
+            });
+
+            $(".nav-collapse").on("click", function (e) {
+                e.preventDefault();
+                $(this).toggleClass("nav-collapse--active");
+                $(this).next().slideToggle();
+            });
+
+            $(document).on(
+                "mouseover mouseout",
+                ".sidebar-collapsed #sidebar-nav",
+                function () {
+                $(".sidebar-collapsed").toggleClass("sidebar-hovered");
+                }
+            );
+        });        
+    </script>        
 
 </head>
-<body class="sidebar-mini white-content ">
-    <div class="wrapper">
-        <header class="header">
-            <div class="sidebars">
-                <ul class="ul-bars">
-                    <li>MENU</li>
-                </ul>
-            </div>
-            <div class="navbar-toggle d-inline">
-                <button type="button" class="navbar-toggler">
-                    <i class="fas fa-bars"></i>
+<body class="bg-white">
+    <div class="relative h-screen">
+        <header class="header-fixed">
+            <div class="flex gap-x-4 items-center">
+                <button id="sidebar-toggle" type="button" class="flex-none flex justify-center items-center text-slate-500 text-2xl leading-none p-2 rounded-md hover:bg-slate-100 hover:text-slate-700">
+                    <i class="uil uil-bars"></i>
                 </button>
-            </div>
-            <a href="./" class="logo">
-                <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:130px;" />
-            </a><span class="text-logo">Export Monitoring</span>
-            <nav class="navbar navbar-static-top" role="navigation">
-                <div class="pull-right built-for-it">
-                    @*<img src="~/Images/built.png" />*@
+                <div class="flex gap-x-4 items-center">
+                    <a href="./" class="inline-block">
+                        <img src="~/Images/trakindo_logo.jpg" class="rounded-none border-white border-2 w-32 h-auto" />
+                    </a>
+                    <span class="text-black text-lg font-bold">Export Monitoring</span>
                 </div>
-            </nav>
-            <div id="pisProgress" class="progress" style="display: none">
-                <div id="pisProgressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                    <span id="lblPisProgressBar" class="sr-only">0%</span>
-                </div>
-            </div>
-        </header>
 
-        <div class="sidebar">
-
-            <div class="sidebar-wrapper ps ps--active-x ps--active-y">
-
-                @Html.Partial("_Menu")
-
-            </div>
-
-        </div>
-
-
-        <div class="main-panel">
-            <!-- Main content -->
-            <div class="content">
-                <div class="content-header">
+                <div class="flex ml-auto items-center gap-x-4">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a id="triger-menu" href="javascript:void(0);" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" onclick="return alert('Please log-in ..!')">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
-                    }
-
-                    <h3>Supply Chain Information System</h3>
-
-                    <ol class="breadcrumb" style="background-color: transparent; padding: 1rem 0;">
-                        @if (userType == "internal")
-                        {
-                            <li><a href="@Url.Content("~/")"><i class="@(ViewBag.Title == "Quick" || ViewBag.Title == "Advanced" ? "fas fa-tachometer-alt mr-2" : "fa fa-dashboard")"></i>Home</a></li>
-                            <li class="active">&nbsp;&nbsp;<i class="fas fa-angle-right">&nbsp;</i> @ViewBag.Title</li>
-                            <text>&nbsp;&nbsp;|&nbsp;&nbsp;</text>
-                        }
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            if (userType == "internal")
-                            {
-                                <a href="javascript:void(0)" class="dropdown-toggle disabled" id="users" data-toggle="dropdown">
-                                    <i class="fa fa-user fa-lg"></i>
-                                    <span class="">@userName</span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
-                                    <i class="fa fa-user fa-lg"></i>
-                                    <span class="">@userName</span>
-                                    <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu pull-right" role="menu">
+                        if (userType == "internal")
+                        {                        
+                            <button id="userDropdownButton" data-dropdown-toggle="userDropdown" class="font-medium text-sm inline-flex items-center gap-x-2 hover:text-black" type="button">
+                                <span>@userName</span>
+                                <svg class="text-slate-400 w-9 h-9" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.579 2 2 6.579 2 12C2 17.421 6.579 22 12 22C17.421 22 22 17.421 22 12C22 6.579 17.421 2 12 2ZM12 7C13.727 7 15 8.272 15 10C15 11.728 13.727 13 12 13C10.274 13 9 11.728 9 10C9 8.272 10.274 7 12 7ZM6.894 16.772C7.791 15.452 9.287 14.572 11 14.572H13C14.714 14.572 16.209 15.452 17.106 16.772C15.828 18.14 14.015 19 12 19C9.985 19 8.172 18.14 6.894 16.772Z" fill="currentColor"/>
+                                </svg>
+                            </button>
+                            <div id="userDropdown" class="hidden z-10 w-44 bg-white rounded-md divide-y divide-gray-100 shadow-md dark:bg-gray-700">
+                                <ul class="py-1 text-sm text-slate-700 dark:text-gray-200" aria-labelledby="userDropdown">
                                     <li>
-                                        <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                        <a href="javascript:void(0);#" onclick="return loadingPage('/change-password')" class="block py-2 px-4 items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <span>Change Password</span>
+                                        </a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                        <a href="javascript:void(0);" onclick="return loadingPage('/sign-out')" class="block py-2 px-4 items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <span>Sign Out</span>
+                                        </a>
                                     </li>
                                 </ul>
-                            }
-
-
-                            @*<a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
-                                    <i class="fa fa-user fa-lg"></i>
-                                    <span class="">@userName</span>
-                                    <span class="caret"></span>
-                                </a>*@
-
-                            @*<ul class="dropdown-menu pull-right" role="menu">*@
-                            @*<li>
-                                    <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
-                                </li>*@
-                            @*<li>
-                                    <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
-                                </li>*@
-                            @*</ul>*@
-
-                            @*<span class="">&nbsp;&nbsp;|&nbsp;&nbsp;</span>*@
-                            @*<a href="#" onclick="return loadingPage('/sign-out')" style="color:red"><i class="fa fa-sign-out fa-lg"></i> Log Off</a>*@
+                            </div>                         
                         }
                         else
                         {
-                            @*<a href="@Url.Action("SignIn", "account", new { area = "" })"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>*@
-                            <a href="#" onclick="return loadingPage('/sign-in')"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>
+                            <a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>
+                                <span class="">@userName</span>
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                </li>
+                            </ul>
                         }
-                    </ol>
+                    }
+                    
+                    <button id="theme-toggle" data-tooltip-target="tooltip-mode" type="button" class="font-medium rounded-lg text-sm p-2 text-center text-slate-500 hover:bg-slate-100">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>                        
+                    </button>
+                    <div id="tooltip-mode" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(301px, 44px);">
+                        Toggle Dark Mode
+                        <div class="tooltip-arrow" data-popper-arrow="" style="position: absolute; left: 0px; transform: translate(59px, 0px);"></div>
+                    </div>                                
                 </div>
-
-                @RenderBody()
+             
             </div>
-        </div>
-    </div>
+        </header>
+        <div id="main-container">
+            <aside id="sidebar-nav">
+                <div class="sidebar-nav--wrapper">
+                    <div class="sidebar-nav--inner">
+                        @Html.Partial("_Menu")
+                    </div>
+                </div>
+            </aside>       
+            <main class="main-content bg-slate-50">
+                <div class="content">
+                    <div class="content-header py-8 px-8">
+                        @if (userType == "internal")
+                        {
+                            <ul class="flex gap-x-3 text-xs leading-4 uppercase">
+                                <li><a href="@Url.Content("~/")" class="hover:underline">Home</a></li>
+                                <li><i class="uil uil-angle-right text-sm leading-4"></i></li>
+                                <li class="font-bold">@ViewBag.Title</li>
+                            </ul>
+                        }
+                    </div>                   
+    
+                    @RenderBody()
 
-    <div class="fixed-plugin">
-        <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="adjustments-line text-center color-change">
-                    <span class="color-label">LIGHT MODE</span>
-                    <span class="badge light-badge mr-2"></span>
-                    <span class="badge dark-badge ml-2"></span>
-                    <span class="color-label">DARK MODE</span>
-                </li>
-            </ul>
-        </div>
+                    @* <div class="py-8 px-8">
+                        <h2 class="text-xl font-bold mb-4">Buttons</h2>
+                        <div class="flex gap-4">
+                            <button class="btn">Default</button>
+                            <button class="btn btn-elevated">Elevated</button>
+                            <button class="btn btn-filled">Filled</button>
+                            <button class="btn btn-tonal">Tonal</button>
+                            <button class="btn btn-outlined">Outlined</button>
+                            <button class="btn btn-text">Text</button>
+                            <button class="btn btn-elevated btn-grad-orange">Button</button>                      
+                        </div>
+                    </div>  *@
+
+                </div>
+            </main>
+        </div>     
     </div>
 
     <!-- modal placeholder content -->
@@ -586,7 +240,7 @@
 
     <script src="~/Content/Assets/js/core/popper.min.js"></script>
     <script src="~/Content/Assets/js/core/bootstrap.min.js"></script>
-    <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    @* <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> *@
     <script src="~/Content/Assets/js/plugins/moment.min.js"></script>
     <script src="~/Content/Assets/js/plugins/bootstrap-switch.js"></script>
     <script src="~/Content/Assets/js/plugins/sweetalert2.min.js"></script>
@@ -598,9 +252,10 @@
     <script src="~/Content/Assets/js/plugins/jquery-jvectormap.js"></script>
     @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
     <script src="~/Content/Assets/js/plugins/bootstrap-notify.js"></script>
-    <script src="~/Content/Assets/js/black-dashboard.min.js"></script>
+    @* <script src="~/Content/Assets/js/black-dashboard.min.js"></script> *@
     <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
 
+    <script src="~/Scripts.app/EMCS/EMCS.js"></script>
 
     <script>
         var myApp = {};
@@ -829,7 +484,6 @@
             $(".modal").removeClass("in");
         });
     </script>
-
 
 </body>
 </html>
