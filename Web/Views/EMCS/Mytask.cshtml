@@ -4,115 +4,57 @@
     ViewBag.Title = "My Task";
 }
 @*@Styles.Render("~/Content/EMCS/FontAwesome/css/all.css")*@
-@Styles.Render("~/Content/EMCS/Custom.css")
+@* @Styles.Render("~/Content/EMCS/Custom.css") *@
 @Styles.Render("~/Content/EMCS/dropzone.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 <input type="hidden" id="IsEditAllowed" value="@ViewBag.IsEditAllowed" />
 @*<div class="row">*@
-<style>
-    .tab-content .tab-pane {
-        border:none !important;
-        padding: 0px !important;
-        box-shadow: none;
-    }
-    tr:nth-child(even) {
-        background-color: transparent !important;
-    }
-    .form-horizontal .control-label {
-        text-align: left !important;
-    }
 
-    .dropdown-menu.dropdown-menu-right {
-        left: 0 !important;
-    }
-
-    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
-        margin-left: 0 !important;
-    }
-
-    /*adjustment indra*/
-    .btn .badge {
-        color: #fff;
-    }
-
-    .tabs {
-        font-size: 15px;
-        padding: 0px;
-        list-style: none;
-        background: #fff;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
-        display: inline-block;
-        border-radius: 50px;
-        position: relative;
-    }
-
-        .tabs a {
-            text-decoration: none;
-            color: #777;
-            padding: 10px 20px;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition-duration: 0.6s;
-        }
-
-            .tabs a.active {
-                color: #fff;
-            }
-
-            .tabs a i {
-                margin-right: 5px;
-            }
-
-        .tabs .selector {
-            height: 100%;
-            display: inline-block;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 1;
-            border-radius: 50px;
-            transition-duration: 0.6s;
-            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background: #05abe0;
-            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
-            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
-            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
-            box-shadow: 4px 4px #a8a8a8a1;
-        }
-
-    .white-content p {
-        color: #000;
-    }
-    .badge {
-        background-color: #fff !important;
-        border: 1px #c6c6c6 solid;
-    }
-    .badge-pill {
-        padding-right: 6px;
-        padding-left: 6px;
-        border-radius: 55px;
-    }
-    .zoomTextMenuEMCS:hover {
-        transform: scale(1.1) !important;
-    }
-</style>
-<div class="">
-    
-    <div class="tab" role="tabpanel" style="margin-top: 20px;box-shadow:none !important;background:none;">
-        <nav class="tabs">
+<div class="px-8">    
+    <div id="myTaskTab" class="tab" role="tabpanel">
+        <nav class="tabsNav">
             <div class="selector"></div>
-
-            <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab" class="active zoomTextMenuEMCS">
-                <p class="badge badge-pill">@(Model.Cipl != 0 ? Model.Cipl : "")</p>&nbsp;CIPL
+            <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab" class="tabsNav--item active">
+                @if(Model.Cipl != 0) {
+                    <span class='tabsNav--item-count'>@Model.Cipl</span>
+                }
+                <span class="tabsNav--item-label">CIPL</span>
             </a>
-            <a href="#tab-task-gr" class="zoomTextMenuEMCS" aria-controls="gr" role="tab" data-toggle="tab"><p class="badge badge-pill">@(Model.Gr != 0 ? Model.Gr : "")</p>&nbsp;RG</a>
-            <a href="#tab-task-cargo" class="zoomTextMenuEMCS" aria-controls="profile" role="tab" data-toggle="tab"> <p class="badge badge-pill">@(Model.Cl != 0 ? Model.Cl : "")</p>&nbsp;CL</a>
-            <a href="#tab-task-si" class="zoomTextMenuEMCS" aria-controls="messages" role="tab" data-toggle="tab"> <p class="badge badge-pill">@(Model.Si != 0 ? Model.Si : "")</p>&nbsp;SI</a>
-            <a href="#tab-task-npe_peb" class="zoomTextMenuEMCS" aria-controls="messages" role="tab" data-toggle="tab"> <p class="badge badge-pill">@(Model.Npe != 0 ? Model.Npe : "")</p>&nbsp;PEB</a>
-            <a href="#tab-task-bl_awb" class="zoomTextMenuEMCS" aria-controls="messages" role="tab" data-toggle="tab"> <p class="badge badge-pill">@(Model.Bl != 0 ? Model.Bl : "")</p>&nbsp;BL / AWB</a>
-            <a href="#tab-task-delegation" class="zoomTextMenuEMCS" aria-controls="messages" role="tab" data-toggle="tab"> <p class="badge badge-pill"></p>&nbsp;DLG</a>
-            <a href="#tab-task-requestForChange" class="zoomTextMenuEMCS" aria-controls="test" role="tab" data-toggle="tab"> <p class="badge badge-pill"></p>&nbsp;RFC</a>
+            <a href="#tab-task-gr" aria-controls="gr" role="tab" data-toggle="tab" class="tabsNav--item">
+                @if(Model.Gr != 0) {
+                    <span class='tabsNav--item-count'>@Model.Gr</span>
+                }
+                <span class="tabsNav--item-label">RG</span>                    
+            </a>
+            <a href="#tab-task-cargo" aria-controls="profile" role="tab" data-toggle="tab" class="tabsNav--item">
+                @if(Model.Cl != 0) {
+                    <span class='tabsNav--item-count'>@Model.Cl</span>
+                }
+                <span class="tabsNav--item-label">CL</span>                    
+            <a href="#tab-task-si" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+                @if(Model.Si != 0) {
+                    <span class='tabsNav--item-count'>@Model.Si</span>
+                }
+                <span class="tabsNav--item-label">SI</span>                      
+            </a>
+            <a href="#tab-task-npe_peb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+                @if(Model.Npe != 0) {
+                    <span class='tabsNav--item-count'>@Model.Npe</span>
+                }
+                <span class="tabsNav--item-label">PEB</span>                      
+            </a>
+            <a href="#tab-task-bl_awb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+                @if(Model.Bl != 0) {
+                    <span class='tabsNav--item-count'>@Model.Bl</span>
+                }
+                <span class="tabsNav--item-label">BL / AWB</span>                      
+            </a>
+            <a href="#tab-task-delegation" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+                <span class="tabsNav--item-label">DLG</span>
+            </a>
+            <a href="#tab-task-requestForChange" aria-controls="test" role="tab" data-toggle="tab" class="tabsNav--item">
+                <span class="tabsNav--item-label">RFC</span>
+            </a>
         </nav>
         <div class="tab-content tabs-custom tab-space tab-subcategories pt-4">
             <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
@@ -142,7 +84,7 @@
                     @Html.Partial("~/Views/EMCS/TaskRequestForChange.cshtml")
                 </div>
             }
-        </div>
+        </div>       
     </div>
 </div>
 @*</div>*@
@@ -166,25 +108,29 @@
 }
 
 <script>
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    //var selector = $(".tabs").find(".selector");
-    var activeItem = tabs.find('.active');
-    var activeWidth = activeItem.innerWidth();
-    $(".selector").css({
-        "left": activeItem.position.left + "px",
-        "width": activeWidth + "px"
-    });
+    $(function () {
+        setTimeout(function(){
+            var tabs = $('.tabsNav');
+            //var selector = $('.tabsNav').find('a').length;
+            //var selector = $(".tabs").find(".selector");
+            var activeItem = tabs.find('.active');
+            var activeWidth = activeItem.outerWidth();
+            $(".selector").css({
+                "left": activeItem.position.left + "px",
+                "width": activeWidth + "px"
+            });
 
-    $(".tabs").on("click", "a", function (e) {
-        e.preventDefault();
-        $('.tabs a').removeClass("active");
-        $(this).addClass('active');
-        var activeWidth = $(this).innerWidth();
-        var itemPos = $(this).position();
-        $(".selector").css({
-            "left": itemPos.left + "px",
-            "width": activeWidth + "px"
-        });
+            $(".tabsNav").on("click", "a", function (e) {
+                e.preventDefault();
+                $('.tabsNav a').removeClass("active");
+                $(this).addClass('active');
+                var activeWidth = $(this).outerWidth();
+                var itemPos = $(this).position();
+                $(".selector").css({
+                    "left": itemPos.left + "px",
+                    "width": activeWidth + "px"
+                });
+            });
+        }, 500);
     });
 </script>

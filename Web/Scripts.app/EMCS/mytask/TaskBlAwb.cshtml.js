@@ -40,7 +40,7 @@ var columns_bl = [
     //}, {
         field: "",
         title: "Action",
-        align: "center",
+        align: "left",
         sortable: true,
         class: "text-nowrap",
         width: "160",
@@ -48,15 +48,15 @@ var columns_bl = [
         formatter: function (data, row, index) {
             console.log(row);
             var btn = [];
-            btn.push('<div>'); 
+            btn.push('<div class="flex gap-x-1.5 items-center">'); 
             if (row['StatusViewByUser'] === 'Waiting for BL or AWB' || row['StatusViewByUser'] === 'Need revision review by imex' || row['StatusViewByUser'] === 'BL or AWB need revision') {
-                btn.push("<button class='btn btn-info btn-link btn-xs btn-create-bl'><i class='fa fa-pencil'></i></button>");
+                btn.push("<button class='btn-action btn-amber btn-create-bl'><i class='uil uil-edit'></i></button>");
             } else if (row['StatusViewByUser'] === 'Waiting for BL or AWB approval') {
-                btn.push("<button class='btn btn-success btn-link btn-sm btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='fa fa-check'></i></button>");
+                btn.push("<button class='btn-action btn-green btn-approval-bl' data-toggle='tooltip' title='Approve'><i class='uil uil-check-circle'></i></button>");
                 //btn.push("<button class='btn btn-warning btn-xs btn-revise-bl' data-toggle='tooltip' title='Revise'><i class='fa fa-pencil'></i></button>");
-                btn.push("<button class='btn btn-xs btn-info btn-link btn-sm btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
+                btn.push("<button class='btn-action btn-blue btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='uil uil-search'></i></button>");
             } else {
-                btn.push("<button class='btn btn-xs btn-info btn-link btn-sm btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='tim-icons icon-zoom-split'></i></button>");
+                btn.push("<button class='btn-action btn-blue btn-view-bl' data-toggle='tooltip' data-placement='top' title='View'><i class='uil uil-search'></i></button>");
             }  
             
             btn.push('</div>');
@@ -127,6 +127,19 @@ $("#tbl-task-bl").bootstrapTable({
     showRefresh: true,
     smartDisplay: false,
     pageSize: '5',
+    loadingFontSize: "16px",
+    classes: "",
+    icons: {
+      paginationSwitchDown: "uil uil-arrow-circle-down",
+      paginationSwitchUp: "uil uil-arrow-circle-up",
+      refresh: "uil uil-sync",
+      toggleOff: "uil uil-toggle-off",
+      toggleOn: "uil uil-toggle-on",
+      columns: "uil uil-columns",
+      fullscreen: "uil uil-expand-arrows-alt",
+      detailOpen: "uil uil-plus",
+      detailClose: "uil uil-minus",
+    },
     formatNoMatches: function () {
         return '<span class="noMatches">-</span>';
     },
