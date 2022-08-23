@@ -1,8 +1,8 @@
 #main-container {
-  @apply pt-16 w-full h-full relative;
+  @apply pt-16 w-full h-full relative overflow-hidden;
 }
 #sidebar-nav {
-  @apply absolute top-16 left-0 bottom-0 bg-white flex flex-col shadow-[inset_-1px_0_0_0_#E2E8F0] z-10;
+  @apply absolute top-16 left-0 bottom-0 bg-white flex flex-col shadow-[inset_-1px_0_0_0_#E2E8F0] z-40;
   @apply transition-all duration-300;
 }
 .sidebar-nav {
