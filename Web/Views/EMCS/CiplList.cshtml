@@ -1,6 +1,6 @@
 ﻿@{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
-    ViewBag.Title = "Commercial Invoice Packing List";
+	Layout = "~/Views/EMCS/_Layout.cshtml";
+	ViewBag.Title = "Commercial Invoice Packing List";
 }
 
 @using System.Web.Mvc
@@ -34,29 +34,29 @@
 	}
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="toolbar">
-            @{
-                if (ViewBag.AllowCreate)
-                {
-                    <a class="btn btn-success animation-on-hover btn-round" href="/EMCS/CiplForm" id="btnCreate">
-                        <i class="fa fa-plus"></i> Add New
-                    </a>
-                }
-            }
-            <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
-                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="tableCipl"></table>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="!px-8 !pt-8 !pb-2">
+	<div class="toolbar">
+		@{
+			if (ViewBag.AllowCreate)
+			{
+				<a id="btnCreate" href="/EMCS/CiplForm"
+				class="inline-flex btn-grad-orange px-3 py-1 rounded-full text-white hover:shadow-md gap-x-2 items-center text-sm font-medium cursor-pointer">
+					<i class="uil uil-plus-circle text-lg"></i><span>Add New</span>
+				</a>
+				@* <a class="btn btn-success animation-on-hover btn-round" href="/EMCS/CiplForm" id="btnCreate">
+					<i class="fa fa-plus"></i> Add New
+					</a> *@
+			}
+		}
+		<div id="mySearch" class="search-bar">
+			<input name="searchText" class="form-control" type="text" placeholder="Search...">
+		</div>
+	</div>
+	<div class="card">
+		<div class="table-responsive">
+			<table class="table" id="tableCipl"></table>
+		</div>
+	</div>
 </div>
 
 @* <div class="row">
