@@ -355,10 +355,6 @@ Web/bin/*
 /Library
 
 # Local Development
-package-lock.json
-package.json
-postcss.config.js
-tailwind.config.js
 Web/MvcMenuEMCSHelpers.cs
 Web/MvcMenuEMCSHelpers.cs
 Web/Web.csproj
