@@ -1,0 +1,203 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+    ViewBag.Title = "Freigh Cost";
+}
+@using System.Web.Mvc
+<link href="/Scripts/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<link href="/Scripts/kartik-v-bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    /*.form-group {
+        height: 50px;
+        width: 100%;
+        left: 28px;
+        top: 180px;
+        border-radius: 10px;
+        border: 2px solid #EEEEEE;
+        background-color: white;
+        padding-top: 2px;
+        padding-left: 10px;
+    }*/
+
+    .label-custom {
+        height: 50px;
+        width: 100%;
+        left: 28px;
+        top: 180px;
+        border-radius: 10px;
+        border: 2px solid #EEEEEE;
+        background-color:white;
+        padding-top : 2px;
+        padding-left : 10px;
+    }
+
+    .label-input {
+        position: inherit;
+        width: 90%;
+        height: 40px;
+        left: 106px;
+        top: 199px;
+        border:none;
+     
+    }
+
+    .box-container {
+        height: 56px;
+        width: 100%;
+        left: 28px;
+        top: 498px;
+        
+        background: #FCBA12;
+        /*border-radius: 10px;*/
+    }
+    
+    .box-bottom {
+        /*position: absolute;*/
+        /*width: 414px;*/
+        height: 276px;
+        left: 0px;
+        top: 619px;
+        background: #FFFFFF;
+        border-radius: 16px;
+
+    }
+    .ui-autocomplete {
+        position: inherit;
+        width: 50%;
+        height: 164px;
+        left: 28px;
+        top: 242px;
+        background: #FFFFFF;
+        border: 2px solid #EEEEEE;
+        box-sizing: border-box;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.06);
+        border-radius: 10px;
+    }
+    .ui-helper-hidden-accessible{
+        display:none;
+    }
+    ul.ui-autocomplete {
+        -moz-border-radius: 15px;
+        border-radius: 30px;
+        font-size: 15px;
+        -webkit-appearance: none;
+    }
+    .ui-widget-content .ui-state-focus {
+        background: blue;
+        border: 1px solid red;
+    }
+    /*.ui-autocomplete {
+        position: inherit;
+        padding : 4px;
+        width: 60%;
+        height: min-content;
+        left: 28px;
+        top: 242px;
+        background: #FFFFFF;
+        border: 2px solid #EEEEEE;
+        box-sizing: border-box;
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.06);
+        border-radius: 10px;
+    }*/
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Freight Cost Estimate</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div>
+                            <label class="control-label">Origin</label>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <div class="label-custom ">
+                                        <img src="~/Images/origin.png" />
+                                        <input type="text" id="searchOrigin" name="Origin" class="label-input" placeholder="Input Origin" style="font-size:14px"  required />
+                                    </div>
+                                </div>
+                            </div>                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div>
+                            <label class="control-label">Destination</label>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <div class="label-custom">
+                                        <img src="~/Images/destination.png" />
+                                        <input type="text" id="searchDestination" name="Destination" class="label-input" placeholder="Input Destination" style="font-size:14px" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div>
+                            <label class="control-label">Model</label>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <div class="label-custom">
+                                        <img src="~/Images/model.png" />
+                                        <input class="label-input" id="searchModel" name="Model" placeholder="Choose Model" style="font-size:14px" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-3">
+                            <button class="box-container" onclick="calculate()" id="BtnFilter">Calculate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <div style="padding-left :28px;padding-top:10px">
+                    <label class="control-label"> Freight Cost</label>  <text id="route" class="control-label" style="padding-left:20%;color:blue;font-size:14px"></text>
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Images/Calender.png" />  <label class="control-label"> Valid To</label>
+                    <text id="validto" class="control-label" style="position:relative; margin-left:50%; right:0;font-size:12px"></text>
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Images/money.png" />  <label class="control-label"> Amount</label>
+                    <text id="amount" class="control-label" style="position:relative; margin-left:50%; right:0;font-size:12px"></text>
+                </div>
+                <br />
+                <br />
+                <div class="col-md-3">
+                    <button type="button" onclick="location.href='@Url.Action("SignOut", "account", new { area = "" })'" class="box-container control-label" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/FreightSales.cshtml.js")"></script>
+}
+  

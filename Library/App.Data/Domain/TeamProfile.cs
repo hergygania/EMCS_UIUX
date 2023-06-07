@@ -1,0 +1,31 @@
+namespace App.Data.Domain
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("imex.TeamProfile")]
+    public partial class TeamProfile
+    {
+        public int ID { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string ProfileName { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+				public byte Status { get; set; }
+        public DateTime? EntryDate { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        [StringLength(30)]
+        public string EntryBy { get; set; }
+
+        [StringLength(30)]
+        public string ModifiedBy { get; set; }
+    }
+}

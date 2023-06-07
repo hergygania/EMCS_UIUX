@@ -1,0 +1,69 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Master",
+    "checkbox": "<input type='checkbox'/>",
+    "children": [
+      {
+        "id": 2,
+        "name": "Feeding Data",
+        "checkbox": "<input type='checkbox'/>",
+        "children": [
+          {
+            "id": 3,
+            "name": "Master Material",
+            "checkbox": "<input type='checkbox'/>"
+          },
+          {
+            "id": 4,
+            "name": "Material Price",
+            "checkbox": "<input type='checkbox'/>"
+          },
+          {
+            "id": 5,
+            "name": "Currency",
+            "checkbox": "<input type='checkbox'/>"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "Fixed Data",
+        "checkbox": "<input type='checkbox'/>",
+        "children": [
+          {
+            "id": 9,
+            "name": "CIF",
+            "checkbox": "<input type='checkbox'/>",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Report",
+    "checkbox": "<input type='checkbox'/>",
+    "children": [
+      {
+        "id": 9,
+        "name": "CIF",
+        "checkbox": "<input type='checkbox'/>",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Setting",
+    "checkbox": "<input type='checkbox'/>",
+    "children": [
+      {
+        "id": 9,
+        "name": "User Access Role",
+        "children": []
+      }
+    ]
+  }
+]

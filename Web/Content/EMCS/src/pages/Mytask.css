@@ -1,0 +1,38 @@
+#myTaskTab {
+  .tabsNav {
+    @apply relative flex rounded-full bg-slate-200 shadow-lg;
+    .tabsNav--item {
+      @apply relative flex-auto flex justify-center items-center gap-x-2 text-center px-6 py-2 z-[1] transition-all delay-150 duration-300;
+      .tabsNav--item-count {
+        @apply w-6 h-6 bg-white border border-slate-300 border-solid rounded-full flex items-center justify-center text-[10px] text-slate-500 font-semibold leading-none transition-all delay-150 duration-300;
+      }
+      .tabsNav--item-label {
+        @apply text-slate-500 transition-all delay-150 duration-300;
+      }
+      &:not(.active) {
+        &:hover {
+          .tabsNav--item-count {
+            @apply border-slate-700 text-slate-900;
+          }
+          .tabsNav--item-label {
+            @apply text-slate-900;
+          }
+        }
+      }
+      &.active {
+        @apply -mt-[8px];
+        .tabsNav--item-count {
+          @apply border-white text-slate-900;
+        }
+        .tabsNav--item-label {
+          @apply text-white;
+        }
+      }
+    }
+    .selector {
+      @apply absolute left-0 -top-1 h-full rounded-full transition-all duration-500 ease-in-out;
+      background: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%);
+      box-shadow: 4px 4px 2px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+}

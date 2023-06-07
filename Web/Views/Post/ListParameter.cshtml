@@ -1,0 +1,61 @@
+﻿@{
+
+    ViewBag.Title = "Master Parameter";
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:40px;">
+    <div style="margin-top:10px;">
+        <div style="margin-top:20px">
+            <div id="table-inprogress" class="table-responsive">
+                <div class="toolbar">
+                    <button class="btn btn-success float-left" type="button" onclick="initModalCreateParameter()"><i class="fa fa-plus"></i>&nbsp;Add New</button>&nbsp;
+                </div>
+                <table id="table-parameter" class="table table-hover thead-dark table-striped table-bordered" style="width:100%;"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="custom-grid-style">
+        <button class="btn btn-default" data-last="~/HomeVendor" onclick="goToLastPage()" type="button"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</button>&nbsp;
+    </div>
+</div>
+<hr />
+
+@Html.Partial("~/Views/Post/ModalParameter.cshtml")
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet" />
+    <link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<link href="~/Content/POST/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+<script src="~/Scripts/sweetalert.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/MasterParameter.js" type="text/javascript"></script>
+    <script>
+        var form = new FormData();
+        var settings = {
+            "url": "https://eprocurement.trakindo.co.id/api/User/validasiPost",
+            //"url": "http://10.2.14.174:8081/api/User/validasiPost",
+            "method": "POST",
+            "headers": {
+                "Cookie": "CookieToken=V8HnQrWex2QnZBy3qrLPa279JYidYBnENDiN0aCxN4GMCKpsze0qQKiL3fZBnuQFrh7Cw4DIHafs7KaKGujH33rzAYbocXME-4orGD-dvyXh6HW7gqKlGE_th0YGbgBDebavIwGu3tFnm6Umlt2Gl-9M512K7SSnmu1Tx12DrLLZbnOIwtTyngyJLrxrBdp8h5RC7teYNy7z8SwGelgxOGeyy5gfOS7z7awTTqIZriEp6dUPbYUUP-CLIBKU9wcpGyjfN9AlrOTD-ce0eIc_O-fHhtuBX2JWK0Wu6w0YKZw#1611803137646#1611795938646"
+            },
+            "processData": false,
+            "contentType": false,
+            //"timeout": 0,
+            //"mimeType": "multipart/form-data",
+            //"data": form
+        };
+
+        $.ajax(settings).done(function (response) {
+            debugger;
+            console.log(response);
+        });
+    </script>
+}
+

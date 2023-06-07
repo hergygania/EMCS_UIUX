@@ -1,0 +1,490 @@
+﻿@model  List<App.Web.Models.EMCS.CargoItemModel>
+@{
+    ViewBag.crudMode = "U";
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    var statusList = new List<string>();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
+</div>
+
+@using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo",@style= " max-height: 500px;overflow-y: scroll;" }))
+{
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Create</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
+        }
+    </div>
+    for (int i = 0; i < Model.Count; i++)
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="form-group" style="margin-bottom:40px !important;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-3">Container Number</label>
+                            <div class="input-group col-md-9">
+                                <input type="text" name="Id" style="display:none;" id="IdCargoItem" value="@Model[i].Id" />
+                                @Html.HiddenFor(m => m[i].Id)
+                                @Html.HiddenFor(m => m[i].IdCargo)
+                                @Html.TextBoxFor(m => m[i].ContainerNumber, new { @class = "form-control required", @id = "ContainerNumber", placeholder = "Container Number" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Container Type </label>
+                            <div class="input-group col-md-9">
+                                @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control" });
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Seal Number</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].ContainerSealNumber, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Seal Number" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Case Number</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].CaseNumber, new { @class = "form-control", @readonly = "readonly", @id = "CaseNumber", placeholder = "Case Number" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Item Name</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].ItemName, new { @class = "form-control", @readonly = "readonly", @id = "ItemName", placeholder = "Item Name" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">EDI</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Ea, new { @class = "form-control", @readonly = "readonly", @id = "EDI", placeholder = "EDI Number" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Inbound Da</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].InBoundDa, new { @class = "form-control", @readonly = "readonly", @id = "Da", placeholder = "Inbond DA" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Cargo Description</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].CargoDescription, new { @class = "form-control", @readonly = "readonly", @id = "CargoDescription", placeholder = "Cargo Description" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-3">Length</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Length, new { @class = "form-control", @id = "Length", placeholder = "Length" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Width</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Width" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Height</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Height, new { @class = "form-control", @id = "Height", placeholder = "Height" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Net Weight</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Net, new { @class = "form-control", @id = "Net", placeholder = "Net Weight" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3">Gross Weight</label>
+                            <div class="input-group col-md-9">
+                                @Html.TextBoxFor(m => m[i].Gross, new { @class = "form-control", @id = "Gross", placeholder = "Gross Weight" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-12">
+                            <div class="row toolbarContainer form-horizontal">
+                            </div>
+                            <table data-toolbar=".toolbarContainer" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+    }
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Create</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
+        }
+    </div>
+    @*<input type="text" name="CargoId" value="@(Model.data.id)" />*@
+}
+<script>
+    $tableContainer = $("#tableAddCargo");
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+
+    function insertDataItem() {
+
+    }
+
+    $(document).ready(function () {
+        $(".btnAddItem").on("click", function (e) {
+            e.preventDefault();
+            //var value = $("#ItemListData").val();
+            var value = $("#ItemListData").select2('data')[0];
+            if (value) {
+            $tableContainer.bootstrapTable('append', {
+                "Id": value.id,
+                "Name": value.name,
+                "Quantity": value.qty,
+                "Uom": value.uom,
+                "PartNumber": value.part,
+                "Sn": value.sn,
+                "JCode": value.jcode,
+                "Ccr": value.ccr,
+                "CaseNumber": value.cn,
+                "Type": value.type,
+                "UnitPrice": value.price,
+                "ExtendedValue": value.extend,
+                "Length": value.length,
+                "Width": value.width,
+                "Height": value.height,
+                "NetWeight": value.net,
+                "GrossWeight": value.gross,
+                });
+            }
+            $("#ItemListData").val(null).trigger("change");
+        })
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $("#ItemListData").select2({
+            //minimumInputLength: 3,
+            placeholder: 'Search for item',
+            maximumInputLength: 20,
+            tags: false, //prevent free text entry
+            width: "100%",
+            ajax: {
+                url: "/EMCS/GetCiplItemAvailable",
+                type: "get",
+                data: function (params) {
+                    var query = {
+                        searchName: params.term
+                    }
+
+                    return query;
+                },
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    console.log(data.data);
+                    var options = [];
+                    $.map(data.data, function (obj) {
+                        this.console.log(obj);
+                        var key = obj.Key;
+                        if (key === "rows") {
+                            var values = obj.Value;
+                            jQuery.each(values, function (index, val) {
+                                var item = {}
+                                item.id = val.Id;
+                                item.text = val.Name + " - " + val.Sn;
+                                item.sn = val.Sn;
+                                item.name = val.Name;
+                                item.qty = val.Quantity;
+                                item.uom = val.Uom;
+                                item.part = val.PartNumber;
+                                item.jcode = val.JCode;
+                                item.ccr = val.Ccr;
+                                item.cn = val.CaseNumber;
+                                item.type = val.Type;
+                                item.price = val.UnitPrice;
+                                item.extend = val.ExtendedValue;
+                                item.length = val.Length;
+                                item.width = val.Width;
+                                item.height = val.Height;
+                                item.net = val.NetWeight;
+                                item.gross = val.GrossWeight;
+
+                                options.push(item);
+                            })
+                        }
+                    });
+                    console.log(options);
+                    return {
+                        results: options
+                    };
+                }
+            }
+        });
+
+        $.validator.unobtrusive.parse("form");
+
+        window.operateEvents = {
+            'click .removeItemContainer': function (e, value, row, index) {
+                $tableContainer.bootstrapTable('remove', { field: 'Id', values: value });
+            }
+        };
+
+        //var columns = [[
+        //    {
+        //        field: "",
+        //        title: "No",
+        //        rowspan:2,
+        //        align: "center",
+        //        formatter: runningFormatterNoPaging
+        //    }, {
+        //        field: "Id",
+        //        title: "Action",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        halign: "center",
+        //        align: "center",
+        //        events: operateEvents,
+        //        sortable: true,
+        //        formatter: function (data, row, index) {
+        //            var elm = [];
+        //            var div1 = "<div class='text-align:'center'>";
+        //            var div2 = "</div>";
+        //            var btn1 = "<button class='btn btn-xs btn-danger removeItemContainer' type='button'><i class='fa fa-remove'></i></button>";
+        //            var htm = [div1, btn1, div2].join(" ");
+        //            return htm;
+        //        }
+        //    }, {
+        //        field: "Name",
+        //        title: "Name",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        halign: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "Quantity",
+        //        title: "Quantity",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        halign: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "Uom",
+        //        title: "UOM",
+        //        rowspan: 2,
+        //        halign: "center",
+        //        class: "text-nowrap",
+        //        sortable: true
+        //    }, {
+        //        field: "PartNumber",
+        //        title: "Part Number",
+        //        rowspan: 2,
+        //        halign: "center",
+        //        class: "text-nowrap",
+        //        sortable: true
+        //    }, {
+        //        field: "Sn",
+        //        title: "SN",
+        //        halign: "center",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        sortable: true
+        //    }, {
+        //        field: "JCode",
+        //        title: "J-Code",
+        //        align: "center",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        halign: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "Ccr",
+        //        title: "CCR",
+        //        halign: "center",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        align: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "CaseNumber",
+        //        title: "Case Number",
+        //        class: "text-nowrap",
+        //        rowspan: 2,
+        //        align: "center",
+        //        halign: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "Type",
+        //        halign: "center",
+        //        title: "Type",
+        //        rowspan: 2,
+        //        class: "text-nowrap",
+        //        align: "center",
+        //        sortable: true
+        //    }, {
+        //        field: "ExtendedValue",
+        //        title: "Extended Value",
+        //        halign: "center",
+        //        rowspan: 2,
+        //        sortable: true,
+        //        align: "right",
+        //        filterControl: true,
+        //        class: "text-nowrap"
+        //    }, {
+        //        field: "",
+        //        title: "Dimension (In CM)",
+        //        halign: "center",
+        //        sortable: true,
+        //        colspan:3,
+        //        filterControl: true,
+        //        class: "text-nowrap"
+        //       }, {
+        //        field: "",
+        //        title: "Volume",
+        //        halign: "center",
+        //        sortable: true,
+        //        filterControl: true,
+        //        class: "text-nowrap"
+        //        }, {
+        //        field: "",
+        //        title: "Net Weight",
+        //        halign: "center",
+        //        sortable: true,
+        //        filterControl: true,
+        //        class: "text-nowrap"
+        //        }, {
+        //        field: "",
+        //        title: "Gross Weight",
+        //        halign: "center",
+        //        sortable: true,
+        //        filterControl: true,
+        //        class: "text-nowrap"
+        //        }
+        //    ], [
+        //        {
+        //            field: "Length",
+        //            title: "Length",
+        //            align: "right",
+        //            halign: "center",
+        //            sortable: true,
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }, {
+        //            field: "Width",
+        //            title: "Width",
+        //            halign: "center",
+        //            align:"right",
+        //            sortable: true,
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }, {
+        //            field: "Height",
+        //            title: "Height",
+        //            halign: "center",
+        //            sortable: true,
+        //            align: "right",
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }, {
+        //            field: "NetWeight",
+        //            title: "M3",
+        //            halign: "center",
+        //            align: "right",
+        //            sortable: true,
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }, {
+        //            field: "NetWeight",
+        //            title: "in KGs",
+        //            halign: "center",
+        //            sortable: true,
+        //            align: "right",
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }, {
+        //            field: "GrossWeight",
+        //            title: "in KGs",
+        //            halign: "center",
+        //            align: "right",
+        //            sortable: true,
+        //            filterControl: true,
+        //            class: "text-nowrap"
+        //        }
+        //    ]
+        //]
+
+        //$tableContainer.bootstrapTable({
+        //    url: '/EMCS/GetCiplItemByContainer',
+        //    columns: columns,
+        //    queryParams: function (params) {
+        //        params.SearchName = $("#IdContainer").val();
+        //        return params;
+        //    },
+        //    cache: false,
+        //    pagination: true,
+        //    search: false,
+        //    striped: false,
+        //    clickToSelect: true,
+        //    reorderableColumns: true,
+        //    toolbarAlign: 'left',
+        //    onClickRow: selectRow,
+        //    sidePagination: 'client',
+        //    showColumns: true,
+        //    responseHandler: function (resp) {
+        //        var data = {};
+        //        $.map(resp, function (value, key) {
+        //            data[value.Key] = value.Value;
+        //        });
+        //        return data;
+        //        //return res.messages
+        //    },
+        //    showRefresh: true,
+        //    smartDisplay: false,
+        //    pageSize: '5',
+        //    responseHandler: function (resp) {
+        //        var data = {};
+        //        $.map(resp.data, function (value, key) {
+        //            data[value.Key] = value.Value;
+        //        });
+        //        return data.rows;
+        //    },
+        //    formatNoMatches: function () {
+        //        return '<span class="noMatches">No item found</span>';
+        //    }
+        //});
+    });
+</script>

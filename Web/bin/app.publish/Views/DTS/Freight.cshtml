@@ -1,0 +1,130 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Freight Estimate Calculator";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .box-custom .box {
+        border: 1px solid #808080;
+        border-top: 2px solid #000006;
+    }
+
+    .box-custom .box-header {
+        /*color: white;*/
+        background: #000006;
+        color: white;
+    }
+
+    .box-custom .form-group {
+        margin-bottom: 5px;
+        border-bottom: 1px solid #d2cece;
+        padding-top: 3px;
+        padding-bottom: 4px;
+    }
+
+    div.datepicker-dropdown {
+        width: 215px;
+    }
+
+    .box-custom .form-group.no-border {
+        border-bottom: none;
+    }
+
+    .box-header.with-border {
+        border-bottom: 4px solid #fe9d01;
+    }
+
+    .box .box-header .box-title {
+        display: inline-block;
+        padding: 10px 0px 0px 10px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+        float: left;
+        cursor: default;
+    }
+
+    .scheduler-border {
+        width: auto; /* Or auto */
+        padding-left: 10px; /* To give a bit of padding on the left and right */
+        border: 1px solid #cecece;
+        margin-top: 10px;
+    }
+
+    .table {
+        table-layout: fixed !important;
+    }
+
+    th {
+        width: 135px !important;
+    }
+
+    td {
+        height: 37px !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+@RenderPage("~/Views/DTS/NewFreight.cshtml")
+@*<div class="box box-warning">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="box-body">
+                        <h5><b>Quick Search</b></h5>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12" id="formFreightSearch">
+                    <div class="box-body">
+                        <form class="form-horizontal" id="freightFormSearch">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Origin</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="origin" placeholder="Origin" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Destination</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" name="destination" placeholder="Destination" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Unit</label>
+                                        <div class="col-md-10">
+                                            <input name="unit" placeholder="Unit" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer text-right">
+            <button id="displayData" class="btn btn-success">Display Data</button>
+        </div>
+    </div>
+    <div class="box box-warning">
+        <div class="box-body">
+            <table id="tableFreight" data-toolbar=".toolbar" class="table table-condensed table-striped table-bordered"></table>
+        </div>
+    </div>*@
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/Freight.cshtml.js")"></script>
+}
+

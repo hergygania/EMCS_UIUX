@@ -1,0 +1,70 @@
+﻿{
+    "total" :  100,
+    "rows": [
+      {
+            "id" : 1,
+            "kota": "Balikpapan",
+            "januari": 1,
+            "februari": 1,
+            "maret": 4,
+            "april": 7,
+            "mei": 0,
+            "juni": 10,
+            "juli": 1,
+            "agustus": 0,
+            "september": 0,
+            "oktober": 9,
+            "november": 0,
+            "desember": 0
+      },
+      {
+            "id": 2,
+            "kota": "Banjarmasin",
+            "januari": 1,
+            "februari": 1,
+            "maret": 5,
+            "april": 7,
+            "mei": 0,
+            "juni": 50,
+            "juli": 1,
+            "agustus": 9,
+            "september": 1,
+            "oktober": 0,
+            "november": 0,
+            "desember": 5
+      },
+      {
+            "id" : 3,
+            "kota": "Batam",
+            "januari": 18,
+            "februari": 1,
+            "maret": 0,
+            "april": 7,
+            "mei": 0,
+            "juni": 0,
+            "juli": 4,
+            "agustus": 4,
+            "september": 1,
+            "oktober": 9,
+            "november": 0,
+            "desember": 1
+      },
+      {
+            "id" : 4,
+            "kota": "Benette",
+            "januari": 6,
+            "februari": 6,
+            "maret": 3,
+            "april": 7,
+            "mei": 1,
+            "juni": 22,
+            "juli": 1,
+            "agustus": 0,
+            "september": 0,
+            "oktober": 5,
+            "november": 3,
+            "desember": 12
+      }
+
+    ]
+}

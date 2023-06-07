@@ -1,0 +1,58 @@
+﻿{
+  "total": 100,
+  "rows": [
+
+    {
+      "id": 1,
+      "inv": "E.53100119016",
+      "cargo": "CL.260218046FG",
+      "branch": "Head Office",
+      "consignee": "Caterpillar USA",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "USA Port",
+      "status": "Waiting for Revision",
+      "date": "11-Dec-18"
+    },
+    {
+      "id": 2,
+      "inv": "E.53100119011",
+      "cargo": "CL.260218041FG",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for CL Approval",
+      "date": "16-Jan-19"
+    },
+    {
+      "id": 3,
+      "inv": "E.53100119011",
+      "cargo": "CL.260218041FG",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for Upload Temporary Document",
+      "date": "16-Jan-19"
+    },
+    {
+      "id": 4,
+      "inv": "E.53100119011",
+      "cargo": "CL.260218041FG",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for Departure Schedule",
+      "date": "16-Jan-19"
+    }
+  ]
+}

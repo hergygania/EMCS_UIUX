@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Receipt Goods List";
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+@*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="toolbarCipl" id="toolbar">
+            <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+            </div>
+
+            <a href="~/EMCS/CreateGR" class="btn btn-success animation-on-hover btn-round"><i class="fa fa-plus-circle"></i>&nbsp;Add New</a>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" data-toolbar=".toolbarCipl" id="TblGoodReceive"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts.App/EMCS/transaction/GoodsReceive.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

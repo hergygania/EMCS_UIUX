@@ -1,0 +1,220 @@
+﻿@using App.Web
+@{
+    string StepName = ViewBag.StepName ?? "confirm";
+    ViewBag.Title = "Detail Po No : 14500124422";
+    Layout = "~/Views/Post/_Layout.cshtml";
+    string Role = "";
+    Role = User.Identity.GetUserRoles();
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    int activeTab = (StepName == "confirm" ? 0 : (StepName == "Submit" ? 2 : 1));
+
+    string isHO = Role.Substring(Role.Length - 4, 4);
+
+}
+<style type="text/css">
+    .labelcheck {
+        /*position: absolute;*/
+        width: 85px;
+        height: 17px;
+        left: 832px;
+        top: 124px;
+        font-family: SF UI Text;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        /* identical to box height */
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: 0.01em;
+        color: #2D2D2D;
+    }
+</style>
+<input id="requestId" value="@ViewBag.Id" style="display:none;">
+<input id="PrePayment" value="@ViewBag.PrePayment">
+
+<input id="PoNo" value="0" style="display:none;">
+<input id="ItemId" value="0" style="display:none;">
+<input id="isTaskUser" value="@ViewBag.isTaskUser" style="display:none;">
+<input id="TypePO" value="@ViewBag.TypePO" style="display:none;">
+<input id="Shipment" value="@ViewBag.Shipment" style="display:none;">
+<input id="Role" value="@Role" style="display:none;">
+
+<div class="row" style="margin-top:75px;">
+    <div class="custom-grid-style">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+        @{
+            if (Role.Contains("POSTFINANCEBRANCH") || Role.Contains("POSTPLANTVIEWERFINANCE"))
+            {
+                <a class="btn btn-primary" href="~/Post/HomeFinance?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>
+            }
+        }
+
+
+<<<<<<< HEAD
+=======
+        <a class="btn btn-primary" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</a>&nbsp;
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+        <a onclick="DownloadFileRequestAll()" class="btn btn-warning confirm float-right" style="margin-left:10px;" href="~/Post/HomeVendor?tab=@activeTab"><i class="fa fa-download "></i>&nbsp;Download All Doc</a>&nbsp;
+        @{
+            switch (StepName)
+            {
+                case "confirm":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        <a onclick="ClickSubmitWithComment(4219)" class="btn btn-danger confirm float-right" style="margin-left:10px">Reject  <span class="fa fa-times-circle"></span></a>
+                        <a onclick="ClickSubmit(2489)" class="btn btn-success confirm float-right" style="margin-left:10px; color:white">Confirm  <span class="fa fa-chevron-circle-right"></span></a>
+                        <label class="control-label float-right labelcheck"> PrePayment </label> <input type="checkbox" id="ChkPrePayment" class="float-right ">
+                    }
+
+                    if (Role.Contains("POSTEXPEDITOR") || Role.Contains("POSTBRANCH"))
+                    {
+                        <a onclick="InitModalUploadPO()" class="btn btn-success confirm float-right" style="margin-right:10px;">Upload PO <span class="fa fa-upload"></span></a>
+                        <input type="checkbox" id="ChkPrePayment" value="@ViewBag.PrePayment" class="float-right ">
+                    }
+                    <script src="~/Scripts.app/POST/DataConfirm.js"></script>
+                    break;
+                case "process":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        <a onclick="ClickSubmit(4222)" class="btn btn-success delivery float-right" style="color:white;">Process PO <span class="fa fa-chevron-circle-right"></span></a>
+
+                    }
+                    <script src="~/Scripts.app/POST/DataProcess.js"></script>
+                    break;
+                case "delivery":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        if (ViewBag.TypePO != "D")
+                        {
+                            <a onclick="ClickSubmitDelivery()" class="btn btn-success delivery float-right" style="color:white;">Submit Shipment  <span class="fa fa-chevron-circle-right"></span></a>
+                        }
+                        else
+                        {
+                            <a onclick="ClickSubmitDelivery()" class="btn btn-success delivery float-right" style="color:white;">Submit Delivery  <span class="fa fa-chevron-circle-right"></span></a>
+                        }
+                    }
+                    <script src="~/Scripts.app/POST/DataDelivery.js"></script>
+                    break;
+                case "deliveryconfirm":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+
+                    }
+                    <script src="~/Scripts.app/POST/DataDeliveryConfirm.js"></script>
+                    break;
+                case "bast":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        <a href="#" class="btn btn-success delivery float-right" onclick="ClickSubmitBast()" style="color:white;">PO Invoice  <span class="fa fa-chevron-circle-right"></span></a>
+                        <script src="~/Scripts.app/POST/DataBast.js"></script>
+                        <script src="~/Scripts.app/POST/DataUpload.js"></script>
+                    }
+                    break;
+                case "invoice":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    }
+                    break;
+                case "submit":
+                    if (ViewBag.isTaskUser == 1)
+                    {
+                        <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    }
+                    break;
+                default:
+                    if (Role.Contains("POSTEXPEDITOR") || Role.Contains("POSTBRANCH") || Role.Substring(Role.Length - 4, 4) == "POST")
+                    {
+                        <a onclick="InitModalUploadPO()" class="btn btn-success confirm float-right" style="margin-left:10px;">Upload PO&nbsp;<span class="fa fa-upload"></span></a>
+                        <a onclick="ClickSubmitPrepay()" class="btn btn-secondary confirm float-right" style="margin-left:10px; color:white">Confirm&nbsp;<span class="fa fa-chevron-circle-right"></span></a>
+                        if (@ViewBag.PrePayment == 1)
+                        {
+                            <label class="control-label float-right labelcheck "> &nbsp PrePayment </label> <input type="checkbox" id="ChkPrePayment" checked class="float-right ">
+                        }
+                        else
+                        {
+                            <label class="control-label float-right labelcheck "> &nbsp PrePayment </label> <input type="checkbox" id="ChkPrePayment" class="float-right ">
+                        }
+
+                    }
+                    <script src="~/Scripts.app/POST/DataInvoice.js"></script>
+                    break;
+            }
+        }
+    </div>
+</div>
+<div class="row" style="margin-top:20px;">
+    <div style="margin-top:10px;" class="table-responsive fixed-table-container">
+        <table id="table-inprogress" data-classes="table-borderless" class="table"></table>
+    </div>
+    <hr />
+</div>
+@Html.Partial("~/Views/Post/NavSearchDetail.cshtml")
+<div class="row" style="margin-top:20px;">
+    <div class="table-responsive" data-scrollbar>
+        <table id="table-item" data-classes="table-borderless" class="table table-hover table-striped" style="width:100%;"></table>
+    </div>
+</div>
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <span class="loading-wrap">
+                    <span class="loading-text" style="font-size: 32px;">Loading, please wait  </span>
+                    <span class="animation-wrap"><i class="fa fa-spinner fa-pulse"></i></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/Post/ModalFormCKB.cshtml")
+@Html.Partial("~/Views/Post/ModalConfirm.cshtml")
+@Html.Partial("~/Views/Post/ModalStatusUpdate.cshtml")
+<<<<<<< HEAD
+<<<<<<< HEAD
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+@Html.Partial("~/Views/Post/ModalStatusList.cshtml")
+@Html.Partial("~/Views/Post/ModalDocBast.cshtml")
+@Html.Partial("~/Views/Post/ModalDocInv.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadBast.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadInvoice.cshtml")
+@Html.Partial("~/Views/Post/ModalUploadPO.cshtml")
+@Html.Partial("~/Views/Post/ModalViewBAST.cshtml")
+@Html.Partial("~/Views/Post/ModalGrList.cshtml")
+@Html.Partial("~/Views/Post/ModalInvList.cshtml")
+
+@section styles {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @Styles.Render("~/Content/POST/Custom.css?_id=" + unixTimestamp)
+    @Styles.Render("~/Content/POST/bootstrap-table.min.css")
+=======
+    @Styles.Render("~/Content/POST/Custom.css?_id=" + unixTimestamp)   
+    @Styles.Render("~/Content/POST/bootstrap-table.min.css") 
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    @Styles.Render("~/Content/POST/Custom.css?_id=" + unixTimestamp)
+    @Styles.Render("~/Content/POST/bootstrap-table.min.css")
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+}
+
+@section scripts{
+    @Scripts.Render("~/Scripts/bootstrap-table.min.js")
+    <script src="~/Scripts.app/POST/VendorDetail.js?_id=@(unixTimestamp)" type="text/javascript"></script>
+}

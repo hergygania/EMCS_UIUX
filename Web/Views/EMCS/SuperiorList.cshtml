@@ -1,0 +1,77 @@
+﻿﻿@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Master Superior";
+}
+
+@using System.Web.Mvc
+@Styles.Render("~/Content/EMCS/Custom.css")
+@*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
+
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="toolbar">
+                    @{
+                        if (ViewBag.AllowCreate)
+                        {
+                            <a class="btn btn-success btn-round animation-on-hover" data-modal="" href="/EMCS/SuperiorCreate" id="btnCreate">
+                                <i class="fa fa-plus"></i> Add New
+                            </a>
+                        }
+                    }
+                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                        <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                    </div>
+                </div>
+                <table id="tableSuperior" data-toolbar=".toolbar" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a data-modal="" href="/EMCS/SuperiorEdit/1" class="editRecord" style="display:none;">
+    <i class="fa fa-edit"></i> Update Superior
+</a>
+
+<div id='myModalPlace' class='modal'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/SuperiorList.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

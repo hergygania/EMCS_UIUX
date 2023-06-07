@@ -1,0 +1,37 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "id": 1,
+      "forwarder": "IMAX",
+      "category": "Custom",
+      "inv": "E.53100119017, E.53100119016",
+      "desc": "PDPLB.  sales, admin sales dll untuk pemahaman serta tertib administrasi",
+      "noted": "Belum ada kepastian terkait dari team ckb terkait fin proforma agar dishare berbarengan dengan duty cost nya. Tujuannya agar rekan2 SIB TU melakukan sekali posting pada DBS system menghindari reject dari CAT"
+    },
+    {
+      "id": 2,
+      "forwarder": "CKB",
+      "category": "Custom",
+      "inv": "E.53100119017, E.53100119016, E.53100119015",
+      "desc": "PDPLB.  sales, admin sales dll untuk pemahaman serta tertib administrasi",
+      "noted": "Belum ada kepastian terkait dari team ckb terkait fin proforma agar dishare berbarengan dengan duty cost nya. Tujuannya agar rekan2 SIB TU melakukan sekali posting pada DBS system menghindari reject dari CAT"
+    },
+    {
+      "id": 3,
+      "forwarder": "CKB",
+      "category": "PDPLB",
+      "inv": "E.53100119017, E.53100119016",
+      "desc": "PDPLB.  sales, admin sales dll untuk pemahaman serta tertib administrasi",
+      "noted": "Belum ada SOP yg mengatur tentang step step flow process transaksinya. Perlu di adakan pertemuan untuk membeahas lebih lanjut dengan team2 terkait seperti team"
+    },
+    {
+      "id": 4,
+      "forwarder": "DHL",
+      "category": "TAX",
+      "inv": "CL531001190PX",
+      "desc": "PDPLB.  sales, admin sales dll untuk pemahaman serta tertib administrasi",
+      "noted": "Belum ada SOP yg mengatur tentang step step flow process transaksinya. Perlu di adakan pertemuan untuk membeahas lebih lanjut dengan team2 terkait seperti team"
+    }
+  ]
+}

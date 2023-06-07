@@ -1,0 +1,92 @@
+﻿<style>
+    .comment-list .row {
+        border: 1px solid #e2e1e1;
+        margin-bottom: 10px;
+        padding-top: 20px;
+        border-radius: 10px;
+    }
+
+    .comment-list .panel .panel-heading {
+        padding: 4px 15px;
+        position: absolute;
+        border: none;
+        border-top-right-radius: 0px;
+        top: 1px;
+    }
+
+        .comment-list .panel .panel-heading.right {
+            border-right-width: 0px;
+            border-top-left-radius: 0px;
+            right: 16px;
+        }
+
+        .comment-list .panel .panel-heading .panel-body {
+            padding-top: 6px;
+        }
+
+    .comment-list figcaption {
+        word-wrap: break-word;
+    }
+
+    .comment-compose .comment-post {
+        margin-top: 6px;
+    }
+
+    .comment-compose .row {
+        border: 1px solid #e2e1e1;
+        margin-bottom: 10px;
+        padding-top: 20px;
+        border-radius: 10px;
+    }
+
+    .comment-compose .panel .panel-heading {
+        padding: 4px 15px;
+        position: absolute;
+        border: none;
+        border-top-right-radius: 0px;
+        top: 1px;
+    }
+
+        .comment-compose .panel .panel-heading.right {
+            border-right-width: 0px;
+            border-top-left-radius: 0px;
+            right: 16px;
+        }
+
+        .comment-compose .panel .panel-heading .panel-body {
+            padding-top: 6px;
+        }
+
+    .comment-compose figcaption {
+        word-wrap: break-word;
+    }
+</style>
+<div class="modal fade" id="modalViewHistoryForm" tabindex="-1" role="dialog" aria-labelledby="Modal Comment" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-left">
+                <h4 class="modal-title w-100 font-weight-bold">View History</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">&nbsp;</div>
+                <table class="table table-borderless table-striped" id="table-history" style="background:white;width:100%;"></table>
+            </div>
+            @*<div class="modal-header text-left">
+                <h4 class="modal-title w-100 font-weight-bold">View Status Notes</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">&nbsp;</div>
+                <table class="table table-borderless table-striped" id="table-viewnotes" style="background:white;width:100%;"></table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Cancel</button>
+            </div>*@
+        </div>
+    </div>
+</div>

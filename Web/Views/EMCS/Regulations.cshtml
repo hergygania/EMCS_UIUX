@@ -1,0 +1,104 @@
+﻿﻿@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Regulation List";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table title="Regulations Browser" class="easyui-treegrid" id="Regulations"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
+@Styles.Render("~/Content/EMCS/JeasyUI/themes/default/easyui.css")
+@Styles.Render("~/Content/EMCS/JeasyUI/themes/default/tree.css")
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    .datagrid-header .datagrid-cell span {
+        font-size: 11px;
+    }
+
+    .tree-title {
+        font-size: 11px;
+    }
+
+    .panel-title {
+        font-size: 12px;
+    }
+
+    .datagrid-cell, .datagrid-cell-group, .datagrid-header-rownumber, .datagrid-cell-rownumber {
+        font-size: 11px;
+    }
+</style>
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    @Scripts.Render("~/Content/EMCS/JeasyUI/jquery.easyui.min.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    <script>
+        $table = $("#Regulations");
+        $table.treegrid({
+            url: '/EMCS/GetRegulationList',
+            method: 'GET',
+            idField: 'ID',
+            pageSize: 1,
+            pageList: [2, 10, 20],
+            nowrap: false,
+            treeField: 'name',
+            animate: true,
+            lines: false,
+            columns: [[
+                { field: 'Instansi', title: 'Instansi', nowrap: false, width: 300, halign: 'center', align: 'left' },
+                { field: 'Nomor', title: 'Nomor', width: 150, halign: 'center', align: 'center' },
+                { field: 'RegulationType', title: 'Type', nowrap: false, width: 300, halign: 'center', align: 'left' },
+                { field: 'Category', title: 'Category', width: 150, halign: 'center', align: 'center' },
+                { field: 'TanggalPenetapan', title: 'Tgl Penetapan', width: 100, align: 'center' },
+                { field: 'Description', title: 'Tentang', nowrap: false, width: 300, halign: 'center', align: 'left' },
+                { field: 'RegulationNo', title: 'No. Regulasi', width: 150, halign: 'center', align: 'center' },
+                { field: 'TanggalPenetapan', title: 'Tgl Penetapan', width: 100, align: 'center' },
+                { field: 'TanggalDiUndangkan', title: 'Tgl Diundangkan', width: 100, align: 'center' },
+                { field: 'TanggalBerlaku', title: 'Tgl Berlaku', width: 100, align: 'center' },
+                { field: 'TanggalBerakhir', title: 'Tgl Berakhir', width: 100, align: 'center' },
+                { field: 'Keterangan', title: 'Keterangan', width: 100, align: 'center' },
+                {
+                    field: 'Files', title: 'Files', width: 100, align: 'center', formatter: function (data, row, index) {
+                        console.log(row);
+                        if (data === "") {
+                            return "<button class='btn btn-xs preview'><i class='fa fa-search'></i></button>";
+                        } else {
+                            return "-";
+                        }
+                    }
+                }
+            ]],
+            onLoadSuccess: function () {
+                $(this).treegrid("collapseAll");
+                $(".preview").on("click", function (e) {
+                    console.log(e);
+                })
+            },
+            onBeforeLoad: function (row, param) {
+                $(this).treegrid("collapseAll");
+            }
+        });
+
+        $(".datagrid-wrap").css("width", "100%");
+    </script>
+}

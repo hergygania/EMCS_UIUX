@@ -1,0 +1,29 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "no": 1,
+      "problemCategory": "Documents",
+      "reason": "CIPL",
+      "detail": "CIPL Telat Approval",
+      "kejadian": "1",
+      "percentage": "25%"
+    },
+    {
+      "no": 2,
+      "problemCategory": "Documents",
+      "reason": "CL",
+      "detail": "Barang Telat Pickup",
+      "kejadian": "1",
+      "percentage": "25%"
+    },
+    {
+      "no": 3,
+      "problemCategory": "Dokuments",
+      "reason": "PEB",
+      "detail": "Data Cl Tidak Lengkap",
+      "kejadian": "2",
+      "percentage": "50%"
+    }
+  ]
+}

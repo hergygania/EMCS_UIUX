@@ -1,0 +1,106 @@
+@model  App.Data.Domain.SurveyDocument
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+@using(Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-header" id="">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title"><i class="fa fa-upload"></i> Upload Files</h4>
+		<div class="form-group">
+			<label class="control-label col-md-3 col-xs-12">Document Name</label>
+			<div class="input-group col-md-9 col-xs-12">
+				@Html.SelectDocumentType("", "select document type", new { @class = "form-control required", @name = "DocumentTypeID" })
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-md-3 col-xs-12">Allowed File</label>
+			<div class="input-group col-md-9 col-xs-12">
+				jpg,gif,png,pdf,zip,doc,docx,xls,xlsx   => (max size each file: 10mb)
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal-body" style="padding-top: 0px;padding-bottom: 0px;">
+		<div class="row">
+			<div id="uploader" name="uploader" style="width: 100%; height: 100%;">Your browser doesn't support native upload.</div>
+		</div>
+	</div>
+}
+
+<!-- PLUPLOAD -->
+<link href="@Url.Content("~/scripts/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/scripts/plupload/plupload.full.min.js")"></script>
+<script src="@Url.Content("~/scripts/plupload/jquery.plupload.queue/jquery.plupload.queue.min.js")"></script>
+
+<script>
+	$("#uploader").pluploadQueue({
+		// General settings
+		runtimes: 'html5',
+		url: '/vetting-process/surveyAttachmentUpload',
+		chunk_size: '1mb',
+		unique_names: true,
+
+		filters: {
+			max_file_size: '10mb',
+			mime_types: [
+				{ title: "Image files", extensions: "jpg,gif,png" },
+				{ title: "Zip files", extensions: "zip" },
+				{ title: "Office files", extensions: "doc,docx,xls,xlsx" },
+				{ title: "Pdf files", extensions: "pdf" }
+			]
+		},
+
+		// Resize images on clientside if we can
+		resize: { width: 320, height: 240, quality: 90 },
+		multiple_queues: true,
+		preinit: {
+			UploadFile: function (up, file) {
+				if ($('#DocumentTypeID').val() == '') {
+					up.stop();
+
+					alert('select document name ..!')
+					$(".plupload_upload_status").css('display', 'none')
+					$(".plupload_buttons").css('display', 'block')
+					$(".plupload_buttons").removeClass("plupload_disabled");
+					return false;
+				}
+
+				up.settings.multipart_params = { DocumentTypeID: $('#DocumentTypeID').val(), ShipmentID: $('#ShipmentID').val() };
+
+				//uploader.start();
+				// You can override settings before the file is uploaded
+				// up.settings.url = 'upload.php?id=' + file.id;
+				// up.settings.multipart_params = {param1 : 'value1', param2 : 'value2'};
+			}
+		}
+	});
+</script>
+
+<script>
+	$(function () {
+
+		$(".modal-dialog").css("width", "700px").css("top", "100px");
+
+		// Retrieving a reference to plupload.Uploader object
+		var uploader = $('#uploader').pluploadQueue();
+
+		uploader.bind('UploadComplete', function () {
+
+			refreshSurveyDocument($('#SurveyID').val());
+			$(".plupload_start").removeClass("plupload_disabled");
+			$('#myModalPlace').modal('toggle');
+		})
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+</script>

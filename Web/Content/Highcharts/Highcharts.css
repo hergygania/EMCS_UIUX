@@ -1,0 +1,66 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+
+/* MISC  
+----------------------------------------------------------*/
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.display-field, 
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+.text-box {
+    width: 30em;
+}
+
+.text-box.multi-line {
+    height: 6.5em;
+}
+
+.tri-state {
+    width: 6em;
+}
+
+.chart {
+    margin: 0px 15px; 
+    clear:both; 
+    min-width: 600px
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 15px;
+}
+
+.ui-accordion-content a {
+    width: 99%;
+    text-align: left;
+}
+
+pre.prettyprint {
+    padding: 0px;
+    border: none;
+}
+
+code{
+    font-size: 1.1em;
+}
+
+.tab-content {
+    overflow: auto;
+}
+
+.active-button{
+	border: 1px solid #ACDD4A;
+    background: #6EAC2C url(themes/start/images/ui-bg_gloss-wave_50_6eac2c_500x100.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: white;
+}

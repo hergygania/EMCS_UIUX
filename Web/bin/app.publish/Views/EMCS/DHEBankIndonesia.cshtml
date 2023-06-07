@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "DHE For Bank Indonesia";
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
+        <div class="form-horizontal">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-4">Start Period</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            @*<input id="inp-start-date" type="text" class=" datepickr form-control" value="" name="email">*@
+                            <input class="form-control date required" id="inp-start-date" name="inp-start-date" placeholder="Start Period" style="background:white;" value="@DateTime.Now.ToString("01 Jan yyyy")">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-4" style="text-align: left;">End Period</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            @*<input id="inp-end-date" type="text" class=" datepickr form-control" name="email">*@
+                            <input class="form-control date required" id="inp-end-date" name="inp-end-date" placeholder="End Period" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-3">Category</label>
+                    <div class="col-md-9">
+                        <select class="select2" id="jenisBarangCipl" required></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="col-md-3" style="text-align: left;">Type</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="type" name="type">
+                            <option value="">--All--</option>
+                            <option value="">Sales</option>
+                            <option value="">Non Sales</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="col-md-12">
+                <div class="col-md-4 pull-right">
+                    <div class="form-group text-right">
+                        <button class="btn btn-warning" onclick="searchDataReport()" id="btn-show-report" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i>Show Report</button>
+                        <button class="btn btn-warning" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
+
+    </div>
+</div>
+
+<div class="row" id="div-report-dhebi">
+    <div class="col-md-12">
+        <div id="container">
+            <table class="table table-bordered" data-toolbar=".toolbarCipl" data-striped="true" id="tbl-dhebi"></table>
+            @*<table class="table table-bordered" data-toolbar=".toolbarCipl" id="tbl-total-shipment"></table>*@
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/DHEBankIndonesia.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

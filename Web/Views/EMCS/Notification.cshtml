@@ -1,0 +1,118 @@
+﻿﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Notification";
+}
+<style>
+    .box-body ul li {
+        margin-left: 10px !important;
+    }
+
+    #tbl-notification thead {
+        display: none !important;
+    }
+
+    .notification-content {
+        padding: 25px;
+        min-height: 400px
+    }
+
+</style>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Folders</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="folder active" data-value="notification">
+                        <a href="#">
+                            <i class="fa fa-inbox"></i> Notifications
+                            <span id="TotalNotification" class="label label-primary pull-right">0</span>
+                        </a>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="folder" data-value="unread">
+                                <a href="#">
+                                    <i class="fa fa-envelope-o"></i>Unread
+                                    <span id="TotalUnread" class="label label-warning pull-right">0</span>
+                                </a>
+                            </li>
+                            <li class="folder" data-value="read"><a href="#"><i class="fa fa-file-text-o"></i> Read</a></li>
+                        </ul>
+                    </li>
+                    <li class="folder" data-value="trash"><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-warning notification-content" id="NotificationList">
+            <div class="box-header with-border">
+                <h3 class="box-title">Notifications</h3>
+            </div>
+            <div class="box-body no-padding">
+                <div class="mailbox-controls notification-control notification-toolbar">
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                        <i class="fa fa-square-o"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="remove()"><i class="fa fa-trash-o"></i></button>
+                </div>
+                <div class="table-responsive mailbox-messages" style="margin-bottom:10px">
+                    <table class="table table-hover table-striped" id="tbl-notification"></table>
+                </div>
+            </div>
+            <div class="box-footer no-padding hidden">
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="remove()"><i class="fa fa-trash-o"></i></button>
+                    <div class="pull-right">
+                        1-50/200
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                        <!-- /.btn-group -->
+                    </div>
+                    <!-- /.pull-right -->
+                </div>
+            </div>
+        </div>
+        <div class="box box-warning hidden notification-content" id="NotificationDetail">
+            <div class="box-body no-padding">
+                <div class="mailbox-read-info">
+                    <input type="hidden" id="NotificationID" />
+                    <h4 id="NotificationSubject"></h4>
+                    <h6>
+                        From: EMCS
+                        <span class="mailbox-read-time pull-right" id="NotificationDate"></span>
+                    </h6>
+                </div>
+                <div class="mailbox-controls with-border text-right">
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete" onclick="remove()">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Back" onclick="backToList()">
+                        <i class="fa fa-undo"></i>
+                    </button>
+                </div>
+                <div class="mailbox-read-message" style="line-height:2.5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+@section scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/Notification.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

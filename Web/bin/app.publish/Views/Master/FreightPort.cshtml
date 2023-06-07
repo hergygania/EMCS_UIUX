@@ -1,0 +1,51 @@
+﻿@{
+	string freightModel = ViewBag.PortModel+"";
+	ViewBag.Title = freightModel + " Port Management";
+	var isSeaFreight = freightModel.ToLower()=="air" ? "false" : "true";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+	.form-horizontal .control-label
+	{
+		text-align: left !important;
+	}
+</style>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-warning">
+			@*<div class="box-header">
+				<h3 class="box-title">@ViewBag.Title</h3>
+			</div>*@
+			<form role="form">
+				<div class="box-body">
+
+					<div class="row">
+						<div class="col-lg-12">
+							@*<hr>*@
+							<div class="toolbar">
+								<button type="button" class="btn btn-warning" onclick="loadModal('/master/FreightPortCreate?isSeaPort=@isSeaFreight')" id="btnCreate" style="width:150px;">
+									<i class="fa fa-plus"></i> Add @freightModel Port
+								</button>
+
+								<div class="fa-pull-left" id="mySearch" style="padding-right: 2px">
+									<input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+								</div>
+							</div>
+							<table class="table table-bordered" id="tableFreight"></table>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section scripts
+{
+	<script>var isSeaFreight = '@isSeaFreight';</script>
+	<script src="@Url.Content("~/Scripts.app/Master/FreightPort.cshtml.js")"></script>
+}

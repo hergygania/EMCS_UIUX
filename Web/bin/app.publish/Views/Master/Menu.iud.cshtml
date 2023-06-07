@@ -1,0 +1,177 @@
+﻿@model  App.Web.Models.MenuModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title Menu</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- left -->
+            <div class="col-lg-6">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Parent</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.Menu.ParentID, new SelectList(Model.MenuList, "ID", "text"), new { @class = "js-states form-control" })
+
+                        @*<div>@Html.ValidationMessageFor(m => m.MenuSelectList)</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Menu.Name, new { @class = "form-control required", placeholder = "Name" })
+                        <div>@Html.ValidationMessageFor(m => m.Menu.Name)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">URL</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Menu.URL, new { @class = "form-control required", placeholder = "URL" })
+                        <div>@Html.ValidationMessageFor(m => m.Menu.URL)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Order No</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Menu.OrderNo, new { @class = "form-control required", placeholder = "Order No" })
+                        <div>@Html.ValidationMessageFor(m => m.Menu.OrderNo)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Icon</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Menu.Icon, new { @class = "form-control required", placeholder = "Icon" })
+                        <div>@Html.ValidationMessageFor(m => m.Menu.Icon)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Is Default</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @*@Html.CheckBoxFor(m => m.Menu.IsDefault)*@
+                        <select class="js-states form-control" id="IsDefault" name="Menu.IsDefault" style="width: 95%; display: none">
+                            <option @(Model.Menu.IsDefault == true ? "selected='selected" : "") value="true">True</option>
+                            <option @(Model.Menu.IsDefault == false ? "selected='selected" : "") value="false">False</option>
+                        </select>
+                    </div>
+                    <br />
+                    <label class="control-label col-md-3 col-xs-12">Is Active</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="isActive" name="Menu.isActive" style="width: 95%; display: none">
+                            <option @(Model.Menu.IsActive == true ? "selected='selected" : "") value="true">Active</option>
+                            <option @(Model.Menu.IsActive == false ? "selected='selected" : "") value="false">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Default input -->
+
+
+        </div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+
+    @Html.HiddenFor(a => a.Menu.ID)
+    @Html.HiddenFor(a => a.Menu.EntryBy)
+    @Html.HiddenFor(a => a.Menu.ModifiedBy)
+    @Html.HiddenFor(a => a.Menu.EntryDate)
+    @Html.HiddenFor(a => a.Menu.ModifiedDate)
+    @*@Html.HiddenFor(a => a.Menu.IsActive)
+    @Html.HiddenFor(a => a.Menu.IsDefault)*@
+
+
+}
+
+<script>
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+
+        $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
+        var width = $(".select2-container--default").width() - 5;
+        $(".select2-container--default").css('width', width + 'px');
+
+
+        selectAll = function (obj, fld) {
+            $("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+        };
+
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+
+     
+        
+            //sAlert(area);
+            //if ($("[name=selectedareas[checked]").length > 0)
+            //    //if ($("[name=selectedareas]").checked == true)
+            //{
+            //    sAlert('cek');
+            //    $("[name=SelectedHub]").prop('disabled', 'disabled');
+            //    $("[name=SelectedStores]").prop('disabled', 'disabled');
+            //}
+            //else {
+            //    sAlert('uncek');
+            //    $("[name=SelectedHub]").prop('enabled', 'enabled');
+            //    $("[name=SelectedStores]").prop('enabled', 'enabled');
+            //}
+            //else if (fld == "SelectedHub") {
+            //    $("[name=selectedareas]").prop('disabled', 'disabled');
+            //    $("[name=SelectedStores]").prop('disabled', 'disabled');
+            //}
+            //else if (fld == "SelectedStores") {
+            //    $("[name=selectedareas]").prop('disabled', 'disabled');
+            //    $("[name=SelectedHub]").prop('disabled', 'disabled');
+            //}
+
+            //
+            //$("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+
+            //sAlert(fld);
+      
+</script>
+
+
+

@@ -1,0 +1,962 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{
+    ViewBag.Title = "Home HO";
+    Layout = "~/Views/Post/_Layout.cshtml";
+    string userName = "", userType = "", userRolesMode = "", controllerName = "", Role = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    string baseUrl = "";
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    try
+    {
+        baseUrl = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        Role = User.Identity.GetUserRoles();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<div class="row">
+    <div class="col-md-9">&nbsp;</div>
+    <div class="col-md-3">
+        <div style="border-bottom:1px solid #e8e8e8;width:300px;"><strong>Welcome Back,</strong> PT. MEORA PRIMA SOLUSINDO</div>
+        <div style="width:300px;"><strong>@DateTime.Now.ToString("dd.MM.yyyy HH.mm.ss")</strong></div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12" style="background:white;">
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#home" role="tab" aria-controls="home" data-toggle="tab">Incoming PO (10)</a></li>
+            <li role="presentation"><a href="#profile" role="tab" aria-controls="profile" data-toggle="tab">PO In-Progress (6)</a></li>
+            <li role="presentation"><a href="#messages" role="tab" aria-controls="messages" data-toggle="tab">PO Done (6)</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Section Tab First -->
+            <div class="tab-pane active" id="home">
+                <div style="align-content:center;">
+                    <div class="col-md-12" style="margin-top:10px;background:#e8e8e8;padding:10px;margin-bottom:10px;">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control input-sm" name="name" placeholder="PO No" />
+                        </div>
+                        @{
+                            if (Role.Contains("POSTFINANCE"))
+                            {
+
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <input type="text" name="POReceipt" class="daterange form-control input-sm poReceipt" placeholder="PO Receipt" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                        @{
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" name="POReceipt" class="daterange form-control input-sm poReceipt" placeholder="PO Receipt" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+
+                        <div class="col-md-2 justify-content-center">
+                            <button class="btn btn-danger bg-gray" style="color:black">Search</button>
+                            <button class="btn btn-primary bg-gray text-black-50" style="color:black;">Refresh</button>
+                            <button class="btn btn-warning bg-gray text-black-50" style="color:black;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <table id="table-po" class="table table-bordered table-striped" style="background:white;"></table>
+                </div>
+            </div>
+            <!-- Section Tab Second -->
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <div style="align-content:center;">
+                    <div class="col-md-12" style="margin-top:10px;background:#e8e8e8;padding:10px;margin-bottom:10px;">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control input-sm" name="name" placeholder="PO No" />
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="POReceipt" class="daterange form-control input-sm poReceipt" placeholder="PO Receipt" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2 justify-content-center">
+                            <button class="btn btn-danger bg-gray" style="color:black">Search</button>
+                            <button class="btn btn-primary bg-gray text-black-50" style="color:black;">Refresh</button>
+                            <button class="btn btn-warning bg-gray text-black-50" style="color:black;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <table id="table-inprogress" class="table table-bordered table-striped" style="background:white;">
+                        @*<thead>
+                                <tr>
+                                    <th class="text-center" style="vertical-align:middle;">No</th>
+                                    <th class="text-center" style="vertical-align:middle;">Action</th>
+                                    <th class="text-center" style="vertical-align:middle;">PO No</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">PO Date</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Status PO</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Confirmation</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Processing</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Delivering</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">BAST</th>
+                                    <th class="text-center" style="vertical-align:middle;width:110px;">Invoicing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">1</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124422</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-success">On Schedule</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">2</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124423</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-success">On Schedule</label></td>
+                                    <td class="text-center" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">3</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124424</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-success">On Schedule</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">4</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124425</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-success">On Schedule</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">5</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124426</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-success">On Schedule</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class=" text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class=" text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">6</td>
+                                    <td class="text-center">
+                                        <a href="DetailHO?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-left">14500124427</td>
+                                    <td class="text-center">31.01.2020</td>
+                                    <td class="text-center"><label class="label label-warning">Risk Delay</label></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-primary" style="color:blue;"><i class="text-primary fa fa-check-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                    <td class="text-center text-danger" style="color:red;"><i class="text-danger fa fa-times-circle" /></td>
+                                </tr>
+                            </tbody>*@
+                    </table>
+                </div>
+            </div>
+            <!-- Section Tab Third -->
+            <div role="tabpanel" class="tab-pane" id="messages">
+                <div style="align-content:center;">
+                    <div class="col-md-12" style="margin-top:10px;background:#e8e8e8;padding:10px;margin-bottom:10px;">
+                        <div class="col-md-2">
+                            <input type="text" class="form-control input-sm" name="name" placeholder="PO No" />
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="POReceipt" class="daterange form-control input-sm poReceipt" placeholder="PO Receipt" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="DeliveryDate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2 justify-content-center">
+                            <button class="btn btn-danger bg-gray" style="color:black">Search</button>
+                            <button class="btn btn-primary bg-gray text-black-50" style="color:black;">Refresh</button>
+                            <button class="btn btn-warning bg-gray text-black-50" style="color:black;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;">
+                    <table id="table-done" data-detail-view="true" class="table table-bordered table-striped" style="background:white;"></table>
+                </div>
+            </div>
+
+            <div id="child-table-inprogress" style="display:none;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td style="height:30px;" class="text-center">Action</td>
+                            <td style="height:30px;" class="text-center">ITEM</td>
+                            <td style="height:30px;" class="text-center">QTY</td>
+                            <td style="height:30px;" class="text-center">UOM</td>
+                            <td style="height:30px;" class="text-center">PRICE / ITEM</td>
+                            <td style="height:30px;" class="text-center">TOTAL</td>
+                            <td style="height:30px;" class="text-center">DESTINATION</td>
+                            <td style="height:30px;" class="text-center">USER</td>
+                            <td style="height:30px;" class="text-center">ETA</td>
+                            <td style="height:30px;" class="text-center">STATUS</td>
+                            <td style="height:30px;" class="text-center">POSITION</td>
+                            <td style="height:30px;" class="text-center">NOTES</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-primary btn-xs" title="Create New Notes"><i class="fa fa-plus-circle" title="Add New Notes"></i></a>
+                                <a class="btn btn-default btn-xs" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                <a class="btn btn-info btn-xs" href="#" title="Update Status"><i class="fa fa-edit" title="View Notes"></i></a>
+                            </td>
+                            <td>Cartridge HP CE285A BLACK / HP 85A</td>
+                            <td class="text-center">5</td>
+                            <td>EA</td>
+                            <td class="text-right">800.000</td>
+                            <td class="text-right">4.000.000</td>
+                            <td>BATU HIJAU 1 - TU</td>
+                            <td>SUMIATI</td>
+                            <td class="text-center">10.02.2020</td>
+                            <td>ON SCHEDULE</td>
+                            <td>TOL MERAK</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <a href="#" class="btn btn-primary btn-xs" title="Create New Notes"><i class="fa fa-plus-circle" title="Add New Notes"></i></a>
+                                <a class="btn btn-default btn-xs" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                                <a class="btn btn-info btn-xs" href="#" title="Update Status"><i class="fa fa-edit" title="View Notes"></i></a>
+                            </td>
+                            <td>Cartridge HP CF287A</td>
+                            <td class="text-center">2</td>
+                            <td>EA</td>
+                            <td class="text-right">2.600.000</td>
+                            <td class="text-right">3.200.000</td>
+                            <td>BENGKULU - TU</td>
+                            <td>FAJRIANSYAH</td>
+                            <td class="text-center">10.02.2020</td>
+                            <td>ON SCHEDULE</td>
+                            <td>BANDUNG</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="child-table-done" style="display:none;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td style="height:30px;" class="text-center">Action</td>
+                            <td style="height:30px;" class="text-center">ITEM</td>
+                            <td style="height:30px;" class="text-center">QTY</td>
+                            <td style="height:30px;" class="text-center">UOM</td>
+                            <td style="height:30px;" class="text-center">PRICE / ITEM</td>
+                            <td style="height:30px;" class="text-center">TOTAL</td>
+                            <td style="height:30px;" class="text-center">DESTINATION</td>
+                            <td style="height:30px;" class="text-center">PIC</td>
+                            <td style="height:30px;" class="text-center">ETA</td>
+                            <td style="height:30px;" class="text-center">STATUS</td>
+                            <td style="height:30px;" class="text-center">POSITION</td>
+                            <td style="height:30px;" class="text-center">NOTES</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">
+                                <a class="btn btn-default btn-xs" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                            </td>
+                            <td>Cartridge HP CE285A BLACK / HP 85A</td>
+                            <td class="text-center">5</td>
+                            <td>EA</td>
+                            <td class="text-right">800.000</td>
+                            <td class="text-right">4.000.000</td>
+                            <td>BATU HIJAU 1 - TU</td>
+                            <td>SUMIATI</td>
+                            <td class="text-center">10.02.2020</td>
+                            <td>ON SCHEDULE</td>
+                            <td>TOL MERAK</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <a class="btn btn-default btn-xs" href="#" title="View Notes"><i class="fa fa-list" title="View Notes"></i></a>
+                            </td>
+                            <td>Cartridge HP CF287A</td>
+                            <td class="text-center">2</td>
+                            <td>EA</td>
+                            <td class="text-right">2.600.000</td>
+                            <td class="text-right">3.200.000</td>
+                            <td>BENGKULU - TU</td>
+                            <td>FAJRIANSYAH</td>
+                            <td class="text-center">10.02.2020</td>
+                            <td>ON SCHEDULE</td>
+                            <td>BANDUNG</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script>
+        var dataPo = [
+            {
+                No: 1,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124422',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+            {
+                No: 2,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124423',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+            {
+                No: 3,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124424',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+            {
+                No: 4,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124425',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+            {
+                No: 5,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124426',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+            {
+                No: 6,
+                Action: `<a class="btn btn-default btn-xs"><i class="fa fa-gear"></i></a>
+                                       <a class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`,
+                PONo: '14500124427',
+                PODate: '31.01.2020',
+                DeliveryDate: '28.02.2020',
+                InvPostingDate: '26.02.2020',
+                GrPostingDate: '31.01.2020',
+                DeliveryDocDate: '01.02.2020'
+            },
+        ];
+
+        var dataInProgress = [
+            {
+                No: 1,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124422',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+            {
+                No: 2,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PODate: '31.01.2020',
+                PONo: '14500124423',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+            {
+                No: 3,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124424',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+            {
+                No: 4,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124425',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+            {
+                No: 5,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124426',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+            {
+                No: 6,
+                Action: `<a href="DetailBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124427',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-warning">Risk Delay</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="text-danger fa fa-times-circle" />'
+            },
+        ];
+
+
+        var dataDone = [
+            {
+                No: 1,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124422',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+            {
+                No: 2,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PODate: '31.01.2020',
+                PONo: '14500124423',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+            {
+                No: 3,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124424',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-success">On Schedule</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+            {
+                No: 4,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124425',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-danger">Delay</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+            {
+                No: 5,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124426',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-danger">Delay</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+            {
+                No: 6,
+                Action: `<a href="DetailDoneBranch?Id=1" class="btn btn-default btn-xs " style="background:#fcba12;color:white!important;" title="view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>`,
+                PONo: '14500124427',
+                PODate: '31.01.2020',
+                StatusPO: '<label class="label label-warning">Risk Delay</label>',
+                Confirmation: '<i class="text-primary fa fa-check-circle" />',
+                Processing: '<i class="text-primary fa fa-check-circle" />',
+                Delivering: '<i class="text-primary fa fa-check-circle" />',
+                Bast: '<i class="text-danger fa fa-times-circle" />',
+                Invoicing: '<i class="fa text-success fa-cloud-download" />',
+                Document: '<i class="fa text-primary fa-cloud-download" />'
+            },
+        ];
+
+        var $tablePO = $("#table-po").bootstrapTable({
+            pagination: true,
+            serverSort: false,
+            columns: [
+                {
+                    title: 'No',
+                    field: 'No',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '50',
+
+                },
+                {
+                    title: 'Action',
+                    field: 'Action',
+                    class: 'text-center',
+                    dataAlign: 'center',
+                    width: '80',
+
+                },
+                {
+                    title: 'PO No',
+                    field: 'PONo',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110'
+
+                },
+                {
+                    title: 'PO Date',
+                    field: 'PODate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivery Date',
+                    field: 'DeliveryDate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Inv. Posting Date',
+                    field: 'InvPostingDate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'GR. Posting Date',
+                    field: 'GrPostingDate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: ' Delivery Doc. Date',
+                    field: 'DeliveryDocDate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+            ],
+            data: dataPo
+        });
+
+
+
+        var $tableInprogress = $('#table-inprogress').bootstrapTable({
+            detailView: false,
+            pagination: true,
+            serverSort: false,
+            columns: [
+                {
+                    title: 'No',
+                    field: 'No',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '50',
+
+                },
+                {
+                    title: 'Action',
+                    field: 'Action',
+                    class: 'text-center',
+                    dataAlign: 'center',
+                    width: '80',
+
+                },
+                {
+                    title: 'PO No',
+                    field: 'PONo',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110'
+
+                },
+                {
+                    title: 'PO Date',
+                    field: 'PODate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Status PO',
+                    field: 'StatusPO',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Confirmation',
+                    field: 'Confirmation',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Processing',
+                    field: 'Processing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivering',
+                    field: 'Delivering',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: ' BAST',
+                    field: 'Bast',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Invoicing',
+                    field: 'Invoicing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+            ],
+            data: dataInProgress
+
+        });
+
+        var $tableDone = $('#table-done').bootstrapTable({
+            detailView: false,
+            pagination: true,
+            serverSort: false,
+            columns: [
+                {
+                    title: 'No',
+                    field: 'No',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '50',
+
+                },
+                {
+                    title: 'Action',
+                    field: 'Action',
+                    class: 'text-center',
+                    dataAlign: 'center',
+                    width: '80',
+
+                },
+                {
+                    title: 'PO No',
+                    field: 'PONo',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110'
+
+                },
+                {
+                    title: 'PO Date',
+                    field: 'PODate',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Status PO',
+                    field: 'StatusPO',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Confirmation',
+                    field: 'Confirmation',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Processing',
+                    field: 'Processing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Delivering',
+                    field: 'Delivering',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: ' BAST',
+                    field: 'Bast',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Invoicing',
+                    field: 'Invoicing',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+                {
+                    title: 'Document',
+                    field: 'Document',
+                    class: 'text-center',
+                    align: 'center',
+                    width: '110',
+
+                },
+            ],
+            data: dataDone
+
+        });
+
+        $('.poReceipt').daterangepicker({
+            opens: 'right',
+            locale: {
+                format: 'DD.MMM.YYYY'
+            },
+
+        }, function (start, end) {
+            console.log('start', start._d);
+            var start_date = moment(start._d).format("DD.MM.YYYY");
+            var end_date = moment(end._d).format("DD.MM.YYYY");
+
+            $('.poReceipt').val(start_date + '-' + end_date);
+        });
+
+        $('.deliveryDate').daterangepicker({
+            opens: 'right',
+            locale: {
+                format: 'DD.MMM.YYYY'
+            },
+
+        }, function (start, end) {
+            console.log('start', start._d);
+            var start_date = moment(start._d).format("DD.MM.YYYY");
+            var end_date = moment(end._d).format("DD.MM.YYYY");
+
+            $('.deliveryDate').val(start_date + '-' + end_date);
+        });
+
+
+    </script>
+}

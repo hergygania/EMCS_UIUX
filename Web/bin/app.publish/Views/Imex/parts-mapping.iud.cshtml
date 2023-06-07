@@ -1,0 +1,316 @@
+@model App.Web.Models.PartsMappingView
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list"></i>@title Parts Mapping</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="col-lg-7">
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Part Number</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectPartsList(Model.partsMapping.PartsId, Model.partsMapping.PartsNameCap, new {id="PartsId", @class = "js-states form-control" })*@
+                            <select class="js-states form-control" id="PartsId" name="PartsId" style="width: 95%;">
+                                <option value="@Model.partsMapping.PartsId">@Model.partsMapping.PartsNameCap</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.partsMapping.PartsId)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Parts Description (Bahasa)</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectPartsList(Model.partsMapping.PartsId, Model.partsMapping.PartsNameCap, new {id="PartsId", @class = "js-states form-control" })*@
+                            <input id="Description_Bahasa" name="Description_Bahasa" value="@Model.partsMapping.Description_Bahasa" type="text" class="form-control" placeholder="enter description" />
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Part Name</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                <input type="text" class="form-control" value="Baja" name="partName" />
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">HS Code</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectHSCode(Model.partsMapping.HSId, "", new { @class = "js-states form-control" })*@
+                            <select class="js-states form-control" id="HSId" name="HSId" style="width: 95%;">
+                                <option value="@Model.partsMapping.HSId">@Model.partsMapping.HSCodeCap</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.partsMapping.HSId)</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Manufacturing Code</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectHSCode(Model.partsMapping.HSId, "", new { @class = "js-states form-control" })*@
+                            <input id="ManufacturingCode" name="ManufacturingCode" value="@Model.partsMapping.ManufacturingCode" type="text" class="form-control" placeholder="enter Code" />
+                            @*<div>@Html.ValidationMessageFor(m => m.partsMapping.HSId)</div>*@
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">HS Description</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                <input type="text" class="form-control" value="LUBRICATING EQUIPMEN" name="hsDescription" />
+                            </div>
+                        </div>*@
+                </div>
+
+                <div class="col-lg-5">
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">OM</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                <select class="js-states form-control" multiple="multiple" style="width:95%;display:none">
+                                    <option selected="selected" value="1">LS</option>
+                                    <option value="2">SN</option>
+                                </select>
+                            </div>
+                        </div>*@
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Machine</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                <input type="text" class="form-control" name="machine">
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Status</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+                                <option @(Model.partsMapping.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+                                <option @(Model.partsMapping.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">PPNBM</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectHSCode(Model.partsMapping.HSId, "", new { @class = "js-states form-control" })*@
+                            <input id="PPNBM" type="number" name="PPNBM" value="@Model.partsMapping.PPNBM" class="form-control" placeholder="enter PPNBM" />
+                            @*<div>@Html.ValidationMessageFor(m => m.partsMapping.HSId)</div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Preferensial Tarif</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectHSCode(Model.partsMapping.HSId, "", new { @class = "js-states form-control" })*@
+                            <input id="PrefTarif" type="number" name="Pref_Tarif" value="@Model.partsMapping.Pref_Tarif" class="form-control" placeholder="" />
+                            @*<div>@Html.ValidationMessageFor(m => m.partsMapping.HSId)</div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Additional Charge</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @*@Html.SelectHSCode(Model.partsMapping.HSId, "", new { @class = "js-states form-control" })*@
+                            <input id="AdditionalCharge" name="Add_Change" value="@Model.partsMapping.Add_Change" type="number" class="form-control" placeholder="enter Description" />
+                            @*<div>@Html.ValidationMessageFor(m => m.partsMapping.HSId)</div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div style="float:right;margin-right:15px">
+                    @if (mode == "I")
+                    {
+                        <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Save</button>
+                    }
+                    else if (mode == "U")
+                    {
+                        <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-danger" style="width:125px;"><i class="fa fa-trash-o"></i> Delete</button>
+                    }
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="width:125px;"><i class="fa fa-times-circle"></i> Cancel</button>
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                        Wait..
+                    </span>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <h5 style="text-align: left"><strong>Data History</strong></h5>
+        @if (mode != "I")
+        {
+            <div class="toolbarMdl">
+                <a href="#" class="btn btn-info downloadExceldtl" style="width:150px;">
+                    <i class="fa fa-download"></i> Download to Excel
+                </a>
+            </div>    }
+
+        <table class="table-bordered table2excelDet" id="tblHist" style="width: 100%"></table>
+
+    </div>
+    <input type="hidden" name="PartsMappingID" value="@Model.partsMapping.PartsMappingID" />
+    <input type="hidden" name="EntryDate" value="@Model.partsMapping.EntryDate" />
+    <input type="hidden" name="EntryBy" value="@Model.partsMapping.EntryBy" />
+}
+
+<script>
+	var mode = '@mode';
+	if (mode == 'I') $("#Status").attr('readonly', 'readonly');
+
+	var $tableHist = $('#tblHist');
+
+	$(function () {
+		enableLink(false);
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		$tableHist.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarMdl',
+			toolbarAlign: 'left',
+			sidePagination: 'server',
+			showColumns: false,
+			showRefresh: true,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [{
+				field: 'PartsMappingID',
+				title: 'No',
+				halign: 'center',
+				align: 'right',
+				width: '3%',
+				formatter: runningFormatter
+			}, {
+				field: 'Source',
+				title: 'Source',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ActionUser',
+				title: 'Action',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ModifiedBy',
+				title: 'ModifiedBy',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ModifiedDate',
+				title: 'ModifiedDate',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter'
+			},
+			{
+				field: 'PartsNumberReformat',
+				title: 'Part Number',
+				halign: 'center',
+				align: 'left',
+				visible: false,
+				sortable: true
+			},
+			{
+				field: 'PartsName',
+				title: 'Parts Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'HSCode',
+				title: 'HS Code',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'HSDescription',
+				title: 'HS Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+                }
+            ]
+		});
+
+		if (mode != 'I') {
+			window.pis.table({
+				objTable: $tableHist,
+				urlSearch: '/imex/PartsMappingHistPage',
+				urlPaging: '/imex/PartsMappingHistPageXt',
+				searchParams: {
+					PartsMappingID: $("[name=PartsMappingID]").val()
+				},
+                autoLoad: true,
+                afterComplete: function (data) {
+                    if (data.length <= 0) {
+                        $(".toolbarMdl").hide();
+                    }
+                }
+			});
+		}
+
+		var partNumber_iud = new mySelect2({
+			id: 'PartsId',
+			url: '/Picker/SelectToPartName',
+			minimumInputLength: 2
+		}).load();
+
+		var hscode_iud = new mySelect2({
+			id: 'HSId',
+			url: '/Picker/Select2HsName',
+			minimumInputLength: 1
+		}).load();
+
+
+
+		$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+
+		$(".downloadExceldtl").click(function () {
+			$(".table2excelDet").table2excel({
+				exclude: ".noExl",
+				name: "Excel Document Name",
+				filename: "partMapping.xls"
+			});
+		});
+
+		$("#mySearch").insertBefore($("[name=refresh]"))
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+</script>

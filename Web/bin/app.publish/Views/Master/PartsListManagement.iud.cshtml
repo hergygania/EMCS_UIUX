@@ -1,0 +1,190 @@
+@model  App.Data.Domain.PartsNumberList
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title PartsList</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- Default input -->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Parts List No</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.PartsNumber, new { @class = "form-control required", @onkeypress = "return numberOnly(event)", @onkeyup = "addReformatNumber()", placeholder = "Parts List Number" })
+                        <div>@Html.ValidationMessageFor(m => m.PartsNumber)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Manufacturing Code</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.ManufacturingCode, new { @class = "form-control", placeholder = "Manufacturing Code" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Parts Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.PartsName, new { @class = "form-control required", placeholder = "Name" })
+                        @*<div>@Html.ValidationMessageFor(m => m.PartsName)</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Description</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+                        <div>@Html.ValidationMessageFor(m => m.Description)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Description Bahasa</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextAreaFor(m => m.Description_Bahasa, new { @class = "form-control", placeholder = "Description Bahasa" })
+                        <div>@Html.ValidationMessageFor(m => m.Description_Bahasa)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">PPNBM</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.PPNBM, new { @class = "form-control", @onkeypress = "return numberOnly(event)", @onkeyup = "addReformatNumber()", placeholder = "PPNBM" })
+                        <div>@Html.ValidationMessageFor(m => m.PPNBM)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Preferensial Tarif</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Pref_Tarif, new { @class = "form-control", @onkeypress = "return numberOnly(event)", @onkeyup = "addReformatNumber()", placeholder = "Preferensial Tarif" })
+                        <div>@Html.ValidationMessageFor(m => m.Pref_Tarif)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Aditional Charge</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Add_Change, new { @class = "form-control", @onkeypress = "return numberOnly(event)", @onkeyup = "addReformatNumber()", placeholder = "Aditional Charge" })
+                        <div>@Html.ValidationMessageFor(m => m.Add_Change)</div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <label class="control-label col-md-3 col-xs-12">Order Method</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            @Html.DropDownListFor(m => m.OMID, new SelectList(Model.OrderMethods, "OMID", "OMCode"), "--Select OM-- ", new { @class = "form-control" })
+                            <div>@Html.ValidationMessageFor(m => m.OMID)</div>
+                        </div>
+                    </div>*@
+
+                @if (mode != "I")
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-xs-12">Status</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <select class="js-states form-control" id="DeletionFlag" name="DeletionFlag" style="width: 95%;">
+                                <option @(Model.DeletionFlag != 0 ? "selected='selected" : "") value="1">Active</option>
+                                <option @(Model.DeletionFlag == 0 ? "selected='selected" : "") value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" name="DeletionFlag" value="@Model.DeletionFlag" />
+                }
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Remand Indicator</label>
+                    <div class="col-md-2 col-xs-12">
+                        @Html.CheckBoxFor(m => m.RemandIndicator, new { @class = "form-control", @style = "width:auto;" })
+                        <div>@Html.ValidationMessageFor(m => m.RemandIndicator)</div>
+                    </div>
+                    <label class="control-label col-md-2 col-xs-12">UTN</label>
+                    <div class="col-md-5 col-xs-12">
+                        @Html.CheckBoxFor(m => m.UTN, new { @class = "form-control", @style = "width:auto;" })
+                        <div>@Html.ValidationMessageFor(m => m.UTN)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Change OM</label>
+                    <div class="col-md-2 col-xs-12">
+                        @Html.CheckBoxFor(m => m.ChangeOM, new { @class = "form-control", @style = "width:auto;" })
+                        <div>@Html.ValidationMessageFor(m => m.ChangeOM)</div>
+                    </div>
+                    <div class="col-md-7 col-xs-12" style="padding:0;">
+                        @Html.DropDownListFor(m => m.ChangedOMCode, new SelectList(Model.OrderMethods.Where(o => o.OMCode == "PT" || o.OMCode == "TB"), "OMCode", "Description"), "--Select OM-- ", new { @class = "form-control", @style = "display:none;" })
+                        <div>@Html.ValidationMessageFor(m => m.ChangedOMCode)</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Default input -->
+        </div>
+
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" onclick="return IsChangeOM();"><i class="fa fa-save"></i> Save</button> }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" onclick="return IsChangeOM();"><i class="fa fa-save"></i> Update</button> }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>}
+
+    </div>
+    <input type="hidden" name="PartsID" value="@Model.PartsID" />
+    <input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+    <input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+    <input type="hidden" name="ModifiedBy" value="@Model.ModifiedBy" />
+    <input type="hidden" name="ModifiedDate" value="@Model.ModifiedDate" />
+}
+<script>
+	var mode = '@mode';
+
+	$(document).ready(function () {
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		helpers.buildDropdown('/Picker/GetListOM', $('#OMID'), true, '');
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        if ($("#ChangedOMCode").val() !== "") {
+            $('#ChangeOM').attr('checked', true);
+            $('#ChangedOMCode').show();
+        }
+
+        $('#ChangeOM').change(function () {
+            if (this.checked)
+                $('#ChangedOMCode').show();
+            else
+                $('#ChangedOMCode').hide();
+        });
+
+	});
+</script>

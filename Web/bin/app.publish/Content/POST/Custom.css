@@ -1,0 +1,12 @@
+﻿/*body {
+    font-family: TT Commons;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 46px;
+    color: #020616;
+}*/
+
+.nav.nav-pills > li.active > a, .nav.nav-pills > li.active > a:hover {
+    border-top-color: #ff6a00 !important;
+}

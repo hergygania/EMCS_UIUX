@@ -1,0 +1,43 @@
+﻿<div id="PreviewDocument" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="border-radius:0px;">
+            <div class="modal-header">
+                <h4 class="modal-title">Preview Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="imgPreview" style="display:none;">
+                    <img id="ImgUrl" src="" alt="Image Preview" style="width:100%;height:auto;" />
+                </div>
+                <div class="pdfPreview" style="display:none;">
+                    <iframe title="Iframe" id="DocUrl" src="" style="height:450px;width:100%;"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function get_extension_file(filename) {
+        return filename.split('.').pop();
+    }
+
+    function showPreviewDocument(Url, downloadLink = "") {
+        var ext = get_extension_file(Url).toLowerCase();
+        if (ext === "jpeg" || ext === "jpg" || ext === "png" || ext === "gif") {
+            $(".imgPreview").show();
+            $(".pdfPreview").hide();
+            $("#ImgUrl").attr("src", Url);
+            $("#PreviewDocument").modal("show");
+        } else if (ext === "pdf") {
+            $(".imgPreview").hide();
+            $(".pdfPreview").show();
+            $("#DocUrl").attr("src", Url);
+            $("#PreviewDocument").modal("show");
+        } else {
+            location.href = downloadLink;
+        }
+        return false;
+    }
+</script>

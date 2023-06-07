@@ -1,0 +1,51 @@
+﻿<div class="modal fade" id="modalVendor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-left">
+                <h4 class="modal-title w-100 font-weight-bold" id="titleVendor"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-md-12">
+                        <form>
+                            <input type="hidden" id="id" name="Id" />
+                            <div class="form-group">
+                                <label>Code</label>
+                                <input type="text" id="code" name="Code" class="form-control validate" style="border:1px solid #ccc!important;">
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="name" name="Name" class="form-control validate" style="border:1px solid #ccc!important;">
+                            </div>
+                            <div class="form-group">
+                                <label>NPWP</label>
+                                <input type="text" id="npwp" name="NPWP" class="form-control validate" style="border:1px solid #ccc!important;">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" id="city" name="City" class="form-control validate" style="border:1px solid #ccc!important;">
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea type="text" id="address" name="Address" class="form-control validate" style="border:1px solid #ccc!important;">
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Telephone</label>
+                                <input type="text" id="telephone" name="Telephone" class="form-control validate" style="border:1px solid #ccc!important;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex text-right">
+                <button class="btn btn-primary" id="submit" onclick="submitForm()"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

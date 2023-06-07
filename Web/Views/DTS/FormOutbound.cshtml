@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Create Outbound Shipment";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .btn-form {
+        width: 100px;
+    }
+</style>
+<div class="row" id="formType" data-value="@(ViewBag.formType)">
+    <div class="col-md-12">
+        <form class="form-horizontal" id="formOutbound" method="post">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 box-body">
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label for="ajuNo" class="col-md-2 col-xs-12 control-label">DA</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" value="@(ViewBag.formType == "edit" ? ViewBag.detail.ID : "")" name="ID" placeholder="Delivery Advice" id="ID" style="display:none">
+                                                        <input type="text" class="form-control" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DA : "")" name="DA" placeholder="Delivery Advice" id="DANo">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="msoNo" class="col-md-2 col-xs-12 control-label">DI</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="DI" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DI : "")" placeholder="Delivery Instruction" id="DINo">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="msoNo" class="col-md-2 col-xs-12 control-label">DI Date</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control date" name="DIDate" value="@(ViewBag.formType == "edit" ? (ViewBag.detail.DIDate != null ? Convert.ToDateTime(ViewBag.detail.DIDate).ToString("dd MMM yyyy") : "") : "")" placeholder="Delivery Instruction Date" id="DIDate">
+                                                        @*<input type="text" class="form-control" name="DI" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DI : "")" placeholder="Delivery Instruction" id="DINo">*@
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Origin</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Origin" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Origin : "")" placeholder="Original Shipment" id="origin">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Destination</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Destination" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Destination : "")" placeholder="Destination" id="destination">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Delivery Contact</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="DeliveryContact" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DeliveryContact : "")" placeholder="DeliveryContact" id="DeliveryContact">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Moda</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Moda" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Moda : "")" placeholder="Moda" id="moda">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Unit Moda</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="UnitModa" value="@(ViewBag.formType == "edit" ? ViewBag.detail.UnitModa : "")" placeholder="Unit Moda" id="unitmoda">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label"><u>Fleet Detail</u></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Police No</label>
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <input type="text" class="form-control" name="NoPol" value="@(ViewBag.formType == "edit" ? ViewBag.detail.NoPol : "")" placeholder="No Pol" id="NoPol">
+                                                    </div>
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Phone No</label>
+                                                    <div class="col-md-5 col-xs-12">
+                                                        <input type="number" class="form-control" name="HpInlandFreight" value="@(ViewBag.formType == "edit" ? ViewBag.detail.HPInlandFreight : "")" placeholder="Contact Phone" id="HpInlandFreight">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Driver Name</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="DriverName" value="@(ViewBag.formType == "edit" ? ViewBag.detail.DriverName : "")" placeholder="Driver Name" id="DriverName">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Vessel Name</label>
+                                                    <div class="col-md-3 col-xs-12">
+                                                        <input type="text" class="form-control" name="VesselName" value="@(ViewBag.formType == "edit" ? ViewBag.detail.VesselName : "")" placeholder="Vessel Name" id="VesselName">
+                                                    </div>
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Phone No</label>
+                                                    <div class="col-md-5 col-xs-12">
+                                                        <input type="number" class="form-control" name="HpSealandFreight" value="@(ViewBag.formType == "edit" ? ViewBag.detail.HPSealandFreight : "")" placeholder="Contact Phone" id="HpSealandFreight">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Consignee Name</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="PIC" value="@(ViewBag.formType == "edit" ? ViewBag.detail.PIC : "")" placeholder="PIC" id="PIC">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Serial Number</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="SerialNumber" value="@(ViewBag.formType == "edit" ? ViewBag.detail.SerialNumber : "")" placeholder="Serial Number" id="SerialNumber">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Unit Type</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="UnitType" value="@(ViewBag.formType == "edit" ? ViewBag.detail.UnitType : "")" placeholder="Unit Type" id="unittype">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Model</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Model" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Model : "")" placeholder="Model" id="Model">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Status</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Status" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Status : "")" placeholder="Status" id="Status">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Position</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control" name="Position" value="@(ViewBag.formType == "edit" ? ViewBag.detail.Position : "")" placeholder="Position" id="Position">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">ETD</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control date" name="ETD" value="@(ViewBag.formType == "edit" ? (ViewBag.detail.ETD != null ? Convert.ToDateTime(ViewBag.detail.ETD).ToString("dd MMM yyyy") : "") : "")" placeholder="Estimation Time Delivery" id="ETD">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">ATD</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control date" name="ATD" value="@(ViewBag.formType == "edit" ? (ViewBag.detail.ATD != null ? Convert.ToDateTime(ViewBag.detail.ATD).ToString("dd MMM yyyy") : "") : "")" placeholder="Actual Time Delivery" id="ATD">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">ETA</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control date" name="ETA" value="@(ViewBag.formType == "edit" ? (ViewBag.detail.ETA != null ? Convert.ToDateTime(ViewBag.detail.ETA).ToString("dd MMM yyyy") : "") : "")" placeholder="Estimation Time Arrived" id="ETA">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">ATA</label>
+                                                    <div class="col-md-10 col-xs-12">
+                                                        <input type="text" class="form-control date" name="ATA" value="@(ViewBag.formType == "edit" ? (ViewBag.detail.ATA != null ? Convert.ToDateTime(ViewBag.detail.ATA).ToString("dd MMM yyyy") : "") : "")" placeholder="Actual Time Arrived" id="ATA">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-md-2 col-xs-12 control-label">Notes</label>
+                                                    <div class="col-md-10 col-md-12">
+                                                        <textarea name="Remarks" id="Remarks" placeholder="Notes" class="form-control" rows="5" cols="5">@(ViewBag.formType == "edit" ? ViewBag.detail.Remarks : "")</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer text-right">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="~/DTS/OutboundNonCKB" class="btn btn-warning btn-form">
+                                <i class="fa fa-chevron-circle-left"></i> Back
+                            </a>
+                            <button class="btn btn-default btn-form" type="button" onclick="resetForm()">
+                                <i class="fa fa-refresh"></i> Reset
+                            </button>
+                            <button type="button" id="submitFormOutbound" name="submitFormOutbound" class="btn btn-success btn-form">
+                                <i class="fa fa-save"></i> Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/formOutbound.cshtml.js")"></script>
+}
+

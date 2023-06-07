@@ -1,0 +1,642 @@
+@model App.Data.Domain.LicenseManagement
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    ViewBag.PartsNumber = "";
+}
+
+<style type="text/css">
+    .select2-selection__choice {
+        white-space: normal !important;
+    }
+
+    .switch-toggle input.disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+        .switch-toggle input.disabled + label, .switch-toggle input.disabled + a, .switch-toggle a:hover {
+            pointer-events: none !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            opacity: .65 !important;
+        }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"><i class="fa fa-list"></i> @title License Management</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body" style="margin:10px">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">License Number</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @Html.TextBoxFor(m => m.LicenseNumber, new { @class = "form-control required", placeholder = "" })
+                            <div>@Html.ValidationMessageFor(m => m.LicenseNumber)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Description</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @Html.TextAreaFor(m => m.Description, 2, 100, new { @class = "form-control required" })
+                            <div>@Html.ValidationMessageFor(m => m.Description)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Group</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control required" id="GroupID" name="GroupID" style="width: 95%;">
+                                <option value="@Model.GroupID">@Model.GroupName</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.GroupID)</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <label class="control-label col-lg-4 col-xs-4">Ports</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control required" id="PortsID" name="PortsID" style="width: 95%;">
+                                <option value="@Model.PortsID">@Model.PortsName</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.GroupID)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Ports</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input class="form-control" type="text" id="Ports" name="Ports" value="@Model.Ports" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Regulation</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control required" id="RegulationCode" name="RegulationCode" style="width: 95%;">
+                                <option value="@Model.RegulationCode">@Model.RegulationCode</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.RegulationCode)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4"></label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;width:100%;">
+                                <input id="radioHsCode" name="permit_type" type="radio" checked="" value="HSCode">
+                                <label for="radioHsCode" id="lblHsCode" onclick="setHSCodeOrPartNumber(1)">HS Code</label>
+                                <input id="radioPartNumber" name="permit_type" type="radio" value="PartNumber">
+                                <label for="radioPartNumber" id="lblPartNumber" onclick="setHSCodeOrPartNumber(2)">PartNumber</label>
+                                <a class="btn btn-primary"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="panelAddInput">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4"></label>
+                        <div class="input-group col-lg-8 col-xs-8 panleTable">
+                            @{
+                                if (Model.ListHSCode != null)
+                                {
+                                    if (Model.ListHSCode.Count() > 0)
+                                    {
+                                        <div class="panelGroupHSCode">
+                                            <table class="table table-bordered table2excel" id="table-HSCode" style="width:100%"></table>
+                                        </div>
+                                    }
+                                }
+
+                                if (Model.ListPartNumber != null)
+                                {
+                                    if (Model.ListPartNumber.Count() > 0)
+                                    {
+                                        foreach (var p in Model.ListPartNumber)
+                                        {
+                                            if (string.IsNullOrWhiteSpace(ViewBag.PartsNumber))
+                                            {
+                                                ViewBag.PartsNumber = p.PartNumber + " - " + p.ManufacturingCode;
+                                            }
+                                            else
+                                            {
+                                                ViewBag.PartsNumber += "," + p.PartNumber + " - " + p.ManufacturingCode;
+                                            }
+                                        }
+                                        <div class="panelGroupPartNumber">
+                                            <table class="table table-bordered table2excel" id="table-PartNumber" style="width:100%;"></table>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Order Method</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control required" id="OM" name="OM" style="width: 95%;">
+                                <option value="@Model.OM">@Model.OM</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.OM)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Release Date</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @Html.TextBoxFor(m => m.ReleaseDate, "{0:dd MMM yyyy}", new { @class = "form-control pull-left date required", placeholder = "" })
+                            <div class="input-group-addon cal">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Expired Date</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @Html.TextBoxFor(m => m.ExpiredDate, "{0:dd MMM yyyy}", new { @class = "form-control pull-left date required", placeholder = "" })
+                            <div class="input-group-addon cal1">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            <label class="control-label col-lg-4 col-xs-4">Validity</label>
+                            <div class="input-group col-lg-8 col-xs-8">
+                                @Html.TextBoxFor(m => m.Validity, new { @class = "form-control", placeholder = "" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Quota</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            @Html.TextBoxFor(m => m.Quota, new { @class = "form-control", placeholder = "" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Status</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+                                <option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+                                <option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:125px;"><i class="fa fa-trash-o"></i> Delete</button>
+        }
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width:125px;"><i class="fa fa-times-circle"></i> Close</button>
+    </div>
+
+    <input type="hidden" name="LicenseManagementID" id="LicenseManagementID" value="@Model.LicenseManagementID" />
+    <input type="hidden" name="dummyRegulationCode" id="dummyRegulationCode" value="@Model.RegulationCode" />
+    <input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+    <input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+    <input type="hidden" name="ListPartsNumber" id="ListPartsNumber" value="@ViewBag.PartsNumber" />
+
+                                }
+
+<script type="text/javascript">
+    var lisPart = $("#ListPartsNumber").val();
+    window.operateEventsParts = {
+        'click .remove': function (e, value, row, index) {
+            swal({
+                title: "Are you sure want to delete this data?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F56954",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    sweetAlert.close();
+                    lisPart = lisPart.replace("," + row.PartNumber + ' - ' + row.ManufacturingCode, '').replace(row.PartNumber + ' - ' + row.ManufacturingCode, '');
+                    $("#ListPartsNumber").val(lisPart);
+
+                    $("#table-PartNumber").bootstrapTable('remove', {
+                        field: 'PartNumber',
+                        values: [row.PartNumber]
+                    });
+                }
+            });
+        }
+    };
+
+    window.operateEventsHS = {
+        'click .remove': function (e, value, row, index) {
+            swal({
+                title: "Are you sure want to delete this data?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F56954",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    sweetAlert.close();
+                    $("#table-HSCode").bootstrapTable('remove', {
+                        field: 'HSCode',
+                        values: [row.HSCode]
+                    });
+                }
+
+                $("#select2-HSCode").select2({ data: [{ id: row.HSCode, text: row.HSCode }] });
+                document.getElementById("selectAll").checked = false;
+            });
+        }
+    }
+
+    $(function () {
+        enableLink(false);
+
+        if (typeof window.rebindCSS == "undefined")
+            $.getScript("/scripts/script.js");
+        else
+            rebindCSS();
+
+        LoadTableParts();
+        LoadTableHS();
+        helpers.buildDropdown('/Picker/Select2Regulation', $('#RegulationCode'), true, '', function (selected) {
+            if (selected != "") {
+                if ($("#select2-HSCode > option").length <= 1 && $("#select2-HSCode > option").val() != undefined)
+                    document.getElementById("selectAll").checked = true;
+            }
+        });
+        helpers.buildDropdown('/Picker/GetListGroupLicense', $('#GroupID'), true, '');
+        helpers.buildDropdown('/Picker/GetListPortsLicense', $('#PortsID'), true, '');
+        helpers.buildDropdown('/Picker/GetListOM', $('#OM'), true, '');
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        $('#RegulationCode').on("change", function () {
+            var dataHS = [], dataPart = [], regulationCode = this.value;
+            lisPart = '';
+            switch ($('[name="permit_type"]').val()) {
+                case "HSCode":
+                    generateTable("HSCode");
+                    helpers.buildDropdown('/Picker/Select2HsCodeByRegulation?RegulationCode=' + this.value + "&LicenseID=" + $("#LicenseManagementID").val(), $('#select2-HSCode'), true, '', function (selected, data) {
+                        if (regulationCode != "") {
+                            if (document.getElementById("selectAll").checked == true)
+                                reloadHSParts(regulationCode, $("#LicenseManagementID").val());
+                        }
+                    });
+                    break;
+                case "PartNumber":
+                    generateTable("PartNumber");
+                    var parts = new mySelect2({
+                        id: 'select2-PartNumber',
+                        url: '/Picker/SelectToAllPartNumberByRegulationCodePaging',
+                        minimumInputLength: 1
+                    }).LoadPartsNumberByRegulation(regulationCode, $("#LicenseManagementID").val());
+                    break;
+            }
+        });
+
+        if ($(".panelGroupPartNumber").html() != undefined)
+            $("#lblPartNumber").click();
+        else {
+            $("#lblHsCode").click();
+            generateTable("HSCode");
+        }
+
+        $("[name=permit_type]").change(function () {
+            lisPart = '';
+            generateTable(this.value);
+        });
+
+        loadHSPart();
+    });
+
+    function operateFormatterHSPart(value, row) {
+        var btn = [];
+
+        btn.push('<div  class="btn-group" style="white-space:nowrap; text-align:center">');
+        btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+        btn.push('</div>');
+
+        return btn.join('');
+    }
+
+    function formatterPartNumber(value, row) {
+        return '<input class="form-control" id="PartNumber_' + value + '" value="' + value + ' - ' + row.ManufacturingCode + '" name="PartNumber" type="text" placeholder="Part Number" readonly style="border:none;background-color: transparent;" />'
+    }
+
+    function formatterHSCode(value, row) {
+        return '<input class="form-control" id="HSCode_' + value + '" value="' + value + '" name="HSCode" type="text" placeholder="HS Code" readonly style="border:none;background-color: transparent;"/>'
+    }
+
+    function LoadTableParts() {
+        $("#table-PartNumber").bootstrapTable({
+            cache: false,
+            //pagination: true,
+            search: true,
+            striped: true,
+            url: '/Imex/LicensePartNumber',
+            clickToSelect: true,
+            reorderableColumns: true,
+            toolbarAlign: 'left',
+            //showColumns: true,
+            showRefresh: false,
+            smartDisplay: false,
+            pageSize: '5',
+            queryParams: function (params) {
+                return { LicenseID: $("#LicenseManagementID").val() }
+            },
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [{
+                field: 'ID',
+                title: 'Action',
+                align: 'center',
+                formatter: operateFormatterHSPart,
+                events: operateEventsParts,
+                width: '1%',
+                switchable: false
+            },
+            {
+                field: 'PartNumber',
+                title: 'Part Number',
+                halign: 'center',
+                align: 'center',
+                switchable: false,
+                formatter: formatterPartNumber
+            }]
+        });
+    }
+
+    function LoadTableHS() {
+        $("#table-HSCode").bootstrapTable({
+            cache: false,
+            search: true,
+            //pagination: true,
+            striped: true,
+            url: '/Imex/LicenseHSCode',
+            clickToSelect: true,
+            reorderableColumns: true,
+            toolbarAlign: 'left',
+            //showColumns: true,
+            showRefresh: false,
+            smartDisplay: false,
+            pageSize: '5',
+            queryParams: function (params) {
+                return { LicenseID: $("#LicenseManagementID").val() }
+            },
+            formatNoMatches: function () {
+                return '<span class="noMatches">-</span>';
+            },
+            columns: [{
+                field: 'ID',
+                title: 'Action',
+                align: 'center',
+                formatter: operateFormatterHSPart,
+                events: operateEventsHS,
+                width: '1%',
+                switchable: false
+            },
+            {
+                field: 'HSCode',
+                title: 'HS Code',
+                halign: 'center',
+                align: 'center',
+                switchable: false,
+                formatter: formatterHSCode
+            }]
+        });
+    }
+
+    function loadHSPart() {
+        $(".removeHSCode").click(function () {
+            var id = $(this).attr("data-remove-id");
+            $("#select2-HSCode").select2({ data: [{ id: id, text: id }] });
+
+            $("[data-panle-id='" + id + "']").remove();
+        });
+
+        $(".removePartNumberCode").click(function () {
+            var id = $(this).attr("data-remove-id");
+            $("#select2-PartNumber").select2({ data: [{ id: id, text: id }] });
+
+            $("[data-panle-id='" + id + "']").remove();
+        });
+
+        $('#select2-HSCode').on("change", function () {
+            var HSCode = this.value;
+            if (HSCode != "" && HSCode != null) {
+                
+                $("#select2-HSCode option[value='" + HSCode + "']").remove();
+           
+                var randomId = 100 + ~~(Math.random() * 100);
+                $("#table-HSCode").bootstrapTable('insertRow', {
+                    index: 0,
+                    row: {
+                        id: randomId,
+                        HSCode: HSCode
+                    }
+                });
+            }
+
+            if ($("#select2-HSCode > option").length <= 1)
+                document.getElementById("selectAll").checked = true;
+        });
+
+        $('#select2-PartNumber').on("change", function () {
+            if (this.value != "" && this.value != null) {
+                var partNumber = this.value.split('-')[0].trim();
+                var manufac = this.value.split('-')[1].trim();
+                
+                $("#select2-PartNumber").val(null).change();
+                 
+                var randomId = 100 + ~~(Math.random() * 100);
+                $("#table-PartNumber").bootstrapTable('insertRow', {
+                    index: 0,
+                    row: {
+                        id: randomId,
+                        PartNumber: partNumber,
+                        ManufacturingCode: manufac
+                    }
+                });
+
+                if (lisPart == "")
+                    lisPart += partNumber + ' - ' + manufac;
+                else
+                    lisPart += "," + partNumber + ' - ' + manufac;
+
+                $("#ListPartsNumber").val(lisPart);
+
+            }
+                                                                          
+        });
+
+        $("#selectAll").off().on("click", function () {
+            if ($("#selectAll").is(':checked')) {
+                reloadHSParts($("#RegulationCode").val(), $("#LicenseManagementID").val());
+            } else {
+                if ($('#select2-HSCode').val() != undefined || $('#select2-HSCode').val() == null) {
+                    $("#table-HSCode").bootstrapTable("removeAll");
+                    helpers.buildDropdown('/Picker/Select2AllHsCodeByRegulation?RegulationCode=' + $("#RegulationCode").val(), $('#select2-HSCode'), true, '');
+                }
+            }
+        });
+    }
+
+    function generateHTMLAddHSCode(id, value) {
+        var html = '<div class="form-group panelGroupHSCode" data-panle-id="' + id + '">';
+        html += '       <label class="control-label col-lg-4 col-xs-4"></label>';
+        html += '        <div class="input-group col-lg-8 col-xs-8">';
+        html += '            <input class="form-control" id="HSCode_' + id + '" value="' + value + '" name="HSCode" type="text" placeholder="HS Code" readonly />';
+        html += '            <div style="cursor:pointer;" class="input-group-addon removeHSCode" data-remove-id="' + id + '">';
+        html += '                <i class="fa fa-trash" style="font-size:18px"></i>';
+        html += '            </div>';
+        html += '        </div>';
+        html += '    </div>';
+
+        return html;
+    }
+
+    function generateHTMLAddPartNumber(id, value) {
+        var html = '<div class="form-group panelGroupPartNumber" data-panle-id="' + id + '">';
+        html += '       <label class="control-label col-lg-4 col-xs-4"></label>';
+        html += '        <div class="input-group col-lg-8 col-xs-8">';
+        html += '            <input class="form-control" id="PartNumber_' + id + '" value="' + value + '" name="PartNumber" type="text" placeholder="Part Number" readonly />';
+        html += '            <div style="cursor:pointer;" class="input-group-addon removePartNumberCode" data-remove-id="' + id + '">';
+        html += '                <i class="fa fa-trash" style="font-size:18px"></i>';
+        html += '            </div>';
+        html += '        </div>';
+        html += '    </div>';
+
+        return html;
+    }
+
+    function generateHTMLSelect2(type) {
+        var html = '<div class="form-group">';
+        html += '      <label class="control-label col-lg-4 col-xs-4"></label>';
+        html += '      <div class="input-group col-lg-8 col-xs-8">';
+        html += '           <div class="row">';
+        html += '           <div class="col-lg-10 col-xs-10">';
+        if (type == 1)
+            html += '           <select class="js-states form-control required" id="select2-HSCode" name="select2-HSCode" style="width: 95%;" placeholder="HS Code"></select>';
+        else
+            html += '           <select class="js-states form-control required" id="select2-PartNumber" name="select2-PartNumber" style="width: 95%;" placeholder="Part Number"></select>';
+        html += '           </div>';
+        if (type == 1)
+            html += '<div class="col-lg-2 col-xs-2"><input type="checkbox" id="selectAll" > All</div>';
+
+        html += '       </div>';
+        html += '</div>';
+
+        return html;
+    }
+
+    function generateTable(type) {
+        var html = '';
+
+        if (type != "PartNumber") {
+            html += '<div class="panelGroupHSCode"><table class="table table-bordered table2excel" id="table-HSCode" style="width:100%"></table></div>';
+            $(".panleTable").html(html);
+            LoadTableHS();
+        }
+        else {
+            html += '<div class="panelGroupPartNumber"><table class="table table-bordered table2excel" id="table-PartNumber" style="width:100%;"></table></div>';
+            $(".panleTable").html(html);
+            LoadTableParts();
+        }
+    }
+
+    function setHSCodeOrPartNumber(type) {
+        $("#panelAddInput").html('');
+        switch (type) {
+            case 1:
+                $('[name="permit_type"]').val('HSCode');
+                $(".panelGroupPartNumber").remove();
+                if ($('#select2-HSCode').val() == undefined) {
+                    $("#panelAddInput").append(generateHTMLSelect2(type));
+                    helpers.buildDropdown('/Picker/Select2HsCodeByRegulation?RegulationCode=' + $("#RegulationCode").val() + "&LicenseID=" + $("#LicenseManagementID").val(), $('#select2-HSCode'), true, '');
+                }
+                break;
+            case 2:
+                $('[name="permit_type"]').val('PartNumber');
+                $(".panelGroupHSCode").remove();
+                if ($('#select2-PartNumber').val() == undefined) {
+                    $("#panelAddInput").append(generateHTMLSelect2(type));
+
+                    var regualtionCode = $("#RegulationCode").val();
+                    if (regualtionCode == "") regualtionCode = $("#dummyRegulationCode").val();
+
+                    var list = lisPart.split(',');
+                    var parts = new mySelect2({
+                        id: 'select2-PartNumber',
+                        url: '/Picker/SelectToAllPartNumberByRegulationCodePaging',
+                        minimumInputLength: 1
+                    }).LoadPartsNumberByRegulation(regualtionCode, $("#LicenseManagementID").val());
+                }
+                break;
+        }
+
+        loadHSPart();
+    }
+
+    function reloadHSParts(_regulationCode, _licenseId) {
+        enableLink(false);
+        if ($(".panelGroupPartNumber").html() != undefined) {
+            $.ajax({
+                url: '/Picker/GetDataPartNumberByRegulationCode',
+                dataType: 'json',
+                type: 'GET',
+                data: { RegulationCode: _regulationCode, LicenseID: _licenseId },
+                success: function (result) {
+                    $("#table-PartNumber").bootstrapTable("load", result);
+                    $("#select2-PartNumber > option").remove();
+                    enableLink(true);
+                },
+                cache: false
+            });
+        } else {
+            $.ajax({
+                url: '/Picker/GetDataHsCodeByRegulation',
+                dataType: 'json',
+                type: 'GET',
+                data: { RegulationCode: _regulationCode },
+                success: function (result) {
+                    $("#table-HSCode").bootstrapTable("load", result);
+                    $("#select2-HSCode > option").remove();
+                    enableLink(true);
+                },
+                cache: false
+            });
+        }
+    }
+
+</script>

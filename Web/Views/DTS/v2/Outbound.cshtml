@@ -1,0 +1,876 @@
+﻿@using App.Data.Domain;
+@{
+    Layout = "~/Views/Shared/_Layoutv2.cshtml"; 
+    ViewBag.Title = "Outbound Tracking";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+    var allowRead = "@(ViewBag.ViewMode)";
+    var userRoleName = "@(ViewBag.RoleName)";
+</script>
+<link href="/Scripts/kartik-v-bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .box-custom .box {
+        border: 1px solid #808080;
+        border-top: 2px solid #000006 !important;
+    }
+
+    .box-custom .box-header {
+        /*color: white;*/
+        background: #000006;
+        color: white;
+    }
+
+    .form-border .form-group {
+        margin-bottom: 5px;
+        border-bottom: 1px solid #d2cece;
+        padding-top: 3px;
+        padding-bottom: 4px;
+    }
+
+    .box-header.with-border {
+        border-bottom: 4px solid #f4f4f4;
+    }
+
+    .box .box-header .box-title {
+        display: inline-block;
+        padding: 10px 0px 0px 10px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+        float: left;
+        cursor: default;
+    }
+
+    .scheduler-border {
+        width: auto; /* Or auto */
+        padding-left: 10px; /* To give a bit of padding on the left and right */
+        border: 1px solid #cecece;
+        margin-top: 10px;
+    }
+
+    .error {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+    label.error {
+        border: none;
+        display: none !important;
+    }
+
+    .btn-trak {
+        background: #fe9d01;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    #input-group-search {
+        max-width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #searchKey {
+        border-color: #f39c12 !important;
+        text-align: center;
+    }
+
+    input#searchKey::placeholder {
+        color: #e08e0b7d !important;
+        text-align: center;
+    }
+
+    input#searchKey::-webkit-input-placeholder {
+        color: #e08e0b7d !important;
+        text-align: center;
+    }
+
+    input#searchKey:-moz-placeholder {
+        color: #e08e0b7d !important;
+        text-align: center;
+    }
+
+    input#searchKey::-ms-input-placeholder {
+        color: #e08e0b7d !important;
+        text-align: center;
+    }
+
+    input#searchKey::-moz-placeholder {
+        color: #e08e0b7d !important;
+        text-align: center;
+    }
+
+    .pagination .page-pre .page-link,
+    .pagination .page-next .page-link {
+        padding: 0 12px !important;
+    }
+
+    #tableOuboundUnit.table > tbody > tr > td {
+        height: 23.33px !important;
+        font-size: 9px !important;
+    }
+
+    .label-schd {
+        font-size: 100%;
+        color: #00a65a !important;
+    }
+
+    .label-rdly {
+        font-size: 100%;
+        color: #f39c12 !important;
+    }
+
+    .label-dlyd {
+        font-size: 100%;
+        color: #f4543c !important;
+    }
+
+    .label-bast {
+        font-size: 100%;
+        color: black !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#Home"><b>Detail Outbound</b></a></li>
+                            @if (ViewBag.allowCreate || ViewBag.allowUpdate)
+                            {
+                                <li><a data-toggle="tab" href="#List"><b>List Outbound</b></a></li>
+                                <li><a data-toggle="tab" href="#UploadStatus"><b>Upload Tracking Status</b></a></li>
+                            }
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="Home" class="tab-pane fade in active">
+                                <div class="col-md-12" style="text-align: center; margin-bottom: 20px;">
+                                    <h5 style="margin-bottom:0; color: #AAAAAA">
+                                        <img src="~/Content/Images/Truck.png" style="width: 48px;" />&nbsp;&nbsp;Easy Way To Track Your Shipment
+                                    </h5>
+                                    <div class="box-body center-block bg-yellow" style="border-radius:9px; width:40%">
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <div class="pull-left" style="color:gray">
+                                                    <h4><strong>DR Number</strong></h4>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" style="padding-left: 0px;padding-right: 0px;">
+                                                <input type="text" id="searchKey" class="form-control" placeholder="Enter Number"
+                                                       style="font-size: 24px !important;height:40px" />
+                                            </div>
+                                            <div class="col-lg-1" style="padding-left: 0px;padding-right: 0px;">
+                                                <div class="pull-left">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" onclick="filterData();" class="btn bg-gray btn-flat form-control"
+                                                                style="font-size:15px !important; padding: 0 12px;height: 38px;margin-top:1px;margin-left:-3px">
+                                                            <i class="fa fa-filter"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1" style="padding-left: 0px;">
+                                                <div class="pull-left">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" onclick="searchData();" class="btn bg-black btn-flat form-control"
+                                                                style="font-size: 24px !important;padding: 0 12px;height: 38px;margin-top:1px;margin-left:-15px;">
+                                                            <i style="margin-right:15px;">GO</i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @RenderPage("~/Views/DTS/v2/FormOutboundGrouping.cshtml")
+                                @*<div class="col-md-12" id="loading" style="display:none;padding-top:20px;border-top:1px solid #cecece;margin-top:40px;">
+                                    <div class="col-md-12 text-center">
+                                        <img src="~/Content/Images/ajax-loading.gif" />
+                                    </div>
+                                </div>*@
+                                <div class="col-md-12" id="OutboundDetailNone" style="display:none;border-top:1px solid #cecece;margin-top:40px;">
+                                    <div class="col-md-12 text-center">
+                                        <h5 style="color: red;"><strong>*) Ops!, DR not found you might enter wrong number</strong></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (ViewBag.allowCreate || ViewBag.allowUpdate)
+                            {
+                                <div id="List" class="tab-pane fade in">
+                                    <div class="col-md-12">
+                                        <div class="form-horizontal" style="margin-top:20px;">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">DI Number</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="DI" id="DINumber" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">DA Number</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="DA" id="DANumber" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Origin</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="filterOrigin" id="filterOrigin" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Destination</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="filterDestination" id="filterDestination" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Moda</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="Moda" id="FilterModa" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Unit Type</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="UnitType" id="FilterUnitType" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Model</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="Model" id="FilterModel" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Serial Number</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="SerialNumber" id="FilterSerialNumber" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Status</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="Status" id="FilterStatus" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">Position</label>
+                                                    <div class="col-md-10">
+                                                        <input type="text" class="form-control" name="Position" id="FilterPosition" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">&nbsp;</div>
+                                            <div class="col-md-6 pull-right">
+                                                <button class="pull-right btn btn-warning" id="BtnFilter" style="color:black;"><i class="fa fa-search"></i> Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <div id="toolbar" class="col-md-2 toolbarBtn">
+                                            <div class="row">
+                                                <button class="btn btn-success" type="button" id="btnExportOutbound"><i class="fa fa-file-excel-o"></i> Download to Excel</button>
+                                            </div>
+                                        </div>
+                                        <table id="tableOutbound" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                    </div>
+                                </div>
+                                <div id="UploadStatus" class="tab-pane fade in">
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <div class="col-md-6">
+                                            <object id="file-object" name="file_import"></object>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="pull-right btn btn-warning" id="BtnDownloadTpl" style="color:black;">
+                                                Download Template
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="box-body">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px; display:none;">
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Moda</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Moda -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Unit Type</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Unit Type -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Model</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control">
+                                                <option>- Select Model -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">&nbsp;</div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Status</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control">
+                                                <option>- Select Status -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Position</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control">
+                                                <option>- Select Position -</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='modalLogStatus' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header bg-orange">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Update Tracking Status</h4>
+            </div>
+            <div class="modal-body" style="padding-top:10px; margin-left: 10px; margin-right: 10px;">
+                <form class="form" id="formLogStatus">
+                    <ul class="nav nav-tabs">
+                        <li id="tab1" class="active"><a data-toggle="tab" href="#UnitInfo"><b>UNIT</b></a></li>
+                        <li id="tab2"><a data-toggle="tab" href="#TransportationInfo"><b>TRANSPORTATION</b></a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="UnitInfo" class="tab-pane fade in active">
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-12">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label for="Action" class="control-label col-md-3 col-xs-12">Activity</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <select class="select2Field" id="Action" name="Action"></select>
+                                                <div for="Action" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Status" class="control-label col-md-3 col-xs-12">Status</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <select class="select2Field" id="Status" name="Status"></select>
+                                                <div for="Status" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Position" class="control-label col-md-3 col-xs-12">Position</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="Position" name="Position" placeholder="Position" />
+                                                <div for="Position" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Attachment1" class="control-label col-md-3 col-xs-12">MAPS</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input id="Attachment1" name="Attachment1" type="file" class="file"
+                                                       data-browse-on-zone-click="false"
+                                                       data-show-preview="false"
+                                                       show-upload="false"
+                                                       data-allowed-file-extensions='["jpg", "png", "gif","bmp","docx","doc","xlsx","xls","pdf"]'
+                                                       data-show-upload="false"
+                                                       data-show-caption="true"
+                                                       data-msg-placeholder="Select {files} for upload..." />
+                                                <label>*Jpg/Png/Gif/Bmp</label>
+                                                <div for="Attachment1" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="EstTimeDeparture" class="control-label col-md-4 col-xs-12">Pickup Plan</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control date" name="EstTimeDeparture" id="EstTimeDeparture"
+                                                       placeholder="Pickup Plan" />
+                                                <div for="EstTimeDeparture" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ActTimeDeparture" class="control-label col-md-4 col-xs-12">ATD</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control date" name="ActTimeDeparture" id="ActTimeDeparture"
+                                                       placeholder="Actual Time Departure" />
+                                                <div for="ActTimeDeparture" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="EstTimeArrival" class="control-label col-md-4 col-xs-12">ETA</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control date" name="EstTimeArrival" id="EstTimeArrival"
+                                                       placeholder="Estimation Time Arrival" />
+                                                <div for="EstTimeArrival" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ActTimeArrival" class="control-label col-md-4 col-xs-12">ATA</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control date" name="ActTimeArrival" id="ActTimeArrival"
+                                                       placeholder="Actual Time Arrival" />
+                                                <div for="ActTimeArrival" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="Notes" class="control-label">Notes</label>
+                                            <textarea class="form-control" name="Notes" id="Notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="TransportationInfo" class="tab-pane fade in">
+                            <div id="sea-freight" class="row freight hidden" style="margin-top: 10px;">
+                                <div class="col-lg-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="VeselName" class="control-label col-md-4 col-xs-12">Vessel Name*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input id="VeselName" name="VeselName" class="form-control" placeholder="Vessel Name" required />
+                                                <div for="VeselName" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PICName" class="control-label col-md-4 col-xs-12">PIC Name*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="PICName" name="PICName" placeholder="PIC Name" required />
+                                                <div for="PICName" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PICHp" class="control-label col-md-4 col-xs-12">PIC HP</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="PICHp" id="PICHp" placeholder="PIC HP" />
+                                                <div for="PICHp" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 driver-info">
+                                        <div class="form-group">
+                                            <label for="VeselNoPolice" class="control-label col-md-4 col-xs-12">NO POLISI*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input name="VeselNoPolice" class="form-control" placeholder="NO POLISI" />
+                                                <div for="VeselNoPolice" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverName" class="control-label col-md-4 col-xs-12">DRIVER Name*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="DriverName" placeholder="DRIVER Name" />
+                                                <div for="DriverName" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverHp" class="control-label col-md-4 col-xs-12">DRIVER HP</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="DriverHp" placeholder="DRIVER HP" />
+                                                <div for="DriverHp" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="land-freight" class="row freight hidden" style="margin-top: 10px;">
+                                <div class="col-lg-12">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label for="VeselNoPolice" class="control-label col-md-4 col-xs-12">NO POLISI*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input id="VeselNoPolice" name="VeselNoPolice" class="form-control" placeholder="NO POLISI" required />
+                                                <div for="VeselNoPolice" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverName" class="control-label col-md-4 col-xs-12">DRIVER Name*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" id="DriverName" name="DriverName" placeholder="DRIVER Name" required />
+                                                <div for="DriverName" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverHp" class="control-label col-md-4 col-xs-12">DRIVER HP</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="DriverHp" id="DriverHp" placeholder="DRIVER HP" />
+                                                <div for="DriverHp" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="air-freight" class="row freight hidden" style="margin-top: 10px;">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="DANo" class="control-label col-md-5 col-xs-12">DA No*</label>
+                                            <div class="input-group col-md-7 col-xs-12">
+                                                <input id="DANo" name="DANo" class="form-control" placeholder="DA No" required />
+                                                <div for="DANo" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 driver-info">
+                                        <div class="form-group">
+                                            <label for="VeselNoPolice" class="control-label col-md-4 col-xs-12">NO POLISI*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input name="VeselNoPolice" class="form-control" placeholder="NO POLISI" />
+                                                <div for="VeselNoPolice" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverName" class="control-label col-md-4 col-xs-12">DRIVER Name*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="DriverName" placeholder="DRIVER Name" />
+                                                <div for="DriverName" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DriverHp" class="control-label col-md-4 col-xs-12">DRIVER HP</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input type="text" class="form-control" name="DriverHp" placeholder="DRIVER HP" />
+                                                <div for="DriverHp" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-left ct-apply-to-all">
+                    <div class="checkbox">
+                        <label style="font-weight: bolder;">
+                            <input id="ApplyToAll" name="AppllyToAll" value="true" type="checkbox" /> Apply to All
+                        </label><br />
+                    </div>
+                </div>
+                <div class="button-action">
+                    <button id="Save" name="Save" class="btn-form btn btn-success" type="button">
+                        <i class="fa fa-check-circle"></i> Save
+                    </button>
+                    <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModalLog();">
+                        <i class="fa fa-arrow-left"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalRequest' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @Html.Partial("~/Views/DTS/v2/_FormRequisitingAcc.cshtml")
+        </div>
+    </div>
+</div>
+
+<div id='myModalFilterDR' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @Html.Partial("~/Views/DTS/v2/_OutboundFilterDR.cshtml")
+        </div>
+    </div>
+</div>
+
+<div id='myModalIconPreparation' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-orange">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">&nbsp; SAP DOCUMENTS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+                            <div class="box-header">
+                                <h3 class="box-title">SAP DOCUMENTS</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="SoNo" class="control-label col-md-4 col-xs-12">SO No*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="SoNo" placeholder="SO Number" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="STRNo" class="control-label col-md-4 col-xs-12">STR No*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="STRNo" placeholder="STR Number" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="SoDate" class="control-label col-md-4 col-xs-12">SO Date*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="SoDate" placeholder="SO Date" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="STRDate" class="control-label col-md-4 col-xs-12">STR Date*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="STRDate" placeholder="STR Date" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 hidden">
+                                        <div class="form-group hidden">
+                                            <label for="STONo" class="control-label col-md-4 col-xs-12">STO No*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="STONo" placeholder="STO Number" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group hidden">
+                                            <label for="StoDate" class="control-label col-md-4 col-xs-12">STO Date*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="STODate" placeholder="STO Date" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 hidden">
+                                        <div class="form-group">
+                                            <label for="DoNo" class="control-label col-md-4 col-xs-12">OD No*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="DoNo" placeholder="OD Number" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="OdDate" class="control-label col-md-4 col-xs-12">OD Date*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="OdDate" placeholder="OD Date" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="DINo" class="control-label col-md-4 col-xs-12">DI No*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="DINo" placeholder="DI Number" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="DIDate" class="control-label col-md-4 col-xs-12">DI Date*</label>
+                                            <div class="input-group col-md-8 col-xs-12">
+                                                <input class="form-control" name="DIDate" placeholder="DI Date" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalIconPickup' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-orange">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">&nbsp; PICKUP</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered" id="tableOuboundUnitForPickup"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalDestination' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-orange">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">&nbsp; DESTINATION</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="formDestinationUnit">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">CUSTOMER & DESTINATION INFO</h4>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseCustomerInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <div class="form-group">
+                                                <label for="DCustID" class="control-label col-md-4 col-xs-12">Customer Name</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <select id="DCustID" required name="DCustID" class="select2Field"></select>
+                                                    <input type="text" name="DCustName" id="DCustName" class="hidden" />
+                                                    <div for="DCustID" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DPicName" class="control-label col-md-4 col-xs-12">Customer PIC Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="DPicName" name="DPicName" required placeholder="Nama PIC customer/penerima unit" />
+                                                    <div for="DPicName" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DPicHP" class="control-label col-md-4 col-xs-12">Customer PIC HP*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="DPicHP" id="DPicHP" required placeholder="Nomor HP PIC customer/penerima unit" />
+                                                    <div for="DPicHP" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DCustAddress" class="control-label col-md-4 col-xs-12">Destination</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <textarea name="DCustAddress" id="DCustAddress" class="form-control" required
+                                                              placeholder="Alamat tujuan customer/penerima unit" style="height: 109px;"></textarea>
+                                                    <label>*Lengkapi alamat dengan alamat site customer</label>
+                                                    <div for="DCustAddress" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label for="DKecamatan" class="control-label col-md-4 col-xs-12">Sub-District*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="DKecamatan" name="DKecamatan" required placeholder="Nama Kecamatan Tujuan" />
+                                                    <div for="DKecamatan" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DKabupaten" class="control-label col-md-4 col-xs-12">District*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="DKabupaten" name="DKabupaten" required placeholder="Nama Kabupaten Tujuan" />
+                                                    <div for="DKabupaten" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DProvince" class="control-label col-md-4 col-xs-12">Province*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="DProvince" name="DProvince" required placeholder="Nama Provinsi Tujuan" />
+                                                    <div for="DProvince" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="button-action">
+                    <button id="SaveDestination" name="SaveDestination" class="btn-form btn btn-success" type="button"><i class="fa fa-cog"></i> Save</button>
+                    <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModal('myModalDestination');">
+                        <i class="fa fa-arrow-left"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id='myModalSNVisionLink' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @Html.Partial("~/Views/DTS/v2/OutboundSNVisionLink.cshtml")
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript" src="/Scripts/kartik-v-bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="/Scripts/adminlte.js"></script>
+    <script type="text/javascript" src=@Url.Content("~/Scripts/ExcelPlus-master-2.4.1/sheetjs.all.js")></script>
+    <script type="text/javascript" src=@Url.Content("~/Scripts/ExcelPlus-master-2.4.1/excelplus-2.4.1.js")></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts.app/DTS/v2/_FormRequisitingAcc.cshtml.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts.app/DTS/v2/Outbound.cshtml.js?v=2")"></script>
+}

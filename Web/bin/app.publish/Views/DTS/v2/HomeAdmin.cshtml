@@ -1,0 +1,301 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layoutv3.cshtml";
+    ViewBag.Title = "DTS Home";
+}
+
+@using System.Web.Mvc
+<link href="/Scripts/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<link href="/Scripts/kartik-v-bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+
+<style type="text/css">
+
+    .highcharts-container {
+        height: 400px !important;
+    }
+    .homebox1 {
+        /*width: 271px;*/
+        height: 100px;
+        /*left: 220px;*/
+        /*top: 135px;*/
+        margin-left: 50px !important;
+        margin-right: 50px !important;
+        margin-top: 10px !important;
+        /*text-align: center;*/
+        /*margin-bottom: 50px !important;*/
+        background: #FFFFFF;
+        border: 1px solid #F2F2F2;
+        box-sizing: border-box;
+        box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    .homebox {
+        /*width: 271px;*/
+        height: 100px;
+        /*left: 220px;*/
+        /*top: 135px;*/
+        margin-left: 50px !important;
+        margin-right: 50px !important;
+        margin-top: 10px !important;
+        text-align:center;
+        /*margin-bottom: 50px !important;*/
+        background: #FFFFFF;
+        border: 1px solid #F2F2F2;
+        box-sizing: border-box;
+        box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    .homeboxbottom {
+        /*width: 271px;*/
+        height: 100px;
+        /*left: 220px;*/
+        /*top: 135px;*/
+        margin-left: 50px !important;
+        margin-right: 50px !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+        background: #FFFFFF;
+        border: 1px solid #F2F2F2;
+        box-sizing: border-box;
+        box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+    .homesmallbox {
+        position: relative;
+        height: 80px;
+        background: #FFFFFF;
+        border: 1px solid #F2F2F2;
+        box-sizing: border-box;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        width: 180px;
+        padding-left: 10px !important;
+        z-index: 2;
+    }
+
+    .homefont {
+        /*position: absolute;*/
+        /*width: 143px;*/
+        height: 34px;
+        /*left: 227px;
+        top: 176px;*/
+        /*font-family: Gilroy;*/
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 30px;
+        /* or 187% */
+        /*display: flex;*/
+        align-items: center;
+        letter-spacing: 0.01em;
+        color: #000000;
+        padding-left: 10px;
+    }
+
+    .collapsible {
+        cursor: pointer;
+        padding-left: 80px;
+        /*width: 100%;*/
+        border: none;
+        text-align: left;
+        outline: none;
+    }
+
+    .statistic {
+        background: #FFFFFF;
+        border: 1px solid #E6E6E6;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+    .notifcount {
+        cursor: pointer
+    }
+    .homebox :hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .notifcount :hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2 col-sm-2 col-xs-12 homebox">
+                    <br />
+                    <img src="~/Images/CreateDRNew.png">
+                    <label class="homefont ">DELIVERY REQUEST</label>
+                    <img src="~/Images/bottomarrow.png" class="collapsible" />
+                    <div style="display:none">
+                        <br />
+                        <br />
+                        <div id="createDRnew" class="homesmallbox">
+                            <br />
+                            <img id="createDRnew" src="~/Images/CreateDIManualNew.png" />
+                            <label id="createDRnew" class="homefont">CREATE DR</label>
+                        </div>
+                        <div id="DRApprove" class="homesmallbox">
+                            <br />
+                            <img id="DRApprove" src="~/Images/CreateDIManualNew.png" />
+                            <label id="DRApprove" class="homefont">DR APPROVAL</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 homebox1">
+                    <br />
+                    <img id="DRList" src="~/Images/DRListNew.png" />
+                    <label id="DRList" class="homefont">DI MANUAL</label>
+                    <img src="~/Images/bottomarrow.png" class="collapsible" />
+                    <div style="display:none">
+                        <br />
+                        <br />
+                        <div id="createDInew" class="homesmallbox">
+                            <br />
+                            <img id="createDInew" src="~/Images/CreateDIManualNew.png" />
+                            <label id="createDInew" class="homefont">CREATE DI</label>
+                        </div>
+                        <div id="DIApprove" class="homesmallbox">
+                            <br />
+                            <img id="DIApprove" src="~/Images/CreateDIManualNew.png" />
+                            <label id="DIApprove" class="homefont">DI APPROVAL</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 homebox">
+                    <br />
+                    <img id="DRList" src="~/Images/tracking.png" />
+                    <label id="DRList" class="homefont">DELIVERY TRACKING</label>
+                    <img src="~/Images/bottomarrow.png" class="collapsible" />
+                    <div style="display:none">
+                        <br />
+                        <br />
+                        <div id="imageInboundTracking" class="homesmallbox">
+                            <br />
+                            <img id="imageInboundTracking" src="~/Images/newtracking.png" />
+                            <label id="imageInboundTracking" class="homefont">Inbound Tracking</label>
+                        </div>
+                        <div id="imageDeliveryTracking" class="homesmallbox">
+                            <br />
+                            <img id="imageDeliveryTracking" src="~/Images/newtracking.png" />
+                            <label id="imageDeliveryTracking" class="homefont">DELIVERY TRACKING</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12 homebox">
+                    <br />
+                    <img id="DRList" src="~/Images/tracking.png" />
+                    <label id="DRList" class="homefont">DAILY REPORT</label>
+                    <img src="~/Images/bottomarrow.png" class="collapsible" />
+                    <div style="display:none">
+                        <br />
+                        <br />
+                        <div id="imageDailyReportInbound" class="homesmallbox">
+                            <br />
+                            <img id="imageDailyReportInbound" src="~/Images/newreport.png" />
+                            <label id="imageDailyReportInbound" class="homefont">DAILY REPORT</label>
+                            <br />
+                            <label id="imageDailyReportInbound" class="homefont " style="padding-left: 50px;">(INBOUND)</label>
+                        </div>
+                        <div id="imageDailyReportOutbound" class="homesmallbox">
+                            <br />
+                            <img id="imageDailyReportOutbound" src="~/Images/newreport.png" />
+                            <label id="imageDailyReportOutbound" class="homefont">DAILY REPORT </label>
+                            <br />
+                            <label id="imageDailyReportOutbound" class="homefont " style="padding-left: 50px;">(OUTBOUND)</label>
+                        </div>
+
+                    </div>
+                </div>             
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="freight" class="col-md-2 homeboxbottom ">
+                    <br />
+                    <img id="freight" src="~/Images/freight.png" />
+                    <label id="freight" class="homefont ">FREIGHT ESTIMATE</label>
+                </div>
+
+                <div id="shipmentinbound" class="col-md-2 homeboxbottom" style="display:none">
+                    <br />
+                    <img id="shipmentinbound" src="~/Images/tracking.png" />
+                    <label id="shipmentinbound" class="homefont ">SHIPMENT NON CKB</label>
+                    <br />
+                    <label id="shipmentinbound" class="homefont " style="padding-left: 80px;">(INBOUND)</label>
+                </div>
+                <div id="shipmentoutbound" class="col-md-2 homeboxbottom" style="display:none">
+                    <br />
+                    <img id="shipmentoutbound" src="~/Images/tracking.png" />
+                    <label id="shipmentoutbound" class="homefont ">SHIPMENT NON CKB</label>
+                    <br />
+                    <label id="shipmentoutbound" class="homefont " style="padding-left: 80px;"> (OUTBOUND)</label>
+                </div>
+                <div id="InboundEviz" class="col-md-2 homeboxbottom ">
+                    <br />
+                    <img id="InboundEviz" src="~/Images/Evis.png" />
+                    <label id="InboundEviz" class="homefont ">INBOUND EVIZ</label>
+                </div>
+                <div id="userguide" class="col-md-2 homebox ">
+                    <br />
+                    <img id="userguide" src="~/Images/Evis.png" />
+                    <label id="userguide" class="homefont">USER GUIDE</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="statistic">
+                    <div id="ChartDR" class="chart-container"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistic">
+                    <div style="font-weight: 600;font-size: 14px;line-height: 24px;margin: 20px">
+                        <strong>DR STATISTIC</strong>
+                    </div>
+                    <div style="font-weight: 600;font-size: 12px;line-height: 24px;margin: 20px">
+                        <label class="notifcount" id="countnotifTodaySPChain"></label> NEW REQUEST TODAY
+                    </div>
+                    <div style="border:1px solid #EEF0F7;">
+                    </div>
+                    <div  class="notifcount" style="font-weight: 600;font-size: 13px;line-height: 24px;margin: 20px">
+                        DR SUBMIT
+                        <label id="drsubmit" style="padding-left:265px">0</label>
+                    </div>
+                    <div  class="notifcount"  style="font-weight: 600;font-size: 13px;line-height: 24px;margin: 20px">
+                        DR APPROVE
+                        <label id="drapprove" style="padding-left:255px">0</label>
+                    </div>
+                    <div  class="notifcount"  style="font-weight: 600;font-size: 13px;line-height: 24px;margin: 20px">
+                        DR REVISE
+                        <label id="drrevise" style="padding-left:270px">0</label>
+                    </div>
+                    <div  class="notifcount"  style="font-weight: 600;font-size: 13px;line-height: 24px;margin: 20px">
+                        DR REJECTED
+                        <label  id="drreject" style="padding-left:238px">0</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+
+

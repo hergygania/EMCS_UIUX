@@ -1,0 +1,373 @@
+﻿﻿@model  App.Web.Models.EMCS.CiplModel
+@{
+    ViewBag.Title = "Commercial Invoice Packing List View";
+    ViewBag.Page = "cipl";
+    ViewBag.Id = Model.Data.Id.ToString();
+    ViewBag.IdReq = Model.Data.Id;
+    ViewBag.IdStep = Model.DataRequest.IdStep;
+    ViewBag.TypeReq = "Cipl";
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    
+}
+
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+@Styles.Render("~/Content/EMCS/dropzone.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+
+@* <style>
+    .input-group-addon {
+        width: 50px;
+        background: #00C0EF;
+        border-color: #00ACD6;
+        color: white;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 0px 0.4285rem 0.4285rem 0px;
+    }
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+    .tabs a {
+        text-decoration: none;
+        color: #777;
+        padding: 10px 20px;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        transition-duration: 0.6s;
+    }
+
+    .tabs a.active {
+        color: #fff;
+    }
+
+    .tabs a i {
+        margin-right: 5px;
+    }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 4px -4px #a8a8a8;
+        }
+</style> *@
+
+<div class="!px-8 !pt-8 !pb-2">
+    <div>
+        @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+    </div>
+    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+        <nav class="tabs tabsNav mb-8 text-base bg-white">
+            <div class="selector"></div>
+            @if (!ViewBag.GroupName.Contains("CKB"))
+            {
+                <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab"><span
+            class="tabsNav--item-label">Detail</span></a>
+                <a href="#history" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;"><span
+            class="tabsNav--item-label">History</span></a>
+                <a href="#problemhistory" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;"><span
+            class="tabsNav--item-label">Problem</span></a>
+                <a href="#documents" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;"><span
+            class="tabsNav--item-label">Documents</span></a>
+                <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;"><span
+            class="tabsNav--item-label">EDI Preview</span></a>
+                <a href="#inpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;"><span
+            class="tabsNav--item-label">Invoice Preview</span></a>
+                <a href="#plpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;"><span
+            class="tabsNav--item-label">PL Preview</span></a>
+                <a href="#uploaddoc" class="tabsNav--item hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;"><span
+            class="tabsNav--item-label">Upload Documents</span></a>
+            }
+            else
+            {
+
+                if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
+                {
+                    <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                    <a href="#history" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                    <a href="#problemhistory" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                    <a href="#documents" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                    <a href="#inpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                    <a href="#plpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                    <a href="#uploaddoc" class="tabsNav--item hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+
+                }
+                else if (ViewBag.StepCargoId != 10020)
+                {
+                    <a href="#edipreview" class="tabsNav--item active" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+
+                }
+                else
+                {
+                    if (ViewBag.StepCargoId == 10020)
+                    {
+                        <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                        <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+
+                    }
+                }
+            }
+        </nav>  
+        <div class="tab-content tabs-custom">
+            @if (!ViewBag.GroupName.Contains("CKB"))
+            {
+                <div role="tabpanel" class="tab-pane active" id="invoice">
+                    @Html.Partial("CiplTabInvoice", Model)
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="history">
+                    @Html.Partial("CiplTabHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="problemhistory">
+                    @Html.Partial("CiplTabProblemHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="documents">
+                    @Html.Partial("CiplTabDocuments")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="inpreview">
+                    @Html.Partial("CiplTabInPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="plpreview">
+                    @Html.Partial("CiplTabPlPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="uploaddoc">
+                    @Html.Partial("CiplTabUploadDoc")
+                </div>
+            }
+            else if (ViewBag.StepCargoId != 10020)
+            {
+                <div role="tabpanel" class="tab-pane active" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+            }
+            else
+            {
+                if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
+                {
+                    <div role="tabpanel" class="tab-pane active" id="invoice">
+                        @Html.Partial("CiplTabInvoice", Model)
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="history">
+                        @Html.Partial("CiplTabHistory")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="problemhistory">
+                        @Html.Partial("CiplTabProblemHistory")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="documents">
+                        @Html.Partial("CiplTabDocuments")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="edipreview">
+                        @Html.Partial("CiplTabEditPreview")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="inpreview">
+                        @Html.Partial("CiplTabInPreview")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="plpreview">
+                        @Html.Partial("CiplTabPlPreview")
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="uploaddoc">
+                        @Html.Partial("CiplTabUploadDoc")
+                    </div>
+
+                }
+                else
+                {
+                    if (ViewBag.StepCargoId == 10020)
+                    {
+                        <div role="tabpanel" class="tab-pane active" id="invoice">
+                            @Html.Partial("CiplTabInvoice", Model)
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="edipreview">
+                            @Html.Partial("CiplTabEditPreview")
+                        </div>
+                    }
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var wizardState = @ViewBag.WizardData.Progress;
+        var spacing = 0;
+        if ('@Model.TemplateDetail.Count' < 25)
+            spacing = ((250 / 20) - '@Model.TemplateDetail.Count') * 20;
+        $('.spacing').css("height", spacing + 'px');
+
+    </script>
+    @Scripts.Render("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")
+    @Scripts.Render("~/Content/EMCS/DropZone/dropzone.js")
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CiplHistory.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CiplDocuments.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CiplItem.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/Custom.js")
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblemDelegation.cshtml.js")
+    <script>
+        $('#btnRevise').hide();
+
+        $(function () {
+            load_data_tabledoc();
+            get_ciplitem_by_id();
+            get_ciplviewdocument_by_id();
+            $.ajax({
+                url: '/EMCS/SearchCargoByCipl',
+                type: 'POST',
+                data: {
+                    IdCipl: $('#idCipl').val()
+                },
+                cache: false,
+                async: false,
+                success: function (data, response) {
+                    if (data.length <= 0 && ($('#statuscipl').val() === "Approve")) {
+                        if (@Model.DataRequest.IdStep === 7 || @Model.DataRequest.IdStep === 10 || @Model.DataRequest.IdStep === 2) {
+                            $('#btnRevise').show();
+                        }
+                    }
+                },
+                error: function (e) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Update Data',
+                    })
+                }
+            })
+        })
+
+        function ReviseProblem(Status, IdRequest, Notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/CiplApproval",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: Status,
+                    Id: IdRequest,
+                    Notes: Notes
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success',
+                    }).then((result) => {
+                        window.location.href = "/EMCS/CiplList";
+                    });
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+        }
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function (resp) {
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+            return status;
+        }
+
+        $("#YesReviseBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Submit";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        });
+    </script>
+}
+
+<script>
+  var tabs = $(".tabs");
+  var selector = $(".tabs").find("a").length;
+  //var selector = $(".tabs").find(".selector");
+  var activeItem = tabs.find(".active");
+  var activeWidth = activeItem.innerWidth();
+  $(".selector").css({
+    left: activeItem.position.left + "px",
+    width: activeWidth + "px",
+  });
+
+  $(".tabs").on("click", "a", function (e) {
+    e.preventDefault();
+    $(".tabs a").removeClass("active");
+    $(this).addClass("active");
+    var activeWidth = $(this).innerWidth();
+    var itemPos = $(this).position();
+    $(".selector").css({
+      left: itemPos.left + "px",
+      width: activeWidth + "px",
+    });
+  });
+</script>

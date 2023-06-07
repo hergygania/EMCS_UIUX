@@ -1,0 +1,103 @@
+﻿﻿@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Achievement";
+}
+
+<style type="text/css">
+    .highcharts-container {
+        height: 262px !important;
+    }
+
+    .hasniToolbar {
+        display: inline !important;
+        /*margin: 5px;*/
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="box box-danger box-shadow">
+            <div class="box-header with-border">
+                <div class="hasniToolbar">
+                    <button class="btn btn-secondary btn-sm pull-right" onclick="exportDataReport()" style="margin-top:4px;" id="PVFullScreen"><i class="fa fa-file-excel-o"></i></button>&nbsp;
+                    <div class="dropdown pull-right" style="margin-right:5px;">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;">
+                            <i class="fa fa-th"></i>
+                        </button>
+                        <ul class="dropdown-menu keep-open">
+                            @*<form class="form-horizontal" id="form-achievement">*@
+                                <li>
+                                    <div class="input-group col-lg-12 col-xs-12">
+                                        <input type="text" class="form-control date" id="inp-start-date" name="inp-start-date" placeholder="Start Date" autocomplete="off" value="@DateTime.Now.ToString("01 Jan yyyy")">
+                                        <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                            <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="input-group col-lg-12 col-xs-12">
+                                        <input type="text" class="form-control date" id="inp-end-date" name="inp-end-date" placeholder="End Date" autocomplete="off" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                        <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                            <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-default btn-sm" onclick="AchievementSearch()" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            @*</form>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" data-toolbar=".toolbarCipl" id="tbl-achievement"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="box box-danger box-shadow">
+            <div class="box-header with-border text-center">
+                @*<h4><b>Achievement</b></h4>*@
+                <div class="outer">
+                    <div id="container-speed" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*modal*@
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="containerModal"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/highchart.js")
+    @Scripts.Render("~/Scripts.app/EMCS/Report/Achievement.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/highcharts-more.js")
+    @Scripts.Render("~/Scripts.app/EMCS/highcharts/solid-gauge.js")
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/Achievement.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

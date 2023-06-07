@@ -1,0 +1,23 @@
+﻿<div style="align-content:center;">
+    <div class="row" style="margin-top:10px;padding:10px;margin-bottom:10px;">
+        <input type="text" class="form-control col input-sm" name="name" id="poNo" placeholder="PO No" />
+        <div class="input-group col">
+            <input type="text" name="InvoiceUploadDate" class="daterange form-control input-sm" id="InvoiceUploadDate" placeholder="Invoice Upload Date" />
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>
+        <div class="input-group col">
+            <input type="text" name="InvoicePostingDate" class="daterange form-control input-sm" id="InvoicePostingDate" placeholder="Invoice Posting Date" />
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row">
+                <button class="btn col btn btn-outline-primary" style="color:black" onclick="searchInvoice()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;
+                <button class="btn col btn btn-outline-warning" style="color:black;" onclick="clearSearchFilter()"><i class="fa fa-recycle"></i>&nbsp;Reset</button>
+            </div>
+        </div>
+    </div>
+</div>

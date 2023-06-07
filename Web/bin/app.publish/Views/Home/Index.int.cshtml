@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+<div class="box box-warning">
+    @*<div class="box-header">
+            <h3 class="box-title"><b>Dashboard</b></h3>
+        </div>*@
+    <div class="box-body">
+
+
+        <div class="content" style="background:white">
+            <div class="row">
+                <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                            <span class="caption-subject text-uppercase"> To Do List</span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:;" class="btn btn-circle">
+                                <i class="glyphicon glyphicon-resize-full"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        @*<table class="table table-bordered table-striped" id="tableToDoList"></table>*@
+                        
+
+                    </div>
+                </div>
+                <!-- END Portlet PORTLET-->
+
+            </div>
+        </div>
+
+        <table id="Todolist" class="easyui-treegrid" style="width:98%"
+               rownumbers=" true"
+               idfield="ID" treefield="Name" data-></table>
+
+    </div>
+</div>
+
+@*<script src="~/Scripts.app/Home/Index.int.cshtml.js"></script>*@
+<script src="~/Scripts/jquery.easyui.min.js"></script>
+<script src="~/Scripts/easyloader.js"></script>
+<link href="~/Content/easyui.css" rel="stylesheet" />
+<script type="text/javascript">
+    var json;
+    $(document).ready(function () {
+        $.ajax({
+            url: "/Home/GetListToDoList",
+            //data: 'RoleID=' + this.value,
+            cache: false,
+            error: function (e) {
+                $('#Todolist').treegrid('loaded');
+                sAlert("Error", e.statusText, "error");
+            },
+            success: function (data) {
+                $('#Todolist').treegrid('loaded');
+                $('#Todolist').treegrid('loadData', data);
+            }
+        });
+
+
+
+        $('#Todolist').treegrid({
+            url: '/Home/GetListToDoList',
+            onLoadSuccess: function () { $('#Todolist').treegrid('collapseAll', 0); },
+            columns: [[
+                //{
+                //    field: 'Name', title: 'Name', formatter: function (value, row) {
+                //        return '<i class="' + row.icon + '"></i>&nbsp&nbsp' + value;
+                //    }
+                //},
+                {
+                    field: 'Name', title: 'Name', width: '90%', halign: 'center', align: 'left', sortable: true, formatter: linkFormatter
+                },     
+                
+                { field: 'Value', title: 'Total Document', width: '10%', halign: 'center', align: 'right', formatter: formatNumber, sortable: true }
+            ]]
+        });
+
+    });
+
+
+    function linkFormatter(value, row, index) {
+        return "<a href='" + row.Url + "'>" + value + "</a>";
+    }
+
+    function myLoadFilter(data, parentId) {
+        function setData(data) {
+            var todo = [];
+            for (var i = 0; i < data.length; i++) {
+                todo.push(data[i]);
+            }
+            while (todo.length) {
+                var node = todo.shift();
+                if (node.children && node.children.length) {
+                    node.state = 'closed';
+                    node.children1 = node.children;
+                    node.children = undefined;
+                    todo = todo.concat(node.children1);
+                }
+            }
+        }
+
+        setData(data);
+        var tg = $(this);
+        var opts = tg.treegrid('options');
+        opts.onBeforeExpand = function (row) {
+            if (row.children1) {
+                tg.treegrid('append', {
+                    parent: row[opts.idField],
+                    data: row.children1
+                });
+                row.children1 = undefined;
+                tg.treegrid('expand', row[opts.idField]);
+            }
+            return row.children1 == undefined;
+        };
+        return data;
+    }
+</script>

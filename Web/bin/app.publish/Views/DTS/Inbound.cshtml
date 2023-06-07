@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "Inbound Tracking";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .box-custom .box {
+        border: 1px solid #808080;
+        border-top: 2px solid #000006;
+    }
+
+    .box-custom .box-header {
+        /*color: white;*/
+        background: #000006;
+        color: white;
+    }
+
+    .box-custom .form-group {
+        margin-bottom: 5px;
+        border-bottom: 1px solid #d2cece;
+        padding-top: 3px;
+        padding-bottom: 4px;
+    }
+
+    .box-header.with-border {
+        border-bottom: 4px solid #fe9d01;
+    }
+
+    .box .box-header .box-title {
+        display: inline-block;
+        padding: 10px 0px 0px 10px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+        float: left;
+        cursor: default;
+    }
+
+    .scheduler-border {
+        width: auto; /* Or auto */
+        padding-left: 10px; /* To give a bit of padding on the left and right */
+        border: 1px solid #cecece;
+        margin-top: 10px;
+    }
+
+    .fieldset50 {
+        width: 50%;
+    }
+
+    .fieldset100 {
+        width: 100%;
+    }
+
+    legend.scheduler-border {
+        border: none;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    @@media screen and (max-width: 560px) {
+        .control-label {
+            padding-left: 15px !important;
+        }
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="box-body">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#Home"><strong>Detail Inbound</strong></a></li>
+                                <li><a data-toggle="tab" href="#List"><strong>List Inbound</strong></a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="Home" class="tab-pane fade in active">
+                                    <div class="row">&nbsp;</div>
+                                    <p>Please input (SN unit or PO Number) for searching</p>
+                                    <div class="col-md-4 col-xs-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="input-group input-group-sm">
+                                                <input type="text" class="form-control" id="searchKey" placeholder="Type any keys">
+                                                <span class="input-group-btn">
+                                                    <button type="button" onclick="searchData();" style="color:black;" class="btn btn-warning btn-flat"><i class="fa fa-search"></i> Search</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row" id="loading" style="display:none;padding-top:20px;border-top:1px solid #cecece;margin-top:40px;">
+                                        <div class="col-md-12 text-center">
+                                            <img src="~/Content/Images/ajax-loading.gif" />
+                                        </div>
+                                    </div>
+                                    @RenderPage("~/Views/DTS/FormInboundGrouping.cshtml")
+                                    <div class="">&nbsp;</div>
+                                    <div class="row" id="inboundDetailNone" style="display:none;border-top:1px solid #cecece;margin-top:40px;">
+                                        <div class="col-md-12 text-center">
+                                            <h5><strong>Tidak ada data ditemukan</strong></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="List" class="tab-pane fade in">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
+                                            <div class="form-horizontal">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">AJU No</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="txtajunumber" class="form-control" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">PO No</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="txtlistidinbound" class="form-control" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Serial Number</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="txtserialnumber" class="form-control" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Batch Number</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="txtbatchnumber" class="form-control" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Model</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" id="dtModel" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">RTS</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control datepickr" id="dtRTS" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">On Board Vessel</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control datepickr" id="dtOnboard" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Port In</label>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control datepickr" id="dtPortin" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Status</label>
+                                                        <div class="col-md-10">
+                                                            <select id="dtStatus" class="form-control">
+                                                                <option value="">-- Select Status --</option>
+                                                                <option value="On Order">On Order</option>
+                                                                <option value="Scored">Scored</option>
+                                                                <option value="Project Solution">Project Solution</option>
+                                                                <option value="Invoice">Invoice</option>
+                                                                <option value="Subleting Vendor">Subleting Vendor</option>
+                                                                <option value="PLB">PLB</option>
+                                                                <option value="Stock in Transit">Stock in Transit</option>
+                                                                <option value="On Hand">On Hand</option>
+                                                                <option value="Good in Transit">Good in Transit</option>
+                                                            </select>
+                                                            @*<input type="text" class="form-control" id="dtStatus" placeholder="" />*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label">Position</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" id="dtPosition" placeholder="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">&nbsp;</div>
+                                                <div class="col-md-6 pull-right">
+                                                    <button class="btn btn-warning pull-right" onclick="searchDataList()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="">&nbsp;</div>
+                                    <div id="toolbar" class="col-md-2 toolbarBtn">
+                                        <div class="row">
+                                            <button class="btn btn-success downloadExcelInbound" type="button" id="btnExport"><i class="fa fa-file-excel-o"></i> Download to Excel</button>
+                                        </div>
+                                    </div>
+                                    <table id="tableInbound" data-toolbar=".toolbar" data-show-export="true" class="table table-bordered"></table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/Inbound.cshtml.js")"></script>
+}

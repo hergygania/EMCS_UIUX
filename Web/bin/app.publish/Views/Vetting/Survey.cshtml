@@ -1,0 +1,286 @@
+@model  App.Web.Models.SurveyView
+
+@{
+    var vettingRoute = Model.VettingRoute;
+    var formMode = Convert.ToString(ViewBag.formMode + "").ToLower(); // "Verify";
+}
+<div class="shipment-form-list col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">VR Number</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input id="VRNo" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">VR Date</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input id="VRDate" type="text" class="form-control pull-right daterange" />
+                        <div class="input-group-addon cal">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @if (("rfi-els").Contains(formMode))
+                {
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">VO Number</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input id="VONo" type="text" class="form-control" />
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Batch Number</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input id="SurveyID" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="pull-right col-xs-8" style="text-align:right;padding-right:0;">
+                    <button id="btnFilter" type="button" class="btn btn-success" style="width:125px;"><i class="fa fa-search"></i> Filter</button>
+                    <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                </div>
+                @*<div class="form-group">
+                    <div class="input-group col-lg-offset-4 col-xs-8">
+                        <button id="btnFilter" type="button" class="btn btn-success" style="float:right;width:150px;"><i class="fa fa-search"></i> Filter</button>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+        @*
+            <div class="col-lg-12">
+                <button id="btnFilter" type="button" class="btn btn-success" style="float:right; margin-right:15px"><i class="fa fa-search"></i> Filter</button>
+            </div>
+        *@		<div class="col-lg-12">
+            <hr style="height:1px" />
+        </div>
+    </div>
+
+
+    <div class="toolbar"></div>
+    <table class="table table-bordered" id="tableSurvey" style="width:100%"></table>
+</div>
+
+
+<script>
+	var vettingRoute = "@vettingRoute", formMode = "@formMode";
+
+	window.eventsSurvey = {
+		'click .edit': function (e, value, row, index) {
+			var _url = 'SurveyEdit'; //(formMode == 'verify' ? 'surveyVerifyEdit' : 'SurveyEdit');
+			getSurveyPage('/vetting-process/' + _url + '?id=' + row.SurveyID + '&formMode=' + formMode);
+		}
+	};
+
+	$(function () {
+		$.ajaxSetup({ cache: false });
+		var $table = $('#tableSurvey');
+		var _staDate, _endDate;
+
+		$('.cal').click(function () {
+		    $('#VRDate').focus();
+		});
+
+		$("#btnFilter").click(function () {
+			_staDate = ''; _endDate = '';
+			if ($('#VRDate').val() != '') {
+				_staDate = $('#VRDate').data('daterangepicker').startDate.format('MM/DD/YYYY');
+				_endDate = $('#VRDate').data('daterangepicker').endDate.format('MM/DD/YYYY');
+			}
+
+			/*
+				freight: get from index.cshtml
+			*/
+			refreshSurveyList();
+		});
+
+		refreshSurveyList = function () {
+			window.pis.table({
+				objTable: $table,
+				urlSearch: '/vetting-process/SurveyList',
+				urlPaging: '/vetting-process/SurveyListXt',
+				searchParams: {
+					Freight: freight,
+					vettingRoute: vettingRoute,
+					Id: $('#SurveyID').val(),
+					VRNo: $('#VRNo').val(),
+					VONo: $('#VONo').val(),
+					DateSta: _staDate,
+					DateFin: _endDate,
+					mode: formMode
+				},
+				autoLoad: true
+			});
+		}
+
+		$table.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbar',
+			toolbarAlign: 'left',
+			onClickRow: selectRow,
+			sidePagination: 'server',
+			showColumns: false,
+			showRefresh: false,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () {
+				return '<span class="noMatches">-</span>';
+			},
+			columns: [{
+				field: 'action',
+				title: 'Action',
+				width: '66px',
+				align: 'center',
+				formatter: operateFormatter({ Detail: false, Edit: true, Delete: false }),
+				events: eventsSurvey,
+				switchable: false
+			}, {
+				field: 'no',
+				title: 'No',
+				halign: 'center',
+				align: 'center',
+				width: '90px',
+				formatter: runningFormatter
+			}, {
+				field: 'SurveyID',
+				title: 'Batch No',
+				halign: 'center',
+				align: 'left',
+				width: '90px',
+				sortable: true
+			}, {
+				field: 'VRNo',
+				title: 'VR Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'VRDate',
+				title: 'VR Date',
+				halign: 'right',
+				align: 'right',
+				width: '111px',
+				formatter: 'dateFormatter',
+				sortable: true
+			}, {
+				field: 'CommodityName',
+				title: 'Commodity',
+				sortable: true,
+				visible: true
+			}, {
+				field: 'VONo',
+				title: 'VONo',
+				sortable: true,
+				visible: true
+			}, {
+				field: 'RFIDate',
+				title: 'RFI Date',
+				halign: 'center',
+				align: 'center',
+				formatter: 'dateFormatter',
+				sortable: true,
+				visible: (formMode == 'rfi' || formMode == 'els' ? true : false)
+			},
+			{
+				field: 'SurveyDate',
+				title: 'Survey Date',
+				halign: 'center',
+				align: 'center',
+				formatter: 'dateFormatter',
+				sortable: true,
+				visible: (formMode == 'rfi' || formMode == 'els' ? true : false)
+			},
+			{
+				field: 'SurveyDone',
+				title: 'Survey Done',
+				halign: 'center',
+				align: 'center',
+				formatter: 'dateFormatter',
+				sortable: true,
+				visible: (formMode == 'els' ? true : false)
+			},
+			{
+				field: 'eLS',
+				title: 'e-LS',
+				halign: 'center',
+				sortable: true,
+				visible: (formMode == 'els' ? true : false)
+			}
+			]
+		});
+
+		$('#btn-clear').click(function () {
+		    $('#VRNo').val('');
+		    $('#VRDate').val('');
+		    $('#VONo').val('');
+		    $('#SurveyID').val('');
+		});
+
+		getSurveyPage = function (url) {
+
+			var divId = (formMode == 'verify' ? 'SurveyVerify' : (formMode == 'rfi' ? 'SurveyRfi' : 'SurveyELS'));
+			$("#" + divId).empty();
+
+			$.ajax({
+				type: "GET",
+				url: url,
+				data: { freight: freight, vettingRoute: vettingRoute },
+				dataType: "html",
+				async: false,
+				cache: false,
+				beforeSend: function () {
+					enableLink(false);
+					$("#" + divId).html("<div style=\"text-align:center;color:red\"><img src='/Content/images/ajax-loading.gif' style=\"padding-right:3px\">...Loading page...</div>");
+				},
+				success: function (data) {
+					$("#" + divId).empty();
+					$("#" + divId).html(data);
+
+					if (typeof window.rebindCSS == "undefined") {
+						alert("rebindCSS")
+						$.getScript("/scripts/script.js", function () {
+						});
+					}
+					else {
+						rebindCSS();
+					}
+				}
+			});
+		};
+
+		function operateFormatter(options) {
+			var btn = [];
+
+			btn.push('<div class="btn-group">');
+			if (options.Add == true)
+				btn.push('<button type="button" class="btn btn-success new" title="Add"><i class="fa fa-plus"></i></button>')
+			if (options.Edit == true)
+				btn.push('<button type="button" class="btn btn-xs btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
+			if (options.Delete == true)
+				btn.push('<button type="button" class="btn btn-xs btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+			if (options.Info == true)
+				btn.push('<button type="button" class="btn btn-xs btn-info info" title="Info"><i class="fa fa-info-circle"></i></button>')
+			if (options.Detail == true)
+				btn.push('<button type="button" class="btn btn-xs btn-info detail" title="Detail" data-toggle="modal" data-target="#mymodal"><i class="fa fa-search-plus"></i> Detail</button>')
+			if (options.Detail2 == true)
+				btn.push('<button type="button" class="btn btn-xs btn-info detail" title="Detail" data-toggle="modal" data-target="#mdlDetail"><i class="fa fa-search-plus"></i> Detail</button>')
+
+			btn.push('</div>');
+
+			return btn.join('');
+		}
+
+	});
+
+
+</script>
+

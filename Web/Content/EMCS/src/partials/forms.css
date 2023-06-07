@@ -1,0 +1,144 @@
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[multiple],
+textarea,
+select {
+  @apply bg-white border border-solid border-neutral-300 text-sm text-brand-black rounded-md placeholder:text-neutral-400 h-10 focus:ring-primary;
+}
+textarea {
+  @apply h-auto min-h-[80px];
+}
+
+form {
+  @apply text-sm;
+}
+
+.form-control {
+  @apply border border-solid border-neutral-300 text-sm rounded-md h-10;
+}
+.form-group {
+  @apply flex w-full;
+  label {
+    @apply font-medium mb-0 py-2;
+    &[required]:after {
+      content: " *";
+      color: red;
+    }
+  }
+}
+select.form-control[multiple],
+select.form-control[size] {
+  @apply h-10;
+}
+.form-control:disabled,
+.form-control[readonly] {
+  @apply bg-neutral-200 cursor-not-allowed;
+  //background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 4px, #fff 4px, #fff 8px);
+}
+.select2-container--default.select2-container--disabled .select2-selection--single {
+  @apply bg-neutral-200;
+}
+.select2-container {
+  @apply h-10;
+}
+.select2-container--default .select2-selection--single {
+  @apply h-10 border border-solid border-neutral-300 rounded-md;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  @apply py-1.5 pl-3 pr-5 text-brand-black;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  @apply text-neutral-400 text-sm;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  @apply top-[7px] right-1;
+}
+.select2-container .select2-search--inline .select2-search__field {
+  @apply mt-0;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  @apply p-0;
+}
+.select2-dropdown {
+  @apply border border-solid border-neutral-300;
+}
+.select2-search--dropdown {
+  @apply p-1.5;
+}
+.select2-container--default .select2-selection--multiple {
+  @apply border border-solid border-neutral-300 h-10;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  @apply border border-solid border-neutral-300 px-2 focus:border-transparent h-9;
+}
+.select2-results {
+  @apply text-sm;
+}
+.select2-results__option {
+  @apply py-2 px-3;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  @apply bg-primary;
+}
+.input-group-addon {
+  @apply -ml-0.5 h-10 w-10 text-xs rounded-r-md bg-primary text-white p-2 flex items-center justify-center border-primary;
+  .uil {
+    @apply text-lg;
+  }
+}
+
+.easy-autocomplete.eac-plate-dark {
+  @apply font-sans;
+}
+.easy-autocomplete {
+  @apply !w-full;
+}
+.easy-autocomplete input.form-control {
+  @apply w-full border border-solid border-neutral-300 text-sm rounded-md h-10 shadow-none;
+}
+.easy-autocomplete.eac-plate-dark input.form-control {
+  @apply text-sm;
+}
+
+.btn-toggle {
+  @apply inline-flex mt-1.5;
+  .btn {
+    @apply rounded-none text-white transition-all duration-300 h-9 py-1 px-5 inline-flex items-center justify-center relative;
+    &:first-child {
+      @apply rounded-l-full;
+    }
+    &:last-child {
+      @apply rounded-r-full;
+    }
+    &.btn-default {
+      @apply bg-[#585858] translate-y-0 shadow-none text-[13px] leading-none z-0 translate-x-0;
+    }
+    &.btn-active {
+      @apply bg-primary -translate-y-1.5 text-[15px] leading-none z-10;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      &.btn-default {
+        @apply bg-[#585858] translate-y-0 shadow-none text-[13px] leading-none z-0 translate-x-0;
+      }
+    }
+    &:first-child {
+      &.btn-active {
+        @apply translate-x-0.5;
+      }
+    }
+    &:last-child {
+      &.btn-active {
+        @apply -translate-x-0.5;
+      }
+    }
+  }
+}

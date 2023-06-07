@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Daily Report Inbound";
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <strong style="font-size:15px;"><b>Report Filter</b></strong style=>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="formFreightSearch">
+                <div class="box-body">
+                    <div class="col-md-12 col-xs-12" id="formAdvanceSearch">
+                        <div class="form-horizontal">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">PO No</label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="txtlistidinbound" class="form-control" placeholder="Type PO Number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">AJU No</label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="txtajunumber" class="form-control" placeholder="Type Aju Number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Serial Number</label>
+                                    <div class="col-md-10">
+                                        <input type="text" id="txtserialnumber" class="form-control" placeholder="Type Serial Number">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">RTS</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control datepickr" id="dtRTS" placeholder="Range Date" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">On Board Vessel</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control datepickr" id="dtOnboard" placeholder="Range Date" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Port In</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control datepickr" id="dtPortin" placeholder="Range Date" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Port Out</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control datepickr" id="dtPortout" placeholder="Range Date" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Status</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="dtStatus" placeholder="Inbound Status" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Position</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="dtPosition" placeholder="Position" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">&nbsp;</div>
+                            <div class="col-md-6 pull-right">
+                                <button class="btn btn-primary pull-right" onclick="showListReport()"><i class="fa fa-search"></i> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="table-responsive">
+            <div id="toolbar" class="col-md-2 toolbarBtn">
+                <div class="row">
+                    <button class="btn btn-success downloadExcelInbound" type="button" id="btnExport"><i class="fa fa-file-excel-o"></i> Download to Excel</button>
+                </div>
+            </div>
+            <table class="table table-bordered table-responsive" data-toolbar="#toolbar" id="tableDailyReport" style="width:100%;"></table>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/DailyReportInbound.cshtml.js")"></script>
+}
+
+

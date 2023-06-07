@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Username 1",
+    "contact": "Contact Name 1"
+  },
+  {
+    "id": 2,
+    "name": "Username 2",
+    "contact": "Contact Name 2"
+  },
+  {
+    "id": 3,
+    "name": "Username 3",
+    "contact": "Contact Name 3"
+  }
+]

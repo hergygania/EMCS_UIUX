@@ -1,0 +1,161 @@
+﻿@model App.Web.Models.PartOrderDetailFilterView
+@{
+    ViewBag.Title = "Part Order Detail Report";
+    string message = ViewBag.Message + "";
+}
+
+<style type="text/css">
+    .select2-selection__choice {
+        white-space: normal !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <div id="parent">
+                <form role="form">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- FILTER KOLOM KIRI - START -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Filter By</label>
+                                        <div class="control-label col-lg-2 col-xs-3" style="margin-top:-7px">
+                                            <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;">
+                                                <input id="hub" name="filter_type" type="radio" checked value="HUB">
+                                                <label for="hub" onclick="setFilter(1)">HUB</label>
+                                                <input id="area" name="filter_type" type="radio" value="AREA">
+                                                <label for="area" onclick="setFilter(2)">AREA</label>
+                                                <a class="btn btn-primary"></a>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-lg-6 col-xs-5">
+                                            @Html.DropDownListFor(m => m.FilterBy, new SelectList(Model.HubList, "HubId", "Name"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+                                        </div>
+                                        @*<div class="control-label col-lg-4 col-xs-4">
+                                            <label class="control-label col-lg-5 col-xs-5" style="margin-top:-6px">Filter By</label>
+                                            <div class="control-label col-lg-7" style="margin-top:-14px">
+                                                <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;">
+                                                    <input id="hub" name="filter_type" type="radio" checked value="HUB">
+                                                    <label for="hub" onclick=" setFilter(1) ">HUB</label>
+                                                    <input id="area" name="filter_type" type="radio" value="AREA">
+                                                    <label for="area" onclick=" setFilter(2) ">AREA</label>
+                                                    <a class="btn btn-primary"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.DropDownListFor(m => m.FilterBy, new SelectList(Model.HubList, "HubId", "Name"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+                                        </div>*@
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Store Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.DropDownListFor(m => m.StoreNumber, new SelectList(Model.StoreNumberList, "StoreNo", "Name"), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Coo</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.DropDownListFor(m => m.Coo, new SelectList(Model.CooDescriptions, "Description", "Description"), "ALL",
+                                                new { @class = "js-states form-control", @style = "width:95%;display:none" })
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Case No</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.CaseNo, new { @class = "form-control", @style = "" })
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Invoice No</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.InvoiceNo, new { @class = "form-control", @style = "" })
+
+                                        </div>
+                                    </div>
+                                    <!-- FILTER KOLOM KIRI - END -->
+                                </div>
+
+                                <!-- FILTER KOLOM KANAN - START -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input id="EntryDate" type="text" class="form-control pull-right daterange" readonly="readonly" style="background-color: #ffffff" />
+                                            <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Part Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.PartNumber, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Part Name</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.PartName, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Customer Reff</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.CustomerReff, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">SOS</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.SOS, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FILTER KOLOM KANAN - END -->
+                            </div>
+
+                            <div class="col-lg-12" style="text-align:right;padding-right:30px;">
+                                <button id="btnFilter" type="button" class="btn btn-success" style="width:125px;"><i class="fa fa-search"></i> Filter</button>
+                                <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                            </div>
+                            <div class="col-lg-12">
+                                <hr>
+                                <div class="toolbar">
+                                    <a href="#" class="btn btn-info downloadExcel" style="width:150px;">
+                                        <i class="fa fa-download"></i> Download to Excel
+                                    </a>
+                                </div>
+                                <table class="table table-bordered table2excel" id="tabelPartOrderDetailReport"></table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var msg = '@message';
+        if (msg != '') {
+            sAlert('', msg, '');
+        }
+    </script>
+    <script src="@Url.Content("~/Scripts/jquery.table2excel.js")"> </script>
+    <script src="@Url.Content("~/Scripts.app/report/partOrderDetailReport.cshtml.js")"> </script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"> </script>
+    <script src="/Scripts/extension/export/tableExport.js"> </script>
+    <script src="~/Scripts.app/Report/_reportImex.js"></script>
+}

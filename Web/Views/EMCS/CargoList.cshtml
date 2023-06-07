@@ -1,0 +1,66 @@
+﻿﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Cargo List";
+}
+
+@using System.Web.Mvc
+@Styles.Render("~/Content/EMCS/Custom.css")
+@*@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")*@
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .dropdown-menu.dropdown-menu-right {
+        left: 0 !important;
+    }
+
+    .btn.dropdown-toggle:after, .navbar .navbar-nav > a.btn.dropdown-toggle:after {
+        margin-left: 0 !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="toolbar">
+            @{
+                if (ViewBag.AllowCreate)
+                {
+                    <a class="btn btn-success animation-on-hover btn-round" href="/EMCS/CargoForm" id="btnCreate">
+                        <i class="fa fa-plus"></i> Add new
+                    </a>
+                }
+            }
+            <div class="fa-pull-left" id="mySearch" style="padding-right: 4px">
+                <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: auto;">
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="" id="tableCargo"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/Cargo.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

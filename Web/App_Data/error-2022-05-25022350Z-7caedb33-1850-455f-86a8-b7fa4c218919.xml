@@ -1,0 +1,209 @@
+﻿<error errorId="7caedb33-1850-455f-86a8-b7fa4c218919" application="/LM/W3SVC/2/ROOT" host="DESKTOP-QKDHOAO" type="System.Data.Entity.Core.EntityCommandExecutionException" message="The data reader is incompatible with the specified 'App.Data.SPShippingSummary'. A member of the type, 'Referrence', does not have a corresponding column in the data reader with the same name." source="App.Service" detail="System.Data.Entity.Core.EntityCommandExecutionException: The data reader is incompatible with the specified 'App.Data.SPShippingSummary'. A member of the type, 'Referrence', does not have a corresponding column in the data reader with the same name.&#xD;&#xA;   at App.Service.EMCS.SVCShippingSummary.SSList(GridListFilter crit) in C:\Users\ASUS\Desktop\mkindo\EMCS_New\Library\App.Service\EMCS\SVCShippingSummary.cs:line 53&#xD;&#xA;   at App.Web.Controllers.EMCS.EmcsController.GetShippingSummary(GridListFilterModel filter) in C:\Users\ASUS\Desktop\mkindo\EMCS_New\Web\Controllers\EMCS\TransactionShippingSummary.cs:line 33&#xD;&#xA;   at lambda_method(Closure , ControllerBase , Object[] )&#xD;&#xA;   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)&#xD;&#xA;   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;BeginInvokeSynchronousActionMethod&gt;b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3d()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.&lt;&gt;c__DisplayClass46.&lt;InvokeActionMethodFilterAsynchronouslyRecursive&gt;b__3f()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass33.&lt;BeginInvokeActionMethodWithFilters&gt;b__32(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;&gt;c__DisplayClass2b.&lt;BeginInvokeAction&gt;b__1c()&#xD;&#xA;   at System.Web.Mvc.Async.AsyncControllerActionInvoker.&lt;&gt;c__DisplayClass21.&lt;BeginInvokeAction&gt;b__1e(IAsyncResult asyncResult)" user="XUPJ21WDN" time="2022-05-25T02:23:50.9271637Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_CONTENT_TYPE:application/json&#xD;&#xA;HTTP_ACCEPT:application/json, text/javascript, */*; q=0.01&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate, br&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.9&#xD;&#xA;HTTP_COOKIE:.ASPXAUTH=3772952D7343B074F0D9615597E25D15E73BDD09D25FB7612FE3479EB71BBFB5D0E1F8909D14C6D59E7793290295F7CACFB89C17DE37E2F5B7C62F1DB5BA99681ACAFB31DE91B737ABB598ABE9B0EFCBB9AC3346BFCC3A526AE3F8B8D547A453; trakindo__pis_localhost1400_202205=10F3D705D4704FB3C037C67BD39CC521E60BF50D32DE4838854A82A4714FCEF7CB9C57BFB57B54A1FE7E3A6D61EAC8B9D0F57DB110B5776E49F1B98A87898FCABF94B098CAA518F905D1D9D08AE9A845D7B10C5C3D7C4DADD06F64B9D0FEBC06F1159D42E24AC6FE17074334A6E2D33FF6E6C2F1B83287C8613A80DADF6F2B668B012128BED617449BE590B36A2D38F1B52BD3D562F77814FAB12195A72272790B56FE46D64A0BABC4A1633C8BA4007246B1676790331CD2E71E930834C036B11C9191198D3D7E9DB16D7621C4BE2F894F01F57660DA07DDDCB14D4F221E43B038A6D94C8A9AC42CC952DCB1E79FCBDA8EDED98DCD45048812496194A01E1E73D25DFE12F51DFEFE9508F6BEC97359C55FF63082FD1B31DA9459E17AA988530093CC868EBC913BBD60346ACCE8D96CD3F4C58FD10EEB39360F7CD92FB8D965980F740554A290B8B4287D0977F772AE6E6B81371361B0B2035B0C781C2F6C0709CACC803D2832A73B52C9423407B99F06; ASP.NET_SessionId=0mhss1kx0jtsj1fol1bgczyg; __RequestVerificationToken=25RO-UkYmocTuoyrTVlF6XOpIsMF9ahqRUukphAPgH2hIRZM7JmzrR6IEJUSKVu_FHQArdR2OuuJsVUvrwyRicMsg-KXwVU8tC-ONG5-Qvc1&#xD;&#xA;HTTP_HOST:localhost:1400&#xD;&#xA;HTTP_REFERER:http://localhost:1400/EMCS/ShippingSummaryList&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36&#xD;&#xA;HTTP_SEC_CH_UA:&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;&#xD;&#xA;HTTP_X_REQUESTED_WITH:XMLHttpRequest&#xD;&#xA;HTTP_SEC_CH_UA_MOBILE:?0&#xD;&#xA;HTTP_SEC_CH_UA_PLATFORM:&quot;Windows&quot;&#xD;&#xA;HTTP_SEC_FETCH_SITE:same-origin&#xD;&#xA;HTTP_SEC_FETCH_MODE:cors&#xD;&#xA;HTTP_SEC_FETCH_DEST:empty&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Content-Type: application/json&#xD;&#xA;Accept: application/json, text/javascript, */*; q=0.01&#xD;&#xA;Accept-Encoding: gzip, deflate, br&#xD;&#xA;Accept-Language: en-US,en;q=0.9&#xD;&#xA;Cookie: .ASPXAUTH=3772952D7343B074F0D9615597E25D15E73BDD09D25FB7612FE3479EB71BBFB5D0E1F8909D14C6D59E7793290295F7CACFB89C17DE37E2F5B7C62F1DB5BA99681ACAFB31DE91B737ABB598ABE9B0EFCBB9AC3346BFCC3A526AE3F8B8D547A453; trakindo__pis_localhost1400_202205=10F3D705D4704FB3C037C67BD39CC521E60BF50D32DE4838854A82A4714FCEF7CB9C57BFB57B54A1FE7E3A6D61EAC8B9D0F57DB110B5776E49F1B98A87898FCABF94B098CAA518F905D1D9D08AE9A845D7B10C5C3D7C4DADD06F64B9D0FEBC06F1159D42E24AC6FE17074334A6E2D33FF6E6C2F1B83287C8613A80DADF6F2B668B012128BED617449BE590B36A2D38F1B52BD3D562F77814FAB12195A72272790B56FE46D64A0BABC4A1633C8BA4007246B1676790331CD2E71E930834C036B11C9191198D3D7E9DB16D7621C4BE2F894F01F57660DA07DDDCB14D4F221E43B038A6D94C8A9AC42CC952DCB1E79FCBDA8EDED98DCD45048812496194A01E1E73D25DFE12F51DFEFE9508F6BEC97359C55FF63082FD1B31DA9459E17AA988530093CC868EBC913BBD60346ACCE8D96CD3F4C58FD10EEB39360F7CD92FB8D965980F740554A290B8B4287D0977F772AE6E6B81371361B0B2035B0C781C2F6C0709CACC803D2832A73B52C9423407B99F06; ASP.NET_SessionId=0mhss1kx0jtsj1fol1bgczyg; __RequestVerificationToken=25RO-UkYmocTuoyrTVlF6XOpIsMF9ahqRUukphAPgH2hIRZM7JmzrR6IEJUSKVu_FHQArdR2OuuJsVUvrwyRicMsg-KXwVU8tC-ONG5-Qvc1&#xD;&#xA;Host: localhost:1400&#xD;&#xA;Referer: http://localhost:1400/EMCS/ShippingSummaryList&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36&#xD;&#xA;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;&#xD;&#xA;X-Requested-With: XMLHttpRequest&#xD;&#xA;sec-ch-ua-mobile: ?0&#xD;&#xA;sec-ch-ua-platform: &quot;Windows&quot;&#xD;&#xA;Sec-Fetch-Site: same-origin&#xD;&#xA;Sec-Fetch-Mode: cors&#xD;&#xA;Sec-Fetch-Dest: empty&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/2/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\ASUS\Desktop\mkindo\EMCS_New\Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="XUPJ21WDN" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="application/json" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="2" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/2" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/EMCS/GetShippingSummary" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\ASUS\Desktop\mkindo\EMCS_New\Web\EMCS\GetShippingSummary" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="offset=0&amp;limit=5&amp;term=&amp;_=1653445380949" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="52727" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/EMCS/GetShippingSummary" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="1400" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/EMCS/GetShippingSummary" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="application/json" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="application/json, text/javascript, */*; q=0.01" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string=".ASPXAUTH=3772952D7343B074F0D9615597E25D15E73BDD09D25FB7612FE3479EB71BBFB5D0E1F8909D14C6D59E7793290295F7CACFB89C17DE37E2F5B7C62F1DB5BA99681ACAFB31DE91B737ABB598ABE9B0EFCBB9AC3346BFCC3A526AE3F8B8D547A453; trakindo__pis_localhost1400_202205=10F3D705D4704FB3C037C67BD39CC521E60BF50D32DE4838854A82A4714FCEF7CB9C57BFB57B54A1FE7E3A6D61EAC8B9D0F57DB110B5776E49F1B98A87898FCABF94B098CAA518F905D1D9D08AE9A845D7B10C5C3D7C4DADD06F64B9D0FEBC06F1159D42E24AC6FE17074334A6E2D33FF6E6C2F1B83287C8613A80DADF6F2B668B012128BED617449BE590B36A2D38F1B52BD3D562F77814FAB12195A72272790B56FE46D64A0BABC4A1633C8BA4007246B1676790331CD2E71E930834C036B11C9191198D3D7E9DB16D7621C4BE2F894F01F57660DA07DDDCB14D4F221E43B038A6D94C8A9AC42CC952DCB1E79FCBDA8EDED98DCD45048812496194A01E1E73D25DFE12F51DFEFE9508F6BEC97359C55FF63082FD1B31DA9459E17AA988530093CC868EBC913BBD60346ACCE8D96CD3F4C58FD10EEB39360F7CD92FB8D965980F740554A290B8B4287D0977F772AE6E6B81371361B0B2035B0C781C2F6C0709CACC803D2832A73B52C9423407B99F06; ASP.NET_SessionId=0mhss1kx0jtsj1fol1bgczyg; __RequestVerificationToken=25RO-UkYmocTuoyrTVlF6XOpIsMF9ahqRUukphAPgH2hIRZM7JmzrR6IEJUSKVu_FHQArdR2OuuJsVUvrwyRicMsg-KXwVU8tC-ONG5-Qvc1" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:1400" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:1400/EMCS/ShippingSummaryList" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36" />
+    </item>
+    <item name="HTTP_SEC_CH_UA">
+      <value string="&quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;" />
+    </item>
+    <item name="HTTP_X_REQUESTED_WITH">
+      <value string="XMLHttpRequest" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_MOBILE">
+      <value string="?0" />
+    </item>
+    <item name="HTTP_SEC_CH_UA_PLATFORM">
+      <value string="&quot;Windows&quot;" />
+    </item>
+    <item name="HTTP_SEC_FETCH_SITE">
+      <value string="same-origin" />
+    </item>
+    <item name="HTTP_SEC_FETCH_MODE">
+      <value string="cors" />
+    </item>
+    <item name="HTTP_SEC_FETCH_DEST">
+      <value string="empty" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="offset">
+      <value string="0" />
+    </item>
+    <item name="limit">
+      <value string="5" />
+    </item>
+    <item name="term">
+      <value string="" />
+    </item>
+    <item name="_">
+      <value string="1653445380949" />
+    </item>
+  </queryString>
+  <cookies>
+    <item name=".ASPXAUTH">
+      <value string="3772952D7343B074F0D9615597E25D15E73BDD09D25FB7612FE3479EB71BBFB5D0E1F8909D14C6D59E7793290295F7CACFB89C17DE37E2F5B7C62F1DB5BA99681ACAFB31DE91B737ABB598ABE9B0EFCBB9AC3346BFCC3A526AE3F8B8D547A453" />
+    </item>
+    <item name="trakindo__pis_localhost1400_202205">
+      <value string="10F3D705D4704FB3C037C67BD39CC521E60BF50D32DE4838854A82A4714FCEF7CB9C57BFB57B54A1FE7E3A6D61EAC8B9D0F57DB110B5776E49F1B98A87898FCABF94B098CAA518F905D1D9D08AE9A845D7B10C5C3D7C4DADD06F64B9D0FEBC06F1159D42E24AC6FE17074334A6E2D33FF6E6C2F1B83287C8613A80DADF6F2B668B012128BED617449BE590B36A2D38F1B52BD3D562F77814FAB12195A72272790B56FE46D64A0BABC4A1633C8BA4007246B1676790331CD2E71E930834C036B11C9191198D3D7E9DB16D7621C4BE2F894F01F57660DA07DDDCB14D4F221E43B038A6D94C8A9AC42CC952DCB1E79FCBDA8EDED98DCD45048812496194A01E1E73D25DFE12F51DFEFE9508F6BEC97359C55FF63082FD1B31DA9459E17AA988530093CC868EBC913BBD60346ACCE8D96CD3F4C58FD10EEB39360F7CD92FB8D965980F740554A290B8B4287D0977F772AE6E6B81371361B0B2035B0C781C2F6C0709CACC803D2832A73B52C9423407B99F06" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="0mhss1kx0jtsj1fol1bgczyg" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="25RO-UkYmocTuoyrTVlF6XOpIsMF9ahqRUukphAPgH2hIRZM7JmzrR6IEJUSKVu_FHQArdR2OuuJsVUvrwyRicMsg-KXwVU8tC-ONG5-Qvc1" />
+    </item>
+  </cookies>
+</error>

@@ -1,0 +1,59 @@
+﻿@model  App.Web.Models.EMCS.CiplModel
+<div class="wrapper">&nbsp;</div>
+<table class="table-custom" style="width:230px;">
+    <thead>
+        <tr>
+            <td class="border_left text_bold" style="width:230px;line-height:22px;border-left:1px solid black;">
+                Description of Goods :
+            </td>
+        </tr>
+    </thead>
+</table>
+
+<table class="table-custom">
+    <thead>
+        <tr>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:11%">Case Number</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="text-align:center;width:10%;">Item No.</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:15%;">Name</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:12%;">Part Number</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:12%;">ASN Number</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:10%;">J-Code</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:5%;">CoO</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:5%;">Qty</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:11%;">Unit Price</th>
+            <th class="text_center text_bold border_top border_bottom text_9" style="width:11%;">Extended Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TemplateDetail)
+        {
+            <tr>
+                <td class="tabledata_spacing text_9 v_top">@item.CaseNumber</td>
+                <td class="tabledata_spacing text_9 v_top text_center">@item.ItemNo</td>
+                <td class="tabledata_spacing text_9 v_top">@item.Name</td>
+                <td class="tabledata_spacing text_9 v_top">@item.PartNumber</td>
+                <td class="tabledata_spacing text_9 v_top">@item.ASNNumber</td>
+                <td class="tabledata_spacing text_9 v_top text_center">@item.JCode</td>
+                <td class="tabledata_spacing text_9 v_top text_center">@item.CoO</td>
+                <td class="tabledata_spacing text_9 v_top text_center">@item.Quantity</td>
+                <td class="tabledata_spacing text_9 v_top text_right">@item.UnitPrice</td>
+                <td class="tabledata_spacing text_9 v_top text_right">@item.ExtendedValue</td>
+            </tr>
+        }
+        @{
+            if (Model.TemplateDetail.Count <= 2)
+            {
+                int dummy = 5;
+                for (int no = 1; no <= dummy; no++)
+                {
+                    <tr><td colspan="10" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                    if (no == 5)
+                    {
+                        <tr><td colspan="10" class="border_top">&nbsp;</td></tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>

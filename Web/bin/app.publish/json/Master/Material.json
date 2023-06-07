@@ -1,0 +1,269 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "MatNr": 795296,
+      "MatDesc": "Raw Material ",
+      "ValClass": 3000,
+      "ValDesc": "Raw ",
+      "UoM": "Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794331,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794775,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": " Ea",
+      "CuCtn": 100
+    },
+    {
+      "MatNr": 794336,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794338,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794337,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794335,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 651440,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794356,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": " Meter",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794732,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": " Ea",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794334,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794332,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794330,
+      "MatDesc": "Raw Material ",
+      "ValClass": 1000,
+      "ValDesc": "Raw ",
+      "UoM": " Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 579165,
+      "MatDesc": "Bl 32F 093 H J0 Bki25kg PL1000",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Bag",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 795299,
+      "MatDesc": "Raw Material",
+      "ValClass": 3000,
+      "ValDesc": "Raw",
+      "UoM": "Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794825,
+      "MatDesc": "Raw Material",
+      "ValClass": 1000,
+      "ValDesc": "Raw",
+      "UoM": "Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794281,
+      "MatDesc": "Raw Material",
+      "ValClass": 1000,
+      "ValDesc": "Raw",
+      "UoM": "Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 794827,
+      "MatDesc": "Raw Material",
+      "ValClass": 1000,
+      "ValDesc": "Raw",
+      "UoM": "Kg",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 594601,
+      "MatDesc": "Bl CS-06 093 H J0 Bki25kg PV1000",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": " Bag",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 631761,
+      "MatDesc": "Rai Doy Pack Box24 X 220G",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 732503,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": "Ea",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 739951,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": "Meter",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 740228,
+      "MatDesc": "AL Snack Pack Sa 120x40g Dmc",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745419,
+      "MatDesc": "DL Scc Creamer Sa 24x10x18g",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745420,
+      "MatDesc": "DL Scc Shaloot Choc Sa 24x10x18g",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745421,
+      "MatDesc": "AL Scc Snack Pack Cho Sa 120x40g DMC",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 631761,
+      "MatDesc": "Rai Doy Pack Box24 X 220G",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 732503,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": "Ea",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 739951,
+      "MatDesc": "Pack Material",
+      "ValClass": 2000,
+      "ValDesc": "Pack",
+      "UoM": "Meter",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 740228,
+      "MatDesc": "AL Snack Pack Sa 120x40g Dmc",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745419,
+      "MatDesc": "DL Scc Creamer Sa 24x10x18g",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745420,
+      "MatDesc": "DL Scc Shaloot Choc Sa 24x10x18g",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    },
+    {
+      "MatNr": 745421,
+      "MatDesc": "AL Scc Snack Pack Cho Sa 120x40g DMC",
+      "ValClass": 4000,
+      "ValDesc": "Conv Cost",
+      "UoM": "Ctn",
+      "CuCtn": 25
+    }
+  ]
+}

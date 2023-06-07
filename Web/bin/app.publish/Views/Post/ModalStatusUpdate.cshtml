@@ -1,0 +1,127 @@
+﻿<div class="modal fade" id="modalUpdateStatusForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:1050!important">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-left">
+                <b class="modal-title w-100 font-weight-bold">Form Update Status</b>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <div class="row">
+                        <div class="col-md-12" id="columnLeft">
+                            <button type="button" class="btn btn-primary" id="addrowqty" value="Add Partial">Add Partial</button>
+                            <hr />
+                            <table class="table table-borderless table-striped" id="table-partialQty" style="background:white;width:100%;">
+                            </table>
+                            <hr />
+
+                        </div>
+                        <div class="col-md-6" id="columnLeft">
+                            <div class="form-group" id="NoItemForm" style="display:none;">
+                                <label>No Item</label>
+                                <input type="text" id="po_type" style="display:none;" value="0" class="form-control validate" readonly>
+                                <input type="text" id="item_id" class="form-control validate" readonly>
+                                <input type="text" id="qtyPartial" style="display:none;" value="0" class="form-control validate" readonly>
+                                <input type="text" id="QtyPartial_Id" style="display:none;" value="0" class="form-control validate" readonly>
+                            </div>
+                            <div class="form-group" id="ItemNameForm">
+                                <label>Item Name</label>
+                                <input type="text" id="item_name" class="form-control validate" readonly>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label>PR No</label>
+                                <input type="text" id="pr_no" class="form-control validate" readonly>
+                            </div>
+                            <div class="form-group" id="statusForm">
+                                <label>Status</label>
+                                <select name="status" id="status" class="form-control validate">
+                                    @*<option selected>.: Select Item Status :.</option>
+                                    <option value="ON SCHEDULE">On Schedule</option>
+                                    <option value="RISK DELAY">Risk Delay</option>
+                                    <option value="IN TRANSIT">In Transit</option>
+                                    <option value="DELAY">Delay</option>
+                                    <option value="POD">POD</option>
+                                    <option value="BAST">BAST</option>
+                                    <option value="ON PROGRESS">On Progress</option>
+                                    <option value="PICK UP">Pick Up</option>
+                                    <option value="COMPLETE">Complete</option>*@
+                                </select>
+                            </div>
+                            <div class="form-group" id="etdForm">
+                                <label id="LabelETD">ETD</label>
+                                <div class="input-group">
+                                    <input type="datetime" name="ETD" class="form-control input-sm" id="etd" placeholder="" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="atdForm">
+                                <label id="LabelATD">ATD</label>
+                                <div class="input-group">
+                                    <input type="text" name="ATD" class="form-control input-sm" id="atd" placeholder="" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="positionForm">
+                                <label id="LabelPosition">Position</label>
+                                <div class="input-group">
+                                    <input type="text" name="position" class="form-control input-sm" id="position" placeholder="" />
+                                    <div class="input-group-append">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" id="columnRight">
+                            <div class="form-group" id="etaForm">
+                                <label id="LabelETA">ETA</label>
+                                <div class="input-group">
+                                    <input type="text" name="ETA" class="form-control input-sm" id="eta" placeholder="" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="ataForm">
+                                <label id="LabelATA">ATA</label>
+                                <div class="input-group">
+                                    <input type="text" name="ATA" class="form-control input-sm" id="ata" placeholder="" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="applyForm">
+                                <label>Apply Status For</label>
+                                <select name="status" id="ApplyFor" class="form-control validate" onchange="OnChangeApplyFor(this.value)">
+                                    <option value="ITEM" selected>This Item</option>
+                                    <option value="MULTIPLE">Multiple Item</option>
+                                    <option value="ALL">ALL</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="ItemForm" style="display:none;">
+                                <label>Select Item</label>
+                                <select name="ItemSelect" id="ItemSelect" multiple="multiple" class="form-control validate">
+                                </select>
+                            </div>
+                            <div class="form-group" id="notesStatusForm">
+                                <label>Notes</label>
+                                <textarea id="NotesStatus" cols="5" rows="5" placeholder="N/A" class="form-control validate"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex">
+                <button class="btn btn-primary" data-dismiss="modal" onclick="UpdateItem()"><i class="fa fa-save"></i>&nbsp;Save</button>
+                <button class="btn btn-light" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>

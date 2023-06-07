@@ -1,0 +1,286 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{
+    string userName = "", userType = "", userRolesMode = "", controllerName = "", Role = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    string baseUrl = "";
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    try
+    {
+        baseUrl = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"));
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        Role = User.Identity.GetUserRoles();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link href="~/Content/POST/Bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/POST/FontAwesome/css/all.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/POST/Dropzone/css/dropzone.css" rel="stylesheet" />
+    <!-- SweetAlert2 -->
+    <link href="~/Content/sweetalert.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/daterangepicker-bs3.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AppScript")
+    @Scripts.Render("~/Content/POST/Bootstrap/js/popper.min.js")
+    @Scripts.Render("~/Content/POST/Bootstrap/js/bootstrap.js")
+
+    @Scripts.Render("~/Scripts/daterangepicker.js")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/Content/POST/FontAwesome/js/all.js")
+
+    @Styles.Render("~/Content/POST/Pages/General.css?_id=" + (unixTimestamp))
+    <link href="~/Content/POST/Custom.css?_id=@(unixTimestamp)" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @{
+        int IdMenu = ViewBag.Menu == null ? 0 : Convert.ToInt32(ViewBag.Menu);
+    }
+    <div class="container-fluid">
+        <div class="navbar fixed-top navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+            <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+                <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:175px;" />
+            </a>
+            <div class="navbar-nav-scroll">
+                @{
+                    var link = "";
+                    if (Role.Contains("POSTFINANCE"))
+                    {
+                        //link = baseUrl + "/Content/POST/Manual/USER_MANUAL_FINANCE.pdf";
+                        link = baseUrl + "/Content/POST/Manual/UserManualPOST_v1.1.pdf";
+                    }
+                    else if (Role.Contains("POSTBRANCH"))
+                    {
+                        //link = baseUrl + "/Content/POST/Manual/USER_MANUAL_CABANG.pdf";
+                        link = baseUrl + "/Content/POST/Manual/UserManualPOST_v1.1.pdf";
+                    }
+                    else if (Role.Contains("POSTVENDOR"))
+                    {
+                        //link = baseUrl + "/Content/POST/Manual/USER_MANUAL_VENDOR.pdf";
+                        link = baseUrl + "/Content/POST/Manual/UserManualPOST_v1.1.pdf";
+                    }
+                    else
+                    {
+                        //link = baseUrl + "/Content/POST/Manual/USER_MANUAL_EXPEDITOR.pdf";
+                        link = baseUrl + "/Content/POST/Manual/UserManualPOST_v1.1.pdf";
+                    }
+                }
+                <ul class="navbar-nav bd-navbar-nav flex-row">
+                    @if (Role.Contains("POSTEXPEDITOR")|| Role.Contains("POSTBRANCH"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="~/Post/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 2 ? "active" : "")" href="~/Post/AdvanceSearch" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Docs');">Advance Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 5 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
+                    }
+
+                    <!-- HO SCIS Role Multiple Role (POST & Administrator)-->
+                    @if (Role.Split(',').Contains("POST") && Role.Split(',').Contains("Administrator"))//HO
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="~/Post/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 2 ? "active" : "")" href="~/Post/AdvanceSearch" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Docs');">Advance Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 5 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
+                    }
+                    <!-- HO SCIS Role Administrator Only-->
+                    @if (Role.Split(',').ToList().Count == 1)
+                    {
+                        if (Role.Split(',')[0].Contains("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="~/Post/dashboard">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 2 ? "active" : "")" href="~/Post/AdvanceSearch" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Docs');">Advance Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 5 ? "active" : "")" href="@link">User Manual</a>
+                            </li>
+                            <li class="nav-item" id="logout">
+                                <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                            </li>
+                        }
+                    }
+
+
+
+                    @if (Role.Contains("POSTVENDOR"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
+                    }
+                    @if ( Role.Contains("POSTVIEWER") || Role.Contains("POSTFINANCEVIEWERBRANCH") || Role.Contains("POSTFINANCEVIEWER"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
+                        </li>
+                        <li class="nav-item" id="logout">
+                            <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                        </li>
+                    }
+                    @if (Role.Contains("POSTFINANCE") || Role.Contains("POSTTAX"))
+                    {
+                        if (Role.Split(',')[1].Contains("POSTFINANCE"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 0 ? "active" : "")" href="~/Post/HomeVendor">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 1 ? "active" : "")" href="~/Post/QuickSearch">Quick Search</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 3 ? "active" : "")" href="~/Post/LeadTime" onclick="ga('send', 'event', 'Navbar', 'Community links', 'Examples');">Reports</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(IdMenu == 4 ? "active" : "")" href="@link">User Manual</a>
+                            </li>
+                            <li class="nav-item" id="logout">
+                                <a class="nav-link " href="@Url.Action("SignOut", "account")">Log Off</a>
+                            </li>
+                        }
+
+                    }
+
+                </ul>
+            </div>
+            <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <li class="nav-item separator" style="border-right: 1px solid #EDEDED;height: 34px;margin-top: 11px;margin-right: 30px;">
+                    <a href="#" style="height:30px;">&nbsp;</a>
+                </li>
+                <li class="nav-item">
+                    <a style="border:1px solid #EDEDED;text-align: center;padding: 3px;margin-top:8px;border-radius:50%;width:40px;height:40px;" class="nav-item nav-link mr-md-2" href="#" id="bd-icon" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle fa-2x"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" style="margin-left:-15px;line-height:21px;padding-top:5px;">
+                    <a style="line-height:17px;" class="nav-link mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div>
+                            @userName
+                        </div>
+                        <div style="font-size:10px;">
+                            <i>@Role</i>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                        <a class="dropdown-item" href="@Url.Action("SignOut", "account")">Log Off</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <input id="Role" value="@Role" style="display:none;">
+        @{
+            ViewBag.TypePage = "HasTabs";
+        }
+
+        @if (ViewBag.TypePage == "HasTabs")
+        {
+            @RenderBody()
+        }
+        else
+        {
+            <!-- Main content -->
+            <div class="row" style="margin-top:110px;">
+                @RenderBody()
+            </div>
+        }
+
+    </div>
+    <script src="~/Scripts/select2.full.js" type="text/javascript"></script>
+    <script src="~/Scripts.app/POST/Custom.js?_id=@(unixTimestamp)" type="text/javascript"></script>
+    <script src="~/Content/POST/Dropzone/js/dropzone.js"></script>
+    <script src="~/Content/POST/SmoothScrollbar/smooth-scrollbar.js"></script>
+    <script>
+        var user = "@Html.Raw(ViewBag.UserLogin)";
+        var Role = "@Html.Raw(ViewBag.Role)";
+        Scrollbar.initAll();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

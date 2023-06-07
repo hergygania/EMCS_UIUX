@@ -1,0 +1,127 @@
+﻿@model App.Web.Models.CustomerOrderViewModel
+@{
+	ViewBag.Title = "Customer Order";
+}
+
+@using System.Web.Mvc
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-warning">
+			@*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+			<div id="parent">
+				<form role="form">
+					<div class="box-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Customer ID - Name</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.ListBoxFor(model => model.selCustList_Nos, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "CUNO", @class = " input-sm form-control", @style = "width:95%;display:none" })
+										</div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">PO Number</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.cust_po_no, new { @class = "form-control" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">PO Date</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<input id="cust_po_date_start" name="cust_po_date_start" type="hidden" />
+											<input id="cust_po_date_end" name="cust_po_date_end" type="hidden" />
+											<input type="text" id="cust_po_date" name="cust_po_date" class="form-control pull-left" />
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Part Number</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.part_number, new { @class = "form-control" })
+											@*<input type="text" class="form-control" name="partNumber" />*@
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Part Desc</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.part_desc, new { @class = "form-control" })
+											@*<input type="text" class="form-control" name="partDesc" />*@
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Docs Status</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<select id="doc_status" class="js-states form-control" style="width:95%;display:none">
+												<option value="">ALL</option>
+												<option value="Outstanding">Outstanding</option>
+												<option value="Complete">Complete</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Model Type</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<select class="js-states form-control" id="model" style="width:95%;display:none">
+												<option value="">ALL</option>
+												<option value="ENGINE">ENGINE</option>
+												<option value="NON ENGINE">NON ENGINE</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Model / Serial</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.model, new { @class = "form-control", @style = "width:30%;margin-right:1%;" })
+											@Html.TextBoxFor(m => m.serial, new { @class = "form-control", @style = "width:69%;" })
+											@*<input type="text" class="form-control" name="model" style="width:30%;margin-right:1%;" /> <input type="text" class="form-control" name="serial" style="width:69%;" />*@
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Equip Number</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.equip_number, new { @class = "form-control" })
+											@*<input type="text" class="form-control" name="equipNumber" />*@
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Trakindo Doc Number</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.ref_doc_no, new { @class = "form-control" })
+											@*<input type="text" class="form-control" name="trakNumber" />*@
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-12">
+								<div class="col-md-6">
+									<button id="btn-filter" type="button" class="btn btn-success"><i class="fa fa-search"></i> Filter</button>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<hr>
+								<table class="table table-bordered" id="table-client" style="width:2000px"></table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="box-body">
+				<div class="row"><div id="detail" style="display: none"></div></div>
+			</div>
+
+		</div>
+	</div>
+</div>
+@section scripts
+{
+	<script src="@Url.Content("~/Scripts.app/PartTracking/CustomerOrder.cshtml.js")"></script>
+}

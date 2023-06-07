@@ -1,0 +1,311 @@
+﻿<!--Product Group-->
+<div class="row">&nbsp;</div>
+<div class="row" id="inboundDetailOnce" style="display:none;">
+    <div class="row">&nbsp;</div>
+    <div class="col-md-8 box-custom">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Shipment Info</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">AJU No <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label detailView" id="ajuNo">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">MSO Number  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="MSONo">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">PO No  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="PoNumber">-</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Loading Port <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" style="word-break:break-word" id="LoadingPort">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Discharge Port <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" style="word-break:break-word" id="DischargePort">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Status <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="Status">-</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">PO Date <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label detailView" id="PODate">-</label>
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">MSO Number  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="MSONo">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">PO No  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="PoNumber">-</label>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Product Info</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Serial Number <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="SerialNumber">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Batch Number <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="BatchNumber">-</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Model <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label class="control-label detailView" id="model">-</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Model Description <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <label style="word-break:break-word" class="control-label detailView" id="modelDescription">-</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Notes</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email" class="col-md-2 col-xs-12 control-label">Notes 1 <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-10 col-xs-12">
+                                    <label class="control-label detailView" id="Notes">-</label>
+                                </div>
+                            </div>
+                            @{
+                                if (ViewBag.AllowUpdate)
+                                {
+                                    <div class="form-group">
+                                        <label for="email" class="col-md-2 col-xs-12 control-label">Notes 2 <span class="hidden-xs pull-right">:</span></label>
+                                        <div class="col-md-10 col-xs-12">
+                                            <textarea type="text" class="form-control" placeholder="" id="Remark" rows="5" cols="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-10">
+                                            <button type="button" onclick="saveRemark()" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <label for="email" class="col-md-2 col-xs-12 control-label">Notes 2 <span class="hidden-xs pull-right">:</span></label>
+                                        <div class="col-md-10 col-xs-12">
+                                            <label class="control-label detailView" id="Remark">-</label>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+                        </div>
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--RTS Group -->
+    <div class="col-md-4 pull-right box-custom">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-title">Notice of Arrival</div>
+            </div>
+            <div class="box-body">
+                <div class="row form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 col-sm-12 control-label">&nbsp;</label>
+                                <div class="col-md-8 col-xs-12 col-sm-12">
+                                    <div class="row text-center">
+                                        <div class="text-center col-md-6 col-xs-12"><strong>Plan</strong></div>
+                                        <div class="text-center col-md-6 col-xs-12"><strong>Actual</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12 col-sm-12">RTS  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-12 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="RtsPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="RtsActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">On Board Vessel <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="VesselPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="VesselActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">Port In  <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PortInPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PortInActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">Port Out <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PortOutPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PortOutActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">PLB In <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PlbInPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PlbInActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">PLB Out <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PlbOutPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="PlbOutActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">Yard In <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="YardInPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="YardInActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">Yard Out <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="YardOutPlan">-</label>
+                                        </div>
+                                        <div class="col-md-6 col-xs-6 text-center">
+                                            <label class="control-label detailView" id="YardOutActual">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label col-md-4 col-xs-12">Plant <span class="hidden-xs pull-right">:</span></label>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xs-12">
+                                            <label class="control-label detailView" id="ResultPlant">-</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

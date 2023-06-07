@@ -1,0 +1,258 @@
+﻿@model  App.Web.Models.EMCS.CiplModel
+@{
+    ViewBag.Title = "DownloadInvoice";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Download</title>
+    @Styles.Render("~/Content/EMCS/DocumentDownloadContent.css")
+</head>
+<body style="margin:0 auto;padding-left:31px;padding-right:23px;">
+    <table class="table-data">
+        <tr>
+            <td class="text_bold" colspan="4" style="width:45%;">
+                <div class="border_title">@Model.Data.SoldConsignee</div>
+            </td>
+            <td class="" style="width:10%;">&nbsp;</td>
+            <td class="text_bold border_right" colspan="4" style="width:45%;">
+                @if (Model.TemplateHeader.ShipDelivery == "Bill To")
+                {
+                    <div  class="border_title border_title_left">BILL TO</div>
+                }
+                else
+                {
+                    <div  class="border_title border_title_left">
+                        @((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.TemplateHeader.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")
+                    </div>}
+
+                </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="border-top:1px solid white;" class="border_left text_bold">@Model.TemplateHeader.ConsigneeName</td>
+            <td></td>
+            <td colspan="4" style="border-top:1px solid white;" class="border_right text_bold">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToName : Model.TemplateHeader.NotifyName)</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="border_left v_top">@Model.TemplateHeader.ConsigneeAddress @((Model.Data.ConsigneeCountry == "") ? ", " + Model.Data.ConsigneeCountry : "")</td>
+            <td></td>
+            <td colspan="4" class="border_right v_top">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToAddress : Model.TemplateHeader.NotifyAddress) @((Model.Data.NotifyName == "-") ? ", " + Model.Data.SoldToCountry : ", " + Model.Data.NotifyCountry)</td>
+        </tr>
+        <tr>
+            <td class="border_left v_top" colspan="4">
+                <label class="custom st">Telephone</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@Model.TemplateHeader.ConsigneeTelephone</label>
+            </td>
+            <td></td>
+            <td class="v_top border_right" colspan="4">
+                <div>
+                    <label class="custom st">Telephone</label>
+                    <label class="custom nd">:</label>
+                    <label class="custom th">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToTelephone : Model.TemplateHeader.NotifyTelephone)</label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="border_left v_top" colspan="4">
+                <label class="custom st">Fax</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@Model.TemplateHeader.ConsigneeFax</label>
+            </td>
+            <td></td>
+            <td class="v_top border_right" colspan="4">
+                <label class="custom st">Fax</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToFax : Model.TemplateHeader.NotifyFax)</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="border_left v_top" colspan="4">
+                <label class="custom st">Contact / Attn</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@Model.TemplateHeader.ConsigneePic</label>
+            </td>
+            <td></td>
+            <td class="v_top border_right" colspan="4">
+                <div>
+                    <label class="custom st">Contact / Attn</label>
+                    <label class="custom nd">:</label>
+                    <label class="custom th">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToPic : Model.TemplateHeader.NotifyPic)</label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="v_top border_left" colspan="4" style="word-wrap: break-word">
+                <label class="custom st">Email Address</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@Model.TemplateHeader.ConsigneeEmail</label>
+            </td>
+            <td></td>
+            <td class="v_top border_right" colspan="4" style="word-wrap: break-word">
+                <label class="custom st">Email Address</label>
+                <label class="custom nd">:</label>
+                <label class="custom th">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToEmail : Model.TemplateHeader.NotifyEmail)</label>
+            </td>
+        </tr>
+        <tr><td class="border_right" colspan="9">&nbsp;</td></tr>
+    </table>
+
+    <table class="table-custom">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="border_left text_bold">Currency:</td>
+            <td class="text_bold">Shipment Terms:</td>
+            <td class="text_bold">Shipment method:</td>
+            <td class="text_bold">CoO:</td>
+            <td class="text_bold">Vessel/Carrier:</td>
+            <td class="text_bold">Sailing on or about:</td>
+            <td class="text_bold">Load Port:</td>
+            <td class="border_right text_bold">Destination Port:</td>
+        </tr>
+        <tr>
+            <td class="border_left">@Model.TemplateHeader.CurrencyDesc</td>
+            <td>@Model.TemplateHeader.ShipmentTerm</td>
+            <td>@Model.TemplateHeader.ShippingMethod</td>
+            <td>@Model.TemplateHeader.CoDesc</td>
+            <td>@Model.TemplateHeader.VesselCarier</td>
+            <td>@Model.TemplateHeader.SailingOn</td>
+            <td style="width:120px;">@Model.TemplateHeader.LoadingPort</td>
+            <td style="width:120px;" class="border_right">@Model.TemplateHeader.DestinationPort</td>
+        </tr>
+        <tr><td colspan="8" style="height:10px" class="border_left border_right"></td></tr>
+        <tr>
+            <td colspan="3" class="border_left text_bold">Payment Terms :</td>
+            <td colspan="3" class="text_bold">Final Destination :</td>
+            <td colspan="2" class="border_right text_bold">LC No & date :</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="border_left">@Model.TemplateHeader.PaymentTerms</td>
+            <td colspan="3">@Model.TemplateHeader.FinalDestination</td>
+            <td colspan="2" class="border_right">@Model.TemplateHeader.LcNoDate</td>
+        </tr>
+    </table>
+
+    @if (Model.Data.Category == "CATERPILLAR NEW EQUIPMENT")
+    {
+        @Html.Partial("DownloadInvoice_pp", Model);
+    }
+    else if (Model.Data.Category == "CATERPILLAR USED EQUIPMENT")
+    {
+        @Html.Partial("DownloadInvoice_rue", Model);
+    }
+    else if (Model.Data.Category == "MISCELLANEOUS")
+    {
+        @Html.Partial("DownloadInvoice_misc", Model);
+    }
+    else if (Model.Data.Category == "CATERPILLAR SPAREPARTS")
+    {
+        if (Model.Data.CategoriItem == "Old Core")
+        {
+            @Html.Partial("DownloadInvoice_oldcore", Model);
+        }
+        else if (Model.Data.CategoriItem == "SIB")
+        {
+            @Html.Partial("DownloadInvoice_sib", Model);
+        }
+        else
+        {
+            @Html.Partial("DownloadInvoice_pra", Model);
+        }
+    }
+
+    <div class="wrapper">&nbsp;</div>
+    <table class="table-document">
+        <tr>
+            <td style="width:45%;" class="border_top border_left text_bold">
+                <label class="custom st total inv">TOTAL QUANTITY</label>
+                <label class="custom nd total inv">:</label>
+                <label class="custom th total inv">@Model.TemplateHeader.TotalQuantity</label>
+            </td>
+            <td style="width:10%;" class="border_top">&nbsp;</td>
+            <td style="width:45%;" class="border_top text_bold border_right" colspan="2">
+                <label class="custom st total inv"></label>
+                <label class="custom nd total inv"></label>
+                <label class="custom th total inv"></label>
+            </td>
+        </tr>
+        <tr>
+            <td class="border_left text_bold">
+                <label class="custom st total inv">TOTAL COLLY / PACKAGES</label>
+                <label class="custom nd total inv">:</label>
+                <label class="custom th total inv">@Model.TemplateHeader.TotalCaseNumber</label>
+            </td>
+            <td>&nbsp;</td>
+            <td class="text_bold border_right">
+                <label class="custom st total inv" style="width:100px;">TOTAL VALUE</label>
+                <label class="custom nd total inv">:</label>
+                <label class="custom th total-1 inv">@Model.TemplateHeader.TotalValue</label>
+            </td>
+            <td class="border_right border_top">
+                <label class="custom th total-2 inv">@Model.TemplateHeader.TotalExtendedValue</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="border_top">&nbsp;</td>
+        </tr>
+    </table>
+
+    <table class="table-document">
+        <tr>
+            <td style="width:50%;height:2px;" colspan="2">&nbsp;</td>
+            <td style="width:50%;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="border_left border_top border_bottom border_right text_bold" style="width:33%;height:10px;">Shipping Marks & Nos :</td>
+            <td class="border_top" style="height:10px">&nbsp;</td>
+            <td class="border_top" style="border-bottom:none;">&nbsp;</td>
+            <td class="border_left border_top border_bottom border_right text_bold" style="width:30%;border:1px solid black;">Remarks :</td>
+            <td class="border_top border_right" style="border-bottom:1px solid white;"></td>
+        </tr>
+        <tr>
+            <td class="border_left border_top text_bold" style="width:33%;line-height:2px;"></td>
+            <td class="" style="height:10px">&nbsp;</td>
+            <td class="" style="border-bottom:none;">&nbsp;</td>
+            <td class="" style="width:30%;"></td>
+            <td class="border_right" style="border-bottom:1px solid white;"></td>
+        </tr>
+        <tr>
+            <td class="border_left border_bottom v_top" colspan="2" style="width:45%;">@Model.TemplateHeader.ShippingMarksDesc</td>
+            <td class="border_bottom" style="width:10%;">&nbsp;</td>
+            <td class="border_bottom border_right v_top" colspan="2" style="width:45%;">@Model.TemplateHeader.RemarksDesc</td>
+        </tr>
+    </table>
+    <table class="table-custom">
+        <tr><td colspan="17" class="border_right" style="height:20px;"></td></tr>
+        <tr><td colspan="17" class="padding_left_10 border_right">Approved by,</td></tr>
+        <tr><td colspan="17" class="padding_left_10 border_right">@Model.TemplateHeader.SignedName</td></tr>
+        <tr><td colspan="17" class="padding_left_10 border_right">@Model.TemplateHeader.SignedPosition</td></tr>
+        <tr><td colspan="17" class="border_right" style="height:30px"></td></tr>
+        <tr><td colspan="17" class="text_justify text_12 text_italic padding_left_10 padding_right_10 text_9 border_right">Signature is not necessary due to this document is an electronic document which printed and generated by computer integrated system. I/We hereby certify that the information on this invoice is true and correct, and that the contents of this shipment as stated above.</td></tr>
+    </table>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+    <table class="">
+        <tr>
+            <td><img src="@ViewBag.QrCodeUrlInvoice" height="150px" width="150px" /></td>
+        </tr>
+    </table>
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+</body>
+</html>

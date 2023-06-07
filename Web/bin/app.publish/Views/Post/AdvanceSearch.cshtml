@@ -1,0 +1,107 @@
+﻿@{
+    string StepName = ViewBag.StepName ?? "confirm";
+    ViewBag.Title = "Advance Search";
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+<div class="row" style="margin-top:70px;">
+    <div class="col-6">
+        <div class="form-group row">
+            <label class="col-form-label col-4">Status PO</label>
+            <div class="col-md-8">
+                <select class="form-control input-sm select2" id="select2StatusPO">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">PO Date</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <input type="text" name="PODate" class="daterange form-control input-sm poDate" placeholder="PO Date" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Destination</label>
+            <div class="col-8">
+                <select class="form-control input-sm select2" id="select2Branch"></select>
+            </div>
+        </div>
+        <div class="form-group row" style="display:none;">
+            <label class="col-form-label col-4">Delivery Status</label>
+            <div class="col-8">
+                <select class="form-control input-sm select2" id="select2DeliveryStatus"></select>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group row">
+            <label class="col-form-label col-4">Supplier Name</label>
+            <div class="col-8">
+                <select class="form-control input-sm select2" id="select2Supplier"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">User</label>
+            <div class="col-8">
+                <select class="form-control input-sm select2" id="select2UserPIC"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-form-label col-4">Delivery Date</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <input type="text" name="PODate" class="daterange form-control input-sm deliveryDate" placeholder="Delivery Date" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">&nbsp;</div>
+    <div class="toolbar">
+        <button type="button" class="pull-right btn btn-success" onclick="DownloadAdvanceSearch();"><i class="fa fa-file"></i>&nbsp;Export to Excel</button>
+        <button type="button" class="pull-right btn btn-warning" onclick="RefreshTableAdvanceSearch();" style="margin-left:10px;"><i class="fa fa-filter"></i>&nbsp;Filter Data</button>
+        <select class="input-sm" id="sortBy" style="width:150px !important;margin-left:8px;height:27px;border:1px solid #efe9e9;border-radius:3px;padding-left:2px;" alt="Sort by" title="Sort by"></select>
+        <select class="input-sm select2-order" id="orderBy" style="width:100px !important;margin-left:8px;height:27px;border:1px solid #efe9e9;border-radius:3px;padding-left:2px;" alt="Order by" title="Order by">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+    </div>
+</div><!-- /input-group -->
+<div class="col-md-12" id="result-multiple">
+    <table id="table-po" class="table table-bordered table-striped" style="background:white;"></table>
+</div>
+
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <span class="loading-wrap">
+                    <span class="loading-text" style="font-size: 32px;">Loading, please wait  </span>
+                    <span class="animation-wrap"><i class="fa fa-spinner fa-pulse"></i></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">&nbsp;</div>
+<link href="~/Content/POST/Custom.css?_id=@(unixTimestamp)" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/HoReport.js?_id=@(unixTimestamp)" type="text/javascript"></script>
+}

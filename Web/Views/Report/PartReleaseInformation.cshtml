@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Part Release ";
+    string message = ViewBag.Message + "";
+}
+
+<style type="text/css">
+    .select2-selection__choice { white-space: normal !important; }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+
+            <div id="parent">
+                <form role="form">
+                    <div class="box-body">
+                        <div class="row">
+                           @Html.Partial("_reportFilter")
+                            <div class="col-lg-12">
+                                <hr>
+
+                                <div class="toolbar">
+                                    <a href="#" class="btn btn-default downloadExcel">
+                                        <i class="fa fa-download"></i>Download to Excel
+                                    </a>
+                                </div>
+
+                                <table class="table table-bordered table2excel" id="tabelPartRelease" style="width: 1300px"></table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var msg = '@message';
+        if (msg != '') {
+            sAlert('', msg, '');
+        }
+    </script>
+    <script src="@Url.Content("~/Scripts/jquery.table2excel.js")"> </script>
+    <script src="@Url.Content("~/Scripts.app/report/partReleaseInformation.cshtml.js")"> </script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"> </script>
+    <script src="/Scripts/extension/export/tableExport.js"> </script>
+}

@@ -1,0 +1,226 @@
+﻿@model App.Web.Models.StockReplenishmentHeaderViewModel
+@{
+	ViewBag.Title = "Stock Replenishment";
+	var guid = System.Guid.NewGuid().ToString();
+}
+
+@using System.Web.Mvc
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-warning" style="min-height:555px">
+			<div id="parent">
+				<form role="form" id="frmSearch">
+					<div class="box-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-lg-6">
+									<div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Filter By</label>
+                                        <div class="control-label col-lg-2 col-xs-3" style="margin-top:-7px">
+                                            <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;">
+                                                <input id="hub" name="filter_type" type="radio" checked value="HUB">
+                                                <label for="hub" onclick="setFilter(1)">HUB</label>
+                                                <input id="area" name="filter_type" type="radio" value="AREA">
+                                                <label for="area" onclick="setFilter(2)">AREA</label>
+                                                <a class="btn btn-primary"></a>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-lg-6 col-xs-5">
+                                            @Html.DropDownListFor(m => m.filter_by, new SelectList(Model.HubList, "HubId", "Name"), "ALL", new { @class = "js-states form-control", @style = "display:none" })
+                                        </div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Store Number</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.DropDownListFor(m => m.selStoreList_Nos, new SelectList(Model.StoreNumberList, "StoreNo", "Name"), new { @multiple = "multiple", @class = "js-states form-control", @style = "width:95%;display:none" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">SR Type</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<select id="sr_type" class="js-states form-control" style="width:95%;display:none">
+												<option value="O">Stock Order</option>
+												<option value="T">Stock Transfer</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Order Class</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectOrderClass("", "ALL", new { @id = "order_class", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Order Profile</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectOrderProfile("", "ALL", new { @id = "order_profile", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Shipment Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectShipmentTypePO("", "ALL", new { @id = "shp_type", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Agreement</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectAgreementTypePO("", "ALL", new { @id = "agreement", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Docs Status</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<select id="doc_status" class="js-states form-control" style="width:95%;display:none">
+												<option value="">ALL</option>
+												<option value="Outstanding Supplier">Outstanding Supplier</option>
+												<option value="Outstanding Supplier > 15 Days">Outstanding Supplier &gt; 15 Days</option>
+												<option value="In Transit">In Transit</option>
+												<option value="POD">POD</option>
+												<option value="Receipt Goods">Receipt Goods</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Doc Entry Date</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<input id="doc_date" name="doc_date" type="text" class="form-control pull-right daterange required" />
+											@*@Html.TextBoxFor(m => m.doc_date_start, new { @class = "form-control pull-left", @style = "display:none;" })
+												@Html.TextBoxFor(m => m.doc_date_end, new { @class = "form-control pull-left", @style = "display:none;" })
+												@Html.TextBoxFor(m => m.doc_date_s, new { @class = "form-control pull-left" })*@
+                                            <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Trakindo Order Number *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.order_number, new { @class = "form-control" })
+										</div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Invoice Number *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.supply_docinv, new { @class = "form-control" })
+										</div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<input id="supply_docinv_date" type="text" class="form-control date" />
+                                            <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Case Number *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.case_no, new { @class = "form-control" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Material Number *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.part_number, new { @class = "form-control" })
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Material Desc *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											@Html.TextBoxFor(m => m.part_desc, new { @class = "form-control" })
+										</div>
+									</div>
+									@*<div class="form-group">
+										<label class="control-label col-lg-4 col-xs-4">Material Type *</label>
+										<div class="input-group col-lg-8 col-xs-8">
+											<select class="js-states form-control" id="MaterialType" style="width:95%;display:none">
+												<option value="">ALL</option>
+												<option value="CAT">CAT</option>
+												<option value="NON CAT">NON-CAT</option>
+												<option value="BUCYRUS">BUCYRUS</option>
+												<option value="ROTABLE FIN">ROTABLE FIN</option>
+												<option value="ROTABLE PSC">ROTABLE PSC</option>
+											</select>
+										</div>
+									</div>*@
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Material Type *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="js-states form-control" id="MaterialType" style="width:95%;display:none">
+                                                @*<option value="@Model.HSCode" selected="selected">@Model.HSCode</option>*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+								</div>
+							</div>
+
+							<div class="col-lg-12" style="text-align:right;padding-right:30px;">
+								<button type="button" id="btn-filter" class="btn btn-success" style="width:125px;"><i class="fa fa-search"></i> Filter</button>
+								<button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+							</div>
+
+							<div class="col-lg-12">
+								<div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+								<table class="table table-bordered table2excel" id="table-stock" data-show-export="true" style="width:3000px;table-layout:fixed;"></table>
+								@Html.HiddenFor(m => m.param_rporne)
+								@Html.HiddenFor(m => m.param_ordsos)
+								@Html.HiddenFor(m => m.param_stno)
+								@Html.HiddenFor(m => m.param_partNumber)
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="box-body">
+				<div class="row">
+					<div id="detail" style="display: none"></div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+<form id="submitImex" method="post" action="/detail-part-and-case-@guid" target="_blank">
+	<input type="hidden" name="sxNo" id="imex_sxNo" />
+	<input type="hidden" name="partNo" id="imex_partNo" />
+	<input type="hidden" name="caseNo" id="imex_caseNo" />
+</form>
+
+@section scripts
+{
+	<script>
+		var dt1 = '@DateTime.Today.ToString("dd MMM yyyy")', dt2 = '@DateTime.Today.ToString("dd MMM yyyy")';
+
+		$('input[name="doc_date"]').daterangepicker({
+			format: 'DD MMM YYYY',
+			autoUpdateInput: true,
+			"showDropdowns": true,
+			"startDate": dt1,
+			"endDate": dt2
+		});
+
+		$('#doc_date').val(dt1 + ' - ' + dt2);
+	</script>
+    <script src="~/Scripts.app/PartTracking/StockReplenishment.cshtml.js?token=@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
+	<script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+	<script src="/Scripts/extension/export/tableExport.js"></script>
+	<script src="/Scripts/extension/export/jquery.base64.js"></script>
+}

@@ -1,0 +1,55 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h5><b>Import Video Data</b></h5>
+    </div>
+
+    <div class="col-md-12">
+
+        <div class="col-md-12">
+            <div class="row text-center divUploadFile dropzone" style="margin-bottom:5px;border: 1px dotted; font-style:italic; color:#808080; font-size:inherit; height:200px" title="Drop the Import File Here or Click this Section for Browse the Import File." id="FormUploadVideo">
+            </div>
+        </div>
+
+        <div id="template-dropzone" class="hidden">
+            <div id="template" class="file-row text-left" style="padding:20px;">
+                <!-- This is used as the file preview template -->
+                <div class="col-md-2">
+                    <div class="row">
+                        <span class="preview">
+                            <img alt="#" style="width:65%;height:auto;" src="~/Images/EMCS/excel.png">
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <p class="name" data-dz-name></p>
+                    <strong class="error text-danger" data-dz-errormessage></strong>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <p class="size" data-dz-size></p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <span data-dz-uploadprogress id="progressPercent"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="actions">
+                    <button data-dz-remove class="btn btn-sm btn-danger delete">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <span>Delete</span>
+                    </button>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts.app/EMCS/dropzone.js"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>

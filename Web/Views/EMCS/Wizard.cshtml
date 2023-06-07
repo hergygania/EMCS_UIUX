@@ -1,0 +1,294 @@
+﻿﻿<style>
+    @* .stepsbar {
+        padding: 0 0 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px;
+        margin-top:-5px;
+    }
+
+        .stepsbar ol {
+            overflow: hidden;
+            margin: 0;
+            padding: 1em 0;
+            list-style: none;
+            line-height: 1.2em;
+            font-size: 1em;
+            counter-reset: li;
+            animation: chase 1s 1 forwards;
+        }
+
+        .stepsbar li {
+            float: left;
+            display: inline;
+            position: relative;
+            counter-increment: li;
+            width: 15%;
+            text-align: center;
+            color: #ccc;
+            transition: all 0.5s ease;
+            padding-bottom: 15px !important;
+            font-weight: 600;
+        }
+
+            .stepsbar li div {
+                align-content: center;
+                justify-content: center;
+                background-color: none;
+                overflow:hidden;
+                padding-top:2px;
+                /*background-image: url(*/@Url.Content("~/Images/EMCS/Icons/map_orange_on_progress.png")/*);*/
+                height: 27px;
+                width: 27px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                margin: 2px auto;
+            }
+
+            .stepsbar li:after {
+                content: "";
+                position: absolute;
+                width: 90%;
+                height: 15px;
+                /*display: block;*/
+                background: rgb(214 214 214);
+                z-index: 1;
+                top: 120%;
+                left: 110%;
+                margin-top: -1.2em;
+                background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+                background-repeat: repeat-x;
+                background-size: 20px 20px;
+                border-radius: 10px;
+            }
+
+    .white-content ol li {
+        color: #fe9d01;
+    }
+
+    .stepsbar li.done:after {
+        left: 0% !important;
+    }
+
+               /* .stepsbar li:first-child.active:after {
+                    left: 50%;
+                }*/
+
+            .stepsbar li:last-child:after {
+                display: none;
+            }
+
+            .stepsbar li.done {
+                color: #1d8cf8;
+            }
+
+                .stepsbar li.done div {
+                    display: none !important;
+                    align-content: center;
+                    justify-content: center;
+                    background-color: none;
+                    overflow: visible;
+                    padding-top: 2px;
+                    background-image: url( @Url.Content("~/Images/EMCS/Icons/map_orange_done.png") );
+                    height: 27px;
+                    width: 27px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    margin: 2px auto;
+                }
+
+                .stepsbar li.done:after {
+                    width: 90%;
+                    height: 15px;
+                    border-radius: 10px;
+                    background-color: #1d8cf8;
+                    animation: progress 0.3s linear 10;
+                }
+
+                .stepsbar li.done:before {
+                    content: "" !important;
+                    background-color: #fe9d01;
+                    border-color: #f5e806;
+                    color: white;
+                }
+
+            .stepsbar li.active {
+                width: 15%;
+                font-weight: bold;
+                color: #00f2c3;
+            }
+
+                .stepsbar li.active:after {
+                    width: 90%;
+                }
+
+                .stepsbar li.active div {
+                    align-content: center;
+                    justify-content: center;
+                    background-color: none;
+                    overflow:hidden;
+                    padding-top:2px;
+                    /*background-image: url(*/@Url.Content("~/Images/EMCS/Icons/map_orange_line.png")/*);*/
+                    height: 27px;
+                    width: 27px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    margin: 2px auto;
+                    /*display: none !important;*/
+                }
+
+                    .stepsbar li.active div:after {
+                        content: "";
+                        position: absolute;
+                        width: 100%;
+                        border-radius: 10px;
+                        height: 15px;
+                        /*display: block;*/
+                        background: #00f2c3;
+                        z-index: 1;
+                        top: 120%;
+                        left: 0%;
+                        margin-top: -1.2em;
+                        background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+                        background-repeat: repeat-x;
+                        background-size: 20px 20px;
+                    } *@
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<input type="hidden" id="WizardState" />
+<div id="stepsbar-wrap">
+    <div id="stepsbar" class="stepsbar">
+        
+        <ol>
+            <li value="1">
+                <span class="indicator"></span>
+                <span class="indicator-line"></span>
+                <span class="label">CIPL / EDI</span>
+            </li>
+            <li value="2">
+                <span class="indicator"></span>
+                <span class="label">BAST</span>
+            </li>
+            <li value="3">
+                <span class="indicator"></span>
+                <span class="label">CL</span>
+            </li>
+            @{
+                if (ViewBag.WizardData.HasSs)
+                {
+                    <li value="4">
+                        <span class="indicator"></span>
+                <span class="label">SS</span>
+                    </li>
+                }
+            }
+            <li value="5">
+                <span class="indicator"></span>
+                <span style="line-height:20px;">SI</span>
+            </li>
+            <li value="6">
+                <span class="indicator"></span>
+                <span class="label">PEB & NPE</span>
+            </li>
+            <li value="7">
+                <span class="indicator"></span>
+                <span class="label">BL / AWB</span>
+            </li>
+        </ol>
+        <div class="stepsbar-line"></div>
+    </div>
+</div>
+@Styles.Render("~/Content/EMCS/JqueryUI/jquery-ui.min.css")
+@Scripts.Render("~/Content/EMCS/JqueryUI/jquery-ui.min.js")
+<script type="text/javascript">
+        var steps = $("#stepsbar li"), currentIDX = 0;
+
+        $(document).ready(function () {
+            var options = { to: { width: 280, height: 185 } };
+            $("#stepsbar ol li").first().find("div").show("blind", options, 1200, function showNext() {
+                $(this).parent().next("li").find("div").show("blind", options, 500, showNext);
+            });
+
+            for (i = 0; i < steps.length; i++) {
+                steps.eq(currentIDX - i).removeClass().prev().removeClass().addClass('active');
+            }
+            for (i = 0; i < wizardState; i++) {
+                steps.eq(currentIDX + i).removeClass().addClass('done').next().removeClass().addClass('active');
+            }
+        });
+
+        steps.click(function () {
+            var toIDX = $(this).attr('value');
+            var id = "@(!string.IsNullOrEmpty(ViewBag.Id) ? ViewBag.Id : "0")";
+            var idCipl = "@ViewBag.IdCipl";
+            console.log(toIDX);
+            switch (toIDX) {
+                case "1":
+                    url = "";
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    if (page == "cargo")
+                    {
+                        id = idCipl
+                    }
+                    var url = "/EMCS/ShowCipl?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "2":
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")"
+                    var url = "/EMCS/ShowRg?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "3":
+                    url = "";
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowCargo?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "4":
+                    debugger;
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowSs?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "5":
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowSi?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "6":
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowNpePeb?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                case "7":
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowBlAwb?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+                    break;
+                default:
+                    var page = "@(!string.IsNullOrEmpty(ViewBag.Page) ? ViewBag.Page : "cargo")";
+                    var url = "/EMCS/ShowCipl?page=" + page + "&Id=" + id;
+                    window.location.href = url;
+            }
+        });
+
+        $("#btnNext").click(function () {
+            if (currentIDX < steps.length) {
+                steps.eq(currentIDX).removeClass().addClass('done').next().removeClass().addClass('active');
+                currentIDX++;
+            }
+        });
+
+        $("#btnBack").click(function () {
+            if (currentIDX <= steps.length && currentIDX > 0) {
+                steps.eq(currentIDX).removeClass().prev().removeClass().addClass('active');
+                currentIDX--;
+            }
+        });
+</script>

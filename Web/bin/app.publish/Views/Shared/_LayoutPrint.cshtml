@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>.:: PT. TRAKINDO UTAMA ::.</title>
+	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<style type="text/css">
+	</style>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/jquery")
+</head>
+<body class="skin-black">
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+
+		<aside class="new-right-side right-side">
+
+			<!-- Main content -->
+			<section class="content">
+				@RenderBody()
+			</section>
+		</aside>
+	</div>
+
+	<script>
+	var myApp = {};
+		myApp.root = '@(Url.Content("~/"))';
+		myApp.fullPath = 'http://' + document.location.host + myApp.root;
+		myApp.firstMonth = '@DateTime.Today.AddMonths(-1).ToString("dd MMM yyyy")';
+		myApp.lastMonth = '@DateTime.Today.ToString("dd MMM yyyy")';
+
+		$(function () {
+		//	$.AdminLTE.tree('.sidebar');
+		});
+	</script>
+
+
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+</body>
+</html>

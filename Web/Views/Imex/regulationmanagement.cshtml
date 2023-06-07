@@ -1,0 +1,73 @@
+@using System.Web.Mvc
+
+@model App.Web.Models.RegulationManagementView
+@{
+    ViewBag.Title = "Regulation Management";
+    string message = ViewBag.Message + "";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form">
+                <div class="box-body" id="panelHeader">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                            </div>
+                            <div class="col-lg-6">
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12">
+                            <hr>
+                            <center>
+                                <div class="toolbar">
+                                    <b href="" class="btn btn-info" onclick="document.getElementById('filexls').click(); return false" style="width:150px;">
+                                        <i class="fa fa-upload"></i> Import/Upload
+                                    </b>
+                                    <a href="~/temp/template-regulation.xlsx" style="width:150px;" class="btn btn-info">
+                                        <i class="fa fa-download"></i> Download Template
+                                    </a>
+                                    <a href="#" class="btn btn-info downloadExcel" style="width:150px;">
+                                        <i class="fa fa-download"></i> Download to Excel
+                                    </a>
+                                </div>
+                            </center>
+
+                            <table class="table table-bordered table-striped" id="tableRMHeader" style="table-layout:fixed;"></table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-body" id="panelDetail" style="display: none">
+                    <div class="row">
+                        <div id="detail"></div>
+                    </div>
+                </div>
+
+            </form>
+
+            <form id="submitExcel" method="post" action="ImportRM" enctype="multipart/form-data">
+                <input type="file" id="filexls" name="upload" style="visibility: hidden;" onchange="$('#submitExcel').submit();" />
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.table2excel.js")"></script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+    <script src="@Url.Content("~/Scripts.app/imex/regulation-management.cshtml.js")"></script>
+}

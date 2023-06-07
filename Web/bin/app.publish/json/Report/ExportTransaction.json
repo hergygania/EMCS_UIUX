@@ -1,0 +1,62 @@
+﻿[
+  {
+    "month": "Jan",
+    "totalInv": 17,
+    "totalPeb": 8
+  },
+  {
+    "month": "Feb",
+    "totalInv": 35,
+    "totalPeb": 10
+  },
+  {
+    "month": "Mar",
+    "totalInv": 31,
+    "totalPeb": 4
+  },
+  {
+    "month": "Apr",
+    "totalInv": 77,
+    "totalPeb": 17
+  },
+  {
+    "month": "Mei",
+    "totalInv": 51,
+    "totalPeb": 32
+  },
+  {
+    "month": "Jun",
+    "totalInv": 46,
+    "totalPeb": 30
+  },
+  {
+    "month": "Jul",
+    "totalInv": 80,
+    "totalPeb": 73
+  },
+  {
+    "month": "Aug",
+    "totalInv": 75,
+    "totalPeb": 39
+  },
+  {
+    "month": "Sep",
+    "totalInv": 44,
+    "totalPeb": 29
+  },
+  {
+    "month": "Oct",
+    "totalInv": 0,
+    "totalPeb": 0
+  },
+  {
+    "month": "Nov",
+    "totalInv": 0,
+    "totalPeb": 0
+  },
+  {
+    "month": "Dec",
+    "totalInv": 0,
+    "totalPeb": 0
+  }
+]

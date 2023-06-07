@@ -1,0 +1,33 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "cycle": "Cipl Approved",
+      "target": "2D",
+      "actual": "1,5D",
+      "percent": "100%"
+
+    },
+    {
+      "cycle": "Pickup Goods",
+      "target": "2D",
+      "actual": "2D",
+      "percent": "100%"
+
+    },
+    {
+      "cycle": "PEB Approved",
+      "target": "2D",
+      "actual": "1D",
+      "percent": "50%"
+    },
+    {
+      "cycle": "Shipped On Board",
+      "target": "7D",
+      "actual": "3D",
+      "percent": "100%"
+
+    }
+  ]
+}
+

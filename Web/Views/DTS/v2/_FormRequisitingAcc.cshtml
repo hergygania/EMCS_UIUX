@@ -1,0 +1,888 @@
+﻿@using System.Web.Mvc
+
+<style type="text/css">
+    .line_hght {
+        padding-top: 3px;
+    }
+
+    .addon-first {
+        width: 65px;
+        text-align: left; 
+    }
+
+    .box-header.with-border {
+        border-bottom: 1px solid #f4f4f4;
+    }
+
+    .box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+        display: inline-block;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .box-header > .box-tools {
+        position: absolute !important;
+        right: 10px !important;
+        top: 5px !important;
+    }
+
+    .btn-box-tool {
+        padding: 5px;
+        font-size: 12px;
+        background: transparent !important;
+        color: #97a0b3;
+    }
+
+    .control-label {
+        text-transform: uppercase !important;
+    }
+
+    .form-horizontal .control-label {
+        text-align: left !important;
+        text-transform: uppercase !important;
+    }
+
+    .error {
+        display: none;
+        color: red;
+        font-weight: bold;
+    }
+
+    label.error {
+        border: none;
+        display: none !important;
+    }
+
+    .btn-form {
+        width: 100px;
+    }
+
+    /*form styles*/
+    #formRequest {
+        position: relative;
+    }
+
+    .btn-outline-warning {
+        background-image: none;
+        border-color: #ffc107;
+        color: #ffc107;
+        background-color: transparent;
+    }
+
+    .btn-outline-warning:hover {
+        color: #212529;
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-outline-warning.active {
+        color: #212529;
+        background-color: #ffc107;
+        border-color: #ffc107;
+        box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    }
+    .form-group.preview .kv-file-remove.btn{
+        display: none;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Requisition Form Approval</h4>
+</div>
+<div class="modal-body" style="padding-top:10px; margin-left: 10px; margin-right: 10px;">
+    <form class="form" id="formRequest">
+        <input class="hidden" type="hidden" name="ID" id="ID" value="0" />
+        <input class="hidden" type="hidden" name="KeyCustom" id="KeyCustom" />
+        <input class="hidden" type="hidden" name="formType" id="formType" placeholder="Form Type" value="I" />
+        <div class="row text-center">
+            <div class="col-md-12">
+                <div id="btn-group-refnotype" class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-warning btn-refnotype active">
+                        <input type="radio" name="reference" id="refSONo" value="SONo" autocomplete="off"> SO-RO NO.
+                    </label>
+                    <label class="btn btn-outline-warning btn-refnotype">
+                        <input type="radio" name="reference" id="refSTRNo" value="STRNo" autocomplete="off"> STR.
+                    </label>
+                    @*<label class="btn btn-outline-warning btn-refnotype">
+                        <input type="radio" name="reference" id="refPONo" value="PONo" autocomplete="off"> PO.
+                    </label>*@
+                    <label class="btn btn-outline-warning btn-refnotype">
+                        <input type="radio" name="reference" id="refDINo" value="DINo" autocomplete="off"> DI MANUAL.
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center" style="margin-top: 10px;">
+            <div class="row col-md-4 col-md-offset-4">
+                @*<label for="ValueType" class="control-label col-md-4 col-xs-12">REFERENCE NO</label>*@
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control text-center" name="refNo" id="refNo">
+                    <span class="input-group-btn btn-refNo">
+                        <button type="button" class="btn btn-warning btn-flat" onclick="referenceClick()"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-default btn-flat" onclick="referenceReset()">Clear</button>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                        <button type="button" id ="btnhistory"class="btn btn-default btn-flat" onclick="viewhistoryreroute()"><i class="fa fa-history"></i></button>
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                        <button type="button" id ="btnhistory"class="btn btn-default btn-flat" onclick="viewhistoryreroute()"><i class="fa fa-history"></i></button>
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                    </span>
+                </div>
+                @*<div for="refNo" id="refDate">DATE:</div>*@
+            </div>
+        </div>
+        <div class="row hidden" style="margin-top: 10px;" id="formRequisition">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">REQUESTER INFO</h4>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseRequestorInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="ReqName" class="control-label col-md-4 col-xs-12">Requester Name</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input id="ReqName" name="ReqName" readonly class="form-control" placeholder="Nama pemohon pengirim unit" />
+                                                    <input id="RequestID" type="hidden" name="ReqID" class="hidden" />
+                                                    <div for="ReqName" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ReqHp" class="control-label col-md-4 col-xs-12">Requester HP*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" required id="RequestHP"  value="@(ViewBag.userPhone)" name="ReqHp" 
+                                                           placeholder="Nomor HP pemohon pengirim unit" />
+                                                    <div for="ReqHp" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Sales1ID" class="control-label col-md-4 col-xs-12">SALES 1 NAME</label>
+                                                <div class="input-group col-md-8 col-xs-12" style="font-size:7px!important" >
+                                                    <select class="select2Field" id="Sales1ID" name="Sales1ID"></select>
+                                                    <input type="text" name="Sales1Name" id="Sales1Name" class="hidden"  />
+                                                    <div for="Sales1ID" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Sales1Hp" class="control-label col-md-4 col-xs-12">SALES HP 1</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Sales1Hp" value="" name="Sales1Hp" 
+                                                           placeholder="Nomor HP Sales yang meminta pengiriman" />
+                                                    <div for="Sales1Hp" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Sales2ID" class="control-label col-md-4 col-xs-12">SALES 2 NAME</label>
+                                                <div class="input-group col-md-8 col-xs-12" style="font-size:7px!important">
+                                                    <select class="select2Field" id="Sales2ID" name="Sales2ID"></select>
+                                                    <input type="text" name="Sales2Name" id="Sales2Name" class="hidden" />
+                                                    <div for="Sales2ID" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Sales2Hp" class="control-label col-md-4 col-xs-12">SALES HP 2</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Sales2Hp" value="" name="Sales2Hp"  placeholder="Nomor HP Sales yang menerima unit" />
+                                                    <div for="Sales2Hp" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">CUSTOMER & DESTINATION INFO</h4>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseCustomerInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                            <div class="form-group" id="newcustName">
+=======
+                                            <div class="form-group">
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                                            <div class="form-group" id="newcustName">
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                                                <label for="CustID" class="control-label col-md-4 col-xs-12">Customer Name</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <select id="CustID" required name="CustID" class="select2Field"></select>
+                                                    <input type="text" name="CustName" id="CustName" class="hidden" />
+                                                    <div for="CustID" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                                            <div class="form-group" id="oldcustNamegroup" hidden="hidden">
+                                                <label for="PicName" class="control-label col-md-4 col-xs-12">Customer Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control"  id="OldCustName" name="OldCustName"  />
+                                                   
+                                                </div>
+                                            </div>
+<<<<<<< HEAD
+                                            <div class="form-group">
+                                                <label for="PicName" class="control-label col-md-4 col-xs-12">Customer PIC Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="PicName" name="PicName" required placeholder="Nama PIC customer/penerima unit" />
+=======
+                                            <div class="form-group">
+                                                <label for="PicName" class="control-label col-md-4 col-xs-12">Customer PIC Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="PicName" name="PicName" required  placeholder="Nama PIC customer/penerima unit" />
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                                            <div class="form-group">
+                                                <label for="PicName" class="control-label col-md-4 col-xs-12">Customer PIC Name*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="PicName" name="PicName" required placeholder="Nama PIC customer/penerima unit" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                                                    <div for="PicName" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="PicHP" class="control-label col-md-4 col-xs-12">Customer PIC HP*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="PicHP" id="PicHP" required placeholder="Nomor HP PIC customer/penerima unit" />
+                                                    <div for="PicHP" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="CustAddress" class="control-label col-md-4 col-xs-12">Destination</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <textarea name="CustAddress" id="CustAddress" class="form-control" required
+                                                              placeholder="Alamat tujuan customer/penerima unit" style="height: 109px;"></textarea>
+                                                    <label>*Lengkapi alamat dengan alamat site customer</label>
+                                                    <div for="CustAddress" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group">
+                                                <label for="Kecamatan" class="control-label col-md-4 col-xs-12">Sub-District*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Kecamatan" name="Kecamatan" required placeholder="Nama Kecamatan Tujuan" />
+                                                    <div for="Kecamatan" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Kabupaten" class="control-label col-md-4 col-xs-12">District*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Kabupaten" name="Kabupaten" required placeholder="Nama Kabupaten Tujuan" />
+                                                    <div for="Kabupaten" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Province" class="control-label col-md-4 col-xs-12">Province*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Province" name="Province" required placeholder="Nama Provinsi Tujuan" />
+                                                    <div for="Province" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="CreateDate" class="control-label col-md-4 col-xs-12">DR Create Date</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="CreateDate" id="CreateDate" placeholder="Create DR Date" readonly/>
+                                                    <div for="CreateDate" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">MATERIAL INFO</h4>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseMaterialInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="Origin" class="control-label col-md-4 col-xs-12">ORIGIN</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" id="Origin" name="Origin" required placeholder="ORIGIN" />
+                                                    <div for="Origin" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4" style="padding-left: 0px; padding-right: 0px;">
+                                                    <label for="Unit">Type</label>
+                                                    <div class="radio">
+                                                        <label><input type="radio" name="unit" value="MACHINE"> MACHINE</label><br />
+                                                        <label><input type="radio" name="unit" value="ENGINE" /> ENGINE</label><br />
+                                                        <label><input type="radio" name="unit" value="FORKLIFT" /> FORKLIFT</label><br />
+                                                        @*<label><input type="radio" name="unit" value="RUE" /> RUE</label><br />*@
+                                                        <label><input type="radio" name="unit" required value="RENTAL" /> RENTAL</label><br />
+                                                        <label><input type="radio" name="unit" required value="NON CAT" /> NON CAT</label><br />
+                                                        @*<label><input type="radio" name="unit" required value="USED EQUIPMENT" /> USED EQUIPMENT</label><br />*@
+                                                        @* <label><input type="radio" name="unit" required value="ATTACHCMENT" /> ATTACHMENT</label><br />*@
+                                                        <label><input type="radio" name="unit" required value="ATTACHMENT CAT" /> ATTACHMENT CAT</label><br />
+                                                        <label><input type="radio" name="unit" required value="ATTACHMENT NON CAT" /> ATTACHMENT NON CAT</label><br />
+                                                        <label><input type="radio" name="unit" required value="UE-ASSET" /> UE-ASSET</label><br />
+                                                        <label><input type="radio" name="unit" required value="UE-STOCK" /> UE-STOCK</label><br />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-8" id="section-dimension" style="padding-left: 0px; padding-right: 0px;" hidden>
+                                                    <div class="input-group col-md-12 col-xs-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" style="width:70px">WEIGHT</span>
+                                                            <input id="u-weight" type="text" class="form-control" placeholder="Weight">
+                                                            <span class="input-group-addon">KG &nbsp;</span>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" style="width:70px">LENGHT</span>
+                                                            <input id="u-length" type="text" class="form-control u-dimension" placeholder="Length">
+                                                            <span class="input-group-addon">CM &nbsp;</span>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" style="width:70px">WIDTH</span>
+                                                            <input id="u-width" type="text" class="form-control u-dimension" placeholder="Width">
+                                                            <span class="input-group-addon">CM &nbsp;</span>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" style="width:70px">HEIGHT</span>
+                                                            <input id="u-height" type="text" class="form-control u-dimension" placeholder="Height">
+                                                            <span class="input-group-addon">CM &nbsp;</span>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon" style="width:70px">VOL.</span>
+                                                            <input id="u-vol" type="text" class="form-control" placeholder="Vol" readonly>
+                                                            <span class="input-group-addon">CM3</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <table id="tableDeliveryRequisitionUnit" @*data-toolbar=".toolbarUnit"*@ class="table table-bordered"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">TERM INFO</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseTermInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-3 hidden">
+                                            <div class="form-group">
+                                                <label for="TermOfDelivery" class="control-label">Term Of Delivery*</label>
+                                                <div class="radio">
+                                                    <label><input name="TermOfDelivery" class="TermOfDelivery" value="DOOR TO DOOR (DTD)" type="radio" /> DOOR TO DOOR (DTD)</label><br />
+                                                    <label><input name="TermOfDelivery" class="TermOfDelivery" value="PORT TO PORT (PTP)" type="radio" /> PORT TO PORT (PTP)</label><br />
+                                                    <label><input name="TermOfDelivery" class="TermOfDelivery" value="DOOR TO PORT OR PORT TO DOOR (DTP OR PTD)" type="radio" /> DOOR TO PORT OR PORT TO DOOR (DTP OR PTD)</label><br />
+                                                    <label><input name="TermOfDelivery" class="TermOfDelivery" value="CONTAINER YARD  TO CONTAINER YARD ( CY TO CY )" type="radio" /> CONTAINER YARD  TO CONTAINER YARD ( CY TO CY )</label><br />
+                                                    <label><input name="TermOfDelivery" class="TermOfDelivery" value="OTHERS" type="radio" /> @*OTHERS*@  <input type="text" id="TODOthers" class="form-control" placeholder="OTHERS" readonly></label><br />
+                                                </div>
+                                                <div for="TermOfDelivery" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="SupportingOfDelivery" class="control-label">Supporting Of Delivery*</label>
+                                                <div class="radio">
+                                                    <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="UNLOADING BY CUSTOMER" type="radio" /> UNLOADING BY CUSTOMER</label><br />
+                                                    <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="UNLOADING BY PTTU" type="radio" /> UNLOADING BY PTTU</label><br />
+                                                    <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="UNLOADING BY VENDOR" type="radio" /> UNLOADING BY VENDOR</label><br />
+                                                    <label>
+                                                        <input name="SupportingOfDelivery" class="SupportingOfDelivery"
+                                                               required value="CRANE/FORKLIFT" type="radio" /> CRANE/FORKLIFT
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" id="SODCrane_Forklift" class="form-control"
+                                                                   placeholder="CAPACITY" readonly>
+                                                            <span class="input-group-addon">/ TON</span>
+                                                        </div>
+                                                    </label><br />
+                                                    <label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="ESCORTED BY MECHANIC" type="radio" /> ESCORTED BY MECHANIC</label><br />
+                                                    @*<label><input name="SupportingOfDelivery" class="SupportingOfDelivery" required value="OTHERS" type="radio" /> OTHERS <input type="text" id="SODOthers" class="form-control" placeholder="OTHERS" readonly></label><br />*@
+                                                </div>
+                                                <div for="SupportingOfDelivery" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="Incoterm" class="control-label">
+                                                    Transportation service arrangement*
+                                                </label>
+                                                <div class="checkbox">
+                                                    <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" value="FOT ( ON TRUCT EXCLUDE UNLOADING )" /> ON TRUCK ( EXCLUDE UNLOADING UNITS AT DESTINATION )</label><br />
+                                                    <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" value="FOB ( ON BOARD INCLUDE LOADING & UNLOADING )" /> ON BOARD ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK & LOADING TO VESSEL/CARRIER )</label><br />
+                                                    <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" value="ON GROUND ( INCLUDE UNLOADING )" /> ON GROUND ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK TO GROUND AT DESTINATION )</label><br />
+                                                    @*<label><input type="radio" class="Incoterm" required name="Incoterm" value="FAS ( FREE ALONGSIDE SHIP)" /> FAS ( FREE ALONGSIDE SHIP)</label><br />*@
+                                                    <label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" value="ONTO CONTAINER ( INCLUDE LOADING & UNLOADING )" /> ONTO CONTAINER ( INCLUDE OPERATOR UNLOADING UNITS FROM TRUCK AND LOADING TO CONTAINER )</label><br />
+                                                    <label class="line_hght" id="on_pondation"><input type="checkbox" class="Incoterm" required name="Incoterm" value="ON PONDATION ( INCLUDE LOADING & UNLOADING )" /> ON PONDATION ( INCLUDE LIFTING TOOLS & OPERATOR UNLOADING UNITS FROM TRUCK AND LOADING ON PONDATION )</label><br />
+                                                    @*<label class="line_hght"><input type="checkbox" class="Incoterm" required name="Incoterm" value="OTHERS" /> <input type="text" id="INCTOthers" class="form-control" placeholder="OTHERS" readonly></label><br />*@
+                                                </div>
+                                                <div for="Incoterm" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="Transportation" class="control-label">Transportation*</label>
+                                                <div class="radio">
+                                                    <label><input name="Transportation" id="Transportation" required value="PTTU" type="radio" /> BY PTTU</label><br />
+                                                    <label><input name="Transportation" id="Transportation" required value="Customer" type="radio" /> BY CUSTOMER</label><br />
+                                                    <label><input name="Transportation" id="Transportation" required value="OTHERS" type="radio" /> @*OTHERS*@ <input type="text" id="TransportationOthers" class="form-control" placeholder="OTHERS" readonly></label>
+                                                </div>
+                                                <div for="Transportation" class="error">This field is required</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="IsDemob" class="control-label">Mobilization/Demobilization*</label>
+                                                <div class="radio">
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                                    <label><input name="IsDemob" id="IsDemob" required value="true" type="radio" /> YES ( Unit RUE / UE ) </label><br />
+                                                    <label><input name="IsDemob" id="IsDemob" required value="false" type="radio" /> NO { Unit PP ) </label><br />
+=======
+                                                    <label><input name="IsDemob" id="IsDemob" required value="true" type="radio" /> YES</label><br />
+                                                    <label><input name="IsDemob" id="IsDemob" required value="false" type="radio" /> NO</label><br />
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                                                    <label><input name="IsDemob" id="IsDemob" required value="true" type="radio" /> YES ( Unit RUE / UE ) </label><br />
+                                                    <label><input name="IsDemob" id="IsDemob" required value="false" type="radio" /> NO { Unit PP ) </label><br />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                                                </div>
+                                                <div for="IsDemob" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="ModaTransport" class="control-label">Moda Transport*</label>
+                                                <div class="radio">
+                                                    <label><input name="ModaTransport" required value="SEA" type="radio" /> SEA FREIGHT</label><br />
+                                                    <label><input name="ModaTransport" required value="LAND" type="radio" /> INLAND FREIGHT</label><br />
+                                                    <label><input name="ModaTransport" required value="AIR" type="radio" /> AIR FREIGHT</label>
+                                                </div>
+                                                <div for="ModaTransport" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">LEAD TIME INFO</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseLeadTimeInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="ExpectedTimeLoading" class="control-label col-md-5 col-xs-12">Pickup Plan*</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <input class="form-control date" name="ExpectedTimeLoading" id="ExpectedTimeLoading"
+                                                           required placeholder="Pickup Plan" />
+                                                    <div for="ExpectedTimeLoading" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ExpectedTimeArrival" class="control-label col-md-5 col-xs-12">Expected time Arrival*</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <input class="form-control date" name="ExpectedTimeArrival" id="ExpectedTimeArrival"
+                                                           required placeholder="Expected Time Arrival" />
+                                                    <div for="ExpectedTimeArrival" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="PenaltyLateness" class="control-label col-md-5 col-xs-12">Penalty Lateness*</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <div class="radio">
+                                                        <label><input type="radio" name="PenaltyLateness" value="true"> YES</label> &nbsp;
+                                                        <label><input type="radio" name="PenaltyLateness" value="false"> NO</label>
+                                                    </div>
+                                                    <div for="PenaltyLateness" class="error">This field is required</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ActualTimeDeparture" class="control-label col-md-5 col-xs-12">Actual Time Departure*</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <input class="form-control" id="ActualTimeDeparture" name="ActualTimeDeparture" placeholder="Actual Time Departure" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ActualTimeArrival" class="control-label col-md-5 col-xs-12">Actual time Arrival*</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <input class="form-control" id="ActualTimeArrival" name="ActualTimeArrival" placeholder="Actual Time Arrival" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="RejectNoteSpace" style="display:none;">
+                                                <label for="RejectNote" class="control-label col-md-5 col-xs-12">Notes</label>
+                                                <div class="input-group col-md-7 col-xs-12">
+                                                    <textarea name="RejectNote" id="RejectNote" disabled class="form-control" placeholder="Notes"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">SAP DOCUMENTS</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseSAPDocument" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="SoNo" class="control-label col-md-4 col-xs-12">SO No*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="SoNo" id="SoNo" placeholder="SO Number" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="STRNo" class="control-label col-md-4 col-xs-12">STR No*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="STRNo" id="STRNo" placeholder="STR Number" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="SoDate" class="control-label col-md-4 col-xs-12">SO Date*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="SoDate" id="SoDate" placeholder="SO Date" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="STRDate" class="control-label col-md-4 col-xs-12">STR Date*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="STRDate" id="STRDate" placeholder="STR Date" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 hidden">
+                                            <div class="form-group hidden">
+                                                <label for="STONo" class="control-label col-md-4 col-xs-12">STO No*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="STONo" id="STONo" placeholder="STO Number" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidden">
+                                                <label for="StoDate" class="control-label col-md-4 col-xs-12">STO Date*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="STODate" id="STODate" placeholder="STO Date" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 hidden">
+                                            <div class="form-group">
+                                                <label for="DoNo" class="control-label col-md-4 col-xs-12">OD No*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="DoNo" id="DoNo" placeholder="OD Number" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="OdDate" class="control-label col-md-4 col-xs-12">OD Date*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="OdDate" id="OdDate" placeholder="OD Date" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="DINo" class="control-label col-md-4 col-xs-12">DI No*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="DINo" id="DINo" placeholder="DI Number" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="DIDate" class="control-label col-md-4 col-xs-12">DI Date*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="DIDate" id="DIDate" placeholder="DI Date" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="DIDateSAP" class="control-label col-md-4 col-xs-12">DI Date SAP*</label>
+                                                <div class="input-group col-md-8 col-xs-12">
+                                                    <input class="form-control" name="DIDateSAP" id="DIDateSAP" placeholder="DI Date SAP" readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">MAIL INFO</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseTermInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="SendEmailToCkb" class="control-label">MAIl CKB</label>
+                                                <div class="checkbox sendmail">
+                                                    <label>
+                                                        <input name="SendEmailToCkbSurabaya" value="true" type="checkbox" /> MAIL TO SURABAYA
+                                                    </label><br />
+                                                    <label>
+                                                        <input name="SendEmailToCkbMakassar" value="true" type="checkbox" /> MAIL TO MAKASSAR
+                                                    </label><br />
+                                                    <label>
+                                                        <input name="SendEmailToCkbCakungStandartKit" value="true" type="checkbox" /> MAIL TO CAKUNG (OPERATION, STANDART KIT & ENGINE)
+                                                    </label><br />
+                                                    <label>
+                                                        <input name="SendEmailToCkbBalikpapan" value="true" type="checkbox" /> MAIL TO BALIKPAPAN
+                                                    </label><br />
+                                                    <label>
+                                                        <input name="SendEmailToCkbBanjarmasin" value="true" type="checkbox" /> MAIL TO BANJARMASIN
+                                                    </label><br />
+                                                </div>
+                                                <div for="SendEmailToCkb" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="SendEmailToCakung" class="control-label">MAIl TU WAREHOUSE</label>
+                                                <div class="checkbox sendmail">
+                                                    <label><input name="SendEmailToCakung" value="true" type="checkbox" /> MAIL TO CAKUNG</label><br />
+                                                    <label><input name="SendEmailToBalikPapan" value="true" type="checkbox" /> MAIL TO BALIKPAPAN</label><br />
+                                                    <label><input name="SendEmailToMakasar" value="true" type="checkbox" /> MAIL TO MAKASAR</label><br />
+                                                    <label><input name="SendEmailToSurabaya" value="true" type="checkbox" /> MAIL TO SURABAYA</label><br />
+                                                    <label><input name="SendEmailToBanjarMasin" value="true" type="checkbox" /> MAIL TO BANJARMASIN</label><br />
+                                                    @*<label><input name="SendEmailToPalembang" value="true" type="checkbox" /> MAIL TO PALEMBANG</label><br />*@
+                                                    @*<label><input name="SendEmailToPekanBaru" value="true" type="checkbox" /> MAIL TO PEKANBARU</label><br />*@
+                                                    <label><input name="SendEmailToCileungsi" value="true" type="checkbox" /> MAIL TO CILEUNGSI</label><br />
+
+                                                </div>
+                                                <div for="SendEmailToCakung" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="SendEmailToTUService" class="control-label">MAIL TU SERVICE</label>
+                                                <div class="checkbox sendmail">
+                                                    <label><input name="SendEmailToServiceTUPalembang" value="true" type="checkbox" /> MAIL TO SERVICE TU PALEMBANG</label><br />
+                                                    <label><input name="SendEmailToServiceTUPekanBaru" value="true" type="checkbox" /> MAIL TO SERVICE TU PEKANBARU</label><br />
+                                                    <label><input name="SendEmailToServiceTUJambi" value="true" type="checkbox" /> MAIL TO SERVICE TU JAMBI</label><br />
+                                                    <label><input name="SendEmailToServiceTUBengkulu" value="true" type="checkbox" /> MAIL TO SERVICE TU BENGKULU</label><br />
+                                                    <label><input name="SendEmailToServiceTUTanjungEnim" value="true" type="checkbox" /> MAIL TO SERVICE TU TANJUNG ENIM</label><br />
+                                                    <label><input name="SendEmailToServiceTUMedan" value="true" type="checkbox" /> MAIL TO SERVICE TU MEDAN</label><br />
+                                                    <label><input name="SendEmailToServiceTUPadang" value="true" type="checkbox" /> MAIL TO SERVICE TU PADANG</label><br />
+                                                    <label><input name="SendEmailToServiceTUBangkaBelitung" value="true" type="checkbox" /> MAIL TO SERVICE TU BANGKA BELITUNG</label><br />
+                                                    <label><input name="SendEmailToServiceTUBandarLampung" value="true" type="checkbox" /> MAIL TO SERVICE TU BANDAR LAMPUNG</label><br />
+                                                    <label><input name="SendEmailToServiceTUBSD" value="true" type="checkbox" /> MAIL TO SERVICE TU BSD</label><br />
+                                                    <label><input name="SendEmailToServiceTUSurabaya" value="true" type="checkbox" /> MAIL TO SERVICE TU SURABAYA</label><br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="SendEmailToTUService" class="control-label">&nbsp;</label>
+                                                <div class="checkbox sendmail">
+                                                    <label><input name="SendEmailToServiceTUManado" value="true" type="checkbox" /> MAIL TO SERVICE TU MANADO</label><br />
+                                                    <label><input name="SendEmailToServiceTUJayapura" value="true" type="checkbox" /> MAIL TO SERVICE TU JAYAPURA</label><br />
+                                                    <label><input name="SendEmailToServiceTUSorong" value="true" type="checkbox" /> MAIL TO SERVICE TU SORONG</label><br />
+                                                    <label><input name="SendEmailToServiceTUSamarinda" value="true" type="checkbox" /> MAIL TO SERVICE TU SAMARINDA</label><br />
+                                                    <label><input name="SendEmailToServiceTUBalikpapan" value="true" type="checkbox" /> MAIL TO SERVICE TU BALIKPAPAN</label><br />
+                                                    <label><input name="SendEmailToServiceTUMakassar" value="true" type="checkbox" /> MAIL TO SERVICE TU MAKASSAR</label><br />
+                                                    <label><input name="SendEmailToServiceTUSemarang" value="true" type="checkbox" /> MAIL TO SERVICE TU SEMARANG</label><br />
+                                                    <label><input name="SendEmailToServiceTUPontianak" value="true" type="checkbox" /> MAIL TO SERVICE TU PONTIANAK</label><br />
+                                                    <label><input name="SendEmailToServiceTUBatuLicin" value="true" type="checkbox" /> MAIL TO SERVICE TU BATU LICIN</label><br />
+                                                    <label><input name="SendEmailToServiceTUSangatta" value="true" type="checkbox" /> MAIL TO SERVICE TU SANGATTA</label><br />
+                                                    <label><input name="SendEmailToServiceTUKendari" value="true" type="checkbox" /> MAIL TO SERVICE TU KENDARI</label><br />
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                                    <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />                                                    
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                                                    <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />                                                    
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 SDOC-container">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">SUPPORTING DOCUMENT</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseTermInfo" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 upload">
+                                            <div class="form-group upload">
+                                                <input id="SDOC" name="SDOC" type="file" class="file"
+                                                       data-browse-on-zone-click="false"
+                                                       data-show-preview="false"
+                                                       data-show-upload="false"
+                                                       data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                                       data-show-caption="true"
+                                                       data-msg-placeholder="Select {files} for upload..." />
+                                            </div>
+                                            <div class="form-group upload">
+                                                <input id="SDOC1" name="SDOC1" type="file" class="file"
+                                                       data-browse-on-zone-click="false"
+                                                       data-show-preview="false"
+                                                       data-show-upload="false"
+                                                       data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                                       data-show-caption="true"
+                                                       data-msg-placeholder="Select {files} for upload..." />
+                                            </div>
+                                            <div class="form-group upload">
+                                                <input id="SDOC2" name="SDOC2" type="file" class="file"
+                                                       data-browse-on-zone-click="false"
+                                                       data-show-preview="false"
+                                                       data-show-upload="false"
+                                                       data-allowed-file-extensions='["jpg", "png", "gif","docx","doc","xlsx","xls","pdf"]'
+                                                       data-show-caption="true"
+                                                       data-msg-placeholder="Select {files} for upload..." />
+                                                <label>*JPG/DOC/PDF/XLS (MAX 1MB/FILE)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row preview">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input id="SDOCPreview" name="SDOCPreview" type="file" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">NOTES</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" id="btnCollapseSAPDocument" data-widget="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 notes">
+                                            <div class="form-group">
+                                                <textarea class="form-control"
+                                                          id="RequestNotes"
+                                                          name="RequestNotes"
+                                                          style="height:110px"
+                                                          placeholder="Type your notes here"></textarea>
+                                                <div for="RequestNotes" class="error">This field is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="button-action" style="text-align: left">
+        <div class="row">
+            <div class="col-sm-6">
+                <button id="ForceComplete" name="ForceComplete" class="processForm btn-form btn btn-default" type="button" style="width: 120px">
+                    <i class="fa fa-check-circle"></i> Force Complete
+                </button>
+            </div>
+            <div class="col-sm-6" style="text-align: right">
+                <button id="Reject" name="Reject" class="processForm btn-form btn btn-danger" type="button"><i class="fa fa-times"></i> Reject</button>
+                <button id="Revise" name="Revise" class="processForm btn-form btn btn-info" type="button"><i class="fa fa-reply"></i> Revise</button>
+                <button id="Approve" name="Approve" class="processForm btn-form btn btn-primary" type="button"><i class="fa fa-cog"></i> Approve</button>
+                <button id="Complete" name="Complete" class="processForm btn-form btn btn-success" type="button"><i class="fa fa-check-circle"></i> Complete</button>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                <button id="ReRoute" name="ReRoute" class="processForm btn-form btn btn-success" type="button" disabled="disabled"><i class="fa fa-check-circle"></i>Request Re-Route</button>
+=======
+                <button id="ReRoute" name="ReRoute" class="processForm btn-form btn btn-success" type="button" disabled="disabled"><i class="fa fa-check-circle"></i> Re-Route</button>
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                <button id="ReRoute" name="ReRoute" class="processForm btn-form btn btn-success" type="button" disabled="disabled"><i class="fa fa-check-circle"></i>Request Re-Route</button>
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModal();"><i class="fa fa-arrow-left"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

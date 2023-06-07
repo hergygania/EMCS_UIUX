@@ -1,0 +1,93 @@
+﻿﻿@model  App.Web.Models.EMCS.GoodReceiveItemModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title GR Item</h4>
+</div>
+
+@using (Html.BeginForm("SaveGrItem", "Emcs", FormMethod.Post, new { encrypt = "multipart/form-data", @id = "form-item-gr" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">EDI No</label>
+                    <div class="col-md-10 col-xs-12">
+                        <select id="DoNo" name="IdCipl" class="form-control select2 EdiNo required form-control" required>
+                            @{
+                                foreach (var item in Model.DoList)
+                                {
+                                    <option value="@item.Id" @(item.EdoNo == Model.DoNo ? "selected" : "")>@item.EdoNo</option>
+                                }
+
+                                if (!String.IsNullOrEmpty(Model.DoNo))
+                                {
+                                    <option value="@Model.IdCipl" selected>@Model.DoNo</option>
+                                }
+                            }
+                        </select>
+                        <div>@Html.ValidationMessageFor(m => m.DoNo)</div>
+                        @*@Html.DropDownListFor(m => m.IdCipl, new SelectList(Model.DoList, "id", "EdoNo"), new { @id = "DoNox", @class = "EdiNo required form-control" })
+                            <div>@Html.ValidationMessageFor(m => m.DoNo)</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">DO Reference</label>
+                    <div class="col-md-10 col-xs-12">
+                        @Html.TextBoxFor(m => m.DaNo, new { @class = "form-control", @id = "DaNo", placeholder = "DO Reference/ DA Number" })
+                        <div>@Html.ValidationMessageFor(m => m.DaNo)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-warning btn_round mr-2" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success btn_round"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success btn_round"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger btn_round mr-2"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+    @Html.HiddenFor(a => a.IdGr, new { @Id = "IdItem" })
+    @Html.HiddenFor(a => a.Id, new { @Id = "IdGrItem" })
+}
+
+<script>
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+    $(document).ready(function () {
+        //$(".EdiNo").select();
+        $("#form-item-gr").removeData("validator");
+        $('#form-item-gr').data('validator', null);
+        $("#form-item-gr").unbind('validate');
+        $("#form-item-gr").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("#form-item-gr");
+        //$("#DoNo").select2();
+    });
+</script>
+
+

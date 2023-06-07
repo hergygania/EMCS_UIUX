@@ -1,0 +1,84 @@
+﻿@using App.Web
+@{
+    string StepName = ViewBag.StepName ?? "confirm";
+    ViewBag.Title = "Detail Po No : 14500124422";
+    Layout = "~/Views/Post/_Layout.cshtml";
+    string Role = "";
+    Role = User.Identity.GetUserRoles();
+    int activeTab = (StepName == "confirm" ? 0 : (StepName == "Submit" ? 2 : 1));
+
+    string isHO = Role.Substring(Role.Length - 4, 4);
+
+}
+<style type="text/css">
+    .fontbold {
+        font-family: SF UI Text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    .fontnormal {
+        font-family: SF UI Text;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+</style>
+<div class="modal fade" id="modalUploadBAST" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1100px !important;">
+        <div class="modal-content">
+            <div class="modal-header text-left">
+                <h4 class="modal-title w-100 font-weight-bold">Form Upload BAST</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="modalUpload divUploadFile dropzone" id="FormUploadBAST">
+                </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                <div style="margin-top:20px;">
+                    <label class="fontbold">Catatan Penting :</label>
+                    <br />
+                    <label class="fontnormal"> 1. Untuk setiap File BAST yang di upload maksimal berukuran <b>2 MB (Megabyte).</b></label>
+                    <br />
+                    <label class="fontnormal"> 2. Tagihan yang benar dan lengkap diajukan paling lambat 90 hari kalendar sejak tanggal BAST/Surat Jalan ditandatangani Para Pihak. Jika lewat dari 90 hari kalendar, maka Trakindo hanya wajib membayar nilai Barang dan/atau Jasa yang sudah diterima sesuai ketentuan PO atau SPK tanpa membayar PPN atas tagihan tersebut</label>
+=======
+                <div  style="margin-top:20px;">
+                    <label class="fontbold">Catatan Penting :</label>
+                    <label class="fontnormal">“Tagihan yang benar dan lengkap diajukan paling lambat 90 hari kalendar sejak tanggal BAST/Surat Jalan ditandatangani Para Pihak. Jika lewat dari 90 hari kalendar, maka Trakindo hanya wajib membayar nilai Barang dan/atau Jasa yang sudah diterima sesuai ketentuan PO atau SPK tanpa membayar PPN atas tagihan tersebut”</label>
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                <div style="margin-top:20px;">
+                    <label class="fontbold">Catatan Penting :</label>
+                    <br />
+                    <label class="fontnormal"> 1. Untuk setiap File BAST yang di upload maksimal berukuran <b>2 MB (Megabyte).</b></label>
+                    <br />
+                    <label class="fontnormal"> 2. Tagihan yang benar dan lengkap diajukan paling lambat 90 hari kalendar sejak tanggal BAST/Surat Jalan ditandatangani Para Pihak. Jika lewat dari 90 hari kalendar, maka Trakindo hanya wajib membayar nilai Barang dan/atau Jasa yang sudah diterima sesuai ketentuan PO atau SPK tanpa membayar PPN atas tagihan tersebut</label>
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                </div>
+                <div class="row" style="margin-top:20px;">
+                    <table id="table-uploadBast" class="table table-bordered table-striped" style="background:white;"></table>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex text-right">
+                @if (Role.Contains("POSTBRANCH"))
+                {
+                    <button class="btn btn-succes" id="BtnApproveBAST" data-dismiss="modal" onclick="SendEmailAttachment('ApproveBAST_RejectBAST')"><i class="fa fa-save"></i> Send Email</button>
+                }
+                <button class="btn btn-succes" id="BtnSaveBast" data-dismiss="modal" onclick="SendEmailAttachment('BAST')"><i class="fa fa-save"></i> Save And Close</button>
+                @*<button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>

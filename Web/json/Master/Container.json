@@ -1,0 +1,178 @@
+[
+  {
+    "port": "Batangas",
+    "customer": 500438,
+    "custDesc": "ALASKA MILK CORPORATION",
+    "country": "Phillipines",
+    "plant": "3611",
+    "MatNr": 740228,
+    "MatDesc": "Finished Goods",
+    "type": "40ft",
+    "LoadBox": 960
+  },
+   {
+      "port":"Batangas",
+      "customer":500438,
+      "custDesc":"ALASKA MILK CORPORATION",
+      "country":"Phillipines",
+      "plant":"3611",
+      "MatNr":745421,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Delisted",
+      "customer":500438,
+      "custDesc":"Alaska Milk Corporation",
+      "country":"Phillipines",
+      "plant":"3612",
+      "MatNr":830531,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Batangas",
+      "customer":500438,
+      "custDesc":"ALASKA MILK CORPORATION",
+      "country":"Phillipines",
+      "plant":"3612",
+      "MatNr":1146116,
+      "MatDesc":"Finished Goods",
+      "type":"40ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Port Klang",
+      "customer":501005,
+      "custDesc":"DUTCH LADY MILK INDUSTRIES BERHAD",
+      "country":"Malaysia",
+      "plant":3611,
+      "MatNr":793805,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Port Klang",
+      "customer":501005,
+      "custDesc":"DUTCH LADY MILK INDUSTRIES BERHAD",
+      "country":"Malaysia",
+      "plant":3611,
+      "MatNr":795174,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Delisted",
+      "customer":501195,
+      "custDesc":"FrieslandCampina (Thailand) PCL",
+      "country":"Thailand",
+      "plant":3611,
+      "MatNr":745419,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Delisted",
+      "customer":501195,
+      "custDesc":"FrieslandCampina (Thailand) PCL",
+      "country":"Thailand",
+      "plant":3611,
+      "MatNr":745420,
+      "MatDesc":"Finished Goods",
+      "type":"40ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Ha Nam  ",
+      "customer":500078,
+      "custDesc":"FrieslandCampina Ha Nam Co. Ltd  ",
+      "country":" Vietnam    ",
+      "plant":3611,
+      "MatNr":793805,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Ha Nam  ",
+      "customer":500078,
+      "custDesc":"FrieslandCampina Ha Nam Co. Ltd  ",
+      "country":" Vietnam    ",
+      "plant":3611,
+      "MatNr":795174,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"0       ",
+      "customer":500086,
+      "custDesc":"FRIESLANDCAMPINA MIDDLE EAST DMCC",
+      "country":" Middle East",
+      "plant":3611,
+      "MatNr":631761,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"0       ",
+      "customer":500590,
+      "custDesc":"FRIESLANDCAMPINA MIDDLE EAST DMCC",
+      "country":" Middle East",
+      "plant":3611,
+      "MatNr":631761,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Cat Lai ",
+      "customer":501510,
+      "custDesc":"FrieslandCampina Vietnam Co. Ltd ",
+      "country":" Vietnam    ",
+      "plant":3611,
+      "MatNr":794062,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"Delisted",
+      "customer":500122,
+      "custDesc":"FrieslandCampina Vietnam Co. Ltd ",
+      "country":" Vietnam    ",
+      "plant":3611,
+      "MatNr":794819,
+      "MatDesc":"Finished Goods",
+      "type":"20ft",
+      "LoadBox":960
+   },
+   {
+      "port":"0       ",
+      "customer":500313,
+      "custDesc":"PT Kievit Indonesia              ",
+      "country":" Indonesia  ",
+      "plant":3612,
+      "MatNr":830531,
+      "MatDesc":"Finished Goods",
+      "type":"kievit",
+      "LoadBox":960
+   },
+   {
+      "port":"0       ",
+      "customer":500313,
+      "custDesc":"PT Kievit Indonesia              ",
+      "country":" Indonesia  ",
+      "plant":3611,
+      "MatNr":1147151,
+      "MatDesc":"Finished Goods",
+      "type":"kievit",
+      "LoadBox":960
+   }
+]

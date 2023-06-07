@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Menu Management";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form">
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="toolbar">
+                                @{
+                                    if (ViewBag.AllowCreate)
+                                    {
+                                        <a class="btn btn-warning" data-modal="" style="width:150px;" href="/Master/MenuCreate" id="btnCreate">
+                                            <i class="fa fa-plus"></i> Add Menu
+                                        </a>
+                                    }
+                                }
+                                <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                    <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                                </div>
+                            </div>
+                            <table class="table table-bordered" data-response-handler="responseHandler" id="tableMenu"></table>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<a data-modal="" href="/master/MenuEdit/1" class="editRecord" style="display:none"></a>
+
+<!-- modal placeholder-->
+<div id='myModalPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/Master/Menu.cshtml.js")"></script>
+}
+

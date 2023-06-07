@@ -1,0 +1,187 @@
+﻿@model App.Data.Domain.RegulationManagementDetail
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<style type="text/css">
+    .select2-selection__choice {
+        white-space: normal !important;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"><i class="fa fa-list"></i> @title HS Mapping Regulation</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body" style="margin:10px">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3 col-xs-3">Regulation</label>
+                    <div class="input-group col-lg-9 col-xs-9">
+                        <select class="js-states form-control required" id="RegulationCode" name="RegulationCode" style="width: 95%;">
+                            <option value="@Model.RegulationCode">@Model.RegulationCode</option>
+                        </select>
+                        <div>@Html.ValidationMessageFor(m => m.RegulationCode)</div>
+                    </div>
+                </div>
+
+                @*@if (Model.RegulationManagementID == 0)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Regulation</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <select class="js-states form-control required" id="RegulationManagementID" name="RegulationManagementID" style="width: 95%;">
+                                <option value="@Model.RegulationManagementID">@Model.RegulationManagementID</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.RegulationManagementID)</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Regulation</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <label class="form-control" readonly>@Model.Regulation</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Order Method</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <label class="form-control" readonly>@Model.OMCode</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="RegulationManagementID" value="@Model.RegulationManagementID" />
+                }*@
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3 col-xs-3">HS Code</label>
+                    <div class="input-group col-lg-9 col-xs-9">
+                        <select class="js-states form-control required" id="HSID" name="HSID" style="width: 95%;">
+                            <option value="@Model.HSID">@Model.HSCodeCap</option>
+                        </select>
+                        <div>@Html.ValidationMessageFor(m => m.HSID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-3 col-xs-3">Order Method</label>
+                    <div class="input-group col-lg-9 col-xs-9">
+                        <select class="js-states form-control required" id="OMID" name="OMID" style="width: 95%;">
+                            <option value="@Model.OMID">@Model.OMCode</option>
+                        </select>
+                        <div>@Html.ValidationMessageFor(m => m.OMID)</div>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Lartas</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <select class="js-states form-control required" id="LartasId" name="LartasId" style="width: 95%;">
+                                <option value="@Model.LartasId">@Model.LartasDesc</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.LartasId)</div>
+                        </div>
+                    </div>*@
+                @*<div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">License</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <select data-required="true" class="js-states form-control required" id="LicenseManagementID" name="LicenseManagementID" style="width: 95%;">
+                                <option value="@Model.LicenseManagementID">@Model.LicenseNumber</option>
+                            </select>
+                            <div>@Html.ValidationMessageFor(m => m.LicenseManagementID)</div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    <label class="control-label col-lg-3 col-xs-3">Bea Masuk</label>
+                    <div class="input-group col-lg-9 col-xs-9">
+                        @Html.TextBoxFor(m => m.BeaMasuk, new { @class = "form-control decimal number", @type = "number", placeholder = "" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        <label class="control-label col-lg-3 col-xs-3">Status</label>
+                        <div class="input-group col-lg-9 col-xs-9">
+                            <select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+                                <option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+                                <option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:125px;"><i class="fa fa-trash-o"></i> Delete</button>
+        }
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width:125px;"><i class="fa fa-times-circle"></i> Close</button>
+    </div>
+    <input type="hidden" name="DetailID" value="@Model.DetailID" />
+    <input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+    <input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+}
+
+<script type="text/javascript">
+    $(function () {
+        var regid = '@Model.RegulationManagementID';
+        enableLink(false);
+
+        if (typeof window.rebindCSS == "undefined")
+            $.getScript("/scripts/script.js");
+        else
+            rebindCSS();
+
+        //helpers.buildDropdown('/Picker/GetListLicense', $('#LicenseManagementID'), true, '');
+        //helpers.buildDropdown('/Picker/GetListLartas', $('#LartasId'), true, '- select lartas -');
+        helpers.buildDropdown('/Picker/GetListOM', $('#OMID'), true, null);
+        //helpers.buildDropdown('/Picker/GetListHSCodeId', $('#selHSCode'), true, null);
+
+        var hscode_iud = new mySelect2({
+            id: 'HSID',
+            url: '/Picker/Select2HsName',
+            minimumInputLength: 1,
+        }).load();
+
+        var _regulation = new mySelect2({
+            id: 'RegulationCode',
+            url: '/Picker/Select2RegulationPaging',
+            minimumInputLength: 1
+        }).load();
+
+        //if (regid == 0) {
+        //    //helpers.buildDropdown('/Picker/GetListRegulation', $('#RegulationManagementID'), true, "");
+        //    var _regulation = new mySelect2({
+        //        id: 'RegulationManagementID',
+        //        url: '/Picker/Select2Regulation',
+        //        minimumInputLength: 1
+        //    }).load();
+        //}
+
+        enableLink(true);
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

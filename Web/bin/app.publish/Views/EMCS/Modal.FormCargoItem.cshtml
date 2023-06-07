@@ -1,0 +1,278 @@
+﻿@model  App.Web.Models.EMCS.CargoItemModel
+@{
+    ViewBag.crudMode = "I";
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    var statusList = new List<string>();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group" style="margin-bottom:40px !important;">
+                <div class="col-sm-12">
+                    <input type="hidden" class="form-control" placeholder="Cargo Id" name="IdCargo" value="@ViewBag.IdCargo" />
+                    <table data-toolbar=".toolbarContainer" data-checkbox="true" class="table table-bordered" id="tableAddCargo"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Add</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger" style="width:120px;"><i class="fa fa-save"></i> Delete</button>
+        }
+    </div>
+    @*<input type="text" name="CargoId" value="@(Model.data.id)" />*@
+}
+<script>
+    $tableContainer = $("#tableAddCargo");
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+    var IdCargo = "@(ViewBag.CargoId)";
+
+    $(document).ready(function () {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+
+        var columns = [[
+            {
+                field: "Id",
+                title: "No",
+                rowspan:2,
+                align: "center",
+                formatter: runningFormatterNoPaging
+            },
+            {
+                field: "state",
+                title: "Action",
+                align: "center",
+                rowspan: 2,
+                class: "text-nowrap",
+                checkbox:true,
+                width: "150"
+            }, {
+                field: "Name",
+                title: "Name",
+                rowspan: 2,
+                class: "text-nowrap",
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Quantity",
+                title: "Quantity",
+                rowspan: 2,
+                class: "text-nowrap",
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Uom",
+                title: "UOM",
+                rowspan: 2,
+                halign: "center",
+                class: "text-nowrap",
+                sortable: true
+            }, {
+                field: "PartNumber",
+                title: "Part Number",
+                rowspan: 2,
+                halign: "center",
+                class: "text-nowrap",
+                sortable: true
+            }, {
+                field: "Sn",
+                title: "SN",
+                halign: "center",
+                rowspan: 2,
+                class: "text-nowrap",
+                sortable: true
+            }, {
+                field: "JCode",
+                title: "J-Code",
+                align: "center",
+                rowspan: 2,
+                class: "text-nowrap",
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Ccr",
+                title: "CCR",
+                halign: "center",
+                rowspan: 2,
+                class: "text-nowrap",
+                align: "center",
+                sortable: true
+            }, {
+                field: "CaseNumber",
+                title: "Case Number",
+                class: "text-nowrap",
+                rowspan: 2,
+                align: "center",
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Type",
+                halign: "center",
+                title: "Type",
+                rowspan: 2,
+                class: "text-nowrap",
+                align: "center",
+                sortable: true
+            }, {
+                field: "ExtendedValue",
+                title: "Extended Value",
+                halign: "center",
+                rowspan: 2,
+                sortable: true,
+                align: "right",
+                filterControl: true,
+                class: "text-nowrap"
+            }, {
+                field: "",
+                title: "Dimension (In CM)",
+                halign: "center",
+                sortable: true,
+                colspan:3,
+                filterControl: true,
+                class: "text-nowrap"
+               }, {
+                field: "",
+                title: "Volume",
+                halign: "center",
+                sortable: true,
+                filterControl: true,
+                class: "text-nowrap"
+                }, {
+                field: "",
+                title: "Net Weight",
+                halign: "center",
+                sortable: true,
+                filterControl: true,
+                class: "text-nowrap"
+                }, {
+                field: "",
+                title: "Gross Weight",
+                halign: "center",
+                sortable: true,
+                filterControl: true,
+                class: "text-nowrap"
+                }
+            ], [
+                {
+                    field: "Length",
+                    title: "Length",
+                    align: "right",
+                    halign: "center",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap"
+                }, {
+                    field: "Width",
+                    title: "Width",
+                    halign: "center",
+                    align:"right",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap"
+                }, {
+                    field: "Height",
+                    title: "Height",
+                    halign: "center",
+                    sortable: true,
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap"
+                }, {
+                    field: "NetWeight",
+                    title: "M3",
+                    halign: "center",
+                    align: "right",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap"
+                }, {
+                    field: "NetWeight",
+                    title: "in KGs",
+                    halign: "center",
+                    sortable: true,
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap"
+                }, {
+                    field: "GrossWeight",
+                    title: "in KGs",
+                    halign: "center",
+                    align: "right",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap"
+                }
+            ]
+        ]
+
+        $tableContainer.bootstrapTable({
+            url: '/EMCS/GetCiplItemAvailable',
+            columns: columns,
+            queryParams: function (params) {
+                params.IdCargo = IdCargo;
+                return params;
+            },
+            cache: false,
+            pagination: true,
+            search: false,
+            striped: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            toolbarAlign: 'left',
+            onClickRow: selectRow,
+            sidePagination: 'client',
+            showColumns: true,
+            responseHandler: function (resp) {
+                console.log(resp);
+                var data = {};
+                $.map(resp, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                return data;
+            },
+            showRefresh: true,
+            smartDisplay: false,
+            pageSize: '5',
+            responseHandler: function (resp) {
+                var data = {};
+                $.map(resp.data, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                return data.rows;
+            },
+            formatNoMatches: function () {
+                return '<span class="noMatches">No item found</span>';
+            }
+        });
+    });
+</script>

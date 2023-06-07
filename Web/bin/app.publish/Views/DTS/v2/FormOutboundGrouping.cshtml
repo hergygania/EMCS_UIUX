@@ -1,0 +1,50 @@
+﻿
+<div class="col-md-12" id="OutboundDetailTrue" style="display:none;">
+    @*<div class="col-md-12" style="text-align: center;">
+        <div class="form-group">
+            <a id="dr-link" class="col-md-12 control-label" href="#" style="margin-bottom: 20px;"><u>Click here to show detail</u></a>
+        </div>
+    </div>*@
+    @RenderPage("~/Views/DTS/v2/_OutboundTrackingStatus.cshtml")
+    <div class="row">
+        <div class="form-border">
+            <div class="col-md-9">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <span class="box-title">UNIT</span>
+                    </div>
+                    <div class="box-body">
+                        <div class="row form-horizontal">
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="tableOuboundUnit"></table>
+                            </div>
+                            <div class="">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box box-warning">
+                    <div class="box-header with-border">
+                        <span class="box-title">LOG</span>
+                    </div>
+                    <div class="box-body">
+                        <div class="row form-horizontal">
+                            <div class="col-md-12">
+                                <table id="tableLog" class="table table-hover">
+                                    <thead>
+                                        <tr><th>DATE</th><th>:</th><th>DESCRIPTION</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="3">-</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

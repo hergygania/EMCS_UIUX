@@ -1,0 +1,479 @@
+﻿@model  App.Web.Models.EMCS.CiplModel
+@{
+    ViewBag.Title = "Commercial Invoice Packing List Approve";
+    ViewBag.TypeReq = "Cipl";
+    ViewBag.IdReq = Model.Data.Id;
+    ViewBag.IdStep = Model.DataRequest.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+    </div>
+    <div class="col-md-12">
+        <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                </li>
+                <li role="presentation">
+                    <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                </li>
+                <li role="presentation">
+                    <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                </li>
+                <li role="presentation">
+                    <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                </li>
+                <li role="presentation">
+                    <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                </li>
+                <li role="presentation">
+                    <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                </li>
+                <li role="presentation">
+                    <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                </li>
+                <li class="hidden" role="presentation">
+                    <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content tabs-custom">
+                <div role="tabpanel" class="tab-pane active" id="invoice">
+                    @Html.Partial("CiplTabInvoiceRevise", Model)
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="history">
+                    @Html.Partial("CiplTabHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="problemhistory">
+                    @Html.Partial("CiplTabProblemHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="documents">
+                    @Html.Partial("CiplTabDocuments")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="inpreview">
+                    @Html.Partial("CiplTabInPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="plpreview">
+                    @Html.Partial("CiplTabPlPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="uploaddoc">
+                    @Html.Partial("CiplTabUploadDoc")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pull-right">
+                    <div class="form-group pull-right" style="margin-top:20px">
+                        <div class="" role="group">
+                            <button type="button" style="min-width:120px;" class="btn btn-success" id="btnApprove"><i class="fa fa-check"></i> Approve</button>
+                            <button type="button" style="min-width:120px;" class="btn btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
+                            <button type="button" style="min-width:120px;" class="btn btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
+                            <button type="button" style="min-width:120px;" class="btn btn-default" id="btnBack"><i class="fa fa-undo"></i> Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Modal.FormProblem")
+
+@section scripts
+{
+    <script>
+        var wizardState = @ViewBag.WizardData.Progress;
+        if ('@Model.Data.Category' == 'CATERPILLAR NEW EQUIPMENT') {
+            $('#InvSales').removeClass("hidden");
+            $('#PLSales').removeClass("hidden");
+        } else if ('@Model.Data.Category' == 'CATERPILLAR USED EQUIPMENT') {
+            $('#InvRUE').removeClass("hidden");
+            $('#PLRUE').removeClass("hidden");
+        } else if ('@Model.Data.Category' == 'CATERPILLAR SPAREPARTS') {
+            if ('@Model.Data.CategoriItem' == 'Old Core') {
+                $('#InvOldCore').removeClass("hidden");
+                $('#PLOldCore').removeClass("hidden");
+            } else if ('@Model.Data.CategoriItem' == 'PRA' || '@Model.Data.CategoriItem' == 'SIB') {
+                $('#InvPRA-SIB').removeClass("hidden");
+                $('#PLPRA-SIB').removeClass("hidden");
+            }
+        }
+    </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplDocuments.cshtml.js")"></script>
+    @*<script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplItem.cshtml.js")"></script>*@
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplApprove.cshtml.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    <script>
+        function ReviseProblem(Status, IdRequest, Notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/CiplApproval",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: Status,
+                    Id: IdRequest,
+                    Notes: Notes
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success',
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+        }
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            console.log(data);
+            debugger;
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function (resp) {
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+            return status;
+        }
+
+        $("#YesRejectBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Reject";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        $("#YesReviseBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Revise";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        $("#btnBack").on("click", function (e) {
+            e.preventDefault();
+            location.href = myApp.fullPath + "/EMCS/Mytask";
+        })
+
+        $tableCiplItem = $('#tableCiplItemRevise');
+        var columnCiplItem = [
+            [{
+                field: "CiplNo",
+                title: "No.",
+                align: "center",
+                halign: "center",
+                rowspan: 2,
+                sortable: true,
+                formatter: runningFormatterNoPaging
+            }, {
+                field: "Name",
+                title: "Name/Model",
+                rowspan: 2,
+                halign: "center",
+                class: "text-nowrap",
+                sortable: true
+            }, {
+                field: "Quantity",
+                title: "Quantity",
+                align: "center",
+                rowspan: 2,
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Uom",
+                title: "UOM",
+                rowspan: 2,
+                halign: "center",
+                sortable: true
+            }, {
+                field: "Sn",
+                title: "SN",
+                rowspan: 2,
+                halign: "center",
+                sortable: true,
+                class: "text-nowrap"
+            }, {
+                field: "Id",
+                title: "ID No.",
+                align: "center",
+                rowspan: 2,
+                halign: "center",
+                sortable: true,
+                class: "text-nowrap"
+            },
+            {
+                field: "YearMade",
+                title: "Year Made",
+                sortable: true,
+                rowspan: 2,
+                align: "center",
+                halign: "center",
+                class: "text-nowrap"
+            },
+            {
+                field: "UnitPrice",
+                title: "Unit Price",
+                sortable: true,
+                align: "right",
+                halign: "center",
+                rowspan: 2,
+                filterControl: true,
+                class: "text-nowrap",
+                formatter: currencyFormatter
+            },
+            {
+                field: "ExtendedValue",
+                title: "Extended Value",
+                sortable: true,
+                filterControl: true,
+                halign: "center",
+                rowspan: 2,
+                align: "right",
+                class: "text-nowrap",
+                formatter: currencyFormatter
+            },
+            {
+                field: "Type",
+                title: "Type",
+                sortable: true,
+                align: "center",
+                rowspan: 2,
+                halign: "center",
+                filterControl: true,
+                class: "text-nowrap",
+                formatter: function (data, row, index) {
+                    if (data) {
+                        return data;
+                    }
+                    return "-";
+                }
+            },
+            {
+                field: "",
+                title: "Old Data",
+                sortable: true,
+                halign: "center",
+                align: "right",
+                colspan: 6,
+                filterControl: true,
+                class: "text-nowrap"
+            }, {
+                field: "",
+                title: "New Data",
+                sortable: true,
+                halign: "center",
+                colspan: 6,
+                align: "right",
+                filterControl: true,
+                class: "text-nowrap"
+            }
+            ],
+            [
+                {
+                    field: "OldLength",
+                    title: "Length",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "OldWidth",
+                    title: "Width",
+                    sortable: true,
+                    align: "right",
+                    halign: "center",
+                    filterControl: true,
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "OldHeight",
+                    title: "Height",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "OldNetWeight",
+                    title: "Net Weight",
+                    halign: "center",
+                    align: "right",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "OldGrossWeight",
+                    title: "Gross Weight",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "OldDimension",
+                    title: "Dimension (in CM)",
+                    sortable: true,
+                    filterControl: true,
+                    halign: "center",
+                    align: "right",
+                    class: "text-nowrap bg-warning",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewLength",
+                    title: "Length",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewWidth",
+                    title: "Width",
+                    sortable: true,
+                    align: "right",
+                    halign: "center",
+                    filterControl: true,
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewHeight",
+                    title: "Height",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewNetWeight",
+                    title: "Net Weight",
+                    halign: "center",
+                    align: "right",
+                    sortable: true,
+                    filterControl: true,
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewGrossWeight",
+                    title: "Gross Weight",
+                    sortable: true,
+                    halign: "center",
+                    align: "right",
+                    filterControl: true,
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                },
+                {
+                    field: "NewDimension",
+                    title: "Dimension (in CM)",
+                    sortable: true,
+                    filterControl: true,
+                    halign: "center",
+                    align: "right",
+                    class: "text-nowrap bg-success",
+                    formatter: currencyFormatter
+                }
+            ]
+        ];
+
+        $(function () {
+            $tableCiplItem.bootstrapTable({
+                url: "/EMCS/CiplItemReviseGetById",
+                columns: columnCiplItem,
+                cache: false,
+                clickToSelect: false,
+                search: false,
+                pagination: true,
+                striped: false,
+                reorderableColumns: false,
+                sidePagination: 'client',
+                toolbar: '.toolbar',
+                //toolbarAlign: 'left',
+                queryParams: function (params) {
+                    return { id: $("#idCipl").val() };
+                },
+                //sidePagination: 'client',
+                //onClickRow: selectRow,
+                //showColumns: true,
+                showRefresh: true,
+                //smartDisplay: false,
+                responseHandler: function (resp) {
+                    console.log(resp.rows);
+                    var data = {};
+                    return resp.rows;
+                },
+                formatNoMatches: function () {
+                    return '<span class="noMatches">No item available</span>';
+                }
+            });
+        })
+    </script>
+}

@@ -1,0 +1,342 @@
+﻿@model App.Web.Models.FreightCostViewModel
+@{
+    ViewBag.Title = "Freight Cost Calculator";
+    var guid = System.Guid.NewGuid().ToString();
+}
+
+@using System.Web.Mvc
+<input type="hidden" name="Cost50" id="Cost50" class="form-control">
+<input type="hidden" name="Cost100" id="Cost100" class="form-control">
+<input type="hidden" name="Cost200" id="Cost200" class="form-control">
+<input type="hidden" name="CostRateIDR" id="CostRateIDR" class="form-control">
+<input type="hidden" name="CostRateUSD" id="CostRateUSD" class="form-control">
+<input type="hidden" name="CurrencyIDR" id="CurrencyIDR" class="form-control">
+
+<style type="text/css">
+    .mandatory {
+        background-color: rgba(245, 105, 84, 1) !important;
+        color: #FFF !important;
+    }
+</style>
+
+<div class="row" id="CostFreight">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:940px">
+            <div id="parent">
+                <form role="form" id="frmCalculator">
+                    <div class="box-body">
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+
+                                        @*Kiri*@
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Service</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.DropDownListFor(m => m._Service, new SelectList(Model.ServiceList, "Name", "Value"), "-- Select Service --", new { @id = "ddlService", @class = "js-states form-control mandatory", @style = "width:95%;display:none" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Origin</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.DropDownListFor(m => m.Origin, new SelectList(Model.OriginCodeList, "Code", "Store_Name"), "-- Select Origin City --", new { @id = "ddlOrigin", @class = "js-states form-control mandatory", @style = "width:95%;display:none" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Destination</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.DropDownListFor(m => m.Destination, new SelectList(Model.DestinationCodeList, "Code", "Store_Name"), "-- Select Destination City --", new { @id = "ddlDestination", @class = "js-states form-control mandatory", @style = "width:95%;display:none" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Actual Weight</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.TextBoxFor(m => m.ActualWeight, new { @class = "form-control mandatory" })
+                                                    <span class="input-group-addon">kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Moda Factor</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.DropDownListFor(m => m.ModaFactor, new SelectList(Model.ModaFactorList, "Value", "Name"), "-- Select Moda Factor --", new { @class = "js-states form-control mandatory", @style = "width:95%;display:none" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*Kanan*@
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Fleet</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.DropDownListFor(m => m.ModaFleet, new SelectList(Model.FleetList, "Value", "ModaName"), "-- Select Fleet Moda --", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Lenght</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.TextBoxFor(m => m.Lenght, new { @class = "form-control mandatory" })
+                                                    <span class="input-group-addon">cm</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Wide</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.TextBoxFor(m => m.Wide, new { @class = "form-control mandatory" })
+                                                    <span class="input-group-addon">cm</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4 col-xs-4">Height</label>
+                                                <div class="input-group col-lg-8 col-xs-8">
+                                                    @Html.TextBoxFor(m => m.Height, new { @class = "form-control mandatory" })
+                                                    <span class="input-group-addon">cm</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group col-lg-12 col-xs-12">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group col-lg-12 col-xs-12">
+                                                    <div class="pull-right">
+                                                        <a class="btn btn-success" style="width:135px;" href="javascript:void(0)" onclick="hitungCalculator()">Calculate</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="false" aria-controls="collapseThree">
+                                            <i class="more-less glyphicon glyphicon-plus"></i>
+                                            Detail
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    @*Kiri*@
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Currency</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.Currency, new { @class = "form-control", @readonly = "true", placeholder = "Currency IDR" })
+
+                                                                <span class="input-group-addon">IDR</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Rate</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.Rate, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Rate" })
+                                                                <span id="spanRate" class="input-group-addon"></span>
+                                                                <input name="CurrencyRate" hidden />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Minimum Rate</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.MinRate, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Minimum Rate" })
+
+                                                                <span id="spanMinRate" class="input-group-addon"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Minimum Weight</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.MinWeight, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Minimum Weight" })
+
+                                                                <span class="input-group-addon">kg</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Inbound Rate</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.InRate, new { @class = "form-control", @readonly = "true", placeholder = "Inbound Rate" })
+                                                                <span id="CurrInRate" class="input-group-addon"></span>
+                                                                <input name="CurrencyInRate" hidden />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Dimension Weight</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.DimWeight, new { @class = "form-control", @readonly = "true", placeholder = "Dimension Weight" })
+
+                                                                <span class="input-group-addon">kg</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Charg. Weight</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.ChargWeight, new { @class = "form-control", @readonly = "true", placeholder = "Charg. Weight" })
+                                                                <span class="input-group-addon">kg</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @*Kanan*@
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Trucking Rate</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.TruckingRate, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Trucking Rate" })
+
+                                                                <span class="input-group-addon">IDR/Trip</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Packaging</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.CostCBM, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Packaging" })
+
+                                                                <span class="input-group-addon">CBM</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Packaging Cost</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.CostPacking, new { @class = "form-control", @Value = "0", @readonly = "true", placeholder = "Packaging Cost" })
+
+                                                                <span class="input-group-addon">IDR</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Cost Surcharge</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.CostSurcharge, new { @class = "form-control", @readonly = "true", placeholder = "Cost Surcharge" })
+
+                                                                <span id="spanCostSurcharge" class="input-group-addon"></span>
+                                                                <input name="CSR" hidden />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Regulated Agent</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.RA, new { @class = "form-control", @Value = "-", @readonly = "true", placeholder = "Regulated Agent" })
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-4 col-xs-4">Cost RA</label>
+                                                            <div class="input-group col-lg-8 col-xs-8">
+                                                                @Html.TextBoxFor(m => m.CostRA, new { @class = "form-control", @readonly = "true", placeholder = "Cost RA" })
+
+                                                                <span id="spanCostRA" class="input-group-addon"></span>
+                                                                <input name="CRA" hidden />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+
+                                    @*Awal Kiri*@
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Total Domestic Freight Cost</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @Html.TextBoxFor(m => m.TotalDomestic, new { @class = "form-control", @readonly = "true", placeholder = "Total Domestic Freight Cost", @styles = "background-color: rgba(255, 255, 0, 0.17);" })
+                                                @Html.HiddenFor(m => m.TotalDomestic)
+                                                <span id="spanDomm" class="input-group-addon"></span>
+                                                <span class="input-group-addon">(Port/Hub/Branch to Branch)</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Transportation Lead Time</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @Html.TextBoxFor(m => m.LeadTime, new { @class = "form-control", @readonly = "true", placeholder = "Transportation Lead Time" })
+                                                @Html.HiddenFor(m => m.LeadTime)
+                                                <span class="input-group-addon">Days</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Cost Inbound USD</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @Html.TextBoxFor(m => m.InboundUSD, new { @class = "form-control", @readonly = "true", placeholder = "Cost Inbound USD" })
+                                                @*<span id="CurrInboundUSD" class="input-group-addon">USD</span>*@
+                                                @Html.HiddenFor(m => m.InboundUSD)
+                                                <span class="input-group-addon">USD</span>
+                                                <span class="input-group-addon">(Source to Port ID)</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Cost Inbound IDR</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @Html.TextBoxFor(m => m.InboundIDR, new { @class = "form-control", @readonly = "true", placeholder = "Cost Inbound IDR" })
+                                                @Html.HiddenFor(m => m.InboundIDR)
+                                                <span class="input-group-addon">IDR</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4 col-xs-4">Total Freight Cost</label>
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @Html.TextBoxFor(m => m.TotalInternational, new { @id = "TotalInternational", @class = "form-control", @readonly = "true", placeholder = "Total International Freight Cost" })
+                                                @Html.HiddenFor(m => m.TotalInternational)
+                                                <span id="spanInter" class="input-group-addon"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*Terkahir Kiri*@
+                                    <div class="col-lg-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                @Html.LabelFor(m => m.Note1, Model.Note1, new { @id = "Note1", @Value = "" })<br />
+                                                @Html.LabelFor(m => m.Note2, Model.Note2, new { @id = "Note2", @Value = "" })<br />
+                                                @Html.LabelFor(m => m.Note3, Model.Note3, new { @id = "Note3", @Value = "" })<br />
+                                                @Html.LabelFor(m => m.Note4, Model.Note4, new { @id = "Note4", @Value = "" })<br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12" style="text-align:right;padding-right:30px;">
+                                        <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Close</button>
+                                        <button type="button" id="btn-export" name="btn-export" class="btn btn-success" style="width:125px;">Export to PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/plugins/autoNumeric.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/FreightCostCalculator/FreightCost.cshtml.js")"></script>
+}

@@ -1,0 +1,99 @@
+﻿<style>
+    .comment-list .row {
+        border: 1px solid #e2e1e1;
+        margin-bottom: 10px;
+        padding-top: 20px;
+        border-radius: 10px;
+    }
+
+    .comment-list .panel .panel-heading {
+        padding: 4px 15px;
+        position: absolute;
+        border: none;
+        border-top-right-radius: 0px;
+        top: 1px;
+    }
+
+        .comment-list .panel .panel-heading.right {
+            border-right-width: 0px;
+            border-top-left-radius: 0px;
+            right: 16px;
+        }
+
+        .comment-list .panel .panel-heading .panel-body {
+            padding-top: 6px;
+        }
+
+    .comment-list figcaption {
+        word-wrap: break-word;
+    }
+
+    .comment-compose .comment-post {
+        margin-top: 6px;
+    }
+
+    .comment-compose .row {
+        border: 1px solid #e2e1e1;
+        margin-bottom: 10px;
+        padding-top: 20px;
+        border-radius: 10px;
+    }
+
+    .comment-compose .panel .panel-heading {
+        padding: 4px 15px;
+        position: absolute;
+        border: none;
+        border-top-right-radius: 0px;
+        top: 1px;
+    }
+
+        .comment-compose .panel .panel-heading.right {
+            border-right-width: 0px;
+            border-top-left-radius: 0px;
+            right: 16px;
+        }
+
+        .comment-compose .panel .panel-heading .panel-body {
+            padding-top: 6px;
+        }
+
+    .comment-compose figcaption {
+        word-wrap: break-word;
+    }
+</style>
+<div class="modal fade" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="Modal Comment" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-left">
+                <h4 class="modal-title w-100 font-weight-bold"><i class="fa fa-comment-dots"></i>&nbsp;Comments for PO <b id="modal_po_number">[4500118834]</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <section class="comment-list"></section>
+                <section class="comment-compose">
+                    <div class="comment-compose row">
+                        <div class="col-md-12">
+                            <form action="/" id="post_comment" method="post">
+                                <div class="panel panel-default" style="padding-bottom:20px;">
+                                    <div class="panel-body">
+                                        <input type="hidden" name="RequestId" id="form_req_id" value="0" />
+                                        <textarea class="form-control" name="Comment" id="comment_content" placeholder="What are you thinking ?"></textarea>
+                                    </div>
+                                    <div class="panel-footer" style="margin-top:10px;">
+                                        <button class="btn btn-light" id="submit_comment" type="button"><i class="fa fa-envelope"></i>&nbsp;Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+}

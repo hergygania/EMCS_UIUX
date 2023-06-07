@@ -1,0 +1,397 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+    ViewBag.Title = "Outbound Item Detail";
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .box-custom .box {
+        border: 1px solid #808080;
+        border-top: 2px solid #000006 !important;
+    }
+
+    .box-custom .box-header {
+        /*color: white;*/
+        background: #000006;
+        color: white;
+    }
+
+    .form-border .form-group {
+        margin-bottom: 5px;
+        border-bottom: 1px solid #d2cece;
+        padding-top: 3px;
+        padding-bottom: 4px;
+    }
+
+    .box-header.with-border {
+        border-bottom: 4px solid #f4f4f4;
+    }
+
+    .box .box-header .box-title {
+        display: inline-block;
+        padding: 10px 0px 0px 10px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+        float: left;
+        cursor: default;
+    }
+
+    .scheduler-border {
+        width: auto; /* Or auto */
+        padding-left: 10px; /* To give a bit of padding on the left and right */
+        border: 1px solid #cecece;
+        margin-top: 10px;
+    }
+
+    .btn-trak {
+        background: #fe9d01;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+
+    #input-group-search {
+        max-width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<div class="col-md-12" id="OutboundDetailTrue">
+    @RenderPage("~/Views/DTS/v2/_OutboundTrackingStatus.cshtml")
+    <div class="row form-border">
+        <div class="col-md-12 box-warning">
+            <div class="box box-warning delivery-profile">
+                <div class="box-header with-border">
+                    <span class="box-title">DETAIL PROFILE</span>
+                </div>
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-3 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">UNIT TYPE<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="Unit">Machine</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">SN<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="SerialNumber">WE208240</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">MODEL<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="Model">305.5E2</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">BATCH<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="Batch">305.5E2</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ETD<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="EstTimeDeparture">19-Jun-2019</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ATD<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="ActTimeDeparture">19-Jun-2019</label>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ETA<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="EstTimeArrival">19-Jun-2019</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">ATA<span class="hidden-xs pull-right">: </span></label>
+                                <div class="col-md-8 col-xs-12">
+                                    <label class="control-label DetailView" id="ActTimeArrival">19-Jun-2019</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <span class="box-title">HISTORY TRACKING STATUS</span>
+                </div>
+                <div class="box-body">
+                    <div class="row form-horizontal">
+                        <div class="col-md-12">
+                            <table id="tableOuboundStatus" class="table table-bordered table-hover table-striped"></table>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 hidden" style="margin-bottom:10px;">
+            <div class="pull-right">
+                <button class="btn btn-default">Send Email</button>
+                <button class="btn btn-success">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" id="OutboundDetailNone" style="display:none;border-top:1px solid #cecece;margin-top:40px;">
+    <div class="col-md-12 text-center">
+        <h5><strong>Data Not Found</strong></h5>
+    </div>
+</div>
+<script type="text/javascript">
+    var _HeaderId = "@ViewBag.HeaderId";
+    var _RefItemId = "@ViewBag.RefItemId";
+
+    function showDetail() {
+        $("#OutboundDetailTrue").show(500);
+        $("#OutboundDetailNone").hide();
+    }
+    function hideDetail() {
+        $("#OutboundDetailTrue").hide(500);
+        $("#OutboundDetailNone").show();
+    }
+    var outboundTrackingHistories = {
+        initTableUnit: function (units) {
+            $("#tableOuboundStatus").bootstrapTable({
+                cache: false,
+                //url: myApp.fullPath + "DTS/GetDetailDataOutboundStatus",
+                data: units,
+                pagination: true,
+                search: false,
+                striped: true,
+                clickToSelect: true,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                pageSize: '5',
+                formatNoMatches: function () {
+                    return '<span class="noMatches">-</span>';
+                },
+                queryParams: function (q) {
+                    return {
+                        HeaderID: _HeaderId,
+                        RefItemId: _RefItemId,
+                    };
+                },
+                columns: [
+                    {
+                        field: 'ID',
+                        title: 'ID',
+                        halign: 'center',
+                        align: 'center',
+                        width: '75px',
+                        sortable: true,
+                        visible: false,
+                    },
+                    {
+                        field: 'HeaderID',
+                        title: 'HeaderID',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true,
+                        visible: false,
+                    },
+                    {
+                        field: 'RefItemId',
+                        title: 'RefItemId',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true,
+                        visible: false,
+                    },
+                    {
+                        field: 'Action',
+                        title: 'ACTION',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true,
+                        visible: false,
+                    },
+                    {
+                        field: 'ActionDescription',
+                        title: 'ACTION',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true
+                    },
+                    {
+                        field: 'Status',
+                        title: 'Status',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true,
+                        visible: false,
+                    },
+                    {
+                        field: 'StatusDescription',
+                        title: 'Status',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true
+                    },
+                    {
+                        field: 'Position',
+                        title: 'Position',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true
+                    },
+                    {
+                        field: 'Notes',
+                        title: 'Notes',
+                        halign: 'left',
+                        align: 'left',
+                        class: 'text-nowrap',
+                        sortable: true
+                    },
+                    {
+                        field: 'Attachment1',
+                        title: 'Attachment',
+                        halign: 'center',
+                        align: 'center',
+                        class: 'text-nowrap',
+                        sortable: true
+                    },
+                    {
+                        field: 'UpdateDate',
+                        title: 'UPDATE ON',
+                        halign: 'center',
+                        align: 'center',
+                        class: 'text-nowrap',
+                        formatter: dateFormatterCAT,
+                        sortable: true
+                    },
+                    {
+                        field: 'UpdateBy',
+                        title: 'UPDATE BY',
+                        halign: 'center',
+                        align: 'center',
+                        class: 'text-nowrap',
+                        sortable: true
+                    }
+
+                ]
+            });
+        },
+        refreshTableUnit: function (units) {
+            $("#tableOuboundStatus").bootstrapTable('destroy');
+            //$("#tableOuboundUnit").bootstrapTable('refresh');
+            outboundTrackingHistories.initTableUnit(units);
+        }
+    }
+    function initTrackingStatus(status, statusUnits) {
+        status = status.toLocaleLowerCase();
+
+        $("#flowCreated").removeClass("active");
+        $("#flowProgress").removeClass("active");
+        $("#flowComplete").removeClass("active");
+        $("#flowPOD").removeClass("active");
+
+        //if (status === "draft" || status === "submit" || status === "revise") {
+        if (status != "reject") {
+            $("#flowCreated").addClass("active");
+        }
+        if (['approve', 'complete', 'pod'].indexOf( status ) > -1) {
+            $("#flowProgress").addClass("active");
+        }
+        if (['complete', 'pod'].indexOf(status) > -1) {
+            $("#flowComplete").addClass("active");
+        }
+        if (status === "pod") {
+            $("#flowPOD").addClass("active");
+        }
+        $("#lblTrackingStatus").html(statusUnits);
+    }
+
+    function resetForm() {
+        $("#Unit").html('');
+        $("#SerialNumber").html('');
+        $("#Model").html('');
+        $("#Batch").html('');
+        $("#EstTimeDeparture").html('');
+        $("#EstTimeArrival").html('');
+        $("#ActTimeDeparture").html('');
+        $("#ActTimeArrival").html('');
+    }
+
+    $(document).ready(function () {
+        resetForm();
+        $.ajax({
+            url: myApp.fullPath + "/DTS/GetDetailDataOutboundStatus",
+            //method: 'POST',
+            beforeSend: function () {
+                ShowLoading();
+            },
+            data: { HeaderId: _HeaderId, RefItemId: _RefItemId },
+            success: function (json) {
+                HideLoading();
+                if (json.result && json.data && json.data.header) {
+                    var data = json.data.header;
+                    var detail = json.data.detail;
+                    $("#originTracking").html(data.Origin);
+                    $("#destinationTracking").html(data.CustName);
+                    $("#ExpTDTracking").html(formatDateLocal(data.ExpectedTimeArrival, "ddd MM/DD/YYYY"));
+                    $("#ExpTATracking").html(formatDateLocal(data.ExpectedTimeLoading, "ddd MM/DD/YYYY"));
+
+                    $("#Unit").html(data.Unit);
+                    if (detail) {
+                        $("#SerialNumber").html(detail.SerialNumber);
+                        $("#Model").html(detail.Model);
+                        $("#Batch").html(detail.Batch);
+                        $("#EstTimeDeparture").html('' + formatDateLocal(detail.EstTimeDeparture) + '');
+                        $("#EstTimeArrival").html('' + formatDateLocal(detail.EstTimeArrival) + '');
+                        $("#ActTimeDeparture").html('' + formatDateLocal(detail.ActTimeDeparture) + '');
+                        $("#ActTimeArrival").html('' + formatDateLocal(detail.ActTimeArrival) + '');
+                    }
+                    var statusUnits = "On Schedule";
+                    initTrackingStatus(data.Status, statusUnits);
+                    if (json.data.units) {
+                        for (var x in json.data.units) {
+                            if (json.data.units[x].DeliveryStatus != "On Schedule") {
+                                statusUnits = json.data.units[x].DeliveryStatus;
+                            }
+                        }
+                        outboundTrackingHistories.refreshTableUnit(json.data.detailStatus);
+                    }
+                    showDetail();
+                } else {
+                    hideDetail();
+                }
+            },
+            error: function (err) {
+                hideDetail();
+                HideLoading();
+            }
+        });
+        outboundTrackingHistories.initTableUnit();
+    });
+</script>

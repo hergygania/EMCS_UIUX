@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Fix Rate";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Quick Search</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="formFreightSearch">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Origin</label>
+                                <div class="col-md-6">
+                                    <select class="form-control">
+                                        <option value="ALL">ALL</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Type</label>
+                                <div class="col-md-6">
+                                    <select class="form-control">
+                                        <option value="ALL">ALL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Destination</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" placeholder="Select Destination" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <button class="btn btn-success">Display Data</button>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <table class="table table-bordered" id="tableFixRate" style="width:100%;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="vertical-align:middle;" rowspan="2">No</th>
+                    <th class="text-center" style="vertical-align:middle;" rowspan="2">Origin</th>
+                    <th class="text-center" vertical-align="middle" colspan="4">Destination</th>
+                    <th class="text-center" vertical-align="middle" colspan="4">Model</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="vertical-align:middle;">AREA</th>
+                    <th class="text-center" style="vertical-align:middle;">PROPINSI</th>
+                    <th class="text-center" style="vertical-align:middle;">KABUPATEN/KOTA</th>
+                    <th class="text-center" style="vertical-align:middle;">IBU KOTA KABUPATEN</th>
+                    <th class="text-center" style="vertical-align:middle;">120K</th>
+                    <th class="text-center" style="vertical-align:middle;">320D2</th>
+                    <th class="text-center" style="vertical-align:middle;">320D2 GC</th>
+                    <th class="text-center" style="vertical-align:middle;">320D2L</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Jakarta</td>
+                    <td>Sumatera</td>
+                    <td>Sumatera</td>
+                    <td>Toba Samosir</td>
+                    <td>-</td>
+                    <td class="text-center">40.000.000</td>
+                    <td class="text-center">45.000.000</td>
+                    <td class="text-center">45.000.000</td>
+                    <td class="text-center">65.000.000</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jakarta</td>
+                    <td>Sumatera</td>
+                    <td>Sumatera</td>
+                    <td>Riau</td>
+                    <td>-</td>
+                    <td class="text-center">41.000.000</td>
+                    <td class="text-center">42.000.000</td>
+                    <td class="text-center">42.000.000</td>
+                    <td class="text-center">62.000.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/DTS/FixRate.cshtml.js")"></script>
+}
+

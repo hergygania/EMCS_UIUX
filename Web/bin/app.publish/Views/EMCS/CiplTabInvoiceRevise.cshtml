@@ -1,0 +1,294 @@
+﻿<div class="row">
+    <div id="header">
+        <div class="col-lg-12">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                <div class="col-lg-6">
+                    <div class="form-group hide">
+                        <label class="control-label col-lg-4 col-xs-4">ID</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" id="idCipl" name="idCipl" placeholder="ID CIPL" value="@Model.Data.Id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">CIPL No</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" id="noCipl" value="@Model.Data.CiplNo" name="noCipl" placeholder="Cipl No" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Category</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="jenisBarangCipl" value="@Model.Data.Category" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">&nbsp;</label>
+                        <div class="input-group categoryspareparts col-md-8">
+                            <input type="text" class="form-control" disabled id="jenisBarangCiplItem" value="@Model.Data.CategoriItem" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Export Type</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled name="exportremarkscipl" value="@Model.Data.ExportType" />
+                        </div>
+                    </div>
+                    @if (Model.Data.ExportType == "Non Sales - Return (Permanent)")
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-lg-4 hidden-xs">&nbsp;</label>
+                            <div class="input-group col-lg-8">
+                                <div class="exportRemarks mt-4">
+                                    <input type="text" class="form-control" readonly name="exportremarksCipl" value="@Model.Data.ExportTypeItem" />
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Date</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" id="noCipl" name="noCipl" placeholder="Date" disabled value="@Model.Data.CreateDate.ToString("dd MMM yyyy")">
+                            <div class="input-group-addon cal">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Reference No</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" rows="3" cols="3" class="form-control" name="refCipl" value="@(ViewBag.refs)" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Customer</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" name="idCustomerCipl" readonly value="@Model.Data.ConsigneeName" />
+                            <select id="idCustomerCipl" class="hidden" style="display:none;"></select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                @if (Model.Data.ExportType == "Sales (Permanent)")
+                {
+                    <div class="form-group col-md-4">
+                        <label>@Model.Data.SoldConsignee</label>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesNameCipl" name="salesNameCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeName) ? Model.Data.ConsigneeName : "-")" placeholder="Consignee Name" disabled>
+                        <textarea type="text" class="form-control mt-4 inpPartsSales" id="salesAddressCipl" name="salesAddressCipl" placeholder="Address" disabled>@(!string.IsNullOrEmpty(Model.Data.ConsigneeAddress) ? Model.Data.ConsigneeAddress : "-")</textarea>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesCountryCipl" name="salesCountryCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeCountry) ? Model.Data.ConsigneeCountry : "-")" placeholder="Country" disabled>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesTelpCipl" name="salesTelpCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeTelephone) ? Model.Data.ConsigneeTelephone : "-")" placeholder="Telephone" disabled>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesFaxCipl" name="salesFaxCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeFax) ? Model.Data.ConsigneeFax : "-")" placeholder="Fax" disabled>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesPicCipl" name="salesPicCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneePic) ? Model.Data.ConsigneePic : "-")" placeholder="PIC" disabled>
+                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesEmailCipl" name="salesEmailCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeEmail) ? Model.Data.ConsigneeEmail : "-")" placeholder="Email" disabled>
+                    </div>
+                }
+                <div class="form-group @(Model.Data.ExportType == "Sales (Permanent)" ? "col-md-4" : "col-md-6")">
+                    <label>@(!string.IsNullOrEmpty(Model.Data.ShipDelivery) ? Model.Data.ShipDelivery : "Delivery To" )</label>
+                    @*<label>Consignee / Ship To / Delivery To</label>*@
+                    <div class="input-group mt-4 hidden">
+                        <div id="div-radio-consignee" class="btn-group btn-group-justified">
+                            <span class="btn btn-default btn-sm notactive-consignee consigneeSameCipl" data-toggle="consigneechange" data-value="L" data-active="btn-success" data-notactive-consignee="btn-default">Same As Sold To</span>
+                            <span class="btn btn-default btn-sm notactive-consignee consigneeDifferentCipl" data-toggle="consigneechange" data-value="D" data-active="btn-info" data-notactive-consignee="btn-default">Different</span>
+                        </div>
+                        <input type="hidden" name="ConsigneeSameSoldTo" id="ConsigneeSameSoldTo">
+                    </div>
+                    <div class="div-sales-consignee">
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeNameCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeName) ? Model.Data.ConsigneeName : "-")" name="consigneeNameCipl" placeholder="Consignee Name">
+                        <textarea type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeAddressCipl" name="consigneeAddressCipl" placeholder="Address">@(!string.IsNullOrEmpty(Model.Data.ConsigneeAddress) ? Model.Data.ConsigneeAddress : "-")</textarea>
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeCountryCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeCountry) ? Model.Data.ConsigneeCountry : "-")" name="consigneeCountryCipl" placeholder="Country">
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeTelpCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeTelephone) ? Model.Data.ConsigneeTelephone : "-")" name="consigneeTelpCipl" placeholder="Telephone">
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeFaxCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeFax) ? Model.Data.ConsigneeFax : "-")" name="consigneeFaxCipl" placeholder="Fax">
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneePicCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneePic) ? Model.Data.ConsigneePic : "-")" name="consigneePicCipl" placeholder="PIC">
+                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeEmailCipl" value="@(!string.IsNullOrEmpty(Model.Data.ConsigneeEmail) ? Model.Data.ConsigneeEmail : "-")" name="consigneeEmailCipl" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="form-group @(Model.Data.ExportType == "Sales (Permanent)" ? "col-md-4" : "col-md-6")">
+                    <label>Notify Party</label>
+                    <div class="input-group mt-4 hidden">
+                        <div id="div-radio-notify" class="btn-group btn-group-justified">
+                            <span class="btn btn-default btn-sm notactive-notify notifySameCipl" data-toggle="notifychange" data-value="L" data-active="btn-success" data-notactive-notify="btn-default">Same As Consignee</span>
+                            <span class="btn btn-default btn-sm notactive-notify notifyDifferentCipl" data-toggle="notifychange" data-value="D" data-active="btn-info" data-notactive-notify="btn-default">Different</span>
+                        </div>
+                        <input type="hidden" name="NotifyPartySameConsignee" id="NotifyPartySameConsignee">
+                    </div>
+
+                    <div class="notify">
+                        <input type="text" disabled class="form-control mt-4" id="notifyNameCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyName) ? Model.Data.NotifyName : "-")" placeholder="Consignee Name">
+                        <textarea type="text" disabled class="form-control mt-4" id="notifyAddressCipl" placeholder="Address">@(Model.Data.NotifyAddress ?? "")</textarea>
+                        <input type="text" disabled class="form-control mt-4" id="notifyCountryCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyCountry) ? Model.Data.NotifyCountry : "-")" placeholder="Country">
+                        <input type="text" disabled class="form-control mt-4" id="notifyTelpCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyTelephone) ? Model.Data.NotifyTelephone : "-")" placeholder="Telephone">
+                        <input type="text" disabled class="form-control mt-4" id="notifyFaxCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyFax) ? Model.Data.NotifyFax : "-")" placeholder="Fax">
+                        <input type="text" disabled class="form-control mt-4" id="notifyPicCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyPic) ? Model.Data.NotifyPic : "-")" placeholder="PIC">
+                        <input type="text" disabled class="form-control mt-4" id="notifyEmailCipl" value="@(!string.IsNullOrEmpty(Model.Data.NotifyEmail) ? Model.Data.NotifyEmail : "-")" placeholder="Email">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">For (Business Area)</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="" id="areaCipl" class="form-control" disabled placeholder="For Business Area" value="@Model.Data.Area" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Currency</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" id="currency" class="form-control" disabled placeholder="Currency" value="@ViewBag.Currency" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Currency</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" id="Rate" class="form-control" disabled placeholder="Rate" value="@Model.Data.Rate" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Payment Terms</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" id="paymentTerm" class="form-control" disabled placeholder="Payment Term" value="@Model.Data.PaymentTerms" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Shipping Method</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" id="shippingCipl" class="form-control" disabled placeholder="Shipping Method" value="@Model.Data.ShippingMethod" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Country Of Origin</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" id="countryCipl" class="form-control" disabled placeholder="Shipping Method" value="@(string.IsNullOrEmpty(Model.Data.CountryOfOrigin) ? "-" : Model.Data.CountryOfOrigin)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Branch</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="cabangCipl" value="@(string.IsNullOrEmpty(Model.Data.Branch) ? "-" : Model.Data.Branch)" name="cabangCipl" placeholder="Destination Port">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">LC No & Date</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="lcno" value="@(string.IsNullOrEmpty(Model.Data.LcNoDate) ? "-" : Model.Data.LcNoDate)" name="LcNoDate" placeholder="LC No. Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Inco Terms</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="incoterms" value="@(string.IsNullOrEmpty(Model.Data.IncoTerm) ? "-" : Model.Data.IncoTerm)" name="Incoterms" placeholder="Incoterm">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Freight Payment</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="FreightPayment" value="@(string.IsNullOrEmpty(Model.Data.FreightPayment) ? "-" : Model.Data.FreightPayment)" name="FreightPayment" placeholder="Freight Payment">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Type</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="Type" value="@(string.IsNullOrEmpty(Model.Forwarder.Type) ? "-" : Model.Forwarder.Type)" name="Type" placeholder="Type">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Forwader</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control" disabled id="Forwarder" value="@(string.IsNullOrEmpty(Model.Forwarder.Forwader) ? "-" : Model.Forwarder.Forwader)" name="Forwarder" placeholder="Forwarder">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border"></legend>
+                <div class="form-group">
+                    <div>
+                        <div class="tableItemSpareparts">
+                            <table class="table table-bordered" data-toolbar=".toolbarCipl" id="tableCiplItemRevise"></table>
+                        </div>
+                        <div class="tableItemUnit">
+                            <table class="table table-bordered" data-toolbar=".toolbarCipl" id="tableunitCiplRevise"></table>
+                        </div>
+                        <div class="tableItemMisc">
+                            <table class="table table-bordered" data-toolbar=".toolbarCipl" id="tablemiscCiplRevise"></table>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-6 tableItem">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Shipping Mark & Nos</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <textarea type="text" rows="7" class="form-control" id="shippingMarkCipl" readonly name="shippingMarkCipl" placeholder="Marks & Nos">@Model.Data.ShippingMarks</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Special Instruction</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <textarea type="text" rows="7" class="form-control" id="txtSpecialInscCipl" readonly name="txtSpecialInscCipl" placeholder="Marks & Nos">@Model.Data.SpecialInstruction</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group div-inspectionReportDoc hidden">
+                        <label class="control-label col-lg-4 col-xs-4">Inspection Report</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="file" class="form-control" id="inspectionReportDoc" readonly value="" placeholder="Inspection Report" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 tableItem">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Total Quantity</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control formatCurrency text-right" id="quantityCipl" value="@ViewBag.Quantity" name="quantityCipl" placeholder="Quantity" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Total Collies</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control formatCurrency text-right" id="colliesCipl" name="colliesCipl" value="@ViewBag.Collies" placeholder="Collies" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Total Volume</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control formatCurrency text-right" id="volumeCipl" name="volumeCipl" value="@ViewBag.volume" placeholder="Volume" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Total Net Weight</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control formatCurrency text-right" id="weightCipl" name="weightCipl" placeholder="Weight" value="@ViewBag.netWeight" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Total Gross Weight</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <input type="text" class="form-control formatCurrency text-right" id="grossCipl" name="grossCipl" placeholder="Gross" value="@ViewBag.grossWeight" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-4 col-xs-4">Remarks</label>
+                        <div class="input-group col-lg-8 col-xs-8">
+                            <textarea type="text" rows="5" class="form-control" id="remarksCipl" name="remarksCipl" placeholder="Remarks" disabled>@Model.Data.Remarks</textarea>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

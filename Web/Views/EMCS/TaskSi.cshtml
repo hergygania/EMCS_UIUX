@@ -1,0 +1,71 @@
+﻿<div class="card">
+  <div class="table-responsive">
+    <table class="table" data-toolbar=".toolbarCipl" id="tbl-task-si"></table>
+  </div>
+</div>
+<div id="InputInstruction" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header mytask">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <form id="FormUploadSI">
+        <div class="modal-body">
+          <div class="form-group hide">
+            <label class="control-label col-lg-4 col-xs-4">ID</label>
+            <div class="input-group col-lg-8 col-xs-8">
+              <input
+                type="text"
+                class="form-control"
+                id="idCL"
+                name="idCL"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4">Description</label>
+            <div class="input-group col-lg-8 col-xs-8">
+              <input
+                type="text"
+                class="form-control"
+                id="descriptionSI"
+                name="descriptionSI"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4"
+              >Special Instruction</label
+            >
+            <div class="input-group col-lg-8 col-xs-8">
+              <input
+                type="text"
+                class="form-control"
+                id="specialInstructionSI"
+                name="specialInstructionSI"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-lg-4 col-xs-4"
+              >Document Required</label
+            >
+            <div class="input-group col-lg-8 col-xs-8">
+              <div id="UploadDocumentSI" class="dropzone"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="SaveDocumentSI" type="button" class="btn btn-primary">
+            <i class="fa fa-plane"></i>&nbsp;Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

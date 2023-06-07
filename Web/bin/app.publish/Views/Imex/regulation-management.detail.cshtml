@@ -1,0 +1,98 @@
+@model App.Data.Domain.RegulationManagement
+@{
+    string message = ViewBag.Message + "";
+}
+
+<form role="form">
+    <input type="text" id="NoPermitCategory" value="@ViewBag.NoPermitCategory" style="display:none" />
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="false" aria-controls="collapseThree">
+                                    <i class="more-less fa fa-chevron-up"></i>
+                                    Filter
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <!-- FILTER KOLOM KIRI - START -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-3 col-xs-3">Regulation</label>
+                                        <div class="inline">
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                @*@Html.TextBoxFor(m => m.Regulation, new { @class = "form-control", @value = "" })*@
+                                                <input type="text" value="" name="Regulation" id="Regulation" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-3 col-xs-3">HS Code</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="form-control" id="HSCode" multiple style="height:1px;">
+                                                @*<option value="@Model.HSCode" selected="selected">@Model.HSCode</option>*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FILTER KOLOM KIRI - END -->
+                                <!-- FILTER KOLOM KANAN - START -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-3 col-xs-3">Order Method</label>
+                                        <div class="inline">
+                                            <div class="input-group col-lg-8 col-xs-8">
+                                                <select class="form-control" id="OM" multiple style="height:1px;">
+                                                    @*<option value="@Model.OM" selected="selected">@Model.OMCode</option>*@
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-3 col-xs-3">Permit Category</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="form-control" id="ListCodePermitCategory" multiple style="height:1px;">
+                                                <option value="@Model.CodePermitCategory" selected="selected">@Model.CodePermitCategory - @Model.PermitCategoryName</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FILTER KOLOM KANAN - END -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="CodePermitCategory" value="@Model.CodePermitCategory" />
+                <div class="col-lg-12">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-danger" onclick="showHeader()" style=""><i class="fa fa-mail-reply"></i> Back</button>
+                    </div>
+                    <div class="pull-right">
+                        <button id="btnFilter" type="button" class="btn btn-success btnFilter" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+                        <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <hr>
+                    <div class="toolbarDetail">
+                        <a href="#" class="btn btn-info detailDownloadExcel" style="width:150px;">
+                            <i class="fa fa-download"></i> Download to Excel
+                        </a>
+                    </div>
+
+                    <table class="table table-bordered table-striped" id="tableRMDetail" style="table-layout:fixed;"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="@Url.Content("~/scripts.app/imex/regulation-management.detail.cshtml.js")"></script>

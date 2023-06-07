@@ -1,0 +1,97 @@
+﻿{
+  "table": [
+    {
+      "id": 1,
+      "container": "4 x 20 feet; 0 x 40 feet",
+      "inco": "EX-WORK",
+      "case_number": "05-77A10",
+      "ref_ea": "1",
+      "ref_bound": "2",
+      "cargo_desc": "Good",
+      "length": "106",
+      "width": "75",
+      "height": "70",
+      "net": "73",
+      "gross": "72",
+      "attachment": "excel.xls"
+    },
+    {
+      "id": 2,
+      "container": "5 x 10 feet; 0 x 30 feet",
+      "inco": "AIR - DAP",
+      "case_number": "05-77A10",
+      "ref_ea": "2",
+      "ref_bound": "3",
+      "cargo_desc": "Good",
+      "length": "110",
+      "width": "55",
+      "height": "90",
+      "net": "66",
+      "gross": "70",
+      "attachment": "excel.xls"
+    },
+    {
+      "id": 3,
+      "container": "8 x 10 feet; 2 x 40 feet",
+      "inco": "AIR - DAP",
+      "case_number": "05-77A10",
+      "ref_ea": "2",
+      "ref_bound": "3",
+      "cargo_desc": "Good",
+      "length": "110",
+      "width": "55",
+      "height": "90",
+      "net": "66",
+      "gross": "70",
+      "attachment": "excel.xls"
+    },
+    {
+      "id": 4,
+      "container": "8 x 30 feet; 6 x 20 feet",
+      "inco": "AIR - DDP",
+      "case_number": "05-77A10",
+      "ref_ea": "4",
+      "ref_bound": "5",
+      "cargo_desc": "Excellent",
+      "length": "40",
+      "width": "105",
+      "height": "190",
+      "net": "180",
+      "gross": "90",
+      "attachment": "excel.xls"
+    }
+  ],
+
+  "app": [
+    {
+      "id": 1,
+      "branch": "0104",
+      "cl_no": "CL002140218XP",
+      "reference_no": "400027855661, 400027855662, 400027855663",
+      "consignee": "Caterpillar USA",
+      "consignee_address": "Jakarta",
+      "date": "28-Nov-18",
+      "prepared_by": "Cipta Krida Bahari",
+      "notify": "DHL Global",
+      "notify_address": "Singapore",
+    },
+  ],
+
+  "others": [
+    {
+      "stuffing_start": "17-Jan-19",
+      "stuffing_finish": "23-Jan-19",
+      "vessel": "123",
+      "vessel_connect": "456",
+      "voyage_vessel": "789",
+      "voyage_connect": "111",
+      "loading": "SOEKARNO HATTA AIRPORT",
+      "destination": "O'hare Aiprot Chicago",
+      "flight": "222",
+      "arrival": "333",
+      "booking_no": "444",
+      "booking_date": "28-Nov-18",
+      "liner": "555"
+    }
+  ]
+}

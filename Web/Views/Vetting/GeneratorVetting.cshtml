@@ -1,0 +1,125 @@
+﻿@{Layout = "";}
+
+
+<div class="col-md-12">
+    <div class="row" style="margin-right:2px">
+        <div class="row">
+            <!-- FILTER KOLOM KIRI - START -->
+            <div class="col-lg-6">
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Periode Date</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input id="InvoiceDate" type="text" class="form-control pull-right daterange">
+                        <div class="input-group-addon cal">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Subject</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input id="Subject" type="text" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Body</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <textarea id="Body" class="form-control required" style="height:150px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Email List</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <textarea id="Email" class="form-control required">@(ViewBag.EmailReceiver)</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- FILTER KOLOM KIRI - END -->
+
+            <button id="btnPreview" type="button" class="btn btn-warning" style="width:125px;"><i class="fa fa-search"></i> Preview</button>
+            <button type="button" id="btnSend" class="btn btn-success" style="width:125px;"><i class="fa fa-times-circle"></i> Send Email</button>
+            <div id="notif">
+
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .loader{
+      border-radius: 100%;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    /* LOADER 2 */
+
+    #loader-2 span{
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      /*border-radius: 100%;*/
+      background-color: #fff;
+      margin: 0px 2px;
+    }
+
+    #loader-2 span:nth-child(1) {
+        animation: opacitychange 1s ease-in-out infinite;
+    }
+
+    #loader-2 span:nth-child(2) {
+        animation: opacitychange 1s ease-in-out 0.10s infinite;
+    }
+
+    #loader-2 span:nth-child(3) {
+        animation: opacitychange 1s ease-in-out 0.20s infinite;
+    }
+
+    #loader-2 span:nth-child(4) {
+        animation: opacitychange 1s ease-in-out 0.30s infinite;
+    }
+
+    #loader-2 span:nth-child(5) {
+        animation: opacitychange 1s ease-in-out 0.40s infinite;
+    }
+
+    #loader-2 span:nth-child(6) {
+        animation: opacitychange 1s ease-in-out 0.50s infinite;
+    }
+
+    #loader-2 span:nth-child(7) {
+        animation: opacitychange 1s ease-in-out 0.60s infinite;
+    }
+
+    @@keyframes opacitychange{
+      0%, 100%{
+        opacity: 0;
+      }
+
+      60%{
+        opacity: 1;
+      }
+    }
+
+    @@keyframes bounce{
+      0%, 75%, 100%{
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
+      }
+
+        25% {
+            -webkit-transform: translateY(-10px);
+            -ms-transform: translateY(-10px);
+            -o-transform: translateY(-10px);
+            transform: translateY(-10px);
+        }
+    }
+
+</style>
+@*<script src="@Url.Content("~/Scripts/jquery.table2excel.js")"></script>*@
+<script src="@Url.Content("~/scripts.app/vetting/generatorvetting.cshtml.js")"></script>
+
+
+

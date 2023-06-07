@@ -1,0 +1,140 @@
+﻿<body>
+	<table id="tablebody" class="table">
+		<tbody>
+			<tr>
+				<th>name</th>
+				<th class=""> Code</th>
+			</tr>
+			<tr>
+				<td>
+					<div class="form-control a medical_his" data-pk="medical_1" data-type="text">fffde</div>
+				</td>
+				<td>
+					<div class="form-control a hcode" data-pk="hcc_1" data-type="text">101</div>
+				</td>
+				<td style="border:none;">
+					<button class="editbtn btn btn-primary">Edit</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="form-control a medical_his" data-pk="medical_2" data-type="text">fffdefds</div>
+				</td>
+				<td>
+					<div class="form-control a hcode" data-pk="hcc_2" data-type="text">fffdfasdddd</div>
+				</td>
+				<td style="border:none;">
+					<button class="editbtn btn btn-primary">Edit</button>
+				</td>
+
+			</tr>
+			<tr>
+				<td>
+					<div class="form-control a medical_his" data-pk="medical_3" data-type="text">component_xyzdfadfd</div>
+				</td>
+				<td>
+					<div class="form-control a hcode" data-pk="hcc_3" data-type="text">dfdfassdfdsfad</div>
+				</td>
+				<td style="border:none;">
+					<button class="editbtn btn btn-primary">Edit</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<div class="bs-example">
+		<!-- Button HTML (to Trigger Modal) -->
+		<!-- Modal HTML -->
+		<div id="myModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Modify Information</h4>
+					</div>
+					<div class="modal-body">
+
+						<label class="control-label col-sm-4" for="structure">Name</label>
+						<div class="col-sm-5">
+							<input type="text" name="med_his" class="form-control" id="name" placeholder="Medical History">
+						</div>
+						<div class="col-sm-3"></div>
+
+
+						<label class="control-label col-sm-4" for="structure">Code</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" name="hcc_code" id="code" placeholder="HCC Code">
+						</div>
+						<div class="col-sm-3"></div>
+
+
+						<label class="control-label col-sm-4" for="structure"></label>
+						<div class="col-sm-5">
+							<input class="btn btn-primary" type="submit" id="save_edit_info" name="submit" value="Save" />
+						</div>
+						<div class="col-sm-3"></div>
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	$(document).ready(function () {
+		$('.editbtn').click(function () {
+
+
+
+			$("#myModal").modal('show');
+			var currow = $(this).closest("tr");
+			var currow1 = $(this).closest("tr");
+
+			var row_medical_col = $(this).closest("tr");
+			var row_medical_col_data = row_medical_col.find(".medical_his").text();
+
+			var row_hcode_col = $(this).closest("tr");
+			var row_hcode_col_data = row_hcode_col.find(".hcode").text();
+
+			var row_h = $(this).closest("tr").find('.hcode');
+			var row_m = $(this).closest("tr").find('.medical_his');
+
+			$('#name').val(row_medical_col_data);
+			$('#code').val(row_hcode_col_data);
+			console.log(row_medical_col_data);
+			console.log(row_hcode_col_data);
+
+			$('#save_edit_info').click(function () {
+
+				console.log(row_h);
+				console.log(row_m);
+				var medical_data1 = $('#name').val();
+				var hcc_data1 = $('#code').val();
+				console.log(medical_data1);
+				console.log(hcc_data1);
+				if (medical_data1 && hcc_data1) {
+					$("#myModal").modal('hide');
+
+					//$("#tablebody td:contains('"+hcc_data1+"')").html(medical_data1);
+
+					row_h.html(hcc_data1);
+
+					row_m.html(medical_data1);
+
+
+
+				}
+				else {
+					alert("fields required");
+				}
+			});
+		});
+	});
+</script>

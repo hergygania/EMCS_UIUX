@@ -1,0 +1,298 @@
+﻿@using System.Web.Mvc
+@using App.Web
+
+@model App.Web.Models.OrderThruCounterHeaderViewModel
+
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    ViewBag.Title = "Order Thru Counter & Service";
+
+    string custGroupName = ViewBag.custGroupHeader + "";
+    var userType = "";
+    try
+    {
+        userType = User.Identity.GetUserType().ToLower();
+        if (userType == "ext-part" && !string.IsNullOrEmpty(Model.cust_group_no))
+        {
+            ViewBag.Title = (custGroupName + "").Replace(Model.cust_group_no + " -", "");
+        }
+    }
+    catch { }
+}
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:555px">
+            <div id="parent">
+                <form id="form" role="form">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Filter By</label>
+                                        <div class="control-label col-lg-2 col-xs-3" style="margin-top:-7px">
+                                            <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;width:100%;">
+                                                <input id="hub" name="filter_type" type="radio" checked value="HUB">
+                                                <label for="hub" onclick="setFilter(1)">HUB</label>
+                                                <input id="area" name="filter_type" type="radio" value="AREA">
+                                                <label for="area" onclick="setFilter(2)">AREA</label>
+                                                <a class="btn btn-primary"></a>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-lg-6 col-xs-5">
+                                            @Html.DropDownListFor(m => m.filter_by, new SelectList(Model.HubList, "HubId", "Name"), "ALL", new { @class = "js-states form-control", @style = "display:none" })
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Plant Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.DropDownListFor(m => m.selStoreList_Nos, new SelectList(Model.StoreNumberList, "Plant", "Name"), new { @multiple = "multiple", @class = "js-states form-control", @style = "width:95%;display:none" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Customer Group</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @if (userType == "ext-part")
+                                            {
+                                                <input type="text" class="form-control readonly" value="@custGroupName" readonly />
+                                                @Html.HiddenFor(m => m.cust_group_no)
+                                            }
+                                            else
+                                            {
+                                                @Html.DropDownListFor(m => m.cust_group_no, new SelectList(Model.CustomerGroupList), "ALL", new { @class = "js-states form-control", @style = "width:95%;display:none" })
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Customer ID - Name</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="js-states form-control" id="selCustList_Nos" style="width:95%;display:none">
+                                                @*<option value="@Model.HSCode" selected="selected">@Model.HSCode</option>*@
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">PO Date</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <input type='text' id="custpodate" class='form-control pull-right date'>
+                                            @*@Html.TextBoxFor(m => m.cust_po_date_s, new { @class = "form-control pull-right" })
+                                            @Html.TextBoxFor(m => m.cust_po_date_start, new { @class = "form-control pull-right", @style = "display:none;" })
+                                            @Html.TextBoxFor(m => m.cust_po_date_end, new { @class = "form-control pull-right", @style = "display:none;" })*@
+                                            
+                                            <div class="input-group-addon" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">PO Number *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.cust_po_no, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Invoice Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectInvoiceType("", "ALL", new { @id = "invoice_type", @class = "js-states form-control", @style = "display:none" })
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Order Status</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            <select class="js-states form-control" id="order_status" name="order_status" style="width:95%;display:none">
+                                                <option value="all">ALL</option>
+                                                <option value="">Not Relevant</option>
+                                                <option value="A">Not Yet Processed</option>
+                                                <option value="B">Partially Processed</option>
+                                                <option value="C">Completely Processed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label class="control-label col-lg-4 col-xs-4">Shipment Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectShipmentTypeSO("", "ALL", new { @id = "shp_type", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Doc Entry Date</label>
+                                        <div class="control-label col-lg-2 col-xs-3" style="margin-top:-7px">
+                                            <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;width:100%;">
+                                                <input id="on" name="defaultDate" type="radio" checked value="ON"  />
+                                                <label for="on" onclick="">ON</label>
+                                                <input id="off" name="defaultDate" type="radio" value="OFF" >
+                                                <label for="off" onclick="">OFF</label>
+                                                <a class="btn btn-primary"></a>
+                                            </div>
+                                        </div>
+                                        <div class="input-group col-lg-6 col-xs-5">
+                                            @Html.TextBoxFor(m => m.doc_date_s, new { @class = "form-control pull-right" })
+                                            @Html.TextBoxFor(m => m.doc_date_start, new { @class = "form-control pull-right", @style = "display:none;" })
+                                            @Html.TextBoxFor(m => m.doc_date_end, new { @class = "form-control pull-right", @style = "display:none;" })
+                                            <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Trakindo Doc Number *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.ref_doc_no, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">WO Number *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.wo_number, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Seg Number</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.seg_number, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Model Type</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.SelectModelType("", "ALL", new { @id = "model_type", @class = "js-states form-control", @style = "display:none" })
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Model / Serial *</label>
+                                        <div class="input-group col-lg-8 col-xs-8 model-parent">
+                                            @Html.TextBoxFor(m => m.model, new { @class = "form-control", @style = "width:30%;margin-right:1%;" })
+                                            @Html.TextBoxFor(m => m.serial, new { @class = "form-control", @style = "width:69%;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Equip Number *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.equip_number, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Part Number *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.part_number, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-xs-4">Part Desc *</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @Html.TextBoxFor(m => m.part_desc, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12" style="text-align:right;padding-right:30px;">
+                                <button type="button" id="btn-filter" class="btn btn-success" style="width:125px;"><i class="fa fa-search"></i> Filter</button>
+                                <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                            </div>
+                            <div class="col-lg-12">
+                                <div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+                                <table class="table table-bordered table2excel" id="table-order" style="width:3000px;table-layout:fixed;"
+                                       data-toolbar="#filter-bar" data-show-toggle="true" data-show-columns="true" data-show-filter="true"></table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div id="detail" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updDoc" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:777px;">
+        <div class="modal-content">
+            <div class="modal-header with-border">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title"><i class="fa fa-list"></i> Update Document</h4>
+            </div>
+            <form method="post" id="updateDocument">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-xs-12">Trakindo Doc Number</label>
+                                <div class="input-group col-md-8 col-xs-12">
+                                    <input type="text" class="form-control" name="docNumber" id="docNumber" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 col-xs-12 control-label">Order Status</label>
+                                <div class="input-group col-md-8 col-xs-12">
+                                    <div class="switch-toggle switch-3 well" style="margin-bottom:0px !important">
+                                        <input id="awt" name="order_status" type="radio" checked value="Awaiting Release Document">
+                                        <label for="awt" onclick="">Awaiting Release Document</label>
+                                        <input id="outBO" name="order_status" type="radio" value="Outstanding Backorder">
+                                        <label for="outBO" onclick="">Outstanding Backorder</label>
+                                        <input id="oC" name="order_status" type="radio" value="Order Completed">
+                                        <label for="oC" onclick="">Order Completed</label>
+                                        <a class="btn btn-primary"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" style="width:120px;"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-danger" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+		var userType = '@userType';
+    </script>
+    <script src="~/Scripts.app/PartTracking/OrderThruCounter.cshtml.js?token=@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+}
+

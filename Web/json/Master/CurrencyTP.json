@@ -1,0 +1,37 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "Symbol": "USD",
+      "Desc": "United States Dollar",
+      "Month1": 13464,
+      "Month2": 13467,
+      "Month3": 13420,
+      "Month4": 13761,
+      "Month5": 13781,
+      "Month6": 14051,
+      "Month7": 13950,
+      "Month8": 14390,
+      "Month9": 14517,
+      "Month10": 14250,
+      "Month11": 14250,
+      "Month12": 14250
+    },
+    {
+      "Symbol": "THB",
+      "Desc": "Thailand Baht",
+      "Month1": 408,
+      "Month2": 414,
+      "Month3": 422,
+      "Month4": 441,
+      "Month5": 440,
+      "Month6": 432,
+      "Month7": 433,
+      "Month8": 437,
+      "Month9": 432,
+      "Month10": 432,
+      "Month11": 432,
+      "Month12": 432
+    }
+  ]
+}

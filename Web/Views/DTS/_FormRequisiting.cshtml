@@ -1,0 +1,259 @@
+﻿@{
+    ViewBag.Title = "Create Outbound Shipment";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .error {
+        display:none;
+        color: red;
+        font-weight:bold;
+    }
+
+    label.error {
+        border: none;
+        display:none !important;
+    }
+
+    .btn-form {
+        width: 100px;
+    }
+</style>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">Requisition Form</h4>
+</div>
+<div class="modal-body">
+    <form class="form" id="formRequest">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="Origin" class="control-label col-md-4 col-xs-12">Origin</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Origin" name="Origin" required placeholder="Origin" />
+                            <input class="hidden" type="hidden" name="ID" placeholder="ID" value="0" />
+                            <input class="hidden" type="hidden" name="formType" placeholder="FOrm Type" value="I" />
+                            <div for="Origin" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Model" class="control-label col-md-4 col-xs-12">Model</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Model" name="Model" required placeholder="Please Use (;) Separator For Multiple Data" />
+                            <div for="Model" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SerialNumber" class="control-label col-md-4 col-xs-12">Serial Number</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="SerialNumber" name="SerialNumber" required placeholder="Please Use (;) Separator For Multiple Data" />
+                            <div for="SerialNumber" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Batch" class="control-label col-md-4 col-xs-12">Batch</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Batch" name="Batch" required placeholder="Please Use (;) Separator For Multiple Data" />
+                            <div for="Batch" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ReqID" class="control-label col-md-4 col-xs-12">Requestor Name</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input id="RequestName" name="RequestorName" readonly value="@(ViewBag.userFullName)" class="form-control" />
+                            <input id="RequestID" type="hidden" name="ReqID" value="@(ViewBag.userID)" class="hidden" />
+                            <div for="ReqID" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ReqHp" class="control-label col-md-4 col-xs-12">Requestor HP</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" required id="RequestHP" value="@(ViewBag.userPhone)" name="ReqHp" placeholder="Requestor Handphone" />
+                            <div for="ReqHp" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="CustID" class="control-label col-md-4 col-xs-12">Customer Name</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <select id="CustomerID" required name="CustID" class="select2Field"></select>
+                            <div for="CustID" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="CustAddress" class="control-label col-md-4 col-xs-12">Customer Address</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <textarea name="CustAddress" id="CustomerAddress" class="form-control" required placeholder="Customer Address"></textarea>
+                            <div for="CustAddress" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Kecamatan" class="control-label col-md-4 col-xs-12">Kecamatan</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Kecamatan" name="Kecamatan" required placeholder="kecamatan" />
+                            <div for="Kecamatan" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Kabupaten" class="control-label col-md-4 col-xs-12">Kabupaten</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Kabupaten" name="Kabupaten" required placeholder="Kabupaten" />
+                            <div for="Kabupaten" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Province" class="control-label col-md-4 col-xs-12">Province</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="Province" name="Province" required placeholder="Province" />
+                            <div for="Province" class="error">This field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="PicName" class="control-label col-md-4 col-xs-12">PIC Customer Name</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" id="PicName" name="PicName" required placeholder="PIC Customer Name" />
+                            <div for="PicName" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PicHP" class="control-label col-md-4 col-xs-12">PIC Customer HP</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <input class="form-control" name="PicHP" required placeholder="PIC Customer Handphone" />
+                            <div for="PicHP" class="error">This field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="TOD" class="control-label col-md-4 col-xs-12">Term Of Delivery</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <div class="checkbox">
+                                <label><input name="TOD" class="TOD" required value="DOOR TO DOOR (DTD)" type="checkbox" /> DOOR TO DOOR (DTD)</label><br />
+                                <label><input name="TOD" class="TOD" required value="PORT TO PORT (PTP)" type="checkbox" /> PORT TO PORT (PTP)</label><br />
+                                <label><input name="TOD" class="TOD" required value="DOOR TO PORT OR PORT TO DOOR (DTP OR PTD)" type="checkbox" /> DOOR TO PORT OR PORT TO DOOR (DTP OR PTD)</label><br />
+                                <label><input name="TOD" class="TOD" required value="CONTAINER YARD  TO CONTAINER YARD ( CY TO CY )" type="checkbox" /> CONTAINER YARD  TO CONTAINER YARD ( CY TO CY )</label><br />
+                            </div>
+                            <div for="TOD" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SOD" class="control-label col-md-4 col-xs-12">Supporting Of Delivery</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <div class="checkbox">
+                                <label><input name="SOD" class="SOD" required value="OPERATOR LOADING & UNLOADING" type="checkbox" /> OPERATOR LOADING & UNLOADING</label><br />
+                                <label><input name="SOD" class="SOD" required value="LIFTING TOOLS" type="checkbox" /> LIFTING TOOLS</label><br />
+                                <label><input name="SOD" class="SOD" required value="ESCORTED BY POLICE" type="checkbox" /> ESCORTED BY POLICE</label><br />
+                                <label><input name="SOD" class="SOD" required value="ESCORTED BY MECHANIC" type="checkbox" /> ESCORTED BY MECHANIC</label><br />
+                            </div>
+                            <div for="SOD" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="INCT" class="control-label col-md-4 col-xs-12">Incoterm</label>
+                        <div class="input-group col-md-8 col-xs-12">
+                            <div class="checkbox">
+                                <label><input type="checkbox" class="INCT" required name="INCT" value="FOT ( FREE ON TRUCK )" /> FOT ( FREE ON TRUCK )</label></br>
+                                <label><input type="checkbox" class="INCT" required name="INCT" value="ON PONDATION" /> ON PONDATION</label></br>
+                                <label><input type="checkbox" class="INCT" required name="INCT" value="FOB ( FREE ON BOARD )" /> FOB ( FREE ON BOARD )</label></br>
+                                <label><input type="checkbox" class="INCT" required name="INCT" value="ON GROUND" /> ON GROUND</label></br>
+                                <label><input type="checkbox" class="INCT" required name="INCT" value="FAS ( FREE ALONGSIDE SHIP)" /> FAS ( FREE ALONGSIDE SHIP)</label></br>
+                            </div>
+                            <div for="INCT" class="error">This field is required</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="ExpectedTimeLoading" class="control-label col-md-5 col-xs-12">Expected time Departure</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <input class="form-control date" name="ExpectedTimeLoading" required placeholder="Expected time Loading" />
+                            <div for="ExpectedTimeLoading" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ExpectedTimeArrival" class="control-label col-md-5 col-xs-12">Expected time Arrival</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <input class="form-control date" name="ExpectedTimeArrival" required placeholder="Expected time Arrival" />
+                            <div for="ExpectedTimeArrival" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PenaltyLateness" class="control-label col-md-5 col-xs-12">Penalty Lateness</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <div class="checkbox">
+                                <label class="checkbox-inline"><input name="PenaltyLateness" required value="true" type="checkbox" /> YES</label>&nbsp;
+                                <label class="checkbox-inline"><input name="PenaltyLateness" required value="false" type="checkbox" /> NO</label>
+                            </div>
+                            <div for="PenaltyLateness" class="error">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SoNo" class="control-label col-md-5 col-xs-12">SO No/STR No</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <input class="form-control" name="SoNo" placeholder="SO Number" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DoNo" class="control-label col-md-5 col-xs-12">OD No</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <input class="form-control" name="DoNo" placeholder="OD Number" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="OdDate" class="control-label col-md-5 col-xs-12">OD Date</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <input class="form-control date" name="OdDate" placeholder="OD Date" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Unit" class="control-label col-md-5 col-xs-12">Type</label>
+                        <div class="input-group col-md-7 col-xs-12">
+
+                            <div class="checkbox">
+                                <input type="radio" name="unit" value="MACHINE" checked> MACHINE<br>
+                                <input type="radio" name="unit" value="ENGINE"> ENGINE<br>
+                                <input type="radio" name="unit" value="FORKLIFT"> FORKLIFT <br />
+                                <input type="radio" name="unit" value="RUE"> RUE <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Transportation" class="control-label col-md-5 col-xs-12">Transportation</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <div class="checkbox">
+                                <label class="checkbox-inline"><input name="Transportation" required value="PTTU" type="checkbox" /> PTTU</label>&nbsp;
+                                <label class="checkbox-inline"><input name="Transportation" required value="Customer" type="checkbox" /> Customer</label>
+                            </div>
+                            <div for="Transportation" class="error">This field is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="RejectNoteSpace" style="display:none;">
+                        <label for="RejectNote" class="control-label col-md-5 col-xs-12">Notes</label>
+                        <div class="input-group col-md-7 col-xs-12">
+                            <textarea name="RejectNote" disabled class="form-control" placeholder="Reject Note"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="">
+        <button name="Cancel" class="btn-form btn btn-warning"><i class="fa fa-remove"></i> Cancel</button>
+        <button name="SaveAsDraft" class="btn-form btn btn-default"><i class="fa fa-save"></i> Save as Draft</button>
+        <button name="SaveAsRevised" class="btn-form btn btn-primary"><i class="fa fa-check-circle-o"></i> Revised</button>
+        <button name="SubmitForm" class="btn-form btn btn-success"><i class="fa fa-paper-plane"></i> Submit</button>
+    </div>
+</div>

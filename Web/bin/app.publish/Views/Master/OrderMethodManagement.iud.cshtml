@@ -1,0 +1,113 @@
+@model  App.Data.Domain.OrderMethod
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U"? "Update" : "Delete");
+}
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel">@title Order Method</h4>
+	</div>
+
+	@using (Html.BeginForm()) {
+		@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="col-lg-12">
+			<!-- Default input -->
+		    <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Order Method Id</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.OMID, new { @class = "form-control",@readonly="readonly", placeholder = "OrderMethod ID" })
+                        <div>@Html.ValidationMessageFor(m => m.OMID)</div>
+                    </div>
+                </div>
+				<div class="form-group">
+					<label class="control-label col-md-3 col-xs-12">OM Code</label>
+					<div class="input-group col-md-9 col-xs-12">
+						@Html.TextBoxFor(m => m.OMCode, new { @class = "form-control required", placeholder = "OM Code" })
+						<div>@Html.ValidationMessageFor(m => m.OMCode)</div>
+					</div>
+				</div>
+		        <div class="form-group">
+		            <label class="control-label col-md-3 col-xs-12">Description</label>
+		            <div class="input-group col-md-9 col-xs-12">
+		                @Html.TextAreaFor(m => m.Description, new { @class = "form-control required", placeholder = "Description" })
+		                <div>@Html.ValidationMessageFor(m => m.Description)</div>
+		            </div>
+		        </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Rangking</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.OMRank, new { @class = "form-control", placeholder = "Rangking" })
+                        <div>@Html.ValidationMessageFor(m => m.OMRank)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Veting Route</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="VettingRoute" name="VettingRoute" style="width: 99%;">
+                            <option @(Model.VettingRoute == 1 ? "selected='selected" : "") value="1">Normal</option>
+                            <option @(Model.VettingRoute == 2 ? "selected='selected" : "") value="2">Survey</option>
+                            <option @(Model.VettingRoute == 3 ? "selected='selected" : "") value="3">Mix</option>
+                        </select>
+                        <div>@Html.ValidationMessageFor(m => m.VettingRoute)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Active</label>
+                    <div class="input-group col-md-1 col-xs-12">
+                        @Html.CheckBoxFor(m => m.SelectedStatus, new { @class = "form-control" })
+                        <div>@Html.ValidationMessageFor(m => m.SelectedStatus)</div>
+
+                    </div>
+                </div>
+			</div>
+			<!-- Default input -->
+		</div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs ">
+         
+            </ul>
+            <!-- /.tab-content -->
+        </div>
+
+        </div>
+
+		<div class="modal-footer">
+			<span id="progress" class="text-center" style="display: none;">
+				<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+				Wait..
+			</span>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			@if (mode == "I") {
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+			}
+			else if(mode == "U"){
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+			}
+			else {
+				<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+			}
+			
+		</div>
+	}
+	<script>
+		var mode = '@mode';
+        if (mode != 'I') $("#OMID").attr('readonly', 'readonly');
+		
+		$(document).ready(function () {
+
+			selectAll = function (obj, fld) {
+				$("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+			};
+
+
+			$("form").removeData("validator");
+			$("form").removeData("unobtrusiveValidation");
+			$.validator.unobtrusive.parse("form");
+		});
+	</script>

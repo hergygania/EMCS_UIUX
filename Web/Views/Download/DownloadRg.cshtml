@@ -1,0 +1,463 @@
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+@{
+    ViewBag.Title = "Download Receipt Goods";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Download Packing List</title>
+    <style type="text/css">
+        html body {
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.7ex;
+            font-weight: 100 !important;
+            line-height: 20px;
+            text-rendering: optimizeSpeed;
+        }
+
+        table tr td, th {
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.7ex;
+            line-height: 20px;
+            text-rendering: optimizeSpeed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* TABLE */
+        .table thead tr {
+            -webkit-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            -moz-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+        }
+
+            .table thead tr th {
+                /*background: -moz-linear-gradient(left, rgba(60,141,188,1) 0%, rgba(60,141,188,0.93) 56%, rgba(61,142,190,0.93) 58%, rgba(86,156,235,0.93) 100%);
+            background: -webkit-gradient(left top, right top, color-stop(0%, rgba(60,141,188,1)), color-stop(56%, rgba(60,141,188,0.93)), color-stop(58%, rgba(61,142,190,0.93)), color-stop(100%, rgba(86,156,235,0.93)));*/
+                background-color: black;
+                /* background: rgba(60,141,188,1); */
+                font-weight: 600;
+                line-height: 1;
+                color: white;
+            }
+
+        .table tbody tr td {
+            line-height: 1;
+        }
+
+        .table-document {
+            border: none;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table-document tr td {
+                background: white;
+            }
+
+            .table-document tr td {
+                line-height: 20px;
+            }
+
+        .table-custom {
+            border: 0.5px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-data {
+            border: 0.5px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse !important;
+        }
+
+            .table-data tr td {
+                /*border: 0.5px solid darkgrey !important;*/
+            }
+
+        .border_top {
+            border-top: 0.5px solid darkgrey !important;
+        }
+
+        .border_bottom {
+            border-bottom: 0.5px solid darkgrey !important;
+        }
+
+        .border_left {
+            padding-left: 10px !important;
+            border-left: 0.5px solid darkgrey !important;
+        }
+
+        .border_right {
+            padding-right: 10px !important;
+            border-right: 0.5px solid darkgrey !important;
+        }
+
+        .text_left {
+            text-align: left !important;
+        }
+
+        .text_right {
+            text-align: right !important;
+        }
+
+        .text_center {
+            text-align: center !important;
+        }
+
+        .text_arial {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .text_bold {
+            font-weight: 800;
+        }
+
+        .tabledata_spacing {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .text_docno {
+            color: darkorange;
+        }
+
+        .text_gold {
+            color: gold;
+        }
+
+        .text_docno_big {
+            font-size: 15px;
+            color: darkorange;
+        }
+
+        .text_20 {
+            font-size: 20px !important;
+        }
+
+        .text_18 {
+            font-size: 18px !important;
+        }
+
+        .text_16 {
+            font-size: 16px !important;
+        }
+
+        .text_14 {
+            font-size: 14px !important;
+        }
+
+        .text_12 {
+            font-size: 12px !important;
+        }
+
+        .text_9 {
+            font-size: 9px !important;
+        }
+
+        .text_8 {
+            font-size: 8px !important;
+        }
+
+        .text_justify {
+            text-align: justify;
+        }
+
+        .text_italic {
+            font-style: italic;
+        }
+
+        .table-title-data {
+            color: red;
+        }
+
+        .width_50_persen {
+            width: 50%
+        }
+
+        .padding_left_10 {
+            padding-left: 10px !important;
+        }
+
+        .padding_right_10 {
+            padding-right: 10px !important;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .table-title-data div {
+            border-right: 1px solid #b9b4b4;
+            border-bottom: 1px solid #b9b4b4;
+            width: 300px;
+            padding-left: 14px;
+            margin-left: -10px;
+            font-weight: 700;
+            color: red;
+            margin-top: 0px;
+            line-height: 35px;
+            color: black;
+            z-index: 99999;
+        }
+
+        .table-title-top {
+            width: 300px;
+            border: 0.5px solid #b9b4b4;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body onload="subst()">
+    <div style="width:950px !important;padding:10px 10px 10px 10px;margin:20px auto">
+        <div class="row" style="padding-left:4px;padding-right:4px">
+            <div style="padding:10px">
+                <table class="table-title-top">
+                    <tr>
+                        <td class="padding_left_10 text_bold">TRANSPORTER DETAILS</td>
+                    </tr>
+                </table>
+
+                <table class="table-custom">
+                    <tr>
+                        <td colspan="4" class="border_left border_top border_right border_bottom text_bold">VENDOR</td>
+                        <td colspan="9" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2" class="text_bold">NAME:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">ID#:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">ADDRESS:</td>
+                        <td colspan="4" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2">@Model.Data.VendorName</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.VendorCode</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.VendorAddress</td>
+                        <td colspan="4" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">DRIVER</td>
+                        <td colspan="10" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2" class="text_bold">NAME:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">ID CARD#:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">DRIVING LICENSE#:</td>
+                        <td colspan="4" class="text_bold border_right">DRIVING LICENSE EXPIRY DATE:</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2">@Model.Data.PicName</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.KtpNumber</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.SimNumber</td>
+                        <td colspan="3">@(Model.Data.SimExpiryDate.HasValue ? @Model.Data.SimExpiryDate.Value.ToString("dd MMM yyyy") : "")</td>
+                        <td class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VEHICLE</td>
+                        <td colspan="10" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2" class="text_bold">TYPE:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">BRAND#:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">KIR#:</td>
+                        <td colspan="4" class="text_bold border_right">KIR EXPIRY DATE:</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2">@Model.Data.VehicleType</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.VehicleMerk</td>
+                        <td></td>
+                        <td colspan="2">@Model.Data.KirNumber</td>
+                        <td colspan="4" class="border_right">@(Model.Data.KirExpire.HasValue ? Model.Data.KirExpire.Value.ToString("dd MMM yyyy") : "")</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2" class="text_bold">LICENSE PLATE:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold"></td>
+                        <td></td>
+                        <td colspan="2" class="text_bold"></td>
+                        <td></td>
+                        <td colspan="4" class="text_bold border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2">@Model.Data.NopolNumber</td>
+                        <td></td>
+                        <td colspan="2"></td>
+                        <td></td>
+                        <td colspan="2"></td>
+                        <td colspan="4" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">COMPLETENESS</td>
+                        <td colspan="10" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left text_bold"></td>
+                        <td colspan="2" class="text_bold">APAR:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">APD:</td>
+                        <td></td>
+                        <td colspan="2" class="text_bold">Others:</td>
+                        <td colspan="4" class="border_right"></td>
+                    </tr>
+                    <tr>
+                        <td class="border_left border_bottom text_bold"></td>
+                        <td colspan="2" class="border_bottom">@Model.Data.Apar</td>
+                        <td class="border_bottom"></td>
+                        <td colspan="2" class="border_bottom">@Model.Data.Apd</td>
+                        <td class="border_bottom"></td>
+                        <td colspan="2" class="border_bottom">@Model.Data.Notes</td>
+                        <td colspan="4" class="border_right border_bottom"></td>
+                    </tr>
+                </table>
+
+                <div>&nbsp;</div>
+                <table class="table-title-top">
+                    <tr>
+                        <td class="padding_left_10 text_bold">ITEM LIST</td>
+                    </tr>
+                </table>
+                <table class="table-custom">
+                    <tr>
+                        <td class="border_left border_bottom text_bold text_center">No</td>
+                        <td class="border_bottom text_bold text_center" align="center">NAME OF GOODS</td>
+                        <td class="border_top border_bottom text_center text_bold" align="center">EDI NUMBER</td>
+                        <td class="border_top border_bottom text_center text_bold" align="center">DA NUMBER</td>
+                    </tr>
+                    @{ var i = 0; }
+                    @foreach (var item in Model.DataItem)
+                    {
+                        i++;
+                        <tr>
+                            <td class="border_left border_bottom text_center">@i</td>
+                            <td class="border_bottom text_left">@item.Name @(!string.IsNullOrEmpty(item.Sn) ? "- " + item.Sn : "- " + item.PartNumber)</td>
+                            <td class="border_bottom text_center">@item.EdoNo</td>
+                            <td class="border_bottom text_center">@item.DaNo</td>
+                        </tr>
+                    }
+                </table>
+
+                <table class="" style="width:100%; border-collapse:collapse;">
+                    <tr>
+                        <td rowspan="5" colspan="3" style="width:45%;border:none !important;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left"><b>TOTAL PACKAGES</b></td>
+                        <td>:</td>
+                        <td class="border_right" align="right">@Model.Data.TotalPackages</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left"><b>TOTAL NET WEIGHT</b> (KGS)</td>
+                        <td>:</td>
+                        <td class="border_right" align="right">@Model.Data.TotalNetWeight</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left"><b>TOTAL GROSS WEIGHT</b> (KGS)</td>
+                        <td>:</td>
+                        <td class="border_right" align="right">@Model.Data.TotalGrossWeight</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left border_bottom"><b>TOTAL VOLUME</b> (M3)</td>
+                        <td class="border_bottom">:</td>
+                        <td class="border_right border_bottom" align="right">@Model.Data.TotalVolume</td>
+                    </tr>
+                </table>
+
+                <div>&nbsp;</div>
+                <table class="table-title-top">
+                    <tr>
+                        <td class="padding_left_10 text_bold">PICKUP POINT</td>
+                    </tr>
+                </table>
+
+                <table class="table-custom">
+                    <tr>
+                        <td class="border_left" style="width:30%;">@Model.Data.PlantName</td>
+                        <td class="">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="border_left">ESTIMATION TIME OF PICKUP :</td>
+                        <td class="text_left">@(Model.Data.EstimationTimePickup.HasValue ? Model.Data.EstimationTimePickup.Value.ToString("dd MMM yyyy") : "") </td>
+                    </tr>
+                </table>
+
+                <div>&nbsp;</div>
+                <table class="table-custom">
+                    <tr><td colspan="13" style="height:20px" class="border_left border_top border_right"></td></tr>
+                    <tr>
+                        <td colspan="11" class="border_left"></td>
+                        <td colspan="2" class="border_right" align="right">APPROVED BY:</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10" class="border_left"></td>
+                        <td colspan="3" class="border_right text_right">PT. Trakindo Utama - Warehouse&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10" class="border_left"></td>
+                        <td colspan="3" class="border_right" align="right">@Model.Data.RequestorName</td>
+                    </tr>
+                    <tr>
+                        <td colspan="10" class="border_left"></td>
+                        <td colspan="3" class="border_right" align="right">@Model.Data.RequestorEmail</td>
+                    </tr>
+                </table>
+
+                <div>&nbsp;</div>
+                <table>
+                    <tr>
+                        <td colspan="13" class="text_9 text_italic" style="text-align:justify;">
+                            This is an electronic document with electronic appproval, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.
+                        </td>
+                    </tr>
+                </table>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+                <table class="">
+                    <tr>
+                        <td><img src="@ViewBag.QrCodeUrlGR" height="150px" width="150px" /></td>
+                    </tr>
+                </table>
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+            </div>
+        </div>
+    </div>
+</body>
+</html>

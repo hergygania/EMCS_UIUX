@@ -1,0 +1,140 @@
+﻿@model App.Data.Domain.V_CUSTORDER_HEADER
+@{
+	ViewBag.Title = "Detail By Document";
+}
+@Html.HiddenFor(m => m.store_no)
+
+<div class="box-header" style="margin-top:-9px; margin-bottom:-8px"><h3 class="box-title">@ViewBag.Title</h3><button type="button" class="btn btn-danger" onclick="cancelDetail()" style="float:right; margin-right:2%"><i class="fa fa-mail-reply"></i> Back</button></div>
+<form role="form">
+	<div class="box-body">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Customer Name</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.cust_name, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Ref Doc</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.ref_doc_no, new { id="ref_doc_no_det", @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Doc Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.doc_date,"{0:dd MMM yyyy}", new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">WO Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.wo_number, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">PO Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.cust_po_no, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">PO Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+                            <input class="form-control" id="cust_po_date" name="cust_po_date" readonly="readonly" type="text">
+							@*@Html.TextBoxFor(m => m.cust_po_date, "{0:dd MMM yyyy}", new { @class = "form-control", @readonly = "readonly" })*@
+                            <div class="input-group-addon" style="background:#00C0EF;border-color:#00ACD6;">
+                                <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                            </div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Store Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.store_name, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Need By Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.need_by_date, "{0:dd MMM yyyy}", new { @class = "form-control", @readonly = "readonly" })
+							<div class="input-group-addon needbydate_down" style="border:2px solid red; display:none"><i class="fa fa-thumbs-o-down"></i></div>
+							<div class="input-group-addon needbydate_up" style="border:2px solid green; display:none"><i class="fa fa-thumbs-o-up"></i></div>
+							<div class="input-group-addon needbydate_left" style="border:2px solid gray; display:none"><i class="fa fa-question-circle"></i></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Commited Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.commited_date, "{0:dd MMM yyyy}", new { @class = "form-control", @readonly = "readonly" })
+							<div class="input-group-addon commited_down" style="border:2px solid red; display:none"><i class="fa fa-thumbs-o-down"></i></div>
+							<div class="input-group-addon commited_up" style="border:2px solid green; display:none"><i class="fa fa-thumbs-o-up"></i></div>
+							<div class="input-group-addon commited_left" style="border:2px solid gray; display:none"><i class="fa fa-question-circle"></i></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Model / Serial</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.model_serial, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Doc Value (Selling Price)</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.doc_value_string, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="clearfix"></div>
+
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Doc Status</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.doc_status, new { @class = "form-control", @readonly = "readonly" })
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-12">
+				<div style="border-top: 1px solid #e3e3e3; margin-top:7px"></div>
+				<table class="table table-bordered table2excel2" id="tableDet" data-show-footer="true" data-show-export="true" style="width:1307px;table-layout:fixed;"></table> <!--2000px-->
+			</div>
+
+			<div class="col-md-12">
+				<div class="modal-footer">
+					<button id="btn-back" type="button" class="btn btn-danger" onclick="cancelDetail()"><i class="fa fa-mail-reply"></i> Back</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" id="det_need_by_date" value="@(Model.need_by_date.HasValue ? Model.need_by_date.Value.ToString("yyyyMMdd") : null)" />
+	<input type="hidden" id="det_commited_date" value="@(Model.commited_date.HasValue ? Model.commited_date.Value.ToString("yyyyMMdd") : null)" />	
+	<input type="hidden" id="det_qtyOrder" />
+	<input type="hidden" id="det_qtyShipped" />
+	<input type="hidden" id="det_qtyBo" />
+	<input type="hidden" id="det_weight" />
+</form>
+
+<style type="text/css">
+.fixed-table-body {max-height: 377px;}
+</style>
+
+@Html.Partial("PopupPartDetail")
+@Html.Partial("PopupMilestone")
+
+<script>
+	function cancelDetail() {
+		$("#detail").empty();
+		$("#detail").hide();
+		$("#parent").show();
+	}
+</script>
+
+<script src="~/Scripts.app/PartTracking/OrderThruCounterDetails.cshtml.js?token=@DateTime.Now.ToString("yyyyMMdd")"></script>

@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Milestone Part Number & Source";
+}
+
+<div class="modal fade bs-example-modal-lg" id="modalmil" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-line-chart"></i> @ViewBag.Title</h4>
+            </div>
+            <div class="modal-body" style="margin:10px">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Part Number</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_part_no" name="m_part_no" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Part Description</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_part_desc" name="m_part_desc" class="form-control" value="SHOE" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Source</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_source" name="m_source" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Invoice Number</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_invoice_no" name="m_invoice_no" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">ETA</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_eta" name="m_eta" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-xs-4">Doc Number</label>
+                                <div class="input-group col-lg-8 col-xs-8">
+                                    <input type="text" id="m_doc_number" name="m_doc_number" class="form-control" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="margin-top:10px;display:none">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="border-right:1px solid gray;">Milestone</th>
+                                    <th style="text-align:center">Order Date - Ack Date</th>
+                                    <th style="text-align:center">Ack Date - Invoice Date</th>
+                                    <th style="text-align:center">Invoice Date - HPL Pick Up date</th>
+                                    <th style="text-align:center">HPL Pick Up Date - POD Date</th>
+                                    <th style="text-align:center">POD Date - Receipt Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight:bold;border-right:1px solid gray;">Date</td>
+                                    <td style="text-align:center">1 Sep 2015 - 2 Sep 2015</td>
+                                    <td style="text-align:center">3 Sep 2015 - 10 Sep 2015</td>
+                                    <td style="text-align:center">11 Sep 2015 - 12 Sep 2015</td>
+                                    <td style="text-align:center">13 Sep 2015 - 27 Sep 2015</td>
+                                    <td style="text-align:center">28 Sep 2015 - 30 Sep 2015</td>
+                                </tr>
+                                <tr style="font-weight:bold;text-align:center">
+                                    <td style="font-weight:bold;border-right:1px solid gray;text-align:left">Benchmark</td>
+                                    <td>
+                                        1 Day
+                                    </td>
+                                    <td>
+                                        6 Days
+                                    </td>
+                                    <td>
+                                        1 Days
+                                    </td>
+                                    <td>
+                                        14 Days
+                                    </td>
+                                    <td>
+                                        2 Days
+                                    </td>
+                                </tr>
+                                <tr style="text-align:center;font-weight:bold;color:white">
+                                    <td style="font-weight:bold;text-align:left;border-right:1px solid gray;color:black">Actual</td>
+                                    <td style="background-color:#0DBB0D;">1 Day</td>
+                                    <td style="background-color:#E0912F">7 Days</td>
+                                    <td style="background-color:#0DBB0D">1 Day</td>
+                                    <td style="background-color:#0DBB0D;">14 Days</td>
+                                    <td style="background-color:#b4b2b2">2 Days</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="divMilestone" class="col-lg-12" style="margin-top:10px">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <!-- <div class="box-footer"> -->
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+
+    function setData(results) {
+        var tbenchmark = 0, tactual = 0, tdelay = 0, tbenchmarkHours = 0, tactualHours = 0, tactualMinutes = 0,
+            tdelayHours = 0;
+        var table = '<table class="table">' +
+						'<thead>' +
+								'<tr>' +
+										'<th style=";border-right:1px solid gray;">Milestone</th>';
+        $.each(results, function (i, data) {
+            var txt = data.MilestoneName.replace("*-", "<span style='color:red'>").replace("-*", "</span'>");
+            table += '<th style="text-align:center;border-right:1px solid gray;">' + txt + '</th>';
+        });
+        table += '</tr>' +
+	 '</thead>' +
+		'<tbody>' +
+								'<tr>' +
+										'<td style="font-weight:bold;border-right:1px solid gray;">Date</td>';
+
+        $.each(results, function (i, data) {
+            var formattedStartDate = '';
+            var formattedEndDate = '';
+
+            if (data.StartDate != null)
+                formattedStartDate = moment(data.StartDate).format('DD MMM YYYY');
+            if (data.EndDate != null)
+                formattedEndDate = moment(data.EndDate).format('DD MMM YYYY');
+
+            table += '<td style="text-align:center;border-right:1px solid gray;">' + formattedStartDate + ' - ' + formattedEndDate + '</td>';
+        });
+        table += '</tr>' +
+				'<tr style="font-weight:bold;text-align:center">' +
+				'<td style="font-weight:bold;border-right:1px solid gray;text-align:left">Benchmark <span class="tbenchmark" style="color:red;float:right"></td>';
+
+        $.each(results, function (i, data) {
+            var v = '-';
+            if (data.BenchmarkOri != null) {
+
+                if (data.Benchmark_Unit == 'Day') {
+                    v = data.BenchmarkOri + '  ' + data.Benchmark_Unit;
+                    tbenchmark = tbenchmark + data.BenchmarkOri;
+                }
+                else {
+                    v = data.BenchmarkOri + '  ' + data.Benchmark_Unit;
+                    tbenchmarkHours = tbenchmarkHours + data.BenchmarkOri;
+                }
+            }
+
+            if (data.delay != null) {
+                if (data.Benchmark_Unit == 'Day')
+                    tdelay = tdelay + data.delay;
+                else if (data.Benchmark_Unit == 'Hour')
+                    tdelayHours = tdelayHours + data.delay
+
+            }
+
+            table += '<td style="border-right:1px solid gray;">' + v + '</td>';
+        });
+
+        table += '</tr>' +
+				'<tr style="text-align:center;font-weight:bold;color:white">' +
+				 '<td style="font-weight:bold;text-align:left;border-right:1px solid gray;color:black">Actual <span class="tdelay"></span>  <span class="tactual" style="color:red;float:right"></span></td>';
+
+        $.each(results, function (i, data) {
+            var actual = '';
+            if (data.Actual != null) {
+                actual = data.Actual;
+                tactual = tactual + data.Actual;
+
+                if (data.Actual_UnitHours == 'Hours' || data.Actual_UnitHours == 'Hour')
+                    tactualHours = tactualHours + data.Actual_Hours;
+                else if (data.Actual_UnitHours == 'Minutes')
+                    tactualMinutes = tactualMinutes + data.Actual_Hours;
+            }
+
+            if (data.StartDate == null || data.EndDate == null)
+                table += '<td style="background-color:#b4b2b2;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+            else if ((data.StartDate == data.EndDate) && (data.StartDate != null && data.EndDate != null))
+                table += '<td style="background-color:#0DBB0D;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+            else {
+
+                var progress = 0;
+                if (data.Benchmark_Unit == 'Hour') {
+                    var _benchmark = (data.Benchmark == null || data.Benchmark == undefined) ? 0 : data.Benchmark;
+
+                    var _actual = (data.Actual_Hours == null || data.Actual_Hours == undefined) ? 0 : data.Actual_Hours;
+                    if (_actual == 0)
+                        progress = 100;
+                    else
+                        progress = (_benchmark / _actual) * 100
+                }
+                else {
+                    var _benchmark = (data.Benchmark == null || data.Benchmark == undefined) ? 0 : data.Benchmark;
+
+                    var _actual = (data.Actual == null || data.Actual == undefined) ? 0 : data.Actual;
+                    if (_actual == 0)
+                        progress = 100;
+                    else
+                        progress = (_benchmark / _actual) * 100
+                }
+
+                if (progress < 80 && data.EndDate == null)
+                    table += '<td style="background-color:red;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                else if (progress < 100 && data.EndDate == null)
+                    table += '<td style="background-color:yellow;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                else //if (progress >= 100)
+                {
+                    debugger;
+                    if (data.Benchmark_Unit == 'Hour') {//Benchmark Hours and Minutes
+                        if (data.Actual_UnitHours == 'Hour' || data.Actual_UnitHours == 'Hours') {
+                            if (data.Actual_Hours > data.Benchmark)
+                                table += '<td style="background-color:red;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                            else {
+                                if (actual > 0)
+                                    table += '<td style="background-color:red;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                                else
+                                    table += '<td style="background-color:#0DBB0D;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                            }
+                        }
+                        else
+                            table += '<td style="background-color:#0DBB0D;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                    } //Benchmark day
+                    else {
+                        if (data.Actual == null)
+                            table += '<td style="background-color:#b4b2b2;border-right:1px solid gray;">-</td>';
+                        else
+                            if (actual > data.Benchmark)
+                                table += '<td style="background-color:red;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                            else
+                                table += '<td style="background-color:#0DBB0D;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
+                    }
+                }
+            }
+
+
+        });
+
+        table += '</tr>' +
+                        '</tbody>' +
+                    '</table>';
+
+        $('#divMilestone').html(table);
+        //$('.tbenchmark').html(tbenchmark + '  Day  ' + tbenchmarkHours + '  Hour  ');
+        //$('.tactual').html(tactual + '  Day  ' + tactualHours + '  Hour  ' + tactualMinutes + '  Minutes  ');
+
+        //if (tdelay > 0)
+        //    $('.tdelay').html('(d: <span style="color:red;">' + tdelay + ' Day ' + tdelayHours + ' Hour</span>)');
+
+    }
+</script>

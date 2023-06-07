@@ -1,0 +1,518 @@
+@model  App.Data.Domain.PartsOrder
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title"><i class="fa fa-list"></i> @title Invoice / SX Detail</h4>
+</div>
+
+@using(Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Invoice No</label>
+						<div class="input-group col-md-9 col-xs-12">
+							@Html.TextBoxFor(m => m.InvoiceNo, new { @class = "form-control required", @readonly = "readonly" })
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Invoice Date</label>
+						<div class="input-group col-lg-9 col-xs-12">
+							<input name="InvoiceDate" type="text" class="form-control" value="@Model.InvoiceDate.ToString("dd MMM yyyy")" readonly="readonly" />
+							<div class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Cust CD</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="JCode" type="text" class="form-control" value="@Model.JCode" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Ship Instruction</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input type="text" class="form-control" value="@Model.ShippingInstruction" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Total Amount</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="TotalAmount" type="text" class="form-control" value="@(Model.TotalAmount.HasValue ? Model.TotalAmount.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Total FOB</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="TotalFOB" type="text" class="form-control" value="@(Model.TotalFOB.HasValue ? Model.TotalFOB.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Hazardous</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<div class="switch-toggle switch-2 well" style="margin-bottom:0px;">
+								<input id="yes" name="IsHazardous" type="radio" @(Model.IsHazardous == true ? "checked" : "") value="true" />
+								<label for="yes" onclick="">Yes</label>
+								<input id="no" name="IsHazardous" type="radio" @(Model.IsHazardous == false ? "checked" : "") value="false" />
+								<label for="no" onclick="">No</label>
+								<a class="btn btn-primary"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Store Number</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="StoreNumber" type="text" class="form-control" value="@Model.StoreNumber" re readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Service Charge</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="ServiceCharges" type="text" class="form-control" value="@(Model.ServiceCharges.HasValue ? Model.ServiceCharges.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Core Deposit</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="CoreDeposit" type="text" class="form-control" value="@(Model.CoreDeposit.HasValue ? Model.CoreDeposit.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Other Charges</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="OtherCharges" type="text" class="form-control" value="@(Model.OtherCharges.HasValue ? Model.OtherCharges.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Freight Charges</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="FreightCharges" type="text" class="form-control" value="@(Model.FreightCharges.HasValue ? Model.FreightCharges.Value.ToString("#,##.##") : "")" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Ship ID ASN</label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="ShippingIDASN" type="text" class="form-control" value="@Model.ShippingIDASN" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-xs-12">Agreement Type </label>
+						<div class="input-group col-md-9 col-xs-12">
+							<input name="AgreementType" type="text" class="form-control" value="@Model.AgreementType" readonly="readonly" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-12" style="margin-top:10px">
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs nav-justified">
+						<li class="active"><a href="#tab_1" data-toggle="tab">Detail Parts Order</a></li>
+						<li><a href="#tab_2" data-toggle="tab">Case Info</a></li>
+					</ul>
+					<div class="tab-content" style="height:310px">
+						<div class="tab-pane active" id="tab_1">
+							<table id="tblDet" class="table table-bordered"></table>
+						</div>
+						<div class="tab-pane" id="tab_2">
+							<table id="tblCase" class="table table-bordered"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<span id="progress" class="text-center" style="display: none;">
+			<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+			Wait..
+		</span>
+		<button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		&nbsp;
+		<button id="btnReturn" type="button" class="btn btn-danger" style="display:none">Return To Vendor</button>
+	</div>
+
+	<input type="hidden" name="ModifiedBy" value="@Model.ModifiedBy" />
+	<input type="hidden" name="ModifiedDate" value="@Model.ModifiedDate" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+	<input type="hidden" name="ShippingInstructionID" value="@Model.ShippingInstructionID" />
+	<input type="hidden" name="Status" value="@Model.Status" />
+	<input type="hidden" name="VettingRoute" value="@Model.VettingRoute" />
+	<input type="hidden" id="PartsOrderID" name="PartsOrderID" value="@Model.PartsOrderID" />
+}
+
+<div id="modalOM" class="modal" data-focus-on="input:first" style="top:222px;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<h3 class="modal-title col-sm-12"><i class="fa fa-list"></i> Update Order Method</h3>
+
+			<form method="post" action="/vetting-process/partsOrderOmEdit" id="frmModalOM" onsubmit="return frmModalOMSubmit(this)">
+				<div class="modal-body">
+					<label class="control-label col-sm-4" for="PartsNumber">Parts Number</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="PartsNumber" id="PartsNumber" readonly="readonly">
+					</div>
+					<div class="col-sm-3"></div>
+
+					<label class="control-label col-sm-4" for="CaseNo">Case No</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="CaseNo" id="CaseNo" readonly="readonly">
+					</div>
+					<div class="col-sm-3"></div>
+
+					<label class="control-label col-sm-4" for="OMID">OM</label>
+					<div class="col-sm-5">
+						<select class="js-states form-control required" id="OMID" name="OMID" style="width: 95%;" data-val-required="OM is required.">
+							<option value="">-</option>
+						</select>
+						<div><span data-valmsg-replace="true" data-valmsg-for="OMID" class="field-validation-valid"></span></div>
+					</div>
+					<div class="col-sm-3"></div>
+
+					<div class="col-sm-12"></div>
+					<input type="hidden" class="form-control" name="DetailID" id="DetailID" placeholder="id">
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default closeOm">Close</button>
+					<input class="btn btn-primary" type="submit" id="save_edit_info" name="submit" value="Update" />
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function () {
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		var $tblCase = $('#tblCase'), $tblDet = $('#tblDet');
+		enableLink(false);
+
+		$('.closeOm').click(function () {
+			$('#modalOM').modal('toggle');
+			showMainScrollbar(false);
+		});
+
+		helpers.buildDropdown('/Picker/GetListOM', $('#OMID'), true, '- select om -');
+
+		$("#btnReturn").click(function () {
+			swal({
+				title: "Are you sure ?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#F56954",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				closeOnCancel: true
+			},
+				function (isConfirm) {
+					if (isConfirm) {
+						sweetAlert.close();
+						frmModalReturnToVendor();
+					}
+				});
+		});
+
+		refreshPartsDetail = function () {
+			$('.fixed-table-loading').css('color', 'red');
+			$('.fixed-table-loading').show();
+
+			window.pis.table({
+				objTable: $tblDet,
+				urlSearch: '/vetting-process/PartsDetailPage',
+				urlPaging: '/vetting-process/PartsDetailPageXt',
+				searchParams: {
+					PartsOrderID: $("[name=PartsOrderID]").val(),
+					invoiceNo: $("[name=InvoiceNo]").val(),
+					invoicedate: $("[name=InvoiceDate]").val(),
+					ReturnToVendor:1
+				},
+				autoLoad: true
+			});
+		};
+
+		window.pis.table({
+			objTable: $tblCase,
+			urlSearch: '/vetting-process/PartsCasePage',
+			urlPaging: '/vetting-process/PartsCasePageXt',
+			searchParams: {
+				PartsOrderID: $("[name=PartsOrderID]").val(),
+				invoiceNo: $("[name=InvoiceNo]").val(),
+				invoicedate: $("[name=InvoiceDate]").val()
+			},
+			autoLoad: true
+		});
+
+		$tblCase.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarCase',
+			toolbarAlign: 'left',
+			sidePagination: 'server',
+			showColumns: true,
+			//showRefresh: true,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () { return '<span class="noMatches">-</span>'; },
+			columns: [{
+				title: 'No',
+				halign: 'center',
+				align: 'right',
+				width: '3%',
+				formatter: runningFormatter
+			}, {
+				field: 'CaseNo',
+				title: 'Case No',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'CaseType',
+				title: 'Case Type',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'CaseDescription',
+				title: 'Case Desc',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'WeightKG',
+				title: 'Weight (kg)',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'LengthCM',
+				title: 'Length (cm)',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'WideCM',
+				title: 'Wide (cm)',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'HeightCM',
+				title: 'Height (cm)',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'RouteID',
+				title: 'Route ID',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'CaseID',
+				title: 'Id',
+				sortable: true,
+				visible: false
+			}
+			]
+		});
+
+
+		$tblDet.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarDetail',
+			toolbarAlign: 'left',
+			sidePagination: 'server',
+			showColumns: true,
+			//showRefresh: true,
+			smartDisplay: false,
+			pageSize: '5',
+			formatNoMatches: function () { return '<span class="noMatches">-</span>'; },
+			columns: [
+			//{
+			//	field: 'action',
+			//	title: 'Action',
+			//	width: '99px',
+			//	align: 'center',
+			//	formatter: formatChangeOM,
+			//	events: operateEventsOM
+			//},
+			{
+				title: 'No',
+				halign: 'center',
+				align: 'right',
+				width: '3%',
+				formatter: runningFormatter
+			}, {
+				field: 'CaseNo',
+				title: 'Case No',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'PartsNumber',
+				title: 'Parts Number',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'PartsDescriptionShort',
+				title: 'Parts Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'COODescription',
+				title: 'COO',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'InvoiceItemNo',
+				title: 'Inv Item #',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'InvoiceItemQty',
+				title: 'Inv Item Qty',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'CustomerReff',
+				title: 'Cust Ref',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'PartGrossWeight',
+				title: 'Gross WT',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'HSCode',
+				title: 'HS Code',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'OMCode',
+				title: 'OM',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'DetailID',
+				title: 'Id',
+				sortable: true,
+				visible: false
+			}
+			]
+		});
+
+		refreshPartsDetail();
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+
+	function formatChangeOM(value, row) {
+		var btn = [];
+		btn.push('<div class="btn-group">');
+		btn.push('<button type="button" class="btn btn-xs btn-primary editOm" title="Change OM"><i class="fa fa-puzzle-piece"></i>&nbsp;</button>');
+		btn.push('</div>');
+		return btn.join('');
+	}
+
+	function frmModalOMSubmit(frm) {
+
+		$('#progress').show();
+		enableLink(false);
+
+		$.ajax({
+			url: frm.action,
+			type: frm.method,
+			data: $(frm).serialize(),
+			success: function (result) {
+
+				enableLink(true);
+
+				if (result.Status == 0) {
+					if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+					//$('#modalOM').modal('hide');
+					$('#modalOM').modal('toggle');
+					showMainScrollbar(false);
+					$('#progress').hide();
+					refreshPartsDetail();
+				}
+				else {
+					if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+					$('#progress').hide();
+				}
+			}
+		});
+		return false;
+	}
+
+	function frmModalReturnToVendor() {
+
+		$('#progress').show();
+		enableLink(false);
+
+		$.ajax({
+			url: '/vetting-process/partsOrderReturnToVendor',
+			type: 'POST',
+			data: { id: $("[name=PartsOrderID]").val() },
+			success: function (result) {
+
+				enableLink(true);
+
+				if (result.Status == 0) {
+					if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+					$('#progress').hide();
+					$("#btnClose").trigger('click');
+				}
+				else {
+					if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+					$('#progress').hide();
+				}
+			}
+		});
+		return false;
+	}
+
+</script>

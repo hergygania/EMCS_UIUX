@@ -1,0 +1,202 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <style type="text/css"></style>
+    @Styles.Render("~/Content/cssv2");
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Styles.Render("~/Content/css2");
+    }
+    else
+    {
+
+    }
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AppScript")
+</head>
+<body class="skin-black">
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:175px;" />
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="pull-right built-for-it">
+                @*<img src="~/Images/built.png" />*@
+            </div>
+        </nav>
+        <div id="pisProgress" class="progress" style="display: none">
+            <div id="pisProgressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                <span id="lblPisProgressBar" class="sr-only">0%</span>
+            </div>
+        </div>
+    </header>
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        @*@if(User.Identity.IsAuthenticated)
+            {*@
+        <div id="aass" class="xxx left-side invis" style="width:350px;">
+            <div id="menu-content-neo" class="sidebar iin" style="background-color:#000000;">
+                <div class="menu-enhance">
+                    @*@if(userType == "ext-part")
+                        {
+                            @Html.Partial("_Menu.ext.part")
+                        }
+                        else if(userType == "ext-imex")
+                        {
+                            @Html.Partial("_Menu.ext.imex")
+                        }
+                        else*@
+                    @*if(userType == "internal")
+                        {*@
+                    @Html.Partial("_Menu")
+                    @*}*@
+                </div>
+            </div>
+            <div id="menu-container-neo"></div>
+        </div>
+        @*}*@
+        <aside class="new-right-side right-side">
+            <section class="content-header">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a id="triger-menu" href="javascript:void(0);" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" onclick="return alert('Please log-in ..!')">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                }
+
+                <h1>Supply Chain Information System</h1>
+
+                <ol class="breadcrumb">
+                    @if (userType == "internal")
+                    {
+                        <li><a href="@Url.Content("~/")"><i class="fa fa-dashboard"></i>Back to Home</a></li>
+                        @*<li class="active">@ViewBag.Title</li>*@
+                        <text>&nbsp;&nbsp;|&nbsp;&nbsp;</text>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (userType == "internal")
+                        {
+                            <a href="javascript:void(0)" class="dropdown-toggle disabled" id="users" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>
+                                <span class="">@userName</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>
+                                <span class="">@userName</span>
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                </li>
+                            </ul>
+                        }
+                    }
+                    else
+                    {
+                        @*<a href="@Url.Action("SignIn", "account", new { area = "" })"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>*@
+                        <a href="#" onclick="return loadingPage('/sign-in')"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>
+                    }
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section>
+        </aside>
+    </div>
+
+    <!-- modal placeholder content -->
+    <div id='myModalPlace' class='modal fade'>
+        <div class="modal-dialog modal-lg">
+            <div id="myModalContent" class="modal-content"></div>
+        </div>
+    </div>
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script type="text/javascript">
+        var myApp = {};
+        myApp.root = '@(Url.Content("~/"))';
+        //myApp.fullPath = 'http://' + document.location.host + myApp.root;
+        myApp.fullPath = document.location.protocol + "//" + document.location.host + myApp.root;
+        myApp.firstMonth = '@DateTime.Today.AddMonths(-1).ToString("dd MMM yyyy")';
+        myApp.lastMonth = '@DateTime.Today.ToString("dd MMM yyyy")';
+        myApp.controller = '@controllerName';
+        myApp.isAdmin = '@isAdmin';
+        myApp.isReadOnly = '@isReadOnly';
+        myApp.Loading = null;
+    </script>
+    <script src="/Scripts.app/DTS/v2/App.js"></script>
+
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Scripts.Render("~/bundles/js", "~/bundles/bootstrap");
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/extentionv2", "~/bundles/bootstrapv2", "~/bundles/jqueryval");
+    }
+    <style type="text/css">
+        .fixed-table-body {
+            max-height: 577px;
+            overflow-y: auto;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+    <script>
+
+    </script>
+
+    @RenderSection("soVetting", required: false)
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+@model App.Data.Domain.PartsOrderCollection
+@{
+	Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+	ViewBag.Title = "Parts Order / Case Detail";
+	string message = ViewBag.Message + "";
+	var partsOrderID = ViewBag.PartsOrderID;
+	var partsNo = ViewBag.PartsNo + "";
+	var listInvoice = new System.Collections.Specialized.ListDictionary();
+}
+
+<style>
+</style>
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-warning" style="min-height:577px">
+			<div class="box-header">
+				<h2 class="box-title">
+					@ViewBag.Title
+				<span style="color:red">@(Model.partsOrder.Count() == 0 && Model.partsOrderCase.Count() == 0 && Model.partsOrderDetail.Count() == 0 ? " - Record not found ..!" : "")</span>
+			</h2>
+			<span style="float:right; margin-right:2%;margin-top:2%; font-weight:bold">Search By  @(ViewBag.searchBy + "")</span>
+		</div>
+
+		<div class="box-body">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="toolbar">
+						<span>@ViewBag.searchNote</span>
+						@*<a href="#" class="btn btn-info downloadExcel" style="width:150px;">
+								<i class="fa fa-download"></i> Download to Excel
+							</a>*@
+						<div style="font-weight:bold">PartsOrder</div>
+					</div>
+					<div style="max-height:175px; overflow-y:auto">
+						<table class="table table-bordered table2excel" style="width:100%">
+							<thead>
+								<tr style="text-align:left">
+									<th style="text-align:right">No</th>
+									<th>Invoice</th>
+									<th>InvoiceDate</th>
+									<th>JCode</th>
+									<th>StoreNumber</th>
+									<th title="ShippingIDASN">ASN</th>
+									<th>AgreementType</th>
+									<th>SOS</th>
+									<th style="text-align:right">TotalAmount</th>
+									<th style="text-align:right">TotalFOB</th>
+									<th>SurveyDate</th>
+									<th style="text-align:right">LastUpDate</th>
+									<th style="text-align:right">p.id</th>
+								</tr>
+							</thead>
+							@{var no = 0;}
+							@foreach(var f in Model.partsOrder.OrderBy(o => o.InvoiceNo).ToList())
+							{
+								no = no + 1;
+								listInvoice.Add(f.PartsOrderID, f.InvoiceNo);
+
+								<tr style="text-align:left">
+									<td style="text-align:right">@no</td>
+									<td style="white-space:nowrap">@f.InvoiceNo</td>
+									<td>@f.InvoiceDate.ToString("dd MMM yyyy")</td>
+									<td>@f.JCode</td>
+									<td>@f.StoreNumber</td>
+									<td>@f.ShippingIDASN</td>
+									<td>@f.AgreementType</td>
+									<td>@f.SOS</td>
+									<td style="text-align:right">@f.TotalAmount</td>
+									<td style="text-align:right">@f.TotalFOB</td>
+									<td>@(f.SurveyDate.HasValue ? f.SurveyDate.Value.ToString("dd MMM yyyy") : "")</td>
+									<td style="text-align:right">@f.ModifiedDate.ToString("dd MMM yyyy")</td>
+									<td style="text-align:right">@f.PartsOrderID</td>
+								</tr>
+							}
+						</table>
+					</div>
+				</div>
+
+				<div class="col-lg-12" style="margin-top:11px">
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs nav-justified">
+							<li class="active"><a href="#tab_1" data-toggle="tab"><span class="fa fa-check-circle"></span> Detail Parts Order</a></li>
+							<li><a href="#tab_2" data-toggle="tab"><span class="fa fa-check-circle"></span> Case Info</a></li>
+							<li><a href="#tabSurvey" data-toggle="tab"><span class="fa fa-exclamation-circle"></span> Survey Info</a></li>
+						</ul>
+
+						<div class="tab-content" style="max-height:444px; overflow-y:auto">
+
+							<div class="tab-pane active" id="tab_1">
+								<table class="table table-bordered table2excel">
+									<thead>
+										<tr style="text-align:left">
+											<th style="text-align:right">No</th>
+											<th>Parts Number</th>
+											<th>Parts Description</th>
+											<th>Case No</th>
+											<th style="text-align:right">Inv Item</th>
+											<th style="text-align:right">Inv Qty</th>
+											<th style="text-align:right">Gross WT</th>
+											<th>OM</th>
+											<th>CustomerReff</th>
+											<th>CLSCode</th>
+											<th>COO</th>
+											<th>is-Return</th>
+											<th>InvoiceNo</th>
+											<th style="text-align:right">p.id</th>
+										</tr>
+									</thead>
+									<tbody>
+										@{no = 0; 
+										int tqty = 0;
+										decimal tgWt = 0;}
+										@foreach(var f in Model.partsOrderDetail.OrderBy(o => o.InvoiceItemNo).ThenBy(o => o.CaseNo).ThenBy(o => o.PartsNumber).ThenBy(o => o.InvoiceNo).ToList())
+										{
+											no = no + 1;
+											tqty = tqty + (f.InvoiceItemQty.HasValue ? f.InvoiceItemQty.Value : 0);
+											tgWt = tgWt + (f.PartGrossWeight.HasValue ? f.PartGrossWeight.Value : 0);
+											<tr style="text-align:left">
+												<td style="text-align:right">@no</td>
+												<td>@f.PartsNumber</td>
+												<td>@f.PartsDescriptionShort</td>
+												<td>@f.CaseNo</td>
+												<td style="text-align:right">@f.InvoiceItemNo</td>
+												<td style="text-align:right">@f.InvoiceItemQty</td>
+												<td style="text-align:right">@f.PartGrossWeight</td>
+												<td>@f.OMCode</td>
+												<td>@f.CustomerReff</td>
+												<td>@f.OrderCLSCode</td>
+												<td>@f.COODescription</td>
+												<td>@(f.ReturnToVendor.HasValue && f.ReturnToVendor.Value == 1 ? "Return" : "")</td>
+												<td>@f.InvoiceNo</td>
+												<td style="text-align:right">@f.PartsOrderID</td>
+											</tr>
+										}
+
+										@if(no > 1)
+										{
+											<tr style="text-align:right">
+												<td colspan="5">&nbsp;</td>
+												<td style="border-top:solid">@tqty.ToString("#,#0")</td>
+												<td style="border-top:solid">@tgWt.ToString("#,#0.#0")</td>
+												<td colspan="7">&nbsp;</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+
+							<div class="tab-pane" id="tab_2">
+								<table class="table table-bordered table2excel">
+									<thead>
+										<tr style="text-align:left">
+											<th style="text-align:right">No</th>
+											<th>Case No</th>
+											<th>Case Desc</th>
+											<th>CaseType</th>
+											<th style="text-align:right">Length (cm)</th>
+											<th style="text-align:right">Weight (kg)</th>
+											<th style="text-align:right">Height (cm)</th>
+											<th style="text-align:right">Volume</th>
+											<th>ASN</th>
+											<th>InvoiceNo</th>
+											<th style="text-align:right">p.id</th>
+										</tr>
+									</thead>
+									<tbody>
+										@{
+											no = 0;
+											var dml = "";
+											var sclr = "";
+											decimal tWt = 0;
+										}
+										@foreach(var f in Model.partsOrderCase.OrderBy(o => o.dml).ThenBy(o => o.CaseNo).ThenBy(o => o.InvoiceNo).ToList())
+										{
+											no = no + 1;
+											tWt = tWt + (f.WeightKG.HasValue ? f.WeightKG.Value : 0);
+											if(f.dml == "1" && dml == "")
+											{
+												no = 1;
+												<tr><td colspan="11" style="color:red">Indirect Case number To Partsorder Detail, related to Invoice only</td></tr>
+												dml = f.dml;
+												sclr = "color:red";
+											}
+											<tr style="text-align:left;@sclr">
+												<td style="text-align:right;@sclr">@no</td>
+												<td style="@sclr">@f.CaseNo @(f.dml == "1" ? "  (*)" : "")</td>
+												<td style="@sclr">@f.CaseDescription</td>
+												<td style="@sclr">@f.CaseType</td>
+												<td style="text-align:right;@sclr">@f.LengthCM</td>
+												<td style="text-align:right;@sclr">@f.WeightKG</td>
+												<td style="text-align:right;@sclr">@f.HeightCM</td>
+												<td style="text-align:right;@sclr">@f.WideCM</td>
+												<td style="@sclr">@f.ShippingIDASN</td>
+												<td style="@sclr">@f.InvoiceNo</td>
+												<td style="text-align:right;@sclr">@f.PartsOrderID</td>
+											</tr>
+										}
+										@if(no > 1)
+										{
+											<tr style="text-align:right">
+												<td colspan="5">&nbsp;</td>
+												<td style="border-top:solid">@tWt.ToString("#,#0.#0")</td>
+												<td colspan="5">&nbsp;</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+								@*@if(dml == "1")
+								{
+									<text><div style="color:red">(*) Indirect Case number To Partsorder Detail, related to Invoice only</div></text>
+								}*@
+							</div>
+
+							<div class="tab-pane" id="tabSurvey">
+								@*<div class="col-lg-12">
+										<div class="col-lg-6">
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<div class="input-group col-md-offset-6 col-xs-6">
+													<div class="switch-toggle switch-2 well" style="margin-bottom:0px;">
+														<input id="invoice" name="surveyBy" type="radio" checked value="Invoice">
+														<label for="invoice" onclick="setSurveyBy(1)">By Invoice</label>
+														<input id="partno" name="surveyBy" type="radio" value="PartNo">
+														<label for="partno" onclick="setSurveyBy(2)">By Parts Number</label>
+														<a class="btn btn-primary"></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>*@
+
+								@*<div class="col-lg-12">
+										<div class="col-lg-8"></div>
+										<div class="col-lg-4" style="float:right">
+											<div class="form-group">
+												<label class="control-label col-lg-4 col-xs-4">Invoice Number</label>
+												<div class="input-group col-lg-8">
+													<div class="form-group">
+														<div class="input-group">
+															@Html.DropDownList("surveyPartOrderId", new SelectList(listInvoice, "key", "value"), new { @class = "js-states form-control", @style="display:none"})
+															<span class="input-group-btn">
+																<button class="btn btn-success" type="button" id="FilterSurvey" style="margin-left:1px"> Go!</button>
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>*@
+
+								<div class="col-lg-12">
+									<div id="divSurvey"></div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+	$(".downloadExcel").click(function () {
+		$(".table2excel").table2excel({
+			exclude: ".noExl",
+			filename: "PartsOrderDetail.xls"
+		});
+	});
+
+	$(function () {
+		$("#FilterSurvey").click(function (e) {
+			enableLink(false);
+			alert('tt')
+		});
+
+		$('.nav-tabs a').click(function (e) {
+			e.preventDefault()
+			var tabID = $(this).attr("href").substr(1);
+			if (tabID == 'tabSurvey') {
+				refreshSurveyPart();
+			}
+
+		});
+
+		refreshSurveyPart = function () {
+			enableLink(false);
+			if (!$('#divSurvey').is(':empty')) {
+				return;
+			}
+
+			$('html, body').addClass('wait');
+			$('#divSurvey').html('<div style="color:red;text-align:center"><img class="loadingImg" src="/Content/images/ajax-loading.gif"/>&nbsp;...loading...</div>');
+
+			var tbh = '<table class="table table-bordered">';
+
+			var tbl = '<table class="table table-bordered table2excel">' +
+			'<thead><tr>' +
+			'<th>No</th>' +
+			'<th>InvoiceNo</th>' +
+			'<th>InvoiceDate</th>' +
+			'<th>PartsNumber</th>' +
+			'<th>ItemQty</th>' +
+			'<th>Gross WT</th>' +
+			'<th>TotalWeight</th>' +
+			'<th>HSCode</th>' +
+			'<th>HSDescription</th>' +
+			'<th>OM</th>' +
+			'<th>COO</th>' +
+			'<th>Modified</th>' +
+			'<tr></thead><tbody>';
+
+			$.getJSON("/partTracking/DetailPartSurvey", {
+				partsOrderId: '@partsOrderID',
+				partsNo: '@partsNo'
+			},
+			function (results) {
+				
+				if (results.surveyDetail != undefined && results.surveyDetail.length!=0) {
+					var h = results.survey;
+					tbh += '<tr><td style="width:40%">Batch #</td><td>' + h.SurveyID + '<span style="float:right">Modified: ' + dateFormatter(h.ModifiedDate) + '</span>&nbsp;</td></tr>';
+					tbh += '<tr><td>VR No #</td><td>' + (h.VRNo + '').replace('null', '-') + '</td></tr>';
+					tbh += '<tr><td>VR Submission</td><td>' + dateFormatter(h.VRDate) + '</td></tr>';
+					tbh += '<tr><td>Commodity</td><td>' + h.CommodityName + ' - ' + h.CommodityCode + '</td></tr>';
+					tbh += '<tr><td>VO #</td><td>' + (h.VONo + '').replace('null', '-') + '</td></tr>';
+					tbh += '<tr><td>RFI Date</td><td>' + dateFormatter(h.RFIDate) + '</td></tr>';
+					tbh += '<tr><td>Survey Date</td><td>' + dateFormatter(h.SurveyDate) + '</td></tr>';
+					tbh += '<tr><td>Survey Done</td><td>' + dateFormatter(h.SurveyDone) + '</td></tr>';
+					tbh += '<tr><td>eLS</td><td>' + (h.eLS + '').replace('null', '-') + '</td></tr>';
+					tbh += '<tr><td>Payment/InvoiceNo</td><td>' + (h.PaymentInvoiceNo + '').replace('null', '-') + '</td></tr>';
+					tbh += '<tr><td>Payment Date</td><td>' + dateFormatter(h.PaymentDate) + '</td></tr>';
+					tbh += '<tr><td>FD Submit Date</td><td>' + dateFormatter(h.FDSubmit) + '</td></tr>';
+					tbh += '<tr><td>Remark</td><td>' + (h.Remark + '').replace('null', '-') + '</td></tr>';
+					tbh += '</table>';
+
+					$.each(results.surveyDetail, function (i, f) {
+						tbl += '<tr>';
+						tbl += '<td>' + (i + 1) + '</td>';
+						tbl += '<td>' + f.InvoiceNo + '</td>';
+						tbl += '<td>' + dateFormatter(f.InvoiceDate) + '</td>';
+						tbl += '<td>' + f.PartsNumber + '</td>';
+						tbl += '<td>' + f.InvoiceItemQty + '</td>';
+						tbl += '<td>' + f.PartGrossWeight + '</td>';
+						tbl += '<td>' + f.TotalWeight + '</td>';
+						tbl += '<td>' + f.HSCode + '</td>';
+						tbl += '<td>' + f.HSDescription + '</td>';
+						tbl += '<td>' + f.OMCode + '</td>';
+						tbl += '<td>' + (f.COODescription + '').replace('null', '-') + '</td>';
+						tbl += '<td>' + dateFormatter(f.ModifiedDate) + '</td>';
+						tbl += '<tr>';
+					});
+					tbl += '</tbody></table>';
+
+					$('#divSurvey').empty();
+					$('#divSurvey').html(tbh + tbl);
+				}
+				else {
+					$('#divSurvey').empty();
+					$('#divSurvey').html('<div style="color:red;text-align:center">.. record not found in survey ..</div>');
+				}
+
+				$('html, body').removeClass('wait');
+				enableLink(true);
+			});
+
+		};
+
+		function dateFormatter(dt) {
+			if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
+			jsonDate = dt;
+			var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			var d = new Date(parseInt(jsonDate.substr(6)));			
+			var m, day, monthIndex = d.getMonth();
+			var mmm = monthNames[monthIndex];
+
+			m = monthIndex + 1;
+			if (m < 10)
+				m = '0' + m
+			if (d.getDate() < 10)
+				day = '0' + d.getDate()
+			else
+				day = d.getDate();
+
+			var formattedDate = m + "/" + day + "/" + d.getFullYear();
+			var formattedString = day + " " + mmm + " " + d.getFullYear();
+			var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+			var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+			var formattedTime = hours + ":" + minutes + ":" + d.getSeconds();
+			formattedDate = formattedDate;// + " " + formattedTime;
+			//formattedDate = formattedString;
+			return formattedDate == undefined ? '-' : formattedDate;
+		};
+
+	});
+
+</script>
+@Scripts.Render("~/bundles/extention")
+<script src="@Url.Content("~/Scripts/jquery.table2excel.js")"></script>

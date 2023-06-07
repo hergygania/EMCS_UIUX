@@ -1,0 +1,641 @@
+﻿@model  App.Web.Models.EMCS.PebNpeModel
+@{
+    ViewBag.Title = "Revise PEB NPE";
+    ViewBag.TypeReq = "NpePeb";
+    ViewBag.IdReq = Model.NpePeb.IdCl;
+    ViewBag.IdStep = Model.Request.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+<style>
+    .help-block {
+        color: #a94442;
+        display: inline;
+        font-weight: bolder;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
+            <form id="FormUploadNpePeb">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#tab-task-form" aria-controls="form" role="tab" data-toggle="tab">NPE / PEB</a></li>
+                    <li role="presentation" class="hide"><a id="tab-document" href="#tab-task-document" aria-controls="document" role="tab" data-toggle="tab">Document</a></li>
+                    <li role="presentation">
+                        <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
+                    </li>
+                    <li role="presentation">
+                        <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+                    </li>
+                </ul>
+                <div class="tab-content tabs-custom">
+                    <div role="tabpanel" class="tab-pane active" id="tab-task-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4">ID</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        <input type="text" class="form-control" id="CargoID" name="CargoID" value="@Model.Data.Id" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group hide">
+                                    <label class="control-label col-lg-4 col-xs-4">ID NPE / PEB</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Id, new { @class = "form-control disabled", @id = "IdNpePeb" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">No Aju PEB</label>
+                                    <div class="input-group col-xs-8 col-lg-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.AjuNumber, new { @class = "form-control required", @id = "AjuNumber", @placeholder = "No Aju PEB", @name = "AjuNo" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4" id="cc_num">Date & Time Aju</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.AjuDate, new { @class = "form-control date required", @id = "AjuDate", @placeholder = "Date", @name = "AjuDate" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">NPE Number</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.NpeNumber, new { @class = "form-control required", @id = "NpeNumber", @placeholder = "NPE Number", @name = "NpeNumber" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Date & Time NPE</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.NpeDate, new { @class = "form-control required date", @id = "NpeDate", @placeholder = "Date", @name = "NpeDate" })
+                                        <div class="input-group-addon cal">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">NPWP</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Npwp, new { @class = "form-control required", @readonly = "readonly", @id = "NpeNpwp", @placeholder = "Npwp", @name = "NpeNpwp", Value = "020258737" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Receiver Name DHE BI</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.ReceiverName, new { @class = "form-control required", @readonly = "readonly", @id = "NpeReceiver", @placeholder = "Receiver", @name = "NpeReceiver", Value = "TRAKINDO UTAMA" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Custom Office Code</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.PassPabeanOffice, new { @class = "form-control required hide", @id = "GetPasswordPabean", @placeholder = "Password Pabean Office", @name = "GetPasswordPabean" })
+                                        <select class="select2" id="NpePass" name="NpePass" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Remarks Code</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextAreaFor(m => m.NpePeb.DescriptionPassword, new { @class = "form-control required", @id = "NpeDescPass", @placeholder = "Description Password", @name = "NpeDescPass", disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">DHE Value</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Dhe, new { @class = "form-control decimal formatCurrency required", @id = "NpeDHE", @placeholder = "DHE Score", @name = "NpeDHE" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">PEB / FOB Value</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.PebFob, new { @class = "form-control decimal formatCurrency required", @id = "NpeFob", @placeholder = "PEB / FOB Score", @name = "NpeFob" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Type of Currency (Valuta)</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Valuta, new { @class = "form-control required hide", @id = "GetNpeValuta", @placeholder = "Valuta", @name = "GetNpeValuta" })
+                                        <select class="select2" id="NpeValuta" name="NpeValuta" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Temporary Storage</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.WarehouseLocation, new { @class = "form-control required", @id = "NpeWarehouse", @placeholder = "Warehouse Location", @name = "NpeWarehouse" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Freight Payment</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.FreightPayment, new { @class = "form-control decimal formatCurrency required", @id = "NpeFreightPayment", @placeholder = "Freight Payment", @name = "NpeFreightPayment" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Insurance Amount</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.InsuranceAmount, new { @class = "form-control decimal formatCurrency required", @id = "NpeInsuranceAmount", @placeholder = "Insurance Amount", @name = "NpeInsuranceAmount" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Currency Rate NDPBM/NDPBK</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.NpePeb.Rate, new { @class = "form-control decimal formatCurrency required disabled", @id = "NpeRate", @placeholder = "Rate", @name = "NpeRate" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">PEB / NPE Document</label>
+
+                                    <div class="radio">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.NpePeb.DocumentComplete, "true", new { @class = "flagCompleteDoc required", Name = "flagCompleteDoc" }) Ya
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.NpePeb.DocumentComplete, "false", new { @class = "flagCompleteDoc required", Name = "flagCompleteDoc" }) Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table style="width:100%" border="0" class="table table-bordered" id="document-cipl">
+                                    <thead>
+                                        <tr>
+                                            <th style="height:40px;vertical-align:middle;text-align:center;width:80%;">Name</th>
+                                            <th style="height:40px;vertical-align:middle;text-align:center;width:20%;">Uploads</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="trCompleteDoc">
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="control-label"><strong>PEB / NPE Document</strong></label>
+                                                    @{
+                                                        if (Model.NpePeb != null)
+                                                        {
+                                                            if (Model.NpePeb.DocumentComplete)
+                                                            {
+                                                                if (Model.Document.Count > 0)
+                                                                {
+                                                                    for (int i = 0; i < Model.Document.Count; i++)
+                                                                    {
+                                                                        if (Model.Document[i].Tag == "COMPLETEDOCUMENT")
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.NpePeb.DocumentComplete, new { @class = "do-not-ignore 1 hide required", @id = "url-document-COMPLETEDOCUMENT", @name = "UrlDocumentCOMPLETEDOCUMENT", Value = @Model.Document[i].FileName })
+                                                                        }
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.TextBoxFor(m => m.NpePeb.DocumentComplete, new { @class = "do-not-ignore 3 hide required", @id = "url-document-COMPLETEDOCUMENT", @name = "UrlDocumentCOMPLETEDOCUMENT", Value = "" })
+                                                                }
+
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(m => m.NpePeb.DocumentComplete, new { @class = "do-not-ignore 4 hide required", @id = "url-document-COMPLETEDOCUMENT", @name = "UrlDocumentCOMPLETEDOCUMENT", Value = "" })
+
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TextBoxFor(m => m.NpePeb.DocumentComplete, new { @class = "do-not-ignore 5 hide required", @id = "url-document-COMPLETEDOCUMENT", @name = "UrlDocumentCOMPLETEDOCUMENT", Value = "" })
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-info btn-xs dz-clickable" id="document-COMPLETEDOCUMENT" type="button" data-toggle="tooltip" title="Upload!"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                                                @{
+                                                    if (Model.Document.Count > 0)
+                                                    {
+                                                        for (int i = 0; i < Model.Document.Count; i++)
+                                                        {
+                                                            if (Model.Document[i].Tag == "COMPLETEDOCUMENT")
+                                                            {
+                                                                <a href="@Url.Content("~/Upload/EMCS/NPEPEB/" + @Model.Document[i].FileName)" class="btn btn-success btn-xs DownloadDocument" id="download-document-COMPLETEDOCUMENT" type="button" target="_blank" data-toggle="Download" title="Download!"><i class="fa fa-download"></i></a>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-success btn-xs DownloadDocument hide" id="download-document-COMPLETEDOCUMENT" type="button" target="_blank" data-toggle="Download" title="Download!"><i class="fa fa-download"></i></a>
+                                                    }
+
+                                                }
+
+                                                <div id="previews">
+                                                    <div id="template" class="template file-row dz-image-preview">
+                                                        <div>
+                                                            <p class="name" data-dz-name=""></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <iframe id="DocumentPebNpe" src="" width="100%" height="550px"></iframe>
+                            </div>
+                        </div>
+                        <div class="box-footer text-right">
+                            <a href="~/EMCS/MyTask" class="btn btn-default" style="min-width:120px;"><i class="fa fa-chevron-left"></i>&nbsp;Back</a>
+                            <button id="DraftNpePeb" type="button" class="btn btn-info" value="Draft" style="min-width:120px;"><i class="fa fa-paper-plane"></i>&nbsp;Draft</button>
+                            <button id="btnRevise" type="button" class="btn btn-warning" value="Revise" style="min-width:120px;"><i class="fa fa-save"></i>&nbsp;Revise</button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-task-document">
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="history">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                                <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="problemhistory">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Modal.FormProblem")
+@section scripts{
+    @Scripts.Render("~/Content/EMCS/DropZone/dropzone.js")
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/Custom.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    <script>
+        $(function () {
+            var flagdoc = $('#flagdoc').attr('data-value');
+            var docc = flagdoc;
+            if (flagdoc === "True") {
+                $("input[name='flagCompleteDoc1']").prop("checked", true);
+            } else if (flagdoc === "False") {
+                $("input[name='flagCompleteDoc1']").prop("checked", false);
+            }
+
+            dropzone();
+
+            getPasswordPabeanOffice();
+            getLastestCurrency();
+            var passwordPabean = $("#GetPasswordPabean").val();
+
+            $('#NpePass').val(passwordPabean);
+            var consExpType = new Option(passwordPabean, passwordPabean, true, true);
+            $('#NpePass').append(consExpType).trigger("change");
+
+            var valuta = $("#GetNpeValuta").val();
+            consExpType = new Option(valuta, valuta, true, true);
+            $('#NpeValuta').append(consExpType).trigger("change");
+
+            var ajudate = $('#AjuDate').val();
+            if (ajudate) {
+                $('#AjuDate').val(moment(ajudate).format("DD MMM YYYY"));
+            } else {
+                $('#AjuDate').val(null);
+            }
+            var npedate = $('#NpeDate').val();
+            if (npedate) {
+                $('#NpeDate').val(moment(npedate).format("DD MMM YYYY"));
+            } else {
+                $('#NpeDate').val(null);
+            }
+
+            var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
+            if (npeDateSubmitToCustomOffice) {
+                var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
+                if (year != "1900") {
+                    $('#NpeDateSubmitToCustomOffice').val(moment(npeDateSubmitToCustomOffice).format("DD MMM YYYY"));
+                }
+                else {
+                    $('#NpeDateSubmitToCustomOffice').val(null);
+                }
+            }
+            else {
+                $('#NpeDateSubmitToCustomOffice').val(null);
+            }
+
+            var documentNpePeb = "@Model.Document[0].FileName";
+            $('#DocumentPebNpe').attr("src", "/Upload/EMCS/NPEPEB/" + documentNpePeb);
+
+            $('#DraftNpePeb').on('click', function () {
+
+            $.ajax({
+                url: '/EMCS/DraftNpePeb',
+                type: 'POST',
+                data: {
+                    Id: $('#IdNpePeb').val(),
+                    IdCl: $('#CargoID').val(),
+                    AjuNumber: $('#AjuNumber').val(),
+                    AjuDate: $('#AjuDate').val(),
+                    NpeNumber: $('#NpeNumber').val(),
+                    NpeDate: $('#NpeDate').val(),
+                    Npwp: $('#NpeNpwp').val(),
+                    ReceiverName: $('#NpeReceiver').val(),
+                    PassPabeanOffice: $('#NpePass').val(),
+                    DHE: removeformatCurrency($('#NpeDHE').val()),
+                    PebFob: removeformatCurrency($('#NpeFob').val()),
+                    Valuta: $('#NpeValuta').val(),
+                    WarehouseLocation: $('#NpeWarehouse').val(),
+                    DocumentComplete: $("input[name='flagCompleteDoc']:checked").val(),
+                    Rate: removeformatCurrency($('#NpeRate').val()),
+                    DescriptionPassword: $('#NpeDescPass').val(),
+                    FreightPayment: removeformatCurrency($('#NpeFreightPayment').val()),
+                    InsuranceAmount: removeformatCurrency($('#NpeInsuranceAmount').val()),
+                    Status: $(this).val(),
+                    NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
+                },
+                cache: false,
+                async: false,
+                success: function(data) {
+                    $('#IdNpePeb').val(data.ID);
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Saved, Your Data Has Been Saved'
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Update Data'
+                    });
+                }
+            });
+        });
+
+            $("#YesReviseBtn").on("click", function () {
+
+                var isValid = $('#FormUploadNpePeb').valid();
+
+                if (isValid) {
+                    var status = $("#myModalProblemContent form").valid();
+                    var statusName = "Revise";
+                    if (status) {
+                        $.ajax({
+                            url: '/EMCS/DraftNpePeb',
+                            type: 'POST',
+                            data: {
+                                Id: $('#IdNpePeb').val(),
+                                IdCl: $('#CargoID').val(),
+                                AjuNumber: $('#AjuNumber').val(),
+                                AjuDate: $('#AjuDate').val(),
+                                NpeNumber: $('#NpeNumber').val(),
+                                NpeDate: $('#NpeDate').val(),
+                                Npwp: $('#NpeNpwp').val(),
+                                ReceiverName: $('#NpeReceiver').val(),
+                                PassPabeanOffice: $('#NpePass').val(),
+                                DHE: removeformatCurrency($('#NpeDHE').val()),
+                                PebFob: removeformatCurrency($('#NpeFob').val()),
+                                Valuta: $('#NpeValuta').val(),
+                                WarehouseLocation: $('#NpeWarehouse').val(),
+                                DocumentComplete: $("input[name='flagCompleteDoc']:checked").val(),
+                                Rate: removeformatCurrency($('#NpeRate').val()),
+                                DescriptionPassword: $('#NpeDescPass').val(),
+                                FreightPayment:
+                                    removeformatCurrency($('#NpeFreightPayment')
+                                        .val()),
+                                InsuranceAmount:
+                                    removeformatCurrency($('#NpeInsuranceAmount')
+                                        .val()),
+                                Status: 'Revise',
+                                NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
+                            },
+                            cache: false,
+                            async: false,
+                            success: function() {
+                                submitProblem(statusName);
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong! Fail Update Data'
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    Swal.fire("Attention!", "Please complete all required field in this form, before submit!", "error");
+                }
+            });
+        });
+
+        function getPasswordPabeanOffice() {
+            $('#NpePass').select2({
+                placeholder: 'Please Select Password Pabean Office',
+                ajax: {
+                    url: "/emcs/KppbcList",
+                    dataType: 'json',
+                    async: false,
+                    data: function(params) {
+                        console.log(params);
+                        var query = {
+                            Name: params.term
+                        }
+                        return query;
+                    },
+                    processResults: function(data) {
+                        console.log(data);
+                        return {
+                            results: $.map(data.data,
+                                function(item) {
+                                    console.log(item);
+                                    return {
+                                        text: item.Code + ' - ' + item.Name,
+                                        id: item.Code + ' - ' + item.Name,
+                                        desc: item.Address
+                                    }
+                                })
+                        }
+                    }
+                }
+            }).on('select2:select',
+                function(event) {
+                    $('#NpeDescPass').val(event.params.data.desc).text(event.params.data.desc);
+                });
+        }
+
+        function getLastestCurrency() {
+            $.ajax({
+                url: "/emcs/GetLastestCurrency",
+                success: function(data) {
+                    console.log(data);
+                    var array = new Array();
+                    $.each(data.data,
+                        function(index, element) {
+                            array.push({ 'id': element.id, 'text': element.text });
+                        });
+
+                    $("#NpeValuta").select2({
+                        data: array,
+                        width: '100%',
+                        placeholder: 'Please Select Export Type'
+                    });
+                }
+            });
+        }
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            console.log(data);
+            debugger;
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function(resp) {
+                    console.log(resp);
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error'
+                    });
+                }
+            });
+            return status;
+        }
+
+        function ReviseProblem(status, idRequest, notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/CiplApproval",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: status,
+                    Id: idRequest,
+                    Notes: notes
+                },
+                success: function(resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success'
+                    }).then(() => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error'
+                    });
+                }
+            });
+        }
+
+        function download(filename, id, url) {
+            id.attr("href", "../Upload/EMCS/NPEPEB/" + filename);
+            url.val(filename);
+        }
+
+        function dropzone() {
+            Dropzone.autoDiscover = false;
+            var previewNode = document.querySelector(".template");
+            previewNode.id = "";
+            var previewTemplate = previewNode.parentNode.innerHTML;
+            previewNode.parentNode.removeChild(previewNode);
+
+            $('.dz-clickable').each(function () {
+                var options = $(this).attr('id').split('-');
+                var name = options[1];
+                $(this).dropzone({
+                    url: '/emcs/UploadDocumentNpePeb',
+                    //paramName: Name,
+                    uploadMultiple: false,
+                    parallelUploads: 1,
+                    clickable: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.pdf",
+                    previewTemplate: previewTemplate,
+                    init: function () {
+                        this.on('sending', function (file, xhr, formData) {
+                            formData.append("IdCargo", $('#CargoID').val());
+                            formData.append("AjuNumber", $('#AjuNumber').val());
+                            formData.append("typeDoc", name);
+                        });
+                        this.on("addedfile", function () {
+                            if (this.files.length > 1) {
+                                this.files = this.files.slice(1, 2);
+                            }
+                        });
+                    },
+
+                    success: function (file, response) {
+                        console.log(file, response);
+                        $('.dz-image-preview').remove();
+                        if (file.status === "success") {
+                            Swal.fire(
+                                'Processing Document!',
+                                'Document Uploaded Successfully!',
+                                'success'
+                            );
+                            $.ajax({
+                                url: '/EMCS/GetDocument',
+                                type: 'POST',
+                                data: {
+                                    IdRequest: $('#CargoID').val(),
+                                    Tag: name
+                                },
+                                cache: false,
+                                async: false,
+                                success: function(data) {
+                                    console.log(data);
+                                    var idDoc = $('#download-document-' + data.Tag);
+                                    var urlDoc = $('#url-document-' + data.Tag);
+                                    idDoc.removeClass("hide");
+                                    download(data.FileName, idDoc, urlDoc);
+                                },
+                                error: function() {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong! Fail Update Data'
+                                    });
+                                }
+                            });
+                        } else {
+                            Swal.fire(
+                                'Processing Document!',
+                                'Error Upload!',
+                                'error'
+                            );
+                        }
+                    },
+                    complete: function (file, response) {
+                        console.log(file, response);
+                    }
+                });
+
+            });
+        }
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model  App.Web.Models.EMCS.CiplModel
+@{
+    ViewBag.Title = "Download Packing List";
+    Layout = null;
+}
+
+<table border="0" class="table-data">
+    <thead>
+        <tr>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="height:2.5em;width:10%">Case Number</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:5%">No.</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">Name</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:5%">Quantity</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">Part Number</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:8%">J-Code</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:7%">Type</th>
+            <th class="text_center text_bold tabledata_spacing" colspan="3" style="width:15%">Dimension (In CM)</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">VOLUME (M3)</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">Nett Weight (Kgs)</th>
+            <th class="text_center text_bold tabledata_spacing" rowspan="2" style="width:10%">Gross Weight (Kgs)</th>
+        </tr>
+        <tr>
+            <th class="text_center text_bold tabledata_spacing" style="width:5%;background-color:white">Length</th>
+            <th class="text_center text_bold tabledata_spacing" style="width:5%;background-color:white">Width</th>
+            <th class="text_center text_bold tabledata_spacing" style="width:5%;background-color:white">Height</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TemplateDetail)
+        {
+            <tr>
+                <td class="tabledata_spacing text_right">@item.CaseNumber</td>
+                <td class="tabledata_spacing text_right">@item.ItemNo</td>
+                <td class="tabledata_spacing">@item.Name</td>
+                <td class="tabledata_spacing text_right">@item.Quantity</td>
+                <td class="tabledata_spacing text_right">@item.PartNumber</td>
+                <td class="tabledata_spacing">@item.JCode</td>
+                <td class="tabledata_spacing">@item.Type</td>
+                <td class="tabledata_spacing text_right">@item.Length</td>
+                <td class="tabledata_spacing text_right">@item.Width</td>
+                <td class="tabledata_spacing text_right">@item.Height</td>
+                <td class="tabledata_spacing text_right">@item.Volume</td>
+                <td class="tabledata_spacing text_right">@item.NetWeight</td>
+                <td class="tabledata_spacing text_right">@item.GrossWeight</td>
+            </tr>
+        }
+    </tbody>
+</table>

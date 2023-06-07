@@ -1,0 +1,141 @@
+@model  App.Data.Domain.EmailRecipient
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">@title Email Recipient</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- Default input -->
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">EmailRecipient Id</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.EmailRecipientID, new { @class = "form-control", @readonly = "readonly", placeholder = "Email Recipient ID" })
+                        <div>@Html.ValidationMessageFor(m => m.EmailRecipientID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.Purpose, new { @class = "form-control required", placeholder = "Purpose" })
+                        <div>@Html.ValidationMessageFor(m => m.Purpose)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Email Address</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <table id="tblEmail" style=" border-collapse: separate;border-spacing: 0 5px ; ">
+                            @{
+    var emailList = Model.EmailList.ToList();
+                            }
+                            @if (!@emailList.Any())
+                            {
+                                <tr data-row="1">
+                                    <td>
+                                        <input type="email" name="email" id="email_1" required="required" class="form-control required" style="width: 250px" />
+                                    </td>
+                                    <td>
+                                        <button type="button" value="Add" class="btn btn-success btn-add-email" onclick="addEmail('tblEmail')" style="margin-left: 10px;">Add</button>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                for (int i = 1; i <= @emailList.Count(); i++)
+                                {
+                                    if (i == 1)
+                                    {
+                                        <tr data-row="@i">
+                                            <td>
+                                                <input type="email" name="email" id="email_@i" required="required" class="form-control required" value=@emailList[i-1] style="width: 250px;" />
+
+                                            </td>
+                                            <td>
+                                                <button type="button" value="Add" class="btn btn-success btn-add-email" onclick="addEmail('tblEmail')" style="margin-left: 10px;">Add</button>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                    else
+                                    {
+                                        <tr data-row="@i">
+                                            <td>
+                                                <input type="email" name="email" id="email_@i" required="required" class="form-control required" value=@emailList[i-1] style="max-width: 250px;" />
+
+                                            </td>
+                                            <td>
+                                                <button type="button" value="Delete" class="btn btn-danger btn-del-email" onclick="removeTr(this)" style="margin-left: 10px;">Delete</button>
+
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            }
+                        </table>
+                        @Html.ValidationMessage("email")
+
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.Status)
+                @Html.HiddenFor(m => m.EntryDate)
+                @Html.HiddenFor(m => m.EntryBy)
+            </div>
+            <!-- Default input -->
+        </div>
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs "></ul>
+            <!-- /.tab-content -->
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+}
+<script>
+    var mode = '@mode';
+    if (mode != 'I') $("#EmailRecipientID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+
+        selectAll = function (obj, fld) {
+            $("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+        };
+
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

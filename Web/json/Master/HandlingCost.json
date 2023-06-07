@@ -1,0 +1,13 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "containType": "20ft",
+      "price": 1234567
+    },
+    {
+      "containType": "40ft",
+      "price": 8901234
+    }
+  ]
+}

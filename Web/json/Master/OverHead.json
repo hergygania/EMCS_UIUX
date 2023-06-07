@@ -1,0 +1,23 @@
+{
+  "total": 100,
+  "rows": [
+    {
+      "year": 2019,
+      "insurance": "0.4%",
+      "overhead": "0.4%",
+      "techAssistance": "2.22%"
+    },
+    {
+      "year": 2018,
+      "insurance": "0.4%",
+      "overhead": "0.4%",
+      "techAssistance": "2.22%"
+    },
+    {
+      "year": 2017,
+      "insurance": "0.4%",
+      "overhead": "0.4%",
+      "techAssistance": "2.22%"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+﻿@model  App.Web.Models.EMCS.VideoModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    var statusList = new List<string>();
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-image-o"></i>&nbsp;@Model.Video.Name Video</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <video width="100%" height="350" style="align-content:center" controls>
+                    <source src="@Url.Content("~/File/EMCS/Video/"+@Model.Video.Video)" type="video/mp4">
+                    <track label="English" kind="subtitles" src="" srclang="en">
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+
+    @Html.HiddenFor(a => a.Video.Id)
+}
+
+<script>
+    var mode = '@mode';
+    if (mode != 'I')
+        $("#ID").attr('readonly', 'readonly');
+
+    $(document).ready(function () {
+        $(".date").datepicker({
+            autoclose: true,
+            format: "dd M yyyy"
+        });
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>
+
+
+

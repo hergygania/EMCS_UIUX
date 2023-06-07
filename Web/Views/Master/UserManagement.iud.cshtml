@@ -1,0 +1,367 @@
+@model App.Web.Models.UserViewModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list"></i> @title User</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="col-lg-12">
+            <!-- left -->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">User Id</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.User.UserID, new { @class = "form-control required", placeholder = "User ID" })
+                        <div>@Html.ValidationMessageFor(m => m.User.UserID)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">User Name</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.User.FullName, new { @class = "form-control required", placeholder = "name" })
+                        <div>@Html.ValidationMessageFor(m => m.User.FullName)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Password</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.User.PasswordNew, new { @class = "form-control", placeholder = "Password (blank for default)" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Phone</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.User.Phone, new { @class = "form-control", placeholder = "Mobile Number" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Email</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", type = "email", placeholder = "Email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Role</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.User.RoleID, new SelectList(Model.RolesList, "RoleID", "Description"), "--- Select Role ---", new { @class = "js-states form-control" })
+                        @*<div>@Html.ValidationMessageFor(m => m.User.RoleID)</div>*@
+                    </div>
+                </div>
+            </div>
+            <!-- left -->
+            <!-- right -->
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">User Type</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="User_UserType" name="User.UserType" style="width: 99%;" onchange="checkUserType(this)">
+                            <option @(Model.User.UserType == "internal" ? "selected='selected" : "") value="internal">Internal</option>
+                            <option @(Model.User.UserType == "ext-part" ? "selected='selected" : "") value="ext-part">External - Parts Order</option>
+                            <option @(Model.User.UserType == "ext-imex" ? "selected='selected" : "") value="ext-imex">External - Imex</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group cust-group">
+                    <label class="control-label col-md-3 col-xs-12">Customer Group</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="User_Cust_Group_No" name="User.Cust_Group_No" style="width: 99%;">
+                            <option value="@Model.User.Cust_Group_No">@Model.User.Cust_Group_NoCap</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Group</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.User.GroupID, new SelectList(Model.GroupList, "Id", "Name"), "--- Select Group ---", new { @class = "js-states form-control" })
+                        @*<div>@Html.ValidationMessageFor(m => m.User.GroupID)</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Position</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <select class="js-states form-control" id="User_Position" name="User.Position" style="width: 99%;">
+                            <option @(Model.User.Position == "null" ? "selected='selected" : "") value="null">--- Select Position ---</option>
+                            <option @(Model.User.Position == "Area" ? "selected='selected" : "") value="Area">Area Management</option>
+                            <option @(Model.User.Position == "Branch" ? "selected='selected" : "") value="Branch">Branch Management</option>
+                            <option @(Model.User.Position == "HO" ? "selected='selected" : "") value="HO">HO Management</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Reminder Email</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        @Html.DropDownListFor(m => m.User.LevelID, new SelectList(Model.LevelList, "Id", "Name"), "--- Select Level ---", new { @class = "js-states form-control" })
+                        @*<div>@Html.ValidationMessageFor(m => m.User.LevelID)</div>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-xs-12">Status</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <div class="switch-toggle switch-2  well">
+                            <input id="Enabled" name="User.Status" type="radio" @(Model.User.Status != 0 ? "checked" : "") value="1">
+                            <label for="Enabled" onclick="">Enabled</label>
+                            <input id="Disabled" name="User.Status" type="radio" @(Model.User.Status == 0 ? "checked" : "") value="0">
+                            <label for="Disabled" onclick="">Disabled</label>
+                            <a class="btn btn-primary"></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom nav-justified tabs-style-underline">
+            <ul class="nav nav-justified nav-tabs ">
+                @*<li class="active">
+                        <a href="#tab_1_justified" data-toggle="tab"><i class="fa fa-history icons"></i><span> Role</span></a>
+                    </li>*@
+                <li class="active">
+                    <a href="#tab_2_justified" data-toggle="tab"><i class="fa fa-key icons"></i><span> Division</span></a>
+                </li>
+                <li class="">
+                    <a href="#tab_3_justified" data-toggle="tab"><i class="fa fa-home icons"></i><span> HUB</span></a>
+                </li>
+                <li class="">
+                    <a href="#tab_4_justified" data-toggle="tab"><i class="fa fa-tasks icons"></i><span> Store</span></a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- /.tab-pane -->
+                @*<div class="tab-pane active" id="tab_1_justified">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" id="selecctAllRole" onclick="selectAll(this,'SelectedRoles');"></span></div>
+                                        Select All
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin:0" />
+
+                    <div class="container-fluid" style="min-height:111px;max-height:150px; overflow-y:auto">
+                        @{
+                                string roleMode = "";
+                        }
+                        @foreach(var g in Model.RolesList)
+                            {
+                                roleMode = "";
+                                if(Model.UserRoles != null)
+                                {
+                                    var _role = Model.UserRoles.Where(w => w.RoleID == g.RoleID).FirstOrDefault();
+                                    if(_role != null)
+                                    {
+                                        roleMode = _role.RoleMode.ToLower();
+                                    }
+                                }
+
+                            <div class="col-md-5">
+                                <table cellpadding="1" cellspacing="1">
+                                    <tr>
+                                        <td style="width:155px; white-space:nowrap">
+                                            <input type="checkbox" name="SelectedRoles" value="@g.RoleID" id="lblRole_@g.RoleID"
+                                                   @{if(Model.SelectedRoles.Contains(g.RoleID)) { <text> checked='checked' </text>    } } />
+                                            <label for="lblRole_@g.RoleID" style="font-weight:normal">@g.Description</label>
+                                        </td>
+                                        <td style="width:77px;">
+                                            <select class="form-control1" name="SelectedRoles_@g.RoleID" id="lblRoleOpt_@g.RoleID">
+                                                <option value="Read" @(roleMode == "read" ? "selected" : "")>Read</option>
+                                                <option value="Write" @(roleMode == "write" ? "selected" : "")>Write</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                <!-- /.tab-pane -->
+                <div class="tab-pane active" id="tab_2_justified">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    @*<label>
+                                            <div class="checker"><span><input type="checkbox" id="selecctAllArea" onclick="selectAll(this, 'SelectedAreas');"></span></div>
+                                            Select All
+                                        </label>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin:0" />
+
+                    <div class="container-fluid" style="min-height:111px;max-height:150px; overflow-y:auto">
+                        @foreach (var g in Model.AreaList)
+                        {
+                            <div class="col-md-4">
+                                <input type="checkbox" name="SelectedAreas" value="@g.AreaID" id="lblArea_@g.AreaID" onclick="selectAll(this, 'selectedareas')"
+                                       @{if (Model.SelectedAreas.Contains(g.AreaID)) { <text> checked='checked' </text>          } } />
+                                <label for="lblArea_@g.AreaID" style="font-weight:normal">@g.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab_3_justified">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    @*<label>
+                                            <div class="checker"><span><input type="checkbox" id="selecctAllHub" onclick="selectAll(this, 'SelectedHub');"></span></div>
+                                            Select All
+                                        </label>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="margin:0" />
+                    <div class="container-fluid" style="min-height:111px;max-height:150px; overflow-y:auto">
+                        @foreach (var g in Model.HubList)
+                        {
+                            <div class="col-md-4">
+                                <input type="checkbox" name="SelectedHub" value="@g.HubID" id="lblHub_@g.HubID" onclick="selectAll(this, 'SelectedHub')"
+                                       @{if (Model.SelectedHub.Contains(g.HubID)) { <text> checked='checked' </text>           } } />
+                                <label for="lblHub_@g.HubID" style="font-weight:normal">@g.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="tab_4_justified">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    @*<label>
+                                            <div class="checker"><span><input type="checkbox" id="selecctAllStore" onclick="selectAll(this, 'SelectedStores');"></span></div>
+                                            Select All
+                                        </label>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="margin:0" />
+                    <div class="container-fluid" style="min-height:111px;max-height:150px; overflow-y:auto">
+                        @foreach (var g in Model.StoreList)
+                        {
+                            <div class="col-md-4">
+                                <input type="checkbox" name="SelectedStores" value="@g.StoreID" id="lblStore_@g.StoreID"
+                                       @{if (Model.SelectedStores.Contains(g.StoreID)) { <text> checked='checked' </text>           } } />
+                                <label for="lblStore_@g.StoreID" style="font-weight:normal">@g.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <span id="progress" class="text-center" style="display: none;">
+            <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+            Wait..
+        </span>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        @if (mode == "I")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+        }
+        else if (mode == "U")
+        {
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+        }
+
+    </div>
+
+    <input type="hidden" name="User.Password" value="@Model.User.Password" />
+    <input type="hidden" name="User.EntryDate" value="@Model.User.EntryDate" />
+    <input type="hidden" name="User.EntryBy" value="@Model.User.EntryBy" />
+}
+
+<script>
+    var mode = '@mode', userType = '@Model.User.UserType';
+    if (mode != 'I') $("#User_UserID").attr('readonly', 'readonly');
+
+
+
+    $(function () {
+        if (typeof window.rebindCSS == "undefined")
+            $.getScript("/scripts/script.js");
+        else
+            rebindCSS();
+
+        $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
+        var width = $(".select2-container--default").width() - 5;
+        $(".select2-container--default").css('width', width + 'px');
+
+        selectAll = function (obj, fld) {
+            var area = '@Model.SelectedAreas';
+            //sAlert(area);
+            //if ($("[name=selectedareas[checked]").length > 0)
+            //    //if ($("[name=selectedareas]").checked == true)
+            //{
+            //    sAlert('cek');
+            //    $("[name=SelectedHub]").prop('disabled', 'disabled');
+            //    $("[name=SelectedStores]").prop('disabled', 'disabled');
+            //}
+            //else {
+            //    sAlert('uncek');
+            //    $("[name=SelectedHub]").prop('enabled', 'enabled');
+            //    $("[name=SelectedStores]").prop('enabled', 'enabled');
+            //}
+            //else if (fld == "SelectedHub") {
+            //    $("[name=selectedareas]").prop('disabled', 'disabled');
+            //    $("[name=SelectedStores]").prop('disabled', 'disabled');
+            //}
+            //else if (fld == "SelectedStores") {
+            //    $("[name=selectedareas]").prop('disabled', 'disabled');
+            //    $("[name=SelectedHub]").prop('disabled', 'disabled');
+            //}
+
+            //
+            //$("[name=" + fld + "]").prop('checked', $('#' + obj.id).prop("checked"));
+
+            //sAlert(fld);
+        };
+
+        if (userType != 'ext-part') $('.cust-group').hide();
+
+        var partName = new mySelect2({
+            id: 'User_Cust_Group_No',
+            url: '/Picker/SelectToCustomerGroup',
+            minimumInputLength: 1,
+        }).load();
+
+        $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    });
+</script>

@@ -1,0 +1,18 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "id": 1,
+      "inv": "E.53100119011",
+      "CL": "CL.260218041FG",
+      "branch": "Tanjung Redeb",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Waiting for Create SI",
+      "date": "16-Jan-19"
+    }
+  ]
+}

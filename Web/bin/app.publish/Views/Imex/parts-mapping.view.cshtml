@@ -1,0 +1,262 @@
+@model App.Web.Models.PartsMappingView
+@{
+	var mode = ViewBag.crudMode;
+	var title = "Detail";
+}
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title" id="myModalLabel"><i class="fa fa-list"></i> @title Parts Mapping</h4>
+</div>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body">
+		<div class="row">
+
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Part Number</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.PartsNumber" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Part Name</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.PartsName" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">HS Code</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.HSCode" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">HS Description</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.HSDescription" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">OM</label>
+						<div class="input-group col-lg-8 col-xs-8">
+                            @*<input type="text" class="form-control" value="@Model.partsMapping.OMCode" readonly />*@
+							<input type="text" class="form-control" value="@ViewBag.OMCode" readonly />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					@*<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Product Structure</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="Product" name="status" readonly />
+						</div>
+					</div>*@
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Created By</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.EntryBy" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Created On</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.EntryDate" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Updated By</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.ModifiedBy" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Updated On</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@Model.partsMapping.ModifiedDate" readonly />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Status</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<input type="text" class="form-control" value="@(Model.partsMapping.Status == 1 ? "Active" : "Inactive")" readonly />
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="col-lg-12">
+				<div style="float:right; margin-right:15px">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<span id="progress" class="text-center" style="display: none;">
+						<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+						Wait..
+					</span>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<h5 style="text-align: left"><strong>Data History</strong></h5>
+		<div class="toolbarMdl">
+			<a href="#" class="btn btn-info downloadExceldtl" style="width:150px;">
+				<i class="fa fa-download"></i> Download to Excel
+			</a>
+		</div>
+		<table class="table table-bordered table2excelDet" id="tblHist" style="width: 100%">
+		</table>
+
+		@*<span id="progress" class="text-center" style="display: none;">
+				<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+				Wait..
+			</span>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			@if(mode == "I")
+			{
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+			}
+			else if(mode == "U")
+			{
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
+			}
+			else
+			{
+				<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
+			}*@
+
+	</div>
+	<input type="hidden" name="PartsMappingID" value="@Model.partsMapping.PartsMappingID" />
+}
+<script>
+	var mode = '@mode';
+	var $tableHist = $('#tblHist');
+
+
+	$(function () {
+		enableLink(false);
+		$(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });
+
+		var width = $(".select2-container--default").width() - 5;
+		$(".select2-container--default").css('width', width + 'px');
+
+		$tableHist.bootstrapTable({
+			cache: false,
+			pagination: true,
+			search: false,
+			striped: true,
+			clickToSelect: true,
+			reorderableColumns: true,
+			toolbar: '.toolbarMdl',
+			toolbarAlign: 'left',
+			sidePagination: 'server',
+			showColumns: true,
+			showRefresh: true,
+			smartDisplay: false,
+			pageSize: '5',
+			columns: [{
+				field: 'PartsMappingID',
+				title: 'No',
+				halign: 'center',
+				align: 'right',
+				width: '3%',
+				formatter: runningFormatter
+			}, {
+				field: 'Source',
+				title: 'Source',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ActionUser',
+				title: 'Action',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ModifiedBy',
+				title: 'ModifiedBy',
+				halign: 'center',
+				align: 'left',
+				sortable: true
+			}, {
+				field: 'ModifiedDate',
+				title: 'ModifiedDate',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				formatter: 'dateFormatter'
+			},
+			//{
+			//	field: 'PartsNumberReformat',
+			//	title: 'Part Number',
+			//	halign: 'center',
+			//	align: 'left',
+			//	visible: false,
+			//	sortable: true
+			//},
+			{
+				field: 'PartsName',
+				title: 'Parts Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'HSCode',
+				title: 'HS Code',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}, {
+				field: 'HSDescription',
+				title: 'HS Description',
+				halign: 'center',
+				align: 'left',
+				sortable: true,
+				visible: false
+			}]
+		});
+
+
+		//	$("#btnFilter").click(function () {
+		window.pis.table({
+			objTable: $tableHist,
+			urlSearch: '/imex/PartsMappingHistPage',
+			urlPaging: '/imex/PartsMappingHistPageXt',
+			searchParams: {
+				PartsMappingID: $("[name=PartsMappingID]").val()
+			},
+			autoLoad: true
+		});
+
+
+		$(".downloadExceldtl").click(function () {
+			$(".table2excelDet").table2excel({
+				exclude: ".noExl",
+				name: "Excel Document Name",
+				filename: "partMapping.xls"
+			});
+		});
+
+
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+	});
+
+
+</script>

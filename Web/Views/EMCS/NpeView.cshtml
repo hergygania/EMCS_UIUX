@@ -1,0 +1,159 @@
+﻿﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml"; 
+    ViewBag.Title = "NpeView";
+}
+
+<div class="row">
+    <div class="col-md-12" style="margin-top:15px;">
+        <div class="tab-content tabs-custom">
+            <section class="invoice" style="height:160vh">
+                <embed src="~/Content/Templates/NPEPEB.pdf" width="100%" height="100%"></embed>
+                <div class="col-md-12 text-right" style="margin-top:50px">
+                    <a class="btn btn-success" onclick="showEditor(0, '')" data-target='#ApprovalCIPL' data-toggle='modal' role="button">
+                        <i class="fas fa-check"></i> approve
+                    </a>
+                    <a class="btn btn-warning" onclick="showEditor(0, '')" data-target='#ReviseCIPL' data-toggle='modal' role="button">
+                        <i class="fas fa-history"></i> revise
+                    </a>
+                    <a class="btn btn-danger" onclick="showEditor(0, '')" data-target='#RejectCIPL' data-toggle='modal' role="button">
+                        <i class="fa fa-ban"></i> reject
+                    </a>
+                    <a href="~/MyTask/Index" class="btn btn-primary" onclick="showEditor(0, '')" role="button">
+                        Cancel
+                    </a>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- -----------------------------------******** MODAL Approval CIPL ********----------------------------------- -->
+        <div id="ApprovalCIPL" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header mytask">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5><i class="far fa-check-circle"></i> APRROVE PEB & NPE</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="#">
+                            <div class="form-group">
+                                <label class="col-sm-4">APPROVE NOTES</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="8" placeholder="" id="" name=""></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success btn-rotate" data-dismiss="modal">APPROVE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -----------------------------------******** MODAL REJECT CIPL ********----------------------------------- -->
+        <div id="RejectCIPL" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content ">
+                    <div class="modal-header mytask">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5><i class="fa fa-ban"></i> REJECT PEB & NPE</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="">
+                            <div class="form-group">
+                                <label class="col-sm-4">PROBLEM CATEGORY</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option value=""> -- Pilih --</option>
+                                        <option value=""> DOCUMENT </option>
+                                        <option value=""> SHIPPING </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4">CASE</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option value=""> -- Pilih --</option>
+                                        <option value=""> PEB Diperiksa kembali </option>
+                                        <option value=""> Kapal angkut muat sedang perbaikan </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4">
+                                    REASONS
+                                </label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="8" placeholder="" id="" name=""></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-rotate" data-dismiss="modal">REJECT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -----------------------------------******** MODAL REVISE CIPL ********----------------------------------- -->
+        <div id="ReviseCIPL" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header mytask">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5><i class="fa fa-history"></i> REVISE PEB & NPE</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="">
+                            <div class="form-group">
+                                <label class="col-sm-4">PROBLEM CATAGORY</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option value=""> -- Pilih --</option>
+                                        <option value=""> DOCUMENT </option>
+                                        <option value=""> SHIPPING </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4">CASE</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option value=""> -- Pilih --</option>
+                                        <option value=""> PEB Diperiksa kembali </option>
+                                        <option value=""> Kapal angkut muat sedang perbaikan </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4">
+                                    REASONS
+                                </label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="8" placeholder="" id="" name=""></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning btn-rotate" data-dismiss="modal">REVISE</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>

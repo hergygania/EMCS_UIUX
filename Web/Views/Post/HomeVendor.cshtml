@@ -1,0 +1,365 @@
+﻿@using App.Web
+@{
+    ViewBag.Title = "_Layout";
+    Layout = "~/Views/Post/_Layout.cshtml";
+    int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalSeconds;
+    string Role = "";
+    Role = User.Identity.GetUserRoles();
+
+    if (Role.Contains("POSTVENDOR"))
+    {
+        ViewBag.TabDefault = ViewBag.TabDefault;
+    }
+    var BaseUrl = ViewBag.BaseUrl;
+    var FullBaseUrl = BaseUrl + "/POST/";
+}
+
+@{ViewBag.Title = "Home Vendor";}
+
+<style type="text/css">
+    .fontbold {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        font-family: Calibri;
+=======
+        font-family: SF UI Text;
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        font-family: Calibri;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    .fontnormal {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        font-family: Calibri;
+=======
+        font-family: SF UI Text;
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        font-family: Calibri;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+
+    .displaymid {
+        position: absolute;
+        top: 40%; /* position the top  edge of the element at the middle of the parent */
+        left: 50%; /* position the left edge of the element at the middle of the parent */
+        transform: translate(-50%, -50%);
+        border: 1px solid #BFBFBF;
+        background-color: white;
+        box-shadow: 1px 1px 2px #aaaaaa;
+    }
+    .fonthardcopy {
+        height: 456px;
+        width: 614px;
+        left: 421px;
+        top: 146px;
+        border-radius: 1 px;
+    }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+</style>
+<input type="hidden" id="BaseUrl" name="BaseUrl" value="@(FullBaseUrl)" />
+
+
+<div id="idpopUp">
+    <div class="navbar tab fixed-top flex-column navbar-expand container-fluid flex-lg-row bd-navbar" style="margin-top: 57px;">
+        <div>
+            <div class="modal-body mx-3">
+                <div style="margin-top:2px;">
+
+                    <div class="row fontbold">
+                        <label> Selamat Datang di POST (Purchase Order Status Tracking) </label>
+                    </div>
+                    <div class="row fontbold">
+                        <label>Memperkuat Sinergi, Maju Bersama Kami</label>
+                    </div>
+
+                    <div class="row fontnormal">
+                        <label>
+                            Sebagai penerapan Good Corporate Governance (GCG), PT Trakindo Utama (Trakindo) berkomitmen untuk terus mempertahankan standar kode etik yang tinggi dalam setiap aktivitas bisnis yang dijalankan
+                            di Trakindo selalu mendorong dan memastikan setiap transaksi bisnis yang dilakukan berkualitas dan bersifat “Zero Tolerence” terhadap praktik-praktik penyuapan sesuai dengan standar ISO 37001 – Sistem Manajemen Anti Penyuapan (SMAP).
+                        </label>
+                    </div>
+
+                    <div class="row fontnormal">
+                        <label>Untuk memperkuat sinergi dengan Rekanan, maka pengelolaan pemesanan barang dan jasa dilakukan melalui POST. </label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>POST adalah sistem aplikasi berbasis web yang menyediakan informasi terkait dengan status pemesanan barang, mulai dari konfirmasi penerimaan PO, konfirmasi jadwal pengiriman barang/jasa, upload BAST / Surat Jalan, pengajuan awal invoice, informasi pembayaran serta dokumen E-Bupot:</label>
+                    </div>
+                    <div class="row fontbold">
+                        <label><b>Transparan</b></label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>Informasi yang lengkap dan sama diantara seluruh pihak yang berkepentingan.</label>
+                    </div>
+                    <div class="row fontbold">
+                        <label><b>Efektif</b></label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>Informasi yang akurat dan tepat waktu untuk mendukung proses monitoring pengadaan barang dan jasa yang efektif.</label>
+                    </div>
+                    <div class="row fontbold">
+                        <label><b>Mudah</b></label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>Kemudahan pertukaran informasi status pengiriman barang dan penyederhanaan proses untuk mendapatakan GR/SA/E-Bupot dan informasi pembayaran</label>
+                    </div>
+                    <div class="row fontbold">
+                        <label><b>Integrasi</b></label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>Koordinasi status PO, barang/jasa, pembayaran dan bukti potong pajak.</label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>Agar tidak ada kendala pada saat upload pengajuan awal invoice di POST, seluruh proses di POST harus dilakukan secara berurutan/sequence. </label>
+                    </div>
+                    <div class="row fontnormal">
+                        <label>
+                            Invoice beserta seluruh lampirannya (dokumen penagihan) yang lengkap dan benar diupload di POST paling lambat tanggal 25 setiap bulannya untuk dibayarkan di akhir bulan berikutnya. Jika tanggal 25 adalah hari libur maka batas waktu adalah hari kerja sebelum tanggal 25 untuk pembayaran di akhir bulan berikutnya.
+                            Invoice asli beserta lampiran yang benar dan lengkap tersebut wajib diserahkan ke Pihak Finance terkait paling lambat 7 hari kerja setelah invoice di upload di POST. Pihak Finance akan melakukan pembayaran jika invoice asli beserta lampiran yang benar dan lengkap sudah diterima di Trakindo.
+                        </label>
+                    </div>
+
+                    <div class="row fontnormal">
+                        <label>Peran serta Rekanan sangat diperlukan agar POST bisa berjalan sesuai harapan agar <b>KITA BISA MAJU BERSAMA.</b></label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="padding-left:50%">
+                        <button class="btn btn-succes" onclick="SavePopUpHome()">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+<div id="idpopUpHardCopyInvoice" >
+    <div class="displaymid" style="margin-top: 57px;">
+        
+        <div>
+            <div class="modal-body mx-3" >
+                <div style="margin-top:2px;">
+
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label> Pengiriman Hardcopy Invoice/Invoice asli </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Dear Bapak/Ibu Rekanan</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Dengan ini kami informasikan seluruh Rekanan <b>WAJIB</b> mengisi data/proses pengiriman hardcopy invoice di POST  setelah meng-upload softcopy invoice di POST. Jika hardcopy invoice dan supporting document yang lengkap belum kami terima setelah tanggal 25 setiap bulannya, dan Bapak/Ibu tidak melakukan pengisian data informasi pengiriman invoice di POST, maka pembayaran akan tertunda 2 bulan berikutnya.
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Silakan segera di update dan di akses menu/feature <b>“Submit Hardcopy Invoice“</b> yang ada di POST setelah pengiriman hard copy invoice dilakukan : </label>
+                        <br />
+                        <img src="~/Images/hardcopyinvoice.png" />
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Per 01 February 2022, Bapak / Ibu Rekanan akan menerima email Reminder ke alamat email Perusahaan Bapak/Ibu yang terdaftar di system kami jika Hardcopy invoice belum dikirim dan belum mengupdate informasi “submit hardcopy invoice” di POST.</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Terima Kasih untuk perhatiannya.</label>
+                    </div>
+                    <br />
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label>PT Trakindo Utama - Supplier & Procurement </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="padding-left:50%">
+                        <button class="btn btn-succes" onclick="SavePopUpHardCopy()">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="idpopUpPPN">
+    <div  class="displaymid" style="margin-top: 57px;">      
+        <div>
+            <div class="modal-body mx-3">
+                <div style="margin-top:2px;">
+
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label> Perubahan PPN. </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Sehubungan dengan adanya kenaikan tarif Pajak Pertambahan Nilai (PPN) yang dimuat dalam UU HPP terkait perubahan tarif PPN dari 10 % menjadi 11 % yang berlaku mulai 1 April 2022, dengan ini PT Trakindo Utama memberitahukan kepada seluruh Rekanan yang bekerjasama  agar menjalankan proses administrasi sesuai dengan peraturan pajak yang berlaku.
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>
+                            Untuk itu penerbitan invoice dan Faktur Pajak untuk PT Trakindo Utama agar mengikuti aturan sebagai berikut :
+                        </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Invoice dan Faktur Pajak dengan tanggal dokumen sebelum tanggal 1 April 2022 menggunakan tarif PPN 10% </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Invoice dan Faktur Pajak dengan tanggal dokumen setelah tanggal 1 April 2022 menggunakan tarif PPN 11%</label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>•	Tanggal Faktur Pajak mengacu pada tanggal BAST/Surat Jalan di tandatangani PT Trakindo Utama </label>
+                    </div>
+                    <br />
+                    <div class="row fontnormal">
+                        <label>Terima Kasih untuk perhatiannya </label>
+                    </div>
+                    <br />
+                    <div class="row fontbold" style="font-size : 16px">
+                        <label>PT Trakindo Utama – PPH & PPN Mgmt. & Operation  </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3" style="padding-left:50%">
+                        <button class="btn btn-succes" onclick="SavePopUpPPN()">Continue</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+<div id="idhome">
+    <div class="navbar tab fixed-top flex-column navbar-expand container-fluid flex-lg-row bd-navbar" style="margin-top: 57px;">
+        <div class="navbar-nav-scroll">
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+                @*@if (Role.Contains("POSTVENDOR"))
+                    {*@
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 0) ? "active" : "")" data-content="tabIncoming" href="javascript:void(0);" data-toggle="tab">PO Incoming <span class="badge badge-warning">@ViewBag.CountPOIncoming</span></a>
+                </li>
+                @*}*@
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 1) ? "active" : "")" data-content="tabInprocess" href="javascript:void(0);" data-toggle="tab">PO In-Progress <span class="badge badge-primary">@ViewBag.CountPOProgress</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 2) ? "active" : "")" data-content="tabDone" href="javascript:void(0);" data-toggle="tab">PO Complete <span class="badge badge-success">@ViewBag.CountPODone</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link showTab @((ViewBag.TabDefault == 3) ? "active" : "")" data-content="tabReject" href="javascript:void(0);" data-toggle="tab">PO Reject <span class="badge badge-danger">@ViewBag.CountPOReject</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" style="margin-top:110px;">
+        <div class="tab-content" style="width:100%;">
+            <!-- Section Tab First -->
+            @Html.Partial("~/Views/Post/NavSearch.cshtml")
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 0) ? "show active" : "")" id="tabIncoming" data-tab="0" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-po" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Second -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 1) ? "show active" : "")" id="tabInprocess" data-tab="1" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-inprogress" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Third -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 2) ? "show active" : "")" id="tabDone" data-tab="2" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-done" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+            <!-- Section Tab Third -->
+            <div role="tabpanel" class="tab-pane fade @((ViewBag.TabDefault == 3) ? "show active" : "")" id="tabReject" data-tab="3" onclick="clearSearchHeader()">
+                <div style="margin-top:10px;" data-scrollbar>
+                    <table id="table-reject" data-classes="table-borderless" class="table table-striped" style="background:white;"></table>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Html.Partial("~/Views/Post/ModalUploadPO.cshtml")
+@Html.Partial("~/Views/Post/ModalViewInv.cshtml")
+@Html.Partial("~/Views/Post/ModalViewBast.cshtml")
+@Html.Partial("~/Views/Post/ModalComment.cshtml")
+@Html.Partial("~/Views/Post/ModalHistory.cshtml")
+
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/Custom.js?_id=@(unixTimestamp)"></script>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <script>
+        var landingPage = @ViewBag.LandingPage;
+    </script>
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    <script>
+        var landingPage = @ViewBag.LandingPage;
+    </script>
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+    <script src="~/Scripts.app/POST/VendorHome.js?_id=@(unixTimestamp)"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    @*<script src="~/Scripts/tinymce/tiny_mce.js"></script>*@
+    @*<script src="~/Scripts.app/POST/DataVendorHome.js"></script>*@
+    <script src="~/Scripts.app/POST/Comment.js?_id=@(unixTimestamp)"></script>
+
+}

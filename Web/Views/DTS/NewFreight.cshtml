@@ -1,0 +1,87 @@
+﻿<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="box-body">
+                    <h5><b>Freight Cost Estimate</b></h5>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Route</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchRoute" name="Route"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Origin</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchOrigin" name="Origin"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Destination</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchDestination" name="Destination"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Model</label>
+                                <div class="col-md-9">
+                                    <select class="select2 form-control" id="searchModel" name="Model"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" id="EstimateFilter">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="col-md-5">
+                            <button class="pull-right btn btn-primary" onclick="showList()"  style="margin-left:10px;" id="BtnFilter"><i class="fa fa-search"></i> Search</button>
+                            @*<button class="pull-right btn btn-success" onclick="Save()" id="BtnSave"><i class="fa fa-save"></i> Save</button>*@
+                            @*<button class="pull-right btn btn-success" onclick="Save()" id="BtnSave"><i class="fa fa-save"></i> Save</button>*@
+
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="table-responsive">           
+            <table class="table table-bordered table-responsive" id="tableFreightCost" style="width:100%;"></table>
+        </div>
+    </div>
+</div>
+

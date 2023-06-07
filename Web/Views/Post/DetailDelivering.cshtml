@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+
+<div class="row" style="margin-top:75px;">
+    <div class="custom-grid-style">
+        <button class="btn btn-default" data-last="~/HomeVendor" onclick="goToLastPage()" type="button"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</button>&nbsp;
+        <a href="~/Post/DetailDelivering" class="btn btn-success delivery float-right" style="color:white;">Go to BAST  <span class="fa fa-chevron-circle-right"></span></a>
+    </div>
+</div>
+
+<div class="row">
+    <div style="margin-top:10px; width:100%;">
+        <table id="table-inprogress" data-classes="table-borderless" class="table"></table>
+        <hr />
+        @Html.Partial("~/Views/Post/NavSearchDetail.cshtml")
+        <div style="margin-top:20px">
+            <div class="table-responsive">
+                <table id="table-item" class="table table-bordered table-hover table-striped" style="width:100%;"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Post/ModalDocBast.cshtml")
+@Html.Partial("~/Views/Post/ModalStatusList.cshtml")
+@Html.Partial("~/Views/Post/ModalStatusUpdate.cshtml")
+<<<<<<< HEAD
+<<<<<<< HEAD
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+@Html.Partial("~/Views/Post/ModalHardCopyInvoice.cshtml")
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script src="~/Scripts.app/POST/VendorDetailDelivery.js" type="text/javascript"></script>
+}

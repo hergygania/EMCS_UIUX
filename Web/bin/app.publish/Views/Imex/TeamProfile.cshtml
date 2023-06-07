@@ -1,0 +1,152 @@
+@model  App.Data.Domain.TeamProfile
+@{
+    ViewBag.Title = "Team Profiles";
+}
+
+@using System.Web.Mvc
+
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning" style="min-height:505px">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+            <form method="post" action="/Imex/TeamProfile" id="frm" onsubmit="return frmSubmit(this)">
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <br />
+                            <div class="form-group">
+                                <div class="input-group col-md-12 col-xs-11">
+                                    @{
+                                        if (ViewBag.AllowCreate || ViewBag.AllowUpdate || ViewBag.AllowDelete)
+                                        {
+                                            <button type="button" class="btn btn-warning editBtn" onclick="tinyMce_enable_disable(this); $('.saveMce').show(); $('.editBtn').hide()" style="float:right;margin-right:15px"><i class="fa fa-edit"></i> Edit</button>
+                                            <button type="submit" class="btn btn-success saveMce" style="display:none;float:right;margin-right:15px"><i class="fa fa-save"></i> Update</button>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-1 col-xs-1">@ViewBag.Title</label>
+                                <div class="input-group col-md-11 col-xs-11">
+                                    @Html.EditorFor(m => m.Description, "RichEditor", new { @class = "form-control required editor", style = "width:99%", placeholder = "Description" })
+                                    @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control required editor", style = "width:99%", placeholder = "Description" })*@
+                                    <div>@Html.ValidationMessageFor(m => m.Description)</div>
+                                </div>
+                            </div>
+
+                            @*<div class="toolbar">
+                                    <button type="button" class="btn btn-warning" onclick="loadModal('/imex/teamProfileCreate')">
+                                        <i class="fa fa-plus"></i> Add Team Profile
+                                    </button>
+
+                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                                        <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 33px;">
+                                    </div>
+                                </div>
+                                <table class="table table-bordered" id="tables"></table>*@
+                        </div>
+
+                        <div class="col-lg-12">
+                            <span id="progress" class="text-center" style="display: none;">
+                                <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                                Wait..
+                            </span>
+                            <div style="float:right;margin-right:15px">
+                                @*<button type="button" class="btn btn-default saveMce">Cancel</button>*@
+                                @{
+                                    if (ViewBag.AllowCreate || ViewBag.AllowUpdate || ViewBag.AllowDelete)
+                                    {
+                                        <button type="submit" class="btn btn-success saveMce" style="display:none"><i class="fa fa-save"></i> Update</button>
+                                        <button type="button" class="btn btn-warning editBtn" onclick="tinyMce_enable_disable(this); $('.saveMce').show(); $('.editBtn').hide()"><i class="fa fa-edit"></i> Edit</button>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <input type="hidden" name="ProfileName" value="@Model.ProfileName" />
+                <input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+                <input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+                <input type="hidden" name="Status" value="@Model.Status" />
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            //cmd = function (cmd, value) {
+            //	alert('cmd ' + cmd+' '+value)
+            //	tinymce.activeEditor.execCommand(cmd, false, value);
+            //}
+
+            refreshButton = function () {
+                setTimeout(function () {
+                    for (var i = 0; i < tinymce.editors.length; i++) {
+                        tinymce.editors[i].getBody().setAttribute('contenteditable', false);
+                    };
+                }, 1000);
+                $('.saveMce').hide();
+                $('.editBtn').show();
+                //tinyMCE.activeEditor.getBody().setAttribute('contenteditable', false);
+            };
+
+            frmSubmit = function (frm) {
+                $('#progress').show();
+                enableLink(false);
+
+                tinyMCE.get("Description").setContent(tinyMCE.activeEditor.getContent());
+                document.getElementById("Description").value = tinyMCE.activeEditor.getContent();
+
+                $.ajax({
+                    url: frm.action,
+                    type: frm.method,
+                    data: $(frm).serialize(),
+                    success: function (result) {
+                        enableLink(true);
+
+                        if (result.Status == 0) {
+
+                            if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+                            $('#progress').hide();
+                            refreshButton()
+                        }
+                        else {
+                            if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+                            $('#progress').hide();
+                        }
+                    }
+                });
+                return false;
+            }
+
+            if (myApp.isReadOnly == 'true') {
+                $('.editBtn').hide();
+                $(".mce-toolbar, .mce-menubar").hide();
+            }
+
+        });
+
+    </script>
+    @*<script src="@Url.Content("~/Scripts.app/imex/teamProfiles.cshtml.js")"></script>*@
+}

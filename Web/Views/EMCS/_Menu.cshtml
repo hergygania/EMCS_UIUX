@@ -1,0 +1,319 @@
+﻿﻿﻿@using App.Web @*@{ bool isAdmin = false; bool isMaster = false; try { isAdmin =
+  User.IsInRole("Administrator"); isMaster = User.IsInRole("Master"); } catch { }
+  }*@
+
+<ul id="sidebar-menu">
+  @{
+    MvcMenuEMCSHelpers obj = new MvcMenuEMCSHelpers(); 
+  } @*
+    @obj.Menu("treeview") *@
+
+  <li>
+    <a href="/EMCS/Dashboard" class="nav-link--level-0">
+      <div class="nav-link-wrap">
+        <i class="uil uil-dashboard"></i>
+        <span class="nav-label">Dashboard</span>
+      </div>
+    </a>
+  </li>
+  <li>
+    <button class="nav-collapse" type="button">
+      <div class="nav-link-wrap">
+        <i class="uil uil-folder"></i>
+        <span class="nav-label">Master EMCS</span>
+      </div>
+    </button>
+    <div class="nav-collapse--child" style="display: none">
+      <ul class="py-2 flex flex-col space-y-2">
+        <li>
+          <a href="/EMCS/CustomerList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-users-alt"></i>
+              <span class="nav-label">Customer</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/SuperiorList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-user-md"></i>
+              <span class="nav-label">Superior</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/IncotermsList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-alt"></i>
+              <span class="nav-label">Incoterms</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/AreaList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-map-pin"></i>
+              <span class="nav-label">Area</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/CountryList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-map"></i>
+              <span class="nav-label">Country</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/CountryList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-image"></i>
+              <span class="nav-label">Banner</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/Kppbc" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-shield"></i>
+              <span class="nav-label">KPPBC</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ProblemCategory" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-label-alt"></i>
+              <span class="nav-label">Problem Category</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/MasterRunningText" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-newspaper"></i>
+              <span class="nav-label">News</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/Kurs" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-usd-circle"></i>
+              <span class="nav-label">Kurs</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/RegulationList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-balance-scale"></i>
+              <span class="nav-label">Master Regulation</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/AreaUserCKB" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-user-location"></i>
+              <span class="nav-label">Area CKB</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/MasterVideo" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-video"></i>
+              <span class="nav-label">Upload Video</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <a href="/EMCS/Mytask" class="nav-link--level-0">
+      <div class="nav-link-wrap">
+        <i class="uil uil-clipboard-notes"></i>
+        <span class="nav-label">My Task</span>
+      </div>
+    </a>
+  </li>
+  <li>
+    <button class="nav-collapse" type="button">
+      <div class="nav-link-wrap">
+        <i class="uil uil-exchange-alt"></i>
+        <span class="nav-label">Transaction EMCS</span>
+      </div>
+    </button>
+    <div class="nav-collapse--child" style="display: none">
+      <ul class="py-2 flex flex-col space-y-2">
+        <li>
+          <a href="/EMCS/CiplList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-invoice"></i>
+              <span class="text-sm font-medium">Commercial Invoice Packing List</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/CargoList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-parcel"></i>
+              <span class="nav-label">Cargo List</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/GRList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-check-alt"></i>
+              <span class="nav-label">RG BAST</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/MasterSIB" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-upload"></i>
+              <span class="nav-label">Upload SIB</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ShippingInstructionList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-bookmark-alt"></i>
+              <span class="nav-label">Shipping Instruction List</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ShippingSummaryList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-search-alt"></i>
+              <span class="nav-label">Shipping Summary List</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/NpePebList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-file-info-alt"></i>
+              <span class="nav-label">PEB & NPE List</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/BLAWBList" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-receipt"></i>
+              <span class="nav-label">BL & AWB List</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li>
+    <button class="nav-collapse" type="button">
+      <div class="nav-link-wrap">
+        <i class="uil uil-chart-pie"></i>
+        <span class="nav-label">EMCS Reports</span>
+      </div>
+    </button>
+    <div class="nav-collapse--child" style="display: none">
+      <ul class="py-2 flex flex-col space-y-2">
+        <li>
+          <a href="/EMCS/ExportActivity" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-graph-bar"></i>
+              <span class="nav-label">Export Activity</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/DetailsTracking" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-crosshair-alt"></i>
+              <span class="nav-label">Details Tracking</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/DHEBankIndonesia" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-university"></i>
+              <span class="nav-label">DHE Bank of Indonesia</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ReportTaxAudit" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-percentage"></i>
+              <span class="nav-label">Tax Audit Purpose</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ExportProblem" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-exclamation-triangle"></i>
+              <span class="nav-label">Export Problem Report</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ExportTransaction" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-bill"></i>
+              <span class="nav-label">Export Transaction In USD</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/Achievement" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-award"></i>
+              <span class="nav-label">Achievement</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/PTTUBranch" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-channel"></i>
+              <span class="nav-label">PTTU Branch</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/DestinationSailingTime" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-location-arrow"></i>
+              <span class="text-sm font-medium">Destination & Sailing Time</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="/EMCS/ReportOutstandingCipl" class="nav-link--level-1">
+            <div class="nav-link-wrap">
+              <i class="uil uil-exclamation-octagon"></i>
+              <span class="nav-label">Outstanding CIPL</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  @* <li>
+    <a href="/EMCS/Notification" class="nav-link--level-0">
+    <div class="nav-link-wrap">
+    <i class="uil uil-bell"></i>
+    <span class="nav-label">Notification</span>
+    </div>
+    </a>
+    </li> *@
+</ul>

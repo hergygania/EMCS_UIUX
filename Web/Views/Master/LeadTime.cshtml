@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Master Lead Time RG & Pick up Time";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            @*<div class="box-header"><h3 class="box-title">@ViewBag.Title</h3></div>*@
+            <form role="form">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="toolbar">
+                                <div class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-warning" onclick="newLeadTime()" style="width:150px;">
+                                            <i class="fa fa-plus"></i> New Lead Time
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered" id="tableLeadTime"></table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addLeadTime" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width:1200px">
+        <div class="modal-content">
+            <div class="modal-header with-border">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title"><i class="fa fa-list"></i> New Lead Time RG & Pick up Time</h4>
+            </div>
+            <form method="post" id="saveLeadTime" data-toggle="validator">
+                <div class="modal-body">
+                    <button id="appendLeadTime" type="button" class="btn btn-warning pull-left" style="width:120px;" disabled><i class="fa fa-plus"></i> Append</button><br /><br /><br />
+                    <div style="border:1px solid #ddd;clear:both;height:220px;overflow-x:auto;overflow-y:hidden;padding-bottom:32px;width:1165px;">
+                        <div style="display:block;width:1163px;">
+                            <table style="table-layout:fixed; width:1163px;">
+                                <thead>
+                                    <tr style="background:#414141;color:white">
+                                        <th style="text-align:center;width:50px;padding:8px 0;border:1px solid #ddd;">
+                                            <div class="fh-inner">#</div>
+                                        </th>
+                                        <th style="text-align:center;width:70px;padding:8px 0;border:1px solid #ddd;">
+                                            <div class="fh-inner">Action</div>
+                                        </th>
+                                        <th style="text-align:center;border:1px solid #ddd;">
+                                            <div class="fh-inner">Store Name</div>
+                                        </th>
+                                        <th style="text-align:center;border:1px solid #ddd;width:280px;">
+                                            <div class="fh-inner">Lead Time RG</div>
+                                        </th>
+                                        <th style="text-align:center;border:1px solid #ddd;width:170px;">
+                                            <div class="fh-inner">Pick up Time 1</div>
+                                        </th>
+                                        <th style="text-align:center;border:1px solid #ddd;width:170px;">
+                                            <div class="fh-inner">Pick up Time 2</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div style="height:100%;overflow-y:scroll;width:1163px;" id="boxpesan">
+                            <table style="margin-top:-1px;table-layout:fixed; width:1146px;">
+                                <tbody id="leadTimeRows"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="btnSaveLead" style="width:120px;"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-danger" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="editLeadTime" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header with-border">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title"><i class="fa fa-list"></i> Edit Lead Time RG & Pick up Time</h4>
+            </div>
+            <form method="post" id="updateLeadTime" data-toggle="validator">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="col-lg-3 col-xs-12 control-label">Store Name</label>
+                                <div class="input-group col-lg-9 col-xs-12">
+                                    <select class="select2-editLeadTime" name="storeID" id="storeID" style="width:100% !important;"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-xs-12 control-label">Lead Time RG</label>
+                                <div class="input-group col-lg-9 col-xs-12">
+                                    <div class="control-label col-lg-6 col-xs-6" style="margin-top:-7px">
+                                        <div class="switch-toggle switch-2 well" style="margin-bottom:0px;height:30px;width:100%;">
+                                            <input id="hours" name="filter_type" type="radio" checked value="Hours">
+                                            <label for="hours">Hours</label>
+                                            <input id="days" name="filter_type" type="radio" value="Day">
+                                            <label for="days">Day</label>
+                                            <a class="btn btn-primary"></a>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control page" name="leadTime" id="leadTime" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-xs-12 control-label">Pick up Time 1</label>
+                                <div class="input-group col-lg-9 col-xs-12">
+                                    <div class="bootstrap-timepicker">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control timepicker" name="pickUpTime1" id="pickUpTime1" />
+                                            <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 col-xs-12 control-label">Pick up Time 2</label>
+                                <div class="input-group col-lg-9 col-xs-12">
+                                    <div class="bootstrap-timepicker">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control timepicker" name="pickUpTime2" id="pickUpTime2" />
+                                            <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="id" id="id" class="form-control">
+                    <button type="submit" class="btn btn-success" id="btnSaveLead" style="width:120px;"><i class="fa fa-save"></i> Update</button>
+                    <button type="button" class="btn btn-danger" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts.app/Master/LeadTime.js"></script>

@@ -1,0 +1,111 @@
+﻿@using System.Web.Mvc
+
+@model App.Web.Models.ManualVettingModel
+@{
+    ViewBag.Title = "Manual Vetting";
+    string message = ViewBag.Message + "";
+}
+<style>
+    .select2-hidden-accessible {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px !important;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form">
+                <div class="box-body" id="panelHeader">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="false" aria-controls="collapseThree">
+                                                <i class="more-less fa fa-chevron-up"></i>
+                                                Filter
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <!-- FILTER KOLOM KIRI - START -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-xs-3">HS Code</label>
+                                                    <div class="input-group col-lg-8 col-xs-8">
+                                                        <select class="js-states form-control" id="selHSCodeList_Ids" name="selHSCodeList_Ids" placeholder="-- HS Code --" multiple></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-xs-3">Parts Number</label>
+                                                    <div class="input-group col-lg-8 col-xs-8">
+                                                        <select class="js-states form-control" id="selPartsList_Ids" name="selPartsList_Ids" placeholder="-- Parts Number --" multiple></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FILTER KOLOM KIRI - END -->
+                                            <!-- FILTER KOLOM KANAN - START -->
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-3 col-xs-3">Order Method</label>
+                                                    <div class="input-group col-lg-8 col-xs-8">
+                                                        <select class="js-states form-control" id="selOrderMethods" name="selOrderMethods" multiple></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- FILTER KOLOM KANAN - END -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg-12">
+                            <hr>
+                            <div class="toolbar">
+                                <div class="pull-left" style="padding-bottom:5px !important;">
+                                    <b href="" class="btn btn-info" onclick="document.getElementById('filexls').click(); return false" style="width:150px;">
+                                        <i class="fa fa-upload"></i> Import/Upload
+                                    </b>
+                                    <a href="~/temp/template-manualVetting.xlsx" style="width:150px;" class="btn btn-info">
+                                        <i class="fa fa-download"></i> Download Template
+                                    </a>
+                                    <a href="#" class="btn btn-warning downloadExcel">
+                                        <i class="fa fa-download"></i> Download to Excel
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <button id="btnFilter" type="button" class="btn btn-success btnFilter" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+                                    <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-striped" id="tableManualVetting" style="table-layout:fixed;"></table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="submitExcel" method="post" action="ImportManualVetting" enctype="multipart/form-data">
+                <input type="file" id="filexls" name="upload" style="visibility: hidden;" onchange="$('#submitExcel').submit();" />
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/jquery.table2excel.js")"></script>
+    <script src="/Scripts/extension/export/bootstrap-table-export.js"></script>
+    <script src="/Scripts/extension/export/tableExport.js"></script>
+    <script src="/Scripts/extension/export/jquery.base64.js"></script>
+    <script src="@Url.Content("~/Scripts.app/Vetting/ManualVetting.cshtml.js")"></script>
+}

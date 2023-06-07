@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Flow Management";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-6" style="min-height:350px;">
+                <div class="toolbarFlow">
+                    <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/FlowCreate" id="btnCreateFlow">
+                        <i class="fa fa-plus"></i> Add Flow
+                    </a>
+                </div>
+                <table id="tableFlow" data-toolbar=".toolbarFlow" class="table table-bordered"></table>
+            </div>
+
+            <div class="col-md-6" style="min-height:350px;">
+                <div class="toolbarFlowStep">
+                    <button class="btn btn-warning" data-modal="" style="width:150px;" id="btnCreateFlowStep">
+                        <i class="fa fa-plus"></i> Add Step
+                    </button>
+                </div>
+                <table id="tableFlowStep" data-toolbar=".toolbarFlowStep" class="table table-bordered"></table>
+            </div>
+
+            <div class="col-md-6" style="min-height:350px;">
+                <div class="toolbarFlowStatus">
+                    <button class="btn btn-warning" data-modal="" style="width:150px;" id="btnCreateFlowStatus">
+                        <i class="fa fa-plus"></i> Add Status
+                    </button>
+                </div>
+                <table id="tableFlowStatus" data-toolbar=".toolbarFlowStatus" class="table table-bordered"></table>
+            </div>
+
+            <div class="col-md-6" style="min-height:350px;">
+                <div class="toolbarFlowNext">
+                    <button class="btn btn-warning" data-modal="" style="width:150px;" id="btnCreateFlowNext">
+                        <i class="fa fa-plus"></i> Add Next Step
+                    </button>
+                </div>
+                <table id="tableFlowNext" data-toolbar=".toolbarFlowNext" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#" data-modal="myModalFlow" class="hidden" alt="Flow Step" id="LinkShowModal" title="Flow Step">
+    Show Step Modal
+</a>
+
+
+<div id='myModalFlow' class='modal fade in'>
+    <div class="modal-dialog modal-sm" style="width:200px;">
+        <div class="modal-content">
+            <div id='myModalFlowContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalFlowStepPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalFlowStepContent'>
+                <div class="modal-header"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalFlowStatusPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalFlowStatusContent'>
+                <div class="modal-header"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalFlowNextPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalFlowNextContent'>
+                <div class="modal-header"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("/Scripts/loadingoverlay.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FlowGeneral.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/Flow.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FlowStatus.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FlowStep.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FlowNextStep.cshtml.js")
+}

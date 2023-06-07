@@ -1,0 +1,327 @@
+﻿﻿@model  App.Web.Models.EMCS.CiplModel
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Commercial Invoice Packing List Approve";
+    ViewBag.TypeReq = "Cipl";
+    ViewBag.IdReq = Model.Data.Id;
+    ViewBag.IdStep = Model.DataRequest.IdStep;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+
+<style>
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            padding: 10px 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition-duration: 0.6s;
+        }
+
+            .tabs a.active {
+                color: #fff;
+            }
+
+            .tabs a i {
+                margin-right: 5px;
+            }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 3px 5px #a8a8a8;
+        }
+</style>
+<input type="hidden" name="formType" id="formType" value="CIPL" />
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+    </div>
+    <div class="col-md-12 pt-3">
+        <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+            <nav class="tabs">
+                <div class="selector"></div>
+
+                <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab" class="active">Detail</a>
+                <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
+                <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+
+            </nav>
+            <div class="tab-content tabs-custom pt-4">
+                <div role="tabpanel" class="tab-pane active" id="invoice">
+                    @Html.Partial("CiplTabInvoice", Model)
+                </div>
+                <div role="tabpanel" class="tab-pane" id="history">
+                    @Html.Partial("CiplTabHistory")
+                </div>
+                <div role="tabpanel" class="tab-pane" id="changehistory">
+                    @Html.Partial("CiplTabChangeHistory")
+                </div>
+                <div role="tabpanel" class="tab-pane" id="problemhistory">
+                    @Html.Partial("CiplTabProblemHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="documents">
+                    @Html.Partial("CiplTabDocuments")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="inpreview">
+                    @Html.Partial("CiplTabInPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="plpreview">
+                    @Html.Partial("CiplTabPlPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="uploaddoc">
+                    @Html.Partial("CiplTabUploadDoc")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pull-right">
+                    <div class="form-group" style="margin-top:20px">
+                        <div class="" role="group">
+                            <button type="button" class="btn btn-round btn-success" id="btnApprove"><i class="fa fa-paper-plane"></i> Approve</button>
+                            <button type="button" class="btn btn-round btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
+                            <button type="button" class="btn btn-round btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
+                            <a href="/emcs/mytask" class="btn btn-round btn-danger"><i class="fa fa-times"></i> Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalUploadPreview' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">Filename</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="Filename" name="Filename">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Modal.FormProblem")
+
+@section scripts
+{
+    <script>
+        var wizardState = @ViewBag.WizardData.Progress;
+
+        if ('@Model.Data.Category' == 'CATERPILLAR NEW EQUIPMENT') {
+            $('#InvSales').removeClass("hidden");
+            $('#PLSales').removeClass("hidden");
+        } else if ('@Model.Data.Category' == 'CATERPILLAR USED EQUIPMENT') {
+            $('#InvRUE').removeClass("hidden");
+            $('#PLRUE').removeClass("hidden");
+        } else if ('@Model.Data.Category' == 'MISCELLANEOUS') {
+            $('#InvMisc').removeClass("hidden");
+            $('#PLMisc').removeClass("hidden");
+        } else if ('@Model.Data.Category' == 'CATERPILLAR SPAREPARTS') {
+            if ('@Model.Data.CategoriItem' == 'Old Core') {
+                $('#InvOldCore').removeClass("hidden");
+                $('#PLOldCore').removeClass("hidden");
+            } else if ('@Model.Data.CategoriItem' == 'PRA' || '@Model.Data.CategoriItem' == 'SIB') {
+                $('#InvPRA-SIB').removeClass("hidden");
+                $('#PLPRA-SIB').removeClass("hidden");
+            }
+        }
+
+        var spacing = 0;
+        if ('@Model.TemplateDetail.Count' < 25)
+            spacing = ((250 / 20) - '@Model.TemplateDetail.Count') * 20;
+        $('.spacing').css("height", spacing + 'px');
+
+    </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplGlobal.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/ChangeHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplDocuments.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplItem.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplProblemHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CiplApprove.cshtml.js")"></script>
+    <script src="@Url.Content("~/Content/EMCS/SweetAlert/sweetalert2.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
+    <script>
+        $(function () {
+            load_data_tabledoc();
+            get_ciplitem_by_id();
+            get_ciplviewdocument_by_id();
+        })
+        function ReviseProblem(Status, IdRequest, Notes, statusName) {
+            $.ajax({
+                url: myApp.fullPath + "EMCS/CiplApproval",
+                type: "Post",
+                async: false,
+                data: {
+                    Status: Status,
+                    Id: IdRequest,
+                    Notes: Notes
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    Swal.fire({
+                        title: statusName + '!',
+                        text: 'Data Confirmed Successfully',
+                        type: 'success',
+                    }).then((result) => {
+                        window.location.href = "/EMCS/MyTask";
+                    });
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+        }
+
+        function submitProblem(statusName) {
+            var status = false;
+            var data = $("#myModalProblemContent form").serializeArray();
+            data.push({ name: "Status", value: statusName });
+            console.log(data);
+            debugger;
+            $.ajax({
+                url: myApp.fullPath + "EMCS/SaveProblemHistory",
+                type: "Post",
+                async: false,
+                data: data,
+                success: function (resp) {
+                    var result = resp.result;
+                    status = true;
+                    ReviseProblem(result.Status, result.IdRequest, result.Comment, statusName);
+                },
+                error: function (resp) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Data Error. Please Try Again !',
+                        type: 'error',
+                    })
+                }
+            })
+            return status;
+        }
+
+        $("#YesRejectBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Reject";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        $("#YesReviseBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Revise";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+        $("#YesApproveBtn").on("click", function () {
+            var status = $("#myModalProblemContent form").valid();
+            var StatusName = "Approve";
+            if (status) {
+                submitProblem(StatusName);
+            }
+        })
+
+    </script>
+}
+
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>

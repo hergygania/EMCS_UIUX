@@ -1,0 +1,1049 @@
+﻿﻿@model  App.Web.Models.EMCS.CargoModel
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Shipping Instruction Form";
+    ViewBag.Id = Model.Data.Id.ToString();
+    ViewBag.IdReq = Model.Data.Id;
+    ViewBag.IdStep = 10017;
+}
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
+@Styles.Render("~/Content/EMCS/dropzone.css")
+
+<style>
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+    .tabs {
+        font-size: 15px;
+        padding: 0px;
+        list-style: none;
+        background: #fff;
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+        display: inline-block;
+        border-radius: 50px;
+        position: relative;
+    }
+
+        .tabs a {
+            text-decoration: none;
+            color: #777;
+            padding: 10px 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition-duration: 0.6s;
+        }
+
+            .tabs a.active {
+                color: #fff;
+            }
+
+            .tabs a i {
+                margin-right: 5px;
+            }
+
+        .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            border-radius: 50px;
+            transition-duration: 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: #05abe0;
+            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
+            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
+            box-shadow: 3px 5px #a8a8a8;
+        }
+</style>
+<input type="hidden" name="formType" id="formType" value="ShippingInstructions" />
+<div class="col-md-12 pb-5 slideRight">
+    @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+</div>
+<div class="col-md-12">
+    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+        <!-- Nav tabs -->
+        <nav class="tabs mb-4">
+            <div class="selector"></div>
+            <a style="z-index:5" class="active" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Shipping Instruction</a>
+            <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Action History</a>
+            <a style="z-index:3" href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab">Problem History</a>
+            <a style="z-index:2" href="#documents" aria-controls="profile" role="tab" data-toggle="tab">Documents</a>
+        </nav>
+        <!-- Tab panes -->
+        <div class="tab-content tabs-custom">
+            <div role="tabpanel" class="tab-pane active" id="invoice">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class='card p-4'>
+                                <div class='row'>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Cargo No</label>
+                                            <div class="col-sm-12">
+                                                <input type="hidden" class="form-control" id="CargoID" name="CargoID" disabled value="@Model.Data.Id">
+                                                <input type="text" class="form-control" id="noCl" name="noCl" disabled value="@Model.Data.ClNo">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Date</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="dateCl" name="dateCl" value="@Model.Data.CreateDate.ToString("dd MMM yyyy")" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Prepared By</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="preparedCl" name="preparedCl" value="@Model.Data.PreparedBy" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Consignee</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="consigneeCl" name="consigneeCl" value="@Model.Data.Consignee" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Notify Party</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@Model.Data.NotifyParty" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Export Type</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="exportType" name="exportType" value="@Model.Data.ExportType" disabled>
+                                            </div>
+                                        </div>
+                                        @*<div class="form-group">
+                            <label class="col-sm-4">Kppbc</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
+                            </div>
+                        </div>*@
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Category</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="category" name="category" value="@Model.Data.Category" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Incoterms</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="incoterms" name="incoterms" value="@Model.Data.IncotermsDesc" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Shipping Method</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" name="ShippingMethod" class="form-control" value="@Model.Data.ShippingMethod" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Cargo Type</label>
+                                            <div class="col-sm-12 col-xs-12">
+                                                <input type="text" name="ShippingMethod" class="form-control" value="@Model.Data.CargoTypeName" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Reference</label>
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control" id="Referrence" name="Referrence" disabled rows="3" cols="3">@Model.Data.RefEdo</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        <form method="post" id="FormShippingInstruction">
+                                            <div class="form-group">
+                                                <label class="col-sm-4">Special Instruction</label>
+                                                <div class="col-sm-12">
+                                                    <textarea class="form-control" name="SpecialInstruction" id="SpecialInstruction" required placeholder="Special Instruction" rows="3" cols="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group hide">
+                                                <label class="col-sm-4">Description</label>
+                                                <div class="col-sm-12">
+                                                    <textarea class="form-control" name="SiDescription" id="SiDescription" required placeholder="Shipping Instruction Description" rows="3" cols="3">-</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4">Document Required</label>
+                                                <div class="col-sm-12">
+                                                    <textarea class="form-control" name="SiDocumentRequired" id="SiDocumentRequired" required placeholder="Document Required" rows="3" cols="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4">PIC For BL / AWB</label>
+                                                <div class="col-sm-12">
+                                                    <select class="js-example-basic-single" name="PicBlAwb" id="PicBlAwb">
+                                                        <option value="IMEX">IMEX</option>
+                                                        <option value="CKB">CKB</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset class="scheduler-border">
+                            <legend style="display: none;">&nbsp;</legend>
+                            <div class="col-md-12">
+                                <div class='card p-4'>
+                                    <table class="table table-bordered" id="tableCargoView" style="width:100%;"></table>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="col-md-12 col-12">
+                            <div class='card p-4'>
+                                <div class='row'>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Total Packages</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control text-right" id="topackCl" name="topackCl" value="" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Total Net Weight</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control text-right" id="tonetwegCl" name="togroswegCl" value="" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Total Gross Weight</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control text-right" id="togroswegCl" name="togroswegCl" value="" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Total Volume</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control text-right" id="tovolumeCl" name="tovolumeCl" value="" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-md-4">Stuffing Date (Started)</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="startstufCl" name="startstufCl" value="@Model.Data.StuffingDateStarted.Value.ToString("dd MMM yyyy")" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4">Stuffing Date (Finished)</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="finishstufCl" name="finishstufCl" value="@Model.Data.StuffingDateFinished.Value.ToString("dd MMM yyyy")" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Vessel / Flight Name</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="veselCl" name="veselCl" value="@Model.Data.VesselFlight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Vessel / Flight No</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageVesselFlight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Connecting Vessel / Flight Name</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="connectveselCl" name="connectveselCl" value="@Model.Data.ConnectingVesselFlight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Connecting Vessel / Flight No</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="voyageCl" name="voyagelCl" value="@Model.Data.VoyageConnectingVessel" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Liner</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="linerCl" name="linerCl" value="@Model.Data.Liner" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Flight / Sailing Schedule (ETD)</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="flightCl" name="flightCl" value="@(Model.Data.SailingSchedule.HasValue ? Model.Data.SailingSchedule.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Arrival Schedule (ETA)</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" id="arrivalCl" name="arrivalCl" value="@(Model.Data.ArrivalDestination.HasValue ?  Model.Data.ArrivalDestination.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Port of Loading</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="portloadCl" name="portloadCl" value="@Model.Data.PortOfLoading" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Port of Discharge / Destination</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="portDiscCl" name="portDiscCl" value="@Model.Data.PortOfDestination" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Booking Number</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="booknumCl" name="booknumCl" value="@Model.Data.BookingNumber" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4">Booking Date</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" id="bookdateCl" name="bookdateCl" value="@(Model.Data.BookingDate.HasValue ? Model.Data.BookingDate.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                    <div class="col-lg-9">
+                                        @*<div class="form-group">
+                            <label class="col-sm-4">ETA</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETA.HasValue ? Model.data.ETA.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                            </div>
+                        </div>*@
+
+                                    </div>
+
+
+
+                                    @*<div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-sm-4">ETD</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETD.HasValue ? Model.data.ETD.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                            </div>
+                        </div>
+                    </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="~/EMCS/CargoList" class="btn btn-warning btn-round"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back</a>
+                                            <button type="button" id="BtnSubmit" class="btn btn-success btn-round"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                            <button type="button" id="BtnApprove" class="btn btn-success btn-round hidden"><i class="fa fa-paper-plane"></i>&nbsp;Approve</button>
+                                            <button type="button" id="BtnRevise" class="btn btn-warning btn-round hidden"><i class="fa fa-pencil"></i>&nbsp;Need Revise</button>
+                                            <button type="button" id="BtnReject" class="btn btn-danger btn-round hidden"><i class="fa fa-times"></i>&nbsp;Reject</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                                    <div class='card p-4'>
+                                        <table id="tableCargoHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="problemhistory">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <div class='card p-4'>
+                                        <table id="tableCargoProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="documents">
+                            <div class="row">
+                                <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                <form method="post" id="DocumentCipl">
+                                    <div class='card p-4'>
+                                        <table style="width:100%" border="0" class="table table-bordered" id="document-cipl">
+                                            <thead>
+                                                <tr>
+                                                    <th style="height:40px;vertical-align:middle;text-align:center;">Name</th>
+                                                    <th style="height:40px;vertical-align:middle;text-align:center;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group div-mandatory">
+                                                            <label class="control-label" id="label-document-SK"><strong>Power of Attorney</strong></label>
+                                                            <input type="text" class="hide" name="UrlDocumentSK" id="url-document-SK" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-SK" type="button" data-toggle="tooltip" title="Upload!"><i class="tim-icons icon-cloud-upload-94"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-SK" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group div-mandatory">
+                                                            <label class="control-label" id="label-document-SPR"><strong>Letter of Return Import</strong></label>
+                                                            <input type="text" class="hide" name="url-document-SPR" id="url-document-SPR" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-SPR" type="button" data-toggle="tooltip" title="Upload!"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-SPR" type="button" target="_blank" data-toggle="Download" title="Hooray!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group div-mandatory">
+                                                            <label class="control-label" id="label-document-SIES"><strong>Temporary Import Permit</strong></label>
+                                                            <input type="text" class="hide" name="url-document-SIES" id="url-document-SIES" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-SIES" type="button" data-toggle="tooltip" title="Upload!"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-SIES" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group div-mandatory">
+                                                            <label class="control-label" id="label-document-SKFB"><strong>Letter of Function of Goods.</strong></label>
+                                                            <input type="text" class="hide" name="url-document-SKFB" id="url-document-SKFB" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-SKFB" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-SKFB" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-LONDG"><strong>Letter of Non Dangerous Goods</strong></label>
+                                                            <input type="text" class="hide" name="url-document-LONDG" id="url-document-LONDG" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-LONDG" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-LONDG" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-MSDS"><strong>MSDS</strong></label>
+                                                            <input type="text" class="hide" name="url-document-MSDS" id="url-document-MSDS" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-MSDS" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-MSDS" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-SD"><strong>Shipment Declaration</strong></label>
+                                                            <input type="text" class="hide" name="url-document-SD" id="url-document-SD" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-SD" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-SD" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-OTHERS"><strong>Others</strong></label>
+                                                            <input type="text" class="hide" name="url-document-OTHERS" id="url-document-OTHERS" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-OTHERS" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-OTHERS" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="tab-document-ckb">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-CKB"><strong>CKB</strong></label>
+                                                            <input type="text" class="hide" name="url-document-CKB" id="url-document-CKB" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-CKB" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-CKB" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr id="tab-document-inspection-report">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label class="control-label" id="label-document-IR"><strong>Inspection Report</strong></label>
+                                                            <input type="text" class="hide" name="url-document-IR" id="url-document-IR" required />
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-info btn-link btn-xs dz-clickable" id="document-IR" type="button"><i class="tim-icons icon-cloud-upload-94" aria-hidden="true" data-toggle="tooltip" title="Upload!"></i></button>
+                                                        <a href="#" class="btn btn-success btn-link btn-xs DownloadDocument" id="download-document-IR" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="tim-icons icon-cloud-download-93"></i></a>
+                                                        <div id="previews">
+                                                            <div id="template" class="template file-row dz-image-preview">
+                                                                <div>
+                                                                    <p class="name" data-dz-name=""></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+    </div>
+</div>
+@*</div>*@
+
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@section scripts
+{
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    @Scripts.Render("~/Content/EMCS/DropZone/dropzone.js")
+    <script>
+        var wizardState = "@ViewBag.WizardData.Progress";
+        var CargoTypeName = "@Model.Data.CargoTypeName";
+        $(function () {
+            $('.js-example-basic-single').select2();
+            $('.DownloadDocument').hide();
+
+            var CategoryCipl = $('#category').val();
+            if (CategoryCipl) {
+
+            }
+            var ExportTypeCipl = $('#exportType').val();
+            if (ExportTypeCipl.includes('Temporary')) {
+                $('#label-document-SK, #label-document-SPR, #label-document-SIES, #label-document-SKFB').addClass('error');
+                $('#url-document-SK, #url-document-SPR, #url-document-SIES, #url-document-SKFB').addClass('do-not-ignore');
+            }
+            var CkbCipl = $('#preparedCl').val();
+            if (CkbCipl === 'Non CKB') {
+                $('#label-document-CKB').addClass('error');
+                $('#url-document-CKB').addClass("do-not-ignore");
+            }
+
+            dropzone();
+            GetDocumentSi();
+        })
+
+        $("#DocumentCipl").validate({
+            onkeyup: false,
+            errorClass: "input-validation-error",
+            ignore: ':hidden:not(.do-not-ignore)',
+
+            errorPlacement: function (error, element) {
+                if (element.hasClass("select2") && element.hasClass("input-validation-error")) {
+                    element.next("span").addClass("input-validation-error");
+                }
+                else if (element.hasClass("select2-hidden-accessible")) {
+                    error.insertAfter(element.parent('span.select2'));
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass(errorClass); //.removeClass(errorClass);
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            //When removing make the same adjustments as when adding
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass(errorClass); //.addClass(validClass);
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                $(element).next("span").removeClass("input-validation-error");
+            },
+
+
+        });
+
+        function GetDocumentSi() {
+            $.ajax({
+                url: '/EMCS/GetDocumentSi',
+                type: 'POST',
+                data: {
+                    IdRequest: $('#CargoID').val(),
+                },
+                cache: false,
+                async: false,
+                success: function (data, response) {
+                    $.each(data, function (index, element) {
+                        console.log(element.Tag);
+                        var id_doc = $('#download-document-' + element.Tag).show();
+                        var url_doc = $('#url-document-' + element.Tag).removeClass('do-not-ignore');
+                        var label_doc = $('#label-document-' + element.Tag).removeClass('error');
+                        download(element.FileName, id_doc, url_doc);
+                    });
+                },
+                error: function (e) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Update Data',
+                    })
+                }
+            })
+        }
+
+        function download(filename, id, url) {
+            id.attr("href", "/Upload/EMCS/SI/" + filename);
+            url.val(filename);
+        }
+
+        function dropzone() {
+            Dropzone.autoDiscover = false;
+            var previewNode = document.querySelector(".template");
+            previewNode.id = "";
+            var previewTemplate = previewNode.parentNode.innerHTML;
+            previewNode.parentNode.removeChild(previewNode);
+
+            $('.dz-clickable').each(function () {
+                var options = $(this).attr('id').split('-');
+                var Name = options[1];
+                $(this).dropzone({
+                    url: '/emcs/UploadDocumentSI',
+                    //paramName: Name,
+                    uploadMultiple: false,
+                    parallelUploads: 1,
+                    clickable: true,
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.pdf",
+                    previewTemplate: previewTemplate,
+                    init: function () {
+                        this.on('sending', function (file, xhr, formData) {
+                            formData.append("IdCargo", $('#CargoID').val());
+                            formData.append("NoCargo", $('#noCl').val());
+                            formData.append("TypeDoc", Name);
+                        });
+                        this.on("addedfile", function (file) {
+                            if (this.files.length > 1) {
+                                this.files = this.files.slice(1, 2);
+                            }
+                        });
+                        //this.on("maxfilesexceeded", function (file) {
+                        //    this.removeAllFiles(); this.addFile(file);
+                        //});
+                    },
+
+                    success: function (file, response) {
+                        $('.dz-image-preview').remove();
+                        if (file.status === "success") {
+                            Swal.fire(
+                                'Processing Document!',
+                                'Document Uploaded Successfully!',
+                                'success'
+                            );
+                            $.ajax({
+                                url: '/EMCS/GetDocumentSI',
+                                type: 'POST',
+                                data: {
+                                    IdRequest: $('#CargoID').val(),
+                                    Tag: Name,
+                                    NoCipl: $('#noCl').val()
+                                },
+                                cache: false,
+                                async: false,
+                                success: function (data, response) {
+                                    GetDocumentSi();
+                                },
+                                error: function (e) {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong! Fail Update Data',
+                                    })
+                                }
+                            })
+
+                        } else {
+                            Swal.fire(
+                                'Processing Document!',
+                                'Error Upload!',
+                                'error'
+                            )
+                        }
+                    },
+                    complete: function (file, response) {
+                        //location.reload();
+                    },
+                    // Rest of the configuration equal to all dropzones
+                });
+
+            });
+        }
+
+        function getDataCipl() {
+            var IdCargo = $("#CargoID").val();
+            $.get(myApp.fullPath + "EMCS/GetTotalDataCargo/" + IdCargo, function (resp) {
+
+            });
+        }
+        function getTotalData() {
+            var IdCargo = $("#CargoID").val();
+            $.get(myApp.fullPath + "EMCS/GetTotalDataCargo/" + IdCargo, function (resp) {
+                var data = {};
+                $.map(resp, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                $("#topackCl").val(formatCurrency(data.totalPackage, ".", ",", 2));
+                $("#togroswegCl").val(formatCurrency(data.totalGrossWeight, ".", ",", 2));
+                $("#tonetwegCl").val(formatCurrency(data.totalNetWeight, ".", ",", 2));
+                $("#tovolumeCl").val(formatCurrency(data.totalVolume, ".", ",", 2));
+            });
+        }
+        getTotalData();
+
+        var visible = false;
+        if (CargoTypeName === "Full Container Load") {
+            visible = true;
+        }
+
+        var tableCargoForm = [
+            [{
+                field: "RowNo",
+                title: "NO",
+                rowspan: 2,
+                align: 'center'
+            }, {
+                field: "IdCipl",
+                rowspan: 2,
+                visible: false
+            }, {
+                field: "ContainerNumber",
+                title: "CONTAINER",
+                visible: visible,
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "IncoTerm",
+                rowspan: 2,
+                visible: false
+            }, {
+                field: "ContainerType",
+                title: "CONTAINER TYPE",
+                visible: visible,
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: function (data, row, index) {
+                    if (data !== "") {
+                        return data;
+                    }
+                    return "-";
+                }
+            }, {
+                field: "CaseNumber",
+                title: "CASE NUMBER",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: function (data, row, index) {
+                    if (data !== "") {
+                        return data;
+                    }
+                    return "-";
+                }
+            }, {
+                field: "ItemName",
+                title: "ITEM NAME",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: function (data, row, index) {
+                    if (data !== "") {
+                        return data;
+                    }
+                    return "-";
+                }
+            }, {
+                field: "reference",
+                title: "REFERENCE",
+                colspan: 2,
+                sortable: true,
+                align: 'center'
+            }, {
+                field: "CargoDescription",
+                title: "CARGO DESCRIPTION",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "volume",
+                title: "VOLUME",
+                colspan: 3,
+                align: 'center',
+                sortable: true,
+                formatter: currencyFormatter
+            }, {
+                field: "NetWeight",
+                title: "NET WEIGHT (KGS)",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: currencyFormatter
+            }, {
+                field: "GrossWeight",
+                title: "GROSS WEIGHT (KGS)",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: currencyFormatter
+            }],
+            [{
+                    field: "EdoNo",
+                    title: "EDI Number #",
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: "InboundDa",
+                    title: "INBOUND DA #",
+                    halign: 'center',
+                    align: 'left',
+                    sortable: true
+                }, {
+                    field: "Length",
+                    title: "Length",
+                    align: 'center',
+                    sortable: true,
+                    formatter: currencyFormatter
+                }, {
+                    field: "Width",
+                    title: "Width",
+                    align: 'center',
+                    sortable: true,
+                    formatter: currencyFormatter
+                }, {
+                    field: "Height",
+                    title: "Height",
+                    align: 'center',
+                    sortable: true,
+                    formatter: currencyFormatter
+                }
+            ]
+        ]
+
+        $tableCargoForm = $("#tableCargoView");
+        $tableCargoForm.bootstrapTable({
+            columns: tableCargoForm,
+            url: myApp.fullPath + "/EMCS/GetCargoListItem",
+            cache: false,
+            sidePagination: 'server',
+            pagination: true,
+            search: false,
+            queryParams: function (params) {
+                var CargoID = $("#CargoID").val();
+                return { "Id": CargoID }
+            },
+            striped: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            responseHandler: function (resp) {
+                var data = {};
+                $.map(resp, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                return data;
+            },
+            toolbar: '.toolbar',
+            toolbarAlign: 'left',
+            onClickRow: selectRow,
+            showColumns: true,
+            showRefresh: true,
+            smartDisplay: false,
+            pageSize: '10',
+            formatNoMatches: function () {
+                return '<span class="noMatches">No Item Found</span>';
+            },
+
+        });
+    </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Wizard/ProgressWizard.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    <script>
+        // #region Approve Function
+        function ApproveCargo(data) {
+            $.ajax({
+                url: "/EMCS/TaskSI",
+                type: "POST",
+                data: data,
+                success: function (resp) {
+                    location.href = "/EMCS/MyTask";
+                },
+                error: function (e) {
+                    Swal.fire({
+                        type: 'error',  
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Update Data',
+                    })
+                }
+            });
+        }
+        // #endregion
+
+        // #region Btn Action Region
+        $("#BtnSubmit").on("click", function () {
+            var formsi = $("#FormShippingInstruction").valid();
+            var document = $('#DocumentCipl').valid();
+
+            if (formsi) {
+                if (!document) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Please Upload Document Required in Tab Document',
+                    })
+                    return false;
+                }
+
+                Swal.fire({
+                    title: 'Submit Confirmation',
+                    text: 'Do you want to continue ?',
+                    type: 'question',
+                    showCancelButton: true,
+                    cancelButtonColor: '#d33',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, Submit!',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showCloseButton: true
+                }).then((result) => {
+                    if (result.value) {
+                        var Id = $("#SiID").val();
+                        var IdCL = $("#CargoID").val();
+                        var Description = $("#SpecialInstruction").val();
+                        var SpecialInstruction = $("#SpecialInstruction").val();
+                        var DocumentRequired = $("#SiDocumentRequired").val();
+                        var PicBlAwb = $('#PicBlAwb').val();
+                        var Type = $('#Type').val();
+                        var data = { Id: Id, IdCL: IdCL, Description: Description, SpecialInstruction: SpecialInstruction, DocumentRequired: DocumentRequired, PicBlAwb: PicBlAwb, ExportType: Type };
+                        ApproveCargo(data);
+                    }
+                    return false;
+                });
+            } else {
+                var cord = ($(".error").offset().top) ? parseInt($(".error").offset().top) - 100 : 0;
+                $('html, body').animate({
+                    scrollTop: cord
+                }, 2000);
+            }
+        });
+
+
+    </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoDocuments.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoItem.cshtml.js")"></script>
+}
+
+<script>
+    var tabs = $('.tabs');
+    var selector = $('.tabs').find('a').length;
+    //var selector = $(".tabs").find(".selector");
+    var activeItem = tabs.find('.active');
+    var activeWidth = activeItem.innerWidth();
+    $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+    });
+
+    $(".tabs").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabs a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).innerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+            "left": itemPos.left + "px",
+            "width": activeWidth + "px"
+        });
+    });
+</script>

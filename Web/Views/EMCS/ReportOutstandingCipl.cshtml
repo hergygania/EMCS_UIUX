@@ -1,0 +1,73 @@
+﻿﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Report Outstanding Cipl";
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+<style>
+    .tableFixHead thead {
+        position: sticky;
+        top: 0;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <div class="form-group">
+                                    <label class="col-md-12">Start Period</label>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                @*<input id="inp-start-date" type="text" class="form-control" name="email" placeholder="Start Period">*@
+                                                <input class="form-control date required" id="inp-start-date" name="inp-start-date" placeholder="Start Period" style="background:white;" value="@DateTime.Now.ToString("01 Jan yyyy")">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <div class="form-group">
+                                    <label class="col-md-12" style="text-align: left;">End Period</label>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <input class="form-control date required" id="inp-end-date" name="inp-end-date" placeholder="End Period" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12 pull-right">
+                                <div class="form-group text-right">
+                                    <button class="btn btn-warning btn-round" onclick="searchDataReport()"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-success btn-round" onclick="exportDataReport()"><i class="fa fa-file"></i> Export To Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped tableFixHead" data-toolbar=".toolbar" id="tbl-outstandingcipl"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/OutstandingCipl.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

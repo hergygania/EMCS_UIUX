@@ -1,0 +1,65 @@
+﻿<ul id="menu-cont" class="sidebar-menu iin" style="position:relative;width:350px;">
+    <li class="header">MAIN NAVIGATION</li>
+    <li class="treeview active"><a href="/"><i class="fa fa-home"></i>Home</a></li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-exchange"></i>Vetting Process
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="/vetting-process/sea-freight"><i class="fa fa-ship"></i>Sea Freight</a>
+            </li>
+            <li>
+                <a href="/vetting-process/air-freight"><i class="fa fa-plane"></i>Air Freight</a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-database"></i>IMEX Data
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="/imex-data/shipment"><i class="fa fa-paper-plane-o"></i>Shipping Data</a>
+            </li>
+            <li>
+                <a href="/imex-data/return-to-vendor"><i class="fa fa-reply"></i>Return to Vendor</a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-list-alt"></i>
+            Imex Report
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="/Report/PartOrderReport"><i class="fa fa-file"></i>Part Order Report</a>
+            </li>
+            <li>
+                <a href="/Report/PartOrderCaseReport"><i class="fa fa-file"></i>Part Order Case Report</a>
+
+            </li>
+            <li>
+                <a href="/Report/PartOrderDetailReport"><i class="fa fa-file"></i>Part Order Detail Report</a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li id="logout">
+        <a href="javascript:void(0);" onclick="return loadingPage('/sign-out')"><i class="fa fa-sign-out"></i><span>Log Off</span></a>
+    </li>
+
+
+</ul>
+
+<script type="text/javascript">
+    //$(function () {
+    //	$.AdminLTE.tree('.sidebar');
+    //});
+</script>

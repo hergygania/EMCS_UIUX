@@ -1,0 +1,110 @@
+﻿﻿
+@{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+    ViewBag.Title = "Master Video";
+    Layout = "~/Views/EMCS/_Layout.cshtml";
+}
+@Styles.Render("~/Content/EMCS/Custom.css")
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+
+<div class="col-md-12">
+    <div class="box box-warning">
+        <div class="box-body">
+            <div class="">
+                <div class="toolbar">
+                    @{
+                        if (ViewBag.AllowCreate)
+                        {
+                            <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/VideoCreate" id="btnCreate">
+                                <i class="fa fa-plus"></i> Add Video
+                            </a>
+                        }
+                    }
+                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                        <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                    </div>
+                </div>
+            </div>
+            <table id="tableVideo" data-toolbar=".toolbar" class="table table-bordered"></table>
+        </div>
+    </div>
+</div>
+
+<a data-modal="" href="/EMCS/VideoEdit/1" class="editRecord" style="display:none;">
+    <i class="fa fa-edit"></i> Update Video
+</a>
+
+<a data-modal="myModalUploadPlace" href="/EMCS/VideoUpload/1" class="uploadRecord" style="display:none;">
+    <i class="fa fa-edit"></i> Upload Video
+</a>
+
+<a data-modal="myModalPreviewPlace" href="/EMCS/PreviewVideo/1" class="previewVideo" style="display:none;">
+    <i class="fa fa-edit"></i> Preview Video
+</a>
+
+
+<div id='myModalPlace' class='modal'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalUploadPlace' class='modal'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalUploadContent'>
+                <div class="modal-header"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalPreviewPlace' class='modal'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div id='myModalPreviewContent'>
+                <div class="modal-header"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/VideoList.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}
+

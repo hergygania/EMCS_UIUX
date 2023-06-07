@@ -1,0 +1,304 @@
+﻿[
+  {
+    "id": 1,
+    "colVal": "",
+    "1LvlMat": "579059",
+    "FgNr": 3611,
+    "pid": 0,
+    "MatDesc": "",
+    "status": 1,
+    "lvl": 0,
+    "name": "Finished Goods",
+    "permissionValue": "open:system:get",
+    "val": "4,175,313",
+    "children": [
+      {
+        "id": 2,
+        "colVal": "",
+        "1LvlMat": "579059",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Raw",
+        "status": 1,
+        "name": "Raw",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 3,
+            "colVal": "40ft",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 4,
+            "colVal": "960",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 5,
+            "colVal": "3,651,796",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "colVal": "",
+        "1LvlMat": "579059",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Pack",
+        "status": 1,
+        "name": "Pack",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 7,
+            "colVal": "40ft",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 8,
+            "colVal": "960",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Pack Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 9,
+            "colVal": "3,651,796",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Pack Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "colVal": "",
+        "1LvlMat": "579059",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Conv Cost",
+        "status": 1,
+        "name": "Conv Cost",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 11,
+            "colVal": "40ft",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Finish Goods",
+            "status": 1,
+            "name": "Finish Goods",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "colVal": "",
+    "1LvlMat": "579165",
+    "FgNr": 3611,
+    "pid": 0,
+    "lvl": 0,
+    "MatDesc": "",
+    "status": 1,
+    "name": "Finished Goods",
+    "permissionValue": "open:dict:get",
+    "val": "4,175,313",
+    "children": [
+      {
+        "id": 13,
+        "colVal": "",
+        "1LvlMat": "579165",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Raw",
+        "status": 1,
+        "name": "Raw",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 14,
+            "colVal": "40ft",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 15,
+            "colVal": "960",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 16,
+            "colVal": "3,651,796",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Raw Material",
+            "status": 1,
+            "name": "Raw Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "colVal": "",
+        "1LvlMat": "579165",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Pack",
+        "status": 1,
+        "name": "Pack",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 18,
+            "colVal": "40ft",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Pack Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          },
+          {
+            "id": 19,
+            "colVal": "960",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Pack Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          },
+          {
+            "id": 20,
+            "colVal": "3,651,796",
+            "1LvlMat": "579165",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Pack Material",
+            "status": 1,
+            "name": "Pack Material",
+            "permissionValue": "open:system:delete",
+            "val": ""
+          }
+        ]
+      },
+      {
+        "id": 21,
+        "colVal": "",
+        "1LvlMat": "579165",
+        "FgNr": 3611,
+        "pid": 1,
+        "lvl": 1,
+        "MatDesc": "Conv Cost",
+        "status": 1,
+        "name": "Conv Cost",
+        "permissionValue": "open:system:add",
+        "val": "",
+        "children": [
+          {
+            "id": 22,
+            "colVal": "40ft",
+            "1LvlMat": "579059",
+            "FgNr": 3611,
+            "pid": 20,
+            "lvl": 2,
+            "MatDesc": "Finish Goods",
+            "status": 1,
+            "name": "Finish Goods",
+            "permissionValue": "open:system:edit",
+            "val": ""
+          }
+        ]
+      }
+    ]
+  }
+]

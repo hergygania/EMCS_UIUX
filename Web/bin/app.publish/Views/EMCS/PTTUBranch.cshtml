@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Total Transaction Per PTTU Branch";
+}
+
+<style>
+    .table {
+        width: 100% !important;
+    }
+</style>
+
+@Styles.Render("~/Content/EMCS/Custom.css")
+
+<div class="row">
+    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
+        <div class="form-horizontal">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4">Start Period</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @*<input id="inp-start-date" type="text" class="form-control" placeholder="Start Period" value="@DateTime.Now.ToString("01 Jan yyyy")" readonly>*@
+                            <input id="inp-start-date" type="text" class="form-control" placeholder="Start Period" readonly>
+                            <span class="input-group-addon cal-start-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4" style="text-align: left;">End Period</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            @*<input id="inp-end-date" type="text" class="form-control" placeholder="End Period" value="@DateTime.Now.ToString("dd Jan yyyy")" readonly>*@
+                            <input id="inp-end-date" type="text" class="form-control" placeholder="End Period" readonly>
+                            <span class="input-group-addon cal-end-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-3">Category</label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="jenisBarangCipl" name="jenisBarangCipl">
+                            <option value="">--All--</option>
+                            <option value="Branch" selected>PPTU BRANCH</option>
+                            <option value="Loading">LOADING PORT</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" id="formAdvanceSearch" style="margin-top:20px;">
+        <div class="form-horizontal  pull-right">
+            <div class="col-md-12">
+                <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
+                <button class="btn btn-warning" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="div-report-pptu">
+    <div class="col-md-12">
+        <div id="container">
+            <table class="table table-bordered" data-show-footer="false" data-footer-style="footerStyle" id="tbl-pttu-branch"></table>
+            <br /><br />
+            <table class="table table-bordered" data-show-footer="false" data-footer-style="footerStyle" id="tbl-pttu-average"></table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts.app/EMCS/report/PTTUBranch.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}

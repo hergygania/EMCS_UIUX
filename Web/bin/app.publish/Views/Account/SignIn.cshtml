@@ -1,0 +1,299 @@
+﻿@model App.Web.Models.UserSignInViewModel
+@{
+    Layout = null;
+    var isMobileDevice = ViewBag.isMobileDevice;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <style type="text/css">
+        .fullScreen {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            border: none 0px #000000;
+            background-color: #000000;
+            /*background-image: url("/Content/Images/logo.png");
+            background-repeat: no-repeat;
+            background-position: 44% 50%;
+            background-size: 100%;*/
+        }
+
+        .form-control::-webkit-input-placeholder {
+            color: grey;
+            font-weight: bold;
+        }
+
+        .form-control:-moz-placeholder {
+            color: grey;
+            font-weight: bold;
+        }
+
+        .form-control::-moz-placeholder {
+            color: grey;
+            font-weight: bold;
+        }
+
+        .form-control:-ms-input-placeholder {
+            color: grey;
+            font-weight: bold;
+        }
+        .newlayout {
+            /*position: absolute;
+            width: 440px;
+            height: 380px;
+            left: 40%;
+            top: 25%;*/
+            border-color: white;
+            border-width: 2px;
+            
+            border-radius: 10px;
+            /* Note: backdrop-filter has minimal browser support */
+            /*border-radius: 20px;*/
+        }
+
+        .label-custom {
+            height: 40px;
+            /*width: 100%;
+            left: 28px;
+            top: 180px;*/
+            border-radius: 10px;
+            border: 2px solid #EEEEEE;
+            background-color: black;
+            padding-top: 2px;
+            padding-left: 10px;
+        }
+    </style>
+
+
+    @Styles.Render("~/Content/css")
+
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/crypto-js.min.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+</head>
+<body class="fullScreen" style="width:100%; height:100%; margin-top:0px;margin-left:0px;">
+    <div class="container">
+        <fieldset id="mainField" class="box-x box-warning-x;" style="margin-top:10%; margin-left:38%; width:305px; min-height:333px; text-align:center;background-color: #1A1C28;border-radius: 20px; overflow-y:auto">
+           <br />
+            <img src="~/Images/trakindo_logo.jpg" alt="" style="" />
+            <br />
+            <div style="background: #1A1C28;">
+                <div class="newlayout">
+                    <div style="height:50%;margin-top:13px; margin-bottom:0px">
+                        <span style="left:50%; font-weight:bolder; color:white;font-size: 125%;">SCIS</span>
+                        <br />
+                        <span style="left:50%; font-weight:bolder; color:white;font-size: 125%;">Supply Chain Information System</span>
+                    </div>
+                    <div class="col-lg-10 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-12">
+                        @using (Html.BeginForm("SignIn", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "submitPage()" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="panelx panel-infox">
+                                <div class="panel-body">
+                                    <div class="form-group col-12">
+                                        @Html.ValidationMessage("Error")
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-12">
+                                            <div class="label-custom">
+                                                <img src="~/Images/Profile.png" />
+                                                @Html.TextBoxFor(m => m.UserID, new { placeholder = "Username", style = "border:none;margin-left:10px;width:80%;height: 30px;background-color:black;color:white;font-size:14px" })
+                                                @Html.ValidationMessageFor(m => m.UserID, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-12">
+                                            <div class="label-custom">
+                                                <img src="~/Images/Password.png" />
+                                                @Html.PasswordFor(m => m.Password, new { placeholder = "Password", style = "border:none;margin-left:10px;width:80%;height: 30px;background-color:black;color:white;font-size:14px" })
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <table style="width:100%;border-radius: 10px;">
+                                            <tr class="label-custom">
+                                                <td>
+                                                    <img src="~/Images/Edit.png" style="padding-left:1px" />
+                                                    @Html.TextBoxFor(m => m.Captcha, new { placeholder = "Captcha", style = "border:none;padding-left:2px;width:60%;height: 30px;background-color:black;color:white;font-size:14px" })
+                                                </td>
+                                                <td style="width:10%;background:#FFFFFF;border-radius: 3px;">
+                                                    <img src="/account/ShowCaptchaImage?" class="imgCaptcha" style="background-color:white" />
+                                                </td>
+                                                <td style="background:#FFFFFF">
+                                                    <button type="button" class="btn btn-default btnReCaptcha" style="width:3px;padding-left:5px; padding-right:13px;background:#FFFFFF"><i class="fa fa-refresh"></i></button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        @Html.ValidationMessageFor(m => m.Captcha, "", new { @class = "text-danger" })
+                                        di
+                                    </div>
+
+                                    <div class="form-group col-12" style="margin-top:20px;">
+                                        <button type="submit" class="btn btn-warning" tabindex="10" style="width:100%;height: 46px; font-weight:bold; color:white; border-radius: 10px">LOGIN</button>&nbsp;&nbsp;
+
+                                        <label style="color: grey; margin-top:11px">
+                                            Forgot Password ?<a href="" data-toggle="modal" data-target="#mdlForgot"> Click here</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+         
+        </fieldset>
+    </div>
+
+    <div id="mdlForgot" class="modal" data-focus-on="input:first" style="margin-top:9%;top:9%;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h3 class="modal-title col-sm-12"> Forgot Password <span id="titleModal"></span><hr /></h3>
+
+                @using (Html.BeginForm("forgotPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "frmForgot", onsubmit = "return frmForgotSubmit(this)" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="lg-12"></div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-sm-4" for="email">Enter your email</label>
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="forgot@email.com" required="required">
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div class="lg-12"></div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-sm-4" for="captcha"></label>
+                            <div class="col-sm-5">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" name="captcha" id="captcha" placeholder="captcha" required="required">
+                                        </td>
+                                        <td style="width:10%">
+                                            <img src="/account/ShowCaptchaImage?" style="" class="imgCaptcha" />
+                                        </td>
+                                        <td style="width:2%">
+                                            <button type="button" class="btn btn-default btnReCaptcha" style="width:3px;padding-left:5px; padding-right:13px"><i class="fa fa-refresh"></i></button>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="col-sm-3"></div>
+                            <div class="lg-12"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <br />
+                        <div class="lg-12"></div>
+                        <button type="button" class="btn btn-default closeOm" data-dismiss="modal">Cancel</button>
+                        <input class="btn btn-success" type="submit" id="submit" name="submit" value="Submit" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="/Scripts/sweetalert-dev.js"></script>
+    <script>
+		function sAlert(title, text, type) {
+			swal({
+				title: title,
+				text: text,
+				type: type,
+				html: true
+			});
+		};
+
+		function submitPage() {
+			$('button').prop('disabled', true)
+            $('.btn-warning').text('...Sign-In Processing...')
+            if (document.getElementById("Password").value != "") {
+                document.getElementById("Password").value = CryptoJS.SHA256(document.getElementById("Password").value);
+            }
+		}
+
+		function frmForgotSubmit(frm) {
+			$('button').prop('disabled', true)
+			$('#progress').show();
+
+			$.ajax({
+				url: '/Account/forgotPassword',
+				type: frm.method,
+				data: $(frm).serialize(),
+				success: function (result) {
+
+					$('#mdlForgot').modal('toggle');
+					$('button').prop('disabled', false)
+
+					if (result.Status == 0) {
+						if (result.Msg != undefined) sAlert('Success', result.Msg, 'success');
+						$('#progress').hide();
+					}
+					else {
+						if (result.Msg != undefined) sAlert('Failed', result.Msg, 'error');
+						$('#progress').hide();
+					}
+				}
+			});
+			return false;
+		}
+
+		(function ($) {
+			$.fn.extend({
+				center: function () {
+					return this.each(function () {
+						var top = (($(window).height() - $(this).outerHeight()) / 2) - 21;
+						var left = (($(window).width() - $(this).outerWidth()) / 2) + 21;
+						$(this).css({ position: 'absolute', margin: 0, top: (top > 0 ? top : 0) + 'px', left: (left > 0 ? left : 0) + 'px' });
+					});
+				}
+			});
+		})(jQuery);
+
+		$(document).ready(function () {
+			$('#mainField').center();
+			$(window).bind('resize', function () {
+				$('#mainField').center({ transition: 255 });
+			});
+			var isMobileDevice = '@isMobileDevice';
+			if (isMobileDevice == 'True') {
+                var left = (($(window).width() - $(this).outerWidth()) / 2) + 50;
+                var top = (($(window).width() - $(this).outerWidth()) / 2) + 30;
+				$("body").css('background-image', 'none');
+                $("#mainField").css('left', left);
+                $("#mainField").css('top', top);
+			};
+
+			$('.btnReCaptcha').click(function () {
+				var img = $('.imgCaptcha');
+				var src = img.attr('src');
+				var d = new Date();
+				img.attr('src', src + '?' + d.getTime());
+			});
+
+		});
+    </script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+
+</body>
+
+</html>

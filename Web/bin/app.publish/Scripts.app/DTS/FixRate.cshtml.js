@@ -1,0 +1,17 @@
+﻿$("#tableFixRate").bootstrapTable({
+    cache: false,
+    pagination: true,
+    search: false,
+    striped: true,
+    clickToSelect: true,
+    reorderableColumns: true,
+    toolbar: '.toolbar',
+    toolbarAlign: 'left',
+    //onClickRow: selectRow,
+    //sidePagination: 'server',
+    showColumns: true,
+    showRefresh: true,
+    smartDisplay: false,
+    //pageSize: '5',
+    //fixedColumns: true,
+});

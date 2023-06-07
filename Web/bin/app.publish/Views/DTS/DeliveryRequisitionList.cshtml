@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Delivery Requisition List";
+}
+
+@using System.Web.Mvc
+<script type="text/javascript">
+    var allowCreate = "@(ViewBag.allowCreate)";
+    var allowUpdate = "@(ViewBag.allowUpdate)";
+    var allowDelete = "@(ViewBag.allowDelete)";
+</script>
+<style type="text/css">
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
+
+    .toolbarBtn {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="toolbar">
+                    @{
+                        if (ViewBag.AllowCreate)
+                        {
+                            <button class="btn btn-success" type="button" id="btnAddRequest">
+                                <i class="fa fa-plus-circle"></i> New
+                            </button>
+                        }
+                    }
+                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
+                        <input name="searchText" class="form-control" type="text" placeholder="Search Delivery Requisition" style="height: 32px;">
+                    </div>
+                </div>
+                <table id="tableDeliveryRequisition" data-toolbar=".toolbar" class="table table-bordered"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModalRequest' class='modal fade in'>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @Html.Partial("~/Views/DTS/_FormRequisiting.cshtml")
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="/Scripts/loadingoverlay.min.js"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/_FormRequisiting.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/DTS/DeliveryRequisitionList.cshtml.js")"></script>
+}
+

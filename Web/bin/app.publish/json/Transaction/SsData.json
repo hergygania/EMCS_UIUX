@@ -1,0 +1,103 @@
+﻿{
+  "total": 100,
+  "rows": [
+    {
+      "id": 1,
+      "clno": "SS002140218XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "Cipta Krida Bahari",
+      "consignee": "Caterpillar USA",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "USA Port",
+      "status": "Inprogress",
+      "bookingno": "xxxxxxxxxx",
+      "date": "28-Nov-18"
+    },
+    {
+      "id": 2,
+      "clno": "SS002140200XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "Cipta Krida Bahari",
+      "consignee": "Caterpillar USA",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "USA Port",
+      "status": "Done",
+      "bookingno": "xxxxxxxx",
+      "date": "11-Dec-18"
+    },
+    {
+      "id": 3,
+      "clno": "SS002140201XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "PT. Trakindo Utama - IMEX",
+      "consignee": "Caterpillar Germany",
+      "method": "AIR",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Batu Kajang",
+      "destination": "Singapore",
+      "status": "Waiting SS Approval",
+      "bookingno": "xxxxxxxxxx",
+      "date": "10-Jan-19"
+    },
+    {
+      "id": 4,
+      "clno": "SS002140202XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "PT. Trakindo Utama - IMEX",
+      "consignee": "Caterpillar USA",
+      "method": "AIR",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Batu Licin",
+      "destination": "USA Port",
+      "status": "Inprogress",
+      "bookingno": "xxxxxxxxxx",
+      "date": "13-Dec-19"
+    },
+    {
+      "id": 5,
+      "clno": "SS002140203XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "PT. Trakindo Utama - IMEX",
+      "consignee": "CATERPILLAR S.A.R.L. Singapore Branch",
+      "method": "AIR",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "Singapore",
+      "status": "Inprogress",
+      "bookingno": "xxxxxxxxxx",
+      "date": "28-Nov-19"
+    },
+    {
+      "id": 6,
+      "clno": "SS002140204XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "PT. Trakindo Utama - IMEX",
+      "consignee": "RITCHIE BROS. AUCTIONEERS PTY. LTD",
+      "method": "AIR",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tj. Priok",
+      "destination": "Singapore",
+      "status": "Done",
+      "bookingno": "xxxxxxxxxx",
+      "date": "18-Dec-18"
+    },
+    {
+      "id": 7,
+      "clno": "SS002140205XP",
+      "branch": "PT. TRAKINDO UTAMA",
+      "preparedby": "PT. Trakindo Utama - IMEX",
+      "consignee": "Trakindo Australia",
+      "method": "SEA",
+      "forwarder": "PT. Cipta Krida Bahari",
+      "loading": "Tanjung Redeb",
+      "destination": "AUS Port",
+      "status": "Done",
+      "bookingno": "xxxxxxxxxx",
+      "date": "16-Jan-19"
+    }
+  ]
+}

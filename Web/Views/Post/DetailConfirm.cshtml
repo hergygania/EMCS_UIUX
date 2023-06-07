@@ -1,0 +1,202 @@
+﻿@{
+    Layout = "~/Views/Post/_Layout.cshtml";
+}
+<div class="row" style="margin-top:75px;">
+    <div class="custom-grid-style">
+        <button class="btn btn-default" data-last="~/HomeVendor" onclick="goToLastPage()" type="button"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back to List</button>&nbsp;
+        <a href="~/Post/DetailDelivering" class="btn btn-success delivery float-right" style="color:white;">Go to Delivery  <span class="fa fa-chevron-circle-right"></span></a>
+    </div>
+</div>
+
+<div class="row">
+    <div style="margin-top:10px; width:100%;">
+        <table id="table-inprogress" data-classes="table-borderless" class="table"></table>
+        <hr />
+        @Html.Partial("~/Views/Post/NavSearchDetail.cshtml")
+        <div style="margin-top:20px">
+            <div class="table-responsive">
+                <table id="table-item" class="table table-bordered table-hover table-striped" style="width:100%;"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/POST/Custom.css" rel="stylesheet" />
+@*<link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>*@
+<link href="~/Content/POST/bootstrap-table.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+@section scripts{
+    <script type="text/javascript">
+        var dataHeader = [{
+            No: 1,
+            PONo: '14500124422',
+            PODate: '25.01.2020',
+            DeliveryDate: '30.01.2020',
+            StatusPO: 'On Schedule',
+            DeliveryType: 'FULL DELIVERY',
+            ShippingBy: `Send To Forwarder`,
+            Confirmation: false,
+            Processing: false,
+            Delivering: false,
+            Bast: false,
+            Invoicing: false,
+        }]
+        var dataItem = [{
+            Item: 'Cartridge HP CE285A BLACK / HP 85A',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '5',
+            Uom: 'EA',
+            Price: '800.000',
+            Total: '4.000.000',
+            Destination: 'BATU HIJAU 1 - TU',
+            User: 'SUMIATI',
+            Position: 'TOL MERAK'
+        },
+        {
+            Item: 'Cartridge HP CF287A',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '2',
+            Uom: 'EA',
+            Price: '326.500',
+            Total: '3.265.000',
+            Destination: 'BENGKULU - TU',
+            User: 'FAJRIANSYAH',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP F6VA26A BLACK / 680 B',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '2',
+            Uom: 'EA',
+            Price: '105.000',
+            Total: '210.000',
+            Destination: 'Tanjung Redeb - TU',
+            User: 'Ikhwan Cipta',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP F6VA27A COLOUR / 680 C',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '2',
+            Uom: 'SET',
+            Price: '105.000',
+            Total: '210.000',
+            Destination: 'Tanjung Redeb - TU',
+            User: 'Ikhwan Cipta',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP CF287A',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '1',
+            Uom: 'EA',
+            Price: '2.600.000',
+            Total: '2.600.000',
+            Destination: 'Bengkulu - TU',
+            User: 'Fajriansyah',
+            Position: 'BANDUNG'
+        },
+
+        {
+            Item: 'CARTRIDGE HP CF287A',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '2',
+            Uom: 'EA',
+            Price: '3.000.000',
+            Total: '6.000.000',
+            Destination: 'Meulaboh - TU',
+            User: 'Hamdani',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP CN055A / 933 XL MAGENTA',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '1',
+            Uom: 'EA',
+            Price: '188.000',
+            Total: '188.000',
+            Destination: 'Central Service - TU',
+            User: 'Rani Maharan',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP CN054A / 933 XL CYAN',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '2',
+            Uom: 'EA',
+            Price: '188.000',
+            Total: '376.000',
+            Destination: 'Central Service - TU',
+            User: 'Rani Maharan',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP CN056A / 933 XL YELLOW',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '6',
+            Uom: 'EA',
+            Price: '188.000',
+            Total: '1.128.000',
+            Destination: 'Central Service - TU',
+            User: 'Rani Maharan',
+            Position: 'BANDUNG'
+        },
+        {
+            Item: 'CARTRIDGE HP CN057S / HP 932 BLACK',
+            Status: 'ON SCHEDULE',
+            DeliveryType: 'FULL DELIVERY',
+            Forwarder: 'CKB',
+            ETD: '30.07.2020',
+            ATD: '30.07.2020',
+            Qty: '8',
+            Uom: 'EA',
+            Price: '240.000',
+            Total: '1.920.000',
+            Destination: 'Central Service - TU',
+            User: 'Rani Maharan',
+            Position: 'BANDUNG'
+        }]
+        var statusPoVisible = false;
+        var deliveryTypeVisible = false;
+        var shippingByVisible = false;
+    </script>
+    <script src="~/Scripts.app/POST/VendorDetail.js" type="text/javascript"></script>
+    <script src="~/Scripts.app/POST/VendorDetail.js" type="text/javascript"></script>
+}

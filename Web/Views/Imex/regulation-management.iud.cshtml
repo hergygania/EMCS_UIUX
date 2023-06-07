@@ -1,0 +1,134 @@
+﻿@model App.Data.Domain.RegulationManagement
+@{
+	var mode = ViewBag.crudMode;
+	var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+}
+
+<style type="text/css">
+	.select2-selection__choice {
+		white-space: normal !important;
+	}
+</style>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title"><i class="fa fa-list"></i> @title Regulation Management</h4>
+</div>
+
+@using(Html.BeginForm(null, null, FormMethod.Post, new { id = "frmDialog"}))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="modal-body" style="margin:10px">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Regulation</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.Regulation, new { @class = "form-control required", placeholder = "regulation name" })
+							<div>@Html.ValidationMessageFor(m => m.Regulation)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Description</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextAreaFor(m => m.Description, new { @class = "form-control required", placeholder = "description", row = 3 })
+							<div>@Html.ValidationMessageFor(m => m.Description)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Order Method</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<select class="js-states form-control" id="OMID" name="OMID" style="width: 95%;">
+								<option value="@Model.OMID">@Model.OMCode</option>
+							</select>
+						</div>
+					</div>
+					@*<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Lartas</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<select class="js-states form-control required" id="LartasId" name="LartasId" style="width: 95%;">
+								<option value="@Model.LartasId">@Model.LartasDesc</option>
+							</select>
+							<div>@Html.ValidationMessageFor(m => m.LartasId)</div>
+						</div>
+					</div>*@
+				</div>
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Issued By</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.IssuedBy, new { @class = "form-control required", placeholder = "issued by" })
+							<div>@Html.ValidationMessageFor(m => m.IssuedBy)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Issued Date</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							@Html.TextBoxFor(m => m.IssuedDate, "{0:dd MMM yyyy}", new { @class = "form-control pull-left date required", placeholder = "issued date" })
+							<div class="input-group-addon cal">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-4 col-xs-4">Status</label>
+						<div class="input-group col-lg-8 col-xs-8">
+							<select class="js-states form-control" id="Status" name="Status" style="width: 95%; display: none">
+								<option @(Model.Status == 1 ? "selected='selected" : "") value="1">Active</option>
+								<option @(Model.Status != 1 ? "selected='selected" : "") value="0">Inactive</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<span id="progress" class="text-center" style="display: none;">
+			<img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+			Wait..
+		</span>
+		@if(mode == "I")
+		{
+			<button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Save</button>
+		}
+		else if(mode == "U")
+		{
+			<button type="submit" class="btn btn-success" style="width:125px;"><i class="fa fa-save"></i> Update</button>
+		}
+		else
+		{
+			<button type="submit" class="btn btn-danger" style="width:125px;"><i class="fa fa-trash-o"></i> Delete</button>
+		}
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width:125px;"><i class="fa fa-times-circle"></i> Close</button>
+	</div>
+
+	<input type="hidden" name="RegulationManagementID" value="@Model.RegulationManagementID" />
+	<input type="hidden" name="EntryDate" value="@Model.EntryDate" />
+	<input type="hidden" name="EntryBy" value="@Model.EntryBy" />
+
+}
+
+<script type="text/javascript">
+
+	$(function () {
+		if (typeof window.rebindCSS == "undefined")
+			$.getScript("/scripts/script.js");
+		else
+			rebindCSS();
+
+		//helpers.buildDropdown('/Picker/GetListLartas', $('#LartasId'), true, '- select lartas -');
+		helpers.buildDropdown('/Picker/GetListOM', $('#OMID'), true, '-');
+		$.fn.modal.Constructor.prototype.enforceFocus = function () { };
+		$("form").removeData("validator");
+		$("form").removeData("unobtrusiveValidation");
+		$.validator.unobtrusive.parse("form");
+
+		$('.cal').click(function () {
+		    $('#IssuedDate').datepicker('show');
+		});
+	});
+</script>

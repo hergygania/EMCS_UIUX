@@ -1,0 +1,180 @@
+﻿@{
+    /**/
+
+    Layout = "~/Views/Shared/_Layoutv2.cshtml";
+    ViewBag.Title = "DTS Home";
+}
+
+@using System.Web.Mvc
+<style type="text/css">
+    .dts-home {
+        margin-top: 20px;
+    }
+
+        .dts-home .widget-user-header {
+            padding: 20px;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .dts-home .nav {
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        .dts-home .box .nav-stacked > li {
+            border-bottom: 1px solid #f4f4f4;
+            margin: 0;
+        }
+
+        .dts-home .nav-stacked > li {
+            float: none;
+        }
+
+        .dts-home .nav > li {
+            position: relative;
+            display: block;
+        }
+
+        .dts-home .nav-stacked > li > a {
+            border-radius: 0;
+            border-top: 0;
+            border-left: 3px solid transparent;
+            color: #444;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .dts-home .nav > li > a {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+
+        .dts-home .info-box-content {
+            background-color: #FFFFFF;
+        }
+
+        .dts-home .info-box {
+            cursor: pointer;
+            min-height: 75px;
+        }
+
+        .dts-home .info-box-icon {
+            height: 75px;
+            width: 75px;
+            font-size: 50px;
+            line-height: 75px;
+        }
+
+        .dts-home .info-box-content {
+            margin-left: 75px;
+            height: 75px;
+        }
+</style>
+
+<div class="dts-home">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="box box-warning box-widget widget-user-2">
+                <div class="widget-user-header bg-yellow">
+                    <div class="col-sm-3">
+                        <i class="fa fa-envelope" style="font-size: 60px;"></i>
+                    </div>
+                    <h3 class="widget-user-username col-sm-9">Delivery Notifications</h3>
+                    <div>&nbsp;</div>
+                </div>
+                <div class="box-footer no-padding">
+                    <ul id="dr-notification" class="nav nav-stacked">
+                        <li><a href="#"><span class="status">&nbsp;</span><span class="count pull-right badge bg-blue">0</span></a></li>
+                        <li><a href="#"><span class="status">&nbsp;</span><span class="count pull-right badge bg-green">0</span></a></li>
+                        <li><a href="#"><span class="status">&nbsp;</span><span class="count pull-right badge bg-yellow">0</span></a></li>
+                        <li><a href="#"><span class="status">&nbsp;</span><span class="count pull-right badge bg-red">0</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="box box-warning">
+                        <div class="box-body" style="padding-top: 25px; padding-bottom: 50px">
+                            <div class="" style="text-align: center; margin-bottom: 20px;">
+                                <h3 style="margin-bottom:0; color: #AAAAAA">
+                                    <img src="~/Content/Images/Truck.png" style="width: 48px;" />&nbsp;&nbsp;Easy Way To Track Your Shipment
+                                </h3>
+                                <div class="box-body center-block bg-yellow" style="border-radius:9px; max-width:500px; display: none;">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="pull-left" style="color:gray">
+                                                <h4><strong>DR Number</strong></h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6" style="padding-left: 0px;padding-right: 0px;">
+                                            <input type="text" id="searchKey" class="form-control" placeholder="Enter Number"
+                                                   style="font-size: 24px !important;height:40px" />
+                                        </div>
+                                        <div class="col-lg-1" style="padding-left: 0px;">
+                                            <div class="pull-left">
+                                                <span class="input-group-btn">
+                                                    <button type="button" onclick="searchData();" class="btn bg-black btn-flat form-control"
+                                                            style="font-size: 24px !important;padding: 0 12px;height: 38px;margin-top:1px;margin-left:-15px;">
+                                                        <i style="margin-right:15px;">GO</i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="text-align: center;">
+                                    <h5 class="username">
+                                        <a id="dr-link" href="#" style="margin-bottom: 20px;">Track Your DR Number here <i class="fa fa-arrow-alt-circle-right"></i></a>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="clearfix visible-sm-block"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box dr">
+                        <span class="info-box-icon bg-blue"><i class="fa fa-plus"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">DELIVERY REQUISITION</span>
+                            <span class="info-box-number"><small>Create your Delivery Request here</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="info-box di">
+                        <span class="info-box-icon bg-red"><i class="fa fa-truck"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">DELIVERY INSTRUCTION MANUAL</span>
+                            <span class="info-box-number"><small>Create your Delivery Instructiion here</small></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Scripts.app/EMCS/highcharts/highchart.js")
+@Scripts.Render("~/Scripts.app/EMCS/highcharts/highcharts-more.js")
+@Scripts.Render("~/Scripts.app/EMCS/highcharts/solid-gauge.js")
+@section scripts{
+    <script type="text/javascript" src="/Scripts/adminlte.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts.app/DTS/v2/HomeBefore.cshtml.js")"></script>
+}

@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "RG Validate";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form form-horizontal">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">GR Number</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="GR.001000" placeholder="Goods Receive Number" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">PIC Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="M.Natsir" placeholder="PIC Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No KTP</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="32001000" placeholder="No. KTP" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No SIM</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="2300200" placeholder="No. SIM" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="30/200/221" placeholder="No STNK Kendaraan" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Nopol</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control" value="B 32000 KB" placeholder="Nomor Polisi Kendaraan" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="GRNumber" class="form-control datepicker" value="01 Jan 2019" placeholder="Estimation Time Pickup" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
+                                <div class="col-md-9">
+                                    <textarea type="text" name="GRNumber" class="form-control" value="" placeholder="Notes" cols="4" rows="4">Tidak Ada Notes</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="toolbar" id="toolbar">
+                    </div>
+                    <table class="table table-striped table-bordered" id="TblGoodReceive"></table>
+                </div>
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Approve</button>&nbsp;
+                        <button class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>&nbsp;Revise</button>&nbsp;
+                        <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i>&nbsp;Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header mytask">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload PEB Document</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/action_page.php">
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            No AJU PEB
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="noAJU" name="noAJU" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">
+                            Tanggal & Jam AJU
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="date" class="form-control" id="datePEB" name="datePEB" placeholder="Date">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="time" class="form-control" id="timePEB" name="timePEB" placeholder="Time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">
+                            Upload Document
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="PebDoc" id="PebDoc" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-rotate" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function ShowModal() {
+            swal("wow");
+        }
+
+        var data = [
+            { "id": "1", "DO": "DO0001", "DA": "100100300", "Pic": "M.Natsir", "Status": "Waiting For Pickup", "ETP": "01 Jan 2019 12:00", "Date": "-" },
+            { "id": "2", "DO": "DO0001", "DA": "100100301", "Pic": "Gonzali Siregar", "Status": "Waiting For Pickup", "ETP": "01 Jan 2019 12:00", "Date": "-" },
+            { "id": "3", "DO": "DO0001", "DA": "100100302", "Pic": "Ardi Idrus", "Status": "Done", "ETP": "01 Jan 2019 12:00", "Date": "01 Jan 2019 12:00" }
+        ];
+
+        function GUserrole() {
+            $('#TblGoodReceive').bootstrapTable({
+                method: 'get',
+                //url: baseUrl + '/User/getListUser',
+                data: data,
+                cache: false,
+                contentType: "text/plain; charset=utf-8",
+                crossDomain: true,
+                striped: true,
+                pagination: false,
+                //formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                //    return '&nbsp; Displaying ' + pageFrom + ' to ' + pageTo + ' of ' + totalRows + ' rows';
+                //},
+                pageSize: 10,
+                pageList: [10, 25, 50, 100, 200],
+                search: false,
+                showRefresh: false,
+                toolbar: "#toolbar",
+                minimumCountColumns: 2,
+                clickToSelect: true,
+                smartDisplay: false,
+                columns: [{
+                    field: 'operate',
+                    title: 'Action',
+                    align: 'center',
+                    visible: false,
+                    width: '10%',
+                    //events: operateEvents,
+                    formatter: function (data, row, index) {
+                        var btnEdit = "";
+                        var btnView = "";
+                        var elm = ["<div>", btnEdit, btnView, "</div>"];
+                        return elm.join(" ");
+                    }
+                }, {
+                    field: 'id',
+                    visible: false
+                }, {
+                    field: 'DO',
+                    visible: true,
+                    title: "DO Number",
+                    halign: "center"
+                }, {
+                    field: 'DA',
+                    title: 'DA Number',
+                    align: 'left',
+                    halign: "center",
+                    valign: 'center',
+                    sortable: true,
+                    class: 'text-nowrap'
+
+                }, {
+                    field: 'Attach',
+                    title: 'Attachment',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        var btnDownload = "<button class='btn btn-xs btn-success'><i class='fa fa-download'></i></button>";
+                        return btnDownload;
+                    },
+                    class: 'text-nowrap'
+
+                }]
+            })
+            $("th[data-field='Username']").css("text-align", "center");
+            $("th[data-field='LoginName']").css("text-align", "center");
+        }
+        GUserrole();
+    </script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+}
+

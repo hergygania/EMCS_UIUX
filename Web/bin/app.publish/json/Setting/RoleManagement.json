@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": 1,
+    "name": "Group 1",
+    "status": true
+  },
+  {
+    "id": 2,
+    "name": "Group 2",
+    "status": true
+  },
+  {
+    "id": 3,
+    "name": "Group 3",
+    "status": false
+  }
+]

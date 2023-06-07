@@ -1,0 +1,675 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3909376-F931-465F-9768-99B11459B742}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>App.Data</RootNamespace>
+    <AssemblyName>App.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Web\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.35.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Web\Helper\Extensions\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FastMember, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FastMember.1.1.0\lib\net40\FastMember.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\Extensions.cs" />
+    <Compile Include="Caching\ICacheManager.cs" />
+    <Compile Include="Caching\MemoryCacheManager.cs" />
+    <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstructionView.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisition_Reroute.cs" />
+    <Compile Include="Domain\DTS\FreightCost.cs" />
+    <Compile Include="Domain\DTS\InboundEviz.cs" />
+    <Compile Include="Domain\DTS\InboundEvizFilter.cs" />
+    <Compile Include="Domain\EMCS\CargoDocument.cs" />
+    <Compile Include="Domain\EMCS\CiplDocumentInsert.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\CiplDocumentModel.cs" />
+    <Compile Include="Domain\EMCS\GoodReceiveDocument.cs" />
+    <Compile Include="Domain\EMCS\MasterSuperior.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\SP_BlAwb.cs" />
+    <Compile Include="Domain\EMCS\SP_getCiplChangeHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_getCiplDocument.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\ExcelCargoSIDetailItemData.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\SP_GetCiplDocumentList.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\SP_getListAllUser.cs" />
+    <Compile Include="Domain\EMCS\Sp_NpePeb.cs" />
+    <Compile Include="Domain\EMCS\Sp_RequestForChangeHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_ShippingInstruction.cs" />
+    <Compile Include="Domain\EMCS\SP_ShippingSummary.cs" />
+    <Compile Include="Domain\EMCS\SP_Superior.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Domain\EMCS\SuperiorListFilter.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    
+    
+    
+    <Compile Include="Domain\POST\BsTablePagingResult.cs" />
+<<<<<<< HEAD
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    <Compile Include="Domain\POST\InvoiceHardCopy.cs" />
+    <Compile Include="Domain\POST\InvoiceHardCopyList.cs" />
+    <Compile Include="Domain\POST\KOFAXFailedUpload.cs" />
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+    <Compile Include="Domain\POST\Ebupot\EbupotDbModel.cs" />
+    <Compile Include="Domain\POST\Ebupot\EbupotFormModel.cs" />
+    <Compile Include="Domain\POST\Ebupot\EbupotListView.cs" />
+    <Compile Include="Domain\POST\Ebupot\EbupotTableListModel.cs" />
+    <Compile Include="Domain\POST\Employee.cs" />
+    <Compile Include="Domain\POST\InvoiceList.cs" />
+    <Compile Include="Domain\POST\MtMappingUserBranch.cs" />
+    <Compile Include="Domain\POST\PaginationParamEbupot.cs" />
+    <Compile Include="Domain\POST\TotalSla.cs" />
+    <Compile Include="Domain\POST\TrAttachment.cs" />
+   <Compile Include="Domain\KPIDashboard\KPIDashboardModels.cs" />
+    <Compile Include="Domain\POST\TrItemPartialQty.cs" />
+    <Compile Include="Extensions\DbTransaction.cs" />
+    <Compile Include="Domain\CAT\BO.cs" />
+    <Compile Include="Domain\CAT\CustomerDBS.cs" />
+    <Compile Include="Domain\CAT\ForecastAccuracyDetailList.cs" />
+    <Compile Include="Domain\CAT\ForecastAccuracySummaryList.cs" />
+    <Compile Include="Domain\CAT\InventoryAllocation.cs" />
+    <Compile Include="Domain\CAT\InventoryFilter.cs" />
+    <Compile Include="Domain\CAT\InventoryList - ext.cs" />
+    <Compile Include="Domain\CAT\InventoryList.cs" />
+    <Compile Include="Domain\CAT\InventoryTrackingDelivery.cs" />
+    <Compile Include="Domain\CAT\InventoryTrackingStatus.cs" />
+    <Compile Include="Domain\CAT\InventoryTrackingStatusCMS.cs" />
+    <Compile Include="Domain\CAT\MasterCustomer.cs" />
+    <Compile Include="Domain\CAT\MasterCustomerDetail.cs" />
+    <Compile Include="Domain\CAT\MasterJobCode.cs" />
+    <Compile Include="Domain\CAT\MasterJobLocation.cs" />
+    <Compile Include="Domain\CAT\MasterSection.cs" />
+    <Compile Include="Domain\CAT\MasterSOS.cs" />
+    <Compile Include="Domain\CAT\OWSS.cs" />
+    <Compile Include="Domain\CAT\PartInfoDetail.cs" />
+    <Compile Include="Domain\CAT\RangeWeekForPiecePartOrderDetail.cs" />
+    <Compile Include="Domain\CAT\RptOutstandingOldCoreDetailFilter.cs" />
+    <Compile Include="Domain\CAT\RptOutstandingOldCoreDetailList.cs" />
+    <Compile Include="Domain\CAT\RptOutstandingOldCoreSummaryList.cs" />
+    <Compile Include="Domain\CAT\RptPiecePartOrderDetailList.cs" />
+    <Compile Include="Domain\CAT\RptPiecePartOrderSummaryList.cs" />
+    <Compile Include="Domain\CAT\RptSummaryPEXList.cs" />
+    <Compile Include="Domain\CAT\SP_DataInventory.cs" />
+    <Compile Include="Domain\CAT\SP_DataInventoryEditForDownload.cs" />
+    <Compile Include="Domain\CAT\SP_DataInventoryForDownload.cs" />
+    <Compile Include="Domain\CAT\SP_DataInventoryTrackingDelivery.cs" />
+    <Compile Include="Domain\CAT\SP_DataInventoryTrackingDeliveryDetail.cs" />
+    <Compile Include="Domain\CAT\SP_RptOutstandingOldCoreDetail.cs" />
+    <Compile Include="Domain\CAT\SP_TrackingStatusDetailTTC.cs" />
+    <Compile Include="Domain\CAT\SP_TrackingStatusDetailWOC.cs" />
+    <Compile Include="Domain\CAT\Staging4Bn48R.cs" />
+    <Compile Include="Domain\CAT\StagingCORE.cs" />
+    <Compile Include="Domain\CAT\StagingCreateBER.cs" />
+    <Compile Include="Domain\CAT\StagingCreateJC.cs" />
+    <Compile Include="Domain\CAT\StagingCreateMO.cs" />
+    <Compile Include="Domain\CAT\StagingCreateSQ.cs" />
+    <Compile Include="Domain\CAT\StagingCreateST.cs" />
+    <Compile Include="Domain\CAT\StagingCreateWIP.cs" />
+    <Compile Include="Domain\CAT\StagingDeleteDocRW.cs" />
+    <Compile Include="Domain\CAT\StagingDeleteMO.cs" />
+    <Compile Include="Domain\CAT\StagingInventoryAdjustment.cs" />
+    <Compile Include="Domain\CAT\StagingReceivedMO.cs" />
+    <Compile Include="Domain\CAT\StagingReceivedST.cs" />
+    <Compile Include="Domain\CAT\StagingSales500.cs" />
+    <Compile Include="Domain\CAT\StagingSales800.cs" />
+    <Compile Include="Domain\CAT\StoreList.cs" />
+    <Compile Include="Domain\CAT\TrackingStatusDetailCMS.cs" />
+    <Compile Include="Domain\CAT\_cat.cs" />
+    <Compile Include="Domain\ChangeLog\ChangeLogModel.cs" />
+    <Compile Include="Domain\DTS\MasterDistrict.cs" />
+    <Compile Include="Domain\DTS\MasterProvince.cs" />
+    <Compile Include="Domain\DTS\MasterSubDistrict.cs" />
+    <Compile Include="Domain\DTS\SerialNumberVisionLink.cs" />
+    <Compile Include="Domain\EMCS\ExcelCiplItem.cs" />
+    <Compile Include="Domain\EMCS\RproblemCategory.cs" />
+    <Compile Include="Domain\EMCS\UserData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoSIDetailData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoSIHeaderData.cs" />
+    <Compile Include="Domain\EMCS\ReferenceToCiplItem.cs" />
+    <Compile Include="Domain\EMCS\SP_DelegationTo.cs" />
+    <Compile Include="Domain\EMCS\SP_GetConsigneeName.cs" />
+    <Compile Include="Domain\POST\GetTotalCommentUnreadByUser.cs" />
+    <Compile Include="Domain\POST\GetCommentByRequest.cs" />
+    <Compile Include="Domain\POST\GetCommentUnreadByUser.cs" />
+    <Compile Include="Domain\POST\Report.cs" />
+    <Compile Include="Domain\POST\QuickSearch.cs" />
+    <Compile Include="Domain\POST\MtVendor.cs" />
+    <Compile Include="Domain\POST\Attachment.cs" />
+    <Compile Include="Domain\POST\AdvanceSearch.cs" />
+    <Compile Include="Domain\POST\SearchReport.cs" />
+    <Compile Include="Domain\POST\SearchDetail.cs" />
+    <Compile Include="Domain\POST\SearchAdvance.cs" />
+    <Compile Include="Domain\POST\SearchHeader.cs" />
+    <Compile Include="Domain\POST\Dashboard.cs" />
+    <Compile Include="Domain\POST\Transaction.cs" />
+    <Compile Include="Domain\POST\SelectItem2.cs" />
+    <Compile Include="Domain\POST\SelectItem3.cs" />
+    <Compile Include="Domain\POST\POList.cs" />
+    <Compile Include="Domain\POST\TrItem.cs" />
+    <Compile Include="Domain\POST\TrPR.cs" />
+    <Compile Include="Domain\POST\TrPO.cs" />
+    <Compile Include="Domain\POST\MappingUploadItem.cs" />
+    <Compile Include="Domain\POST\GR.cs" />
+    <Compile Include="Domain\POST\Invoice.cs" />
+    <Compile Include="Domain\POST\TrRequestCommentRead.cs" />
+    <Compile Include="Domain\POST\TrRequestComment.cs" />
+    <Compile Include="Domain\POST\TrRequestAttachment.cs" />
+    <Compile Include="Domain\POST\TrRequest.cs" />
+    <Compile Include="Domain\POST\StParameter.cs" />
+    <Compile Include="Domain\POST\_post.cs" />
+    <Compile Include="Domain\_POSTContext.cs" />
+    <Compile Include="Domain\SOVetting\CKBDeliveryStatus.cs" />
+    <Compile Include="Domain\SOVetting\CustomerOrderSummary.cs" />
+    <Compile Include="Domain\SOVetting\CustomerPOSummary.cs" />
+    <Compile Include="Domain\SOVetting\DpsSoSourceItem.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstruction.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstructionFilter.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstructionRef.cs" />
+    <Compile Include="Domain\DTS\DeliveryInstructionUnit.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionRef.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionStatus.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionStatusUpload.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionUnit.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionUnitRef.cs" />
+    <Compile Include="Domain\DTS\DRStatusGroup.cs" />
+    <Compile Include="Domain\DTS\FilterColumn.cs" />
+    <Compile Include="Domain\DTS\ReportDeliveryRequisition.cs" />
+    <Compile Include="Domain\DTS\ReportDeliveryRequisitionFilter.cs" />
+    <Compile Include="Domain\EMCS\SP_GetGrItemList.cs" />
+    <Compile Include="Domain\EMCS\BlAwb.cs" />
+    <Compile Include="Domain\EMCS\Cargo.cs" />
+    <Compile Include="Domain\EMCS\CargoCipl.cs" />
+    <Compile Include="Domain\EMCS\CargoFormData.cs" />
+    <Compile Include="Domain\EMCS\CargoHistory.cs" />
+    <Compile Include="Domain\EMCS\CiplItemCargo.cs" />
+    <Compile Include="Domain\EMCS\CiplItemReviseData.cs" />
+    <Compile Include="Domain\EMCS\CiplItemUpdateHistory.cs" />
+    <Compile Include="Domain\EMCS\ConsigneeData.cs" />
+    <Compile Include="Domain\EMCS\DashboardExportToday.cs" />
+    <Compile Include="Domain\EMCS\DashboardExportToday2.cs" />
+    <Compile Include="Domain\EMCS\DashboardExportValue.cs" />
+    <Compile Include="Domain\EMCS\DashboardMapBranch.cs" />
+    <Compile Include="Domain\EMCS\DashboardMapBranchResult.cs" />
+    <Compile Include="Domain\EMCS\DashboardNetWeight.cs" />
+    <Compile Include="Domain\EMCS\DashboardOutstanding.cs" />
+    <Compile Include="Domain\EMCS\DelegationReq.cs" />
+    <Compile Include="Domain\EMCS\DocumentList.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoHeaderData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoDetailData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoSIData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoSSDetailData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCargoSSHeaderData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCiplInvoicePLDetailData.cs" />
+    <Compile Include="Domain\EMCS\ExcelCiplInvoicePLHeaderData.cs" />
+    <Compile Include="Domain\EMCS\ExcelGRDetailData.cs" />
+    <Compile Include="Domain\EMCS\ExcelGRHeaderData.cs" />
+    <Compile Include="Domain\EMCS\ExcelSIData.cs" />
+    <Compile Include="Domain\EMCS\ExcelSSData.cs" />
+    <Compile Include="Domain\EMCS\ExcelSSDetailData.cs" />
+    <Compile Include="Domain\EMCS\MasterBranchCkb.cs" />
+    <Compile Include="Domain\EMCS\MasterPlant.cs" />
+    <Compile Include="Domain\EMCS\MasterSeaAirPort.cs" />
+    <Compile Include="Domain\EMCS\MasterSIB.cs" />
+    <Compile Include="Domain\EMCS\MasterVideo.cs" />
+    <Compile Include="Domain\EMCS\NotificationQueue.cs" />
+    <Compile Include="Domain\EMCS\PlantBusiness.cs" />
+    <Compile Include="Domain\EMCS\Regulation.cs" />
+    <Compile Include="Domain\EMCS\RequestCipl.cs" />
+    <Compile Include="Domain\EMCS\RequestCl.cs" />
+    <Compile Include="Domain\EMCS\RequestGr.cs" />
+    <Compile Include="Domain\EMCS\RSSUrl.cs" />
+    <Compile Include="Domain\EMCS\RSSFeed.cs" />
+    <Compile Include="Domain\EMCS\SelectItem3.cs" />
+    <Compile Include="Domain\EMCS\SP_CargoItemDetail.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplDocument.cs" />
+    <Compile Include="Domain\EMCS\CiplForwader.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplItemList.cs" />
+    <Compile Include="Domain\EMCS\SP_GetCiplAreaAvailable.cs" />
+    <Compile Include="Domain\EMCS\SP_GetCiplAvailable.cs" />
+    <Compile Include="Domain\EMCS\CargoDetailData.cs" />
+    <Compile Include="Domain\EMCS\CargoHeaderData.cs" />
+    <Compile Include="Domain\EMCS\CargoContainer.cs" />
+    <Compile Include="Domain\EMCS\CiplApprove.cs" />
+    <Compile Include="Domain\EMCS\ExcelCiplEdoData.cs" />
+    <Compile Include="Domain\EMCS\CargoListData.cs" />
+    <Compile Include="Domain\EMCS\CargoItem.cs" />
+    <Compile Include="Domain\EMCS\CiplItem.cs" />
+    <Compile Include="Domain\EMCS\CiplItemInsert.cs" />
+    <Compile Include="Domain\EMCS\CiplItemListFilter.cs" />
+    <Compile Include="Domain\EMCS\CiplListFilter.cs" />
+    <Compile Include="Domain\EMCS\CKBListFilter.cs" />
+    <Compile Include="Domain\EMCS\CountData.cs" />
+    <Compile Include="Domain\EMCS\Documents.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_GetCiplPicAvailable.cs" />
+    <Compile Include="Domain\EMCS\SP_GetCiplTotalData.cs" />
+    <Compile Include="Domain\EMCS\SP_GetDocumentList.cs" />
+    <Compile Include="Domain\EMCS\SP_GetProblemList.cs" />
+    <Compile Include="Domain\EMCS\SP_GoodReceive.cs" />
+    <Compile Include="Domain\EMCS\SP_GoodReceiveHistory.cs" />
+    <Compile Include="Domain\EMCS\ReturnSPInsert.cs" />
+    <Compile Include="Domain\EMCS\SP_RAchievement.cs" />
+    <Compile Include="Domain\EMCS\SP_RDetailsTracking.cs" />
+    <Compile Include="Domain\EMCS\SP_RDheBI.cs" />
+    <Compile Include="Domain\EMCS\SP_Regulations.cs" />
+    <Compile Include="Domain\EMCS\SP_RExportByCategory.cs" />
+    <Compile Include="Domain\EMCS\SP_RExportProblem.cs" />
+    <Compile Include="Domain\EMCS\SP_ROutstandingCipl.cs" />
+    <Compile Include="Domain\EMCS\SP_RProblemHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_RPTTUBranch.cs" />
+    <Compile Include="Domain\EMCS\SP_RPTTUBranchAverage.cs" />
+    <Compile Include="Domain\EMCS\SP_RPTTUBranchAverageYTD.cs" />
+    <Compile Include="Domain\EMCS\SP_RSailingEstimation.cs" />
+    <Compile Include="Domain\EMCS\SP_RSalesVSNonSales.cs" />
+    <Compile Include="Domain\EMCS\SP_RTaxAudit.cs" />
+    <Compile Include="Domain\EMCS\SP_RTotalExport.cs" />
+    <Compile Include="Domain\EMCS\SP_RTotalExportMonthly.cs" />
+    <Compile Include="Domain\EMCS\SP_RTotalExportPort.cs" />
+    <Compile Include="Domain\EMCS\SP_RTrendExport.cs" />
+    <Compile Include="Domain\EMCS\StringData.cs" />
+    <Compile Include="Domain\EMCS\TaskBlAwb.cs" />
+    <Compile Include="Domain\EMCS\TaskNpePeb.cs" />
+    <Compile Include="Domain\EMCS\TaskSI.cs" />
+    <Compile Include="Domain\EMCS\ShippingInstruction.cs" />
+    <Compile Include="Domain\EMCS\NpePeb.cs" />
+    <Compile Include="Domain\EMCS\SP_CargoDetail.cs" />
+    <Compile Include="Domain\EMCS\SP_CargoProblemHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_CargoList.cs" />
+    <Compile Include="Domain\EMCS\SP_FlowStatus.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplProblemHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_getCargoHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_getCiplHistory.cs" />
+    <Compile Include="Domain\EMCS\GoodsReceiveItem.cs" />
+    <Compile Include="Domain\EMCS\EmcsTable.cs" />
+    <Compile Include="Domain\EMCS\IDData.cs" />
+    <Compile Include="Domain\EMCS\Cipl.cs" />
+    <Compile Include="Domain\EMCS\GridListFilter.cs" />
+    <Compile Include="Domain\EMCS\GoodsReceive.cs" />
+    <Compile Include="Domain\EMCS\KppbcListFilter.cs" />
+    <Compile Include="Domain\EMCS\MasterAreaUserCKB.cs" />
+    <Compile Include="Domain\EMCS\MasterBranch.cs" />
+    <Compile Include="Domain\EMCS\MasterDepartment.cs" />
+    <Compile Include="Domain\EMCS\MasterKppbc.cs" />
+    <Compile Include="Domain\EMCS\CargoAddCIPL.cs" />
+    <Compile Include="Domain\EMCS\Reference.cs" />
+    <Compile Include="Domain\EMCS\SelectItem.cs" />
+    <Compile Include="Domain\EMCS\MasterKurs.cs" />
+    <Compile Include="Domain\EMCS\SelectItem2.cs" />
+    <Compile Include="Domain\EMCS\SP_AreaUserCKB.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplDeleteById.cs" />
+    <Compile Include="Domain\EMCS\SP_CiplList.cs" />
+    <Compile Include="Domain\EMCS\SP_FlowStep.cs" />
+    <Compile Include="Domain\EMCS\SP_Flow.cs" />
+    <Compile Include="Domain\EMCS\SP_FlowNext.cs" />
+    <Compile Include="Domain\EMCS\MasterFlowStatus.cs" />
+    <Compile Include="Domain\EMCS\MasterFlowNext.cs" />
+    <Compile Include="Domain\EMCS\MasterFlowStep.cs" />
+    <Compile Include="Domain\EMCS\MasterFlow.cs" />
+    <Compile Include="Domain\EMCS\ProblemHistory.cs" />
+    <Compile Include="Domain\EMCS\MasterProblem.cs" />
+    <Compile Include="Domain\EMCS\MasterRegulation.cs" />
+    <Compile Include="Domain\EMCS\MasterRunningText.cs" />
+    <Compile Include="Domain\EMCS\MasterStatus.cs" />
+    <Compile Include="Domain\EMCS\MasterParameter.cs" />
+    <Compile Include="Domain\EMCS\MasterIncoterms.cs" />
+    <Compile Include="Domain\EMCS\MasterBanner.cs" />
+    <Compile Include="Domain\EMCS\MasterCountry.cs" />
+    <Compile Include="Domain\EMCS\MasterArea.cs" />
+    <Compile Include="Domain\EMCS\MasterCustomers.cs" />
+    <Compile Include="Domain\DTS\FreightCalculatorFilter.cs" />
+    <Compile Include="Domain\DTS\FreightCalculator.cs" />
+    <Compile Include="Domain\DTS\CategoryCode.cs" />
+    <Compile Include="Domain\DTS\MasterCustomers.cs" />
+    <Compile Include="Domain\DTS\ShipmentInboundListDownload.cs" />
+    <Compile Include="Domain\DTS\FreightOriginDestination.cs" />
+    <Compile Include="Domain\DTS\ShipmentOutboundListData.cs" />
+    <Compile Include="Domain\DTS\UnitModels.cs" />
+    <Compile Include="Domain\DTS\MasterUsers.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisitionFilter.cs" />
+    <Compile Include="Domain\DTS\InboundFilter.cs" />
+    <Compile Include="Domain\DTS\OutboundFilter.cs" />
+    <Compile Include="Domain\DTS\DeliveryRequisition.cs" />
+    <Compile Include="Domain\DTS\ShipmentInboundDetailSingle.cs" />
+    <Compile Include="Domain\DTS\ShipmentInboundList.cs" />
+    <Compile Include="Domain\DTS\ShipmentInboundDetail.cs" />
+    <Compile Include="Domain\DTS\ShipmentInbound.cs" />
+    <Compile Include="Domain\DTS\ShipmentOutboundList.cs" />
+    <Compile Include="Domain\DTS\ShipmentOutbound.cs" />
+    <Compile Include="Domain\DTS\_dts.cs" />
+    <Compile Include="Domain\EMCS\SP_getListAllKppbc.cs" />
+    <Compile Include="Domain\EMCS\SP_getListUser.cs" />
+    <Compile Include="Domain\EMCS\SP_GetReference.cs" />
+    <Compile Include="Domain\EMCS\SP_GetGrList.cs" />
+    <Compile Include="Domain\EMCS\SP_RequestCl.cs" />
+    <Compile Include="Domain\EMCS\SP_RequestGr.cs" />
+    <Compile Include="Domain\EMCS\SP_RequestCipl.cs" />
+    <Compile Include="Domain\EMCS\UserLog.cs" />
+    <Compile Include="Domain\EMCS\Vendor.cs" />
+    <Compile Include="Domain\EMCS\WizardData.cs" />
+    <Compile Include="Domain\EMCS\_emcs.cs" />
+    <Compile Include="Domain\Extensions\PartsNumberList-ext.cs" />
+    <Compile Include="Domain\MasterAgreementTypePO.cs" />
+    <Compile Include="Domain\MasterCommodityType.cs" />
+    <Compile Include="Domain\MasterCustomerGroup.cs" />
+    <Compile Include="Domain\MasterInvoiceType.cs" />
+    <Compile Include="Domain\MasterModelType.cs" />
+    <Compile Include="Domain\MasterOrderClass.cs" />
+    <Compile Include="Domain\MasterOrderProfile.cs" />
+    <Compile Include="Domain\MasterShipmentTypePO.cs" />
+    <Compile Include="Domain\MasterShipmentTypeSO.cs" />
+    <Compile Include="Domain\PartsNumberList.cs" />
+    <Compile Include="Domain\SOVetting\SapSoHeader.cs" />
+    <Compile Include="Domain\SOVetting\SapSoOrderItem.cs" />
+    <Compile Include="Domain\SOVetting\SapSoSearch.cs" />
+    <Compile Include="Domain\SOVetting\SapSoSourceItem.cs" />
+    <Compile Include="Domain\SAP\MaterialDescription.cs" />
+    <Compile Include="Domain\SAP\Customer.cs" />
+    <Compile Include="Domain\Station3LCKB.cs" />
+    <Compile Include="Domain\SurveyLocation.cs" />
+    <Compile Include="Domain\City.cs" />
+    <Compile Include="Domain\DeliveryTracking.cs" />
+    <Compile Include="Domain\DocumentUpload.cs" />
+    <Compile Include="Domain\EscalationLimit.cs" />
+    <Compile Include="Domain\Extensions\Calculator-ext.cs" />
+    <Compile Include="Domain\Extensions\Currency-ext.cs" />
+    <Compile Include="Domain\Extensions\DocumentUpload-Ext.cs" />
+    <Compile Include="Domain\Extensions\getCity.cs" />
+    <Compile Include="Domain\Extensions\GetMenuRoleAccessDetail_Result.cs" />
+    <Compile Include="Domain\Extensions\getModaFactor.cs" />
+    <Compile Include="Domain\Extensions\InRateList-ext.cs" />
+    <Compile Include="Domain\Extensions\MasterTruckLog-ext.cs" />
+    <Compile Include="Domain\Extensions\Menu-Ext.cs" />
+    <Compile Include="Domain\Extensions\menuTable.cs" />
+    <Compile Include="Domain\Extensions\ModaFleet-ext.cs" />
+    <Compile Include="Domain\Extensions\PartCounterDetail.cs" />
+    <Compile Include="Domain\Extensions\PartCounterDetailResult.cs" />
+    <Compile Include="Domain\Extensions\RateList-ext.cs" />
+    <Compile Include="Domain\Extensions\RoleAccessDetailsMenu.cs" />
+    <Compile Include="Domain\Extensions\RoleAccessMenu-Ext.cs" />
+    <Compile Include="Domain\Extensions\SupplyDetail.cs" />
+    <Compile Include="Domain\Extensions\SupplyDetailResult.cs" />
+    <Compile Include="Domain\Extensions\SurchargeList-ext.cs" />
+    <Compile Include="Domain\Extensions\Survey-ext-collection.cs" />
+    <Compile Include="Domain\AgreementType.cs" />
+    <Compile Include="Domain\Extensions\UserAccessTable.cs" />
+    <Compile Include="Domain\Extensions\V_CUSTORDER_HEADER_NEW-ext.cs" />
+    <Compile Include="Domain\Extensions\V_CUSTORDER_HEADERS-ext.cs" />
+    <Compile Include="Domain\Extensions\V_DetailDTS.cs" />
+    <Compile Include="Domain\Extensions\V_filterDTS.cs" />
+    <Compile Include="Domain\Extensions\V_DTS.cs" />
+    <Compile Include="Domain\Extensions\V_FREIGHTCOST-ext.cs" />
+    <Compile Include="Domain\Group.cs" />
+    <Compile Include="Domain\LicenseManagementDetailExtend.cs" />
+    <Compile Include="Domain\LicenseManagementPartNumber.cs" />
+    <Compile Include="Domain\LicenseManagementHS.cs" />
+    <Compile Include="Domain\LogImport.cs" />
+    <Compile Include="Domain\OrderMethodByPartNumber.cs" />
+    <Compile Include="Domain\MasterGeneric.cs" />
+    <Compile Include="Domain\MasterInboundRate.cs" />
+    <Compile Include="Domain\MasterInboundRateLog.cs" />
+    <Compile Include="Domain\MasterRate.cs" />
+    <Compile Include="Domain\MasterRateLog.cs" />
+    <Compile Include="Domain\MasterSurcharge.cs" />
+    <Compile Include="Domain\MasterSurchargeLog.cs" />
+    <Compile Include="Domain\MasterTruckingRate.cs" />
+    <Compile Include="Domain\MasterTruckingRateLog.cs" />
+    <Compile Include="Domain\Master_Moda.cs" />
+    <Compile Include="Domain\Master_Status.cs" />
+    <Compile Include="Domain\Master_UnitType.cs" />
+    <Compile Include="Domain\Menu.cs" />
+    <Compile Include="Domain\MilestoneDTS.cs" />
+    <Compile Include="Domain\ModaofCondition.cs" />
+    <Compile Include="Domain\DeliveryTrackingStatus.cs" />
+    <Compile Include="Domain\PartsListNumber.cs" />
+    <Compile Include="Domain\SP_HSRegulation.cs" />
+    <Compile Include="Domain\SP_PartsMapping.cs" />
+    <Compile Include="Domain\Region.cs" />
+    <Compile Include="Domain\ManualVetting.cs" />
+    <Compile Include="Domain\RoleAccessMenu.cs" />
+    <Compile Include="Domain\RptDeliveryTrackingStatus.cs" />
+    <Compile Include="Domain\RptDocumentAmend_20160229.cs" />
+    <Compile Include="Domain\RptDocumentAwaitingAck.cs" />
+    <Compile Include="Domain\SP_HSCodeList.cs" />
+    <Compile Include="Domain\TrkSoSummary.cs" />
+    <Compile Include="Domain\VettingProcess\GeneratorModel.cs" />
+    <Compile Include="Domain\VettingProcess\StagingPartsMapping.cs" />
+    <Compile Include="Domain\V_CUSTORDER_HEADER_NEW.cs" />
+    <Compile Include="Domain\V_CUSTORDER_HEADERS.cs" />
+    <Compile Include="Domain\V_FREIGHTCOST.cs" />
+    <Compile Include="Domain\V_PART_ORDER_CASE_REPORT.cs" />
+    <Compile Include="Domain\V_PART_ORDER_DETAIL_REPORT.cs" />
+    <Compile Include="Domain\V_PART_ORDER_REPORT.cs" />
+    <Compile Include="Domain\_DTSContext.cs" />
+    <Compile Include="Domain\_EMCSContext.cs" />
+    <Compile Include="Extensions\DbContextExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\CommodityMapping.cs" />
+    <Compile Include="Domain\CommodityImex.cs" />
+    <Compile Include="Data\RepositoryBase\IRepository.cs" />
+    <Compile Include="Data\RepositoryBase\Repository.cs" />
+    <Compile Include="Data\RepositoryBase\RepositoryFactory.cs" />
+    <Compile Include="Data\_forms\MasterSearchForm.cs" />
+    <Compile Include="Data\_forms\SiteConfiguration.cs" />
+    <Compile Include="Domain\AirPort.cs" />
+    <Compile Include="Domain\Email.cs" />
+    <Compile Include="Domain\EmailAttachment.cs" />
+    <Compile Include="Domain\Extensions\AirPort-ext.cs" />
+    <Compile Include="Domain\Extensions\EmailRecipient-ext.cs" />
+    <Compile Include="Domain\Extensions\FreightPort-ext.cs" />
+    <Compile Include="Domain\Area.cs" />
+    <Compile Include="Domain\Commodity.cs" />
+    <Compile Include="Domain\CooDescription.cs" />
+    <Compile Include="Domain\DocumentType.cs" />
+    <Compile Include="Domain\Extensions\HSCodeList-ext.cs" />
+    <Compile Include="Domain\Extensions\HsCodeListReport.cs" />
+    <Compile Include="Domain\Extensions\ImportGate-ext.cs" />
+    <Compile Include="Domain\Extensions\JobFlag-ext.cs" />
+    <Compile Include="Domain\Extensions\PartListTable.cs" />
+    <Compile Include="Domain\Extensions\PartsOrder-ext-collectiony.cs" />
+    <Compile Include="Domain\Extensions\PartsOrderCase-ext.cs" />
+    <Compile Include="Domain\Extensions\LicenseExtendComment-ext.cs" />
+    <Compile Include="Domain\Extensions\OrderMethod-ext.cs" />
+    <Compile Include="Domain\Extensions\PartsList-ext.cs" />
+    <Compile Include="Domain\Extensions\SeaPort-ext.cs" />
+    <Compile Include="Domain\Extensions\Shipment-ext.cs" />
+    <Compile Include="Domain\Extensions\PartsOrderDetail-ext.cs" />
+    <Compile Include="Domain\Extensions\PartsOrder-ext.cs" />
+    <Compile Include="Domain\Extensions\PartsMapping-ext.cs" />
+    <Compile Include="Domain\Extensions\RegulationManagementDetail-ext.cs" />
+    <Compile Include="Domain\Extensions\RegulationManagement-ext.cs" />
+    <Compile Include="Domain\Extensions\LicenseManagement-ext.cs" />
+    <Compile Include="Domain\Extensions\Lartas-ext.cs" />
+    <Compile Include="Domain\Extensions\ShipmentDocument-ext.cs" />
+    <Compile Include="Domain\Extensions\ShipmentManifest-ext.cs" />
+    <Compile Include="Domain\Extensions\ShipmentManifestDetail-ext.cs" />
+    <Compile Include="Domain\Extensions\ShippingInstruction-ext.cs" />
+    <Compile Include="Domain\Extensions\Store-ext.cs" />
+    <Compile Include="Domain\Extensions\CommodityMapping-ext.cs" />
+    <Compile Include="Domain\Extensions\StoreTable.cs" />
+    <Compile Include="Domain\Extensions\Survey-ext.cs" />
+    <Compile Include="Domain\Extensions\SurveyDetail-ext.cs" />
+    <Compile Include="Domain\Extensions\SurveyDocument-ext.cs" />
+    <Compile Include="Domain\Extensions\TodoListTable.cs" />
+    <Compile Include="Domain\Extensions\UserAccess-ext.cs" />
+    <Compile Include="Domain\Extensions\V_CUSTORDER_HEADER-ext.cs" />
+    <Compile Include="Domain\Extensions\V_STOCKORDER_HEADER-ext.cs" />
+    <Compile Include="Domain\FreightPort.cs" />
+    <Compile Include="Domain\HSCodeList.cs" />
+    <Compile Include="Domain\ImportGate.cs" />
+    <Compile Include="Domain\JobFlag.cs" />
+    <Compile Include="Domain\LicensePort.cs" />
+    <Compile Include="Domain\LicensePorts.cs" />
+    <Compile Include="Domain\LicenseGroup.cs" />
+    <Compile Include="Domain\LicenseManagement.cs" />
+    <Compile Include="Domain\LicenseManagementExtend.cs" />
+    <Compile Include="Domain\LicenseManagementExtendComment.cs" />
+    <Compile Include="Domain\LicenseManagementHistory.cs" />
+    <Compile Include="Domain\Milestone.cs" />
+    <Compile Include="Domain\OrderMethod.cs" />
+    <Compile Include="Domain\OrderProfile.cs" />
+    <Compile Include="Domain\PartsList.cs" />
+    <Compile Include="Domain\PartsMapping.cs" />
+    <Compile Include="Domain\PartsMappingHistory.cs" />
+    <Compile Include="Domain\PartsOrder.cs" />
+    <Compile Include="Domain\PartsOrderCase.cs" />
+    <Compile Include="Domain\PartsOrderDetail.cs" />
+    <Compile Include="Domain\Profile.cs" />
+    <Compile Include="Domain\RegulationManagement.cs" />
+    <Compile Include="Domain\RegulationManagementDetail.cs" />
+    <Compile Include="Domain\Lartas.cs" />
+    <Compile Include="Domain\EmailRecipient.cs" />
+    <Compile Include="Domain\RptAckMessage.cs" />
+    <Compile Include="Domain\RptLongIntransit.cs" />
+    <Compile Include="Domain\RptLongPOD.cs" />
+    <Compile Include="Domain\RptPSSIntransit.cs" />
+    <Compile Include="Domain\RptSubmittedItem.cs" />
+    <Compile Include="Domain\RptVendorConstraint.cs" />
+    <Compile Include="Domain\SeaPort.cs" />
+    <Compile Include="Domain\Store.cs" />
+    <Compile Include="Domain\ToDoList.cs" />
+    <Compile Include="Domain\_reportDbContext.cs" />
+    <Compile Include="Domain\RptBackorderSubmission.cs" />
+    <Compile Include="Domain\RptBORespondTime.cs" />
+    <Compile Include="Domain\RptCounterPerformance.cs" />
+    <Compile Include="Domain\RptDocumentAmend.cs" />
+    <Compile Include="Domain\RptDocumentConsolidateInvoice.cs" />
+    <Compile Include="Domain\RptDocumentHeld.cs" />
+    <Compile Include="Domain\RptDocumentNonConsolidateInvoice.cs" />
+    <Compile Include="Domain\RptDocumentPendingRelease.cs" />
+    <Compile Include="Domain\RptDocumentReprint.cs" />
+    <Compile Include="Domain\RptDocumentSuspend.cs" />
+    <Compile Include="Domain\RptEmergencyOrder.cs" />
+    <Compile Include="Domain\RptOrderConfirmation.cs" />
+    <Compile Include="Domain\RptOutstandingBackorderItem.cs" />
+    <Compile Include="Domain\RptPartReleaseInformation.cs" />
+    <Compile Include="Domain\RptPODtoBOFill.cs" />
+    <Compile Include="Domain\RptSTRespondTime.cs" />
+    <Compile Include="Domain\RptUnrealisticCommittedDateBackorderItem.cs" />
+    <Compile Include="Domain\RptUnrealisticCommittedDateExstock.cs" />
+    <Compile Include="Domain\RptWHDocumentReprint.cs" />
+    <Compile Include="Domain\Shipment.cs" />
+    <Compile Include="Domain\ShipmentDocument.cs" />
+    <Compile Include="Domain\ShipmentManifest.cs" />
+    <Compile Include="Domain\ShipmentManifestDetail.cs" />
+    <Compile Include="Domain\ShippingInstruction.cs" />
+    <Compile Include="Domain\SosGroup.cs" />
+    <Compile Include="Domain\Survey.cs" />
+    <Compile Include="Domain\SurveyDetail.cs" />
+    <Compile Include="Domain\SurveyDocument.cs" />
+    <Compile Include="Domain\TeamProfile.cs" />
+    <Compile Include="Domain\V_CLIENTORDER_HEADER.cs" />
+    <Compile Include="Domain\V_CUSTODER_DETAIL.cs" />
+    <Compile Include="Domain\V_CUSTORDER_HEADER.cs" />
+    <Compile Include="Domain\V_FORWADER_STATUS.cs" />
+    <Compile Include="Domain\V_GET_CUSTOMER.cs" />
+    <Compile Include="Domain\V_GET_CUSTOMER_GROUP.cs" />
+    <Compile Include="Domain\V_MODEL_LIST.cs" />
+    <Compile Include="Domain\V_POPUP_DETAIL.cs" />
+    <Compile Include="Domain\V_STOCKORDER_DETAIL.cs" />
+    <Compile Include="Domain\V_STOCKORDER_HEADER.cs" />
+    <Compile Include="Domain\V_SUPPLIER_STATUS.cs" />
+    <Compile Include="Domain\V_TRAKINDO_STATUS.cs" />
+    <Compile Include="Domain\_imex.cs" />
+    <Compile Include="Domain\_master.cs" />
+    <Compile Include="Domain\_EfDbContext.cs" />
+    <Compile Include="Domain\Hub.cs" />
+    <Compile Include="Domain\RoleAccess.cs" />
+    <Compile Include="Domain\UserAccess_Store.cs" />
+    <Compile Include="Domain\UserAccess_Hub.cs" />
+    <Compile Include="Domain\UserAccess_Area.cs" />
+    <Compile Include="Domain\UserAccess_Role.cs" />
+    <Compile Include="Domain\UserAccess.cs" />
+    <Compile Include="Domain\_partTracking.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

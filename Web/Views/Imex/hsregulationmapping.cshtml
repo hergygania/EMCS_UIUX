@@ -1,0 +1,178 @@
+@using System.Web.Mvc
+
+@model App.Web.Models.RegulationManagementView
+
+@{
+    ViewBag.Title = "HS Regulation Mapping";
+    string message = ViewBag.Message + "";
+}
+
+<style type="text/css">
+    .select2-selection__choice {
+        white-space: normal !important;
+    }
+</style>
+@{
+    if (ViewBag.AllowDelete)
+    {
+        <input type="hidden" name="AllowDelete" id="AllowDelete" class="form-control" value="True">
+    }
+
+    if (ViewBag.AllowUpdate)
+    {
+        <input type="hidden" name="AllowUpdate" id="AllowUpdate" class="form-control" value="True">
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-warning">
+            <form role="form" id="frmSrc">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="clearfix"></div>
+                                @*<div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Regulation</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ListBoxFor(model => model.selRegulation, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selRegulation", @class = " input-sm form-control", @style = "width:95%;display:none" })
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Issued By</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ListBoxFor(model => model.selIssueBy, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selIssueBy", @class = " input-sm form-control", @style = "width:95%;" })
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Issued Date</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.TextBoxFor(m => m.IssuedDateSta, new { @class = "form-control pull-left date", placeholder = "from" })
+                                        <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;"><i class="fa fa-calendar" style="color:#FFFFFF;"></i></div>
+                                        @Html.TextBoxFor(m => m.IssuedDateFin, new { @class = "form-control pull-left date", placeholder = "to" })
+                                        <div class="input-group-addon cal1" style="background:#00C0EF;border-color:#00ACD6;"><i class="fa fa-calendar" style="color:#FFFFFF;"></i></div>
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">HS Description</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        <input id="HSDescription" type="text" class="form-control" placeholder="enter description or number" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">HS Code</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ListBoxFor(m => m.selHSCode, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selHSCode", @class = " input-sm form-control", @style = "width:95%;" })
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Lartas</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ListBoxFor(model => model.selLartas, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selLartas", @class = " input-sm form-control", @style = "width:95%;display:none" })
+                                    </div>
+                                </div>*@
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Default OM</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ListBoxFor(model => model.selOrderMethods, new SelectList(Enumerable.Empty<SelectListItem>()), new { id = "selOrderMethods", @class = " input-sm form-control", @style = "width:95%;" })
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4">Status</label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        <select class="js-states form-control" id="Status" style="width:95%;display:none">
+                                            <option value="">ALL</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-4 col-xs-4"></label>
+                                    <div class="input-group col-lg-8 col-xs-8">
+                                        @Html.ValidationMessageFor(m => m.IssuedDateFin)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="pull-right col-xs-8" style="text-align:right;padding-right:0;">
+                                    <button id="btnFilter" type="button" class="btn btn-success" style="width:125px"><i class="fa fa-search"></i> Filter</button>
+                                    <button type="button" id="btn-clear" class="btn btn-danger" style="width:125px;"><i class="fa fa-times-circle"></i> Clear</button>
+                                </div>
+                                @*<div class="form-group">
+                                        <div class="input-group col-lg-offset-4 col-xs-8">
+                                            <button id="btnFilter" type="button" class="btn btn-success" style="float:right;width:150px"><i class="fa fa-search"></i> Filter</button>
+                                        </div>
+                                    </div>
+                                    <button id="btnFilter" type="button" class="btn btn-success" style="float:right; margin-right:15px"><i class="fa fa-search"></i> Filter</button>*@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <hr>
+                            <div class="toolbar">
+                                @{
+                                    if (ViewBag.AllowCreate)
+                                    {
+                                        @*<button type="button" class="btn btn-warning" onclick="loadModal('/imex/RegulationManagDetailAdd?regid=0')" style="width:150px">
+                                            <i class="fa fa-plus"></i> New
+                                        </button>*@
+                                        @*<a href="#" class="btn btn-info" onclick="document.getElementById('filexls').click(); return false" style="width:150px">
+                                            <i class="fa fa-upload"></i> Import/Upload
+                                        </a>*@
+                                        @*<a href="/temp/template-hsMapping.xlsx" style="width:150px" class="btn btn-info">
+                                            <i class="fa fa-download"></i> Download Template
+                                        </a>*@
+                                    }
+                                }
+                                <a href="#" class="btn btn-info downloadExcel" style="width:150px">
+                                    <i class="fa fa-download"></i> Download to Excel
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <table class="table table-bordered table2excel" id="tblHs" style="width:100%" data-detail-view="true" data-detail-formatter="detailFormatter"></table>
+
+                            <div id="divResult" class="table2excel2" style="display:none;">
+                                <hr />
+                                <a href="#" class="btn btn-default downloadExcel2"><i class="fa fa-download"></i> Download to Excel</a>
+                                <div id="uploadResult" class="table2excel2" style="overflow:auto;width:50%; max-height:333px; overflow:auto;">></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            <form id="submitExcel" action="HsRegulationUploadExcel" method="post" enctype="multipart/form-data">
+                <input type="file" id="filexls" name="upload" style="visibility: hidden;" onchange="$('#submitExcel').submit();" />
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts
+{
+    <script>
+        var msg = '@message';
+        if (msg != '') {
+            sAlert('', msg, '');
+        }
+
+    </script>
+    <script src="@Url.Content("~/Scripts/jquery.table2excel.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/imex/hs-regulation-mapping.cshtml.js")"></script>
+}

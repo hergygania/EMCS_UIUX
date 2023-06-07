@@ -1,0 +1,83 @@
+﻿<div class="modal fade" id="popupEditinventory" data-backdrop="static" data-keyboard="false" role="dialog" aria-hidden="true">
+    <div>
+        <div class="modal-dialog" style="width:1050px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-list"></i> Edit Inventory</h4>
+                </div>
+                <form class="form-horizontal" method="post" id="formEditInventory" data-toggle="validator">
+                    <div class="modal-body" style="height:140px">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">KAL</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertKAL" name="InsertKAL" type="text" class="form-control" placeholder="KAL..">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">Store</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertStore" name="InsertStore" type="text" class="form-control" placeholder="Store...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">Status </label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertStatus" name="InsertStatus" value="OH" readonly type="text" class="form-control" placeholder="Store...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">Alternate Part Number</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertAltPN" name="InsertAltPN" type="text" class="form-control" placeholder="Part number...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">SOS</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    @*<input id="InsertSOS" name="InsertSOS" type="text" class="form-control" placeholder="Part number...">*@
+                                    @Html.DropDownListFor(m => m.SOSID, new SelectList(Model.sos_list, "SOS", "SOS"), "", new { @class = "js-states form-control", @style = "display:none" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">RG Number </label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertRGNumber" name="InsertRGNumber" type="text" class="form-control" placeholder="Store...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">Alternate Part Number</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertAltPN" name="InsertAltPN" type="text" class="form-control" placeholder="Part number...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">SOS</label>
+                                <div class="col-lg-9" style="width:75%">
+                                    @*<input id="InsertSOS" name="InsertSOS" type="text" class="form-control" placeholder="Part number...">*@
+                                    @Html.DropDownListFor(m => m.SOSID, new SelectList(Model.sos_list, "SOS", "SOS"), "", new { @class = "js-states form-control", @style = "display:none" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label" style="width:25%">RG Number </label>
+                                <div class="col-lg-9" style="width:75%">
+                                    <input id="InsertRGNumber" name="InsertRGNumber" type="text" class="form-control" placeholder="Store...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="button" id="btnUserAdd" onclick="submitForm()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" id="btnclose" class="btn btn-danger" onclick="ClearForm();" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Detail By Part Number & Source";
+}
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h4 class="modal-title"><i class="fa fa-list"></i> @ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Part Number</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="6Y6293" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Part Description</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="SHOE" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Source</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="SNG" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Invoice Number</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="324238487" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Invoice Date</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="23 Sep 2015" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-4 col-xs-4">Doc Number</label>
+                    <div class="input-group col-lg-8 col-xs-8">
+                        <input type="text" class="form-control" value="31C593750D" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-top:10px">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a href="#tab_1" data-toggle="tab">SUPPLIER STATUS</a></li>
+                    <li><a href="#tab_2" data-toggle="tab">FORWADER STATUS</a></li>
+                    <li><a href="#tab_3" data-toggle="tab">TRAKINDO STATUS</a></li>
+                </ul>
+                <div class="tab-content" style="height:310px">
+                    <div class="tab-pane active" id="tab_1">
+                        <table id="supStatus" class="table table-bordered"></table>
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <table id="forwStatus" class="table table-bordered"></table>
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        <table id="trakStatus" class="table table-bordered"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>@section scripts
+{
+    <script src="@Url.Content("~/Scripts.app/PartTracking/StockReplenishmentPopupPartDetail.cshtml.js")"></script>
+}
+

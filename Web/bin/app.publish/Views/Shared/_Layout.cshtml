@@ -1,0 +1,505 @@
+﻿@using App.Web
+@using App.Web.Helper
+@{
+    string userName = "", userType = "", userRolesMode = "", controllerName = "";
+    string isAdmin = "false";
+    string isReadOnly = "false";
+    try
+    {
+        userName = User.Identity.GetEmployeeName();
+        userType = User.Identity.GetUserType();
+        userRolesMode = (User.Identity.GetUserRolesMode() + "").ToLower();
+        controllerName = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Replace("imexdata", "imex");
+
+        if (userRolesMode.Contains(controllerName + "_read") && !User.IsInRole("Administrator"))
+        {
+            isReadOnly = "true";
+        }
+
+        isAdmin = User.IsInRole("Administrator") ? "true" : "false";
+    }
+    catch { }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>.:: PT. TRAKINDO UTAMA ::.</title>
+    @*<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <style type="text/css">
+        .btn-box-tool {
+            padding: 5px;
+            font-size: 12px;
+            background: transparent;
+            color: #97a0b3;
+            box-shadow: inset 0px -1px 0px 0px rgba(255, 255, 255, 0.15) !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="~/Content/Assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/Content/Assets/css/black-dashboard.css" rel="stylesheet" />
+    <link href="~/Content/Assets/demo/demo.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />*@
+    @*@Styles.Render("~/Content/css");*@
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Styles.Render("~/Content/css2");
+    }
+    else
+    {
+
+    }
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/AppScript")*@
+</head>
+<body class="sidebar-mini">
+    <div class="wrapper">
+        <header class="header">
+            <a href="./" class="logo">
+                <img src="~/Images/trakindo_logo.jpg" class="img-responsive" style="border:solid 2px white; width:175px;" />
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="pull-right built-for-it">
+                    @*<img src="~/Images/built.png" />*@
+                </div>
+            </nav>
+            <div id="pisProgress" class="progress" style="display: none">
+                <div id="pisProgressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                    <span id="lblPisProgressBar" class="sr-only">0%</span>
+                </div>
+            </div>
+        </header>
+        <div class="sidebar">
+            @*@if(User.Identity.IsAuthenticated)
+                {*@
+            <div id="aass" class="sidebar-wrapper">
+                @Html.Partial("_Menu")
+                <!--<div id="menu-content-neo" class="sidebar iin" style="background-color:#000000;">
+                <div class="menu-enhance">-->
+                @*@if(userType == "ext-part")
+                    {
+                        @Html.Partial("_Menu.ext.part")
+                    }
+                    else if(userType == "ext-imex")
+                    {
+                        @Html.Partial("_Menu.ext.imex")
+                    }
+                    else*@
+                @*if(userType == "internal")
+                    {*@
+                @*}*@
+                <!--</div>
+                </div>-->
+                @*<div id="menu-container-neo"></div>*@
+            </div>
+            @*}*@
+
+        </div>
+
+
+        <div class="main-panel">
+            <!-- Main content -->
+            <div class="content">
+                <div class="content-header">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a id="triger-menu" href="javascript:void(0);" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" onclick="return alert('Please log-in ..!')">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                    }
+
+                    <h1>Supply Chain Information System</h1>
+
+                    <ol class="breadcrumb" style="background-color: transparent;">
+                        @if (userType == "internal")
+                        {
+                            <li><a href="@Url.Content("~/")"><i class="@(ViewBag.Title == "Quick" || ViewBag.Title == "Advanced" ? "fas fa-tachometer-alt mr-2" : "fa fa-dashboard")"></i>Home</a></li>
+                            <li class="active">@ViewBag.Title</li>
+                            <text>&nbsp;&nbsp;|&nbsp;&nbsp;</text>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (userType == "internal")
+                            {
+                                <a href="javascript:void(0)" class="dropdown-toggle disabled" id="users" data-toggle="dropdown">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <span class="">@userName</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <span class="">@userName</span>
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                    </li>
+                                </ul>
+                            }
+
+
+                            @*<a href="#" class="dropdown-toggle" id="users" data-toggle="dropdown">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <span class="">@userName</span>
+                                    <span class="caret"></span>
+                                </a>*@
+
+                            @*<ul class="dropdown-menu pull-right" role="menu">*@
+                            @*<li>
+                                    <a href="#" onclick="return loadingPage('/change-password')"><i class="fa fa-user-secret"></i> Change Password</a>
+                                </li>*@
+                            @*<li>
+                                    <a href="@Url.Action("SignOut", "account", new { area = "" })"><i class="fa fa-sign-out"></i>Log Off</a>
+                                </li>*@
+                            @*</ul>*@
+
+                            @*<span class="">&nbsp;&nbsp;|&nbsp;&nbsp;</span>*@
+                            @*<a href="#" onclick="return loadingPage('/sign-out')" style="color:red"><i class="fa fa-sign-out fa-lg"></i> Log Off</a>*@
+                        }
+                        else
+                        {
+                            @*<a href="@Url.Action("SignIn", "account", new { area = "" })"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>*@
+                            <a href="#" onclick="return loadingPage('/sign-in')"><i class="fa fa-user fa-lg"></i> <span class="hidden-sm"> Login</span></a>
+                        }
+                    </ol>
+                </div>
+
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-plugin">
+        <div class="dropdown show-dropdown">
+            <a href="#" data-toggle="dropdown">
+                <i class="fa fa-cog fa-2x"> </i>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header-title"> Sidebar Background</li>
+                <li class="adjustments-line">
+                    <a href="javascript:void(0)" class="switch-trigger background-color">
+                        <div class="badge-colors text-center">
+                            <span class="badge filter badge-warning " data-color="orange"></span>
+                            <span class="badge filter badge-primary" data-color="primary"></span>
+                            <span class="badge filter badge-info active" data-color="blue"></span>
+                            <span class="badge filter badge-success" data-color="green"></span>
+                            <span class="badge filter badge-danger" data-color="red"></span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </li>
+                <li class="adjustments-line text-center color-change">
+                    <span class="color-label">LIGHT MODE</span>
+                    <span class="badge light-badge mr-2"></span>
+                    <span class="badge dark-badge ml-2"></span>
+                    <span class="color-label">DARK MODE</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- modal placeholder content -->
+    <div id='myModalPlace' class='modal fade'>
+        <div class="modal-dialog modal-lg">
+            <div id="myModalContent" class="modal-content"></div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/js/core/jquery.min.js"></script>
+
+    <script>
+        var myApp = {};
+        myApp.root = '@(Url.Content("~/"))';
+        myApp.fullPath = 'http://' + document.location.host + myApp.root;
+        myApp.firstMonth = '@DateTime.Today.AddMonths(-1).ToString("dd MMM yyyy")';
+        myApp.lastMonth = '@DateTime.Today.ToString("dd MMM yyyy")';
+        myApp.controller = '@controllerName';
+        myApp.isAdmin = '@isAdmin';
+        myApp.isReadOnly = '@isReadOnly';
+
+        $(function () {
+            loadingPage = function (url) {
+                $('html, body').addClass('wait');
+                $('.content').empty();
+                $('.box-title').text('');
+                $('.content').html('<div style="text-align:center;margin-top:5%;"><img class="loadingImg" src="/Content/images/ajax-loading.gif"/>&nbsp;...Loading...</div>')
+                $('.content').css('color', 'red');
+                location.replace(url);
+            }
+        });
+
+        (function addXhrProgressEvent($) {
+            var originalXhr = $.ajaxSettings.xhr;
+
+            $.ajaxSetup({
+                progress: $.noop,
+                xhr: function () {
+                    var xhr = originalXhr(), that = this;
+                    if (xhr) {
+                        if (typeof xhr.addEventListener == "function") {
+                            xhr.addEventListener("progress", function (event) {
+                                that.progress(event);
+                                if (that.global) {
+                                    var event = $.Event('ajaxProgress', event);
+                                    event.type = 'ajaxProgress';
+                                    $(document).trigger(event, [xhr]);
+                                }
+                            }, false);
+                        }
+                    }
+                    return xhr;
+                }
+            });
+        })(jQuery);
+    </script>
+
+    @if (ViewBag.Title == "Quick" || ViewBag.Title == "Advanced")
+    {
+        @Scripts.Render("~/bundles/js", "~/bundles/bootstrap");
+        @*@Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")*@
+    }
+    else
+    {
+        @Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+    }
+
+    <script src="~/Content/Assets/js/core/popper.min.js"></script>
+    <script src="~/Content/Assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/moment.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-switch.js"></script>
+    <script src="~/Content/Assets/js/plugins/sweetalert2.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.tablesorter.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.validate.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-selectpicker.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/Assets/js/plugins/jasny-bootstrap.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/daygrid.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/timegrid.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/fullcalendar/interaction.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/jquery-jvectormap.js"></script>
+    <script src="~/Content/Assets/js/plugins/nouislider.min.js"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>*@
+    <script src="~/Content/Assets/js/plugins/chartjs.min.js"></script>
+    <script src="~/Content/Assets/js/plugins/bootstrap-notify.js"></script>
+    <script src="~/Content/Assets/js/black-dashboard.min.js"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/Content/Assets/demo/demo.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+
+
+
+
+
+
+    <style type="text/css">
+        .fixed-table-body {
+            max-height: 577px;
+            overflow-y: auto;
+        }
+    </style>
+    @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            if (myApp.isReadOnly == 'true') {
+                $('#btnCreate').hide();
+                $('#btnCreateShipment').hide();
+                $(".table").bootstrapTable('hideColumn', 'action');
+                $("button:contains('New')").hide();
+                $("button:contains('Create')").hide();
+                $("button:contains('Upload')").hide();
+                $("a:contains('Upload')").hide();
+                $("a:contains('Template')").hide();
+
+                $(".dropdown-menu input").on('click', function () {
+                    $(".table").bootstrapTable('hideColumn', 'action');
+                });
+            } else if (myApp.isAdmin == 'false') {
+                $(".table").bootstrapTable('hideColumn', 'update');
+            }
+
+            window.pisProgress = $("#pisProgress");
+            window.pisProgressBar = function (value, show) {
+                if (value != undefined && show) {
+                    pisProgress.fadeIn();
+                    $('.progress-bar').text(value + '%');
+                    $('.progress-bar').css('width', value + '%').attr('aria-valuenow', value);
+                } else {
+                    pisProgress.fadeOut();
+                    setTimeout(function () {
+                        $('.progress-bar').text('0%');
+                        $('.progress-bar').css('width', '0%').attr('aria-valuenow', '0');
+                    }, 1000);
+                }
+            }
+
+            $(".box-body").collapse('show');
+            $('.box .box-header .box-tools [data-widget="collapse"]').click(function () {
+                var currentIconClass = $(this).find("i").attr("class");
+
+                if (currentIconClass === "fa fa-minus") {
+                    $(this).find("i").removeClass("fa fa-minus");
+                    $(this).find("i").addClass("fa fa-plus");
+                    $(this).parent().parent().next(".box-body").collapse('hide');
+                } else {
+                    $(this).find("i").removeClass("fa fa-plus");
+                    $(this).find("i").addClass("fa fa-minus");
+                    $(this).parent().parent().next(".box-body").collapse('show');
+                }
+
+                setInterval(function () {
+                    try {
+                        $('.modal').modal('handleUpdate');
+                    } catch (e) {
+
+                    }
+                }, 100)
+            });
+        });
+    </script>
+
+    @RenderSection("soVetting", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $sidebar = $('.sidebar');
+                $navbar = $('.navbar');
+                $main_panel = $('.main-panel');
+
+                $full_page = $('.full-page');
+
+                $sidebar_responsive = $('body > .navbar-collapse');
+                sidebar_mini_active = true;
+                white_color = false;
+
+                window_width = $(window).width();
+
+                fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+                $('.fixed-plugin a').click(function (event) {
+                    if ($(this).hasClass('switch-trigger')) {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else if (window.event) {
+                            window.event.cancelBubble = true;
+                        }
+                    }
+                });
+
+                $('.fixed-plugin .background-color span').click(function () {
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+
+                    var new_color = $(this).data('color');
+
+                    if ($sidebar.length != 0) {
+                        $sidebar.attr('data', new_color);
+                    }
+
+                    if ($main_panel.length != 0) {
+                        $main_panel.attr('data', new_color);
+                    }
+
+                    if ($full_page.length != 0) {
+                        $full_page.attr('filter-color', new_color);
+                    }
+
+                    if ($sidebar_responsive.length != 0) {
+                        $sidebar_responsive.attr('data', new_color);
+                    }
+                });
+
+                $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (sidebar_mini_active == true) {
+                        $('body').removeClass('sidebar-mini');
+                        sidebar_mini_active = false;
+                        blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+                    } else {
+                        $('body').addClass('sidebar-mini');
+                        sidebar_mini_active = true;
+                        blackDashboard.showSidebarMessage('Sidebar mini activated...');
+                    }
+
+                    // we simulate the window Resize so the charts will get updated in realtime.
+                    var simulateWindowResize = setInterval(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    }, 180);
+
+                    // we stop the simulation of Window Resize after the animations are completed
+                    setTimeout(function () {
+                        clearInterval(simulateWindowResize);
+                    }, 1000);
+                });
+
+                $('.switch-change-color input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (white_color == true) {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').removeClass('white-content');
+                        }, 900);
+                        white_color = false;
+                    } else {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').addClass('white-content');
+                        }, 900);
+
+                        white_color = true;
+                    }
+
+
+                });
+
+                $('.light-badge').click(function () {
+                    $('body').addClass('white-content');
+                });
+
+                $('.dark-badge').click(function () {
+                    $('body').removeClass('white-content');
+                });
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>
