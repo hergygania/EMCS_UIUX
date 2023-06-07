@@ -1219,10 +1219,10 @@ a:hover {
 }
 
 .btn-grad-orange {
-  //background-image: linear-gradient(to right, #fe9d01 0%, #ffcc00 51%, #fe9d01 100%);
-  //background-image: linear-gradient(to right, #ff8c00 0%, #ffcc00 51%, #fe9d01 100%);
-  //background-image: linear-gradient(to right, #fe9d01 0%, #fe9d01 40%, #ffcc00 83%);
-  //background: linear-gradient(20deg, #f6b221 60%, #ffd38a 83%);
+  /* background-image: linear-gradient(to right, #fe9d01 0%, #ffcc00 51%, #fe9d01 100%); */
+  /* background-image: linear-gradient(to right, #ff8c00 0%, #ffcc00 51%, #fe9d01 100%); */
+  /* background-image: linear-gradient(to right, #fe9d01 0%, #fe9d01 40%, #ffcc00 83%); */
+  /* background: linear-gradient(20deg, #f6b221 60%, #ffd38a 83%); */
   /* background: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%); */
   background: linear-gradient(20deg, #fe9d01 50%, #ffd38a 83%);
   background-size: 130% auto;
@@ -3065,7 +3065,7 @@ a:hover {
 }
 
 #sidebar-menu .nav-collapse.nav-collapse--active:after {
-  //transform: rotate(225deg);
+  /* transform: rotate(225deg); */
   --tw-translate-y: -50%;
   --tw-rotate: 225deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4033,7 +4033,7 @@ select.form-control[size] {
   cursor: not-allowed;
   --tw-bg-opacity: 1;
   background-color: rgb(229 229 229 / var(--tw-bg-opacity));
-  //background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 4px, #fff 4px, #fff 8px);
+  /* background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 4px, #fff 4px, #fff 8px); */
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single {
