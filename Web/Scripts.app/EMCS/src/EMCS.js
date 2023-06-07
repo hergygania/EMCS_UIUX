@@ -10,11 +10,16 @@ const sidebarNavScrollbar = new PerfectScrollbar(".sidebar-nav--inner", {
   wheelPropagation: true,
   minScrollbarLength: 20,
 });
-const mainContentScrollbar = new PerfectScrollbar(".main-content", {
-  wheelSpeed: 1,
-  wheelPropagation: true,
-  minScrollbarLength: 20,
-});
+// const mainContentScrollbar = new PerfectScrollbar(".main-content", {
+//   wheelSpeed: 1,
+//   wheelPropagation: true,
+//   minScrollbarLength: 20,
+// });
+// const tabTaskNpePebScrollbar = new PerfectScrollbar("#tab-task-npe_peb .fixed-table-body", {
+//   wheelSpeed: 1,
+//   wheelPropagation: true,
+//   minScrollbarLength: 20,
+// });
 // const tableScrollbar = new PerfectScrollbar(
 //   "#tab-task-cargo .fixed-table-body",
 //   {
@@ -34,8 +39,7 @@ var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
 // Change the icons inside the button based on previous settings
 if (
   localStorage.getItem("color-theme") === "dark" ||
-  (!("color-theme" in localStorage) &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches)
+  (!("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
 ) {
   themeToggleLightIcon.classList.remove("hidden");
 } else {
@@ -100,7 +104,7 @@ themeToggleBtn.addEventListener("click", function () {
 
 //   $(document).on(
 //     "mouseover mouseout",
-//     ".sidebar-collapsed #sidebar-nav",
+//     ".sidebar-collapsed #sidebar-menu",
 //     function () {
 //       $(".sidebar-collapsed").toggleClass("sidebar-hovered");
 //     }

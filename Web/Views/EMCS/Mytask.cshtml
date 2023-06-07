@@ -1,7 +1,7 @@
 ﻿@model dynamic
 @{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
-    ViewBag.Title = "My Task";
+  Layout = "~/Views/EMCS/_Layout.cshtml";
+  ViewBag.Title = "My Task";
 }
 @*@Styles.Render("~/Content/EMCS/FontAwesome/css/all.css")*@
 @* @Styles.Render("~/Content/EMCS/Custom.css") *@
@@ -10,127 +10,135 @@
 <input type="hidden" id="IsEditAllowed" value="@ViewBag.IsEditAllowed" />
 @*<div class="row">*@
 
-<div class="px-8">    
-    <div id="myTaskTab" class="tab" role="tabpanel">
-        <nav class="tabsNav">
-            <div class="selector"></div>
-            <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab" class="tabsNav--item active">
-                @if(Model.Cipl != 0) {
-                    <span class='tabsNav--item-count'>@Model.Cipl</span>
-                }
-                <span class="tabsNav--item-label">CIPL</span>
-            </a>
-            <a href="#tab-task-gr" aria-controls="gr" role="tab" data-toggle="tab" class="tabsNav--item">
-                @if(Model.Gr != 0) {
-                    <span class='tabsNav--item-count'>@Model.Gr</span>
-                }
-                <span class="tabsNav--item-label">RG</span>                    
-            </a>
-            <a href="#tab-task-cargo" aria-controls="profile" role="tab" data-toggle="tab" class="tabsNav--item">
-                @if(Model.Cl != 0) {
-                    <span class='tabsNav--item-count'>@Model.Cl</span>
-                }
-                <span class="tabsNav--item-label">CL</span>                    
-            <a href="#tab-task-si" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
-                @if(Model.Si != 0) {
-                    <span class='tabsNav--item-count'>@Model.Si</span>
-                }
-                <span class="tabsNav--item-label">SI</span>                      
-            </a>
-            <a href="#tab-task-npe_peb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
-                @if(Model.Npe != 0) {
-                    <span class='tabsNav--item-count'>@Model.Npe</span>
-                }
-                <span class="tabsNav--item-label">PEB</span>                      
-            </a>
-            <a href="#tab-task-bl_awb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
-                @if(Model.Bl != 0) {
-                    <span class='tabsNav--item-count'>@Model.Bl</span>
-                }
-                <span class="tabsNav--item-label">BL / AWB</span>                      
-            </a>
-            <a href="#tab-task-delegation" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
-                <span class="tabsNav--item-label">DLG</span>
-            </a>
-            <a href="#tab-task-requestForChange" aria-controls="test" role="tab" data-toggle="tab" class="tabsNav--item">
-                <span class="tabsNav--item-label">RFC</span>
-            </a>
-        </nav>
-        <div class="tab-content tabs-custom tab-space tab-subcategories pt-4">
-            <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
-                @Html.Partial("~/Views/EMCS/TaskCipl.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-gr">
-                @Html.Partial("~/Views/EMCS/TaskGr.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-cargo">
-                @Html.Partial("~/Views/EMCS/TaskCl.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-si">
-                @Html.Partial("~/Views/EMCS/TaskSi.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-npe_peb">
-                @Html.Partial("~/Views/EMCS/TaskNpePeb.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-bl_awb">
-                @Html.Partial("~/Views/EMCS/TaskBlAwb.cshtml")
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tab-task-delegation">
-                @Html.Partial("~/Views/EMCS/TaskDelegation.cshtml")
-            </div>
-            @if (ViewBag.IsImexUser)
-            {
-                <div role="tabpanel" class="tab-pane" id="tab-task-requestForChange">
-                    @Html.Partial("~/Views/EMCS/TaskRequestForChange.cshtml")
-                </div>
-            }
-        </div>       
+<div class="!px-8 !pt-8 !pb-2">
+  <div id="myTaskTab" class="tab" role="tabpanel">
+    <nav class="tabsNav">
+      <div class="selector"></div>
+      <a href="#tab-task-cipl" aria-controls="home" role="tab" data-toggle="tab" class="tabsNav--item active">
+        @if (Model.Cipl != 0)
+        {
+          <span class='tabsNav--item-count'>@Model.Cipl</span>
+        }
+        <span class="tabsNav--item-label">CIPL</span>
+      </a>
+      <a href="#tab-task-gr" aria-controls="gr" role="tab" data-toggle="tab" class="tabsNav--item">
+        @if (Model.Gr != 0)
+        {
+          <span class='tabsNav--item-count'>@Model.Gr</span>
+        }
+        <span class="tabsNav--item-label">RG</span>
+      </a>
+      <a href="#tab-task-cargo" aria-controls="profile" role="tab" data-toggle="tab" class="tabsNav--item">
+        @if (Model.Cl != 0)
+        {
+          <span class='tabsNav--item-count'>@Model.Cl</span>
+        }
+        <span class="tabsNav--item-label">CL</span>
+        <a href="#tab-task-si" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+          @if (Model.Si != 0)
+          {
+            <span class='tabsNav--item-count'>@Model.Si</span>
+          }
+          <span class="tabsNav--item-label">SI</span>
+        </a>
+        <a href="#tab-task-npe_peb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+          @if (Model.Npe != 0)
+          {
+            <span class='tabsNav--item-count'>@Model.Npe</span>
+          }
+          <span class="tabsNav--item-label">PEB</span>
+        </a>
+        <a href="#tab-task-bl_awb" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+          @if (Model.Bl != 0)
+          {
+            <span class='tabsNav--item-count'>@Model.Bl</span>
+          }
+          <span class="tabsNav--item-label">BL / AWB</span>
+        </a>
+        <a href="#tab-task-delegation" aria-controls="messages" role="tab" data-toggle="tab" class="tabsNav--item">
+          <span class="tabsNav--item-label">DLG</span>
+        </a>
+        <a href="#tab-task-requestForChange" aria-controls="test" role="tab" data-toggle="tab" class="tabsNav--item">
+          <span class="tabsNav--item-label">RFC</span>
+        </a>
+    </nav>
+    <div class="tab-content tabs-custom tab-space tab-subcategories pt-4">
+      <div role="tabpanel" class="tab-pane active" id="tab-task-cipl">
+        @Html.Partial("~/Views/EMCS/TaskCipl.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-gr">
+        @Html.Partial("~/Views/EMCS/TaskGr.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-cargo">
+        @Html.Partial("~/Views/EMCS/TaskCl.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-si">
+        @Html.Partial("~/Views/EMCS/TaskSi.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-npe_peb">
+        @Html.Partial("~/Views/EMCS/TaskNpePeb.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-bl_awb">
+        @Html.Partial("~/Views/EMCS/TaskBlAwb.cshtml")
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-task-delegation">
+        @Html.Partial("~/Views/EMCS/TaskDelegation.cshtml")
+      </div>
+      @if (ViewBag.IsImexUser)
+      {
+        <div role="tabpanel" class="tab-pane" id="tab-task-requestForChange">
+          @Html.Partial("~/Views/EMCS/TaskRequestForChange.cshtml")
+        </div>
+      }
     </div>
+  </div>
 </div>
 @*</div>*@
 
 @Html.Partial("MytaskModal")
 
+@Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+
 @section scripts
 {
-    <script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/Mytask.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCipl.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskGr.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCl.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskSi.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskBlAwb.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskDelegation.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskRequestForChangeHistory.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+<script src="@Url.Content("~/Content/EMCS/DropZone/dropzone.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/Mytask.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCipl.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskGr.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskCl.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskSi.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskNpePeb.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskBlAwb.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskDelegation.cshtml.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/mytask/TaskRequestForChangeHistory.js")"></script>
+<script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 
 }
 
 <script>
-    $(function () {
-        setTimeout(function(){
-            var tabs = $('.tabsNav');
-            //var selector = $('.tabsNav').find('a').length;
-            //var selector = $(".tabs").find(".selector");
-            var activeItem = tabs.find('.active');
-            var activeWidth = activeItem.outerWidth();
-            $(".selector").css({
-                "left": activeItem.position.left + "px",
-                "width": activeWidth + "px"
-            });
+  $(function () {
+    setTimeout(function () {
+      var tabs = $('.tabsNav');
+      //var selector = $('.tabsNav').find('a').length;
+      //var selector = $(".tabs").find(".selector");
+      var activeItem = tabs.find('.active');
+      var activeWidth = activeItem.outerWidth();
+      $(".selector").css({
+        "left": activeItem.position.left + "px",
+        "width": activeWidth + "px"
+      });
 
-            $(".tabsNav").on("click", "a", function (e) {
-                e.preventDefault();
-                $('.tabsNav a').removeClass("active");
-                $(this).addClass('active');
-                var activeWidth = $(this).outerWidth();
-                var itemPos = $(this).position();
-                $(".selector").css({
-                    "left": itemPos.left + "px",
-                    "width": activeWidth + "px"
-                });
-            });
-        }, 500);
-    });
+      $(".tabsNav").on("click", "a", function (e) {
+        e.preventDefault();
+        $('.tabsNav a').removeClass("active");
+        $(this).addClass('active');
+        var activeWidth = $(this).outerWidth();
+        var itemPos = $(this).position();
+        $(".selector").css({
+          "left": itemPos.left + "px",
+          "width": activeWidth + "px"
+        });
+      });
+    }, 500);
+  });
 </script>

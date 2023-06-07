@@ -4630,11 +4630,6 @@
     wheelPropagation: true,
     minScrollbarLength: 20
   });
-  var mainContentScrollbar = new perfect_scrollbar_esm_default(".main-content", {
-    wheelSpeed: 1,
-    wheelPropagation: true,
-    minScrollbarLength: 20
-  });
   var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
   var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
   if (localStorage.getItem("color-theme") === "dark" || !("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {

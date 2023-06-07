@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities";
 
 @import "./partials/base.css";
+@import "./partials/utilities.css";
 @import "./partials/header.css";
 @import "./partials/layout.css";
 @import "./partials/buttons.css";
@@ -10,6 +11,8 @@
 @import "./partials/circliful.css";
 @import "./partials/perfect-scrollbar.css";
 @import "./partials/table.css";
+@import "./partials/forms.css";
+@import "./partials/jConveyorTicker.css";
 
 @import "./pages/Dashboard.css";
 @import "./pages/Mytask.css";

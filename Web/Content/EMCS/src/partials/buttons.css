@@ -25,34 +25,40 @@
   }
   .btn-clr {
     background-image: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%);
-    background-image: linear-gradient(
-      to bottom left,
-      #734700,
-      #ff9c01,
-      #ffe1b0
-    );
+    background-image: linear-gradient(to bottom left, #734700, #ff9c01, #ffe1b0);
+  }
+  .btn-group {
+    .btn {
+      &.btn-default {
+        @apply bg-white text-slate-500 border-slate-400 py-2;
+      }
+      &.btn-active {
+        @apply text-white bg-primary border border-solid border-primary py-2;
+        &.btn-default {
+          @apply bg-white text-slate-500 border-slate-400 py-2;
+        }
+      }
+    }
   }
   .btn-grad-orange {
-    background-image: linear-gradient(
-      to right,
-      #fe9d01 0%,
-      #ffcc00 51%,
-      #fe9d01 100%
-    );
-    background-size: 200% auto;
+    //background-image: linear-gradient(to right, #fe9d01 0%, #ffcc00 51%, #fe9d01 100%);
+    //background-image: linear-gradient(to right, #ff8c00 0%, #ffcc00 51%, #fe9d01 100%);
+    //background-image: linear-gradient(to right, #fe9d01 0%, #fe9d01 40%, #ffcc00 83%);
+    //background: linear-gradient(20deg, #f6b221 60%, #ffd38a 83%);
+    /* background: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%); */
+    background: linear-gradient(20deg, #fe9d01 50%, #ffd38a 83%);
+    background-size: 130% auto;
+    /* background: linear-gradient(33deg, #fe9d01 33%, #ffd38a 67%, #fe9d01 100%);
+    background-size: 150% auto; */
     @apply text-white transition-all duration-500;
     &:hover {
+      /* background-position: right center;
+      background-size: 100% auto; */
       background-position: right center;
     }
   }
-
   .btn-grad-yellow {
-    background-image: linear-gradient(
-      to right,
-      #fcba12 0%,
-      #fde047 51%,
-      #fcba12 100%
-    );
+    background-image: linear-gradient(to right, #fcba12 0%, #fde047 51%, #fcba12 100%);
     transition: 0.5s;
     background-size: 200% auto;
     @apply text-white transition-all duration-500;

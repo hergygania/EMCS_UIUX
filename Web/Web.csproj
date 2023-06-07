@@ -618,6 +618,18 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
+    <Content Include="Content\EMCS\app-tailwind.css" />
+    <Content Include="Content\EMCS\src\app-tailwind.css" />
+    <Content Include="Content\EMCS\src\pages\Dashboard.css" />
+    <Content Include="Content\EMCS\src\pages\Mytask.css" />
+    <Content Include="Content\EMCS\src\partials\base.css" />
+    <Content Include="Content\EMCS\src\partials\buttons.css" />
+    <Content Include="Content\EMCS\src\partials\circliful.css" />
+    <Content Include="Content\EMCS\src\partials\components.css" />
+    <Content Include="Content\EMCS\src\partials\header.css" />
+    <Content Include="Content\EMCS\src\partials\layout.css" />
+    <Content Include="Content\EMCS\src\partials\perfect-scrollbar.css" />
+    <Content Include="Content\EMCS\src\partials\table.css" />
     <Content Include="Content\POST\bootstrap-table.min.css" />
     <Content Include="Content\POST\Dropzone\css\dropzone.css" />
     <Content Include="Content\POST\Dropzone\js\dropzone.js" />
@@ -5073,6 +5085,8 @@
     <Content Include="Scripts.app\EMCS\bars\bars.js" />
     <Content Include="Scripts.app\EMCS\bootstrap-table\bootstrap-table-cell-input.js" />
     <Content Include="Scripts.app\EMCS\breaking-news\breaking-news-ticker.min.js" />
+    <Content Include="Scripts.app\EMCS\breaking-news\eocjs-newsticker.js" />
+    <Content Include="Scripts.app\EMCS\breaking-news\jquery.jConveyorTicker.min.js" />
     <Content Include="Scripts.app\EMCS\circliful\jquery.circliful.js" />
     <Content Include="Scripts.app\EMCS\CountryList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Custom.js" />
@@ -5080,6 +5094,7 @@
     <Content Include="Scripts.app\EMCS\Dashboard.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Department.cshtml.js" />
     <Content Include="Scripts.app\EMCS\dropzone.js" />
+    <Content Include="Scripts.app\EMCS\EMCS.js" />
     <Content Include="Scripts.app\EMCS\Flow.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowGeneral.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowNextStep.cshtml.js" />
@@ -5132,6 +5147,7 @@
     <Content Include="Scripts.app\EMCS\report\TaxAuditPurpose.cshtml.js" />
     <Content Include="Scripts.app\EMCS\RunningTextList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\SIBList.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\src\EMCS.js" />
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.css" />
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.js" />
     <Content Include="Scripts.app\EMCS\SuperiorList.cshtml.js">
@@ -6097,27 +6113,6 @@
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\src\main\webapp\WEB-INF\spring\app-convert.properties" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\com\highcharts\export\filter\CorsFilter.class" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\log4j.properties" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007880.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007883.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007886.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_776ee455_1453bb181b6__8000_00007889.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000014.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000017.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000020.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000023.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000026.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload_cf7d419_1454f9ef8a4__8000_00000029.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000965.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000974.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000977.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000980.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000983.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000986.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000989.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000992.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000995.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00000998.tmp" />
-    <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\upload__6795ead4_1458e102cdd__8000_00001001.tmp" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\java\readme.md" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\phantomjs\readme.md" />
     <Content Include="Scripts\Highcharts-4.0.1\exporting-server\php\php-batik\index.php" />
@@ -7272,6 +7267,7 @@
     <Folder Include="Content\SoVetting\plugins\dataTables.checkboxes\" />
     <Folder Include="File\EMCS\Regulation\" />
     <Folder Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\classes\com\highcharts\export\controller\" />
+    <Folder Include="Scripts\Highcharts-4.0.1\exporting-server\java\highcharts-export\highcharts-export-web\target\tmp\" />
     <Folder Include="Upload\doc\" />
     <Folder Include="Upload\EMCS\Cipl\" />
     <Folder Include="Upload\EMCS\Sib\" />
@@ -7355,6 +7351,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <!-- <Target Name="Tailwind" BeforeTargets="Build">
+    <Exec Command="npm run build"/>
+  </Target> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

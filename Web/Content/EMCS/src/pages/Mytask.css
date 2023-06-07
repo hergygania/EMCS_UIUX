@@ -1,6 +1,6 @@
 #myTaskTab {
   .tabsNav {
-    @apply relative flex rounded-full bg-slate-200 shadow-sm;
+    @apply relative flex rounded-full bg-slate-200 shadow-lg;
     .tabsNav--item {
       @apply relative flex-auto flex justify-center items-center gap-x-2 text-center px-6 py-2 z-[1] transition-all delay-150 duration-300;
       .tabsNav--item-count {

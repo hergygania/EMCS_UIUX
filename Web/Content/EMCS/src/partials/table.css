@@ -2,15 +2,14 @@
   @apply overflow-y-hidden;
 }
 .table {
-  @apply text-slate-900 text-[13px] leading-normal border-b-2 border-solid border-slate-200;
+  @apply text-slate-900 text-[13px] leading-normal border-b-2 border-solid border-slate-300;
   td,
   th {
-    @apply border-t border-solid border-slate-200 px-4 py-3;
+    @apply border-t border-solid border-slate-300 px-4 py-4;
   }
   thead {
-    @apply bg-slate-100;
     th {
-      @apply border-b-2 border-solid border-slate-200 font-semibold text-xs uppercase;
+      @apply border-b-2 border-solid border-slate-300 font-semibold text-xs uppercase bg-[#585858];
     }
   }
   &.table-bordered {
@@ -19,22 +18,34 @@
   }
   &.table-default {
     thead {
-      @apply bg-slate-100;
+      @apply bg-slate-200;
     }
   }
   .btn-action {
-    @apply inline-flex w-6 h-6 items-center justify-center rounded text-lg leading-none;
+    @apply inline-flex w-7 h-7 items-center justify-center rounded-full text-lg leading-none;
     &.btn-green {
-      @apply text-green-500 bg-green-200 hover:bg-green-300 hover:text-green-500;
+      @apply text-green-600 bg-green-200 hover:bg-green-300 hover:text-green-600;
     }
     &.btn-amber {
-      @apply text-amber-500 bg-amber-200 hover:bg-amber-300 hover:text-amber-500;
+      @apply text-amber-600 bg-amber-200 hover:bg-amber-300 hover:text-amber-600;
     }
     &.btn-red {
-      @apply text-red-500 bg-red-200 hover:bg-red-300 hover:text-red-500;
+      @apply text-red-600 bg-red-200 hover:bg-red-300 hover:text-red-600;
     }
     &.btn-blue {
-      @apply text-blue-500 bg-blue-200 hover:bg-blue-300 hover:text-blue-500;
+      @apply text-blue-600 bg-blue-200 hover:bg-blue-300 hover:text-blue-600;
+    }
+  }
+}
+
+.table-bordered {
+  td,
+  th {
+    @apply border border-solid border-gray-300;
+  }
+  thead {
+    th {
+      @apply border-slate-700;
     }
   }
 }
@@ -47,7 +58,7 @@
     }
     thead {
       th {
-        @apply text-slate-500;
+        @apply text-white;
         .th-inner {
           @apply p-4;
         }
@@ -89,6 +100,15 @@
     }
   }
   .fixed-table-container {
+    .table {
+      thead {
+        th {
+          .th-inner {
+            @apply p-4;
+          }
+        }
+      }
+    }
     .fixed-table-body {
       .fixed-table-loading {
         .loading-wrap {
@@ -99,9 +119,37 @@
   }
   .fixed-table-toolbar {
     @apply px-4;
+    .bs-bars {
+      @apply my-3;
+    }
     .columns {
+      @apply my-3;
       label {
         @apply py-2 px-4 leading-4 mb-0 flex gap-x-2 items-start;
+      }
+    }
+    .column-right {
+      @apply ml-1.5;
+    }
+    .search-bar {
+      @apply float-right my-3 mr-2;
+    }
+    [type="text"] {
+      @apply text-sm rounded-full h-9 px-5 border border-solid border-slate-300 focus:ring-2 ring-blue-200 focus:outline-none;
+    }
+    .btn {
+      @apply text-sm font-normal py-2 px-3 leading-none h-9;
+      &.btn-secondary {
+        @apply border border-white border-solid bg-primary hover:bg-primary text-white hover:text-white focus:shadow-none hover:brightness-110;
+      }
+      .uil {
+        @apply font-normal text-base leading-none;
+        @apply text-white;
+      }
+      &:hover {
+        .uil {
+          @apply text-white;
+        }
       }
     }
   }
@@ -109,11 +157,8 @@
     @apply px-4;
     > .pagination,
     > .pagination-detail {
-      @apply text-sm my-4;
+      @apply text-xs my-4;
     }
-  }
-  .fixed-table-toolbar,
-  .fixed-table-pagination {
     .btn {
       @apply text-sm font-normal py-1.5 px-3 leading-none;
       &.btn-secondary {
@@ -128,6 +173,9 @@
         }
       }
     }
+  }
+  .fixed-table-toolbar,
+  .fixed-table-pagination {
     .dropdown-toggle:after {
       border-top: 4px solid;
       border-right: 4px solid transparent;
@@ -145,7 +193,7 @@
 }
 
 .pagination {
-  @apply rounded-full;
+  @apply flex gap-x-2 text-xs;
   .page-item:first-child .page-link {
     @apply rounded-l-full;
   }
@@ -154,8 +202,9 @@
   }
   .page-link {
     @apply text-slate-900;
-    @apply border border-slate-300 border-solid;
+    @apply border border-slate-300 border-solid rounded-full;
     @apply bg-white hover:bg-slate-100;
+    @apply h-8 w-8 flex items-center justify-center p-0;
   }
   .page-item.active .page-link {
     @apply border-primary bg-primary text-white;

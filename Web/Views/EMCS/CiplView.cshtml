@@ -16,7 +16,7 @@
 @Styles.Render("~/Content/EMCS/dropzone.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 
-<style>
+@* <style>
     .input-group-addon {
         width: 50px;
         background: #00C0EF;
@@ -72,62 +72,109 @@
             background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
             box-shadow: 4px -4px #a8a8a8;
         }
-</style>
+</style> *@
 
-<div class="col-md-12">
-    <div class="col-md-12">
+<div class="!px-8 !pt-8 !pb-2">
+    <div>
         @Html.Partial("~/Views/EMCS/Wizard.cshtml")
     </div>
-    <div class="col-md-12 mt-5">
-        <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
-            <!-- Nav tabs -->
-            <nav class="tabs mb-4">
-                <div class="selector"></div>
-                @if (!ViewBag.GroupName.Contains("CKB"))
+    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+        <nav class="tabs tabsNav mb-8 text-base bg-white">
+            <div class="selector"></div>
+            @if (!ViewBag.GroupName.Contains("CKB"))
+            {
+                <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab"><span
+            class="tabsNav--item-label">Detail</span></a>
+                <a href="#history" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;"><span
+            class="tabsNav--item-label">History</span></a>
+                <a href="#problemhistory" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;"><span
+            class="tabsNav--item-label">Problem</span></a>
+                <a href="#documents" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;"><span
+            class="tabsNav--item-label">Documents</span></a>
+                <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;"><span
+            class="tabsNav--item-label">EDI Preview</span></a>
+                <a href="#inpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;"><span
+            class="tabsNav--item-label">Invoice Preview</span></a>
+                <a href="#plpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;"><span
+            class="tabsNav--item-label">PL Preview</span></a>
+                <a href="#uploaddoc" class="tabsNav--item hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;"><span
+            class="tabsNav--item-label">Upload Documents</span></a>
+            }
+            else
+            {
+
+                if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
                 {
-                    <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                    <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                    <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                    <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                    <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                    <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                    <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                    <a href="#uploaddoc" class="hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+                    <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                    <a href="#history" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                    <a href="#problemhistory" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                    <a href="#documents" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                    <a href="#inpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                    <a href="#plpreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                    <a href="#uploaddoc" class="tabsNav--item hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+
+                }
+                else if (ViewBag.StepCargoId != 10020)
+                {
+                    <a href="#edipreview" class="tabsNav--item active" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+
                 }
                 else
                 {
-
-                    if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
+                    if (ViewBag.StepCargoId == 10020)
                     {
-                        <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                        <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                        <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                        <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                        <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                        <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                        <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                        <a href="#uploaddoc" class="hidden" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+                        <a href="#invoice" class="tabsNav--item active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                        <a href="#edipreview" class="tabsNav--item" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
 
-                    }
-                    else if (ViewBag.StepCargoId != 10020)
-                    {
-                        <a href="#edipreview" class="active" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-
-                    }
-                    else
-                    {
-                        if (ViewBag.StepCargoId == 10020)
-                        {
-                            <a href="#invoice" class="active" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
-                            <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-
-                        }
                     }
                 }
-            </nav>
-            <!-- Tab panes -->
-            <div class="tab-content tabs-custom">
-                @if (!ViewBag.GroupName.Contains("CKB"))
+            }
+        </nav>  
+        <div class="tab-content tabs-custom">
+            @if (!ViewBag.GroupName.Contains("CKB"))
+            {
+                <div role="tabpanel" class="tab-pane active" id="invoice">
+                    @Html.Partial("CiplTabInvoice", Model)
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="history">
+                    @Html.Partial("CiplTabHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="problemhistory">
+                    @Html.Partial("CiplTabProblemHistory")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="documents">
+                    @Html.Partial("CiplTabDocuments")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="inpreview">
+                    @Html.Partial("CiplTabInPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="plpreview">
+                    @Html.Partial("CiplTabPlPreview")
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="uploaddoc">
+                    @Html.Partial("CiplTabUploadDoc")
+                </div>
+            }
+            else if (ViewBag.StepCargoId != 10020)
+            {
+                <div role="tabpanel" class="tab-pane active" id="edipreview">
+                    @Html.Partial("CiplTabEditPreview")
+                </div>
+            }
+            else
+            {
+                if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
                 {
                     <div role="tabpanel" class="tab-pane active" id="invoice">
                         @Html.Partial("CiplTabInvoice", Model)
@@ -160,122 +207,26 @@
                     <div role="tabpanel" class="tab-pane" id="uploaddoc">
                         @Html.Partial("CiplTabUploadDoc")
                     </div>
-                }
-                else if (ViewBag.StepCargoId != 10020)
-                {
-                    <div role="tabpanel" class="tab-pane active" id="edipreview">
-                        @Html.Partial("CiplTabEditPreview")
-                    </div>
+
                 }
                 else
                 {
-                    if (ViewBag.StepCargoId != 10020 && ViewBag.FlowCargoId == 4)
+                    if (ViewBag.StepCargoId == 10020)
                     {
                         <div role="tabpanel" class="tab-pane active" id="invoice">
                             @Html.Partial("CiplTabInvoice", Model)
                         </div>
 
-                        <div role="tabpanel" class="tab-pane" id="history">
-                            @Html.Partial("CiplTabHistory")
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="problemhistory">
-                            @Html.Partial("CiplTabProblemHistory")
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="documents">
-                            @Html.Partial("CiplTabDocuments")
-                        </div>
-
                         <div role="tabpanel" class="tab-pane" id="edipreview">
                             @Html.Partial("CiplTabEditPreview")
                         </div>
-
-                        <div role="tabpanel" class="tab-pane" id="inpreview">
-                            @Html.Partial("CiplTabInPreview")
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="plpreview">
-                            @Html.Partial("CiplTabPlPreview")
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="uploaddoc">
-                            @Html.Partial("CiplTabUploadDoc")
-                        </div>
-
                     }
-                    else
-                    {
-                        if (ViewBag.StepCargoId == 10020)
-                        {
-                            <div role="tabpanel" class="tab-pane active" id="invoice">
-                                @Html.Partial("CiplTabInvoice", Model)
-                            </div>
-
-                            <div role="tabpanel" class="tab-pane" id="edipreview">
-                                @Html.Partial("CiplTabEditPreview")
-                            </div>
-                        }
-                    }
-
                 }
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-right" style="margin-top:20px;">
-                    <a href="~/EMCS/CiplList" class="btn btn-warning btn-round">
-                        <i class="fa fa-chevron-circle-left"></i>&nbsp;Back
-                    </a>
-                    @if (Model.Data.CreateBy.ToLower() == User.Identity.Name.ToLower())
-                    {
-                        <button type="button" class="btn btn-warning btn-sm" id="btnRevise" style="min-width:120px;"><i class="fa fa-edit"></i> Request Revise</button>
-                        if (Model.DataRequest.IdStep == 10016 || Model.DataRequest.IdStep == 10023 || Model.DataRequest.IdStep == 10026)
-                        {
-                            <button type="button" class="btn btn-warning btn-sm" id="btnDelegation" style="min-width:120px;"><i class="fa fa-paper-plane"></i> Delegation</button>
-                        }
-                    }
-                </div>
-            </div>
+
+            }
         </div>
     </div>
 </div>
-
-<div id='myModalUploadPreview' class='modal fade'>
-    <div class="modal-dialog" style="width:800px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group hidden">
-                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
-                    <div class="input-group col-md-9 col-xs-12">
-                        <input type="text" class="form-control" id="IdDocument" name="IdDocument">
-                    </div>
-                </div>
-                <div class="form-group hidden">
-                    <label class="control-label col-md-3 col-xs-12">Filename</label>
-                    <div class="input-group col-md-9 col-xs-12">
-                        <input type="text" class="form-control" id="Filename" name="Filename">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@Html.Partial("Modal.FormProblem")
-@Html.Partial("Modal.FormProblemDelegation")
 
 @section scripts
 {
@@ -398,25 +349,25 @@
 }
 
 <script>
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    //var selector = $(".tabs").find(".selector");
-    var activeItem = tabs.find('.active');
-    var activeWidth = activeItem.innerWidth();
-    $(".selector").css({
-        "left": activeItem.position.left + "px",
-        "width": activeWidth + "px"
-    });
+  var tabs = $(".tabs");
+  var selector = $(".tabs").find("a").length;
+  //var selector = $(".tabs").find(".selector");
+  var activeItem = tabs.find(".active");
+  var activeWidth = activeItem.innerWidth();
+  $(".selector").css({
+    left: activeItem.position.left + "px",
+    width: activeWidth + "px",
+  });
 
-    $(".tabs").on("click", "a", function (e) {
-        e.preventDefault();
-        $('.tabs a').removeClass("active");
-        $(this).addClass('active');
-        var activeWidth = $(this).innerWidth();
-        var itemPos = $(this).position();
-        $(".selector").css({
-            "left": itemPos.left + "px",
-            "width": activeWidth + "px"
-        });
+  $(".tabs").on("click", "a", function (e) {
+    e.preventDefault();
+    $(".tabs a").removeClass("active");
+    $(this).addClass("active");
+    var activeWidth = $(this).innerWidth();
+    var itemPos = $(this).position();
+    $(".selector").css({
+      left: itemPos.left + "px",
+      width: activeWidth + "px",
     });
+  });
 </script>

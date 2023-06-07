@@ -348,5 +348,35 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
 /Web/ErrorLog
 /Web/App_Data
+Web/bin/*
+/Library
+
+# Local Development
+package-lock.json
+package.json
+postcss.config.js
+tailwind.config.js
+Web/MvcMenuEMCSHelpers.cs
+Web/MvcMenuEMCSHelpers.cs
+Web/Web.csproj
+Web/bin/App.Data.dll
+Web/bin/WindowService.Console.exe
+Web/Web.csproj
+Web/MvcMenuEMCSHelpers.cs
+Web/bin/App.Service.dll
+Web/Images/pin - Copy.png
+Web/Scripts.app/EMCS/Dashboard-old.cshtml.js
+Web/Scripts.app/EMCS/Dashboard-Ori.cshtml.js
+Web/Views/EMCS/_Layout-old.cshtml
+Web/Views/EMCS/CiplFormTemplate copy.cshtml
+Web/Views/EMCS/CiplTabInvoice copy.cshtml
+Web/Views/EMCS/CiplView copy.cshtml
+Web/Views/EMCS/Dashboard copy.cshtml
+Web/Views/EMCS/Dashboard-Ori.cshtml
+Web/Views/EMCS/ExportActivity copy.cshtml
+Web/Views/EMCS/ExportActivity.cshtml
+Web/Views/EMCS/Wizard copy.cshtml
+Web/Content/EMCS/Dashboard copy.css
