@@ -10,9 +10,18 @@ var AtaVisible = AtaVisible ?? true;
 var GRVisible = GRVisible ?? true;
 var canEdit = canEdit ?? false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+
+
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 if (($('#Role').val() === "Administrator,POSTEXPEDITOR") && $("#Shipment").val() === "PTTU") {
     canEdit = true;
 }
@@ -31,10 +40,19 @@ var IdItem = 0;
 var PrePayment = $('#PrePayment').val();
 var Shipment = $('#Shipment').val();
 var BastVisible = BastVisible ?? false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 var RemoveHCVisible = RemoveHCVisible ?? false;
 if (Role == "Administrator,POSTVENDOR") {
     RemoveHCVisible = true
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 var InvoiceVisible = InvoiceVisible ?? false;
 if (Shipment == "") {
     if (PrePayment == 1) {
@@ -666,6 +684,8 @@ function InitTableInProgress() {
             events: operateEventHeader
         },
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
             title: 'Invoice Validation',
             field: 'CountKOFAXUpload',
             class: 'text-center',
@@ -681,6 +701,31 @@ function InitTableInProgress() {
             align: 'center',
             width: '100px',
             formatter: GetProcessFlowChecklistInvoiceHardcopy,
+=======
+            title: 'Invoice Approved',
+            field: 'CountReviewInvoice',
+            class: 'text-center',
+            align: 'center',
+            width: '100px',
+            formatter: GetProcessFlowChecklistInvoiceFinance,
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            title: 'Invoice Validation',
+            field: 'CountKOFAXUpload',
+            class: 'text-center',
+            align: 'center',
+            width: '100px',
+            formatter: GetProcessFlowChecklistInvoiceKOFAX,
+            events: operateEventHeader
+        },
+        {
+            title: 'Invoice Hardcopy',
+            field: 'CountInvoiceHardcopy',
+            class: 'text-center',
+            align: 'center',
+            width: '100px',
+            formatter: GetProcessFlowChecklistInvoiceHardcopy,
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             events: operateEventHeader
         },
         {
@@ -743,7 +788,15 @@ function InitTableItem() {
                     if (Role === "Administrator,POSTEXPEDITOR" || Role === "Administrator,POSTVENDOR") {
                         console.log(Role);
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
+<<<<<<< HEAD
+<<<<<<< HEAD
                         var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
+=======
+                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     }
                     else {
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
@@ -817,6 +870,10 @@ function InitTableItem() {
                     return ActionItem1
                 }
             }, {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'HardCopy Invoice',
                 class: 'text-nowrap',
                 align: 'center',
@@ -831,6 +888,11 @@ function InitTableItem() {
                     return ActionItem1
                 }
             }, {
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'PR Number',
                 field: 'PR_Number',
                 class: 'text-nowrap',
@@ -1307,18 +1369,39 @@ function DeleteFileUpload(id, type) {
 
 
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadFileUpload(id) {
     url = "/POST/DownloadFileRequest?id=" + id;
     window.open(url, '_blank');
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadFileRequestAll() {
     var requestId = parseInt($('#requestId').val());
     url = "/POST/DownloadFileRequestAll?requestid=" + requestId;
     window.open(url, '_blank');
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
@@ -1449,6 +1532,10 @@ function InitTablepartialQty() {
         ]
     })
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitTablehardcopyInvoice() {
     $('#table-hardcopyinvoice').bootstrapTable({
         detailView: false,
@@ -1512,6 +1599,12 @@ function InitTablehardcopyInvoice() {
         ]
     })
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 $('#table-partialQty tr').click(function (event) {
     if (event.target.type !== 'radio') {
@@ -1541,6 +1634,10 @@ window.EventsFormatter = {
             });
        
     },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
     'click .removehardcopy': function (e, value, row, index) {
         var HardCopyId = row.Id;
@@ -1564,6 +1661,11 @@ window.EventsFormatter = {
         });
 
     },
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 }
 $(":radio[name=radios]").change(function () {
     $(".table tr.active").removeClass("active");
@@ -1600,6 +1702,10 @@ function deletePartialQty(ID) {
         }
     });
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function deleteHarcopyInvoice(ID) {
     $.ajax({
         type: "POST",
@@ -1616,6 +1722,11 @@ function deleteHarcopyInvoice(ID) {
         }
     });
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 function GetPartialItem(id) {
     $.getJSON("GetItemPartialById?Id=" + id)
@@ -1859,6 +1970,10 @@ function InitModalUpdateStatus(id) {
 
         })
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 function InitModalHardCopy(id) {   
     if (Role.includes("Administrator,POSTVENDOR")) {
@@ -1879,6 +1994,11 @@ function InitModalHardCopy(id) {
 
 
 
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitModalViewNotes(id) {
     $.getJSON("GetItemListById?Id=" + id)
         .then(function (data) {
@@ -1892,6 +2012,10 @@ function InitModalViewNotes(id) {
         })
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2Destination() {
     $('#select2Destination').select2({
         placeholder: "Destination",
@@ -1921,6 +2045,12 @@ function InitSelect2Destination() {
         return;
     });
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2StatusPO(POType) {
     var StatusPO = [];
     if (POType == '') {
@@ -1977,9 +2107,19 @@ function InitDateRange() {
     $('#ata').datepicker({
         format: 'dd.mm.yyyy',
     });
+<<<<<<< HEAD
+<<<<<<< HEAD
     $('#submissiondate').datepicker({
         format: 'dd.mm.yyyy',
     });
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    $('#submissiondate').datepicker({
+        format: 'dd.mm.yyyy',
+    });
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 }
 function clearSearchDetail() {
@@ -1990,15 +2130,37 @@ function clearSearchDetail() {
     $("#table-item").bootstrapTable('refresh');
 
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2filenameinvoice() {
     $('#select2file').select2({
         placeholder: "File Name Invoice",
         id: requestId,
+<<<<<<< HEAD
         ajax: {
             url: 'GetSelectFileNameInvoice',
             data: function (params) {
                 var query = {
                     id: requestId,
+=======
+function InitSelect2Destination() {
+    $('#select2Destination').select2({
+        placeholder: "Destination",
+        id: "id",
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+        ajax: {
+            url: 'GetSelectFileNameInvoice',
+            data: function (params) {
+                var query = {
+<<<<<<< HEAD
+                    search: params.term,
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                    id: requestId,
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     type: 'public'
                 }
                 return query;
@@ -2171,6 +2333,8 @@ function ClickSubmitWithComment(FlowProcessStatusID, OldFlowProcessStatusID, man
 
 }
 function ClickSubmitDelivery() {
+<<<<<<< HEAD
+<<<<<<< HEAD
     var Shipment = $('#Select2Shipment').val();
     if (Shipment == null || Shipment == '' ) {
         swalWarning('Please Choose Shipment');
@@ -2181,6 +2345,22 @@ function ClickSubmitDelivery() {
     }
   
    
+=======
+    UpdateShipment();
+    var Shipment = $('#Select2Shipment').val();
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    var Shipment = $('#Select2Shipment').val();
+    if (Shipment == null || Shipment == '' ) {
+        swalWarning('Please Choose Shipment');
+        return false;
+    }
+    else {
+        UpdateShipment();
+    }
+  
+   
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     var FlowProcessStatusID = 4217//Default Forwarder
     if (Shipment == 'CKB') {
         FlowProcessStatusID = 2499
@@ -2319,6 +2499,10 @@ function UpdateShipment() {
         }
     })
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 function UpdateHardCopy() { 
     var attachmentId = $('#select2file').val();
@@ -2355,6 +2539,11 @@ function UpdateHardCopy() {
     })
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function UpdateItem() {
     var ApplyFor = $('#ApplyFor').val();
     var idItem = $('#item_id').val();
@@ -2530,11 +2719,27 @@ function InitDropZoneBast() {
         thumbnailHeight: 100,
         thumbnailWeight: 100,
         method: 'POST',
+<<<<<<< HEAD
+<<<<<<< HEAD
         acceptedFiles: ".pdf",
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 10,
         maxFilesize: 2, // MB
+=======
+        acceptedFiles: ".pdf,.zip,.rar",
+        filesizeBase: 1024,
+        autoProcessQueue: true,
+        maxFiles: 10,
+        maxFilesize: 20, // MB
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        acceptedFiles: ".pdf",
+        filesizeBase: 1024,
+        autoProcessQueue: true,
+        maxFiles: 10,
+        maxFilesize: 2, // MB
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2606,7 +2811,15 @@ function InitDropZoneInvoice() {
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 1,
+<<<<<<< HEAD
+<<<<<<< HEAD
         maxFilesize: 2, // MB
+=======
+        maxFilesize: 10, // MB
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        maxFilesize: 2, // MB
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2757,8 +2970,18 @@ function InitModalUploadBast(id, statusItem) {
     if (parseInt(isTaskUser) == 0) {
         document.getElementById("BtnSaveBast").style.display = "none";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
         if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
             document.getElementById("FormUploadBAST").style.display = "none";
+=======
+        if (Role.includes('POSTBRANCH') || Role.includes('POSTFINANCEVIEWERBRANCH') || Role.includes('POSTFINANCEVIEWER') || Role.includes('POSTVIEWER')) {
+            document.getElementById("BtnApproveBAST").style.display = "block";
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
+            document.getElementById("FormUploadBAST").style.display = "none";
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         }
     }
 
@@ -2805,7 +3028,14 @@ function ViewPopup() {
 }
 
 function InitData(id) {
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     IdItem = id;
     $.getJSON("GetListAttachment?id=" + IdItem + "&type=BAST", function (data) {
         var countBastUpload = data.result.length;
@@ -2827,6 +3057,10 @@ function InitData(id) {
                 document.getElementById("FormUploadInvoice").style.display = "none";
             }
             else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
                     document.getElementById("FormUploadInvoice").style.display = "none";
                  }
@@ -2834,6 +3068,12 @@ function InitData(id) {
                     document.getElementById("FormUploadInvoice").style.display = "block";
                  }
              
+<<<<<<< HEAD
+=======
+                document.getElementById("FormUploadInvoice").style.display = "block";
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             }
 
             if (parseInt(isTaskUser) == 0) {
@@ -2847,7 +3087,15 @@ function InitData(id) {
             }
 
         });
+<<<<<<< HEAD
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+      
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         $('#modalUploadInvoicing').modal();
         $('#table-uploadInvoice').bootstrapTable('refresh', {
             query: {
@@ -2856,7 +3104,14 @@ function InitData(id) {
             }
         });
     })
+<<<<<<< HEAD
+<<<<<<< HEAD
  
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+ 
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 }
 
 function InitModalUploadPO() {
@@ -3290,9 +3545,19 @@ function InitTableUploadInvoice() {
                         return [btnDownload, btnDelete].join('&nbsp;');
                     } else {
                         btnDownload = `<a href="#" onclick="DownloadFileUpload(${data.ID});" class="btn btn-light btn-xs" title="Download"><span class="fa fa-download"></span></a>&nbsp;`;
+<<<<<<< HEAD
+<<<<<<< HEAD
                         //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
 
                         if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
+=======
+                        if (Role.includes('POSTTAX') || Role.includes('POSTFINANCE') || Role.includes('POSTFINANCEBRANCH')) {
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                        //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
+
+                        if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                             if (data.CountItemHasInvoiceSAP == 0) {
                                 if (data.IsRejected == 0 && IsApprove == 0) {
 
@@ -3328,6 +3593,33 @@ function InitTableUploadInvoice() {
                     return `<select id="${data.ID}_Progress"  class="Select2Progress form-control gosearch">`
                 }
             },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            //{
+            //    title: 'Doc Type Mandatory',
+            //    width: '300',
+            //    class: 'align-top',
+            //    align: 'left',
+            //    halign: 'center',
+            //    formatter: function (row, data, index) {
+            //        return '<ul class="list-inline"><li class="list-inline-item">Invoice</li></ul>'
+            //    }
+            //},
+            //{
+            //    title: 'Doc Type',
+            //    width: '250',
+            //    align: 'left',
+            //    halign: 'center',
+            //    class: 'align-top',
+            //    formatter: function (row, data, index) {
+            //        return `<select id="${data.ID}_DocType"   multiple="multiple"  class="Select2DocType form-control gosearch">`
+            //    }
+            //},
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 title: 'Refer to BAST',
                 width: '300',
@@ -3369,7 +3661,15 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Approve Date Finance',
+<<<<<<< HEAD
+<<<<<<< HEAD
                 field: 'CreateDate',
+=======
+                field: 'ApproveDateFinance',
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                field: 'CreateDate',
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 class: 'align-top',
                 halign: 'center',
                 align: 'left',
@@ -3379,6 +3679,8 @@ function InitTableUploadInvoice() {
 
             },{
                 title: 'Status',
+<<<<<<< HEAD
+<<<<<<< HEAD
                 field: 'Status',
                 class: 'align-top',
                 align: 'center',
@@ -3400,6 +3702,35 @@ function InitTableUploadInvoice() {
                 align: 'center',
                 halign: 'center',
                 //visible: VisibleKOFAXMessage
+=======
+                field: 'ApproveStatus',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center'
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                field: 'Status',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
+
+            }, {
+                title: 'Validation Message',
+                field: 'StatusMessage',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
+
+            }, {
+                title: 'WithHolding Tax',
+                field: 'WHTaxAmount',
+                class: 'align-top',
+                align: 'center',
+                halign: 'center',
+                //visible: VisibleKOFAXMessage
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
             }
         ]
@@ -3654,6 +3985,10 @@ function InitTableUploadPO() {
     });
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadGR() {
 
     var param = {
@@ -3681,6 +4016,11 @@ function DownloadGR() {
         }
     })
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 
 
@@ -3704,7 +4044,15 @@ $(document).ready(function () {
     InitDropZonePO();
     InitTableViewNotes();
     InitTablepartialQty();
+<<<<<<< HEAD
+<<<<<<< HEAD
     InitTablehardcopyInvoice();
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    InitTablehardcopyInvoice();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     //InitTableGr();
     //InitTableInvoice();
 })

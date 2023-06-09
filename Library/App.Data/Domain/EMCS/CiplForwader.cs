@@ -28,8 +28,18 @@
         public string UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool IsDelete { get; set; }
+<<<<<<< HEAD
+<<<<<<< HEAD
         public string Type { get; set; }
         public string ExportShipmentType { get; set; }
     }
+=======
+}
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        public string Type { get; set; }
+        public string ExportShipmentType { get; set; }
+    }
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                                                 
 }

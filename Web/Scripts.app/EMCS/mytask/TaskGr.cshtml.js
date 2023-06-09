@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿﻿$(function () {
   var columns_gr = [
     {
       //    field: "id",

@@ -1,4 +1,4 @@
-﻿var $table = $('#tableKppbc');
+﻿﻿var $table = $('#tableKppbc');
 var $searchInput = $("#txtSearchData").val();
 var $AllowDelete = $('#AllowDelete').val();
 var $AllowUpdate = $('#AllowUpdate').val();

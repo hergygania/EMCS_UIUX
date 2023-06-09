@@ -1,4 +1,4 @@
-﻿var $AllowDelete = $('#AllowDelete').val();
+﻿﻿var $AllowDelete = $('#AllowDelete').val();
 var $AllowUpdate = $('#AllowUpdate').val();
 
 var $tablepart = $('#tablepartCipl');
@@ -3401,4 +3401,3 @@ function post_update_cipl_item(id, status) {
         }
     })
 }
-

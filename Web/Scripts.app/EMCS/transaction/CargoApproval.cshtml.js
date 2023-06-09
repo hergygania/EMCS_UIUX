@@ -370,7 +370,15 @@ function ApproveCargo(obj) {
 $("#btnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
+<<<<<<< HEAD
+<<<<<<< HEAD
         text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
+=======
+        text: 'Do you want to continue ?',
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

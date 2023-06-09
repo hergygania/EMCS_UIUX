@@ -597,7 +597,15 @@ var DIForm = {
                     formatter: function () {
                         if (DIForm.mode === "I" || DIForm.mode === "U") {
                             var htm = [];
+<<<<<<< HEAD
+<<<<<<< HEAD
                             htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-trash"></i></button> ');
+=======
+                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-remove"></i></button> ');
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-trash"></i></button> ');
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                             return htm.join('');
                         }
                         return '';

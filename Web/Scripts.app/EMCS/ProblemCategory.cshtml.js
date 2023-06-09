@@ -1,4 +1,4 @@
-﻿var $table = $('#tableProblemCategory');
+﻿﻿var $table = $('#tableProblemCategory');
 
 $(function () {
 

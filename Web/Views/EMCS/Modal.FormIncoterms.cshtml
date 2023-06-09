@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.IncotermsModel
+﻿﻿@model  App.Web.Models.EMCS.IncotermsModel
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
@@ -87,6 +87,5 @@
         $.validator.unobtrusive.parse("form");
     });
 </script>
-
 
 

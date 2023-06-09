@@ -17,7 +17,14 @@ namespace App.Service.POST
 
         public readonly static ICacheManager CacheManager = new MemoryCacheManager();
         public readonly static XSSFWorkbook workbookSLA = new XSSFWorkbook();
+<<<<<<< HEAD
+<<<<<<< HEAD
         public readonly static XSSFWorkbook workbookGR = new XSSFWorkbook();
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        public readonly static XSSFWorkbook workbookGR = new XSSFWorkbook();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public static List<AdvanceSearchModel> GetListAdvanceSearch(SearchAdvance param)
         {
@@ -92,6 +99,10 @@ namespace App.Service.POST
                 var font = workbookSLA.CreateFont();
                 var headerRow = sheetSLA.CreateRow(0);
                 headerRow.CreateCell(0).SetCellValue("PO No");
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 headerRow.CreateCell(1).SetCellValue("PO Date");               
                 headerRow.CreateCell(2).SetCellValue("PO Line Item");
                 headerRow.CreateCell(3).SetCellValue("Item Desc");
@@ -125,6 +136,45 @@ namespace App.Service.POST
                 headerRow.CreateCell(31).SetCellValue("Invoice Date");
                 headerRow.CreateCell(32).SetCellValue("PO Status");
             
+<<<<<<< HEAD
+=======
+                headerRow.CreateCell(1).SetCellValue("PO Date");
+                headerRow.CreateCell(2).SetCellValue("Item Category");
+                headerRow.CreateCell(3).SetCellValue("PO Line Item");
+                headerRow.CreateCell(4).SetCellValue("Item Desc");
+                headerRow.CreateCell(5).SetCellValue("Plant");
+                headerRow.CreateCell(6).SetCellValue("Vendor");
+                headerRow.CreateCell(7).SetCellValue("PO Confirm Date");
+                headerRow.CreateCell(8).SetCellValue("PR Number");
+                headerRow.CreateCell(9).SetCellValue("PR line item");
+                headerRow.CreateCell(10).SetCellValue("PR Date");
+                headerRow.CreateCell(11).SetCellValue("PR Creator");
+                headerRow.CreateCell(12).SetCellValue("Ordering By");
+                headerRow.CreateCell(13).SetCellValue("Request Date");
+                headerRow.CreateCell(14).SetCellValue("Promise Date");
+                headerRow.CreateCell(15).SetCellValue("Aging");
+                headerRow.CreateCell(16).SetCellValue("ETD");
+                headerRow.CreateCell(17).SetCellValue("ATD");
+                headerRow.CreateCell(18).SetCellValue("ETA");
+                headerRow.CreateCell(19).SetCellValue("ATA");
+                headerRow.CreateCell(20).SetCellValue("Plan Start Date");
+                headerRow.CreateCell(21).SetCellValue("Actual Complete Date");
+                headerRow.CreateCell(22).SetCellValue("Plan Complete Date");
+                headerRow.CreateCell(23).SetCellValue("Actual Finish Date");
+                headerRow.CreateCell(24).SetCellValue("M-L");
+                headerRow.CreateCell(25).SetCellValue("P-O");
+                headerRow.CreateCell(26).SetCellValue("GR / SA Number");
+                headerRow.CreateCell(27).SetCellValue("GR / SA Posting Date");
+                headerRow.CreateCell(28).SetCellValue("GR / SA Document Date");
+                headerRow.CreateCell(29).SetCellValue("Cost Center");
+                headerRow.CreateCell(30).SetCellValue("Invoice Number");
+                headerRow.CreateCell(31).SetCellValue("Invoice Posting Date");
+                headerRow.CreateCell(32).SetCellValue("Invoice Date");
+                headerRow.CreateCell(33).SetCellValue("PO Status");
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 int rowNumber = 1;
                 model.isExport = true;
                 var data = Service.POST.Report.GetListReportSla(user, model);
@@ -136,10 +186,15 @@ namespace App.Service.POST
 
                     if (item.PO_Date.HasValue)
                         rowQuestion.CreateCell(1).SetCellValue(item.PO_Date.ToString());
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     rowQuestion.CreateCell(2).SetCellValue(item.PO_lineitem);
                     rowQuestion.CreateCell(3).SetCellValue(item.ItemDescription);
                     rowQuestion.CreateCell(4).SetCellValue(item.Plant);
                     rowQuestion.CreateCell(5).SetCellValue(item.VendorName);
+<<<<<<< HEAD
                     if (item.PO_ConfirmDate.HasValue)
                         rowQuestion.CreateCell(6).SetCellValue(item.PO_ConfirmDate.ToString());
 
@@ -176,6 +231,55 @@ namespace App.Service.POST
                     rowQuestion.CreateCell(31).SetCellValue(item.Invoice_Date.ToString());
                     rowQuestion.CreateCell(32).SetCellValue(item.POStatus);
                 
+=======
+
+                    //rowQuestion.CreateCell(2).SetCellValue(item.Item_Category);
+                    rowQuestion.CreateCell(3).SetCellValue(item.PO_lineitem);
+                    rowQuestion.CreateCell(4).SetCellValue(item.ItemDescription);
+                    rowQuestion.CreateCell(5).SetCellValue(item.Plant);
+                    rowQuestion.CreateCell(6).SetCellValue(item.VendorName);
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                    if (item.PO_ConfirmDate.HasValue)
+                        rowQuestion.CreateCell(6).SetCellValue(item.PO_ConfirmDate.ToString());
+
+                    rowQuestion.CreateCell(7).SetCellValue(item.PR_Number);
+                    rowQuestion.CreateCell(8).SetCellValue(item.PR_lineitem);
+
+                    if (item.PR_Date.HasValue)
+                        rowQuestion.CreateCell(9).SetCellValue(item.PR_Date.ToString());
+
+                    rowQuestion.CreateCell(10).SetCellValue(item.PR_Creator);
+                    rowQuestion.CreateCell(11).SetCellValue(item.OrderingBy);
+
+                    if (item.RequestDate.HasValue)
+                        rowQuestion.CreateCell(12).SetCellValue(item.RequestDate.ToString());
+
+<<<<<<< HEAD
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                    rowQuestion.CreateCell(13).SetCellValue(item.PromiseDate);
+                    rowQuestion.CreateCell(14).SetCellValue(item.Aging);
+                    rowQuestion.CreateCell(15).SetCellValue(item.ETD);
+                    rowQuestion.CreateCell(16).SetCellValue(item.ATD);
+                    rowQuestion.CreateCell(17).SetCellValue(item.ETA);
+                    rowQuestion.CreateCell(18).SetCellValue(item.ATA);
+                    rowQuestion.CreateCell(19).SetCellValue(item.PlanStartDate);
+                    rowQuestion.CreateCell(20).SetCellValue(item.ActualCompleteDate);
+                    rowQuestion.CreateCell(21).SetCellValue(item.PlanCompleteDate);
+                    rowQuestion.CreateCell(22).SetCellValue(item.ActualFinishDate);
+                    rowQuestion.CreateCell(23).SetCellValue(item.M_L);
+                    rowQuestion.CreateCell(24).SetCellValue(item.P_O);
+                    rowQuestion.CreateCell(25).SetCellValue(item.SA_Number);
+                    rowQuestion.CreateCell(26).SetCellValue(item.SA_PostingDate);
+                    rowQuestion.CreateCell(27).SetCellValue(item.SA_DocumentDate);
+                    rowQuestion.CreateCell(28).SetCellValue(item.SA_Amount);                  
+                    rowQuestion.CreateCell(29).SetCellValue(item.Invoice_Number);
+                    rowQuestion.CreateCell(30).SetCellValue(item.Invoice_PostingDate.ToString());
+                    rowQuestion.CreateCell(31).SetCellValue(item.Invoice_Date.ToString());
+                    rowQuestion.CreateCell(32).SetCellValue(item.POStatus);
+                
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     rowNumber = rowNumber + 1;
                 }
                 MemoryStream output = new MemoryStream();
@@ -191,6 +295,10 @@ namespace App.Service.POST
                 return output;
             }
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public static MemoryStream DownloadToExcelGR(string PoNo,string ItemId)
         {
@@ -243,5 +351,10 @@ namespace App.Service.POST
                 return output;
             }
         }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 }

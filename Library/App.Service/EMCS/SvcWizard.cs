@@ -375,8 +375,17 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
+<<<<<<< HEAD
+<<<<<<< HEAD
                 //var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
                 var item = db.Database.SqlQuery<CountData>("select count(IdCargo) total from dbo.CargoItem where IdCargo =  " + idCargo + " AND isdelete = 0").FirstOrDefault();
+=======
+                var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                //var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
+                var item = db.Database.SqlQuery<CountData>("select count(IdCargo) total from dbo.CargoItem where IdCargo =  " + idCargo + " AND isdelete = 0").FirstOrDefault();
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 if (item.Total > 1)
                 {
                     return true;

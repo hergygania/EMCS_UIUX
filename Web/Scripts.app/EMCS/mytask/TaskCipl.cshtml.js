@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿﻿$(function () {
   const columnsCipl = [
     {
       //    field: "id",

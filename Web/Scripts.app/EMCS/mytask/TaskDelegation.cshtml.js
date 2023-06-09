@@ -1,4 +1,4 @@
-﻿function ApproveDelegation(obj) {
+﻿﻿function ApproveDelegation(obj) {
   $.ajax({
     url: "/EMCS/BlAwbApproval",
     type: "POST",

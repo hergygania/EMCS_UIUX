@@ -1,4 +1,4 @@
-﻿var $tableFormDocuments1 = $('#tableCiplFormDocuments1');
+﻿﻿var $tableFormDocuments1 = $('#tableCiplFormDocuments1');
 
 function load_data_tabledoc() {
     var columnDocument = [

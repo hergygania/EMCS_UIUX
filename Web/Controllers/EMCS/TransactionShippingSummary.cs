@@ -3,12 +3,23 @@ using System;
 using System.Web.Mvc;
 using App.Web.Models.EMCS;
 using System.IO;
+<<<<<<< HEAD
+<<<<<<< HEAD
 using App.Web.Helper;
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+using App.Web.Helper;
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult ShippingSummaryList()
         {
@@ -40,6 +51,14 @@ namespace App.Web.Controllers.EMCS
             ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
             TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
             TempData.Peek("QrCodeUrlSS");
+<<<<<<< HEAD
+=======
+        public ActionResult ShippingSummaryView(long cargoId = 1)
+        {
+            ApplicationTitle();
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;

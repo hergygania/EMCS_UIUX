@@ -56,7 +56,15 @@ namespace App.Service.EMCS
             using (var db = new Data.EmcsContext())
             {
                 var search = (String.IsNullOrEmpty(crit.searchName) || crit.searchName == "null") ? "" : crit.searchName;
+<<<<<<< HEAD
+<<<<<<< HEAD
                 var tb = db.MasterCountry.Where(a => a.Description.Contains(search) || a.CountryCode.Contains(search) && !a.IsDeleted);
+=======
+                var tb = db.MasterCountry.Where(a => a.Description.Contains(search) || a.CountryCode.Contains(search));
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                var tb = db.MasterCountry.Where(a => a.Description.Contains(search) || a.CountryCode.Contains(search) && !a.IsDeleted);
+>>>>>>> 23d1d01 (P1- CIPL P-1 : Slide No. 17))
                 return tb.ToList();
             }
         }

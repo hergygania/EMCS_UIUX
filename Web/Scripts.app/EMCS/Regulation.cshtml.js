@@ -1,4 +1,4 @@
-﻿var $table = $('#tableRegulation');
+﻿﻿var $table = $('#tableRegulation');
 
 $(function () {
     $(".js-states").select2({ width: 'resolve', dropdownAutoWidth: 'false' });

@@ -1,4 +1,4 @@
-﻿var $table = $('#tableDeliveryRequisition');
+﻿﻿var $table = $('#tableDeliveryRequisition');
 var $searchInput = $("#txtSearchData").val();
 
 $.get("/EMCS/GetGrList", function (resp) {

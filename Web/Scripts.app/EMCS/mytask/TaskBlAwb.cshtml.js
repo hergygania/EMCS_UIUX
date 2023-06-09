@@ -1,4 +1,4 @@
-﻿function ApproveBlAwb(obj) {
+﻿﻿function ApproveBlAwb(obj) {
     $.ajax({
         url: "/EMCS/BlAwbApproval",
         type: "POST",

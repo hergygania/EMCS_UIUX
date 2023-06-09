@@ -2,10 +2,19 @@
 {
     public class SpCargoItemDetail
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public SpCargoItemDetail()
         {
 
         }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public long Id { get; set; }
         public long IdCipl { get; set; }
         public long IdCargo { get; set; }

@@ -1,4 +1,4 @@
-﻿var $table = $("#tbl-dhebi");
+﻿﻿var $table = $("#tbl-dhebi");
 
 $(function () {
     get_parameter_select();

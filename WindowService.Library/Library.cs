@@ -35,7 +35,14 @@ using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data.SqlClient;
+<<<<<<< HEAD
+<<<<<<< HEAD
 using System.Web;
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+using System.Web;
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
 namespace WindowService.Library
 {
@@ -1075,7 +1082,15 @@ namespace WindowService.Library
         #region POST Console
         public static void ReadEmailPOST()
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
             //string Subject = "TRAKINDO_POST";
+=======
+            string Subject = "TRAKINDO_POST";
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            //string Subject = "TRAKINDO_POST";
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
             CreateLog("Start Grab Email");
             try
@@ -1115,6 +1130,16 @@ namespace WindowService.Library
                 searchFilterCollection.Add(new SearchFilter.SearchFilterCollection(LogicalOperator.And,
                     new SearchFilter.IsEqualTo(EmailMessageSchema.HasAttachments, true)));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                searchFilterCollection.Add(new SearchFilter.SearchFilterCollection(LogicalOperator.And,
+                  new SearchFilter.ContainsSubstring(EmailMessageSchema.Subject, "TRAKINDO_POST")));           
+
+             
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 // Create the search filter.
                 SearchFilter searchFilter = new SearchFilter.SearchFilterCollection(LogicalOperator.And,
                     searchFilterCollection.ToArray());
@@ -1125,24 +1150,45 @@ namespace WindowService.Library
                 IOrderedEnumerable<Item> items = null;
                 try
                 {
+<<<<<<< HEAD
+<<<<<<< HEAD
                     items = service.FindItems(inbox, searchFilter, iv).OrderByDescending(a => a.DateTimeCreated);
+=======
+                    items = service.FindItems(inbox, searchFilter, iv).OrderBy(a => a.DateTimeReceived);
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                    items = service.FindItems(inbox, searchFilter, iv).OrderByDescending(a => a.DateTimeCreated);
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 }
                 catch (Exception ex)
                 {
                     CreateLog(ex.Message);
                 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                 foreach (EmailMessage msg in items)
                 {
 
                     using (var db = new postContext())
                     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                        
                             string PO_number = "";
                             string SubjectMessage = "";
                             string FinalPO_number = "";
                             string subj = msg.Subject;
                             if (subj.Contains("TRAKINDO PO") || subj.Contains("TRAKINDO_POST"))
+<<<<<<< HEAD
                             {
                                 var subjsplit = subj.Split(' ');
                                
@@ -1242,6 +1288,118 @@ namespace WindowService.Library
                                 msg.IsRead = true;
                                 msg.Update(ConflictResolutionMode.AutoResolve);
                             }                        
+=======
+                        if (!msg.IsRead && msg.Subject.Contains(Subject))
+                        {
+
+                            var dataPO = db.Database.SqlQuery<TrPO>("SELECT * FROM dbo.TrPO where '" + msg.Subject + "' like '%'+ PO_Number +'%'").ToList();
+                            if (dataPO != null)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+                            {
+                                var subjsplit = subj.Split(' ');
+                               
+                                foreach (var item in subjsplit)
+                                {
+                                    SubjectMessage = Regex.Match(item, @"\d+").Value;
+                                    if (SubjectMessage.Length > 0 && SubjectMessage.Length == 10 && PO_number.Length == 0)
+                                    {
+                                        PO_number = "'" + SubjectMessage + "',";
+                                    }
+                                    else if (SubjectMessage.Length > 0 && SubjectMessage.Length == 10 && PO_number.Length > 0)
+                                    {
+                                        PO_number += "'" + SubjectMessage + "',";
+                                    }
+                                }
+                                if (PO_number !="")
+                                {
+                                    FinalPO_number = PO_number.Substring(0, PO_number.Length - 1);
+
+                                    var dataPO = db.Database.SqlQuery<TrPO>("SELECT * FROM dbo.TrPO where PO_number in(" + FinalPO_number + ") ").ToList();
+                                    if (dataPO != null)
+                                    {
+                                        if (dataPO.Count > 0)
+                                        {
+                                            foreach (var tmpPO in dataPO)
+                                            {
+                                                CreateLog("Read Email: " + msg.Subject);
+                                                EmailMessage message = EmailMessage.Bind(service, msg.Id,
+                                                    new PropertySet(BasePropertySet.IdOnly, ItemSchema.Attachments, ItemSchema.HasAttachments));
+
+                                                foreach (Attachment attachment in message.Attachments)
+                                                {
+                                                    if (attachment is FileAttachment)
+                                                    {
+                                                        try
+                                                        {
+                                                            var fileAttachment = attachment as FileAttachment;
+                                                            var fileNameFilter = Path.GetFileName(fileAttachment.Name).ToString();
+                                                            if (fileNameFilter.Contains(tmpPO.PO_Number))
+                                                            {
+                                                                var deleteData = db.TrRequestAttachment.Where(a => a.RequestID == tmpPO.IdRequest && a.FileNameOri == fileNameFilter).FirstOrDefault();
+                                                                if (deleteData != null)
+                                                                {
+                                                                    db.TrRequestAttachment.Remove(deleteData);
+                                                                    db.SaveChanges();
+                                                                }
+
+                                                                var model = new TrRequestAttachment();
+                                                                model.RequestID = tmpPO.IdRequest;
+                                                                model.ItemID = 0;
+                                                                model.Path = "";
+                                                                model.FileName = fileAttachment.Name;
+                                                                model.FileNameOri = Path.GetFileName(fileAttachment.Name);
+                                                                model.CodeAttachment = "PO";
+                                                                model.IsActive = true;
+                                                                model.UploadedDate = DateTime.Now;
+                                                                model.UploadedBy = "CONSOLE_SCHEDULE";
+                                                                model.Name = "";
+                                                                model.Progress = "";
+                                                                model.IsApprove = false;
+                                                                model.IsRejected = false;
+                                                                db.TrRequestAttachment.Add(model);
+                                                                //db.SaveChanges();
+
+                                                                var fileName = "PO" + "_" + model.ID + "_" + fileAttachment.Name;
+                                                                var folder_ = folder + tmpPO.IdRequest + Path.DirectorySeparatorChar;
+                                                                string path = folder_ + fileName;
+                                                                bool exists = Directory.Exists(folder_);
+
+                                                                if (!exists)
+                                                                    Directory.CreateDirectory(folder_);
+                                                                fileAttachment.Load(path);
+
+
+                                                                model.FileName = fileName;
+                                                                model.Path = path;
+                                                                db.SaveChanges();
+                                                            }
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            CreateLog(ex.InnerException.InnerException.Message);
+                                                            CreateLog(ex.Message);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            msg.IsRead = true;
+                                            msg.Update(ConflictResolutionMode.AutoResolve);
+                                        }
+                                    }
+                                }
+                               
+                            }
+<<<<<<< HEAD
+                        }
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                            else
+                            {
+                                msg.IsRead = true;
+                                msg.Update(ConflictResolutionMode.AutoResolve);
+                            }                        
+>>>>>>> 93c2efe ([U] Update from client's TFS)
                     }
                 }
                 CreateLog("Start Merge Part Order");
@@ -1252,6 +1410,10 @@ namespace WindowService.Library
                 throw;
             }
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         #endregion
 
         #region POST KOFAX Console
@@ -1330,6 +1492,13 @@ namespace WindowService.Library
             return "";
         }
       
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         #endregion
     }
 }

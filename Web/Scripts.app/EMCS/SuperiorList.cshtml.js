@@ -1,4 +1,4 @@
-﻿var $table = $("#tableSuperior");
+﻿﻿var $table = $("#tableSuperior");
 var $searchInput = $("#txtSearchData").val();
 var $AllowDelete = $("#AllowDelete").val();
 var $AllowUpdate = $("#AllowUpdate").val();

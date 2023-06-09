@@ -265,6 +265,10 @@ function GetProcessFlowChecklistPaidPO(data, row, index) {
         return uncheck;
     }
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function GetProcessFlowChecklistInvoiceHardcopy(data, row, index) {
     if (row.CountHasSubmitHardcopyInvoice == 0) {
         return uncheck;
@@ -289,6 +293,11 @@ function GetProcessFlowChecklistInvoiceKOFAX(data, row, index) {
     }
 
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function GetProcessFlowChecklistBast(data, row, index) {
     if (row.POType == "D") {
         if (row.CountHasUploadedBAST == 0) {

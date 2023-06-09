@@ -105,7 +105,15 @@ namespace App.Data
         public virtual DbSet<MasterAirSeaPort> MasterAirSeaPorts { get; set; }
         public virtual DbSet<MasterBranchCkb> MasterBranchCkbs { get; set; }
         public virtual DbSet<SpGetCiplTotalData> SpGetCiplTotalDatas { get; set; }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
         public virtual DbSet<Type> Type { get; set; }
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+
+        public virtual DbSet<Type> Type { get; set; }
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

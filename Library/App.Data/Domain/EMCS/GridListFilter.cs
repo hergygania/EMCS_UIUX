@@ -1,4 +1,4 @@
-﻿namespace App.Data.Domain.EMCS
+﻿﻿namespace App.Data.Domain.EMCS
 {
     public class GridListFilter
     {

@@ -1,4 +1,4 @@
-﻿var $table = $("#tableAreaUserCKB");
+﻿﻿var $table = $("#tableAreaUserCKB");
 var $searchInput = $("#txtSearchData").val();
 var $AllowDelete = $("#AllowDelete").val();
 var $AllowUpdate = $("#AllowUpdate").val();

@@ -1,4 +1,4 @@
-﻿@model  App.Web.Models.EMCS.BannerModel
+﻿﻿@model  App.Web.Models.EMCS.BannerModel
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
@@ -104,6 +104,5 @@
         $.validator.unobtrusive.parse("form");
     });
 </script>
-
 
 

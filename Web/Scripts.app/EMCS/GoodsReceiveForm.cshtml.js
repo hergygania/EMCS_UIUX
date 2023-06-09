@@ -259,7 +259,15 @@ $("#BtnSubmit").on("click", function (e) {
         if (totalItem > 0) {
             Swal.fire({
                 title: 'Confirmation',
+<<<<<<< HEAD
+<<<<<<< HEAD
                 text: 'By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
+=======
+                text: 'Are you sure want to submit data?',
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                text: 'By submitting, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
@@ -585,6 +593,10 @@ $(document).ready(function () {
     $.validator.unobtrusive.parse("form");
     initVehicleAutocomplete();
     initVehicleMerkAutocomplete();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 });
 
 var myDropzoneDocument = new Dropzone("#FormUploadDocumentContainer", { // Make the bodyFormUpload a dropzone
@@ -669,4 +681,9 @@ $("#actions .start").on("click", function () {
 $("#actions .cancel").on("click", function () {
     myDropzoneDocument.removeAllFiles(true);
     $("#placeholderUpload").hide();
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 });

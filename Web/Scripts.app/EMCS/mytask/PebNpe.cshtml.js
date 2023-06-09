@@ -45,6 +45,10 @@
         $('#NpeDate').val(null);
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
     if (npeDateSubmitToCustomOffice) {
         var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
@@ -58,6 +62,11 @@
     else {
         $('#NpeDateSubmitToCustomOffice').val(null);
     }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     GetDocumentPebNpe();
 
 })

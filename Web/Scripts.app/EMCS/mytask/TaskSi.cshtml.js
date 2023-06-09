@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿﻿$(function () {
   window.operateEvents = {
     "click #si-submit": function (e, value, row, index) {
       //$('#idCL').val(row.Id);

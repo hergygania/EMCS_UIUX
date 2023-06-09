@@ -1,4 +1,4 @@
-﻿$tableDocuments = $('#tableCargoDocuments');
+﻿﻿$tableDocuments = $('#tableCargoDocuments');
 function load_data_tabledoc() {
     var columnDocument = [
         {

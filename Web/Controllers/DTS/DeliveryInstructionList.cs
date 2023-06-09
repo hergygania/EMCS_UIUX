@@ -437,7 +437,15 @@ namespace App.Web.Controllers.DTS
 
         public ActionResult DeliveryInstructionPageXt()
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
             Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstructionView>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
+=======
+            Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstruction>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstructionView>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 var param = Request["params"];
                 if (!string.IsNullOrEmpty(param))

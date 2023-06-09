@@ -1,5 +1,4 @@
-﻿
-@model  App.Web.Models.EMCS.AreaUserCkbModel
+﻿﻿@model  App.Web.Models.EMCS.VideoModel
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
@@ -10,8 +9,9 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Area User CKB</h4>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Video</h4>
 </div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -20,19 +20,31 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-xs-12">Area</label>
+                    <label class="control-label col-md-4 col-xs-12">Name</label>
                     <div class="col-md-12 col-xs-12">
-                        @Html.DropDownListFor(m => m.UserCkb.BAreaCode, new SelectList(Model.AreaList, "BAreaCode", "BAreaName"), new { @class = "js-states form-control" })
-                        <div>@Html.ValidationMessageFor(m => m.UserCkb.BAreaCode)</div>
+                        @Html.TextBoxFor(m => m.Video.Name, new { @class = "form-control required", placeholder = "Name" })
+                        <div>@Html.ValidationMessageFor(m => m.Video.Name)</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-4 col-xs-12">User CKB</label>
+                    <label class="control-label col-md-4 col-xs-12">Start Date</label>
                     <div class="col-md-12 col-xs-12">
-                        @*@Html.TextBoxFor(m => m.userCKB.AreaCKB, new { @class = "form-control required", placeholder = "User CKB" })
-                            <div>@Html.ValidationMessageFor(m => m.userCKB.AreaCKB)</div>*@
-                        @Html.DropDownListFor(m => m.UserCkb.Username, new SelectList(Model.UserList, "UserID", "FullName"), new { @class = "js-states form-control" })
-                        <div>@Html.ValidationMessageFor(m => m.UserCkb.Username)</div>
+                        @Html.EditorFor(m => m.Video.StartedDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "Start Date" } })
+                        <div>@Html.ValidationMessageFor(m => m.Video.StartedDate)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-xs-12">End Date</label>
+                    <div class="col-md-12 col-xs-12">
+                        @Html.EditorFor(m => m.Video.FinishedDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", placeholder = "End Date" } })
+                        <div>@Html.ValidationMessageFor(m => m.Video.FinishedDate)</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-xs-12">Is Active</label>
+                    <div class="col-md-12 col-xs-12">
+                        @Html.DropDownListFor(m => m.Video.IsActive, new SelectList(Model.StatusList, "Value", "Text"), new { @class = "js-states form-control" })
+                        <div>@Html.ValidationMessageFor(m => m.Video.IsActive)</div>
                     </div>
                 </div>
             </div>
@@ -57,10 +69,9 @@
         {
             <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-remove"></i> Delete</button>
         }
-
     </div>
 
-    @Html.HiddenFor(a => a.UserCkb.Id)
+    @Html.HiddenFor(a => a.Video.Id)
     @*@Html.HiddenFor(a => a.Menu.EntryBy)
         @Html.HiddenFor(a => a.Menu.ModifiedBy)
         @Html.HiddenFor(a => a.Menu.EntryDate)
@@ -77,13 +88,14 @@
         $("#ID").attr('readonly', 'readonly');
 
     $(document).ready(function () {
+        $(".date").datepicker({
+            autoclose: true,
+            format: "dd M yyyy"
+        });
         $("form").removeData("validator");
         $("form").removeData("unobtrusiveValidation");
         $.validator.unobtrusive.parse("form");
     });
 </script>
-
-
-
 
 

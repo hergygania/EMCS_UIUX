@@ -1,4 +1,4 @@
-﻿$table = $('#TblGoodReceive');
+﻿﻿$table = $('#TblGoodReceive');
 $searchInput = $("#txtSearchData").val();
 
 window.operateEvents = {

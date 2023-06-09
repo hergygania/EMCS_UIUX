@@ -26,6 +26,10 @@ function closeLoading() {
     $("#loadingModal").modal("hide");
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadGR() {
  
     var param = {
@@ -51,9 +55,22 @@ function DownloadGR() {
             swalSuccess(' failed Download!');
         }
     })
+<<<<<<< HEAD
 }
 
 
+=======
+function DownloadFileUpload(id) {
+    url = "/POST/DownloadFileRequest?id=" + id;
+    window.open(url, '_blank');
+}
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+}
+
+
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function getColumns(types) {
     var type = $("#poType").val() ?? types;
     var labelEtd = "ETD";
@@ -352,6 +369,10 @@ var columnsGr = [{
     align: 'left',
     width: '450',
     formatter: dateSAPFormatter
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 },
 {
     title: 'GR Amount',
@@ -362,6 +383,11 @@ var columnsGr = [{
     width: '450',
     formatter: currencyFormatter
     
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 }]
 
 function setMileStone(res) {
@@ -454,6 +480,10 @@ function setMileStone(res) {
             } else {
                 $('#InvoiceDate').text(dataSingle.ProgressInvoice);
             }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
             $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
             $('#BastDate').text(hasBast + " of " + totalBast + " (" + percentBast + "%)");
@@ -463,6 +493,11 @@ function setMileStone(res) {
             } else {
                 $('#InvoiceDate').text(totalInvoice + " INVOICE");
             }
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         } else {
             $('#DeliveringDate').text(hasPod + " of " + totalPod + " (" + percentPod + "%)")
             $('#TotalGr').text(hasGr + " of " + totalGr + " (" + percentGr + "%)")
@@ -518,9 +553,21 @@ function setMileStone(res) {
             document.getElementById("Circle-bast").className = "btn btn-default btn-circle";
         } else {
             var pointColorBast = (dataSingle.CountItemNotbast == 0) ? "btn-primary" : "btn-warning";
+<<<<<<< HEAD
+<<<<<<< HEAD
             //if (poTypes === "D") {
             //    pointColorBast = "btn-primary";
             //}
+=======
+            if (poTypes === "D") {
+                pointColorBast = dataSingle.ProgressBAST == "100%" ? "btn-primary" : "btn-warning";
+            }
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            //if (poTypes === "D") {
+            //    pointColorBast = "btn-primary";
+            //}
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             document.getElementById("Circle-bast").className = "btn " + pointColorBast + " btn-circle";
         }
         if (HasGr == 0) {
@@ -533,9 +580,21 @@ function setMileStone(res) {
             document.getElementById("Circle-invoice").className = "btn btn-default btn-circle";
         } else {
             var pointColorInv = (dataSingle.CountItemNotInvoice == 0) ? "btn-primary" : "btn-warning";
+<<<<<<< HEAD
+<<<<<<< HEAD
             //if (poTypes === "D") {
             //    pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
             //}
+=======
+            if (poTypes === "D") {
+                pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
+            }
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            //if (poTypes === "D") {
+            //    pointColorInv = dataSingle.ProgressInvoice == "100%" ? "btn-primary" : "btn-warning";
+            //}
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             document.getElementById("Circle-invoice").className = "btn " + pointColorInv + " btn-circle";
         }
         if (HasInvoiceFinance == 0) {

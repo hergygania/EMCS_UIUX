@@ -32,8 +32,16 @@ function setFormSisable(isdisabled, formType) {
             $("#refDINo").parent().removeClass('hidden');
         }
     } 
+<<<<<<< HEAD
+<<<<<<< HEAD
     $("#newcustName").show();
     $("#oldcustNamegroup").hide();
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    $("#newcustName").show();
+    $("#oldcustNamegroup").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $('.btn-refNo button').attr("disabled", isdisabled);
     $("#refNo").attr("disabled", isdisabled);
     $("#refDate").attr("disabled", isdisabled);
@@ -55,7 +63,14 @@ function setFormSisable(isdisabled, formType) {
     $("#Province").attr("disabled", isdisabled);
     $("#Origin").attr("disabled", isdisabled);
     $("#RequestNotes").attr("disabled", isdisabled);
+<<<<<<< HEAD
+<<<<<<< HEAD
     $("#btnhistory").hide();
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    $("#btnhistory").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     if(formType === 'V')
     {
         $("#ExpectedTimeArrival").attr("disabled", isdisabled);
@@ -118,6 +133,10 @@ function setFormSisable(isdisabled, formType) {
         $form.find("input[name=SendEmailToCkbCakungStandartKit]").attr("disabled", true);
         $form.find("input[name=SendEmailToCkbBalikpapan]").attr("disabled", true);
         $form.find("input[name=SendEmailToCkbBanjarmasin]").attr("disabled", true);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     } else if (referenceEvent.dataRef.header.Status == 'rerouted' && formType == "U") {
  
         $form.find("input[name=SendEmailToCkbSurabaya]").attr("disabled", true);
@@ -149,6 +168,11 @@ function setFormSisable(isdisabled, formType) {
         $form.find("input[name=SendEmailToServiceTUSangatta]").attr("disabled", false);
         $form.find("input[name=SendEmailToServiceTUKendari]").attr("disabled", false);
         $form.find("input[name=SendEmailToServiceTUMeulaboh]").attr("disabled", false);    
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 
 
@@ -161,6 +185,10 @@ function invalidRef() {
     $("#refNo").removeProp('readonly', false);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function viewhistoryreroute() {
     var refNo = $("#refNo").val();
     var refUrl;   
@@ -205,6 +233,11 @@ function viewhistoryreroute() {
     });
 }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 function referenceClick() {
     var refNo = $("#refNo").val();
     var refUrl;
@@ -425,9 +458,22 @@ var referenceEvent = {
                 $form.find("input[name=ModaTransport][value='" + itemInct + "']").prop("checked", true);
             });
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
        
       // CKB
         $form.find("input[name=SendEmailToCkbSurabaya]").prop("checked", dataRef.header.SendEmailToCkbSurabaya == true);      
+=======
+        //$form.find("input[name=SendEmailToCkb]").prop("checked", dataRef.header.SendEmailToCkb == true);
+      // CKB
+        $form.find("input[name=SendEmailToCkbSurabaya]").prop("checked", dataRef.header.SendEmailToCkbSurabaya == true);
+        //$form.find("input[name=SendEmailToCkbSurabaya]").attr("disabled", isdisabled);
+>>>>>>> 639d8d0 (Intial commit)
+=======
+       
+      // CKB
+        $form.find("input[name=SendEmailToCkbSurabaya]").prop("checked", dataRef.header.SendEmailToCkbSurabaya == true);      
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         $form.find("input[name=SendEmailToCkbMakassar]").prop("checked", dataRef.header.SendEmailToCkbMakassar == true);   
         $form.find("input[name=SendEmailToCkbCakungStandartKit]").prop("checked", dataRef.header.SendEmailToCkbCakungStandartKit == true);
         $form.find("input[name=SendEmailToCkbBalikpapan]").prop("checked", dataRef.header.SendEmailToCkbBalikpapan == true);
@@ -462,7 +508,15 @@ var referenceEvent = {
         $form.find("input[name=SendEmailToServiceTUBatuLicin]").prop("checked", dataRef.header.SendEmailToServiceTUBatuLicin == true);
         $form.find("input[name=SendEmailToServiceTUSangatta]").prop("checked", dataRef.header.SendEmailToServiceTUSangatta == true);
         $form.find("input[name=SendEmailToServiceTUKendari]").prop("checked", dataRef.header.SendEmailToServiceTUKendari == true);
+<<<<<<< HEAD
+<<<<<<< HEAD
         $form.find("input[name=SendEmailToServiceTUMeulaboh]").prop("checked", dataRef.header.SendEmailToServiceTUMeulaboh == true);        
+=======
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        $form.find("input[name=SendEmailToServiceTUMeulaboh]").prop("checked", dataRef.header.SendEmailToServiceTUMeulaboh == true);        
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         if (dataRef.header.IsDemob) {
             $form.find("input[name=IsDemob][value=true]").prop('checked', true).attr("disabled", isdisabled);
         } else {
@@ -515,6 +569,10 @@ var referenceEvent = {
         if (formType == 'R') {
             $('.SDOC-container .row .upload').show();
             $('.SDOC-container .row.preview').hide();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
 
       
         } else if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "STR" && dataRef.header.ReRouted == true){
@@ -523,6 +581,14 @@ var referenceEvent = {
             showFilePreview(dataRef.header);
         }else {
             $('.SDOC-container .row .upload').show();
+<<<<<<< HEAD
+=======
+            //showFilePreview(dataRef.header);
+        } else {
+            $('.SDOC-container .row .upload').hide();
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             $('.SDOC-container .row.preview').show();
             showFilePreview(dataRef.header);
         }
@@ -533,12 +599,23 @@ var referenceEvent = {
         $('input[name="SendEmailCheckAll"]').prop("checked", false);
 
         if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "STR" && dataRef.header.ReRouted == true) {
+<<<<<<< HEAD
+<<<<<<< HEAD
             $("button[name=ReRoute]").attr("disabled", false);          
+=======
+            $("button[name=ReRoute]").attr("disabled", false);
+            // $("button[name=ReRoute]").html('<i class="fa fa-check-circle"></i> Complete');
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            $("button[name=ReRoute]").attr("disabled", false);          
+>>>>>>> 93c2efe ([U] Update from client's TFS)
             $("#CustID").attr("disabled", false);
             $("#CustName").attr("disabled", false);
             $("#CustAddress").attr("disabled", false);
             $("#PicName").attr("disabled", false);
             $("#PicHP").attr("disabled", false);
+<<<<<<< HEAD
+<<<<<<< HEAD
             $("#ExpectedTimeArrival").attr("disabled", true);
             $("#ExpectedTimeLoading").attr("disabled", true);
             $("button[name=Reject]").show();
@@ -560,6 +637,36 @@ var referenceEvent = {
             $("#btnhistory").show();
             $("#btnhistory").attr("disabled", false);
         }
+=======
+            $("button[name=Reject]").hide();
+=======
+            $("#ExpectedTimeArrival").attr("disabled", true);
+            $("#ExpectedTimeLoading").attr("disabled", true);
+            $("button[name=Reject]").show();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
+            $("button[name=Approve]").hide();
+            $("button[name=Revise]").hide();
+            $form.find("input[name=SupportingOfDelivery]").attr("disabled", false);
+            $("#btnhistory").show();
+        }
+        if (formType == 'U' && dataRef.header.Status == "rerouted" && dataRef.header.RefNoType == "SO" && dataRef.header.ReRouted == true) {
+            
+            $("#ExpectedTimeArrival").attr("disabled", true);
+            $("#ExpectedTimeLoading").attr("disabled", true);
+         
+        }
+        if (['submit', 'approve', 'revised'].indexOf(dataRef.header.Status) > -1 && formType == 'U') {
+            $form.find("input[name=ModaTransport]").attr("disabled", false);
+        }
+<<<<<<< HEAD
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+        if (formType == 'V' && dataRef.header.Status === "rerouted") {
+            $("#btnhistory").show();
+            $("#btnhistory").attr("disabled", false);
+        }
+>>>>>>> 93c2efe ([U] Update from client's TFS)
       
         requestingForm.initTableUnit(dataRef.details, formType, isdisabled);
         showFormRequisition();
@@ -569,7 +676,14 @@ function resetForm() {
     $form[0].reset();
     resetReference();
     resetFormRequisition();
+<<<<<<< HEAD
+<<<<<<< HEAD
     $("#btnhistory").hide();
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+    $("#btnhistory").hide();
+>>>>>>> 93c2efe ([U] Update from client's TFS)
     $("[name=refresh]").trigger('click');
 }
 function resetReference() {
@@ -727,7 +841,16 @@ var requestingForm = {
             }
         });
         $("input[type=radio][name='reference']").change(function () {
+<<<<<<< HEAD
+<<<<<<< HEAD
          
+=======
+            //resetFormRequisition();
+            //console.log($('input[name=formType]').val());
+>>>>>>> 639d8d0 (Intial commit)
+=======
+         
+>>>>>>> 93c2efe ([U] Update from client's TFS)
         });
     }
 }

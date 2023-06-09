@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿﻿$(function () {
   window.operateEvents = {
     "click .btn-create-npe": function (e, data, row, index) {
       location.href = "/EMCS/CreatePebNpe?Id=" + parseInt(row.IdCl);

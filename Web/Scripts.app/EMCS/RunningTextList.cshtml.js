@@ -1,4 +1,4 @@
-﻿var $table = $('#tableIncoterms');
+﻿﻿var $table = $('#tableIncoterms');
 var $searchInput = $("#txtSearchData").val();
 var $AllowDelete = $('#AllowDelete').val();
 var $AllowUpdate = $('#AllowUpdate').val();

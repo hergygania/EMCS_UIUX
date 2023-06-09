@@ -20,6 +20,9 @@ namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         public List<CargoItemModel> InitCargoItem(List<long> ids)
         {
             try
@@ -70,6 +73,68 @@ namespace App.Web.Controllers.EMCS
 
             }
 
+=======
+        public CargoItemModel InitCargoItem(long id)
+=======
+        public List<CargoItemModel> InitCargoItem(long id)
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+=======
+        public List<CargoItemModel> InitCargoItem(List<long> ids)
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+        {
+            try
+            {
+                var detail = new List<CargoItemModel>();
+                var dataList = Service.EMCS.SvcCargoItem.GetDataByCargoId(ids);
+                if (dataList.Count > 0)
+                {
+                    foreach (var data in dataList)
+                    {
+                        var cargoModel = new CargoItemModel();
+                        cargoModel.Id = data.Id;
+                        cargoModel.CargoDescription = data.CargoDescription;
+                        cargoModel.ContainerNumber = data.ContainerNumber;
+                        cargoModel.ContainerType = data.ContainerType;
+                        cargoModel.ContainerSealNumber = data.ContainerSealNumber;
+                        cargoModel.IdCargo = data.IdCargo;
+                        cargoModel.IdCipl = data.IdCipl;
+                        cargoModel.IdCiplItem = data.IdCargo;
+                        cargoModel.InBoundDa = data.InboundDa;
+                        cargoModel.Length = data.Length;
+                        cargoModel.Width = data.Width;
+                        cargoModel.Height = data.Height;
+                        cargoModel.Net = data.NetWeight;
+                        cargoModel.Gross = data.GrossWeight;
+                        cargoModel.CaseNumber = data.CaseNumber;
+                        cargoModel.ItemName = data.ItemName;
+                        cargoModel.Ea = data.EdoNo;
+                        detail.Add(cargoModel);
+
+                        cargoModel.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType").ConvertAll(a =>
+                        {
+                            return new SelectListItem()
+                            {
+                                Text = a.Description,
+                                Value = a.Value.ToString(),
+                                Selected = data.ContainerType != null && a.Description.ToString() == data.ContainerType.ToString() ? true : false
+                            };
+                        });
+                    }
+
+                }
+                return detail;
+            }
+<<<<<<< HEAD
+            return detail;
+>>>>>>> 639d8d0 (Intial commit)
+=======
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         }
 
         public ContainerModel InitItemContainer(long id)
@@ -79,12 +144,17 @@ namespace App.Web.Controllers.EMCS
             data.Container = Service.EMCS.SvcContainer.GetDataById(id);
             return data;
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public CargoItem InitItemCargoFor(long id)
         {
             var data = new CargoItem();
             data = Service.EMCS.SvcContainer.GetDataItemById(id);
             return data;
         }
+<<<<<<< HEAD
 
        
         public ActionResult EditCargoitem(string cargoids)
@@ -203,12 +273,143 @@ namespace App.Web.Controllers.EMCS
                 //}
 
                 return JsonCRUDMessage("U", updateModel);
+=======
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+
+       
+        public ActionResult EditCargoitem(string cargoids)
+        {
+            try
+            {
+               var model = JsonConvert.DeserializeObject<cargoItem>(cargoids);
+                ApplicationTitle();
+                ViewBag.crudMode = "U";
+                var detail = InitCargoItem(model.cargoIds);
+                if (detail.Count == 1) // Single item
+                    ViewBag.SingleItem = true;
+                else
+                    ViewBag.SingleItem = false;
+                ViewBag.listContainerType = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType");
+
+                var containerTypeList = Service.EMCS.MasterParameter.GetParamByGroup("ContainerType").Select(a => new SelectListItem
+                {
+                    Text = a.Description,
+                    Value = a.Value.ToString(),
+                });
+                return PartialView("Modal.FormEditCargoItem", detail);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public class cargoItem
+        {
+            public List<long> cargoIds { get; set; }
+       
+        }
+        [HttpPost]
+        public JsonResult EditCargoItem(List<CargoItemModel> form)
+        {
+            try
+            {
+                var updateModel = new List<SpCargoItemDetail>();
+                for (int i = 0; i < form.Count; i++)
+                {
+                    form[i].ContainerNumber = form[0].ContainerNumber;
+                    form[i].ContainerSealNumber = form[0].ContainerSealNumber;
+                    form[i].ContainerType = form[0].ContainerType;
+                }
+                foreach (var item in form)
+                {
+                    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                    var dataUpdate = new CargoItem();
+
+
+                    dataUpdate.Id = item.Id;
+                    dataUpdate.IdCargo = item.IdCargo;
+                    dataUpdate.ContainerNumber = item.ContainerNumber;
+                    dataUpdate.ContainerType = item.ContainerType;
+                    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                    dataUpdate.Length = item.Length;
+                    dataUpdate.Width = item.Width;
+                    dataUpdate.Height = item.Height;
+                    dataUpdate.Gross = item.Gross;
+                    dataUpdate.Net = item.Net;
+
+                    var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
+                    if (hasChange)
+                    {
+                        #region cek apakah perubahan untuk item yg sama sudah dilakukan
+                        var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
+                        var dml = "I";
+                        if (oldUpdate != null)
+                        {
+                            dml = "U";
+                        }
+
+                        Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
+                        #endregion
+                    }
+
+                    Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+                    updateModel.Add(obj);
+                }
+                //foreach (var item in form)
+                //{
+                //    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                //    var dataUpdate = new CargoItem();
+
+
+                //    dataUpdate.Id = item.Id;
+                //    dataUpdate.IdCargo = item.IdCargo;
+                //    dataUpdate.ContainerNumber = item.ContainerNumber;
+                //    dataUpdate.ContainerType = item.ContainerType;
+                //    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                //    dataUpdate.Length = item.Length;
+                //    dataUpdate.Width = item.Width;
+                //    dataUpdate.Height = item.Height;
+                //    dataUpdate.Gross = item.Gross;
+                //    dataUpdate.Net = item.Net;
+
+                //    var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
+                //    if (hasChange)
+                //    {
+                //        #region cek apakah perubahan untuk item yg sama sudah dilakukan
+                //        var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
+                //        var dml = "I";
+                //        if (oldUpdate != null)
+                //        {
+                //            dml = "U";
+                //        }
+
+                //        Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
+                //        #endregion
+                //    }
+
+                //    Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+                //    updateModel.Add(obj);
+                //}
+
+<<<<<<< HEAD
+                Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+                return JsonCRUDMessage("U", obj);
+>>>>>>> 639d8d0 (Intial commit)
+=======
+                return JsonCRUDMessage("U", updateModel);
+>>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             }
             catch (Exception err)
             {
                 return JsonMessage("Update Cargo Item Failed", 1, err);
             }
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         //public ActionResult EditCargoItemById(long id)
         //{
         //    try
@@ -277,6 +478,11 @@ namespace App.Web.Controllers.EMCS
         //        return JsonMessage("Update Cargo Item Failed", 1, err);
         //    }
         //}
+<<<<<<< HEAD
+=======
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
         public ActionResult CreateCargoItem(long id = 0)
         {
@@ -386,16 +592,34 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         //public JsonResult GetTotalDataCargo(long id)
         //{
         //    var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id);
         //    return Json(data, JsonRequestBehavior.AllowGet);
         //}
         public JsonResult GetTotalDataCargo(long id, string selectvalue)
+<<<<<<< HEAD
         {
             var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id,selectvalue);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+=======
+        public JsonResult GetTotalDataCargo(long id)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+        {
+            var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id,selectvalue);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+<<<<<<< HEAD
+
+>>>>>>> 639d8d0 (Intial commit)
+=======
+>>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public JsonResult DeleteCargoItem(long id)
         {
             try
