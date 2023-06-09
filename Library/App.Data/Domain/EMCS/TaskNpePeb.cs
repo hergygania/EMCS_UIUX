@@ -39,16 +39,6 @@
         [Required]
         public string SpecialInstruction { get; set; }
         public string DocumentRequired { get; set; }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
         public System.DateTime NpeDateSubmitToCustomOffice { get; set; }
-
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public System.DateTime NpeDateSubmitToCustomOffice { get; set; }
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

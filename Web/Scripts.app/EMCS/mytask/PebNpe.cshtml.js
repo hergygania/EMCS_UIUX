@@ -5,8 +5,9 @@
         var id = $(this).attr("id");
         $("#" + id).valid();
     })
-    $('.DownloadDocument, .preview-document, #DocumentShow').hide();
-    dropzone();
+    $('.DownloadDocument, .preview-document, #DocumentShow ,.preview-Canceldocument,.DownloadCancelDocument').hide();
+    /*dropzone();*/
+    getbutton();
 
     getPasswordPabeanOffice();
     getLastestCurrency();
@@ -45,10 +46,6 @@
         $('#NpeDate').val(null);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
     if (npeDateSubmitToCustomOffice) {
         var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
@@ -62,11 +59,6 @@
     else {
         $('#NpeDateSubmitToCustomOffice').val(null);
     }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     GetDocumentPebNpe();
 
 })
@@ -135,12 +127,12 @@ function getLastestCurrency() {
 }
 
 function getLastestKurs() {
-    $.ajax({
-        url: "/emcs/GetLastestKurs",
-        success: function (data) {
-            $('#NpeRate').val(formatCurrency(data, ".", ",", 2)).prop('disabled', true);
-        }
-    })
+    //$.ajax({
+    //    url: "/emcs/GetLastestKurs",
+    //    success: function (data) {
+    //        $('#NpeRate').val(formatCurrency(data, ".", ",", 2)).prop('disabled', true);
+    //    }
+    //})
 }
 
 $("#FormUploadNpePeb").validate({
@@ -177,6 +169,39 @@ $("#FormUploadNpePeb").validate({
 $('.preview-document').on('click', function () {
     $('#DocumentShow').attr("src", "/Upload/EMCS/NPEPEB/" + $(this).val()).show();
 })
+$('.preview-Canceldocument').on('click', function (data, row, e, element) {
+    $.ajax({
+        url: '/EMCS/GetDataById?Id=' + $('#CargoID').val(),
+        type: 'POST',
+        success: function (data) {
+            $('#DocumentShow').attr("src", "/Upload/EMCS/NPEPEB/CancelDocument/" + data.CancelledDocument).show();
+
+        }
+
+    })
+})
+$('.DownloadCancelDocument').on('click', function (data, row, e, element) {
+    location.href = "/EMCS/DownloadCancelDocument/" + $('#CargoID').val()
+})
+function getbutton() {
+    $.ajax({
+        url: '/EMCS/GetDataById?Id=' + $('#CargoID').val(),
+        type: 'POST',
+        success: function (data) {
+            if (data.CancelledDocument == null) {
+                $('.upload').show();
+                $('.preview-Canceldocument,.DownloadCancelDocument').hide();
+            }
+            else {
+                $('.FileName').val(data.CancelledDocument);
+                $('.upload').hide();
+                $('.preview-Canceldocument,.DownloadCancelDocument').show();
+            }
+        }
+
+    })
+
+}
 
 $('.flagCompleteDoc').on('click', function () {
     $('#trCompleteDoc').hide();
@@ -240,7 +265,6 @@ function dropzone() {
     previewNode.id = "";
     var previewTemplate = previewNode.parentNode.innerHTML;
     previewNode.parentNode.removeChild(previewNode);
-
     $('.dz-clickable').each(function () {
         var options = $(this).attr('id').split('-');
         var Name = options[1];
@@ -291,4 +315,59 @@ function dropzone() {
         });
 
     });
+
 }
+$('.dz-clickable').each(function () {
+    var previewNode = document.querySelector(".template");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+    var options = $(this).attr('id').split('-');
+    var Name = options[1];
+    $(this).dropzone({
+        url: '/emcs/UploadDocumentNpePeb',
+        //paramName: Name,
+        uploadMultiple: false,
+        parallelUploads: 1,
+        clickable: true,
+        maxFiles: 1,
+        acceptedFiles: ".jpeg,.jpg,.pdf",
+        previewTemplate: previewTemplate,
+        init: function () {
+            this.on('sending', function (file, xhr, formData) {
+                formData.append("IdCargo", $('#CargoID').val());
+                formData.append("AjuNumber", $('#AjuNumber').val());
+                formData.append("typeDoc", Name);
+            });
+            this.on("addedfile", function (file) {
+                if (this.files.length > 1) {
+                    this.files = this.files.slice(1, 2);
+                }
+            });
+        },
+
+        success: function (file, response) {
+            $('.dz-image-preview').remove();
+            if (file.status === "success") {
+                Swal.fire(
+                    'Processing Document!',
+                    'Document Uploaded Successfully!',
+                    'success'
+                );
+                GetDocumentPebNpe();
+            } else {
+                Swal.fire(
+                    'Processing Document!',
+                    'Error Upload!',
+                    'error'
+                )
+            }
+        },
+        complete: function (file, response) {
+            console.log(file, response);
+            //location.reload();
+        },
+        // Rest of the configuration equal to all dropzones
+    });
+
+});

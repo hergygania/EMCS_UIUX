@@ -10,18 +10,9 @@ var AtaVisible = AtaVisible ?? true;
 var GRVisible = GRVisible ?? true;
 var canEdit = canEdit ?? false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
 if (($('#Role').val() === "Administrator,POSTEXPEDITOR") && $("#Shipment").val() === "PTTU") {
     canEdit = true;
 }
@@ -40,19 +31,10 @@ var IdItem = 0;
 var PrePayment = $('#PrePayment').val();
 var Shipment = $('#Shipment').val();
 var BastVisible = BastVisible ?? false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 var RemoveHCVisible = RemoveHCVisible ?? false;
 if (Role == "Administrator,POSTVENDOR") {
     RemoveHCVisible = true
 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 var InvoiceVisible = InvoiceVisible ?? false;
 if (Shipment == "") {
     if (PrePayment == 1) {
@@ -367,7 +349,7 @@ function operateFormatterShippingBy(value, row, index) {
         options += '<option value="Forwarder"' + ("Forwarder" === value ? 'selected' : '') + '>by Vendor</option>'
         options += '<option value="CKB"' + ("CKB" === value ? 'selected' : '') + '>Deliver To CKB</option>'
         options += '<option value="PTTU"' + ("PTTU" === value ? 'selected' : '') + '>by PTTU</option>'
-      
+
         return '<select class="form-control select2 select2-table" onchange="UpdateShipment();" id="Select2Shipment">' + options + '</select>'
     }
 }
@@ -452,13 +434,13 @@ function InitTableGrGet(PoNo, ItemId) {
         pageSize: 10,
         pageList: [5, 10, 25, 50, 100, 200],
         url: 'GetDataGRByPO',
-        queryParams: function (params) {           
+        queryParams: function (params) {
             var query = {
                 poNo: PoNo,
                 ItemId: ItemId,
             }
             return query;
-        },        
+        },
         responseHandler: function (res) {
             return res.result;
         },
@@ -481,7 +463,7 @@ function InitTableInvoiceGet(PoNo, ItemId) {
             }
             return query;
         },
-      
+
         responseHandler: function (res) {
             return res.result;
         },
@@ -684,8 +666,6 @@ function InitTableInProgress() {
             events: operateEventHeader
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             title: 'Invoice Validation',
             field: 'CountKOFAXUpload',
             class: 'text-center',
@@ -701,31 +681,6 @@ function InitTableInProgress() {
             align: 'center',
             width: '100px',
             formatter: GetProcessFlowChecklistInvoiceHardcopy,
-=======
-            title: 'Invoice Approved',
-            field: 'CountReviewInvoice',
-            class: 'text-center',
-            align: 'center',
-            width: '100px',
-            formatter: GetProcessFlowChecklistInvoiceFinance,
->>>>>>> 639d8d0 (Intial commit)
-=======
-            title: 'Invoice Validation',
-            field: 'CountKOFAXUpload',
-            class: 'text-center',
-            align: 'center',
-            width: '100px',
-            formatter: GetProcessFlowChecklistInvoiceKOFAX,
-            events: operateEventHeader
-        },
-        {
-            title: 'Invoice Hardcopy',
-            field: 'CountInvoiceHardcopy',
-            class: 'text-center',
-            align: 'center',
-            width: '100px',
-            formatter: GetProcessFlowChecklistInvoiceHardcopy,
->>>>>>> 93c2efe ([U] Update from client's TFS)
             events: operateEventHeader
         },
         {
@@ -788,15 +743,7 @@ function InitTableItem() {
                     if (Role === "Administrator,POSTEXPEDITOR" || Role === "Administrator,POSTVENDOR") {
                         console.log(Role);
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
-=======
                         var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        var btnUpdate = `<a class="btn btn-light btn-xs" id="updateStatusItem" onClick="InitModalUpdateStatus(${Item_Id})" title="Update Status" data-role="updatestatus"><i class="fa fa-edit" title="Update Status"></i></a>`;                       
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     }
                     else {
                         var btnViewNote = `<a class="btn btn-light btn-xs" onClick="InitModalViewNotes(${Item_Id})"  title="View Notes"><i class="fa fa-history" title="View Notes"></i></a>`;
@@ -870,29 +817,20 @@ function InitTableItem() {
                     return ActionItem1
                 }
             }, {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'HardCopy Invoice',
                 class: 'text-nowrap',
                 align: 'center',
                 width: '110',
                 visible: InvoiceVisible,
-                formatter: function () {                   
+                formatter: function () {
                     var btnHardCopy = '';
-             
+
                     btnHardCopy = `<a class="btn btn-light btn-xs" id="updateHardCopy" onClick="InitModalHardCopy()" title=" Submit Hardcopy Invoice" data-role="hardcopyinvoice"><i class="fa fa-file" title="Submit HardCopy Invoice"></i></a>`;
                     var ActionItem1 = [btnHardCopy].join('&nbsp;');
 
                     return ActionItem1
                 }
             }, {
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'PR Number',
                 field: 'PR_Number',
                 class: 'text-nowrap',
@@ -936,7 +874,7 @@ function InitTableItem() {
                     if (value == "POD" && partial > 0 && CountPOD < partial) {
                         color = 'badge-warning';
                     }
-                    else if(partial > 0 && CountPOD < partial){
+                    else if (partial > 0 && CountPOD < partial) {
                         color = 'badge-warning';
                     }
                     return `<span class='badge ` + color + `'>` + data + `</span>`;
@@ -1161,7 +1099,7 @@ function GetProcessFlowChecklistPaidPO(data, row, index) {
 function SendEmailAttachment(type) {
     var dataInvoice = $('#table-uploadInvoice').bootstrapTable("getData");
     var isValid = true;
-    for (i = 0, j = dataInvoice.length; i<j;i++) {
+    for (i = 0, j = dataInvoice.length; i < j; i++) {
         var idAttachment = dataInvoice[i].ID;
         var BAST = $('#' + idAttachment).select2('val');
         if (BAST == null) {
@@ -1176,14 +1114,14 @@ function SendEmailAttachment(type) {
             RefreshAllTable();
         });
 
-        if(type == "Invoice"){
+        if (type == "Invoice") {
             $('#modalUploadInvoicing').modal('toggle');
         }
     }
     else {
         swalError("BAST tidak boleh kosong (Jika tidak ada pilihan BAST silahkan untuk dilakukan proses GR terlebih dahulu)");
     }
-    
+
 }
 function UpdateInvoice() {
 
@@ -1369,39 +1307,18 @@ function DeleteFileUpload(id, type) {
 
 
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadFileUpload(id) {
     url = "/POST/DownloadFileRequest?id=" + id;
     window.open(url, '_blank');
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadFileRequestAll() {
     var requestId = parseInt($('#requestId').val());
     url = "/POST/DownloadFileRequestAll?requestid=" + requestId;
     window.open(url, '_blank');
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
@@ -1516,7 +1433,7 @@ function InitTablepartialQty() {
             class: 'clickable-row',
             events: EventsFormatter,
             width: '10',
-            formatter: function (row, data, index) {              
+            formatter: function (row, data, index) {
                 var btnViewNote6 = `<a class="remove btn btn-light btn-xs"" title="Remove"><i class="fa fa-trash" title="Remove"></i></a>`;
                 var ActionItem6 = [btnViewNote6].join('&nbsp;');
                 return ActionItem6
@@ -1532,10 +1449,6 @@ function InitTablepartialQty() {
         ]
     })
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitTablehardcopyInvoice() {
     $('#table-hardcopyinvoice').bootstrapTable({
         detailView: false,
@@ -1567,19 +1480,19 @@ function InitTablehardcopyInvoice() {
 
         {
             title: 'PO_Number',
-            field: 'PO_Number',            
+            field: 'PO_Number',
             align: 'center',
             width: '120'
         },
         {
             title: 'FileName',
-            field: 'FileNameOri',           
+            field: 'FileNameOri',
             align: 'center',
             width: '120'
         },
         {
             title: 'Recipients Name/ Receipt Number',
-            field: 'ReceiptNameOrNumber',           
+            field: 'ReceiptNameOrNumber',
             align: 'center',
             width: '120'
         },
@@ -1599,12 +1512,6 @@ function InitTablehardcopyInvoice() {
         ]
     })
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 $('#table-partialQty tr').click(function (event) {
     if (event.target.type !== 'radio') {
@@ -1612,7 +1519,7 @@ $('#table-partialQty tr').click(function (event) {
     }
 });
 window.EventsFormatter = {
-    'click .remove': function (e, value, row, index) { 
+    'click .remove': function (e, value, row, index) {
         var ItemId = row.Item_Id;
         swal({
             title: "Are you sure want to delete this data?",
@@ -1629,15 +1536,11 @@ window.EventsFormatter = {
                 deletePartialQty(row.QtyPartial_Id);
                 $("#table-partialQty").bootstrapTable('destroy')
                 return InitTablepartialQtyRefresh(ItemId);
-               
+
             }
-            });
-       
+        });
+
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
     'click .removehardcopy': function (e, value, row, index) {
         var HardCopyId = row.Id;
@@ -1661,11 +1564,6 @@ window.EventsFormatter = {
         });
 
     },
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 }
 $(":radio[name=radios]").change(function () {
     $(".table tr.active").removeClass("active");
@@ -1686,12 +1584,12 @@ function deletePartialQty(ID) {
         dataType: "json",
         success: function (d) {
             swalSuccess("Success Remove");
-             //$("#table-partialQty").bootstrapTable('destroy', {
+            //$("#table-partialQty").bootstrapTable('destroy', {
             //    query: { id: id }
             //});
             //$("#table-partialQty").bootstrapTable('destroy')
             //InitTablepartialQty();
-       
+
             //if (d.Msg !== undefined) {
             //    sAlert('Success', d.Msg, 'success');
             //}
@@ -1702,31 +1600,22 @@ function deletePartialQty(ID) {
         }
     });
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function deleteHarcopyInvoice(ID) {
     $.ajax({
         type: "POST",
         url: '/Post/HarcopyInvoiceDelete',
-       
+
         data: { ID: ID },
         dataType: "json",
         success: function (d) {
             swalSuccess("Success Remove");
-           
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
         }
     });
 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 function GetPartialItem(id) {
     $.getJSON("GetItemPartialById?Id=" + id)
@@ -1742,7 +1631,7 @@ function GetPartialItem(id) {
             //}
 
 
-            
+
             $("#status option").each(function (e, a) {
                 $("#status").val(data.result.Item_Status).trigger('change');
                 //if ($(this).context.value == data.result.Item_Status) {
@@ -1894,7 +1783,7 @@ function ChangeLabelModalUpdateStatus(POType) {
         txtLabelPosition.placeholder = 'Input Numeric Only (1-100)';
         txtLabelPosition.min = 0;
         txtLabelPosition.max = 100;
-      
+
         //txtLabelPosition.readOnly = true;
     } else {
         LabelETD = document.getElementById("LabelETD");
@@ -1970,19 +1859,15 @@ function InitModalUpdateStatus(id) {
 
         })
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
-function InitModalHardCopy(id) {   
+function InitModalHardCopy(id) {
     if (Role.includes("Administrator,POSTVENDOR")) {
         $('#btnSave').show();
     }
     else {
         $('#btnSave').hide();
     }
-   
+
     $('#modalhardCopyInvoiceForm').modal('show');
     $('#modalhardCopyInvoiceForm').modal({ backdrop: "static" });
     InitSelect2filenameinvoice();
@@ -1994,11 +1879,6 @@ function InitModalHardCopy(id) {
 
 
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitModalViewNotes(id) {
     $.getJSON("GetItemListById?Id=" + id)
         .then(function (data) {
@@ -2012,10 +1892,6 @@ function InitModalViewNotes(id) {
         })
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2Destination() {
     $('#select2Destination').select2({
         placeholder: "Destination",
@@ -2045,12 +1921,6 @@ function InitSelect2Destination() {
         return;
     });
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2StatusPO(POType) {
     var StatusPO = [];
     if (POType == '') {
@@ -2107,19 +1977,9 @@ function InitDateRange() {
     $('#ata').datepicker({
         format: 'dd.mm.yyyy',
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
     $('#submissiondate').datepicker({
         format: 'dd.mm.yyyy',
     });
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-    $('#submissiondate').datepicker({
-        format: 'dd.mm.yyyy',
-    });
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 }
 function clearSearchDetail() {
@@ -2130,37 +1990,15 @@ function clearSearchDetail() {
     $("#table-item").bootstrapTable('refresh');
 
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function InitSelect2filenameinvoice() {
     $('#select2file').select2({
         placeholder: "File Name Invoice",
         id: requestId,
-<<<<<<< HEAD
         ajax: {
             url: 'GetSelectFileNameInvoice',
             data: function (params) {
                 var query = {
                     id: requestId,
-=======
-function InitSelect2Destination() {
-    $('#select2Destination').select2({
-        placeholder: "Destination",
-        id: "id",
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
-        ajax: {
-            url: 'GetSelectFileNameInvoice',
-            data: function (params) {
-                var query = {
-<<<<<<< HEAD
-                    search: params.term,
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    id: requestId,
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     type: 'public'
                 }
                 return query;
@@ -2333,34 +2171,16 @@ function ClickSubmitWithComment(FlowProcessStatusID, OldFlowProcessStatusID, man
 
 }
 function ClickSubmitDelivery() {
-<<<<<<< HEAD
-<<<<<<< HEAD
     var Shipment = $('#Select2Shipment').val();
-    if (Shipment == null || Shipment == '' ) {
+    if (Shipment == null || Shipment == '') {
         swalWarning('Please Choose Shipment');
         return false;
     }
     else {
         UpdateShipment();
     }
-  
-   
-=======
-    UpdateShipment();
-    var Shipment = $('#Select2Shipment').val();
->>>>>>> 639d8d0 (Intial commit)
-=======
-    var Shipment = $('#Select2Shipment').val();
-    if (Shipment == null || Shipment == '' ) {
-        swalWarning('Please Choose Shipment');
-        return false;
-    }
-    else {
-        UpdateShipment();
-    }
-  
-   
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
+
     var FlowProcessStatusID = 4217//Default Forwarder
     if (Shipment == 'CKB') {
         FlowProcessStatusID = 2499
@@ -2499,14 +2319,10 @@ function UpdateShipment() {
         }
     })
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
-function UpdateHardCopy() { 
+function UpdateHardCopy() {
     var attachmentId = $('#select2file').val();
-  
+
 
     var data = {
         "hardcopy": {
@@ -2515,9 +2331,9 @@ function UpdateHardCopy() {
             "submissionDate": datePickerSAPFormatter($('#submissiondate').val()),
             "submissiontype": $('#submissiontype').val(),
             "receiptnameornumber": $('#ReceiptNameOrNumber').val(),
-           
+
         },
-       
+
     }
 
     $.ajax({
@@ -2531,7 +2347,7 @@ function UpdateHardCopy() {
                 swalSuccess('HardCopy Data Successfully Saved!');
             } else {
                 swalWarning('HardCopy failed save!');
-            }           
+            }
         },
         error: function (err) {
             swalWarning('HardCopy failed save!');
@@ -2539,11 +2355,6 @@ function UpdateHardCopy() {
     })
 }
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function UpdateItem() {
     var ApplyFor = $('#ApplyFor').val();
     var idItem = $('#item_id').val();
@@ -2719,27 +2530,11 @@ function InitDropZoneBast() {
         thumbnailHeight: 100,
         thumbnailWeight: 100,
         method: 'POST',
-<<<<<<< HEAD
-<<<<<<< HEAD
         acceptedFiles: ".pdf",
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 10,
         maxFilesize: 2, // MB
-=======
-        acceptedFiles: ".pdf,.zip,.rar",
-        filesizeBase: 1024,
-        autoProcessQueue: true,
-        maxFiles: 10,
-        maxFilesize: 20, // MB
->>>>>>> 639d8d0 (Intial commit)
-=======
-        acceptedFiles: ".pdf",
-        filesizeBase: 1024,
-        autoProcessQueue: true,
-        maxFiles: 10,
-        maxFilesize: 2, // MB
->>>>>>> 93c2efe ([U] Update from client's TFS)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2811,15 +2606,7 @@ function InitDropZoneInvoice() {
         filesizeBase: 1024,
         autoProcessQueue: true,
         maxFiles: 1,
-<<<<<<< HEAD
-<<<<<<< HEAD
         maxFilesize: 2, // MB
-=======
-        maxFilesize: 10, // MB
->>>>>>> 639d8d0 (Intial commit)
-=======
-        maxFilesize: 2, // MB
->>>>>>> 93c2efe ([U] Update from client's TFS)
         parallelUploads: 1,
         dictDefaultMessage: "<h4>Drop the Import File Here or Click this Section for Browse the Import File.</h4>",
         uploadMultiple: false
@@ -2970,18 +2757,8 @@ function InitModalUploadBast(id, statusItem) {
     if (parseInt(isTaskUser) == 0) {
         document.getElementById("BtnSaveBast").style.display = "none";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
             document.getElementById("FormUploadBAST").style.display = "none";
-=======
-        if (Role.includes('POSTBRANCH') || Role.includes('POSTFINANCEVIEWERBRANCH') || Role.includes('POSTFINANCEVIEWER') || Role.includes('POSTVIEWER')) {
-            document.getElementById("BtnApproveBAST").style.display = "block";
->>>>>>> 639d8d0 (Intial commit)
-=======
-        if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
-            document.getElementById("FormUploadBAST").style.display = "none";
->>>>>>> 93c2efe ([U] Update from client's TFS)
         }
     }
 
@@ -2999,7 +2776,7 @@ function InitModalUploadInvoice(id) {
                 IsPopUP = false;
             }
         }
-        
+
         if (IsPopUP == true) {
             ViewPopup()
         }
@@ -3028,14 +2805,7 @@ function ViewPopup() {
 }
 
 function InitData(id) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
     IdItem = id;
     $.getJSON("GetListAttachment?id=" + IdItem + "&type=BAST", function (data) {
         var countBastUpload = data.result.length;
@@ -3057,23 +2827,13 @@ function InitData(id) {
                 document.getElementById("FormUploadInvoice").style.display = "none";
             }
             else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (Role.includes("Administrator,POSTHOVIEWER") || Role.includes("Administrator,POSTPLANTVIEWERFINANCE") || Role.includes("Administrator,POSTVIEWER")) {
                     document.getElementById("FormUploadInvoice").style.display = "none";
-                 }
+                }
                 else {
                     document.getElementById("FormUploadInvoice").style.display = "block";
-                 }
-             
-<<<<<<< HEAD
-=======
-                document.getElementById("FormUploadInvoice").style.display = "block";
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
+                }
+
             }
 
             if (parseInt(isTaskUser) == 0) {
@@ -3087,15 +2847,7 @@ function InitData(id) {
             }
 
         });
-<<<<<<< HEAD
-<<<<<<< HEAD
-      
-=======
 
->>>>>>> 639d8d0 (Intial commit)
-=======
-      
->>>>>>> 93c2efe ([U] Update from client's TFS)
         $('#modalUploadInvoicing').modal();
         $('#table-uploadInvoice').bootstrapTable('refresh', {
             query: {
@@ -3104,14 +2856,7 @@ function InitData(id) {
             }
         });
     })
-<<<<<<< HEAD
-<<<<<<< HEAD
- 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
- 
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
 }
 
 function InitModalUploadPO() {
@@ -3503,7 +3248,7 @@ $('#table-uploadBast').on('post-body.bs.table', function (field, value, row, $el
 
 function InitTableUploadInvoice() {
     $('#table-uploadInvoice').bootstrapTable({
-       
+
         pagination: false,
         serverSort: false,
         loadingTemplate: "loadingTemplate",
@@ -3545,19 +3290,9 @@ function InitTableUploadInvoice() {
                         return [btnDownload, btnDelete].join('&nbsp;');
                     } else {
                         btnDownload = `<a href="#" onclick="DownloadFileUpload(${data.ID});" class="btn btn-light btn-xs" title="Download"><span class="fa fa-download"></span></a>&nbsp;`;
-<<<<<<< HEAD
-<<<<<<< HEAD
                         //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
 
                         if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
-=======
-                        if (Role.includes('POSTTAX') || Role.includes('POSTFINANCE') || Role.includes('POSTFINANCEBRANCH')) {
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        //Role.includes("Administrator,POSTFINANCEVIEWER") || Role.includes("Administrator,POSTVIEWER")
-
-                        if (Role.includes("Administrator,POSTTAX") || Role.includes("Administrator,POSTFINANCE") || Role.includes("Administrator,POSTFINANCEBRANCH")) {
->>>>>>> 93c2efe ([U] Update from client's TFS)
                             if (data.CountItemHasInvoiceSAP == 0) {
                                 if (data.IsRejected == 0 && IsApprove == 0) {
 
@@ -3593,33 +3328,6 @@ function InitTableUploadInvoice() {
                     return `<select id="${data.ID}_Progress"  class="Select2Progress form-control gosearch">`
                 }
             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            //{
-            //    title: 'Doc Type Mandatory',
-            //    width: '300',
-            //    class: 'align-top',
-            //    align: 'left',
-            //    halign: 'center',
-            //    formatter: function (row, data, index) {
-            //        return '<ul class="list-inline"><li class="list-inline-item">Invoice</li></ul>'
-            //    }
-            //},
-            //{
-            //    title: 'Doc Type',
-            //    width: '250',
-            //    align: 'left',
-            //    halign: 'center',
-            //    class: 'align-top',
-            //    formatter: function (row, data, index) {
-            //        return `<select id="${data.ID}_DocType"   multiple="multiple"  class="Select2DocType form-control gosearch">`
-            //    }
-            //},
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 title: 'Refer to BAST',
                 width: '300',
@@ -3633,7 +3341,7 @@ function InitTableUploadInvoice() {
                 title: 'Notes',
                 field: 'Notes',
                 width: '750',
-                
+
                 align: 'left',
                 class: 'align-top',
                 halign: 'center',
@@ -3659,17 +3367,9 @@ function InitTableUploadInvoice() {
                 formatter: dateFormattertime
 
 
-            },{
+            }, {
                 title: 'Approve Date Finance',
-<<<<<<< HEAD
-<<<<<<< HEAD
                 field: 'CreateDate',
-=======
-                field: 'ApproveDateFinance',
->>>>>>> 639d8d0 (Intial commit)
-=======
-                field: 'CreateDate',
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 class: 'align-top',
                 halign: 'center',
                 align: 'left',
@@ -3677,10 +3377,8 @@ function InitTableUploadInvoice() {
                 formatter: dateFormattertime
 
 
-            },{
+            }, {
                 title: 'Status',
-<<<<<<< HEAD
-<<<<<<< HEAD
                 field: 'Status',
                 class: 'align-top',
                 align: 'center',
@@ -3702,35 +3400,6 @@ function InitTableUploadInvoice() {
                 align: 'center',
                 halign: 'center',
                 //visible: VisibleKOFAXMessage
-=======
-                field: 'ApproveStatus',
-                class: 'align-top',
-                align: 'center',
-                halign: 'center'
->>>>>>> 639d8d0 (Intial commit)
-=======
-                field: 'Status',
-                class: 'align-top',
-                align: 'center',
-                halign: 'center',
-                //visible: VisibleKOFAXMessage
-
-            }, {
-                title: 'Validation Message',
-                field: 'StatusMessage',
-                class: 'align-top',
-                align: 'center',
-                halign: 'center',
-                //visible: VisibleKOFAXMessage
-
-            }, {
-                title: 'WithHolding Tax',
-                field: 'WHTaxAmount',
-                class: 'align-top',
-                align: 'center',
-                halign: 'center',
-                //visible: VisibleKOFAXMessage
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
             }
         ]
@@ -3739,7 +3408,7 @@ function InitTableUploadInvoice() {
 
 
 $('#table-uploadInvoice').on('post-body.bs.table', function (field, value, row, $element) {
-   
+
 
     var disabled = false;
     if (isTaskUser == 0) {
@@ -3832,14 +3501,14 @@ $('#table-uploadInvoice').on('post-body.bs.table', function (field, value, row, 
             var dataInvoice = $('#table-uploadInvoice').bootstrapTable("getData");
             var isValid = true;
             for (i = 0, j = dataInvoice.length; i < j; i++) {
-                var idAttachment = dataInvoice[i].ID;               
+                var idAttachment = dataInvoice[i].ID;
                 if (idAttachment != attachId) {
                     var BAST = $('#' + idAttachment).select2('val');
-                    if(BAST != null){
+                    if (BAST != null) {
                         if (itemId == BAST[0]) {
                             isValid = false;
                             i = dataInvoice.length;
-                            $('#' + attachId).select2('val','');
+                            $('#' + attachId).select2('val', '');
                         } else {
                             isValid = true;
                         }
@@ -3855,7 +3524,7 @@ $('#table-uploadInvoice').on('post-body.bs.table', function (field, value, row, 
             } else {
                 swalError("BAST sudah digunakan di Invoice yang lain.");
             }
-            
+
         }).on("select2:unselecting", function (obj) {
             var attachId = obj.target.id;
             var selected = obj.params.args.data.selected
@@ -3985,15 +3654,11 @@ function InitTableUploadPO() {
     });
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function DownloadGR() {
 
     var param = {
         "poNo": $("#PoNo").val(),
-        "ItemId" : $("#ItemId").val()
+        "ItemId": $("#ItemId").val()
     };
     $.ajax({
         cache: false,
@@ -4016,11 +3681,6 @@ function DownloadGR() {
         }
     })
 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 
 
@@ -4029,7 +3689,7 @@ function DownloadGR() {
 
 Dropzone.autoDiscover = false;
 $(document).ready(function () {
-     
+
     $('[data-toggle="tooltip"]').tooltip()
     $('.select2').select2();
     InitSelect2Destination();
@@ -4044,15 +3704,7 @@ $(document).ready(function () {
     InitDropZonePO();
     InitTableViewNotes();
     InitTablepartialQty();
-<<<<<<< HEAD
-<<<<<<< HEAD
     InitTablehardcopyInvoice();
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-    InitTablehardcopyInvoice();
->>>>>>> 93c2efe ([U] Update from client's TFS)
     //InitTableGr();
     //InitTableInvoice();
 })

@@ -5,18 +5,8 @@
         public string CiplNo { get; set; }
         public string CreateDate { get; set; }
         public string ReferenceNo { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public string Category { get; set; }
         public string CategoriItem { get; set; }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public string Category { get; set; }
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public string Area { get; set; }
         public string FullArea { get; set; }
         public string RequestorName { get; set; }
@@ -62,7 +52,6 @@
         public string SignedName { get; set; }
         public string SignedPosition { get; set; }
         public string EdiNo { get; set; }
-
         public string ShipDelivery { get; set; }
     }
 }

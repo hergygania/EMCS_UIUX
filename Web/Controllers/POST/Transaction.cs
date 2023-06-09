@@ -26,15 +26,7 @@ namespace App.Web.Controllers.POST
             return data;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public ActionResult HomeVendor(int tab = 0, int landingpage = 0)
-=======
-        public ActionResult HomeVendor(int tab = 0)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public ActionResult HomeVendor(int tab = 0, int landingpage = 0)
->>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             var userLogin = GetUserLogin();
             var Group = Service.POST.Global.GetGroupByUserId(userLogin);
@@ -46,16 +38,8 @@ namespace App.Web.Controllers.POST
             int Active = tab == 0 ? 1 : tab;
             ViewBag.TabDefault = Group == "POSTVENDOR" ? tab : Active;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             ViewBag.LandingPage = landingpage;
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-            ViewBag.LandingPage = landingpage;
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
             var param = new SearchHeader();
             ViewBag.CountPOIncoming = Service.POST.PO.GetTotalList(userLogin, param, "INCOMING");
             ViewBag.CountPOProgress = Service.POST.PO.GetTotalList(userLogin, param, "PROGRESS");
@@ -72,10 +56,6 @@ namespace App.Web.Controllers.POST
             return View();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public ActionResult HomeFinance(int tab = 0)
         {
             var userLogin = GetUserLogin();
@@ -106,11 +86,6 @@ namespace App.Web.Controllers.POST
             return View();
         }
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         //add detail
         public ActionResult Detail(int Id)
         {
@@ -127,7 +102,7 @@ namespace App.Web.Controllers.POST
             ViewBag.AllowDelete = true;
             ViewBag.isTaskUser = isTaskUser;
             ViewBag.TypePage = "NoTabs";
-            ViewBag.StepName = "invoice";           
+            ViewBag.StepName = "invoice";
             PaginatorBoot.Remove("SessionTRN");
             string url = string.Format("/POST/DetailDone?id={0}", Id);
 
@@ -294,7 +269,7 @@ namespace App.Web.Controllers.POST
             {
                 ViewBag.Prepayment = 0;
             }
-            
+
             ViewBag.Group = Group;
             PaginatorBoot.Remove("SessionTRN");
             string url = string.Format("/POST/DetailDone?id={0}", Id);
@@ -604,24 +579,15 @@ namespace App.Web.Controllers.POST
                 var requestId = Service.POST.Transaction.UpdateRequestPrePayment(request);
 
                 Service.POST.Transaction.SendEmail("Request", Convert.ToInt32(requestId), "");
-              
+
                 return Json(new { status = "SUCCESS", result = requestId }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        }    
-
-=======
         }
->>>>>>> 639d8d0 (Intial commit)
-=======
-        }    
 
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult SaveItem(UpdateTrItem item, string saveType)
         {
             try
@@ -629,27 +595,11 @@ namespace App.Web.Controllers.POST
                 string itemId;
                 if (saveType == "NOTES")
                 {
-<<<<<<< HEAD
-<<<<<<< HEAD
                     itemId = Service.POST.Transaction.UpdateItemNotes(item);
                 }
                 else
                 {
                     itemId = Service.POST.Transaction.UpdateItem(item);
-=======
-                    itemId = Service.POST.Transaction.UpadateItemNotes(item);
-                }
-                else
-                {
-                    itemId = Service.POST.Transaction.UpadateItem(item);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    itemId = Service.POST.Transaction.UpdateItemNotes(item);
-                }
-                else
-                {
-                    itemId = Service.POST.Transaction.UpdateItem(item);
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 }
 
 
@@ -661,10 +611,6 @@ namespace App.Web.Controllers.POST
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult SaveHardCopy(UpdateInvoiceHardCopy hardcopy)
         {
             try
@@ -680,11 +626,6 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 
         public JsonResult UpadateItemQtyPartial(string idItem, string qtyPartial)
@@ -747,7 +688,7 @@ namespace App.Web.Controllers.POST
         {
             try
             {
-               
+
                 var data = Service.POST.Transaction.UpdateInvoice(Convert.ToInt32(id), suratketerangan);
 
                 return Json(new { status = "SUCCESS", result = data }, JsonRequestBehavior.AllowGet);
@@ -800,11 +741,7 @@ namespace App.Web.Controllers.POST
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
-        public ActionResult DownloadGRData(string PoNo,string ItemId ="")
+        public ActionResult DownloadGRData(string PoNo, string ItemId = "")
         {
             Guid guid = Guid.NewGuid();
             Session[guid.ToString()] = DownloadToExcelGR(PoNo, ItemId);
@@ -822,7 +759,7 @@ namespace App.Web.Controllers.POST
         {
             try
             {
-                
+
                 var output = Service.POST.AdvanceSearh.DownloadToExcelGR(PoNo, "");
                 return File(output.ToArray(),
                  "application/vnd.ms-excel",
@@ -845,41 +782,18 @@ namespace App.Web.Controllers.POST
         {
             var data = Service.POST.Transaction.GetDataRequestAttachmentById(id);
             byte[] fileBytes;
-<<<<<<< HEAD
-=======
-        public FileResult DownloadFileRequest(int id)
-        {
-            var data = Service.POST.Transaction.GetDataRequestAttachmentById(id);
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
             if (data != null)
             {
                 var pathFile = data.Path;
                 var fileNameOri = data.FileNameOri;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 fileBytes = System.IO.File.ReadAllBytes(pathFile);
-=======
-                var fileBytes = System.IO.File.ReadAllBytes(pathFile);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                fileBytes = System.IO.File.ReadAllBytes(pathFile);
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileNameOri);
             }
             else
                 return null;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public FileResult DownloadFileRequestAll(int requestid)
         {
 
@@ -896,15 +810,7 @@ namespace App.Web.Controllers.POST
                 for (int i = 0; i < data.Count; i++)
                 {
                     var pathFile = data[i].Path;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-                   
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     if (fileNameOri != data[i].FileNameOri)
                     {
                         ZipEntry entry = new ZipEntry(Path.GetFileName(pathFile));
@@ -941,15 +847,7 @@ namespace App.Web.Controllers.POST
             return File(finalResult, "application/zip", fileName);
 
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult UpdateNameAttachment(int id, string name)
         {
             try
@@ -1028,7 +926,7 @@ namespace App.Web.Controllers.POST
             }
         }
 
-        public JsonResult RejectAttachment(int attachmentId, bool reject,string rejectnote)
+        public JsonResult RejectAttachment(int attachmentId, bool reject, string rejectnote)
         {
             try
             {
@@ -1040,11 +938,11 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult ApproveAttachment(int attachmentId, bool approve,string role,string note)
+        public JsonResult ApproveAttachment(int attachmentId, bool approve, string role, string note)
         {
             try
             {
-                Service.POST.Transaction.ApproveAttachment(attachmentId, approve, role,note);
+                Service.POST.Transaction.ApproveAttachment(attachmentId, approve, role, note);
                 return Json(new { status = "SUCCESS", result = "SUCCESS" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -1070,7 +968,7 @@ namespace App.Web.Controllers.POST
 
         #region Get Table List
 
-        public JsonResult GetListAttachment(int id = 0, string type = "",string status ="")
+        public JsonResult GetListAttachment(int id = 0, string type = "", string status = "")
         {
             try
             {
@@ -1096,14 +994,7 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", msg = ex.InnerException.Message, result = data }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         #region ListPO
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        #region ListPO
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult GetListPOInComing(string user, SearchHeader param)
         {
             try
@@ -1176,14 +1067,10 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         #endregion
 
         #region ListInvoiceFinance
-        public JsonResult GetListInvoiceIncoming (string user,SearchHeaderInvoice param)
+        public JsonResult GetListInvoiceIncoming(string user, SearchHeaderInvoice param)
         {
             {
                 try
@@ -1192,7 +1079,7 @@ namespace App.Web.Controllers.POST
                     param.offset = param.offset == 0 ? 0 : param.offset;
 
                     var userLogin = HttpContext.User.Identity.Name;
-                    var rows = Service.POST.Invoice.GetListInvoiceInComing(userLogin,param).ToList();
+                    var rows = Service.POST.Invoice.GetListInvoiceInComing(userLogin, param).ToList();
                     var total = Service.POST.Invoice.GetCountInvoiceInComing(userLogin, param);
                     return Json(new { status = "SUCCESS", rows, total, offset = param.offset }, JsonRequestBehavior.AllowGet);
                 }
@@ -1265,11 +1152,6 @@ namespace App.Web.Controllers.POST
 
 
         #endregion
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public JsonResult GetListItemByRequestId(int requestId, SearchDetail param)
         {
@@ -1448,10 +1330,6 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult HarcopyInvoiceDelete(int Id)
         {
             try
@@ -1464,11 +1342,6 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult GetItemPartialListById(int Id)
         {
             try
@@ -1482,10 +1355,6 @@ namespace App.Web.Controllers.POST
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult GetHardCopyInvoiceByInvoiceId(int Id)
         {
             try
@@ -1511,11 +1380,6 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public JsonResult GetItemPartialById(int Id)
         {
@@ -1586,10 +1450,6 @@ namespace App.Web.Controllers.POST
         }
         #endregion
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult GetSelectFileNameInvoice(Int64 id)
         {
             try
@@ -1602,11 +1462,6 @@ namespace App.Web.Controllers.POST
                 return Json(new { status = "FAILED", result = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         #region checking Request
         public JsonResult IsTaskByUser(int id)
         {
@@ -1625,7 +1480,7 @@ namespace App.Web.Controllers.POST
 
         #endregion
 
-        
+
         public JsonResult GetInitData(string user, SearchHeader param)
         {
             try
@@ -1642,25 +1497,17 @@ namespace App.Web.Controllers.POST
 
         #region Checking PopUp
         public JsonResult CheckPopUp()
-        {            
+        {
             try
             {
                 string vendorid = GetUserLogin();
                 var data = Service.POST.Transaction.CheckPopUp(vendorid);
-               
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            catch (Exception )
-=======
-            catch (Exception ex)
->>>>>>> 639d8d0 (Intial commit)
-=======
-            catch (Exception )
->>>>>>> 93c2efe ([U] Update from client's TFS)
+            catch (Exception)
             {
-                
+
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
@@ -1673,45 +1520,29 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            catch (Exception )
-=======
-            catch (Exception ex)
->>>>>>> 639d8d0 (Intial commit)
-=======
-            catch (Exception )
->>>>>>> 93c2efe ([U] Update from client's TFS)
+            catch (Exception)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult SavePopUp(Boolean isChecked,string description)
+        public JsonResult SavePopUp(Boolean isChecked, string description)
         {
 
             try
             {
                 string vendorid = GetUserLogin();
-                var data = Service.POST.Transaction.SavePopUp(vendorid,isChecked, description);
+                var data = Service.POST.Transaction.SavePopUp(vendorid, isChecked, description);
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
             catch (Exception)
-=======
-            catch (Exception ex)
->>>>>>> 639d8d0 (Intial commit)
-=======
-            catch (Exception)
->>>>>>> 93c2efe ([U] Update from client's TFS)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult SavePopUpInvoice(Boolean isChecked, string description,string PoNo)
+        public JsonResult SavePopUpInvoice(Boolean isChecked, string description, string PoNo)
         {
 
             try
@@ -1721,15 +1552,7 @@ namespace App.Web.Controllers.POST
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            catch (Exception )
-=======
-            catch (Exception ex)
->>>>>>> 639d8d0 (Intial commit)
-=======
-            catch (Exception )
->>>>>>> 93c2efe ([U] Update from client's TFS)
+            catch (Exception)
             {
 
                 return Json(0, JsonRequestBehavior.AllowGet);

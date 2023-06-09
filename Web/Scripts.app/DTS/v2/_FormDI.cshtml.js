@@ -1,5 +1,5 @@
 ﻿$form = $("#formRequest");
-$tableUnit = $('#tableDeliveryInstructionUnit'); 
+$tableUnit = $('#tableDeliveryInstructionUnit');
 
 $form.validate({
     ignore: ":hidden",
@@ -19,14 +19,14 @@ $form.validate({
 });
 // ReSharper disable once UnusedParameter
 function formatCurrency(amount, decimalSeparator, nDecimalDigits) {
-    decimalSeparator =  '.';
+    decimalSeparator = '.';
     var thousandsSeparator = ',';
     nDecimalDigits = typeof nDecimalDigits !== 'undefined' ? nDecimalDigits : 0;
 
-// ReSharper disable ConditionIsAlwaysConst
-// ReSharper disable once HeuristicallyUnreachableCode
+    // ReSharper disable ConditionIsAlwaysConst
+    // ReSharper disable once HeuristicallyUnreachableCode
     amount = typeof amount !== 'undefined' || amount !== 'null' ? amount : 0;
-// ReSharper restore ConditionIsAlwaysConst
+    // ReSharper restore ConditionIsAlwaysConst
 
     var num = parseFloat(amount);
     if (isNaN(num)) {
@@ -63,8 +63,8 @@ function showFilePreview(header) {
     if (header.SupportingDocument5 && header.SupportingDocument5 !== "") {
         filesPreview.push(myApp.root + header.SupportingDocument5);
     }
-  
-  
+
+
     $("#SDOCPreview").fileinput('destroy');
     if (filesPreview.length > 0) {
         // ReSharper disable once MissingHasOwnPropertyInForeach
@@ -171,8 +171,8 @@ var DIForm = {
             $("#PromisedDeliveryDate").attr("disabled", true);
             $("#vendorname").attr("disabled", true);
             if (this.mode === "U") {
-              
-                if (this.data["VendorName"] === '-' ) {
+
+                if (this.data["VendorName"] === '-') {
                     $("select[name=CustID]").attr("disabled", true);
                     $("#chkvendor").prop("checked", true);
                     $("#vendorname").attr("disabled", false);
@@ -199,25 +199,25 @@ var DIForm = {
                         $form.find("input[name=SupportingOfDelivery][value='" + itemInct + "']").prop("checked", true);
                     });
                 }
-            }          
-         
+            }
+
             $("select[name=Sales1ID]").attr("disabled", false);
             $("select[name=Sales2ID]").attr("disabled", false);
-          
-            if (this.mode === "U" && data.Status === "revise") {             
+
+            if (this.mode === "U" && data.Status === "revise") {
                 $("button[name=SubmitForm]").hide();
                 $("button[name=SaveAsDraft]").hide();
                 $("button[name=SaveAsRevised]").show();
             }
-          
+
             if (this.mode === "I") {
                 $("#btnAddUnit").show();
                 $("#ForwarderName").attr("disabled", true);
-              
+
             }
             $('.SDOC-container .row .upload').show();
             $('.SDOC-container .row.preview').hide();
-        } else {          
+        } else {
             $("#formRequest").find('input').attr('disabled', true);
             $("#formRequest").find('textarea').attr('disabled', true);
             $("select[name=CustID]").attr("disabled", true);
@@ -229,7 +229,7 @@ var DIForm = {
             $("button[name=Cancel]").show();
             $("button[name=SubmitForm]").hide();
             $("button[name=SaveAsDraft]").hide();
-            $("button[name=SaveAsRevised]").hide();          
+            $("button[name=SaveAsRevised]").hide();
 
             if (this.mode !== "A") {
                 $("button[name=Cancel]").hide();
@@ -243,7 +243,7 @@ var DIForm = {
             if (data.ModaTransport && this.header !== 'null') {
                 modaTransport = data.ModaTransport.split(',');
                 $.each(modaTransport, function (index, itemInct) {
-                    $form.find("input[name=ModaTransport][value='" + itemInct + "']").prop("checked", true);                  
+                    $form.find("input[name=ModaTransport][value='" + itemInct + "']").prop("checked", true);
                 });
             }
             if (this.data["Incoterm"] && this.data !== 'null') {
@@ -266,12 +266,12 @@ var DIForm = {
                         $("select[name=CustID]").attr("disabled", true);
                         $("#chkvendor").prop("checked", true);
                         $("#vendorname").attr("disabled", true);
-                    }                   
+                    }
                 }
             }
-            if (this.mode === "A") {        
+            if (this.mode === "A") {
                 $("button[name=Reject]").hide();
-                $("button[name=Revise]").hide();                
+                $("button[name=Revise]").hide();
                 $form.find("input[name=ModaTransport]").attr("disabled", false);
                 $("#Remarks").attr("disabled", false);
                 $("#ChargeofAccount").attr("disabled", false);
@@ -279,19 +279,19 @@ var DIForm = {
                 $("#PromisedDeliveryDate").attr("disabled", false);
                 $("#PickUpPlanDate").attr("disabled", false);
                 if (this.data["VendorName"] !== null) {
-             
+
                     if (this.data["VendorName"] !== "-") {
                         $("select[name=CustID]").attr("disabled", true);
                         $("#chkvendor").prop("checked", true);
                         $("#vendorname").attr("disabled", true);
-                    }               
+                    }
                 } else {
                     $("select[name=CustID]").attr("disabled", true);
                     $("#chkvendor").prop("checked", false);
                     $("#vendorname").attr("disabled", true);
                 }
             }
-            if (this.mode !== "V" && this.mode !== "A" ) {                
+            if (this.mode !== "V" && this.mode !== "A") {
                 $form.find("input[name=ModaTransport]").attr("disabled", false);
             }
             $('.SDOC-container .row .upload').hide();
@@ -330,14 +330,14 @@ var DIForm = {
             obj[item.name] = item.value;
             return obj;
         }, {});
-// ReSharper disable once AssignmentInConditionExpression
+        // ReSharper disable once AssignmentInConditionExpression
         if (dataForm['vendorname'] === "undefined" && dataForm['CustName'] === "") {
             sAlert('Error', "Please Fill Customer Name", "error");
             return;
-        } 
-        
+        }
+
         dataForm['Status'] = actType;
-        if (this.mode === "I" ||this.mode ==="U") {
+        if (this.mode === "I" || this.mode === "U") {
             var detailUnits = $('#tableDeliveryInstructionUnit').bootstrapTable('getData');
             console.log(detailUnits);
             if (detailUnits.length <= 0) {
@@ -371,7 +371,7 @@ var DIForm = {
                     //String model = dataunit.Model.toString();
                     //String SerialNumber = dataunit.SerialNumber.toString();
                     //String Batch = dataunit.Batch.toString();
-                     
+
                     if (dataunit.Model.toString().match('<') || dataunit.Model.toString().match('>')) {
                         errMsgVal += ", Model Unit invalid.";
                     }
@@ -389,7 +389,7 @@ var DIForm = {
                 //    //    errMsgVal += ", Model invalid.";
                 //    //}
                 //    sAlert('Error', detailUnits[key.Model], "error");
-                    
+
                 //    return;
                 //}
 
@@ -397,8 +397,9 @@ var DIForm = {
                     sAlert('Error', errMsgVal, "error");
                     return;
                 }
-            }}
-        
+            }
+        }
+
 
         var formData = new FormData();
         // ReSharper disable once MissingHasOwnPropertyInForeach
@@ -417,13 +418,13 @@ var DIForm = {
         formData.append("SDOC", $('#SDOC')[0].files[0]);
         formData.append("SDOC1", $('#SDOC1')[0].files[0]);
         formData.append("SDOC2", $('#SDOC2')[0].files[0]);
-        
+
 
         $.ajax({
             type: "POST",
             url: myApp.root + 'DTS/DeliveryInstructionProccessUpload',
             data: formData,
-                    
+
             dataType: "json",
             contentType: false,
             processData: false,
@@ -465,14 +466,14 @@ var DIForm = {
         var ChargeofAccount = $("#ChargeofAccount").val();
         var ExpectedDeliveryDate = $("#ExpectedDeliveryDate").val();
         var PromisedDeliveryDate = $("#PromisedDeliveryDate").val();
-        
+
         var modaTransport = $form.find("input[name=ModaTransport]:checked").val();
         var Incoterm = $form.find("input[name=Incoterm]:checked").val();
         var SupportingOfDelivery = $form.find("input[name=SupportingOfDelivery]:checked").val();
         var remarks = $("#Remarks").val();
         var $tableUnit = $('#tableDeliveryInstructionUnit');
 
-        
+
         var detailunit = $tableUnit.bootstrapTable('getData');
         if (actType === "reject" || actType === "revise") {
             swal({
@@ -483,7 +484,7 @@ var DIForm = {
                 animation: "slide-from-top",
                 inputPlaceholder: "Type a description"
             }, function (inputValue) {
-               
+
                 if (inputValue === false) return false;
 
                 if (inputValue === "") {
@@ -495,8 +496,8 @@ var DIForm = {
                 // ReSharper disable once NotAllPathsReturnValue
             });
         } else if (actType === "approve", modaTransport, Incoterm, SupportingOfDelivery, detailunit) {
-        
-            self.sendResponseApproval(actType, remarks, inputValue, forwarderName, ChargeofAccount, modaTransport,Incoterm, SupportingOfDelivery,ExpectedDeliveryDate, PromisedDeliveryDate, detailunit);
+
+            self.sendResponseApproval(actType, remarks, inputValue, forwarderName, ChargeofAccount, modaTransport, Incoterm, SupportingOfDelivery, ExpectedDeliveryDate, PromisedDeliveryDate, detailunit);
         }
     },
     sendResponseApproval: function (actType, remarks, approvalNote, forwarderName, ChargeofAccount, modaTransport, Incoterm, SupportingOfDelivery, ExpectedDeliveryDate, PromisedDeliveryDate, detailunit) {
@@ -507,7 +508,7 @@ var DIForm = {
             url: myApp.root + 'DTS/DeliveryInstructionProccessApproval',
             data: {
                 ID: self.ID, actType: actType, Remarks: remarks, ApprovalNote: approvalNote, ForwarderName: forwarderName, ChargeofAccount: ChargeofAccount, ModaTransport: modaTransport,
-                Incoterm: Incoterm, SupportingOfDelivery: SupportingOfDelivery, ExpectedDeliveryDate: ExpectedDeliveryDate, PromisedDeliveryDate: PromisedDeliveryDate,  detailUnits: detailunit
+                Incoterm: Incoterm, SupportingOfDelivery: SupportingOfDelivery, ExpectedDeliveryDate: ExpectedDeliveryDate, PromisedDeliveryDate: PromisedDeliveryDate, detailUnits: detailunit
             },
             dataType: "json",
             beforeSend: function () {
@@ -559,12 +560,12 @@ var DIForm = {
                 return '<span class="noMatches">Set</span>';
             },
             onAll: function () {
-                if (DIForm.mode === "I" ) {
+                if (DIForm.mode === "I") {
                     $('[data-name="Model"]').editable('enable');
                     $('[data-name="SerialNumber"]').editable('enable');
                     $('[data-name="Batch"]').editable('enable');
                     $('[data-name="FreightCost"]').editable('disable');
-                    
+
                 }
                 else if (DIForm.mode === "U") {
                     $('[data-name="Model"]').editable('enable');
@@ -577,14 +578,14 @@ var DIForm = {
                     $('[data-name="SerialNumber"]').editable('disable');
                     $('[data-name="Batch"]').editable('disable');
                     $('[data-name="FreightCost"]').editable('enable');
-             
+
                 }
                 else {
                     $('[data-name="Model"]').editable('disable');
                     $('[data-name="SerialNumber"]').editable('disable');
                     $('[data-name="Batch"]').editable('disable');
                     $('[data-name="FreightCost"]').editable('disable');
-            
+
                 }
             },
             columns: [
@@ -597,15 +598,7 @@ var DIForm = {
                     formatter: function () {
                         if (DIForm.mode === "I" || DIForm.mode === "U") {
                             var htm = [];
-<<<<<<< HEAD
-<<<<<<< HEAD
                             htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-trash"></i></button> ');
-=======
-                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-remove"></i></button> ');
->>>>>>> 639d8d0 (Intial commit)
-=======
-                            htm.push('<button class="removeUnit btn btn-danger btn-xs"><i class="fa fa-trash"></i></button> ');
->>>>>>> 93c2efe ([U] Update from client's TFS)
                             return htm.join('');
                         }
                         return '';
@@ -791,7 +784,7 @@ var DIForm = {
             }
         });
 
-        $('input[type=radio][name=SupportingOfDelivery]').change(function () {     
+        $('input[type=radio][name=SupportingOfDelivery]').change(function () {
             $("#SODOthers").val('');
             $("#FOT").attr("disabled", false);
             $("#FOB").attr("disabled", false);
@@ -844,7 +837,7 @@ function htmlEncode(str) {
 }
 $(function () {
     DIForm.initSelect2();
- 
+
     $("button[name=Cancel]").click(function () {
         $form[0].reset();
         DIForm.hide();
@@ -899,16 +892,16 @@ $(function () {
             }
         });
     });
-   
+
     $('#chkvendor').change(function () {
-      
+
         if ($('input[id=chkvendor]').is(':checked')) {
             $("select[id=CustID]").attr("disabled", true);
             $('#CustAddress').val("");
             $("#CustID").select2("val", "");
             $("#CustName").text("", "");
             $("#vendorname").attr("disabled", false);
-         
+
         } else {
             $("select[id=CustID]").attr("disabled", false);
             $("#vendorname").attr("disabled", true);

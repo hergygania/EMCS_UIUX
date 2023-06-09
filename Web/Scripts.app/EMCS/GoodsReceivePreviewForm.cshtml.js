@@ -2,14 +2,49 @@
 
 window.operateEventRight = {
     'click .download': function (e, value, row) {
+
         e.preventDefault();
         location.href = myApp.fullPath + "/EMCS/DownloadGrItem/" + row.Id;
     },
-    'click .ShowDocument': function (e, value, row) {
+    'click .showDocument': function (e, value, row) {
         e.preventDefault();
-        const url = `/Upload/EMCS/GR/${row.IdGr}/${value}`;
+
+        /*const url = `/Upload/EMCS/GoodsReceive/`+value;*/
+        document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + row.Id + "/" + value;
         // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-        showPreviewDocument(url);
+        /*showPreviewDocument(url);*/
+    },
+    'click .downloadarmadadoc': function (e, value, row) {
+
+        location.href = "/EMCS/DownloadArmadaDocument/" + row.Id;
+    },
+    'click .showDocumentarmadadoc': function (e, value, row) {
+        $.ajax({
+            url: '/EMCS/GetListArmada?IdGr=0&Id=' + row.Id + '',
+            success: function (data) {
+
+                document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + data[0].FileName;
+
+            }
+        })
+    },
+    'click .downloadarmadaHistory': function (e, value, row) {
+
+        location.href = "/EMCS/DownloadArmadaDocumentHistory?FileName=" + row.FileName;
+    },
+    'click .showDocumentarmadaHistory': function (e, value, row) {
+        $.ajax({
+            url: '/EMCS/GetDocumentListOfArmada?Id=' + row.Id + '&IdShippingFleet=0',
+            success: function (data) {
+
+                document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + data[0].FileName;
+
+            }
+        })
+    },
+    'click .ViewDocumentList': function (e, value, row) {
+
+        tableDocumentList(row.IdShippingFleet);
     }
 };
 
@@ -95,6 +130,7 @@ operateFormatter.DEFAULTS = {
 };
 
 window.operateEvents = {
+
     'click .edit': function (e, value, row) {
         $(".editRecord").attr('href', '/EMCS/BannerEdit/' + row.ID).trigger('click');
     },
@@ -121,6 +157,10 @@ window.operateEvents = {
             }
             return false;
         });
+    },
+    'click .viewarmada': function (e, value, row) {
+        ViewItemTable(row.Id);
+
     }
 };
 
@@ -238,22 +278,14 @@ function ApproveGR(obj) {
                 }
             });
         }
-        });
+    });
 };
 
 //#region Button Action
 $("#BtnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
-<<<<<<< HEAD
-<<<<<<< HEAD
         text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
-=======
-        text: 'Do you want to continue ?',
->>>>>>> 639d8d0 (Intial commit)
-=======
-        text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

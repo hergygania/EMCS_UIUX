@@ -1,5 +1,5 @@
 $(function () {
-    $.ajaxSetup({cache: false});
+    $.ajaxSetup({ cache: false });
     var o = $.AdminLTE.options;
     _init();
     $.AdminLTE.tree('.sidebar');
@@ -13,7 +13,7 @@ $(function () {
 
     $(document).on('keydown drop', '.page', function (event) {
         var charCode = (event.which) ? event.which : event.keyCode;
-//        alert(charCode);
+        //        alert(charCode);
         if (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 96 || charCode > 105)) {
             if (charCode == 190) {
                 return true;
@@ -55,9 +55,9 @@ $(function () {
                 firstDay: 1
             }
         },
-		function (start, end, label) {
-		    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-		});
+            function (start, end, label) {
+                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            });
 
         $('.daterange').on('apply.daterangepicker', function (ev, picker) {
             $('#' + ev.currentTarget.id).val(picker.startDate.format('DD MMM YYYY') + ' - ' + picker.endDate.format('DD MMM YYYY'));
@@ -99,7 +99,7 @@ function fix_sidebar() {
 function selectRow(e, row, $element) {
     //Add by Uti Ridwan Ali 31 Maret 2017 : Untuk fixing Bugs Detail View bootstrap-tabe
     var $rowDetailView = $(row).parent().find(".detail-view");
-    
+
     if ($rowDetailView.length) {
         if ($(row).hasClass("selecteds") == true)
             $(row).removeClass("selecteds");
@@ -196,7 +196,7 @@ function julianToDateFormatter(value, row, index) {
         var D = e + 1 - Math.floor(((153 * f) + 2) / 5);
         var M = f + 3 - 12 - Math.round(f / 10);
         var Y = (100 * b) + d - 4800 + Math.floor(f / 10);
-        return new Date(Y, M, D);     
+        return new Date(Y, M, D);
     }
 }
 
@@ -220,7 +220,7 @@ function formatErrorMessage(jqXHR, exception) {
 
 function newDateFormatter(dt) {
     if (dt != '' && dt != ' ' && dt != null && dt != 'null') {
-//        console.log(dt);
+        //        console.log(dt);
         var year = dt.substring(0, 4);
         var month = dt.substring(4, 6);
         var date = dt.substring(6, 8);
@@ -229,10 +229,6 @@ function newDateFormatter(dt) {
         return '-';
     }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function dateFormatterV2(dt) {
     if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
     jsonDate = dt;
@@ -259,12 +255,6 @@ function dateFormatterV2(dt) {
     formattedDate = formattedDate;// + " " + formattedTime;
     return formattedDate == undefined ? '-' : formattedDate;
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function dateFormatter(dt) {
     if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
     jsonDate = dt;
@@ -292,7 +282,7 @@ function dateFormatter(dt) {
 };
 
 function dateFormatterCAT(dt) {
-    if (dt != null && dt !="") {
+    if (dt != null && dt != "") {
         var formattedDate = moment(dt).format('DD MMM YYYY');
         return formattedDate;
     }
@@ -301,8 +291,8 @@ function dateFormatterCAT(dt) {
 function dateStringFormatterCAT(dt) {
     if (dt != null && dt != "") {
         var Year = dt.substring(0, 4);
-        var Month = dt.substring(6,4);
-        var Day = dt.substring(8,6);
+        var Month = dt.substring(6, 4);
+        var Day = dt.substring(8, 6);
         return moment(Year + '-' + Month + '-' + Day).format('DD MMM YYYY');
     }
 };
@@ -396,7 +386,7 @@ loadDetailPage = function (url, parentId, detailId) {
 };
 
 function enableLink(value) {
-//    alert(value);
+    //    alert(value);
     if (value == true) {
         $('html, body').removeClass('wait');
         $('button').prop('disabled', false)
@@ -409,7 +399,7 @@ function enableLink(value) {
         $('.btn').addClass('disabled');
 
         if ($('.loadingImg', '.fixed-table-loading').length == 0) {
-//            alert('a');
+            //            alert('a');
             $('.fixed-table-loading').prepend('<img class="loadingImg" src="/Content/images/ajax-loading.gif"/>&nbsp;')
             $('.fixed-table-body-columns').addClass('didi');
         }
@@ -440,7 +430,7 @@ function reloadScripts(toRefreshList, key) {
                 function r(d) {
                     if (s) {
                         d = d ||
-                                window.event;
+                            window.event;
                         var c = 0;
                         d.wheelDelta && (c = -d.wheelDelta / 120);
                         d.detail && (c = d.detail / 3);
@@ -485,7 +475,7 @@ function reloadScripts(toRefreshList, key) {
                 var s, x, y, A, z, u, l, B, D = 30, k = !1, b = f(this);
                 if (b.parent().hasClass(a.wrapperClass)) {
                     var n = b.scrollTop(),
-                            c = b.parent().find("." + a.barClass), g = b.parent().find("." + a.railClass);
+                        c = b.parent().find("." + a.barClass), g = b.parent().find("." + a.railClass);
                     w();
                     if (f.isPlainObject(h)) {
                         if ("height" in h && "auto" == h.height) {
@@ -516,7 +506,7 @@ function reloadScripts(toRefreshList, key) {
                     b.css({ overflow: "hidden", width: a.width, height: a.height });
                     var g = f("<div></div>").addClass(a.railClass).css({ width: a.size, height: "100%", position: "absolute", top: 0, display: a.alwaysVisible && a.railVisible ? "block" : "none", "border-radius": a.railBorderRadius, background: a.railColor, opacity: a.railOpacity, zIndex: 90 }), c = f("<div></div>").addClass(a.barClass).css({
                         background: a.color, width: a.size, position: "absolute", top: 0, opacity: a.opacity, display: a.alwaysVisible ?
-                                    "block" : "none", "border-radius": a.borderRadius, BorderRadius: a.borderRadius, MozBorderRadius: a.borderRadius, WebkitBorderRadius: a.borderRadius, zIndex: 99
+                            "block" : "none", "border-radius": a.borderRadius, BorderRadius: a.borderRadius, MozBorderRadius: a.borderRadius, WebkitBorderRadius: a.borderRadius, zIndex: 99
                     }), q = "right" == a.position ? { right: a.distance } : { left: a.distance };
                     g.css(q);
                     c.css(q);
@@ -568,7 +558,7 @@ function reloadScripts(toRefreshList, key) {
                     b.bind("touchmove", function (b) {
                         k || b.originalEvent.preventDefault();
                         b.originalEvent.touches.length &&
-                                (m((z - b.originalEvent.touches[0].pageY) / a.touchScrollStep, !0), z = b.originalEvent.touches[0].pageY)
+                            (m((z - b.originalEvent.touches[0].pageY) / a.touchScrollStep, !0), z = b.originalEvent.touches[0].pageY)
                     });
                     w();
                     "bottom" === a.start ? (c.css({ top: b.outerHeight() - c.outerHeight() }), m(0, !0)) : "top" !== a.start && (m(f(a.start).position().top, null, !0), a.alwaysVisible || c.hide());

@@ -1,27 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using System.Web.Mvc;
 using App.Domain;
 using App.Web.App_Start;
-=======
-using System.Web;
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-using System.Web.Mvc;
-using App.Domain;
-using App.Web.App_Start;
-<<<<<<< HEAD
-using System.Globalization;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Configuration;
-using System.Net;
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;
@@ -66,10 +48,10 @@ namespace App.Web.Controllers.EMCS
         public ActionResult VideoPageXt()
         {
             Func<MasterSearchForm, IList<MasterVideo>> func = delegate (MasterSearchForm crit)
-         {
-             List<MasterVideo> list = Service.EMCS.MasterVideo.GetVideoList(crit);
-             return list.OrderBy(o => o.UpdateDate).ToList();
-         };
+            {
+                List<MasterVideo> list = Service.EMCS.MasterVideo.GetVideoList(crit);
+                return list.OrderBy(o => o.UpdateDate).ToList();
+            };
 
             ActionResult paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
             return Json(paging, JsonRequestBehavior.AllowGet);
@@ -81,7 +63,7 @@ namespace App.Web.Controllers.EMCS
         {
             var videoData = new VideoModel();
             videoData.Video = InitilizeVideo(id);
-            
+
 
             if (videoData.Video == null)
             {
@@ -212,8 +194,8 @@ namespace App.Web.Controllers.EMCS
                     else
                     {
                         fileName = "";
-                    }                 
-                                       
+                    }
+
                     return fileName;
                 }
             }
@@ -246,7 +228,7 @@ namespace App.Web.Controllers.EMCS
             Service.EMCS.MasterVideo.Update(
                     items,
                     ViewBag.crudMode);
-                return JsonCRUDMessage(ViewBag.crudMode);
+            return JsonCRUDMessage(ViewBag.crudMode);
         }
 
         [HttpPost]

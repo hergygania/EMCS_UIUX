@@ -85,14 +85,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Reference Include="System.Web" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
     <Reference Include="System.Web" />
->>>>>>> 93c2efe ([U] Update from client's TFS)
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,14 +94,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="Helper\NetworkShare.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
     <Compile Include="Helper\NetworkShare.cs" />
->>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="Library.cs" />
     <Compile Include="Model\BOMIT.cs" />
     <Compile Include="Model\BOMITTMP.cs" />

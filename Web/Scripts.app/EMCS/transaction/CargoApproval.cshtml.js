@@ -8,10 +8,15 @@ function getTotalData() {
     var IdCargo = $("#CargoID").val();
     $.get(myApp.fullPath + "EMCS/GetTotalDataCargo/" + IdCargo, function (resp) {
         var data = {};
-        $.map(resp, function (value, key) {
+        var data1 = {};
+        $.map(resp.data, function (value, key) {
             data[value.Key] = value.Value;
         });
-        $("#topackCl").val(formatCurrency(data.totalPackage, ".", ",", 2));
+        $.map(resp.data1, function (value, key) {
+            data1[value.Key] = value.Value;
+        });
+        $("#NoItem").val(formatCurrency(data1.totalPackage, ".", ",", 2));
+        $("#CaseNo").val(formatCurrency(data.totalPackage, ".", ",", 2));
         $("#togroswegCl").val(formatCurrency(data.totalGrossWeight, ".", ",", 2));
         $("#tonetwegCl").val(formatCurrency(data.totalNetWeight, ".", ",", 2));
         //$("#tovolumeCl").val(formatCurrency(data.totalVolume, ".", ",", 2));
@@ -56,8 +61,6 @@ function submitProblem(statusName) {
     var status = false;
     var data = $("#myModalProblemContent form").serializeArray();
     data.push({ name: "Status", value: statusName });
-    console.log(data);
-    debugger;
     $.ajax({
         url: myApp.fullPath + "EMCS/SaveProblemHistory",
         type: "Post",
@@ -370,15 +373,7 @@ function ApproveCargo(obj) {
 $("#btnApprove").on("click", function () {
     Swal.fire({
         title: 'Approve Confirmation',
-<<<<<<< HEAD
-<<<<<<< HEAD
         text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
-=======
-        text: 'Do you want to continue ?',
->>>>>>> 639d8d0 (Intial commit)
-=======
-        text: 'By approving this document, you are responsible for the authenticity of the documents and data entered.Are you sure you want to process this document ?',
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         type: 'question',
         showCancelButton: true,
         cancelButtonColor: '#d33',

@@ -22,10 +22,6 @@ var baseUrl = location.origin;
 Dropzone.autoDiscover = false;
 
 $(document).ready(function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
     if (landingPage == 1) {
         CheckPopUpHomePage();
@@ -38,12 +34,6 @@ $(document).ready(function () {
         $("#idhome").show();
     }
 
-<<<<<<< HEAD
-=======
-    CheckPopUpHomePage();
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
     initDateRange();
     InitTableViewHistory();
     $('[data-toggle="tooltip"]').tooltip()
@@ -121,14 +111,14 @@ $(document).ready(function () {
                 class: 'text-center',
                 dataAlign: 'center',
                 width: '80',
-             
+
                 formatter: function (data, row, index) {
                     var button1 = `<a href="DetailOutstanding?Id=${data}" class="btn btn-default btn-xs" style="background:#fcba12;color:white;"><i class="fa fa-eye"></i></a>`;
                     var button2 = '';
                     if (Role.includes('POSTVENDOR') || Role.includes('POSTEXPEDITOR') || Role.includes('POSTTAX') || Role.includes('POSTFINANCEBRANCH')) {
                         button2 = `<a href="javascript:void(0);" onclick="ShowComment(` + row.Request_Id + `, ` + row.PO_No + `)" class="btn btn-light notification btn-comment btn-xs" style="color:black;"><i class="fa fa-comment-dots"></i><span style="display:none;" class="total-comment-` + row.Request_Id + `">&nbsp;0</span><span style="display:none;" class="badge-custom badge-custom-` + row.Request_Id + `">&nbsp;0</span></a>`;
                     }
-                  
+
                     return [button1, button2].join(" ");
                 }
             },
@@ -315,8 +305,8 @@ $(document).ready(function () {
                 visible: VisibleColumnComment,
                 formatter: function (data, row, index) {
                     var NextProcessName = row.NextProcessName;
-                    var url = LinkUrlRequest(NextProcessName, row.Request_Id);                    
-                    var  button2 = `<a href="javascript:void(0);" onclick="ShowComment(` + row.Request_Id + `, ` + row.PO_No + `)" class="btn btn-light notification btn-comment btn-xs" style="color:black;"><i class="fa fa-comment-dots"></i><span style="display:none;" class="total-comment-` + row.Request_Id + `">&nbsp;0</span><span style="display:none;" class="badge-custom badge-custom-` + row.Request_Id + `">&nbsp;0</span></a>`;
+                    var url = LinkUrlRequest(NextProcessName, row.Request_Id);
+                    var button2 = `<a href="javascript:void(0);" onclick="ShowComment(` + row.Request_Id + `, ` + row.PO_No + `)" class="btn btn-light notification btn-comment btn-xs" style="color:black;"><i class="fa fa-comment-dots"></i><span style="display:none;" class="total-comment-` + row.Request_Id + `">&nbsp;0</span><span style="display:none;" class="badge-custom badge-custom-` + row.Request_Id + `">&nbsp;0</span></a>`;
                     var buttons = [button2].join(" ");
                     return '<div style="width:20px;">' + buttons + '</div>';
                 }
@@ -484,10 +474,6 @@ $(document).ready(function () {
                 align: 'center',
                 width: '100px',
                 formatter: GetProcessFlowChecklistGRSA,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
             },
             //{
             //    title: 'Document Finance',
@@ -498,13 +484,7 @@ $(document).ready(function () {
             //    visible: VisibleColumnFinance,
             //    formatter: GetProcessFlowChecklistInvoiceDocument,
             //},
-           
-<<<<<<< HEAD
-=======
-            },  
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
             {
                 title: 'Invoice Submit',
                 field: 'Invoice_Date',
@@ -520,25 +500,15 @@ $(document).ready(function () {
                 class: 'text-center',
                 align: 'center',
                 width: '100px',
-                visible: VisibleColumnFinance,              
+                visible: VisibleColumnFinance,
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 title: 'Invoice Date',
                 field: 'Invoice_Date',
-=======
-                title: 'Invoice Submitted',
-                field: 'Invoicing',
->>>>>>> 639d8d0 (Intial commit)
-=======
-                title: 'Invoice Date',
-                field: 'Invoice_Date',
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 class: 'text-center',
                 align: 'center',
                 width: '100px',
-                visible: VisibleColumnFinance,  
+                visible: VisibleColumnFinance,
 
                 formatter: GetProcessFlowChecklistInvoice,
             },
@@ -640,7 +610,7 @@ $(document).ready(function () {
                 if (Role.includes('POSTVENDOR') || Role.includes('POSTEXPEDITOR') || Role.includes('POSTTAX') || Role.includes('POSTFINANCEBRANCH')) {
                     button2 = `<a href="javascript:void(0);" onclick="ShowComment(` + row.Request_Id + `, ` + row.PO_No + `)" class="btn btn-light notification btn-comment btn-xs" style="color:black;"><i class="fa fa-comment-dots"></i><span style="display:none;" class="total-comment-` + row.Request_Id + `">&nbsp;0</span><span style="display:none;" class="badge-custom badge-custom-` + row.Request_Id + `">&nbsp;0</span></a>`;
                 }
-                    var buttons = [button1, button2].join(" ");
+                var buttons = [button1, button2].join(" ");
                 return '<div style="width:150px;">' + buttons + '</div>';
             }
         },
@@ -794,7 +764,7 @@ $(document).ready(function () {
         //    visible: VisibleColumnFinance,
         //    formatter: GetProcessFlowChecklistInvoice,
         //},
-       
+
         {
             title: 'Invoice Submit',
             field: 'Invoicing',
@@ -818,7 +788,7 @@ $(document).ready(function () {
             class: 'text-center',
             align: 'center',
             width: '100px',
-            visible: VisibleColumnFinance,  
+            visible: VisibleColumnFinance,
             formatter: GetProcessFlowChecklistInvoice,
         }, {
             title: 'Invoice Posted',
@@ -1405,29 +1375,7 @@ function GetDeliveryFlowChecklist(data, row, index) {
             return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + check + '</span>';
         }
         else
-<<<<<<< HEAD
-<<<<<<< HEAD
-            return CurrentProgress;        
-=======
             return CurrentProgress;
-
-
-        // if (row.TotalNotPOD == 0) {
-        // return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + check + '</span>';
-
-        // } else if (row.TotalNotPOD > 0) {
-        // if (data == 'current') {
-        // return PartialInProgress;
-        // } else {
-        // return '<span class="showDeliveryDate" data-toggle="tooltip" data-placement="top" title="' + data + '">' + uncheck + '</span>';
-        // }
-        // } else {
-        // return current;
-        // }
->>>>>>> 639d8d0 (Intial commit)
-=======
-            return CurrentProgress;        
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 }
 
@@ -1534,33 +1482,15 @@ function CheckPopUpHomePage() {
     $.getJSON("CheckPopUp", function (data) {
         if (data.IsAgreeHomePage == true) {
             $("#idpopUp").hide();
-<<<<<<< HEAD
-<<<<<<< HEAD
-            $("#idpopUpHardCopyInvoice").show();   
+            $("#idpopUpHardCopyInvoice").show();
             $("#idpopUpPPN").hide();
             $("#idhome").hide();
-=======
-            $("#idhome").show();
->>>>>>> 639d8d0 (Intial commit)
-=======
-            $("#idpopUpHardCopyInvoice").show();   
-            $("#idpopUpPPN").hide();
-            $("#idhome").hide();
->>>>>>> 93c2efe ([U] Update from client's TFS)
         }
         else {
             $("#idpopUp").show();
             $("#idhome").hide();
-<<<<<<< HEAD
-<<<<<<< HEAD
-             $("#idpopUpPPN").hide();
+            $("#idpopUpPPN").hide();
             $("#idhome").hide();
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-             $("#idpopUpPPN").hide();
-            $("#idhome").hide();
->>>>>>> 93c2efe ([U] Update from client's TFS)
         }
     });
 }
@@ -1570,45 +1500,20 @@ function SavePopUpHome() {
 
     $.getJSON("SavePopUp?isChecked=true&description=HomePage", function (data) {
         $("#idpopUp").hide();
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $("#idpopUpHardCopyInvoice").hide();
-        $("#idpopUpPPN").show();       
-        $("#idhome").hide();
-    });
-}
-function SavePopUpHardCopy() {   
-        $("#idpopUp").hide();
         $("#idpopUpHardCopyInvoice").hide();
         $("#idpopUpPPN").show();
         $("#idhome").hide();
+    });
+}
+function SavePopUpHardCopy() {
+    $("#idpopUp").hide();
+    $("#idpopUpHardCopyInvoice").hide();
+    $("#idpopUpPPN").show();
+    $("#idhome").hide();
 }
 function SavePopUpPPN() {
     $("#idpopUp").hide();
     $("#idpopUpHardCopyInvoice").hide();
     $("#idpopUpPPN").hide();
     $("#idhome").show();
-=======
-        $("#idhome").show();
-
-    });
->>>>>>> 639d8d0 (Intial commit)
-=======
-        $("#idpopUpHardCopyInvoice").hide();
-        $("#idpopUpPPN").show();       
-        $("#idhome").hide();
-    });
-}
-function SavePopUpHardCopy() {   
-        $("#idpopUp").hide();
-        $("#idpopUpHardCopyInvoice").hide();
-        $("#idpopUpPPN").show();
-        $("#idhome").hide();
-}
-function SavePopUpPPN() {
-    $("#idpopUp").hide();
-    $("#idpopUpHardCopyInvoice").hide();
-    $("#idpopUpPPN").hide();
-    $("#idhome").show();
->>>>>>> 93c2efe ([U] Update from client's TFS)
 }

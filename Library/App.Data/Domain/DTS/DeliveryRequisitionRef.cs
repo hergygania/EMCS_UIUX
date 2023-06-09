@@ -122,16 +122,7 @@ namespace App.Data.Domain
         public bool? SendEmailToServiceTUBatuLicin { get; set; }
         public bool? SendEmailToServiceTUSangatta { get; set; }
         public bool? SendEmailToServiceTUKendari { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public bool? SendEmailToServiceTUMeulaboh { get; set; }
-
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public bool? SendEmailToServiceTUMeulaboh { get; set; }
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public string RequestNotes { get; set; }
         public string SendEmailNotes { get; set; }
         public string ActivityTracking { get; set; }
@@ -246,29 +237,13 @@ namespace App.Data.Domain
                 SendEmailToServiceTUBatuLicin = this.SendEmailToServiceTUBatuLicin,
                 SendEmailToServiceTUSangatta = this.SendEmailToServiceTUSangatta,
                 SendEmailToServiceTUKendari = this.SendEmailToServiceTUKendari,
-<<<<<<< HEAD
-<<<<<<< HEAD
                 SendEmailToServiceTUMeulaboh = this.SendEmailToServiceTUMeulaboh,
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                SendEmailToServiceTUMeulaboh = this.SendEmailToServiceTUMeulaboh,
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 IsDemob = this.IsDemob,
                 RequestNotes = this.RequestNotes,
                 SendEmailNotes = this.SendEmailNotes,
                 ActivityTracking = this.ActivityTracking,
-                StatusTracking = this.StatusTracking,
-<<<<<<< HEAD
-<<<<<<< HEAD
-                ForceComplete = this.ForceComplete                
-=======
+                StatusTracking = this.StatusTracking,   
                 ForceComplete = this.ForceComplete
-                
->>>>>>> 639d8d0 (Intial commit)
-=======
-                ForceComplete = this.ForceComplete                
->>>>>>> 93c2efe ([U] Update from client's TFS)
             };
 
             return obj;

@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -84,6 +84,9 @@
     <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -106,6 +109,9 @@
     <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
       <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=108.0.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.108.0.2\lib\netstandard2.0\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
     </Reference>
@@ -122,15 +128,40 @@
       <HintPath>..\packages\Spire.XLS-FE\Bin\NET4.0\Spire.XLS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,7 +234,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="MvcMenuEMCSHelpers.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracyDetail.cs" />
     <Compile Include="Controllers\CAT\ForecastAccuracySummary.cs" />
@@ -236,9 +266,12 @@
     <Compile Include="Controllers\DTS\ReportDeliveryReqiusitionController.cs" />
     <Compile Include="Controllers\DTS\VesselController.cs" />
     <Compile Include="Controllers\DTS\_baseDTSController.cs" />
+    <Compile Include="Controllers\EMCS\MasterSubconCompanyController.cs" />
     <Compile Include="Controllers\EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Controllers\EMCS\MasterVendorController.cs" />
+    <Compile Include="Controllers\EMCS\ReportPebNpeController.cs" />
     <Compile Include="Controllers\Imex\ChangeLogController.cs" />
     <Compile Include="Controllers\Imex\KPIDashboardController.cs" />
     <Compile Include="Controllers\POST\EBupot.cs" />
@@ -484,6 +517,7 @@
     <Compile Include="Models\EMCS\FlowStepModel.cs" />
     <Compile Include="Models\EMCS\GoodReceiveItemModel.cs" />
     <Compile Include="Models\EMCS\GoodReceiveModel.cs" />
+    <Compile Include="Models\EMCS\GoodReceiveViewModel.cs" />
     <Compile Include="Models\EMCS\GridListFilter.cs" />
     <Compile Include="Models\EMCS\IncotermsModel.cs" />
     <Compile Include="Models\EMCS\KppbcModel.cs" />
@@ -492,6 +526,8 @@
     <Compile Include="Models\EMCS\RegulationModel.cs" />
     <Compile Include="Models\EMCS\RevisePebNpeModel.cs" />
     <Compile Include="Models\EMCS\RunningTextModel.cs" />
+    <Compile Include="Models\EMCS\ShippingFleetListModel.cs" />
+    <Compile Include="Models\EMCS\ShippingFleetModel.cs" />
     <Compile Include="Models\EMCS\SIBModel.cs" />
     <Compile Include="Models\EMCS\StatusModel.cs" />
     <Compile Include="Models\EMCS\SuperiorModel.cs">
@@ -508,6 +544,7 @@
     <Compile Include="Models\ReportFilterDTS.cs" />
     <Compile Include="Models\RequestForChangeModel.cs" />
     <Compile Include="Models\RoleAccessMenuModel.cs" />
+    <Compile Include="Models\SharePointUser.cs" />
     <Compile Include="Models\UpdateDocument.cs" />
     <Compile Include="Models\BackorderSubmissionView.cs" />
     <Compile Include="Models\CaptchaImageResult.cs" />
@@ -559,52 +596,6 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\AdminLTE.css" />
-    <Content Include="Content\Assets\core\js\bootstrap.min.js" />
-    <Content Include="Content\Assets\core\js\jquery.min.js" />
-    <Content Include="Content\Assets\core\js\popper.min.js" />
-    <Content Include="Content\Assets\css\black-dashboard.css" />
-    <Content Include="Content\Assets\css\demo.css" />
-    <Content Include="Content\Assets\css\nucleo-icons.css" />
-    <Content Include="Content\Assets\demo\demo.css" />
-    <Content Include="Content\Assets\demo\demo.js" />
-    <Content Include="Content\Assets\demo\docs.css" />
-    <Content Include="Content\Assets\demo\docs.min.css" />
-    <Content Include="Content\Assets\demo\docs.min.js" />
-    <Content Include="Content\Assets\demo\jquery.sharrre.js" />
-    <Content Include="Content\Assets\demo\src\application.js" />
-    <Content Include="Content\Assets\demo\vendor\anchor.min.js" />
-    <Content Include="Content\Assets\demo\vendor\clipboard.min.js" />
-    <Content Include="Content\Assets\demo\vendor\holder.min.js" />
-    <Content Include="Content\Assets\demo\vendor\split.min.js" />
-    <Content Include="Content\Assets\js\black-dashboard.js" />
-    <Content Include="Content\Assets\js\black-dashboard.min.js" />
-    <Content Include="Content\Assets\js\bootstrap-notify.js" />
-    <Content Include="Content\Assets\js\chartjs.min.js" />
-    <Content Include="Content\Assets\js\core\bootstrap.min.js" />
-    <Content Include="Content\Assets\js\core\jquery.min.js" />
-    <Content Include="Content\Assets\js\core\popper.min.js" />
-    <Content Include="Content\Assets\js\demo.js" />
-    <Content Include="Content\Assets\js\perfect-scrollbar.jquery.min.js" />
-    <Content Include="Content\Assets\js\plugins\bootstrap-datetimepicker.js" />
-    <Content Include="Content\Assets\js\plugins\bootstrap-notify.js" />
-    <Content Include="Content\Assets\js\plugins\bootstrap-selectpicker.js" />
-    <Content Include="Content\Assets\js\plugins\bootstrap-switch.js" />
-    <Content Include="Content\Assets\js\plugins\bootstrap-tagsinput.js" />
-    <Content Include="Content\Assets\js\plugins\chartjs.min.js" />
-    <Content Include="Content\Assets\js\plugins\fullcalendar\daygrid.min.js" />
-    <Content Include="Content\Assets\js\plugins\fullcalendar\fullcalendar.min.js" />
-    <Content Include="Content\Assets\js\plugins\fullcalendar\interaction.min.js" />
-    <Content Include="Content\Assets\js\plugins\fullcalendar\timegrid.min.js" />
-    <Content Include="Content\Assets\js\plugins\jasny-bootstrap.min.js" />
-    <Content Include="Content\Assets\js\plugins\jquery-jvectormap.js" />
-    <Content Include="Content\Assets\js\plugins\jquery.bootstrap-wizard.js" />
-    <Content Include="Content\Assets\js\plugins\jquery.dataTables.min.js" />
-    <Content Include="Content\Assets\js\plugins\jquery.tablesorter.js" />
-    <Content Include="Content\Assets\js\plugins\jquery.validate.min.js" />
-    <Content Include="Content\Assets\js\plugins\moment.min.js" />
-    <Content Include="Content\Assets\js\plugins\nouislider.min.js" />
-    <Content Include="Content\Assets\js\plugins\perfect-scrollbar.jquery.min.js" />
-    <Content Include="Content\Assets\js\plugins\sweetalert2.min.js" />
     <Content Include="Content\customdts.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-table-fixed-columns.css" />
@@ -618,18 +609,10 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\daterangepicker-bs3.css" />
-    <Content Include="Content\EMCS\app-tailwind.css" />
-    <Content Include="Content\EMCS\src\app-tailwind.css" />
-    <Content Include="Content\EMCS\src\pages\Dashboard.css" />
-    <Content Include="Content\EMCS\src\pages\Mytask.css" />
-    <Content Include="Content\EMCS\src\partials\base.css" />
-    <Content Include="Content\EMCS\src\partials\buttons.css" />
-    <Content Include="Content\EMCS\src\partials\circliful.css" />
-    <Content Include="Content\EMCS\src\partials\components.css" />
-    <Content Include="Content\EMCS\src\partials\header.css" />
-    <Content Include="Content\EMCS\src\partials\layout.css" />
-    <Content Include="Content\EMCS\src\partials\perfect-scrollbar.css" />
-    <Content Include="Content\EMCS\src\partials\table.css" />
+    <Content Include="Content\EMCS\BootstrapTagsInput\bootstrap-tagsinput.css" />
+    <Content Include="Content\EMCS\BootstrapTagsInput\bootstrap-tagsinput.js" />
+    <Content Include="Content\EMCS\BootstrapTagsInput\typeahead.bundle.js" />
+    <Content Include="Content\EMCS\BootstrapTagsInput\typeahead.css" />
     <Content Include="Content\POST\bootstrap-table.min.css" />
     <Content Include="Content\POST\Dropzone\css\dropzone.css" />
     <Content Include="Content\POST\Dropzone\js\dropzone.js" />
@@ -4955,7 +4938,6 @@
     <Content Include="Images\origin.png" />
     <Content Include="Images\Password.png" />
     <Content Include="Images\Pickup.png" />
-    <Content Include="Images\pin.png" />
     <Content Include="Images\po1.png" />
     <Content Include="Images\POD.png" />
     <Content Include="Images\preparation.png" />
@@ -5085,8 +5067,6 @@
     <Content Include="Scripts.app\EMCS\bars\bars.js" />
     <Content Include="Scripts.app\EMCS\bootstrap-table\bootstrap-table-cell-input.js" />
     <Content Include="Scripts.app\EMCS\breaking-news\breaking-news-ticker.min.js" />
-    <Content Include="Scripts.app\EMCS\breaking-news\eocjs-newsticker.js" />
-    <Content Include="Scripts.app\EMCS\breaking-news\jquery.jConveyorTicker.min.js" />
     <Content Include="Scripts.app\EMCS\circliful\jquery.circliful.js" />
     <Content Include="Scripts.app\EMCS\CountryList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Custom.js" />
@@ -5094,7 +5074,6 @@
     <Content Include="Scripts.app\EMCS\Dashboard.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Department.cshtml.js" />
     <Content Include="Scripts.app\EMCS\dropzone.js" />
-    <Content Include="Scripts.app\EMCS\EMCS.js" />
     <Content Include="Scripts.app\EMCS\Flow.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowGeneral.cshtml.js" />
     <Content Include="Scripts.app\EMCS\FlowNextStep.cshtml.js" />
@@ -5132,6 +5111,7 @@
     <Content Include="Scripts.app\EMCS\mytask\TaskGr.cshtml.js" />
     <Content Include="Scripts.app\EMCS\mytask\TaskNpePeb.cshtml.js" />
     <Content Include="Scripts.app\EMCS\mytask\TaskSi.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\NewPopup.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Notification.js" />
     <Content Include="Scripts.app\EMCS\ProblemCategory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\Regulation.cshtml.js" />
@@ -5143,16 +5123,19 @@
     <Content Include="Scripts.app\EMCS\report\ExportProblemCategory.cshtml.js" />
     <Content Include="Scripts.app\EMCS\report\ExportTransaction.cshtml.js" />
     <Content Include="Scripts.app\EMCS\report\OutstandingCipl.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\report\PebReport.cshtml.js" />
     <Content Include="Scripts.app\EMCS\report\PTTUBranch.cshtml.js" />
+    <Content Include="Scripts.app\EMCS\report\ReportPebNpe.cshtml.js" />
     <Content Include="Scripts.app\EMCS\report\TaxAuditPurpose.cshtml.js" />
     <Content Include="Scripts.app\EMCS\RunningTextList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\SIBList.cshtml.js" />
-    <Content Include="Scripts.app\EMCS\src\EMCS.js" />
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.css" />
     <Content Include="Scripts.app\EMCS\stepprogressbar\jquery.stepProgressBar.js" />
+    <Content Include="Scripts.app\EMCS\Subcon.cshtml.js" />
     <Content Include="Scripts.app\EMCS\SuperiorList.cshtml.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts.app\EMCS\transaction\BlAWBDocument.js" />
     <Content Include="Scripts.app\EMCS\transaction\BLAWBList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\Cargo.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\CargoApproval.cshtml.js" />
@@ -5179,6 +5162,7 @@
     <Content Include="Scripts.app\EMCS\transaction\ShippingInstruction.cshtml.js" />
     <Content Include="Scripts.app\EMCS\transaction\ShippingSummary.cshtml.js" />
     <Content Include="Scripts.app\EMCS\typing\jquery.typer.js" />
+    <Content Include="Scripts.app\EMCS\Vendor.cshtml.js" />
     <Content Include="Scripts.app\EMCS\VideoList.cshtml.js" />
     <Content Include="Scripts.app\EMCS\wizard\ProgressWizard.js" />
     <Content Include="Scripts.app\FreightCostCalculator\FreightCost.cshtml.js" />
@@ -5800,197 +5784,6 @@
     </Content>
     <Content Include="Content\E-BUPOT\Manual\UserManual_EBUPOT.pdf" />
     <Content Include="Content\DTS\UserManual.pptx" />
-    <Content Include="Content\Assets\fonts\nucleo.eot" />
-    <Content Include="Content\Assets\fonts\nucleo.ttf" />
-    <Content Include="Content\Assets\fonts\nucleo.woff" />
-    <Content Include="Content\Assets\fonts\nucleo.woff2" />
-    <Content Include="Content\Assets\css\dashboard-free.css.map" />
-    <Content Include="Content\Assets\scss\black-dashboard.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\_buttons.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\_typography.scss" />
-    <Content Include="Content\Assets\js\black-dashboard.js.map" />
-    <Content Include="Content\Assets\scss\custom\_alerts.scss" />
-    <Content Include="Content\Assets\scss\custom\_avatars.scss" />
-    <Content Include="Content\Assets\scss\custom\_badge.scss" />
-    <Content Include="Content\Assets\scss\custom\_buttons.scss" />
-    <Content Include="Content\Assets\scss\custom\_card.scss" />
-    <Content Include="Content\Assets\scss\custom\_checkboxes-radio.scss" />
-    <Content Include="Content\Assets\scss\custom\_close.scss" />
-    <Content Include="Content\Assets\scss\custom\_custom-forms.scss" />
-    <Content Include="Content\Assets\scss\custom\_dropdown.scss" />
-    <Content Include="Content\Assets\scss\custom\_example-pages.scss" />
-    <Content Include="Content\Assets\scss\custom\_fixed-plugin.scss" />
-    <Content Include="Content\Assets\scss\custom\_footer.scss" />
-    <Content Include="Content\Assets\scss\custom\_forms.scss" />
-    <Content Include="Content\Assets\scss\custom\_functions.scss" />
-    <Content Include="Content\Assets\scss\custom\_global.scss" />
-    <Content Include="Content\Assets\scss\custom\_grid.scss" />
-    <Content Include="Content\Assets\scss\custom\_icons.scss" />
-    <Content Include="Content\Assets\scss\custom\_images.scss" />
-    <Content Include="Content\Assets\scss\custom\_info-areas.scss" />
-    <Content Include="Content\Assets\scss\custom\_input-group.scss" />
-    <Content Include="Content\Assets\scss\custom\_misc.scss" />
-    <Content Include="Content\Assets\scss\custom\_mixins.scss" />
-    <Content Include="Content\Assets\scss\custom\_modal.scss" />
-    <Content Include="Content\Assets\scss\custom\_nav.scss" />
-    <Content Include="Content\Assets\scss\custom\_navbar.scss" />
-    <Content Include="Content\Assets\scss\custom\_pagination.scss" />
-    <Content Include="Content\Assets\scss\custom\_pills.scss" />
-    <Content Include="Content\Assets\scss\custom\_popover.scss" />
-    <Content Include="Content\Assets\scss\custom\_progress.scss" />
-    <Content Include="Content\Assets\scss\custom\_reboot.scss" />
-    <Content Include="Content\Assets\scss\custom\_rtl.scss" />
-    <Content Include="Content\Assets\scss\custom\_sidebar-and-main-panel.scss" />
-    <Content Include="Content\Assets\scss\custom\_tables.scss" />
-    <Content Include="Content\Assets\scss\custom\_tabs.scss" />
-    <Content Include="Content\Assets\scss\custom\_timeline.scss" />
-    <Content Include="Content\Assets\scss\custom\_type.scss" />
-    <Content Include="Content\Assets\scss\custom\_utilities.scss" />
-    <Content Include="Content\Assets\scss\custom\_variables.scss" />
-    <Content Include="Content\Assets\scss\custom\_white-content.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-animation-on-hover.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-chart.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-collapse.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-contributions.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-lock.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-map.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-plain.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-pricing.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-profile.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-register.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-stats-mini.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-stats.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-subcategories.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-task.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-testimonials.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-user.scss" />
-    <Content Include="Content\Assets\scss\custom\cards\_card-wizard.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\opacity.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_alert.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_background-variant.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_badges.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_buttons.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_dropdown.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_forms.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_icon.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_inputs.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_modals.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_page-header.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_popovers.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_vendor-prefixes.scss" />
-    <Content Include="Content\Assets\scss\custom\mixins\_wizard.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_backgrounds.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_floating.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_helper.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_position.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_shadows.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_sizing.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_spacing.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_text.scss" />
-    <Content Include="Content\Assets\scss\custom\utilities\_transform.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-animate-bootstrap-notify.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-bootstrap-select.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-bootstrap-switch.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-card-wizard.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-chartjs.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-datatables.net.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-datetimepicker.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-fullcalendar.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-jasny-fileupload.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-jquery.jvectormap.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-nouislider.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-perfect-scrollbar.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-sweetalert2.scss" />
-    <Content Include="Content\Assets\scss\custom\vendor\_plugin-tagsinput.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_alert.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_background-variant.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_badge.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_border-radius.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_box-shadow.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_breakpoints.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_buttons.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_caret.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_clearfix.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_deprecate.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_float.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_forms.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_gradients.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_grid-framework.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_grid.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_hover.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_image.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_list-group.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_lists.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_nav-divider.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_pagination.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_reset-text.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_resize.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_screen-reader.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_size.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_table-row.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_text-emphasis.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_text-hide.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_text-truncate.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_transition.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\mixins\_visibility.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_align.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_background.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_borders.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_clearfix.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_display.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_embed.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_flex.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_float.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_overflow.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_position.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_screenreaders.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_shadows.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_sizing.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_spacing.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_stretched-link.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_text.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\utilities\_visibility.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\vendor\_rfs.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\bootstrap-grid.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\bootstrap-reboot.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\bootstrap.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_alert.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_badge.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_breadcrumb.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_button-group.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_buttons.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_card.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_carousel.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_close.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_code.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_custom-forms.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_dropdown.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_forms.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_functions.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_grid.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_images.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_input-group.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_jumbotron.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_list-group.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_media.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_mixins.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_modal.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_nav.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_navbar.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_pagination.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_popover.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_print.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_progress.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_reboot.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_root.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_spinners.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_tables.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_toasts.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_tooltip.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_transitions.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_type.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_utilities.scss" />
-    <Content Include="Content\Assets\scss\black-dashboard\bootstrap\_variables.scss" />
     <None Include="Content\EMCS\Templates\New_Template_Problem_History.xls" />
     <Content Include="Content\EMCS\Templates\Template_DHE_BI.xls" />
     <Content Include="Content\EMCS\Templates\Template_EstimationTime.xls" />
@@ -6085,6 +5878,12 @@
     </Content>
     <Content Include="Content\EMCS\Templates\TemplateSS.xls" />
     <Content Include="Content\POST\Manual\UserManualPOST_v1.1.pdf" />
+    <Content Include="DownloadUserGuide\BlAwb.pptx" />
+    <Content Include="DownloadUserGuide\Cargo.pptx" />
+    <Content Include="DownloadUserGuide\Cipl.pptx" />
+    <Content Include="DownloadUserGuide\PebNpe.pptx" />
+    <Content Include="DownloadUserGuide\RgBast.pptx" />
+    <Content Include="DownloadUserGuide\Si.pptx" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -6694,10 +6493,61 @@
     <Content Include="Scripts\tinymce\utils\validate.js" />
     <Content Include="Scripts\TreeMenu.js" />
     <Content Include="Scripts\validator.min.js" />
+    <Content Include="SQL Scripts\20220902_1528_alter_SP_RTaxAudit.txt" />
+    <Content Include="SQL Scripts\20221121.txt" />
+    <Content Include="SQL Scripts\24th August 2022.txt" />
+    <Content Include="SQL Scripts\23rd August 2022.txt" />
+    <Content Include="SQL Scripts\PebReportSql_Change.txt" />
+    <Content Include="SQL Scripts\RFC17_August.txt" />
+    <Content Include="SQL Scripts\RFC_ItemList_11_August.txt" />
     <Content Include="SQL Scripts\SQL 25 May 2022.txt" />
+    <Content Include="SQL Scripts\SQL 26 May 2022.txt" />
+    <Content Include="SQL Scripts\SQL 30 May 2022.txt" />
+    <Content Include="SQL Scripts\SQL-2022-08-04-sp_get_all_reference_item.txt" />
     <Content Include="SQL Scripts\SQL.txt" />
+    <Content Include="SQL Scripts\SQLCancelationDbChange.txt" />
+    <Content Include="SQL Scripts\SQL_01_12_2022.txt" />
+    <Content Include="SQL Scripts\SQL_02_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_02_12_2022.txt" />
+    <Content Include="SQL Scripts\SQL_03_11_2022.txt" />
+    <Content Include="SQL Scripts\SQl_05_12_2022.txt" />
+    <Content Include="SQL Scripts\SQL_06_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_06_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_07_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_07_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_07_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_08_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_08_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_09_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_09_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_10_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_11_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_12_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_12_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_14_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_14_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_15_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_16_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_16_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_17_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_18_10_2022.txt" />
     <Content Include="SQL Scripts\SQL_19-05.txt" />
+    <Content Include="SQL Scripts\SQL_19_10_2022.txt" />
     <Content Include="SQL Scripts\SQL_20-05.txt" />
+    <Content Include="SQL Scripts\SQL_20_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_20_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_21_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_21_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_22_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_23_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_24_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_25_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_27_08_2022.txt" />
+    <Content Include="SQL Scripts\SQL_27_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_30_09_2022.txt" />
+    <Content Include="SQL Scripts\SQL_03_10_2022.txt" />
+    <Content Include="SQL Scripts\SQL_30_11_2022.txt" />
+    <Content Include="SQL Scripts\SQL_31_10_2022.txt" />
     <Content Include="Upload\EMCS\Cargo\10262\DocCargo-10262.png" />
     <Content Include="Upload\EMCS\Cargo\10263\DocCargo-10263.png" />
     <Content Include="Upload\EMCS\Dummy\NotFound.txt" />
@@ -7225,8 +7075,6 @@
     <Content Include="Views\Post\NavFinanceSearch.cshtml" />
     <Content Include="Views\Post\ModalHardCopyInvoice.cshtml" />
     <Content Include="Views\EMCS\CiplTabChangeHistory.cshtml" />
-    <Content Include="Views\EMCS\_Layout.cshtml" />
-    <Content Include="Views\EMCS\_Menu.cshtml" />
     <Content Include="Views\EMCS\TaskRequestForChange.cshtml" />
     <Content Include="Temp\ExportPDFCalculator.docx" />
     <Content Include="Views\PrimeProduct\ImportPrimeProduct.cshtml" />
@@ -7256,6 +7104,18 @@
     <Content Include="Views\EMCS\BLAWBList.cshtml" />
     <Content Include="Views\EMCS\NpePebList.cshtml" />
     <Content Include="Views\EMCS\GoodsReceiveTabDocument.cshtml" />
+    <Content Include="Views\EMCS\_FormTemplateBlAwb.cshtml" />
+    <Content Include="Views\EMCS\_FormTemplateBlAwbDocument.cshtml" />
+    <Content Include="Views\EMCS\GRFormNew.cshtml" />
+    <Content Include="Views\EMCS\ShippingFleetForm.cshtml" />
+    <Content Include="Views\EMCS\ShippingFleetView.cshtml" />
+    <Content Include="Views\EMCS\AddArmadaItem.cshtml" />
+    <Content Include="Views\EMCS\ModelFormSubcon.cshtml" />
+    <Content Include="Views\EMCS\ModelFormVendor.cshtml" />
+    <Content Include="Views\EMCS\PebReport.cshtml" />
+    <Content Include="Views\EMCS\Subcon.cshtml" />
+    <Content Include="Views\EMCS\Vendor.cshtml" />
+    <Content Include="Views\EMCS\RFCBlAwb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -7351,9 +7211,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- <Target Name="Tailwind" BeforeTargets="Build">
-    <Exec Command="npm run build"/>
-  </Target> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

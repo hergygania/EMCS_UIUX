@@ -49,7 +49,7 @@
         [DataType(DataType.DateTime)]
         [DisplayName("Estimation Time Departure")]
         public DateTime? Etd { get; set; }
-
+        public string TotalPackageBy { get; set; }
         public string VesselFlight { get; set; }
 
         [DisplayName("Connecting Vessel / Flight")]
@@ -147,5 +147,5 @@
         public long IdKppbc { get; set; }
 
         public ProblemHistory Detail { get; set; }
-    }                                                
+    }
 }

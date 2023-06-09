@@ -18,9 +18,9 @@ namespace App.Web.Controllers.DTS
     public partial class DtsController
     {
 
-        
+
         // GET: DailyReport
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryInstructionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryInstructionList")]
         public ActionResult DeliveryInstructionList()
         {
             ViewBag.IsAdminDTS = AuthorizeAcces.AllowCreated;
@@ -61,7 +61,7 @@ namespace App.Web.Controllers.DTS
             return View("v2/DeliveryInstructionListAcc");
         }
 
-        [HttpPost, ValidateInput(false)]        
+        [HttpPost, ValidateInput(false)]
         //[ValidateAntiForgeryToken]
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryInstructionList")]
         public JsonResult DeliveryInstructionProccessUpload(DeliveryInstructionRef formColl)
@@ -72,7 +72,7 @@ namespace App.Web.Controllers.DTS
             var ResultVendorName = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.VendorName, "`^<>");
             var ResultPicName = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.PicName, "`^<>");
             var ResultPicHP = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.PicHP, "`^<>");
-            var ResultCustAddress = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.CustAddress, "`^<>");            
+            var ResultCustAddress = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.CustAddress, "`^<>");
             var ResultKecamatan = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.Kecamatan, "`^<>");
             var ResultKabupaten = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.Kabupaten, "`^<>");
             var ResultProvince = Service.Master.EmailRecipients.ValidateInputHtmlInjection(formColl.Province, "`^<>");
@@ -147,10 +147,10 @@ namespace App.Web.Controllers.DTS
             var UserName = UserInfo.EmployeeName;
             if (whiteList == url)
             {
-                if (Service.DTS.DeliveryInstructionUnit.GetRoleDRApproval(formColl.ID, userId)) 
+                if (Service.DTS.DeliveryInstructionUnit.GetRoleDRApproval(formColl.ID, userId))
                 {
                     var formType = formColl.formType;
-                   
+
                     //formColl.PickUpPlanDate = (formColl.PickUpPlanDate == null) ? DateTime.Now : formColl.PickUpPlanDate;
                     var header = formColl.CastTo();
                     var ReqNameAccess = Service.Master.UserAcces.GetUserRoles(userId);
@@ -199,20 +199,20 @@ namespace App.Web.Controllers.DTS
                     {
                         return Json(new { result = "failed", ErrorMessage = "Unauthorised" });
                     }
-                   
+
                 }
                 else
-                {                    
+                {
                     return Json(new { result = "failed", ErrorMessage = "Unauthorised" });
                 }
-            
+
             }
             else
             {
                 return Json(new { result = "failed", ErrorMessage = "Unauthorised" });
             }
         }
-     
+
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public JsonResult DeliveryInstructionProccess(string formType, DeliveryInstruction formColl, List<DeliveryInstructionUnit> detailUnits)
@@ -320,7 +320,7 @@ namespace App.Web.Controllers.DTS
                     {
                         SendingEmailDi(item.Status, item.ID);
                     }
-                   
+
 
                     return JsonCRUDMessage(formType);
                 }
@@ -336,7 +336,7 @@ namespace App.Web.Controllers.DTS
             }
         }
 
-        [HttpPost, ValidateInput(false)]       
+        [HttpPost, ValidateInput(false)]
         public JsonResult DeliveryInstructionProccessApproval(string actType, DeliveryInstruction formColl, List<DeliveryInstructionUnit> detailUnits)
         {
             try
@@ -395,25 +395,25 @@ namespace App.Web.Controllers.DTS
 
                         item.KeyCustom = keyCustomNext;
                     }
-                        var detailunititem = Service.DTS.DeliveryInstructionUnit.GetDetailByHeaderId(formColl.ID);
-                        Service.DTS.DeliveryInstructionUnit.DeleteByHeaderId(item.ID);
-                        
-                        //if (detailunititem != null && detailunititem.Count() > 0)
-                        if (detailUnits != null && detailUnits.Count() > 0)                            
+                    var detailunititem = Service.DTS.DeliveryInstructionUnit.GetDetailByHeaderId(formColl.ID);
+                    Service.DTS.DeliveryInstructionUnit.DeleteByHeaderId(item.ID);
+
+                    //if (detailunititem != null && detailunititem.Count() > 0)
+                    if (detailUnits != null && detailUnits.Count() > 0)
+                    {
+                        foreach (DeliveryInstructionUnit unit in detailUnits)
                         {
-                            foreach (DeliveryInstructionUnit unit in detailUnits)
-                            {
-                                unit.HeaderID = item.ID;
-                                Service.DTS.DeliveryInstructionUnit.Crud(unit, "I");
-                            }
+                            unit.HeaderID = item.ID;
+                            Service.DTS.DeliveryInstructionUnit.Crud(unit, "I");
                         }
+                    }
                     var res = Service.DTS.DeliveryInstruction.crud(item, "U");
                     // ReSharper disable once UnusedVariable
                     if (status != "approve")
                     {
-                                          
+
                         SendingEmailDi(item.Status, item.ID);
-                    }                   
+                    }
 
                     return Json(new { Status = 0, Msg = "" }, JsonRequestBehavior.AllowGet);
                 }
@@ -437,15 +437,7 @@ namespace App.Web.Controllers.DTS
 
         public ActionResult DeliveryInstructionPageXt()
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstructionView>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
-=======
-            Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstruction>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
->>>>>>> 639d8d0 (Intial commit)
-=======
-            Func<App.Data.Domain.DTS.DeliveryInstructionFilter, List<DeliveryInstructionView>> func = delegate (App.Data.Domain.DTS.DeliveryInstructionFilter filter)
->>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 var param = Request["params"];
                 if (!string.IsNullOrEmpty(param))
@@ -473,20 +465,20 @@ namespace App.Web.Controllers.DTS
                 if (Service.DTS.DeliveryInstructionUnit.GetRoleDRApproval(ID, userId))
                 {
                     using (var scope = new TransactionScope())
-                    {                 
+                    {
                         var item = Service.DTS.DeliveryInstruction.GetId(ID);
-                   
-                            if (item != null)
-                            {
-                                Service.DTS.DeliveryInstruction.crud(item, "D");
 
-                                Service.DTS.DeliveryInstructionUnit.DeleteByHeaderId(item.ID);
-                            }                  
+                        if (item != null)
+                        {
+                            Service.DTS.DeliveryInstruction.crud(item, "D");
+
+                            Service.DTS.DeliveryInstructionUnit.DeleteByHeaderId(item.ID);
+                        }
 
                         scope.Complete();
 
                         return JsonCRUDMessage("D");
-                       
+
                     }
                 }
                 else
@@ -499,7 +491,7 @@ namespace App.Web.Controllers.DTS
                 return Json(new { result = "failed", message = ex.Message }, JsonRequestBehavior.DenyGet);
             }
         }
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryInstructionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryInstructionList")]
         public JsonResult GetDeliveryInstructionUnitList(long headerId)
         {
             try
@@ -512,7 +504,7 @@ namespace App.Web.Controllers.DTS
                 }
                 else
                 {
-                    data =  null;
+                    data = null;
                 }
 
                 return Json(data, JsonRequestBehavior.AllowGet);
@@ -557,7 +549,7 @@ namespace App.Web.Controllers.DTS
                 throw ex;
             }
         }
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryInstructionListacc")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryInstructionListacc")]
         public ActionResult ExportToPdfDeliveryInstruction(long id)
         {
             try
@@ -569,7 +561,7 @@ namespace App.Web.Controllers.DTS
 
                 var di = Service.DTS.DeliveryInstruction.GetId(id);
                 var diUnits = Service.DTS.DeliveryInstructionUnit.GetDetailByHeaderId(id);
-                resultFilePDF = Service.DTS.ExporttoPdf.ExportPdfdi(fileExcel, filePath, di, diUnits,filelogo);
+                resultFilePDF = Service.DTS.ExporttoPdf.ExportPdfdi(fileExcel, filePath, di, diUnits, filelogo);
                 return Json(new { fileName = resultFilePDF }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

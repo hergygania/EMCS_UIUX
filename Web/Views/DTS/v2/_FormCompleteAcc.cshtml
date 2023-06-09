@@ -1,7 +1,10 @@
 ﻿@using System.Web.Mvc
 
 <style type="text/css">
-    .label-mail{ font-size: 12px; font-weight: bold !important;}
+    .label-mail {
+        font-size: 12px;
+        font-weight: bold !important;
+    }
 </style>
 
 <div class="modal-header bg-orange">
@@ -108,20 +111,20 @@
                             <div class="form-group">
                                 <label for="VeselNoPolice" class="control-label col-md-4 col-xs-12">NO POLISI*</label>
                                 <div class="input-group col-md-8 col-xs-12">
-                                    <input name="VeselNoPolice" class="form-control" placeholder="NO POLISI" />                                
+                                    <input name="VeselNoPolice" class="form-control" placeholder="NO POLISI" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="DriverName" class="control-label col-md-4 col-xs-12">DRIVER Name*</label>
                                 <div class="input-group col-md-8 col-xs-12">
                                     <input type="text" class="form-control" name="DriverName" placeholder="DRIVER Name" />
-                                   
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="DriverHp" class="control-label col-md-4 col-xs-12">DRIVER HP</label>
                                 <div class="input-group col-md-8 col-xs-12">
-                                    <input type="text" class="form-control" name="DriverHp" placeholder="DRIVER HP" />                                   
+                                    <input type="text" class="form-control" name="DriverHp" placeholder="DRIVER HP" />
                                 </div>
                             </div>
                         </div>
@@ -130,21 +133,21 @@
                                 <label for="PickUpPlan" class="control-label col-md-5 col-xs-12">PickUp Plan*</label>
                                 <div class="input-group col-md-7 col-xs-12">
                                     <input class="form-control date" name="PickUpPlan" placeholder="Pick Up Plan" />
-                                   
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="EstTimeDeparture" class="control-label col-md-5 col-xs-12">Estimation Time Departure*</label>
                                 <div class="input-group col-md-7 col-xs-12">
                                     <input class="form-control date" name="EstTimeDeparture" placeholder="Estimation Time Departure" />
-                                   
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="EstTimeArrival" class="control-label col-md-5 col-xs-12">Estimation Time Arrival*</label>
                                 <div class="input-group col-md-7 col-xs-12">
                                     <input class="form-control date" name="EstTimeArrival" placeholder="Estimation Time Arrival" />
-                                   
+
                                 </div>
                             </div>
                             <div class="pull-left ct-apply-to-all">
@@ -298,50 +301,50 @@
         </div>
     </div>
 
-<div class="row">
+    <div class="row">
         @*<div class="col-lg-6">
-            <div class="row">
-                <div class="col-md-5 text-left">
-                    <div class="form-group">                     
-                            <label class="label-mail"> <input name="SendEmailCheckAll" value="true" type="checkbox" /> Check All </label><br />                        
+                <div class="row">
+                    <div class="col-md-5 text-left">
+                        <div class="form-group">
+                                <label class="label-mail"> <input name="SendEmailCheckAll" value="true" type="checkbox" /> Check All </label><br />
+                        </div>
+                        <div class="form-group">
+                            <label for="SendEmailToCkb" class="control-label">MAIL CKB</label><br />
+                            <div class="checkbox sendmail">
+                                <label> <input name="SendEmailToCkbAllArea" value="true" type="checkbox" /> MAIL TO ALL AREA </label><br />
+                                <label> <input name="SendEmailToCkbCakung" value="true" type="checkbox" /> MAIL TO CAKUNG </label><br />
+                                <label> <input name="SendEmailToCkbSurabaya" value="true" type="checkbox" /> MAIL TO SURABAYA </label><br />
+                                <label> <input name="SendEmailToCkbMakassar" value="true" type="checkbox" /> MAIL TO MAKASSAR </label><br />
+                                <label> <input name="SendEmailToCkbCakungStandartKit" value="true" type="checkbox" /> MAIL TO CAKUNG (OPERATION,STANDART KIT & ENGINE) </label><br />
+                                <label> <input name="SendEmailToCkbBalikpapan" value="true" type="checkbox" /> MAIL TO BALIKPAPAN </label><br />
+                                <label> <input name="SendEmailToCkbBanjarmasin" value="true" type="checkbox" /> MAIL TO BANJARMASIN </label><br />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                <div class="checkbox">
+                    <label style="font-size: 12px; font-weight: bold;">
+                        <input name="SendEmailToCakung" value="true" type="checkbox" /> MAIL TO Cakung
+                    </label><br />
+                </div>
+                <div for="SendEmailToCakung" class="error">This field is required</div>
+            </div>
                     </div>
-                    <div class="form-group">
-                        <label for="SendEmailToCkb" class="control-label">MAIL CKB</label><br />
-                        <div class="checkbox sendmail">
-                            <label> <input name="SendEmailToCkbAllArea" value="true" type="checkbox" /> MAIL TO ALL AREA </label><br />
-                            <label> <input name="SendEmailToCkbCakung" value="true" type="checkbox" /> MAIL TO CAKUNG </label><br />
-                            <label> <input name="SendEmailToCkbSurabaya" value="true" type="checkbox" /> MAIL TO SURABAYA </label><br />
-                            <label> <input name="SendEmailToCkbMakassar" value="true" type="checkbox" /> MAIL TO MAKASSAR </label><br />
-                            <label> <input name="SendEmailToCkbCakungStandartKit" value="true" type="checkbox" /> MAIL TO CAKUNG (OPERATION,STANDART KIT & ENGINE) </label><br />
-                            <label> <input name="SendEmailToCkbBalikpapan" value="true" type="checkbox" /> MAIL TO BALIKPAPAN </label><br />
-                            <label> <input name="SendEmailToCkbBanjarmasin" value="true" type="checkbox" /> MAIL TO BANJARMASIN </label><br />
+                    <div class="col-md-7 text-left" style="padding-left: 5px;">
+                        <div class="form-group">
+                            <label for="SendEmailNotes" class="control-label">&nbsp;</label>
+                            <textarea class="form-control" id="SendEmailNotes" name="SendEmailNotes" placeholder="Note For Email" rows="10"></textarea>
+                            <div for="SendEmailNotes" class="error">This field is required</div>
                         </div>
                     </div>
-                    <div class="form-group">
-            <div class="checkbox">
-                <label style="font-size: 12px; font-weight: bold;">
-                    <input name="SendEmailToCakung" value="true" type="checkbox" /> MAIL TO Cakung
-                </label><br />
-            </div>
-            <div for="SendEmailToCakung" class="error">This field is required</div>
-        </div>
+
                 </div>
-                <div class="col-md-7 text-left" style="padding-left: 5px;">
-                    <div class="form-group">
-                        <label for="SendEmailNotes" class="control-label">&nbsp;</label>
-                        <textarea class="form-control" id="SendEmailNotes" name="SendEmailNotes" placeholder="Note For Email" rows="10"></textarea>
-                        <div for="SendEmailNotes" class="error">This field is required</div>
-                    </div>
-                </div>
-              
-            </div>
-        </div>*@
+            </div>*@
         <div class="col-lg-6">
             <div class="row">
                 <div class="col-md-12">
                     @*<div class="form-group">
-                        <label class="label-mail"> <input name="SendEmailCheckAll" value="true" type="checkbox" /> Check All </label><br />
-                    </div>*@
+                            <label class="label-mail"> <input name="SendEmailCheckAll" value="true" type="checkbox" /> Check All </label><br />
+                        </div>*@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="SendEmailToCakung" class="control-label">MAIL WAREHOUSE</label><br />
@@ -352,7 +355,7 @@
                                 <label> <input name="SendEmailToSurabaya" value="true" type="checkbox" /> MAIL TO SURABAYA </label><br />
                                 <label> <input name="SendEmailToBanjarMasin" value="true" type="checkbox" /> MAIL TO BANJARMASIN </label><br />
                                 @*<label> <input name="SendEmailToPalembang" value="true" type="checkbox" /> MAIL TO PALEMBANG </label><br />
-                                <label> <input name="SendEmailToPekanBaru" value="true" type="checkbox" /> MAIL TO PEKANBARU </label><br />*@
+                                    <label> <input name="SendEmailToPekanBaru" value="true" type="checkbox" /> MAIL TO PEKANBARU </label><br />*@
                                 <label> <input name="SendEmailToCileungsi" value="true" type="checkbox" /> MAIL TO CILEUNGSI </label><br />
                             </div>
                         </div>
@@ -372,7 +375,7 @@
                                 <label><input name="SendEmailToServiceTUBandarLampung" value="true" type="checkbox" /> MAIL TO SERVICE TU BANDAR LAMPUNG</label><br />
                                 <label><input name="SendEmailToServiceTUBSD" value="true" type="checkbox" /> MAIL TO SERVICE TU BSD</label><br />
                                 <label><input name="SendEmailToServiceTUSurabaya" value="true" type="checkbox" /> MAIL TO SERVICE TU SURABAYA</label><br />
-                                
+
                             </div>
                         </div>
                     </div>
@@ -392,26 +395,19 @@
                                 <label><input name="SendEmailToServiceTUBatuLicin" value="true" type="checkbox" /> MAIL TO SERVICE TU BATU LICIN</label><br />
                                 <label><input name="SendEmailToServiceTUSangatta" value="true" type="checkbox" /> MAIL TO SERVICE TU SANGATTA</label><br />
                                 <label><input name="SendEmailToServiceTUKendari" value="true" type="checkbox" /> MAIL TO SERVICE TU KENDARI</label><br />
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />                                
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                                <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />                                
->>>>>>> 93c2efe ([U] Update from client's TFS)
+                                <label><input name="SendEmailToServiceTUMeulaboh" value="true" type="checkbox" /> MAIL TO SERVICE TU MEULABOH</label><br />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-<div class="modal-footer">
-    <div class="button-action">
-        <button id="SaveComplete" name="SaveComplete" class="btn-form btn btn-success" type="button"><i class="fa fa-cog"></i> Save</button>
-        <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModal('myModalRequestComplete');">
-            <i class="fa fa-arrow-left"></i> Close
-        </button>
     </div>
-</div>
+    <div class="modal-footer">
+        <div class="button-action">
+            <button id="SaveComplete" name="SaveComplete" class="btn-form btn btn-success" type="button"><i class="fa fa-cog"></i> Save</button>
+            <button name="Cancel" class="btn-form btn btn-warning action-form" onclick="hideModal('myModalRequestComplete');">
+                <i class="fa fa-arrow-left"></i> Close
+            </button>
+        </div>
+    </div>

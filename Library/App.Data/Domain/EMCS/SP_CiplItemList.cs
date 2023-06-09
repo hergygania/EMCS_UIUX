@@ -8,6 +8,7 @@ namespace App.Data.Domain.EMCS
         [Key]
         public long Id { get; set; }
         public long IdCipl { get; set; }
+        //public long IdShippingFleet { get; set; }
         public string ReferenceNo { get; set; }
         public string IdCustomer { get; set; }
         public string Name { get; set; }
@@ -25,6 +26,7 @@ namespace App.Data.Domain.EMCS
         public decimal ExtendedValue { get; set; }
         public decimal? Length { get; set; }
         public decimal? Width { get; set; }
+        public decimal? Volume { get; set; }
         public decimal? Height { get; set; }
         public decimal? GrossWeight { get; set; }
         public decimal? NetWeight { get; set; }
@@ -34,8 +36,9 @@ namespace App.Data.Domain.EMCS
         public string UpdateBy { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool IsDelete { get; set; }
-        public string CustName { get; set; }
-        public string CustNr { get; set; }
+        //public string CustName { get; set; }
+        //public string CustNr { get; set; }
+        public string Status { get; set; }
 
     }
 }

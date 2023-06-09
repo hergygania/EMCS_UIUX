@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using App.Data.Caching;
-using App.Data.Domain; 
+using App.Data.Domain;
 using App.Domain;
 using App.Web.App_Start;
 using System.Globalization;
@@ -21,15 +21,7 @@ namespace App.Web.Controllers.DTS
     {
         private readonly string ServerMapPath = "~/Upload/DTS/deliveryrequisition/";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        
-=======
-        // GET: DailyReport
->>>>>>> 639d8d0 (Intial commit)
-=======
-        
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult DeliveryRequisitionListV1()
         {
@@ -156,18 +148,9 @@ namespace App.Web.Controllers.DTS
                     var formType = formColl.formType;
                     formColl.ExpectedTimeLoading = (formColl.ExpectedTimeLoading == null) ? DateTime.Now : formColl.ExpectedTimeLoading;
                     formColl.ExpectedTimeArrival = (formColl.ExpectedTimeArrival == null) ? DateTime.Now : formColl.ExpectedTimeArrival;
-<<<<<<< HEAD
-<<<<<<< HEAD
                     formColl.Province = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Province, "Provinsi");
-                    formColl.Kabupaten = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kabupaten,"Kabupaten");
+                    formColl.Kabupaten = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kabupaten, "Kabupaten");
                     formColl.Kecamatan = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kecamatan, "Kecamatan");
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    formColl.Province = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Province, "Provinsi");
-                    formColl.Kabupaten = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kabupaten,"Kabupaten");
-                    formColl.Kecamatan = Service.DTS.DeliveryRequisition.GetTerritoryName(formColl.Kecamatan, "Kecamatan");
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     DeliveryRequisition header = new DeliveryRequisition();
                     header = formColl.CastToDR();
                     var ReqNameAccess = Service.Master.UserAcces.GetUserRoles(userId);
@@ -237,13 +220,11 @@ namespace App.Web.Controllers.DTS
         [HttpPost]
         public JsonResult DeliveryRequisitionProccess(string formType, DeliveryRequisition item, List<DeliveryRequisitionUnit> detailUnits)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             Int64 DRID = item.ID;
             item.ReRouted = false;
             item.RefNo = (item.RefNo ?? "").Trim();
             if (formType == "U")
-            {               
+            {
                 var header = Service.DTS.DeliveryRequisition.GetId(DRID);
 
                 DeliveryRequisition_Reroute item_Reroute = new DeliveryRequisition_Reroute();
@@ -253,8 +234,8 @@ namespace App.Web.Controllers.DTS
                     if (item.RefNoType == "STR" || item.RefNoType == "DI")
                     {
                         return JsonMessage("Please Input SO # to Change STR # DR Re-Route", 1, "i");
-                    }                    
-                  
+                    }
+
                     item_Reroute = Service.DTS.DeliveryRequisition_Reroute.RerouteForm(header);
 
                     item_Reroute.NewCustName = item.CustName;
@@ -266,10 +247,10 @@ namespace App.Web.Controllers.DTS
 
                     Service.DTS.DeliveryRequisition_Reroute.crud(item_Reroute);
                 }
-                
+
 
                 ViewBag.crudMode = formType;
-                int res = 0 ;
+                int res = 0;
                 if (header.Status == "request rerouted")
                 {
                     header.CustName = item.CustName;
@@ -283,97 +264,26 @@ namespace App.Web.Controllers.DTS
                     header.Kecamatan = item.Kecamatan;
                     header.RequestNotes = item.RequestNotes;
                     header.Status = "rerouted";
-                    res = Service.DTS.DeliveryRequisition.crudreroute(formType, header, detailUnits, item_Reroute);                    
+                    res = Service.DTS.DeliveryRequisition.crudreroute(formType, header, detailUnits, item_Reroute);
                 }
                 else
                 {
-                    if (header.Status =="draft" || header.Status=="revise")
+                    if (header.Status == "draft" || header.Status == "revise")
                     {
                         header.Status = item.Status;
                     }
                     res = Service.DTS.DeliveryRequisition.crud(formType, header, detailUnits);
                 }
-                 
-=======
-=======
-            Int64 DRID = item.ID;
->>>>>>> 93c2efe ([U] Update from client's TFS)
-            item.ReRouted = false;
-            item.RefNo = (item.RefNo ?? "").Trim();
-            if (formType == "U")
-            {               
-                var header = Service.DTS.DeliveryRequisition.GetId(DRID);
 
-                DeliveryRequisition_Reroute item_Reroute = new DeliveryRequisition_Reroute();
-
-                if (header.Status == "request rerouted")
-                {
-                    if (item.RefNoType == "STR" || item.RefNoType == "DI")
-                    {
-                        return JsonMessage("Please Input SO # to Change STR # DR Re-Route", 1, "i");
-                    }                    
-                  
-                    item_Reroute = Service.DTS.DeliveryRequisition_Reroute.RerouteForm(header);
-
-                    item_Reroute.NewCustName = item.CustName;
-                    item_Reroute.NewPicName = item.PicName;
-                    item_Reroute.NewPicHP = item.PicHP;
-                    item_Reroute.NewCustAddress = item.CustAddress;
-                    item_Reroute.NewRefNo = item.RefNo;
-                    item_Reroute.NewRefNoType = item.RefNoType;
-
-                    Service.DTS.DeliveryRequisition_Reroute.crud(item_Reroute);
-                }
-                
-
-                ViewBag.crudMode = formType;
-<<<<<<< HEAD
-                var res = Service.DTS.DeliveryRequisition.crud(formType, item, detailUnits);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                int res = 0 ;
-                if (header.Status == "request rerouted")
-                {
-                    header.CustName = item.CustName;
-                    header.PicName = item.PicName;
-                    header.PicHP = item.PicHP;
-                    header.CustAddress = item.CustAddress;
-                    header.RefNo = item.RefNo;
-                    header.RefNoType = item.RefNoType;
-                    header.Province = item.Province;
-                    header.Kabupaten = item.Kabupaten;
-                    header.Kecamatan = item.Kecamatan;
-                    header.RequestNotes = item.RequestNotes;
-                    header.Status = "rerouted";
-                    res = Service.DTS.DeliveryRequisition.crudreroute(formType, header, detailUnits, item_Reroute);                    
-                }
-                else
-                {
-                    if (header.Status =="draft" || header.Status=="revise")
-                    {
-                        header.Status = item.Status;
-                    }
-                    res = Service.DTS.DeliveryRequisition.crud(formType, header, detailUnits);
-                }
-                 
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (res > 0)
-                {                
+                {
 
                     if (item.Status != "draft")
                     {
                         sendingEmailDR(item.Status, item.ID);
                     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-              
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-              
 
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     return JsonCRUDMessage(ViewBag.crudMode);
                 }
                 else
@@ -392,7 +302,7 @@ namespace App.Web.Controllers.DTS
                     if (Request.ContentType.Contains("multipart/form-data"))
                     {
                         Tuple<bool, Object> result = DoUpload(Request.Files["SDOC"], null, header.ID.ToString());
-                       
+
                         if (result.Item1 == true)
                         {
                             header.SupportingDocument = result.Item2.ToString();
@@ -402,14 +312,14 @@ namespace App.Web.Controllers.DTS
                         if (result.Item1 == true)
                         {
                             header.SupportingDocument1 = result.Item2.ToString();
-                        }                       
-                        
+                        }
+
                         result = DoUpload(Request.Files["SDOC2"], null, header.ID.ToString());
                         if (result.Item1 == true)
                         {
                             header.SupportingDocument2 = result.Item2.ToString();
                         }
-                        
+
                         Service.DTS.DeliveryRequisition.crud(header, "U");
                     }
                     if (item.Status != "draft")
@@ -449,10 +359,6 @@ namespace App.Web.Controllers.DTS
             var paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
             return Json(paging, JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public ActionResult DeliveryRequisitionIncomingPage()
         {
@@ -478,11 +384,6 @@ namespace App.Web.Controllers.DTS
             var paging = PaginatorBoot.Manage("SessionTRN", func).Pagination.ToJsonResult();
             return Json(paging, JsonRequestBehavior.AllowGet);
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         //public ActionResult DeliveryRequisitionPageAllNotif()
         //{
         //    this.PaginatorBoot.Remove("SessionTRN");
@@ -511,7 +412,7 @@ namespace App.Web.Controllers.DTS
         //    return Json(paging, JsonRequestBehavior.AllowGet);
         //}
         [HttpPost]
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryRequisitionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryRequisitionList")]
         public JsonResult DeliveryRequisitionDelete(DeliveryRequisition formColl)
         {
             try
@@ -553,7 +454,7 @@ namespace App.Web.Controllers.DTS
             var item = Service.DTS.MasterUsers.GetListFilter(key);
             return Json(item, JsonRequestBehavior.AllowGet);
         }
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryRequisitionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryRequisitionList")]
         public JsonResult GetMasterEmployee(string key)
         {
             var item = Service.DTS.MasterUsers.GetEmployeeListFilter(key);
@@ -572,35 +473,15 @@ namespace App.Web.Controllers.DTS
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public JsonResult getMasterDistrict(string key,string provinsiId)
+        public JsonResult getMasterDistrict(string key, string provinsiId)
         {
-            var item = Service.DTS.MasterDistrict.GetListFilter(key,provinsiId);
+            var item = Service.DTS.MasterDistrict.GetListFilter(key, provinsiId);
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getMasterSubDistrict(string key,string districtId)
+        public JsonResult getMasterSubDistrict(string key, string districtId)
         {
             var item = Service.DTS.MasterSubDistrict.GetListFilter(key, districtId);
-=======
-        public JsonResult getMasterDistrict(string key)
-=======
-        public JsonResult getMasterDistrict(string key,string provinsiId)
->>>>>>> 93c2efe ([U] Update from client's TFS)
-        {
-            var item = Service.DTS.MasterDistrict.GetListFilter(key,provinsiId);
-            return Json(item, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getMasterSubDistrict(string key,string districtId)
-        {
-<<<<<<< HEAD
-            var item = Service.DTS.MasterSubDistrict.GetListFilter(key);
->>>>>>> 639d8d0 (Intial commit)
-=======
-            var item = Service.DTS.MasterSubDistrict.GetListFilter(key, districtId);
->>>>>>> 93c2efe ([U] Update from client's TFS)
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
@@ -658,7 +539,7 @@ namespace App.Web.Controllers.DTS
             }
         }
 
-        public void sendingEmail(string type = "new", string customKey = "", string origin = "", string destination = "", string unitType = "", string timeDeparture = "", string requestor = "", string reqID = "",string unit="",string DINo="",string cust_name="")
+        public void sendingEmail(string type = "new", string customKey = "", string origin = "", string destination = "", string unitType = "", string timeDeparture = "", string requestor = "", string reqID = "", string unit = "", string DINo = "", string cust_name = "")
         {
             string emailUrl = ConfigurationManager.AppSettings["EmailUrl"];
             //string emailTos = ConfigurationManager.AppSettings["ErrorEmailTo"];
@@ -760,46 +641,27 @@ namespace App.Web.Controllers.DTS
             try
             {
                 string response = client.UploadString(emailUrl, json);
-<<<<<<< HEAD
-<<<<<<< HEAD
-                
-=======
-                //Log(response);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
             }
             catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public JsonResult GetStatusDR(Int64 Id)
         {
 
             var header = Service.DTS.DeliveryRequisition.GetStatusDR(Id);
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();           
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public JsonResult GetDRExist(string refNo)
         {
-          
+
             var header = Service.DTS.DeliveryRequisition.GetDRExistDetail(refNo);
-<<<<<<< HEAD
-<<<<<<< HEAD
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();     
+            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
         }
@@ -811,62 +673,62 @@ namespace App.Web.Controllers.DTS
             var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
             return result;
         }
-        public JsonResult GetDRReferenceRerouteNo(string number,Int64 ID)
+        public JsonResult GetDRReferenceRerouteNo(string number, Int64 ID)
         {
             var header = new App.Data.Domain.DeliveryRequisitionRef();
             List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
             try
             {
-             
-                    List<Data.Domain.DeliveryRequisitionRef> items = Service.DTS.DeliveryRequisition.GetReferenceReroute(number);
 
-                    var db = new Data.DTSContext();
-                    var refnoSAP = items.First();
-                    var tb = db.DeliveryRequisition;
-                    var HeaderDR = tb.ToList().Where(i => i.ID == ID).FirstOrDefault();
-                
-                    if (HeaderDR !=null)
+                List<Data.Domain.DeliveryRequisitionRef> items = Service.DTS.DeliveryRequisition.GetReferenceReroute(number);
+
+                var db = new Data.DTSContext();
+                var refnoSAP = items.First();
+                var tb = db.DeliveryRequisition;
+                var HeaderDR = tb.ToList().Where(i => i.ID == ID).FirstOrDefault();
+
+                if (HeaderDR != null)
+                {
+                    header.ID = HeaderDR.ID;
+                    header.Sales1ID = HeaderDR.Sales1ID;
+                    header.Sales1Name = HeaderDR.Sales1Name;
+                    header.Sales1Hp = HeaderDR.Sales1Hp;
+                    header.ExpectedTimeArrival = HeaderDR.ExpectedTimeArrival;
+                    header.ExpectedTimeLoading = HeaderDR.ExpectedTimeLoading;
+                    header.Status = HeaderDR.Status;
+                    header.Origin = HeaderDR.Origin;
+                    header.RequestNotes = HeaderDR.RequestNotes;
+                    header.SupportingDocument = HeaderDR.SupportingDocument;
+                    header.SupportingDocument1 = HeaderDR.SupportingDocument1;
+                    header.SupportingDocument2 = HeaderDR.SupportingDocument2;
+                    header.SupportingDocument3 = HeaderDR.SupportingDocument3;
+                }
+
+                header.RefNo = number;
+                header.CustID = refnoSAP.CustID;
+                header.CustName = refnoSAP.CustName;
+                header.CustAddress = refnoSAP.CustAddress;
+                header.PicName = refnoSAP.PicName;
+                header.PicHP = refnoSAP.PicHP;
+
+                var Detail = db.DeliveryRequisitionUnit;
+                var Detailitem = Detail.ToList().Where(i => i.HeaderID == ID).ToList();
+                foreach (var item in Detailitem)
+                {
+                    details.Add(new Data.Domain.DeliveryRequisitionUnitRef
                     {
-                        header.ID = HeaderDR.ID;
-                        header.Sales1ID = HeaderDR.Sales1ID;
-                        header.Sales1Name = HeaderDR.Sales1Name;
-                        header.Sales1Hp = HeaderDR.Sales1Hp;
-                        header.ExpectedTimeArrival = HeaderDR.ExpectedTimeArrival;
-                        header.ExpectedTimeLoading = HeaderDR.ExpectedTimeLoading;
-                        header.Status = HeaderDR.Status;
-                        header.Origin = HeaderDR.Origin;
-                        header.RequestNotes = HeaderDR.RequestNotes;
-                        header.SupportingDocument = HeaderDR.SupportingDocument;
-                        header.SupportingDocument1 = HeaderDR.SupportingDocument1;
-                        header.SupportingDocument2 = HeaderDR.SupportingDocument2;
-                        header.SupportingDocument3 = HeaderDR.SupportingDocument3;
-                    }
 
-                    header.RefNo = number;
-                    header.CustID = refnoSAP.CustID;
-                    header.CustName = refnoSAP.CustName;
-                    header.CustAddress = refnoSAP.CustAddress;
-                    header.PicName = refnoSAP.PicName;
-                    header.PicHP = refnoSAP.PicHP;
-               
-                    var Detail = db.DeliveryRequisitionUnit;
-                    var Detailitem = Detail.ToList().Where(i => i.HeaderID == ID).ToList();
-                    foreach (var item in Detailitem)
-                    {
-                        details.Add(new Data.Domain.DeliveryRequisitionUnitRef
-                        {
-                            
-                            RefNo = item.RefNo.ToString(),
-                            RefItemId = item.RefItemId,
-                            Model = item.Model,
-                            SerialNumber = item.SerialNumber,
-                            Batch = item.Batch,
-                            Checked = 1,
-                            Selectable = 0
+                        RefNo = item.RefNo.ToString(),
+                        RefItemId = item.RefItemId,
+                        Model = item.Model,
+                        SerialNumber = item.SerialNumber,
+                        Batch = item.Batch,
+                        Checked = 1,
+                        Selectable = 0
 
-                        });
-                    }                 
-                
+                    });
+                }
+
                 var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
                 return result;
             }
@@ -879,24 +741,24 @@ namespace App.Web.Controllers.DTS
         public JsonResult GetHistoryReroute(string keyType, string number)
         {
             var header = new App.Data.Domain.DeliveryRequisition_Reroute();
-           
+
             try
             {
-              
-                    List<Data.Domain.DeliveryRequisition_Reroute> items = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(number);
 
-                    var db = new Data.DTSContext();
-                    var tb = db.DeliveryRequisition_Reroute;
-                    var Demobilization = tb.ToList().Where(i => i.RefNo == number).FirstOrDefault();
-                  
-                    if (items != null && items.Count() > 0)
-                    {
-                        header = items.First();
-                       
+                List<Data.Domain.DeliveryRequisition_Reroute> items = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(number);
 
-                     
-                    }
-                
+                var db = new Data.DTSContext();
+                var tb = db.DeliveryRequisition_Reroute;
+                var Demobilization = tb.ToList().Where(i => i.RefNo == number).FirstOrDefault();
+
+                if (items != null && items.Count() > 0)
+                {
+                    header = items.First();
+
+
+
+                }
+
                 var result = Json(new { header }, JsonRequestBehavior.AllowGet);
                 return result;
             }
@@ -907,126 +769,6 @@ namespace App.Web.Controllers.DTS
             }
         }
 
-=======
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
-            //if (items != null && items.Count() > 0)
-            //{
-
-            //}
-            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
-            return result;
-        }
->>>>>>> 639d8d0 (Intial commit)
-=======
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();     
-            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
-            return result;
-        }
-        public JsonResult GetDRRerouteHistory(string KeyCustom)
-        {
-
-            var header = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(KeyCustom);
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
-            var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
-            return result;
-        }
-        public JsonResult GetDRReferenceRerouteNo(string number,Int64 ID)
-        {
-            var header = new App.Data.Domain.DeliveryRequisitionRef();
-            List<Data.Domain.DeliveryRequisitionUnitRef> details = new List<Data.Domain.DeliveryRequisitionUnitRef>();
-            try
-            {
-             
-                    List<Data.Domain.DeliveryRequisitionRef> items = Service.DTS.DeliveryRequisition.GetReferenceReroute(number);
-
-                    var db = new Data.DTSContext();
-                    var refnoSAP = items.First();
-                    var tb = db.DeliveryRequisition;
-                    var HeaderDR = tb.ToList().Where(i => i.ID == ID).FirstOrDefault();
-                
-                    if (HeaderDR !=null)
-                    {
-                        header.ID = HeaderDR.ID;
-                        header.Sales1ID = HeaderDR.Sales1ID;
-                        header.Sales1Name = HeaderDR.Sales1Name;
-                        header.Sales1Hp = HeaderDR.Sales1Hp;
-                        header.ExpectedTimeArrival = HeaderDR.ExpectedTimeArrival;
-                        header.ExpectedTimeLoading = HeaderDR.ExpectedTimeLoading;
-                        header.Status = HeaderDR.Status;
-                        header.Origin = HeaderDR.Origin;
-                        header.RequestNotes = HeaderDR.RequestNotes;
-                        header.SupportingDocument = HeaderDR.SupportingDocument;
-                        header.SupportingDocument1 = HeaderDR.SupportingDocument1;
-                        header.SupportingDocument2 = HeaderDR.SupportingDocument2;
-                        header.SupportingDocument3 = HeaderDR.SupportingDocument3;
-                    }
-
-                    header.RefNo = number;
-                    header.CustID = refnoSAP.CustID;
-                    header.CustName = refnoSAP.CustName;
-                    header.CustAddress = refnoSAP.CustAddress;
-                    header.PicName = refnoSAP.PicName;
-                    header.PicHP = refnoSAP.PicHP;
-               
-                    var Detail = db.DeliveryRequisitionUnit;
-                    var Detailitem = Detail.ToList().Where(i => i.HeaderID == ID).ToList();
-                    foreach (var item in Detailitem)
-                    {
-                        details.Add(new Data.Domain.DeliveryRequisitionUnitRef
-                        {
-                            
-                            RefNo = item.RefNo.ToString(),
-                            RefItemId = item.RefItemId,
-                            Model = item.Model,
-                            SerialNumber = item.SerialNumber,
-                            Batch = item.Batch,
-                            Checked = 1,
-                            Selectable = 0
-
-                        });
-                    }                 
-                
-                var result = Json(new { header, details }, JsonRequestBehavior.AllowGet);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = Json(new { header, details, message = ex.Message }, JsonRequestBehavior.AllowGet);
-                return result;
-            }
-        }
-        public JsonResult GetHistoryReroute(string keyType, string number)
-        {
-            var header = new App.Data.Domain.DeliveryRequisition_Reroute();
-           
-            try
-            {
-              
-                    List<Data.Domain.DeliveryRequisition_Reroute> items = Service.DTS.DeliveryRequisition_Reroute.GetDRRerouteHistory(number);
-
-                    var db = new Data.DTSContext();
-                    var tb = db.DeliveryRequisition_Reroute;
-                    var Demobilization = tb.ToList().Where(i => i.RefNo == number).FirstOrDefault();
-                  
-                    if (items != null && items.Count() > 0)
-                    {
-                        header = items.First();
-                       
-
-                     
-                    }
-                
-                var result = Json(new { header }, JsonRequestBehavior.AllowGet);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                var result = Json(new { header, message = ex.Message }, JsonRequestBehavior.AllowGet);
-                return result;
-            }
-        }
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public JsonResult GetDRReferenceNo(string keyType, string number)
         {
@@ -1057,16 +799,7 @@ namespace App.Web.Controllers.DTS
                         if (header.RefType == "SO")
                         {
                             header.SoNo = header.RefNo;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            header.SoDate = header.RefNoDate;                            
-=======
                             header.SoDate = header.RefNoDate;
-                            // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
->>>>>>> 639d8d0 (Intial commit)
-=======
-                            header.SoDate = header.RefNoDate;                            
->>>>>>> 93c2efe ([U] Update from client's TFS)
                         }
                         else if (header.RefType == "STR")
                         {
@@ -1109,7 +842,7 @@ namespace App.Web.Controllers.DTS
             }
         }
 
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryRequisitionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryRequisitionList")]
 
         public JsonResult GetDRDetails(string number)
         {
@@ -1127,16 +860,7 @@ namespace App.Web.Controllers.DTS
                     if (header.RefType == "SO")
                     {
                         header.SoNo = header.RefNo;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        header.SoDate = header.RefNoDate;                       
-=======
                         header.SoDate = header.RefNoDate;
-                        // header.RefNoStatus = (header.RefNoStatus == "RA01") ? "APPROVED" : "PENDING";
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        header.SoDate = header.RefNoDate;                       
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     }
                     else if (header.RefType == "STR")
                     {
@@ -1167,7 +891,7 @@ namespace App.Web.Controllers.DTS
             }
         }
 
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryRequisitionList")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryRequisitionList")]
 
         public JsonResult GetDRUnits(long number)
         {

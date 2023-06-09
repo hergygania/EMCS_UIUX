@@ -3,8 +3,8 @@ $tableUnitInfo = $('#tableDeliveryInstructionUnitInfo');
 $searchInput = $("#txtSearchData").val();
 
 function statusFormatter(str) {
-    var color ;
-    var text ;
+    var color;
+    var text;
     var icon;
     switch (str) {
         case 'approve':
@@ -53,32 +53,22 @@ function tooltip() {
 // ReSharper disable once UnusedParameter
 function ActionFormatter(value, row, index) {
     var htm = [];
-  
+
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i>&nbsp;</button>');
     if (row.Status === "approve") {
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (row.DRID > 0) {
             htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
         }
-=======
-        htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
->>>>>>> 639d8d0 (Intial commit)
-=======
-        if (row.DRID > 0) {
-            htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
-        }
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     if (row.Status !== "reject" && row.Status !== "revise") {
         htm.push('<button class="approve btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i>&nbsp;</button> ');
     }
-    
+
     return htm.join('');
 }
 
 window.EventsFormatter = {
-// ReSharper disable once UnusedParameter
+    // ReSharper disable once UnusedParameter
     'click .approve': function (e, value, row, index) {
         DIForm.ID = row.ID;
         DIForm.data = row;
@@ -86,7 +76,7 @@ window.EventsFormatter = {
         DIForm.title = "APPROVAL DI";
         DIForm.show();
     },
-// ReSharper disable once UnusedParameter
+    // ReSharper disable once UnusedParameter
     'click .view': function (e, value, row, index) {
         DIForm.ID = row.ID;
         DIForm.data = row;
@@ -94,7 +84,7 @@ window.EventsFormatter = {
         DIForm.title = "VIEW DI";
         DIForm.show();
     },
-// ReSharper disable once UnusedParameter
+    // ReSharper disable once UnusedParameter
     'click .export-pdf': function (e, value, row, index) {
         $.ajax({
             url: "/DTS/ExportToPDFDeliveryInstruction/" + row.ID,
@@ -173,7 +163,7 @@ var columnList = [
                 return htm.join('');
             },
             events: EventsFormatter = {
-// ReSharper disable once UnusedParameter
+                // ReSharper disable once UnusedParameter
                 'click .show-unit': function (e, value, row, index) {
                     $tableUnitInfo.bootstrapTable('refreshOptions', {
                         queryParams: function () {
@@ -240,7 +230,7 @@ var columnList = [
             filterControl: "input",
             sortable: true
         }
-        
+
     ]
 ];
 

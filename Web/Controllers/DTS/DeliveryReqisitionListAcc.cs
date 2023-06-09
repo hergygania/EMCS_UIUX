@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 
 
@@ -32,7 +32,7 @@ namespace App.Web.Controllers.DTS
             return View();
         }
 
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)] 
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead)]
         public ActionResult DeliveryRequisitionListAcc()
         {
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
@@ -52,21 +52,9 @@ namespace App.Web.Controllers.DTS
         public ActionResult DeliveryRequisitionListView()
         {
             ViewBag.AllowRead = AuthorizeAcces.AllowRead;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            ViewBag.AllowCreate = false; 
-            ViewBag.AllowUpdate = false; 
+            ViewBag.AllowCreate = false;
+            ViewBag.AllowUpdate = false;
             ViewBag.AllowDelete = false;
-=======
-            ViewBag.AllowCreate = false; // AuthorizeAcces.AllowCreated;
-            ViewBag.AllowUpdate = false; //AuthorizeAcces.AllowUpdated;
-            ViewBag.AllowDelete = false; //AuthorizeAcces.AllowDeleted;
->>>>>>> 639d8d0 (Intial commit)
-=======
-            ViewBag.AllowCreate = false; 
-            ViewBag.AllowUpdate = false; 
-            ViewBag.AllowDelete = false;
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
             Session["AllowRead_DeliveryRequisitionAcc"] = AuthorizeAcces.AllowRead;
             Session["AllowCreated_DeliveryRequisitionAcc"] = AuthorizeAcces.AllowCreated;
@@ -75,7 +63,7 @@ namespace App.Web.Controllers.DTS
 
             return View("v2/DeliveryRequisitionListAcc");
         }
-        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead,UrlMenu = "DeliveryRequisitionListAcc")]
+        [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "DeliveryRequisitionListAcc")]
         [HttpPost, ValidateInput(false)]
         public JsonResult DeliveryValidateProccess(DeliveryRequisition formColl)
         {
@@ -110,10 +98,6 @@ namespace App.Web.Controllers.DTS
                 {
                     item.IsDemob = true;
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (item.Status == "rerouted")
                 {
                     item.Status = "request rerouted";
@@ -123,39 +107,25 @@ namespace App.Web.Controllers.DTS
                     item.Status = status.ToLower();
                 }
 
-               
-<<<<<<< HEAD
-=======
-                item.Status = status.ToLower();
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
                 item.ExpectedTimeLoading = formColl.ExpectedTimeLoading;
                 item.ExpectedTimeArrival = formColl.ExpectedTimeArrival;
                 if (item.Status.ToLower() == "reject" || item.Status.ToLower() == "revise")
                 {
                     item.RejectNote = rejectNote;
                     item.ActivityTracking = "Rejected";
-                    if (item.Status.ToLower() == "reject") {
+                    if (item.Status.ToLower() == "reject")
+                    {
                         using (var db = new Data.RepositoryFactory(new Data.DTSContext()))
                         {
                             int noOfRowDeleted = db.DbContext.Database
                                            .ExecuteSqlCommand("DELETE from DeliveryRequisitionUnit where HeaderId=" + item.ID);
                         }
                     }
-                    
+
                 }
                 if (item.Status.ToLower() == "approve")
-<<<<<<< HEAD
-<<<<<<< HEAD
-                {                   
-=======
                 {
-                    //item.SendEmailToCkb = formColl.SendEmailToCkb;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                {                   
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     item.SendEmailToCkbBalikpapan = formColl.SendEmailToCkbBalikpapan;
                     item.SendEmailToCkbBanjarmasin = formColl.SendEmailToCkbBanjarmasin;
                     item.SendEmailToCkbCakungStandartKit = formColl.SendEmailToCkbCakungStandartKit;
@@ -165,7 +135,7 @@ namespace App.Web.Controllers.DTS
                     item.ActivityTracking = "Preparation";
                 }
                 item.ModaTransport = formColl.ModaTransport;
-               
+
                 //TU WAREHOUSE
                 item.SendEmailToCakung = formColl.SendEmailToCakung;
                 item.SendEmailToBalikPapan = formColl.SendEmailToBalikPapan;
@@ -173,26 +143,12 @@ namespace App.Web.Controllers.DTS
                 item.SendEmailToSurabaya = formColl.SendEmailToSurabaya;
                 item.SendEmailToBanjarMasin = formColl.SendEmailToBanjarMasin;
                 item.SendEmailToCileungsi = formColl.SendEmailToCileungsi;
-<<<<<<< HEAD
-<<<<<<< HEAD
-              
+
                 //TU CKB
-               
-=======
-                //item.SendEmailToPalembang = formColl.SendEmailToPalembang;
-                //item.SendEmailToPekanBaru = formColl.SendEmailToPekanBaru;
-                //TU CKB
-                //item.SendEmailToCkbAllArea = formColl.SendEmailToCkbAllArea;
-                //item.SendEmailToCKBCakung = formColl.SendEmailToCKBCakung;
->>>>>>> 639d8d0 (Intial commit)
-=======
-              
-                //TU CKB
-               
->>>>>>> 93c2efe ([U] Update from client's TFS)
+
                 item.SendEmailToCkbSurabaya = formColl.SendEmailToCkbSurabaya;
-                item.SendEmailToCkbMakassar = formColl.SendEmailToCkbMakassar;         
-                item.SendEmailToCkbCakungStandartKit = formColl.SendEmailToCkbCakungStandartKit;        
+                item.SendEmailToCkbMakassar = formColl.SendEmailToCkbMakassar;
+                item.SendEmailToCkbCakungStandartKit = formColl.SendEmailToCkbCakungStandartKit;
                 item.SendEmailToCkbBalikpapan = formColl.SendEmailToCkbBalikpapan;
                 item.SendEmailToCkbBanjarmasin = formColl.SendEmailToCkbBanjarmasin;
                 //TU Service
@@ -218,29 +174,14 @@ namespace App.Web.Controllers.DTS
                 item.SendEmailToServiceTUBatuLicin = formColl.SendEmailToServiceTUBatuLicin;
                 item.SendEmailToServiceTUSangatta = formColl.SendEmailToServiceTUSangatta;
                 item.SendEmailToServiceTUKendari = formColl.SendEmailToServiceTUKendari;
-<<<<<<< HEAD
-<<<<<<< HEAD
                 item.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                item.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (ModelState.IsValid)
                 {
                     Service.DTS.DeliveryRequisition.crud(item, "U");
                     ViewBag.crudMode = "U";
                     sendingEmailDR(item.Status, item.ID);
-<<<<<<< HEAD
-<<<<<<< HEAD
-                   
-=======
-                    //if (item.Status.ToLower() == "approve" && item.SendEmailToCkb == true)
->>>>>>> 639d8d0 (Intial commit)
-=======
-                   
->>>>>>> 93c2efe ([U] Update from client's TFS)
-                    if (item.Status.ToLower() == "approve" )
+
+                    if (item.Status.ToLower() == "approve")
                     {
                         sendingEmailDR(item.ID, "APPROVE_CKB_DR");
                     }
@@ -254,10 +195,11 @@ namespace App.Web.Controllers.DTS
             }
             return Json(new { status = 1, Msg = "Save failed2" }, JsonRequestBehavior.DenyGet);
         }
-    
+
         public JsonResult DeliveryCompleteProccess(DeliveryRequisitionRef formColl)
         {
-            try {
+            try
+            {
                 var header = Service.DTS.DeliveryRequisition.GetDataWithReference(formColl.RefNoType, formColl.ID.ToString());
                 if (header.RefNoStatus == "PENDING" && formColl.ForceComplete != true)
                 {
@@ -286,8 +228,6 @@ namespace App.Web.Controllers.DTS
                         header.SupportingDocument3 = Attachment1;
                         header.SupportingDocument4 = Attachment2;
                     }
-<<<<<<< HEAD
-<<<<<<< HEAD
                     if (header.Status == "rerouted")
                     {
 
@@ -310,43 +250,9 @@ namespace App.Web.Controllers.DTS
                         }
                     }
                     header.ModaTransport = formColl.ModaTransport;
-                   
+
                     //CKB
-                  
-=======
-=======
-                    if (header.Status == "rerouted")
-                    {
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
-                        Tuple<bool, Object> result1 = DoUpload(Request.Files["SDOC"], null, header.ID.ToString());
-                        if (result1.Item1 == true)
-                        {
-                            header.SupportingDocument2 = result1.Item2.ToString();
-                        }
-
-                        result1 = DoUpload(Request.Files["SDOC1"], null, header.ID.ToString());
-                        if (result1.Item1 == true)
-                        {
-                            header.SupportingDocument2 = result1.Item2.ToString();
-                        }
-
-                        result1 = DoUpload(Request.Files["SDOC2"], null, header.ID.ToString());
-                        if (result.Item1 == true)
-                        {
-                            header.SupportingDocument2 = result1.Item2.ToString();
-                        }
-                    }
-                    header.ModaTransport = formColl.ModaTransport;
-                   
-                    //CKB
-<<<<<<< HEAD
-                    //header.SendEmailToCkbAllArea = formColl.SendEmailToCkbAllArea;
-                    //header.SendEmailToCKBCakung = formColl.SendEmailToCKBCakung;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                  
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     header.ExpectedTimeArrival = formColl.ExpectedTimeArrival;
                     header.ExpectedTimeLoading = formColl.ExpectedTimeLoading;
                     header.SendEmailToCkbSurabaya = formColl.SendEmailToCkbSurabaya;
@@ -386,15 +292,7 @@ namespace App.Web.Controllers.DTS
                     header.SendEmailToServiceTUBatuLicin = formColl.SendEmailToServiceTUBatuLicin;
                     header.SendEmailToServiceTUSangatta = formColl.SendEmailToServiceTUSangatta;
                     header.SendEmailToServiceTUKendari = formColl.SendEmailToServiceTUKendari;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    header.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;                   
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    header.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;                   
->>>>>>> 93c2efe ([U] Update from client's TFS)
+                    header.SendEmailToServiceTUMeulaboh = formColl.SendEmailToServiceTUMeulaboh;
                     header.SendEmailNotes = formColl.SendEmailNotes;
                     header.ForceComplete = formColl.ForceComplete;
                     header.ActivityTracking = "Pick Up";
@@ -402,28 +300,18 @@ namespace App.Web.Controllers.DTS
                 }
 
                 var id = Convert.ToInt64(formColl.ID);
-               
+
                 ViewBag.crudMode = "U";
                 if (id > 0)
                 {
                     var item = Service.DTS.DeliveryRequisition.GetId(id);
                     var status = "";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     if (item.Status == "approve" || item.Status == "booked")
                     {
                         status = "complete";
                         item.Status = status.ToLower();
                     }
                     else if (item.Status == "rerouted")
-<<<<<<< HEAD
-=======
-                    if (item.Status == "approve" || item.Status == "booked" || item.Status == "rerouted")
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                     {
                         status = "complete";
                         item.Status = status.ToLower();
@@ -433,14 +321,14 @@ namespace App.Web.Controllers.DTS
                         status = "complete_updated";
                         item.Status = "complete";
                     }
-                   
+
                     if (formColl.detailUnits != null && formColl.detailUnits.Count() > 0)
                     {
                         foreach (DeliveryRequisitionUnit unit in formColl.detailUnits)
                         {
                             Service.DTS.DeliveryRequisitionUnit.crud(unit, "U");
                         }
-                    }                    
+                    }
                     Service.DTS.DeliveryRequisition.crud(item, "U");
                     if (status != "complete_updated")
                     {
@@ -451,7 +339,7 @@ namespace App.Web.Controllers.DTS
                     {
                         sendingEmailDR("complete_updated", item.ID);
                     }
-                    
+
                     return JsonCRUDMessage(ViewBag.crudMode);
                 }
                 return Json(new { status = 1, Msg = "Save failed" }, JsonRequestBehavior.DenyGet);
@@ -467,15 +355,7 @@ namespace App.Web.Controllers.DTS
         {
             try
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 var formType = "U";
-=======
-                var formType = "U"; // formColl.formType;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                var formType = "U";
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 formColl.ExpectedTimeLoading = (formColl.ExpectedTimeLoading == null) ? DateTime.Now : formColl.ExpectedTimeLoading;
                 formColl.ExpectedTimeArrival = (formColl.ExpectedTimeArrival == null) ? DateTime.Now : formColl.ExpectedTimeArrival;
 
@@ -484,16 +364,6 @@ namespace App.Web.Controllers.DTS
                 header.RefNo = formColl.RefNo;
                 header.SoNo = formColl.SoNo;
                 header.SoDate = formColl.SoDate;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                //header.STRNo = formColl.STRNo;
-                //header.STRDate = formColl.STRDate;
-                //header.DINo = formColl.DINo;
-                //header.DIDate = formColl.DIDate;
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 header.CustID = formColl.CustID;
                 header.CustName = formColl.CustName;
                 header.CustAddress = formColl.CustAddress;

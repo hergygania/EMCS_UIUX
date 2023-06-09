@@ -28,10 +28,6 @@ namespace App.Data.Domain.POST
 
         public bool isTotal { get; set; }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
     public class SearchHeaderInvoice
     {
@@ -54,9 +50,4 @@ namespace App.Data.Domain.POST
         public string order { get; set; }
        
     }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 }

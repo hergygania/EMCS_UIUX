@@ -11,23 +11,10 @@ using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.Data;
 using App.Domain;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using App.Data.Domain.EMCS;
 using Newtonsoft.Json;
 using App.Web.Helper;
 using App.Web.App_Start;
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-using App.Data.Domain.EMCS;
-using Newtonsoft.Json;
-using App.Web.Helper;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
 namespace App.Web.Controllers.EMCS
 {
@@ -74,21 +61,15 @@ namespace App.Web.Controllers.EMCS
 
             return null;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public CargoModel InitModelCargo(long id)
         {
             var detail = new CargoModel();
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(id);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
+            var TotalPackage = Service.EMCS.SvcCargoItem.GetTotalPackage(id, detail.Data.TotalPackageBy);
+            detail.TemplateHeader.TotalCaseNumber = Convert.ToString(TotalPackage);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
 
             return detail;
@@ -100,157 +81,132 @@ namespace App.Web.Controllers.EMCS
             data.DetailGr = Service.EMCS.DocumentStreamGenerator.GetGrDetailData(id);
             return data;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
-=======
-
-        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
+        public FileResult DownloadUserGuide(string menuname)
         {
-            string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
+            string fullPath = Request.MapPath("~/Upload/EMCS/Dummy/NotFound.txt");
 
-            string headerContent;
-            if (typeDoc == "Invoice")
+            if (menuname != null)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
-                if (qrCodeInvoiceValue == null)
-                {
-                    string strQrCodeUrlInvoice = Common.GenerateQrCode(detail.Data.Id, "downloadInvoice");
-                    qrCodeInvoiceValue = strQrCodeUrlInvoice;
-                }
-                ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
-            }
-            else if (typeDoc == "Pl")
-            {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                var qrCodelPLValue = TempData["QrCodeUrlPL"];
-                if (qrCodelPLValue == null)
-                {
-                    string strQrCodeUrlPL = Common.GenerateQrCode(detail.Data.Id, "DownloadPl");
-                    qrCodelPLValue = strQrCodeUrlPL;
-                }
-                ViewBag.QrCodeUrlPL = qrCodelPLValue;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
-            }
-            else if (typeDoc == "Rg")
-            {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
-                if (qrCodeUrlGRValue == null)
-                {
-                    string strQrCodeUrlGR = Common.GenerateQrCode(detail.Data.Id, "DownloadRg");
-                    qrCodeUrlGRValue = strQrCodeUrlGR;
-                }
-                ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
-            }
-            else if (typeDoc == "Cargo")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
-            }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            else if (typeDoc == "Si")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
-            }
-<<<<<<< HEAD
-            else if (typeDoc == "Ss")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
-            }
-            else
-            {
-                var qrCodeValue = TempData["QrCodeUrlEDI"];
-                if (qrCodeValue == null)
-                {
-                    string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
-                    qrCodeValue = strQrCodeUrlEDI;
-                }
-                ViewBag.QrCodeUrlEDI = qrCodeValue;
-=======
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            else if (typeDoc == "Ss")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
-            }
-            else
-<<<<<<< HEAD
-<<<<<<< HEAD
-            {
->>>>>>> 639d8d0 (Intial commit)
-=======
-            {               
-=======
-            {
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-                var qrCodeValue = TempData["QrCodeUrlEDI"];
-                if (qrCodeValue == null)
-                {
-                    string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
-                    qrCodeValue = strQrCodeUrlEDI;
-                }
-                ViewBag.QrCodeUrlEDI = qrCodeValue;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
+                fullPath = Request.MapPath("~/DownloadUserGuide/" + menuname + ".pptx");
+                var fileBytes = System.IO.File.ReadAllBytes(fullPath);
+                string fileName = menuname + ".pptx";
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
             }
 
-            using (var sw = new StreamWriter(new FileStream(headerBlank, FileMode.Create, FileAccess.Write)))
+            return File(fullPath, "text/plain", "NotFound.txt");
+        }
+        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null, CargoSiModel cargoSiModel = null, CargoSsModel cargoSsModel = null, string menuname = null)
+        {
+            try
             {
-                sw.Write(headerContent);
-                string customSwitches = string.Format("--header-html  \"{0}\" " +
-                                                      "--page-size A4 " +
-                                                      "--dpi 96 " +
-                                                      "--print-media-type " +
-                                                      "--outline " +
-                                                      "--header-spacing \"1\"  " +
-                                                      "--header-font-size \"10\" ", headerBlank);
+                string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
 
-                var dataview = new ViewAsPdf(view, detail)
+                string headerContent = null;
+                if (menuname == null)
                 {
-                    IsJavaScriptDisabled = false,
-                    CustomSwitches = customSwitches,
-                    PageOrientation = Rotativa.Options.Orientation.Portrait,
-                    PageSize = Rotativa.Options.Size.A4,
-                    PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                };
+                    if (typeDoc == "Invoice")
+                    {
+                        var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
+                        if (qrCodeInvoiceValue == null)
+                        {
+                            string strQrCodeUrlInvoice = Common.GenerateQrCode(detail.Data.Id, "downloadInvoice");
+                            qrCodeInvoiceValue = strQrCodeUrlInvoice;
+                        }
+                        ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
+                    }
+                    else if (typeDoc == "Pl")
+                    {
+                        var qrCodelPLValue = TempData["QrCodeUrlPL"];
+                        if (qrCodelPLValue == null)
+                        {
+                            string strQrCodeUrlPL = Common.GenerateQrCode(detail.Data.Id, "DownloadPl");
+                            qrCodelPLValue = strQrCodeUrlPL;
+                        }
+                        ViewBag.QrCodeUrlPL = qrCodelPLValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
+                    }
+                    else if (typeDoc == "Rg")
+                    {
+                        var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
+                        if (qrCodeUrlGRValue == null)
+                        {
+                            string strQrCodeUrlGR = Common.GenerateQrCode(detail.Data.Id, "DownloadRg");
+                            qrCodeUrlGRValue = strQrCodeUrlGR;
+                        }
+                        ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
+                    }
+                    else if (typeDoc == "Cargo")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
+                    }
+                    else if (typeDoc == "Si")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
+                    }
+                    else if (typeDoc == "Ss")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
+                    }
+                    else
+                    {
+                        var qrCodeValue = TempData["QrCodeUrlEDI"];
+                        if (qrCodeValue == null)
+                        {
+                            string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
+                            qrCodeValue = strQrCodeUrlEDI;
+                        }
+                        ViewBag.QrCodeUrlEDI = qrCodeValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
+                    }
+                }
+                else
+                {
+                    if (menuname == "Cipl")
+                    {
+                        view = "Cipl.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Cipl.pptx", view);
+                    }
+                    else if (menuname == "Cargo")
+                    {
+                        view = "Cargo.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Cargo.pptx", view);
+                    }
+                    else if (menuname == "Rg")
+                    {
+                        view = "Rg-Bast.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Rg-Bast.pptx", view);
+                    }
+                    else if (menuname == "PebNpe")
+                    {
+                        view = "PebNpe.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/PebNpe.pptx", view);
+                    }
+                    else if (menuname == "BlAwb")
+                    {
+                        view = "BlAwb.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/BlAwb.pptx", view);
+                    }
+                    else
+                    {
 
-                if (typeDoc == "Rg")
+                    }
+                }
+
+
+                using (var sw = new StreamWriter(new FileStream(headerBlank, FileMode.Create, FileAccess.Write)))
                 {
-                    dataview = new ViewAsPdf(view, gr)
+                    sw.Write(headerContent);
+                    string customSwitches = string.Format("--header-html  \"{0}\" " +
+                                                          "--page-size A4 " +
+                                                          "--dpi 96 " +
+                                                          "--print-media-type " +
+                                                          "--outline " +
+                                                          "--header-spacing \"1\"  " +
+                                                          "--header-font-size \"10\" ", headerBlank);
+
+                    var dataview = new ViewAsPdf(view, detail)
                     {
                         IsJavaScriptDisabled = false,
                         CustomSwitches = customSwitches,
@@ -258,61 +214,67 @@ namespace App.Web.Controllers.EMCS
                         PageSize = Rotativa.Options.Size.A4,
                         PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
                     };
-                }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-                else if (typeDoc == "Si")
-                {
-                    dataview = new ViewAsPdf(view, cargoSiModel)
+
+                    if (typeDoc == "Rg")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
-                }
-                else if (typeDoc == "Ss")
-                {
-                    dataview = new ViewAsPdf(view, cargoSsModel)
+                        dataview = new ViewAsPdf(view, gr)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Si")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
-                }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-                else if (typeDoc == "Cargo")
-                {
-                    dataview = new ViewAsPdf(view, cargo)
+                        dataview = new ViewAsPdf(view, cargoSiModel)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Ss")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
+                        dataview = new ViewAsPdf(view, cargoSsModel)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Cargo")
+                    {
+                        dataview = new ViewAsPdf(view, cargo)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+
+                    sw.Flush();
+                    sw.Close();
+
+                    return dataview;
                 }
 
-                sw.Flush();
-                sw.Close();
-
-                return dataview;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         protected string RenderPartialViewToString(string viewName, object model)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
             try
             {
                 if (string.IsNullOrEmpty(viewName))
@@ -333,41 +295,6 @@ namespace App.Web.Controllers.EMCS
             catch (Exception ex)
             {
                 throw ex;
-=======
-            if (string.IsNullOrEmpty(viewName))
-                viewName = ControllerContext.RouteData.GetRequiredString("action");
-
-            if (model != null)
-                ViewData.Model = model;
-
-            using (StringWriter sw = new StringWriter())
-=======
-            try
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-            {
-                if (string.IsNullOrEmpty(viewName))
-                    viewName = ControllerContext.RouteData.GetRequiredString("action");
-
-<<<<<<< HEAD
-                return sw.GetStringBuilder().ToString();
->>>>>>> 639d8d0 (Intial commit)
-=======
-                if (model != null)
-                    ViewData.Model = model;
-
-                using (StringWriter sw = new StringWriter())
-                {
-                    ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                    ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                    viewResult.View.Render(viewContext, sw);
-
-                    return sw.GetStringBuilder().ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             }
         }
 
@@ -376,6 +303,81 @@ namespace App.Web.Controllers.EMCS
             var detail = InitModelCipl(id);
             ViewBag.typeDocument = "INVOICE";
             string View = "DownloadInvoice";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                if (detail.Data.CategoriItem.ToLower() == "old core" || detail.Data.CategoriItem.ToLower() == "oldcore")
+                {
+                    detail.Data.CategoriItem = "REMAN";
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, View);
         }
 
@@ -384,12 +386,79 @@ namespace App.Web.Controllers.EMCS
             var detail = InitModelCipl(id);
             ViewBag.TypeDocument = "PACKING LIST";
             string View = "DownloadPl";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, View, "Pl");
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         //public ActionResult DownloadSi(long id)
         //{
         //    var detail = InitModelCargo(id);
@@ -397,22 +466,94 @@ namespace App.Web.Controllers.EMCS
         //    string View = "DownloadSi";
         //    return GeneratePdf(detail, View, "Si");
         //}
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public ActionResult DownloadEdi(long id)
         {
             var detail = InitModelCipl(id);
             ViewBag.typeDocument = "Export Delivery Instruction";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, "DownloadEdi", "Edi");
         }
 
         public ActionResult DownloadRg(long id)
         {
             var detail = InitModelRg(id);
+            detail.Armada = Service.EMCS.SvcGoodsReceiveItem.GetListArmada(0, id);
+            var Idcipl = Service.EMCS.SvcGoodsReceive.GetCiplByGr(id);
+            var totalvalue = Service.EMCS.SvcTotalCipl.GetById(Convert.ToInt64(Idcipl[0].Id));
+            detail.Data.TotalGrossWeight = Convert.ToString(totalvalue.TotalGrossWeight);
+            detail.Data.TotalNetWeight = Convert.ToString(totalvalue.TotalNetWeight);
+            detail.Data.TotalPackages = Convert.ToString(totalvalue.TotalPackage);
+            detail.Data.TotalVolume = Convert.ToString(totalvalue.TotalVolume);
             ViewBag.typeDocument = "Export Receipt Goods";
             return GeneratePdf(null, "DownloadRg", "Rg", detail);
         }
@@ -425,10 +566,6 @@ namespace App.Web.Controllers.EMCS
 
         public ActionResult DownloadSs(long id)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadss");
             ViewBag.QrCodeUrlSS = strQrCodeUrlEDI;
             TempData["QrCodeUrlSS"] = strQrCodeUrlEDI;
@@ -448,11 +585,11 @@ namespace App.Web.Controllers.EMCS
                 Header = Service.EMCS.DocumentStreamGenerator.GetCargoSsHeader(id),
                 Detail = Service.EMCS.DocumentStreamGenerator.GetCargoSsDetail(id)
             };
-            return GeneratePdf(null, "DownloadSs", "Ss", null, null,null, data);
+            return GeneratePdf(null, "DownloadSs", "Ss", null, null, null, data);
         }
         public ActionResult DownloadSi(int id)
         {
-           
+
             try
             {
                 string strQrCodeUrlEDI = Common.GenerateQrCode(id, "downloadsl");
@@ -487,20 +624,10 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
 
-           
-<<<<<<< HEAD
+
         }
 
 
-=======
-            var detail = InitModelCargo(id);
-            return View(detail);
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-        }
-
-
->>>>>>> 639d8d0 (Intial commit)
         public ActionResult DownloadStatement(int id)
         {
             string serverPath = HttpContext.Server.MapPath("~/Phantomjs/");
@@ -520,21 +647,9 @@ namespace App.Web.Controllers.EMCS
             return File(bytes, "application/pdf", filename);
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         public FileResult DownloadCIPLItem(long id)
         {
-=======
-        
-        public FileResult DownloadCIPLItem(long id)
-        {           
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-        public FileResult DownloadCIPLItem(long id)
-        {
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             try
             {
                 var data = Service.EMCS.DocumentStreamGenerator.GetStreamCiplItem(id);
@@ -571,15 +686,7 @@ namespace App.Web.Controllers.EMCS
         {
             return View();
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         private void ExecuteCommand(string command)
         {
             try
@@ -632,8 +739,6 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-<<<<<<< HEAD
-<<<<<<< HEAD
         public JsonResult UploadCIPLItem(long idCIPL, string idReference, string refCIPL, string ciplFormModelFormData)
         {
             try
@@ -648,29 +753,6 @@ namespace App.Web.Controllers.EMCS
                 if (UploadFile("CIPLItem", "TemplateCatepillarSparePart"))
                 {
                     return GetFileNameCIPLItem(idCIPL, idReference, refCIPL, objCiplFormModel);
-=======
-        public JsonResult UploadCIPLItem(long idCIPL,string idReference,string refCIPL)
-=======
-        public JsonResult UploadCIPLItem(long idCIPL, string idReference, string refCIPL, string ciplFormModelFormData)
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-        {
-            try
-            {
-                CiplFormModel objCiplFormModel = new CiplFormModel();
-                if (idCIPL == 0)
-                {
-                    objCiplFormModel = JsonConvert.DeserializeObject<CiplFormModel>(ciplFormModelFormData);
-
-                }
-
-                if (UploadFile("CIPLItem", "TemplateCatepillarSparePart"))
-                {
-<<<<<<< HEAD
-                    return GetFileNameCIPLItem(idCIPL, idReference, refCIPL);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    return GetFileNameCIPLItem(idCIPL, idReference, refCIPL, objCiplFormModel);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 }
                 else
                 {
@@ -683,15 +765,7 @@ namespace App.Web.Controllers.EMCS
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference, string refCIPL, CiplFormModel objCiplFormModel)
-=======
-        public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference,string refCIPL)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public JsonResult GetFileNameCIPLItem(long idCIPL, string idReference, string refCIPL, CiplFormModel objCiplFormModel)
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         {
             try
             {
@@ -706,8 +780,6 @@ namespace App.Web.Controllers.EMCS
                     {
                         xssf = new XSSFWorkbook(file);
                         sheet = xssf.GetSheet("CIPLItem");
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                         var tuple = CheckFileData(sheet, refCIPL, idReference);
                         if (tuple.Item2 == "success")
@@ -727,48 +799,12 @@ namespace App.Web.Controllers.EMCS
                                 ViewBag.crudMode = "I";
 
                                 return Json(new { idCIPL = idCIPL, status = true, msg = "Upload file successfully" });
-=======
-                        
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                        var tuple = CheckFileData(sheet, refCIPL, idReference);
-                        if (tuple.Item2 == "success")
-                        {
-                            if (idCIPL == 0)
-                            {
-                                objCiplFormModel.Data.ReferenceNo = idReference;
-                                var data = Service.EMCS.SvcCipl.InsertCipl(objCiplFormModel.Forwader, objCiplFormModel.Data, "I", "Draft");
-                                if (data != null)
-                                {
-                                    idCIPL = data.Select(x => x.Id).First();
-                                }
-
-                            }
-                            if (GetCIPLItemDataTable(sheet, idCIPL, idReference))
-                            {
-                                ViewBag.crudMode = "I";
-<<<<<<< HEAD
-                                return Json(new { status = true, msg = "Upload file successfully" });
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-                                return Json(new { idCIPL = idCIPL, status = true, msg = "Upload file successfully" });
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                             }
                             return Json(new { status = true, msg = "Upload file successfully" });
                         }
                         else
                         {
-<<<<<<< HEAD
-<<<<<<< HEAD
                             return Json(new { status = false, msg = tuple.Item1 });
-=======
-                            return Json(new { status = false, msg = tuple.Item1});
->>>>>>> 639d8d0 (Intial commit)
-=======
-                            return Json(new { status = false, msg = tuple.Item1 });
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         }
                     }
                     else
@@ -802,24 +838,10 @@ namespace App.Web.Controllers.EMCS
                 return false;
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public Tuple<string, string> CheckFileData(ISheet sheet, string refCIPL, string idReference)
         {
 
             var tuple = new Tuple<string, string>("", "");
-=======
-        public Tuple<string, string> CheckFileData(ISheet sheet,string refCIPL, string idReference)
-        {
-
-            var tuple = new Tuple<string, string>("","");
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public Tuple<string, string> CheckFileData(ISheet sheet, string refCIPL, string idReference)
-        {
-
-            var tuple = new Tuple<string, string>("", "");
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             for (var i = 1; i <= sheet.LastRowNum; i++)
             {
                 if (sheet.GetRow(i) != null)
@@ -850,28 +872,12 @@ namespace App.Web.Controllers.EMCS
                             }
                         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-                      
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         if (tuple.Item2 != "success")
                         {
                             break;
                         }
-<<<<<<< HEAD
-<<<<<<< HEAD
                     }
-=======
-                    }                 
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    }
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 }
                 if (tuple.Item2 != "success")
                 {
@@ -882,23 +888,15 @@ namespace App.Web.Controllers.EMCS
 
 
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum, string refCIPL)
-=======
-        public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum,string refCIPL)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public Tuple<string, string> CheckStringVal(ISheet sheet, int numRow, int cellNum, int isNum, string refCIPL)
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         {
             string message = "";
             string value = "";
             string messagedesc = "";
+            int netWeight = 0;
+            int grossWeight = 0;
             try
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
@@ -906,22 +904,6 @@ namespace App.Web.Controllers.EMCS
                     //Note : above condition is not working for string cell value if cell value is null
                     value = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
                     if (cellNum == 0)
-=======
-              
-                if (sheet.GetRow(numRow).GetCell(cellNum)!=null)
-                {
-                    value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
-                    if (cellNum == 0 )
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-                if (sheet.GetRow(numRow).GetCell(cellNum) != null)
-                {
-                    //value = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
-                    //Note : above condition is not working for string cell value if cell value is null
-                    value = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
-                    if (cellNum == 0)
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     {
                         if (!refCIPL.Contains(value))
                         {
@@ -942,18 +924,33 @@ namespace App.Web.Controllers.EMCS
                     else if (cellNum == 7 || cellNum == 8 || cellNum == 10 || cellNum >= 13)
                     {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                         if (isDecimal(value))
-=======
-                        if (isDecimal(value))                        
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        if (isDecimal(value))
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                         {
-                            message = "success";
-                            messagedesc = "";
+                            if (cellNum == 18)
+                            {
+                                netWeight = Int32.Parse(sheet.GetRow(numRow).GetCell(17).StringCellValue.Replace(".", ""));
+                                grossWeight = Int32.Parse(sheet.GetRow(numRow).GetCell(18).StringCellValue.Replace(".", ""));
+                            }
+
+                            if (netWeight > 0 && grossWeight > 0)
+                            {
+                                if (netWeight > grossWeight)
+                                {
+                                    message = "failed";
+                                    messagedesc = "Net Weight Can't Bigger Than Gross Weight";
+                                }
+                                else
+                                {
+                                    message = "success";
+                                    messagedesc = "";
+                                }
+                            }
+                            else
+                            {
+                                message = "success";
+                                messagedesc = "";
+                            }
+
                         }
                         // It's a decimal
                         else
@@ -961,24 +958,10 @@ namespace App.Web.Controllers.EMCS
                             message = "failed";
                             messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " not decimal value";
                         }
-<<<<<<< HEAD
-<<<<<<< HEAD
                     }
                 }
                 else
                 {
-=======
-                    }                 
-                }
-                else
-                {                   
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    }
-                }
-                else
-                {
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     if (cellNum == 10)
                     {
                         message = "failed";
@@ -988,21 +971,9 @@ namespace App.Web.Controllers.EMCS
                     {
                         message = "success";
                         messagedesc = "";
-<<<<<<< HEAD
-<<<<<<< HEAD
                     }
                 }
 
-=======
-                    }                  
-                }
-             
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    }
-                }
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             }
             catch (Exception e)
             {
@@ -1027,21 +998,9 @@ namespace App.Web.Controllers.EMCS
         }
         public string GetCellName(int cell)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
             string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
 
-=======
-            
-            string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
-            
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-            string coloum = Service.EMCS.SvcCipl.GetCellDataName(cell);
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             return coloum;
         }
 
@@ -1052,15 +1011,7 @@ namespace App.Web.Controllers.EMCS
             string messagedesc = "";
             string value = "";
             try
-<<<<<<< HEAD
-<<<<<<< HEAD
             {
-=======
-            {              
->>>>>>> 639d8d0 (Intial commit)
-=======
-            {
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
                     value = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue.ToString();
@@ -1068,15 +1019,7 @@ namespace App.Web.Controllers.EMCS
                     messagedesc = "";
                 }
                 else
-<<<<<<< HEAD
-<<<<<<< HEAD
                 {
-=======
-                {                 
->>>>>>> 639d8d0 (Intial commit)
-=======
-                {
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     message = "failed";
                     messagedesc = "Data Column " + GetCellName(cellNum) + " Row " + numRow + " Empty";
                 }
@@ -1161,15 +1104,7 @@ namespace App.Web.Controllers.EMCS
                 dt.Columns.Add("CoO");
                 dt.Columns.Add("IdParent");
                 dt.Columns.Add("SIBNumber");
-<<<<<<< HEAD
-<<<<<<< HEAD
                 dt.Columns.Add("WONumber");
-=======
-                dt.Columns.Add("WONumber"); 
->>>>>>> 639d8d0 (Intial commit)
-=======
-                dt.Columns.Add("WONumber");
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 dt.Columns.Add("Claim");
                 dt.Columns.Add("ASNNumber");
 
@@ -1178,15 +1113,7 @@ namespace App.Web.Controllers.EMCS
                 {
                     if (sheet.GetRow(i) != null)
                     {
-<<<<<<< HEAD
-<<<<<<< HEAD
                         dr = AddDataRow(dt, sheet, i, idCIPL, idReference);
-=======
-                        dr = AddDataRow(dt, sheet, i, idCIPL,idReference);
->>>>>>> 639d8d0 (Intial commit)
-=======
-                        dr = AddDataRow(dt, sheet, i, idCIPL, idReference);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                     }
                 }
 
@@ -1203,15 +1130,7 @@ namespace App.Web.Controllers.EMCS
             }
             catch (Exception ex)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return false;
             }
         }
@@ -1261,18 +1180,8 @@ namespace App.Web.Controllers.EMCS
         public DataRow AddDataRow(DataTable dt, ISheet sheet, int i, long idCIPL, string idReference)
         {
             DataRow dataRow = dt.NewRow();
-<<<<<<< HEAD
-<<<<<<< HEAD
             var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference);
             var Refno = GetStringVal(sheet, i, 0, 0);
-=======
-            var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference); 
-            var Refno = GetStringVal(sheet, i, 0, 0);  
->>>>>>> 639d8d0 (Intial commit)
-=======
-            var idReferenceCIPL = Service.EMCS.SvcCipl.GetIdReference(idReference);
-            var Refno = GetStringVal(sheet, i, 0, 0);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             dataRow["Id"] = i;
             dataRow["IdCipl"] = idCIPL;
             dataRow["IdReference"] = idReferenceCIPL;
@@ -1290,15 +1199,7 @@ namespace App.Web.Controllers.EMCS
             dataRow["YearMade"] = "";
             dataRow["Quantity"] = GetDecVal(sheet, i, 2, 0);
             dataRow["UnitPrice"] = GetStringVal(sheet, i, 7, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
             dataRow["ExtendedValue"] = GetStringVal(sheet, i, 8, 0);
-=======
-            dataRow["ExtendedValue"] = GetStringVal(sheet, i,8, 0);          
->>>>>>> 639d8d0 (Intial commit)
-=======
-            dataRow["ExtendedValue"] = GetStringVal(sheet, i, 8, 0);
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             dataRow["Length"] = GetStringVal(sheet, i, 13, 0);
             dataRow["Width"] = GetStringVal(sheet, i, 14, 0);
             dataRow["Height"] = GetStringVal(sheet, i, 15, 0);
@@ -1342,15 +1243,7 @@ namespace App.Web.Controllers.EMCS
             {
 
                 string val;
-<<<<<<< HEAD
-<<<<<<< HEAD
                 val = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
-=======
-                val = sheet.GetRow(numRow).GetCell(cellNum).StringCellValue;
->>>>>>> 639d8d0 (Intial commit)
-=======
-                val = Convert.ToString(sheet.GetRow(numRow).GetCell(cellNum));
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 return val;
             }
             catch (Exception ex)
@@ -1362,48 +1255,21 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 double val = 0;
                 //val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
                 if (sheet.GetRow(numRow).GetCell(cellNum) != null)
                 {
                     val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
                 }
-<<<<<<< HEAD
 
                 return val;
             }
             catch (Exception)
-=======
-                double val;
-                val = sheet.GetRow(numRow).GetCell(cellNum).NumericCellValue;
-
-                return val;
-            }
-            catch (Exception )
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-                return val;
-            }
-            catch (Exception)
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             {
                 return 0;
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-     
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

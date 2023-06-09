@@ -16,7 +16,7 @@ namespace App.Service.EMCS
     public class DocumentStreamGenerator
     {
         private static ISheet sheet1;
-        private static XSSFWorkbook workbook1 = new XSSFWorkbook();      
+        private static XSSFWorkbook workbook1 = new XSSFWorkbook();
 
         public static MemoryStream GetStream(long docId, string fileExcel, string filePath, string reportType, string category = "", string categoryItem = "")
         {
@@ -701,7 +701,7 @@ namespace App.Service.EMCS
         }
         public static ISheet CreateSheetCIPLItem()
         {
-            
+
             var sheet = workbook1.CreateSheet();
 
             //(Optional) set the width of the columns
@@ -751,11 +751,11 @@ namespace App.Service.EMCS
         }
         public static void CreateSheetDataCIPLItem(List<CIPLItemExcel> tbl)
         {
-            
+
             int rowNumber = 1;
             foreach (var data in tbl)
             {
-               
+
                 //Create a new Row
                 var row = sheet1.CreateRow(rowNumber++);
 
@@ -801,15 +801,7 @@ namespace App.Service.EMCS
         }
 
         public static List<ExcelCargoDetailData> GetCargoDetailData(long cargoId)
-<<<<<<< HEAD
-<<<<<<< HEAD
-            {
-=======
         {
->>>>>>> 639d8d0 (Intial commit)
-=======
-            {
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             using (var db = new Data.EmcsContext())
             {
                 db.Database.CommandTimeout = 600;
@@ -1153,18 +1145,9 @@ namespace App.Service.EMCS
             worksheet.Replace(range.Container.Value, item.Container);
             worksheet.Replace(range.Liner.Value, item.Liner);
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
-<<<<<<< HEAD
-<<<<<<< HEAD
             worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
             //worksheet.Replace(range.Qr)
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-            worksheet.Replace(range.SiSubmitter.Value, item.SiSubmitter);
-            //worksheet.Replace(range.Qr)
-
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
             return msg;
         }
@@ -1344,7 +1327,7 @@ namespace App.Service.EMCS
             }
         }
         #endregion
-    
+
         public class CIPLItemExcel
         {
             public string ReferenceNo { get; set; }
@@ -1508,7 +1491,7 @@ namespace App.Service.EMCS
             public CellRange GrossWeight { get; set; }
             public CellRange UnitPrice { get; set; }
             public CellRange ExtendedValue { get; set; }
-        }      
+        }
 
         public class CargoHeaderCellRange
         {

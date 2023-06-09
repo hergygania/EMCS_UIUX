@@ -1,4 +1,4 @@
-﻿$table = $('#tableDeliveryRequisition'); 
+﻿$table = $('#tableDeliveryRequisition');
 $searchInput = $("#txtSearchData").val();
 function statusFormatter(str, index, row) {
     color = '';
@@ -40,20 +40,11 @@ function statusFormatter(str, index, row) {
             text = 'BOOKED';
             icon = 'fa fa-hourglass-start';
             break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         case 'request rerouted':
             color = 'warning';
             text = 'REQUEST REROUTED';
             icon = 'fa fa-hourglass-start';
             break;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         case 'rerouted':
             color = 'warning';
             text = 'REROUTED';
@@ -75,30 +66,14 @@ function tooltip() {
 function ActionFormatter(value, row, index) {
     var htm = [];
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></button> ');
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'request rerouted') {
-=======
-    if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'rerouted') {
->>>>>>> 639d8d0 (Intial commit)
-=======
-    if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'request rerouted') {
->>>>>>> 93c2efe ([U] Update from client's TFS)
         if (allowUpdate === "True") htm.push('<button class="edit btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></button> ');
         if (row.Status !== "complete") {
             if (allowDelete === "True") htm.push('<button class="remove btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></button> ');
         }
     }
     if (row.Status === "complete" && row.RefNoType === "STR") {
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Request Reroute"><i class="fa fa-route"></i></button> ');
-=======
-        if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Reroute"><i class="fa fa-route"></i></button> ');
->>>>>>> 639d8d0 (Intial commit)
-=======
-        if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Request Reroute"><i class="fa fa-route"></i></button> ');
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     return htm.join('');
 }
@@ -205,11 +180,11 @@ window.EventsFormatter = {
                     } else if (d.header.RefNoType == 'DI') {
                         $("#refDINo").parent().addClass('active')
                     }
-                    referenceEvent.fillFromSo(d,"U");
+                    referenceEvent.fillFromSo(d, "U");
                     //showFormRequisition();
                 } else {
                     invalidRef();
-                    sAlert('Error',"Data not found!", "error");
+                    sAlert('Error', "Data not found!", "error");
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -244,7 +219,7 @@ window.EventsFormatter = {
                         $("#refSTRNo").parent().addClass('active');
                     } else if (d.header.RefNoType === 'PO') {
                         $("#refPONo").parent().addClass('active');
-                    }else if (d.header.RefNoType === 'DI') {
+                    } else if (d.header.RefNoType === 'DI') {
                         $("#refDINo").parent().addClass('active');
                     }
                     referenceEvent.fillFromSo(d, "V");
@@ -496,7 +471,7 @@ var columnList = [
             rowspan: 2,
             sortable: true,
             filterControl: "datepicker",
-            filterDatepickerOptions: {format: 'yyyy-mm-dd'},
+            filterDatepickerOptions: { format: 'yyyy-mm-dd' },
             formatter: formatDateBT,
         },
     ],
@@ -587,7 +562,7 @@ $(function () {
             $("#refNo").val(b);
             referenceClick();
         }
-        
+
     }
 
     $table.bootstrapTable({
@@ -638,24 +613,24 @@ $(function () {
             });
         },
         columns: columnList
-    });   
-  
-    var homenotif = localStorage.getItem("homenotif")    
-    var status = localStorage.getItem("status") 
+    });
+
+    var homenotif = localStorage.getItem("homenotif")
+    var status = localStorage.getItem("status")
     var today = localStorage.getItem("today")
-    if (homenotif == 'notif') {     
-            window.pis.table({
-                objTable: $table,
-                urlSearch: '/DTS/DeliveryRequisitionPage',
-                urlPaging: '/DTS/DeliveryRequisitionPageXt',
-                searchParams: {
-                    requestor: true,
-                    status: status,
-                    today: today
-                },
-                autoLoad: true
-            });
-    }   
+    if (homenotif == 'notif') {
+        window.pis.table({
+            objTable: $table,
+            urlSearch: '/DTS/DeliveryRequisitionPage',
+            urlPaging: '/DTS/DeliveryRequisitionPageXt',
+            searchParams: {
+                requestor: true,
+                status: status,
+                today: today
+            },
+            autoLoad: true
+        });
+    }
     else {
         window.pis.table({
 
@@ -670,10 +645,10 @@ $(function () {
             autoLoad: true
         });
     }
-       
-    
-        
-    
+
+
+
+
 
     $("#btnAddRequest").click(function (e) {
         resetForm();
@@ -699,7 +674,7 @@ $(function () {
             dataType: "json",
             data: {
                 requestor: true,
-                filterColumns: options.valuesFilterControl                
+                filterColumns: options.valuesFilterControl
             },
             success: function (guid) {
                 //enableLink(true);

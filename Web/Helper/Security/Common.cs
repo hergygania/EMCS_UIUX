@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-﻿using QRCoder;
+using QRCoder;
 using System;
-=======
-﻿using System;
->>>>>>> 639d8d0 (Intial commit)
-=======
-﻿using QRCoder;
-using System;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 using System.Configuration;
 using System.Drawing;
 using System.IO;
@@ -21,10 +12,6 @@ namespace App.Web.Helper
 {
     public class Common
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static string GenerateQrCode(long IdCipl, string doc)
         {
 
@@ -53,60 +40,18 @@ namespace App.Web.Helper
 
                 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-                //switch (doc)
-                //{
-                //    case "downloadedi":
-                //        ViewBag.QrCodeUrlEDI = imgDataURL;
-                //        TempData["QrCodeUrlEDI"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlEDI");
-                //        break;
-                //    case "downloadInvoice":
-                //        ViewBag.QrCodeUrlInvoice = imgDataURL;
-                //        TempData["QrCodeUrlInvoice"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlInvoice");
-                //        break;
-                //    case "DownloadPl":
-                //        ViewBag.QrCodeUrlPL = imgDataURL;
-                //        TempData["QrCodeUrlPL"] = imgDataURL;
-                //        TempData.Peek("QrCodeUrlPL");
-                //        break;
-
-                //    default:
-                //        break;
-                //}
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
                 return imgDataURL;
             }
             catch (Exception ex)
             {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 throw ex;
-=======
-                throw;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-=======
-                throw ex;
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
             }
 
 
 
 
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public static string UploadFile(HttpPostedFileBase file, string appName)
         {
 
@@ -120,9 +65,9 @@ namespace App.Web.Helper
                 {
                     img = ScaleImage(img);
                 }
-               
+
                 var fileName = appName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
-                
+
                 var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Images/" + appName + "/"), fileName);
 
                 img.Save(path);
@@ -131,7 +76,7 @@ namespace App.Web.Helper
             }
             return "";
         }
- 
+
         private static Bitmap ScaleImage(Image oldImage)
         {
             double resizeFactor = 1;
@@ -170,8 +115,8 @@ namespace App.Web.Helper
             if (!string.IsNullOrEmpty(file))
             {
                 var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Images/" + appName + "/"), file);
-        
-        if (File.Exists(path))
+
+                if (File.Exists(path))
                 {
                     Result = "/Images/" + appName + "/" + file;
                 }

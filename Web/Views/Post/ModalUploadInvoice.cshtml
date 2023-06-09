@@ -30,6 +30,7 @@
         letter-spacing: 0em;
         text-align: left;
     }
+
     .addScroll {
         overflow-y: auto;
         height: 400px;
@@ -48,7 +49,7 @@
             <div class="modal-body mx-3">
                 <div class="row fontnormal" style="margin-top:10px;">
                     <table id="tblPopUpInvoice" class="table table-striped">
-                        <thead>                         
+                        <thead>
                             <tr>
                                 <th scope="col" colspan="2" class="text-left">Supplier harus melakukan penagihan dengan dokumen yang benar dan lengkap dan diajukan paling lambat 90 hari kalendar sejak tanggal BAST/Surat Jalan ditandatangani Para Pihak. Jika lewat dari 90 hari kalendar, maka Trakindo hanya wajib membayar nilai Barang dan/atau Jasa yang sudah diterima sesuai ketentuan PO atau SPK tanpa membayar PPN atas tagihan tersebut </th>
                             </tr>
@@ -89,7 +90,7 @@
                             </tr>
                             <tr>
                                 <th scope="col" colspan="2" class="text-left">k. Copy Surat Keterangan UMKM yang berlaku bila supplier/vendor bergerak di Perusahaan UMKM</th>
-                            </tr>                           
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -97,19 +98,19 @@
                     <input type="checkbox" id="chkagree"><label class="control-label col-xs-3" style="padding-left:10px"><strong>Perusahaan kami sudah mengerti dan menyetujui konsekuensi aturan main yang disebutkan di atas.</strong>  </label><br>
                 </div>
             </div>
-            <div class="modal-footer d-flex text-right">               
-                <button class="btn btn-succes" data-dismiss="modal" onclick="SavePopup()"><i class="fa fa-arrow-right"></i> Agree</button> 
+            <div class="modal-footer d-flex text-right">
+                <button class="btn btn-succes" data-dismiss="modal" onclick="SavePopup()"><i class="fa fa-arrow-right"></i> Agree</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalUploadInvoicing"  role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="modalUploadInvoicing" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 1300px !important;">
         <div class="modal-content">
             <div class="modal-header text-left">
                 <h4 class="modal-title w-100 font-weight-bold">Form Upload Invoice</h4>
-              
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -117,13 +118,9 @@
             <div class="modal-body mx-3">
                 <div class="modalUpload divUploadFile dropzone" id="FormUploadInvoice">
                 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 @*<div class="row " style="margin-top:20px;">
-                    <label><b>Sebelum invoice di upload harap perhatikan hal berikut:</b></label>
-                </div>*@
+                        <label><b>Sebelum invoice di upload harap perhatikan hal berikut:</b></label>
+                    </div>*@
                 <div class="row " style="margin-top:20px;font-size:14px">
                     <label>
                         <b>Sebelum invoice di upload harap perhatikan hal berikut:</b>
@@ -132,7 +129,7 @@
                         <br />
                         2. File invoice yang di upload berupa (Form Qpay,Form GR,  Faktur Pajak, Form Kwitansi, Surat jalan/Bast, Copy PO) di compile menjadi 1 lampiran file pdf.
                         <br />
-                        3. File Invoice dan dokumen pedukung lainnya yang di upload maksimal berukuran <b>2 MB (Megabyte).</b> 
+                        3. File Invoice dan dokumen pedukung lainnya yang di upload maksimal berukuran <b>2 MB (Megabyte).</b>
                         <br />
                         <br />
                         Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b>
@@ -143,34 +140,16 @@
                         <br />
                         Apabila pengiriman hardcopy invoice tidak kami terima dalam jangka waktu satu bulan kedepan, maka pembayaran akan ditunda oleh tim finance kami.
                     </label>
-<<<<<<< HEAD
                 </div>
-               
+
                 @*<div class="row " style="margin-top:20px;">
-                    <label>Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b> </label>
-                </div>
-                <div class="row " style="margin-top:20px;">
-                    <label>
-                        Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice dan hardcopy invoice dikirim ke kami paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST. (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25).
-                    </label>
-                </div>*@
-=======
-                <div class="row " style="margin-top:20px;">
-                    <label>Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST.  (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25)</label>
-                </div>
->>>>>>> 639d8d0 (Intial commit)
-=======
-                </div>
-               
-                @*<div class="row " style="margin-top:20px;">
-                    <label>Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b> </label>
-                </div>
-                <div class="row " style="margin-top:20px;">
-                    <label>
-                        Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice dan hardcopy invoice dikirim ke kami paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST. (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25).
-                    </label>
-                </div>*@
->>>>>>> 93c2efe ([U] Update from client's TFS)
+                        <label>Setelah softcopy invoice diupload silakan bapak/ibu Rekanan mengisi data/proses pengiriman hardcopy invoice di menu/features <b>" Submit Hardcopy Invoice "</b> </label>
+                    </div>
+                    <div class="row " style="margin-top:20px;">
+                        <label>
+                            Pembayaran akan dilakukan akhir bulan berikutnya, terhitung dari tanggal upload invoice dan hardcopy invoice dikirim ke kami paling lambat tanggal 25 jam 11.30, (local time) dengan kondisi invoice sudah benar dan lengkap dan approve di POST. (jika tanggal 25 jatuh di hari libur, maka invoice paling lambat diupload dihari kerja sebelum tanggal 25).
+                        </label>
+                    </div>*@
                 <div class="row" style="margin-top:20px;">
                     <div class="addScroll">
                         <table id="table-uploadInvoice" class="table table-bordered table-striped" style="background:white;"></table>
@@ -180,25 +159,15 @@
                     <p>Untuk Jasa, apakah ada surat keterangan tidak potong pajak PPH? </p>
                 </div>
                 <div class="row" style="margin-top:20px;">
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <input type="radio" id="yespajak" name="pajak" value="YES"> Ya, (Silakan di upload dokumen bebas potong Pajak)
 
-=======
-                    <input type="radio" id="yespajak" name="pajak" value="YES"> Ya, (Silakan di upload dokumen bebas potong Pajak)                   
-                    
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    <input type="radio" id="yespajak" name="pajak" value="YES"> Ya, (Silakan di upload dokumen bebas potong Pajak)
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 </div>
                 <div class="row" style="margin-top:20px;">
                     <input type="radio" id="nopajak" name="pajak" value="NO" checked> Tidak
                 </div>
             </div>
             <div class="modal-footer d-flex text-right">
-                <button class="btn btn-succes" id="BtnSaveInvoice"  onclick="SendEmailAttachment('Invoice')"><i class="fa fa-save"></i> Save And Close</button>
+                <button class="btn btn-succes" id="BtnSaveInvoice" onclick="SendEmailAttachment('Invoice')"><i class="fa fa-save"></i> Save And Close</button>
                 @*<button class="btn btn-succes" id="BtnUpdateInvoice" data-dismiss="modal" onclick="UpdateInvoice()"><i class="fa fa-save"></i>Save</button>*@
                 @if (Role.Contains("POSTFINANCE") || Role.Contains("POSTFINANCEBRANCH"))
                 {
