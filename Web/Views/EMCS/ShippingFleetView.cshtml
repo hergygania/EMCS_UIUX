@@ -1,0 +1,160 @@
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+
+@Html.HiddenFor(m => m.ShippingFleet.IdGr, new { @Id = "IdGr" })
+<div class="fancy-collapse-panel" id="Div">
+    @{
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Armada
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+
+                    <div class="panel-body">
+                        <div class="col-md-12 col-sm-12 col-xs-6">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div style="width:70px">
+                                    @Html.HiddenFor(m => m.ShippingFleet.Id, new { @Id = "ShippingFleetId", @class = "form-control required", placeholder = "ShippingFleetId", @readonly = "readonly" })
+                                    @*@Html.TextBoxFor(m => m.ShippingFleet.IdGr, new { @Id = "IdGr", @class = "form-control required", placeholder = "IdGr" })*@
+                                    @Html.HiddenFor(m => m.ShippingFleet.IdCipl, new { @Id = "IdCipl", @class = "form-control required", placeholder = "IdCipl", @readonly = "readonly" })
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-sm-12 col-md-3 col-xs-12">EDI No</label>
+                                    <div class="col-md-9" data-item="x_PERFORMANCE_MEASURE">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.DoNo, new { @class = "EdiNo required form-control DoNox", placeholder = " Select DoNo", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label">PIC Name <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.PicName, new { @Id = "PicName", @class = "form-control required", placeholder = "PIC Name", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 text-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.PhoneNumber, new { @Id = "PhoneNumber", @class = "form-control required", placeholder = "Phone Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card# <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.KtpNumber, new { @Id = "KtpNumber", @class = "form-control required", placeholder = "KTP Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License# <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.SimNumber, new { @Id = "SimNumber", @class = "form-control required", placeholder = "SIM Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date# <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(m => m.ShippingFleet.SimExpiryDate, new { htmlAttributes = new { @Id = "SimExpiryDate", @class = "form-control required ", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "License Expire Date" } })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.StnkNumber, new { @Id = "StnkNumber", @class = "form-control required", placeholder = "STNK Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.KirNumber, new { @Id = "KirNumber", @class = "form-control required", placeholder = "KIR Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(m => m.ShippingFleet.KirExpire, new { htmlAttributes = new { @Id = "KirExpire", @class = "form-control required ", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "KIR Expire Date" } })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.NopolNumber, new { @Id = "NopolNumber", @class = "form-control required", placeholder = "NOPOL Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        @Html.EditorFor(m => m.ShippingFleet.EstimationTimePickup, new { htmlAttributes = new { @Id = "EstimationTimePickup", @class = "form-control required ", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "Estimation Time Pickup Date" } })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.Apar, Model.ShippingFleet.Apar == true ? "Yes" : "No", new { @Id = "Apar", @class = "Apar required form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.Apd, Model.ShippingFleet.Apd == true ? "Yes" : "No", new { @Id = "Apd", @class = "Apd required form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="control-label col-md-3 col-xs-12">DO Reference</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.ShippingFleet.DaNo, new { @class = "form-control", @id = "DaNo", placeholder = "DO Reference/ DA Number", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 285px;"></div>
+                        <div>
+                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaview"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+
+
+
+
+@Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+@Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+@section Scripts{
+    @Scripts.Render("~/Scripts.app/EMCS/ShippingFleet.cshtml.js")
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
+    <script>
+        var $hideAction = $("#HideAction").val();
+        $(document).ready(function () {
+            $("#form-item-gr").removeData("validator");
+            $('#form-item-gr').data('validator', null);
+            $("#form-item-gr").unbind('validate');
+            $("#form-item-gr").removeData("unobtrusiveValidation");
+            $.validator.unobtrusive.parse("#form-item-gr");
+        })
+
+    </script>
+    <script src="~/Scripts.app/EMCS/dropzone.js"></script>
+    @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
+    @*@Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")*@
+
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @*<script src="@Url.Content("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")"></script>*@
+    <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
+}
+
+
+

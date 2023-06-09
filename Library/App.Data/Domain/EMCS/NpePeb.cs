@@ -58,16 +58,10 @@
         public bool IsDelete { get; set; }
 
         public bool DraftPeb { get; set; }
+        public int? IsCancelled { get; set; }
         public string RegistrationNumber { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-       
-         public DateTime? NpeDateSubmitToCustomOffice { get; set; }
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-       
-         public DateTime? NpeDateSubmitToCustomOffice { get; set; }
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+        public string CancelledDocument { get; set; }
+
+        public DateTime? NpeDateSubmitToCustomOffice { get; set; }
     }
 }

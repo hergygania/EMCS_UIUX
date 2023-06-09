@@ -1,9 +1,10 @@
-﻿﻿using App.Data.Caching;
+﻿using App.Data.Caching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using App.Domain;
 using System.Data.SqlClient;
+using App.Data.Domain.EMCS;
 
 namespace App.Service.EMCS
 {
@@ -55,6 +56,25 @@ namespace App.Service.EMCS
                 throw ex;
             }
 
+        }
+
+        public static int UpdateRFCChange(ShippingInstructions item)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    db.DbContext.Database.ExecuteSqlCommand("exec [sp_update_RFCSI] @IdCl='" + item.IdCl + "', @SpecialInstruction='" + item.SpecialInstruction + "', @DocumentRequired='" + item.DocumentRequired + "'");
+
+                    return 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
         public static string GetExportShipmentType(long id)

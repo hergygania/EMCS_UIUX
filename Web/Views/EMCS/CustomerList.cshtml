@@ -1,10 +1,8 @@
-﻿﻿@{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
+﻿@{
     ViewBag.Title = "Master Customer";
 }
 
 @using System.Web.Mvc
-@Styles.Render("~/Content/EMCS/Custom.css")
 <script type="text/javascript">
     var allowCreate = "@(ViewBag.allowCreate)";
     var allowUpdate = "@(ViewBag.allowUpdate)";
@@ -41,3 +39,4 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/CustomerList.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
+

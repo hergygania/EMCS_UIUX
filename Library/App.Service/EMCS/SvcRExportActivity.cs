@@ -19,14 +19,14 @@ namespace App.Service.EMCS
 
         public readonly static ICacheManager CacheManager = new MemoryCacheManager();
 
-        public static List<SpRTrendExport> TrendExportList(int startYear, int endYear)
+        public static List<SpRTrendExport> TrendExportList(int startYear, int endYear, string filter)
         {
             try
             {
                 using (var db = new Data.EmcsContext())
                 {
                     db.Database.CommandTimeout = 600;
-                    var sql = "EXEC SP_ActivityReport_TrendExport @startYear = " + startYear + ", @endYear = " + endYear;
+                    var sql = "EXEC SP_ActivityReport_TrendExport @startYear = " + startYear + ", @endYear = " + endYear + ", @filter = '" + filter + "'";
                     List<SpRTrendExport> data = db.Database.SqlQuery<SpRTrendExport>(sql).ToList();
                     return data;
                 }
@@ -101,10 +101,10 @@ namespace App.Service.EMCS
                     int year = DateTime.Now.Year;
                     var searchId = crit.searchId ?? year;
                     var searchName = crit.searchName ?? "";
-                    if (searchName != null)
-                    {
-                        searchName = Regex.Replace(searchName, @"[^0-9a-zA-Z]+", "");
-                    }
+                    //if (searchName != null)
+                    //{
+                    //    searchName = Regex.Replace(searchName, @"[^0-9a-zA-Z]+", "");
+                    //}
                     
 
                     var sql = "EXEC SP_RBigestCommodities @date1 = '" + searchId + "', @ExportType = '" + searchName + "'";

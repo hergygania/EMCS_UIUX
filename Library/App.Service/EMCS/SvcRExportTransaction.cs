@@ -21,6 +21,7 @@ namespace App.Service.EMCS
         {
             var thisYear = DateTime.Now.Year.ToString();
             string yearNow = crit.searchCode ?? thisYear;
+            string filter = crit.searchName ?? "";
 
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
@@ -28,10 +29,11 @@ namespace App.Service.EMCS
 
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@year", yearNow));
+                parameterList.Add(new SqlParameter("@filter", filter));
                 SqlParameter[] parameters = parameterList.ToArray();
 
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.SpRTotalExportMonthly>(@"exec [dbo].[Sp_Report_Total_Export_Monthly]@year", parameters).FirstOrDefault();
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.SpRTotalExportMonthly>(@"exec [dbo].[Sp_Report_Total_Export_Monthly] @year, @filter", parameters).FirstOrDefault();
                 return data;
             }
         }
@@ -40,6 +42,7 @@ namespace App.Service.EMCS
         {
             var thisYear = DateTime.Now.Year.ToString();
             string yearNow = crit.searchCode ?? thisYear;
+            string filter = crit.searchName ?? "";
 
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
@@ -47,10 +50,11 @@ namespace App.Service.EMCS
 
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@year", yearNow));
+                parameterList.Add(new SqlParameter("@filter", filter));
                 SqlParameter[] parameters = parameterList.ToArray();
 
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.SpRTotalExportPort>(@"exec [dbo].[Sp_Report_Total_Export_Port]@year", parameters).ToList();
+                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.SpRTotalExportPort>(@"exec [dbo].[Sp_Report_Total_Export_Port] @year, @filter", parameters).ToList();
                 return data;
             }
         }

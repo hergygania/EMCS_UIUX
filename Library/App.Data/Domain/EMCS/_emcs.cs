@@ -7,6 +7,7 @@ namespace App.Data
     public partial class EmcsContext
     {
         //DTS
+        public virtual DbSet<SpCiplItemList> CiplItem_Change { get; set; }
         public virtual DbSet<DashboardNetWeight> DashboardNetWeight { get; set; }
         public virtual DbSet<DashboardExportToday> DashboardExportToday { get; set; }
         public virtual DbSet<DashboardExportToday2> DashboardExportToday2 { get; set; }
@@ -66,6 +67,7 @@ namespace App.Data
         public virtual DbSet<Cargo> CargoData { get; set; }
         public virtual DbSet<CargoItem> CargoItemData { get; set; }
         public virtual DbSet<CargoAddCipl> CargoAddCipl { get; set; }
+        public virtual DbSet<CargoItem_Change> CargoItem_Change { get; set; }
         public virtual DbSet<SpCargoProblemHistory> SpCargoProblemHistory { get; set; }
         public virtual DbSet<SpGetCargoHistory> SpGetCargoHistory { get; set; }
         public virtual DbSet<SpGetReference> GetReference { get; set; }
@@ -85,7 +87,16 @@ namespace App.Data
         public virtual DbSet<TaskNpePeb> TaskNpePeb { get; set; }
         public virtual DbSet<TaskBlAwb> TaskBlAwb { get; set; }
         public virtual DbSet<BlAwb> BlAwb { get; set; }
+        public virtual DbSet<BlAwb_Change> BlAwb_Change { get; set; }
+        public virtual DbSet<BlAwb_History> BlAwb_History { get; set; }
         public virtual DbSet<SpGetCiplAvailable> CiplAvailables { get; set; }
+        public virtual DbSet<ShippingFleet> ShippingFleet { get; set; }
+        public virtual DbSet<ShippingFleet_History> ShippingFleet_History { get; set; }
+        public virtual DbSet<ShippingFleetRefrence> ShippingFleetRefrence { get; set; }
+        public virtual DbSet<ShippingFleet_Change> ShippingFleet_Change { get; set; }
+        public virtual DbSet<ShippingFleetDocumentHistory> ShippingFleetDocumentHistory { get; set; }
+        public virtual DbSet<MasterSubConCompany> MasterSubConCompany { get; set; }
+        public virtual DbSet<ShippingFleetItem> ShippingFleetItem { get; set; }
         public virtual DbSet<CargoCipl> CargoCipls { get; set; }
         public virtual DbSet<CargoHistory> CargoHistory { get; set; }
         public virtual DbSet<SpGetProblemList> SpGetProblemLists { get; set; }
@@ -105,15 +116,7 @@ namespace App.Data
         public virtual DbSet<MasterAirSeaPort> MasterAirSeaPorts { get; set; }
         public virtual DbSet<MasterBranchCkb> MasterBranchCkbs { get; set; }
         public virtual DbSet<SpGetCiplTotalData> SpGetCiplTotalDatas { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         public virtual DbSet<Type> Type { get; set; }
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
-        public virtual DbSet<Type> Type { get; set; }
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
     }
 }

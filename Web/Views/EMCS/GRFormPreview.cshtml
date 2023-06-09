@@ -1,559 +1,646 @@
-﻿﻿﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
 @{
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
     ViewBag.Title = "BAST " + title;
     ViewBag.Page = "rg";
     ViewBag.Id = Model.Data.Id.ToString();
-    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 @Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
 
-<style>
-    .hidden {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    .tabs {
-        font-size: 15px;
-        padding: 0px;
-        list-style: none;
-        background: #fff;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
-        display: inline-block;
-        border-radius: 50px;
-        position: relative;
-    }
-
-        .tabs a {
-            text-decoration: none;
-            color: #777;
-            padding: 10px 20px;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition-duration: 0.6s;
-        }
-
-            .tabs a.active {
-                color: #fff;
-            }
-
-            .tabs a i {
-                margin-right: 5px;
-            }
-
-        .tabs .selector {
-            height: 100%;
-            display: inline-block;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 1;
-            border-radius: 50px;
-            transition-duration: 0.6s;
-            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background: #05abe0;
-            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
-            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
-            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
-            box-shadow: 4px -4px #a8a8a8;
-        }
-</style>
-
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormGR" }))
 {
     @Html.AntiForgeryToken()
-    <div class="col-md-12">
-        <div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("~/Views/EMCS/Wizard.cshtml")
+        </div>
+        <div class="col-md-12">
             <div class="col-md-12">
-                @Html.Partial("~/Views/EMCS/Wizard.cshtml")
-            </div>
-            <div class="col-md-12 mt-5">
-                <div class="col-md-12">
-                    <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
-                        <!-- Nav tabs -->
-                        
-                        <nav class="tabs mb-4">
-                            <div class="selector"></div>
-                            <a href="#invoice" class="animation-on-hover active" aria-controls="home" role="tab" data-toggle="tab">Receipt Goods List</a>
-                            <a href="#history" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:3;">History</a>
-                            <a href="#problem" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:2;">Problem History</a>
-                            <a href="#preview" class="animation-on-hover" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:1;">Preview</a>
-                        </nav>
-                        <!-- Tab panes -->
-                        <div class="tab-content tabs-custom">
-                            <div role="tabpanel" class="tab-pane active" id="invoice">
-                                <div class="box">
-                                    <div id="header">
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.GrNo, new { @class = "form-control", @readonly = "readonly", placeholder = "Goods Receive Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driver Name</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.PicName, new { @class = "form-control required", @readonly = "readonly", placeholder = "PIC Name" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.PhoneNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "Phone Name" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card#</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.KtpNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "KTP Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License#</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.SimNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "SIM Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date#</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.EditorFor(m => m.Data.SimExpiryDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", placeholder = "License Expire Date" } })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor #ID & Name</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.Vendor, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vendor Name" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor Address</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        <textarea class="form-control" id="VendorAddress" readonly="readonly" name="VendorAddress" placeholder="Vendor Address" rows="3" cols="3">@(Model.Data.VendorAddress != "" ? Model.Data.VendorAddress : "") </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Type</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Type" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Brand</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Merk" })
-                                                    </div>
+                <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Receipt Goods List</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#problem" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Problem History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#Changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:3;">Change History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#preview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:2;">Preview</a>
+                        </li>
+                        <li role="document">
+                            <a href="#documents" id="listgetforview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:1;">Document</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content tabs-custom">
+                        <div role="tabpanel" class="tab-pane active" id="invoice">
+                            <div class="row">
+                                <div id="header">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.GrNo, new { @class = "form-control", @readonly = "readonly", placeholder = "Goods Receive Number" })
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.StnkNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "STNK Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.KirNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "KIR Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.EditorFor(m => m.Data.KirExpire, new { htmlAttributes = new { @class = "form-control required", @readonly = "readonly", placeholder = "KIR Expire Date" } })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextBoxFor(m => m.Data.NopolNumber, new { @class = "form-control required", @readonly = "readonly", placeholder = "NOPOL Number" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.EditorFor(m => m.Data.EstimationTimePickup, new { htmlAttributes = new { @class = "form-control required date", @readonly = "readonly", autocomplete = "off", placeholder = "Estimation Time Pickup Date" } })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        <input type="text" class="form-control" readonly name="Apar" value="@((Model.Data.Apar.HasValue && Model.Data.Apar.Value) ? "Yes" : "No")" />
-                                                        @*@Html.TextBoxFor(m => m.data.Apar, new { @class = "form-control required", @readonly = "readonly", placeholder = "APAR" })*@
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        <input type="text" class="form-control" readonly name="Apar" value="@((Model.Data.Apd.HasValue && Model.Data.Apd.Value) ? "Yes" : "No")" />
-                                                        @*@Html.TextBoxFor(m => m.data.Apd, new { @class = "form-control required", @readonly = "readonly", placeholder = "APAR" })*@
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point ( Area )</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PlantCode - @Model.Data.PlantName" readonly />
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point PIC</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PickupPic - @Model.Data.PickupPicName" readonly />
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
-                                                    <div class="col-md-10 col-xs-10">
-                                                        @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @rows = "4", @readonly = "readonly", @cols = "4" })
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor #ID & Name</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.Vendor, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vendor Name" })
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12">
-                                                <table class="table table-bordered" id="TblGoodReceive"></table>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor Address</label>
+                                                <div class="input-group col-md-9">
+                                                    <textarea class="form-control" id="VendorAddress" readonly="readonly" name="VendorAddress" placeholder="Vendor Address" rows="3" cols="3">@(Model.Data.VendorAddress != "" ? Model.Data.VendorAddress : "") </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Type</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Type" })
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Brand</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", @readonly = "readonly", placeholder = "Vehicle Merk" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point ( Area )</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PlantCode - @Model.Data.PlantName" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point PIC</label>
+                                                <div class="input-group col-md-9">
+                                                    <input type="text" name="PickupPoint" class="form-control" value="@Model.Data.PickupPic - @Model.Data.PickupPicName" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
+                                                <div class="input-group col-md-9">
+                                                    @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @rows = "4", @readonly = "readonly", @cols = "4" })
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="col-md-12">&nbsp;</div>
+                                        @*<table class="table table-bordered" id="TblGoodReceive"></table>*@
                                     </div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="history">
-                                <div class="box">
-                                    <div class="col-xs-12 table-responsive">
-                                        <input type="hidden" name="IdGR" id="IdGR" value="@Model.Data.Id" />
-                                        <table id="tableGoodReceiveHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
-                                    </div>                 <!-- /.col -->
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="problem">
-                                <div class="box">
-                                    <div class="col-xs-12 table-responsive">
-                                        <table id="tableGoodReceiveProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
-                                    </div>                 <!-- /.col -->
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="preview">
-                                <div class="box">
-                                    <div class="row" style="margin-top:15px;margin-bottom:15px;padding-left:139px">
-                                        <div class="col-md-12">
-                                            <strong>
-                                                @*<a class="btn btn-info" href="~/EMCS/ReportRG?RGId=@Model.Id"><i class="fa fa-file-pdf-o"></i>Export RG</a>*@
-                                                <strong>@Html.ActionLink("Export RG", "DownloadRg", "Download", new { id = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-success btn-round" })</strong>
-                                                @*<strong>@Html.ActionLink("Export RG", "ReportGr", new { GRId = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-info" })</strong>*@
-                                            </strong>
-                                        </div>
-                                    </div>
-                                    <div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
-                                        <div class="row" style="padding-left:4px;padding-right:4px">
-                                            <div style="padding:10px">
-                                                <table class="table-document">
-                                                    <tr>
-                                                        <td style="width:3%"></td>
-                                                        <td style="width:9%"></td>
-                                                        <td style="width:4%"></td>
-                                                        <td style="width:10%"></td>
-                                                        <td style="width:12%"></td>
-                                                        <td style="width:7%"></td>
-                                                        <td style="width:8%"></td>
-                                                        <td style="width:11%"></td>
-                                                        <td style="width:13%"></td>
-                                                        <td style="width:1%"></td>
-                                                        <td style="width:10%"></td>
-                                                        <td style="width:1%"></td>
-                                                        <td style="width:11%"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="13"><img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="5" class="text_bold">PT. TRAKINDO UTAMA</td>
-                                                        <td colspan="5" class="border_left border_top border_right border_bottom text_bold header_title" style="height:30px">RECEIPT OF GOODS</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="5">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
-                                                        <td class="border_left">Number</td>
-                                                        <td class="border_bottom">:</td>
-                                                        <td colspan="3" class="border_right text_bold text_docno_big">@Model.Data.GrNo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="5">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
-                                                        <td class="border_left border_bottom">Date</td>
-                                                        <td class="border_bottom">:</td>
-                                                        <td colspan="3" class="border_bottom border_right">@Model.Data.CreateDate.ToString("dd MMM yyyy")</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="10">INDONESIA - 12560</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="10">Tel. : (62-21) 29976620</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3"></td>
-                                                        <td colspan="10">Fax. : (62-21) 29976612</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="border_bottom text_bold" style="height:20px"></td>
-                                                        <td colspan="10" class=""></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="border_left border_right border_top border_bottom text_bold">TRANSPORTER DETAILS</td>
-                                                        <td colspan="9" class="border_bottom"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VENDOR</td>
-                                                        <td colspan="10" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2" class="text_bold">NAME:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">ID#:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">ADDRESS:</td>
-                                                        <td colspan="4" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2">@Model.Data.VendorName</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.VendorCode</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.VendorAddress</td>
-                                                        <td colspan="4" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">DRIVER</td>
-                                                        <td colspan="10" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2" class="text_bold">NAME:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">ID CARD#:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">DRIVING LICENSE#:</td>
-                                                        <td colspan="4" class="text_bold border_right">DRIVING LICENSE EXPIRY DATE:</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2">@Model.Data.PicName</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.KtpNumber</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.SimNumber</td>
-                                                        <td colspan="3">@(Model.Data.SimExpiryDate.HasValue ? @Model.Data.SimExpiryDate.Value.ToString("dd MMM yyyy") : "")</td>
-                                                        <td class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VEHICLE</td>
-                                                        <td colspan="10" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2" class="text_bold">TYPE:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">BRAND#:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">KIR#:</td>
-                                                        <td colspan="4" class="text_bold border_right">KIR EXPIRY DATE:</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2">@Model.Data.VehicleType</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.VehicleMerk</td>
-                                                        <td></td>
-                                                        <td colspan="2">@Model.Data.KirNumber</td>
-                                                        <td colspan="4" class="border_right">@(Model.Data.KirExpire.HasValue ? Model.Data.KirExpire.Value.ToString("dd MMM yyyy") : "")</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2" class="text_bold">LICENSE PLATE:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold"></td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold"></td>
-                                                        <td></td>
-                                                        <td colspan="4" class="text_bold border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2">@Model.Data.NopolNumber</td>
-                                                        <td></td>
-                                                        <td colspan="2"></td>
-                                                        <td></td>
-                                                        <td colspan="2"></td>
-                                                        <td colspan="4" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" class="border_left border_top border_right border_bottom text_bold">COMPLETENESS</td>
-                                                        <td colspan="10" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left text_bold"></td>
-                                                        <td colspan="2" class="text_bold">APAR:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">APD:</td>
-                                                        <td></td>
-                                                        <td colspan="2" class="text_bold">Others:</td>
-                                                        <td colspan="4" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left border_bottom text_bold"></td>
-                                                        <td colspan="2" class="border_bottom">@((Model.Data.Apar.Value) ? "Yes" : "No")</td>
-                                                        <td class="border_bottom"></td>
-                                                        <td colspan="2" class="border_bottom">@((Model.Data.Apd.Value) ? "Yes" : "No")</td>
-                                                        <td class="border_bottom"></td>
-                                                        <td colspan="2" class="border_bottom">@Model.Data.Notes</td>
-                                                        <td colspan="4" class="border_right border_bottom"></td>
-                                                    </tr>
-                                                    <tr style="height:10px">
-                                                        <td colspan="6"></td>
-                                                        <td colspan="7"></td>
-                                                    </tr>
-                                                    <tr style="height:10px">
-                                                        <td colspan="4"></td>
-                                                        <td colspan="9"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="border_left border_top border_right border_bottom text_bold">ITEM LIST</td>
-                                                        <td colspan="9" class="border_bottom"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="border_left border_bottom text_bold">No</td>
-                                                        <td colspan="4" class="border_bottom text_bold" style="text-align: center">NAME OF GOODS</td>
-                                                        <td colspan="4" class="border_top border_bottom text_bold" style="text-align: center">EDI NUMBER</td>
-                                                        <td colspan="4" class="border_top border_bottom border_right text_bold" style="text-align: center">DO Reference</td>
-                                                    </tr>
-                                                    @{ var i = 0; }
-                                                    @foreach (var item in Model.DetailGr)
-                                                    {
-                                                        i++;
-                                                        <tr>
-                                                            <td class="border_left border_bottom">@i</td>
-                                                            <td colspan="4" class="border_bottom">@item.GoodsName</td>
-                                                            <td colspan="4" class="border_bottom">@item.DoNo</td>
-                                                            <td colspan="4" class="border_bottom border_right">@item.DaNo.Replace("'", "")</td>
-                                                        </tr>
-                                                    }
-                                                    <tr>
-                                                        <td colspan="8"></td>
-                                                        <td colspan="3" class="border_left"><b>TOTAL PACKAGES</b></td>
-                                                        <td>:</td>
-                                                        <td class="border_right" style="text-align: right">@Model.Data.TotalPackages</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="8"></td>
-                                                        <td colspan="3" class="border_left"><b>TOTAL NET WEIGHT</b> (KGS)</td>
-                                                        <td>:</td>
-                                                        <td class="border_right" style="text-align: right">@Model.Data.TotalNetWeight</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="8"></td>
-                                                        <td colspan="3" class="border_left"><b>TOTAL GROSS WEIGHT</b> (KGS)</td>
-                                                        <td>:</td>
-                                                        <td class="border_right" style="text-align: right">@Model.Data.TotalGrossWeight</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="8"></td>
-                                                        <td colspan="3" class="border_left border_bottom"><b>TOTAL VOLUME</b> (M3)</td>
-                                                        <td class="border_bottom">:</td>
-                                                        <td class="border_right border_bottom" style="text-align: right">@Model.Data.TotalVolume</td>
-                                                    </tr>
-                                                    <tr style="height:10px">
-                                                        <td colspan="4"></td>
-                                                        <td colspan="9"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="border_left border_top border_right border_bottom text_bold">PICKUP POINT</td>
-                                                        <td colspan="9" class="border_bottom"></td>
-                                                    </tr>
-                                                    <tr style="height:10px">
-                                                        <td colspan="6" class="border_left"></td>
-                                                        <td colspan="7" class="border_top border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="13" class="border_left border_right">@Model.Data.PlantName</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="border_left">ESTIMATION TIME OF PICKUP :</td>
-                                                        <td colspan="3">@(Model.Data.EstimationTimePickup.HasValue ? Model.Data.EstimationTimePickup.Value.ToString("dd MMM yyyy hh:ss:mm") : "") </td>
-                                                        <td colspan="6" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="4" class="border_left">ACTUAL TIME OF PICKUP :</td>
-                                                        <td colspan="3">@(Model.Data.UpdateDate.HasValue ? Model.Data.UpdateDate.Value.ToString("dd MMM yyyy hh:mm:ss") : "") </td>
-                                                        <td colspan="6" class="border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="13" style="height:20px"></td>
-                                                    </tr>
-                                                    <tr><td colspan="13" style="height:20px" class="border_left border_top border_right"></td></tr>
-                                                    <tr>
-                                                        <td colspan="11" class="border_left"></td>
-                                                        <td colspan="2" class="border_right" style="text-align: right">APPROVED BY:</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="10" class="border_left"></td>
-                                                        <td colspan="3" class="border_right" style="text-align: right">PT. Trakindo Utama - Warehouse</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="10" class="border_left"></td>
-                                                        <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedName</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="10" class="border_left"></td>
-                                                        <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedPosition</td>
-                                                    </tr>
-                                                    <tr><td colspan="13" style="height:20px" class="border_left border_right"></td></tr>
-                                                    <tr><td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td></tr>
-                                                    <tr><td colspan="13" style="height:20px"></td></tr>
-                                                    <tr>
-                                                        <td colspan="13">Signature is not necessary due to this document is an electronic document which printed and generated by computer integrated system. We hereby certify that the information on this invoice is true and correct, and that the contents of this shipment as stated above.</td>
-                                                    </tr>
-                                                </table>
-                                                <table class="">
-                                                    <tr>
-                                                        <td><img src="@ViewBag.QrCodeUrlGR" height="150px" width="150px" /></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaview"></table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-md-12 text-right">
-                                @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
-                                <input type="hidden" id="Status" name="Status" value="Draft" />
-                                @Html.HiddenFor(m => m.Data.Id)
-                                <a href="~/emcs/Grlist" class="btn btn-warning btn-round warning"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <input type="hidden" name="IdGR" id="IdGR" value="@Model.Data.Id" />
+                                    <table id="tableGoodReceiveHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
                             </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="problem">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <table id="tableGoodReceiveProblemHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="Changehistory">
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    @*<input type="hidden" name="IdGR" id="IdGR" value="@Model.Data.Id" />*@
+                                    <table id="tableGRHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    @*<input type="hidden" name="IdGR" id="IdGR" value="@Model.Data.Id" />*@
+                                    <table id="tableArmadaHistory" data-toolbar=".toolbar" class="table table-bordered"></table>
+                                </div>                 <!-- /.col -->
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="preview">
+                            <div class="row" style="margin-top:15px;margin-bottom:15px;padding-left:139px">
+                                <div class="col-md-12">
+                                    <strong>
+                                        @*<a class="btn btn-info" href="~/EMCS/ReportRG?RGId=@Model.Id"><i class="fa fa-file-pdf-o"></i>Export RG</a>*@
+                                        <strong>@Html.ActionLink("Export RG", "DownloadRg", "Download", new { id = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-info" })</strong>
+                                        @*<strong>@Html.ActionLink("Export RG", "ReportGr", new { GRId = Model.Data.Id, reportType = "GR" }, new { @class = "btn btn-info" })</strong>*@
+                                    </strong>
+                                </div>
+                            </div>
+                            <div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
+                                <div class="row" style="padding-left:4px;padding-right:4px">
+                                    <div style="padding:10px">
+                                        <table class="table-document">
+                                            <tr>
+                                                <td style="width:3%"></td>
+                                                <td style="width:9%"></td>
+                                                <td style="width:4%"></td>
+                                                <td style="width:10%"></td>
+                                                <td style="width:12%"></td>
+                                                <td style="width:7%"></td>
+                                                <td style="width:8%"></td>
+                                                <td style="width:11%"></td>
+                                                <td style="width:13%"></td>
+                                                <td style="width:1%"></td>
+                                                <td style="width:10%"></td>
+                                                <td style="width:1%"></td>
+                                                <td style="width:11%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13"><img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5" class="text_bold">PT. TRAKINDO UTAMA</td>
+                                                <td colspan="5" class="border_left border_top border_right border_bottom text_bold header_title" style="height:30px">RECEIPT OF GOODS</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                                                <td class="border_left">Number</td>
+                                                <td class="border_bottom">:</td>
+                                                <td colspan="3" class="border_right text_bold text_docno_big">@Model.Data.GrNo</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="5">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
+                                                <td class="border_left border_bottom">Date</td>
+                                                <td class="border_bottom">:</td>
+                                                <td colspan="3" class="border_bottom border_right">@Model.Data.CreateDate.ToString("dd MMM yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">INDONESIA - 12560</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">Tel. : (62-21) 29976620</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td colspan="10">Fax. : (62-21) 29976612</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_bottom text_bold" style="height:20px"></td>
+                                                <td colspan="10" class=""></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_right border_top border_bottom text_bold">TRANSPORTER DETAILS</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VENDOR</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">NAME:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ID#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ADDRESS:</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.VendorName</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VendorCode</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VendorAddress</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">DRIVER</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">NAME:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">ID CARD#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">DRIVING LICENSE#:</td>
+                                                <td colspan="4" class="text_bold border_right">DRIVING LICENSE EXPIRY DATE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Armada[0].PicName</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Armada[0].KtpNumber</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Armada[0].SimNumber</td>
+                                                <td colspan="3">@(Model.Armada[0].SimExpiryDate.HasValue ? @Model.Armada[0].SimExpiryDate.Value.ToString("dd MMM yyyy") : "")</td>
+                                                <td class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">VEHICLE</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">TYPE:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">BRAND#:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">KIR#:</td>
+                                                <td colspan="4" class="text_bold border_right">KIR EXPIRY DATE:</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Data.VehicleType</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Data.VehicleMerk</td>
+                                                <td></td>
+                                                <td colspan="2">@Model.Armada[0].KirNumber</td>
+                                                <td colspan="4" class="border_right">@(Model.Armada[0].KirExpire.HasValue ? Model.Armada[0].KirExpire.Value.ToString("dd MMM yyyy") : "")</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">LICENSE PLATE:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold"></td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold"></td>
+                                                <td></td>
+                                                <td colspan="4" class="text_bold border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2">@Model.Armada[0].NopolNumber</td>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td></td>
+                                                <td colspan="2"></td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="border_left border_top border_right border_bottom text_bold">COMPLETENESS</td>
+                                                <td colspan="10" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left text_bold"></td>
+                                                <td colspan="2" class="text_bold">APAR:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">APD:</td>
+                                                <td></td>
+                                                <td colspan="2" class="text_bold">Others:</td>
+                                                <td colspan="4" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left border_bottom text_bold"></td>
+                                                <td colspan="2" class="border_bottom">@(Model.Armada[0].Apar.Value ? "Yes" : "No")</td>
+                                                <td class="border_bottom"></td>
+                                                <td colspan="2" class="border_bottom">@(Model.Armada[0].Apd.Value ? "Yes" : "No" )</td>
+                                                <td class="border_bottom"></td>
+                                                <td colspan="2" class="border_bottom">@Model.Data.Notes</td>
+                                                <td colspan="4" class="border_right border_bottom"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="6"></td>
+                                                <td colspan="7"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="4"></td>
+                                                <td colspan="9"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_top border_right border_bottom text_bold">ITEM LIST</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border_left border_bottom text_bold">No</td>
+                                                <td colspan="4" class="border_bottom text_bold" style="text-align: center">NAME OF GOODS</td>
+                                                <td colspan="4" class="border_top border_bottom text_bold" style="text-align: center">EDI NUMBER</td>
+                                                <td colspan="4" class="border_top border_bottom border_right text_bold" style="text-align: center">DO Reference</td>
+                                            </tr>
+                                            @{ var i = 0; }
+                                            @foreach (var item in Model.Armada)
+                                            {
+                                                i++;
+                                                <tr>
+                                                    <td class="border_left border_bottom" style="text-align: center">@i</td>
+                                                    @*<td colspan="4" class="border_bottom">@item.GoodsName</td>*@
+                                                    <td colspan="4" class="border_bottom" style="text-align: center">@item.PicName</td>
+                                                    <td colspan="4" class="border_bottom" style="text-align: center">@item.DoNo</td>
+                                                    <td colspan="4" class="border_bottom border_right" style="text-align: center">@item.DaNo.Replace("'", "")</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL PACKAGES</b></td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalPackages</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL NET WEIGHT</b> (KGS)</td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalNetWeight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left"><b>TOTAL GROSS WEIGHT</b> (KGS)</td>
+                                                <td>:</td>
+                                                <td class="border_right" style="text-align: right">@Model.Data.TotalGrossWeight</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="8"></td>
+                                                <td colspan="3" class="border_left border_bottom"><b>TOTAL VOLUME</b> (M3)</td>
+                                                <td class="border_bottom">:</td>
+                                                <td class="border_right border_bottom" style="text-align: right">@Model.Data.TotalVolume</td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="4"></td>
+                                                <td colspan="9"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left border_top border_right border_bottom text_bold">PICKUP POINT</td>
+                                                <td colspan="9" class="border_bottom"></td>
+                                            </tr>
+                                            <tr style="height:10px">
+                                                <td colspan="6" class="border_left"></td>
+                                                <td colspan="7" class="border_top border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" class="border_left border_right">@Model.Data.PlantName</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left">ESTIMATION TIME OF PICKUP :</td>
+                                                <td colspan="3">@(Model.Armada[0].EstimationTimePickup.HasValue ? Model.Armada[0].EstimationTimePickup.Value.ToString("dd MMM yyyy hh:ss:mm") : "") </td>
+                                                <td colspan="6" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="border_left">ACTUAL TIME OF PICKUP :</td>
+                                                <td colspan="3">@(Model.Data.UpdateDate.HasValue ? Model.Data.UpdateDate.Value.ToString("dd MMM yyyy hh:mm:ss") : "") </td>
+                                                <td colspan="6" class="border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="13" style="height:20px"></td>
+                                            </tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_top border_right"></td></tr>
+                                            <tr>
+                                                <td colspan="11" class="border_left"></td>
+                                                <td colspan="2" class="border_right" style="text-align: right">APPROVED BY:</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">PT. Trakindo Utama - Warehouse</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedName</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" class="border_left"></td>
+                                                <td colspan="3" class="border_right" style="text-align: right">@Model.Data.SignedPosition</td>
+                                            </tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_right"></td></tr>
+                                            <tr><td colspan="13" style="height:20px" class="border_left border_bottom border_right"></td></tr>
+                                            <tr><td colspan="13" style="height:20px"></td></tr>
+                                            <tr>
+                                                <td colspan="13">Signature is not necessary due to this document is an electronic document which printed and generated by computer integrated system. We hereby certify that the information on this invoice is true and correct, and that the contents of this shipment as stated above.</td>
+                                            </tr>
+                                        </table>
+                                        <table class="">
+                                            <tr>
+                                                <td><img src="@ViewBag.QrCodeUrlGR" height="150px" width="150px" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="documents">
+                            @Html.Partial("GoodsReceiveTabDocument");
+
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-12 text-right">
+                            @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
+                            <input type="hidden" id="Status" name="Status" value="Draft" />
+                            @Html.HiddenFor(m => m.Data.Id)
+                            <a href="~/emcs/Grlist" class="btn btn-primary btn-outline-secondary" style="width:120px;"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Back</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id='myModalUploadPlace' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="Closeuploadmodel()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                            <div class="input-group col-md-9 col-xs-12">
+                                <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="Closeuploadmodel()" data-dismiss="modal">Close</button>
+                </div>
+
+                <div id="template-dropzone" class="hidden">
+                    <div id="template" class="file-row text-left" style="padding:20px;">
+                        <!-- This is used as the file preview template -->
+                        <div class="col-md-2">
+                            <div class="row">
+                                <span class="preview">
+                                    <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="size" data-dz-size></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalItem' class='modal fade in'>
+        <div class="modal-dialog" style="width: 1526px;height: 220px;">
+            <div class="modal-content" style=" height: auto;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group" style="margin-bottom:40px !important;">
+                            <div>
+                                <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaitem"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                        Wait..
+                    </span>
+                    <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+                </div>
+                @*<div class="modal-content"style=" height: 300px; width: 1637pX; MARGIN-LEFT: -391PX;">
+                        <div>
+                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaitem"></table>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+    <div id='DocumentList' class='modal fade in'>
+        <div class="modal-dialog" style="width: 1526px;height: 220px;">
+            <div class="modal-content" style=" height: auto;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group" style="margin-bottom:40px !important;">
+                            <div>
+                                <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tableDocumentList"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                        Wait..
+                    </span>
+                    <button type="button" class="btn btn-default" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+                </div>
+                @*<div class="modal-content"style=" height: 300px; width: 1637pX; MARGIN-LEFT: -391PX;">
+                        <div>
+                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaitem"></table>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+    <div id='myModalUploadPreview1' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">Filename</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="Filename" name="Filename">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div id='myModalUploadPreview' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">Filename</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="Filename" name="Filename">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
     <a href="/EMCS/DownloadGrItem/1" class="downloadFile hidden">
         <i class="fa fa-edit"></i> Download Item
     </a>
@@ -568,38 +655,1039 @@
 @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
 
 <input type="hidden" name="HideAction" id="HideAction" value="false" />
+<input type="hidden" name="IdGr" id="IdGr" value="0" />
+<input type="hidden" name="IdCipl" id="IdCipl" value="0" />
+<input type="hidden" name="IdArmada" id="IdArmada" value="0" />
+<input type="hidden" name="method" id="Method" value="View" />
+<input type="hidden" name="formType" id="formType" value="GoodsReceive" />
+
 @section Scripts{
     <script>
         var wizardState = @ViewBag.WizardData.Progress;
         var $hideAction = $("#HideAction").val();
-    </script>
-    <script src="~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js"></script>
+        $(document).ready(function () {
 
-    <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
+            tablearmada();
+            get_Grdocumentviewlist();
+            tableGRHistory();
+            tableArmadaHistory();
+
+        });
+
+        function tableDocumentList(Id) {
+            $('#IdArmada').val(Id);
+            $tableDocumentList = $('#tableDocumentList');
+            var columnDocumentList = [
+                {
+                    width: '10%',
+                    visible:false
+
+                },
+                {
+                    field: 'CreateDate',
+                    title: 'Document Upload Date',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    width: '30%',
+                    formatter: function(data){
+                        return moment(data.CreateDate).format("DD MMM YYYY HH:MM:SS");
+                    }
+                },
+                {
+                    field: 'FileName',
+                    title: 'Attchment',
+                    halign: 'center',
+                    align: 'center',
+                    width: '20%',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    events: operateEventRight,
+                    formatter: function (data, row) {
+                        var btnDownload = "<button class='btn btn-xs btn-success downloadarmadaHistory' type='button'><i class='fa fa-download'></i></button>";
+                        var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocumentarmadaHistory' data-toggle='modal' data-target='#myModalUploadPreview1' type='button'><i class='fa fa-file-pdf-o'></i></button>";
+                            return [btnDownload, btnPreview].join(' ');
+                    },
+                },
+                {
+                    width: '10%',
+                    visible: false
+                }
+            ];
+            $tableDocumentList.bootstrapTable({
+                url: "/EMCS/GetDocumentListOfArmada",
+                columns: columnDocumentList,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+                    return {
+                        IdShippingFleet: $('#IdArmada').val(),
+                        Id: 0
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                }
+                //responseHandler: function (data) {
+                //    
+                //},
+                //error: function (data){
+
+                //}
+            });
+            $($tableDocumentList).bootstrapTable('refresh');
+        }
+
+    </script>
     @Scripts.Render("~/Scripts.app/EMCS/transaction/GoodReceiveHistory.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/GoodsReceivePreviewForm.cshtml.js")
+    @Scripts.Render("~/Scripts.app/EMCS/dropzone.js")
     @Scripts.Render("~/Scripts.app/EMCS/Custom.js")
-}
-<script>
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    //var selector = $(".tabs").find(".selector");
-    var activeItem = tabs.find('.active');
-    var activeWidth = activeItem.innerWidth();
-    $(".selector").css({
-        "left": activeItem.position.left + "px",
-        "width": activeWidth + "px"
-    });
+    <script>
 
-    $(".tabs").on("click", "a", function (e) {
-        e.preventDefault();
-        $('.tabs a').removeClass("active");
-        $(this).addClass('active');
-        var activeWidth = $(this).innerWidth();
-        var itemPos = $(this).position();
-        $(".selector").css({
-            "left": itemPos.left + "px",
-            "width": activeWidth + "px"
+        function tablearmada() {
+
+            $tablearmada = $('#tablearmadaview');
+            var columnArmada = [
+                //{
+                //    field: '',
+                //    title: 'Action',
+                //    halign: 'center',
+                //    align: 'center',
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //    events: operateEvents,
+                //    formatter: function () {
+                //        //var btnView = "<button type='button' class='btn viewarmada btn-xs btn-default'><i class='fa fa-search'></i></button>";
+                //        //var elm = ["<div>", btnView, "</div>"];
+                //        //return elm.join(" ");
+                //    }
+                //},
+                {
+                    field: 'DoNo',
+                    title: 'Edi No.',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PicName',
+                    title: 'PIC Name',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PhoneNumber',
+                    title: 'Contact',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimExpiryDate',
+                    title: 'License Expiry Date#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'StnkNumber',
+                    title: 'No STNK',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Bast',
+                    title: 'Bast',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirNumber',
+                    title: 'KIR Number',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirExpire',
+                    title: 'KIR Expiry Date',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'NopolNumber',
+                    title: 'Police Plate#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimNumber',
+                    title: 'SIM',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    //formatter: function (data, row, index) {
+                    //    return moment(data).format("DD MMM YYYY");
+                    //}
+                },
+                {
+                    field: 'KtpNumber',
+                    title: 'KTP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Apar',
+                    title: 'APAR',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+
+                },
+                {
+                    field: 'EstimationTimePickup',
+                    title: 'ATP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Apd',
+                    title: 'APD',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+                },
+                {
+                    field: 'DaNo',
+                    title: 'DO Reference',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                //{
+                //    field: '',
+                //    title: 'Attachment',
+                //    align: 'center',
+                //    valign: 'center',
+                //    halign: "center",
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //},
+                {
+                    field: 'FileName',
+                    title: 'Attachment',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    sortable: true,
+                    events: operateEventRight,
+                    formatter: function (data, row) {
+                        if (row.FileName !== "" && row.FileName !== null) {
+                            var btnDownload = "<button class='btn btn-xs btn-success downloadarmadadoc' type='button'><i class='fa fa-download'></i></button>";
+                            var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocumentarmadadoc' data-toggle='modal' data-target='#myModalUploadPreview1' type='button'><i class='fa fa-file-pdf-o'></i></button>";
+                            return [btnDownload, btnPreview].join(' ');
+                        } else {
+                            return "-";
+                        }
+                    },
+                    class: 'text-nowrap'
+
+                }];
+
+            $tablearmada.bootstrapTable({
+                url: "/EMCS/GetListArmada",
+                columns: columnArmada,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+                    return {
+                        IdGr: $('#IdGr').val(),
+                        Id: 0,
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                },
+                //success: function (data) {
+                //    /*edinoCount = data.length;*/
+                //}
+            });
+            $($tablearmada).bootstrapTable('refresh')
+
+
+        }
+        function ViewItemTable(Id) {
+
+            if (Id != 0) {
+                $('#Method').val('View');
+                var ciplids = [];
+                $.ajax({
+                    url: '/EMCS/GetListArmada?IdGr=0&Id=' + Id + '',
+                    success: function (getdata) {
+                        if (getdata.length != 0 && getdata.length != null && getdata.length != undefined) {
+                            $.ajax({
+                                url: '/EMCS/GetCiplIdFromDoNo?DoNo=' + getdata[0].DoNo,
+                                success: function (data1) {
+
+                                    for (var i = 0; i < data1.length; i++) {
+                                        ciplids.push(data1[i].Id);
+                                    }
+                                    $('#IdArmada').val(getdata[0].Id);
+                                    $('#IdCipl').val(ciplids.join(','));
+                                    text = [];
+                                    getid = [];
+                                    $tablearmadaitemview = $('#tablearmadaitem');
+
+                                    var columnarmadaitemview = [
+                                        [
+                                            {
+                                                field: "CiplNo",
+                                                title: "No.",
+                                                align: "center",
+                                                halign: "center",
+                                                rowspan: 2,
+                                                sortable: true,
+                                                formatter: runningFormatterNoPaging
+                                            },
+                                            {
+                                                field: "Name",
+                                                title: "Name",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            }, {
+                                                field: "Quantity",
+                                                title: "Quantity",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            }, {
+                                                field: "UnitUom",
+                                                title: "UOM",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true,
+                                                formatter: function (value, row, index) {
+                                                    return row.UnitUom;
+                                                }
+                                            }, {
+                                                field: "PartNumber",
+                                                title: "Part Number",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "Sn",
+                                                title: "Sn",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "JCode",
+                                                title: "J-Code",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "Ccr",
+                                                title: "CCR",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "CaseNumber",
+                                                title: "Case Number",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "ASNNumber",
+                                                title: "ASN Number",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true
+                                            },
+                                            {
+                                                field: "Category",
+                                                title: "Type",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true,
+                                            }, {
+                                                field: "UnitPrice",
+                                                title: "Unit Price",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true,
+                                                formatter: function (value, row, index) {
+                                                    return row.UnitPrice;
+                                                }
+                                            }, {
+                                                field: "ExtendedValue",
+                                                title: "Extended Value",
+                                                rowspan: 2,
+                                                align: 'center',
+                                                sortable: true,
+                                                filterControl: true,
+                                                formatter: function (value, row, index) {
+                                                    return row.ExtendedValue;
+                                                }
+                                            }, {
+                                                field: "dimension",
+                                                title: "Dimension (In CM)",
+                                                colspan: 3,
+                                                align: 'center',
+                                                sortable: true,
+                                                filterControl: true
+                                            }, {
+                                                field: "Volume",
+                                                title: "Volume",
+                                                colspan: 1,
+                                                align: 'center',
+                                                sortable: true,
+                                                filterControl: true
+                                            }, {
+                                                field: "NetWeight",
+                                                title: "Net Weight",
+                                                colspan: 1,
+                                                align: 'right',
+                                                sortable: true,
+                                                filterControl: true
+                                            }, {
+                                                field: "GrossWeight",
+                                                title: "Gross Weight",
+                                                colspan: 1,
+                                                align: 'right',
+                                                sortable: true,
+                                                filterControl: true
+                                            }],
+                                        [{
+                                            field: "Length",
+                                            title: "Length",
+                                            sortable: true,
+                                            align: 'center',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.Length;
+                                            }
+                                        }, {
+                                            field: "Width",
+                                            title: "Width",
+                                            sortable: true,
+                                            align: 'center',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.Width;
+                                            }
+                                        }, {
+                                            field: "Height",
+                                            title: "Height",
+                                            sortable: true,
+                                            align: 'center',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.Height;
+                                            }
+                                        }, {
+                                            field: "m3",
+                                            title: "(m3)",
+                                            sortable: true,
+                                            align: 'center',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.Volume;
+                                            }
+                                        }, {
+                                            field: "NetWeight",
+                                            title: "in KGa",
+                                            sortable: true,
+                                            align: 'right',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.NetWeight;
+                                            }
+                                        }, {
+                                            field: "GrossWeight",
+                                            title: "in KGa",
+                                            sortable: true,
+                                            align: 'right',
+                                            filterControl: true,
+                                            formatter: function (value, row, index) {
+                                                return row.GrossWeight;
+                                            }
+                                        }
+                                        ]
+                                    ];
+                                    if ($('#Method').val() == "View") {
+                                        $tablearmadaitemview.bootstrapTable('hideColumn', 'State')
+                                    }
+
+                                    $tablearmadaitemview.bootstrapTable({
+                                        url: "/EMCS/CiplItemAvailableInArmada",
+                                        columns: columnarmadaitemview,
+                                        pagination: false,
+                                        //pagesize: '10',
+                                        cache: false,
+                                        search: false,
+                                        striped: false,
+                                        clickToSelect: true,
+                                        reorderableColumns: true,
+                                        toolbar: '.toolbararmadaitem',
+                                        toolbarAlign: 'left',
+                                        queryParams: function (params) {
+
+                                            return {
+                                                Method: $('#Method').val(),
+                                                IdCipl: $('#IdCipl').val(),
+                                                IdGr: getdata[0].IdGr,
+                                                IdShippingFleet: $('#IdArmada').val(),
+                                            };
+                                        },
+                                        onClickRow: selectRow,
+                                        showColumns: false,
+                                        showRefresh: false,
+                                        smartDisplay: false,
+                                        formatNoMatches: function () {
+                                            return '<span class="noMatches">Not Data Found</span>';
+                                        },
+                                        success: function (data) {
+
+                                            //if ($('#Mehthod').val() == "View") {
+                                            //    $tablearmadaitemview.column(0).visible(false);
+                                            //}
+                                        }
+                                    });
+                                    $($tablearmadaitemview).bootstrapTable('refresh');
+                                    $('#myModalItem').modal('show')
+                                }
+                            })
+
+                        }
+
+
+                    }
+                })
+            }
+            $tableDocuments1 = $('#tableGrDocuments1');
+        }
+        function tableGRHistory() {
+            $tableGRHistory = $('#tableGRHistory');
+            var columnGRHistory = [
+                {
+                    field: 'FieldName',
+                    title: 'FieldName',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'BeforeValue',
+                    title: 'Old Value',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'AfterValue',
+                    title: 'New Value',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'CreateBy',
+                    title: 'Change by',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'CreateDate',
+                    title: 'Date of modification',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY hh:mm:ss");
+                    }
+                },
+            ];
+
+            $tableGRHistory.bootstrapTable({
+                url: "/EMCS/GetListSpRequestForChangeByFormType",
+                columns: columnGRHistory,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+
+                    return {
+                        limit: params.limit,
+                        offset: params.offset,
+                        IdTerm: $("#IdGr").val(),
+                        formType: $("#formType").val(),
+                        sort: params.sort,
+                        order: params.order
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                },
+                responseHandler: function (resp) {
+                    
+                    var data = {};
+                    $.map(resp, function (value, key) {
+                        data[value.Key] = value.Value;
+                    });
+                    return data.rows;
+                }
+            });
+            /*$($tableGRHistory).bootstrapTable('refresh')*/
+        }
+        function tableArmadaHistory() {
+            $tableArmadaHistory = $('#tableArmadaHistory');
+            var columnArmadaHistory = [
+                {
+                    field: 'DoNo',
+                    title: 'Edi No.',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PicName',
+                    title: 'PIC Name',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PhoneNumber',
+                    title: 'Contact',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimExpiryDate',
+                    title: 'License Expiry Date#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'StnkNumber',
+                    title: 'No STNK',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Bast',
+                    title: 'Bast',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirNumber',
+                    title: 'KIR Number',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirExpire',
+                    title: 'KIR Expiry Date',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'NopolNumber',
+                    title: 'Police Plate#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimNumber',
+                    title: 'SIM',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KtpNumber',
+                    title: 'KTP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Apar',
+                    title: 'APAR',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+
+                },
+                {
+                    field: 'EstimationTimePickup',
+                    title: 'ATP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Apd',
+                    title: 'APD',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+                },
+                {
+                    field: 'DaNo',
+                    title: 'DO Reference',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Status',
+                    title: 'Status',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: '',
+                    title: 'Document List',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    sortable: true,
+                    events: operateEventRight,
+                    formatter: function (data, row) {
+                        //if (row.FileName !== "" && row.FileName !== null) {
+                        //    var btnDownload = "<button class='btn btn-xs btn-success downloadarmadadoc' type='button'><i class='fa fa-download'></i></button>";
+                        //    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocumentarmadadoc' data-toggle='modal' data-target='#myModalUploadPreview' type='button'><i class='fa fa-file-pdf-o'></i></button>";
+                        //    return [btnDownload, btnPreview].join(' ');
+                        //} else {
+                        //    return "-";
+                        //}
+                        return "<button class='btn btn-xs btn-success ViewDocumentList' type='button' data-toggle='modal' data-target='#DocumentList' ><i class='fa fa-search'></i></button>";
+
+
+                    },
+                    class: 'text-nowrap'
+
+                }];
+
+            $tableArmadaHistory.bootstrapTable({
+                url: "/EMCS/GetDataByIdGrForHistory",
+                columns: columnArmadaHistory,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+
+                    return {
+                        Id: $('#IdGr').val(),
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                },
+            });
+            $($tableArmadaHistory).bootstrapTable('refresh')
+        }
+        $tableDocuments1 = $('#tableGrDocuments1');
+        var columnDocument1 = [
+            {
+                field: '',
+                title: 'Action',
+                halign: 'center',
+                align: 'center',
+                class: 'text-nowrap',
+                sortable: true,
+                formatter: function (data, row, index) {
+                    return "-";
+                },
+
+            },
+            {
+                field: 'Id',
+                title: 'No',
+                halign: 'center',
+                align: 'center',
+                class: 'text-nowrap',
+                sortable: true,
+                visible: false
+            },
+            {
+                field: 'IdGr',
+                title: 'RG Bast Id',
+                halign: 'center',
+                align: 'center',
+                class: 'text-nowrap',
+                sortable: true,
+                visible: false
+            },
+            {
+                field: 'DocumentDate',
+                title: 'Date',
+                halign: 'center',
+                align: 'left',
+                class: 'text-nowrap',
+                sortable: true,
+                formatter: function (data, row, index) {
+                    return moment(data).format("DD MMM YYYY");
+                }
+            },
+            {
+                field: 'DocumentName',
+                title: 'Document Name',
+                halign: 'center',
+                align: 'left',
+                class: 'text-nowrap',
+                sortable: true
+            },
+            {
+                field: 'Filename',
+                title: 'Attachment',
+                align: 'center',
+                valign: 'center',
+                halign: "center",
+                class: 'text-nowrap',
+                sortable: true,
+                events: operateEventRight,
+                formatter: function (data, row) {
+                    if (row.FileName !== "" && row.FileName !== null) {
+                        var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                        var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview1'><i class='fa fa-file-pdf-o'></i></button>";
+                        return [btnDownload, btnPreview].join(' ');
+                    }
+                    else {
+                        return "-";
+                    }
+                },
+                class: 'text-nowrap'
+            }];
+        $tableDocuments1.bootstrapTable({
+            columns: columnDocument1,
+            cache: false,
+            search: false,
+            striped: false,
+            clickToSelect: true,
+            reorderableColumns: true,
+            toolbar: '.toolbarDocument',
+            toolbarAlign: 'left',
+            onClickRow: selectRow,
+            showColumns: true,
+            showRefresh: false,
+            smartDisplay: false,
+            pagination: true,
+            sidePagination: 'client',
+            pageSize: '5',
+            formatNoMatches: function () {
+                return '<span class="noMatches">No data found</span>';
+            },
+            //responseHandler: function () {
+            //    return data;
+            //}
         });
-    });
-</script>
+        function get_Grdocumentviewlist() {
+            $.ajax({
+                url: '/EMCS/GetGRDocumentList',
+                data: {
+                    IdGr: $('#IdGr').val(),
+
+                },
+
+                cache: false,
+                async: false,
+                success: function (data, response) {
+                    
+                    var convert = GRDocumentConvert(data);
+                    convert.Id = 0;
+                    if (convert.length > 0) {
+                        $tableDocuments1.bootstrapTable('removeAll');
+                        $tableDocuments1.bootstrapTable('load', convert);
+                        $tableDocuments1.bootstrapTable('remove', convert.Id);
+
+
+                    } else {
+                        $tableDocuments1.bootstrapTable('removeAll');
+                    }
+                    convert.Id = 0;
+                },
+
+                error: function (e) {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Fail Get Data',
+                    })
+                }
+
+            })
+
+        }
+        function GRDocumentConvert(data) {
+
+            var array = new Array();
+            $.each(data, function (index, element) {
+                var arraydata = {
+                    Id: element.Id,
+                    IdGr: element.IdGr,
+                    DocumentDate: moment(element.DocumentDate).format("DD MMM YYYY"),
+                    DocumentName: element.DocumentName,
+                    Filename: element.Filename
+                }
+                array.push(arraydata);
+            })
+            return array;
+        }
+
+    </script>
+}

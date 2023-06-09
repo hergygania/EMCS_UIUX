@@ -19,6 +19,7 @@
         public decimal UnitPrice { get; set; }
 
         public string Currency { get; set; }
+        public string Qty { get; set; }
         public string CreateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string UpdateBy { get; set; }

@@ -23,11 +23,51 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
-                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false).FirstOrDefault();
+                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false && a.IsCancelled != 2).FirstOrDefault();
                 return data;
             }
         }
+        public static List<Data.Domain.EMCS.NpePeb> GetDataByIdForList(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false && a.IsCancelled != 2).ToList();
+                return data;
+            }
+        }
+        public static Data.Domain.EMCS.NpePeb GetByIdNpePeb(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.NpePebs.Where(a => a.Id == id && a.IsDelete == false && a.IsCancelled != 2).FirstOrDefault();
+                return data;
+            }
+        }
+        public static List<Data.Domain.UserAccess_Role> GetListUserRoles(string userId)
+        {
+            using (var db = new Data.EfDbContext())
+            {
+                var tb = db.UserAccess_Role.Where(c => c.UserID == userId).ToList();
+                return tb;
+            }
+        }
+        public static Data.Domain.EMCS.RequestCl GetStatusById(long id)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var IdCl = Convert.ToString(id);
+                    var requestCl = db.RequestCl.Where(a => a.IdCl == IdCl && a.IsDelete == false).FirstOrDefault();
+                    return requestCl;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
         public static dynamic NpePebList(GridListFilter crit)
         {
             try
@@ -71,20 +111,11 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 string strNpeDateSubmitToCustomOffice = "";
                 if (item.NpeDateSubmitToCustomOffice.HasValue)
                 {
                     strNpeDateSubmitToCustomOffice = item.NpeDateSubmitToCustomOffice.Value.ToString();
                 }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@Id", item.Id));
@@ -113,22 +144,11 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@UpdateDate", ""));
                 parameterList.Add(new SqlParameter("@IsDelete", false));
                 parameterList.Add(new SqlParameter("@RegistrationNumber", item.RegistrationNumber ?? ""));
-<<<<<<< HEAD
-<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
                 SqlParameter[] parameters = parameterList.ToArray();
 
                 // ReSharper disable once CoVariantArrayConversion
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 try
                 {
                     var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber , @NpeDateSubmitToCustomOffice", parameters).FirstOrDefault();
@@ -140,67 +160,6 @@ namespace App.Service.EMCS
                     throw ex;
                 }
                
-<<<<<<< HEAD
-            }
-        }
-
-        public static Data.Domain.EMCS.ReturnSpInsert UpdateNpePeb(Data.Domain.EMCS.NpePeb item)
-        {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
-            {
-                string strNpeDateSubmitToCustomOffice = "";
-                if (item.NpeDateSubmitToCustomOffice.HasValue)
-                {
-                    strNpeDateSubmitToCustomOffice = item.NpeDateSubmitToCustomOffice.Value.ToString();
-                }
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@Id", item.Id));
-                parameterList.Add(new SqlParameter("@IdCl", item.IdCl));
-                parameterList.Add(new SqlParameter("@AjuNumber", item.AjuNumber ?? ""));
-                parameterList.Add(new SqlParameter("@AjuDate", item.AjuDate.ToString()));
-                parameterList.Add(new SqlParameter("@NpeNumber", item.NpeNumber ?? ""));
-                parameterList.Add(new SqlParameter("@NpeDate", item.NpeDate.ToString()));
-                parameterList.Add(new SqlParameter("@Npwp", item.Npwp ?? ""));
-                parameterList.Add(new SqlParameter("@ReceiverName", item.ReceiverName ?? ""));
-                parameterList.Add(new SqlParameter("@PassPabeanOffice", item.PassPabeanOffice ?? ""));
-                parameterList.Add(new SqlParameter("@Dhe", item.Dhe));
-                parameterList.Add(new SqlParameter("@PebFob", item.PebFob));
-                parameterList.Add(new SqlParameter("@Valuta", item.Valuta ?? ""));
-                parameterList.Add(new SqlParameter("@DescriptionPassword", item.DescriptionPassword ?? ""));
-                parameterList.Add(new SqlParameter("@DocumentComplete", item.DocumentComplete.ToString()));
-                parameterList.Add(new SqlParameter("@Rate", item.Rate));
-                parameterList.Add(new SqlParameter("@WarehouseLocation", item.WarehouseLocation ?? ""));
-                parameterList.Add(new SqlParameter("@FreightPayment", item.FreightPayment));
-                parameterList.Add(new SqlParameter("@InsuranceAmount", item.InsuranceAmount));
-                parameterList.Add(new SqlParameter("@DraftPeb", item.DraftPeb));
-                parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
-                parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
-                parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
-                parameterList.Add(new SqlParameter("@UpdateDate", ""));
-                parameterList.Add(new SqlParameter("@IsDelete", false));
-                parameterList.Add(new SqlParameter("@RegistrationNumber", item.RegistrationNumber ?? ""));
-                parameterList.Add(new SqlParameter("@NpeDateSubmitToCustomOffice", strNpeDateSubmitToCustomOffice));
-
-                SqlParameter[] parameters = parameterList.ToArray();
-
-                try
-                {
-                    var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePeb_Update] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber , @NpeDateSubmitToCustomOffice", parameters).FirstOrDefault();
-                    return data;
-                }
-                catch (Exception ex)
-                {
-
-                    throw ex;
-                }
-
-=======
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.ReturnSpInsert>(" exec [dbo].[SP_NpePebInsert] @Id, @IdCl, @AjuNumber, @AjuDate, @NpeNumber, @NpeDate, @Npwp, @ReceiverName, @PassPabeanOffice, @Dhe, @PebFob, @Valuta, @DescriptionPassword, @DocumentComplete, @Rate, @WarehouseLocation, @FreightPayment, @InsuranceAmount, @Status, @DraftPeb, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @RegistrationNumber", parameters).FirstOrDefault();
-                return data;
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             }
         }
 
@@ -265,14 +224,110 @@ namespace App.Service.EMCS
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
                 {
                     db.DbContext.Database.CommandTimeout = 600;
-                    var status = item.Status ?? "";
+                    var status = item.Status;
                     var actionBy = SiteConfiguration.UserName;
                     var comment = item.Notes ?? "";
-                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "'");
+                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + itm.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "'");
                     return 1;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static long CancelNpePeb(Data.Domain.EMCS.NpePeb itm, Data.Domain.EMCS.CiplApprove item, string dml)
+        {
+            try
+            {
+                if (itm.IsCancelled == null)
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "CancelRequest" + "', @Notes='" + comment + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+                if (itm.IsCancelled == 0)
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "CancelApproval" + "', @Notes='" + "" + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+
+                else
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "Cancel" + "', @Notes='" + comment + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        public static long CancelAllNpePeb(Data.Domain.EMCS.NpePeb itm, Data.Domain.EMCS.CiplApprove item, string dml)
+        {
+            try
+            {
+                if (item.Status == "CancelRequest")
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+                else if (item.Status == "CancelApproval")
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+                else
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
             {
                 return 0;
             }
@@ -341,10 +396,6 @@ namespace App.Service.EMCS
                 return 1;
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
         public static bool NpePebHisOwned(long id, string userId)
         {
             using (var db = new Data.EmcsContext())
@@ -360,14 +411,24 @@ namespace App.Service.EMCS
                 return result;
             }
         }
+        public static long InsertCancelledDocument(long id, string fileName)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", id));
+                parameterList.Add(new SqlParameter("@FileName", fileName));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_InsertDocumentCancelled] @id, @FileName", parameters);
+                return 1;
+            }
+        }
 
 
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 
     }
 }

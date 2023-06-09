@@ -56,19 +56,9 @@ function ActionFormatter(value, row, index) {
   
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i>&nbsp;</button>');
     if (row.Status === "approve") {
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (row.DRID > 0) {
             htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
         }
-=======
-        htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
->>>>>>> 639d8d0 (Intial commit)
-=======
-        if (row.DRID > 0) {
-            htm.push('<button class="export-pdf btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Export To PDF"><i class="fa fa-file-pdf"></i>&nbsp; </button> ');
-        }
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     if (row.Status !== "reject" && row.Status !== "revise") {
         htm.push('<button class="approve btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i>&nbsp;</button> ');

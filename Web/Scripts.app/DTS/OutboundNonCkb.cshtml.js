@@ -70,7 +70,6 @@ window.operateEvents = {
         });
     },
     'click .edit': function (e, value, row, index) {
-        debugger;
         console.log(row.ID);
         window.location.href = myApp.root + 'DTS/FormOutbound?ID=' + row.ID;
     }

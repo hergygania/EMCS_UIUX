@@ -1,137 +1,54 @@
-﻿﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
 @{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     var mode = ViewBag.crudMode;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "BAST " + title;
 }
 @Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.css")
 @Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.themes.css")
+@Styles.Render("~/Content/EMCS/BootstrapTagsInput/bootstrap-tagsinput.css")
+@Styles.Render("~/Content/EMCS/BootstrapTagsInput/typeahead.css")
 @Styles.Render("~/Content/EMCS/Custom.css")
 <style>
-    .input-group-addon {
-        width: 50px;
-        background: #00C0EF;
-        border-color: #00ACD6;
-        color: white;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-radius: 0px 0.4285rem 0.4285rem 0px;
+    .stylearmada {
+        color: black;
+        border-radius: 11px;
+        height: 32px;
+        width: 92PX;
     }
-    .tabs {
-        font-size: 15px;
-        padding: 0px;
-        list-style: none;
-        background: #fff;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
-        display: inline-block;
-        border-radius: 50px;
-        position: relative;
-    }
-
-        .tabs a {
-            text-decoration: none;
-            color: #777;
-            padding: 10px 20px;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition-duration: 0.6s;
-        }
-
-            .tabs a.active {
-                color: #fff;
-            }
-
-            .tabs a i {
-                margin-right: 5px;
-            }
-
-        .tabs .selector {
-            height: 100%;
-            display: inline-block;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 1;
-            border-radius: 50px;
-            transition-duration: 0.6s;
-            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background: #05abe0;
-            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
-            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
-            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
-            box-shadow: 3px 5px #a8a8a8;
-        }
 </style>
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormGR" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="row">
         <div class="col-md-12">
             <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
-               
-                <nav class="tabs mb-4">
-                    <div class="selector"></div>
-                    <a href="#tab-task-rgbast" class="active" aria-controls="home" role="tab" data-toggle="tab">RG Bast</a>
-                    <a href="#tab-rgbastdocuments" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                </nav>
-                <!-- Tab panes -->
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tab-task-rgbast" aria-controls="home" role="tab" data-toggle="tab">RG Bast</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab-rgbastdocuments" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    </li>
+                </ul>
                 <div class="tab-content tabs-custom">
-                    <div role="tabpanel" class="tab-pane active" id="tab-task-rgbast">
-                        <div class="box">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <form>
-                                        <div class="">
+                    <div class="tab-pane active" id="tab-task-rgbast">
+                        <div class="form form-horizontal">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="col-md-12 col-sm-12 col-xs-6">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
                                                     @Html.TextBoxFor(m => m.Data.GrNo, new { @class = "form-control", @id = "GrNo", @readonly = "readonly", placeholder = "Goods Receive Number" })
                                                     <div>@Html.ValidationMessageFor(m => m.Data.GrNo)</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">PIC Name <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.PicName, new { @Id = "PicName", @class = "form-control required", placeholder = "PIC Name" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.PicName)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.PhoneNumber, new { @class = "form-control required", placeholder = "Phone Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.PhoneNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card# <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.KtpNumber, new { @class = "form-control required", placeholder = "KTP Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.KtpNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License# <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.SimNumber, new { @class = "form-control required", placeholder = "SIM Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.SimNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date# <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(m => m.Data.SimExpiryDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "License Expire Date" } })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.SimExpiryDate)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor #ID & Name <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
                                                     <select class="Vendor" name="data.Vendor" id="Vendor" required>
                                                         @if (!string.IsNullOrEmpty(Model.Data.Vendor))
                                                         {
@@ -143,85 +60,32 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor Address</label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
                                                     <textarea class="form-control" id="VendorAddress" readonly="readonly" name="VendorAddress" placeholder="Vendor Address" rows="3" cols="3">@(Model.Data.VendorAddress != "" ? Model.Data.VendorAddress : "") </textarea>
                                                     <div>@Html.ValidationMessageFor(m => m.Data.Vendor)</div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Type <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", placeholder = "Truck Type" })
+                                                <div class="col-md-8">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", @id = "VehicleType", placeholder = "Truck Type" })
                                                     <div>@Html.ValidationMessageFor(m => m.Data.VehicleType)</div>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Brand <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", placeholder = "Truck Merk" })
+                                                <div class="col-md-8">
+                                                    @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", @id = "VehicleBrand", placeholder = "Truck Merk" })
                                                     <div>@Html.ValidationMessageFor(m => m.Data.VehicleMerk)</div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-6">
-                                    <form id="LoginValidation">
-                                        <div class="">
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.StnkNumber, new { @class = "form-control required", placeholder = "STNK Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.StnkNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.KirNumber, new { @class = "form-control required", placeholder = "KIR Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.KirNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(m => m.Data.KirExpire, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "KIR Expire Date" } })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.KirExpire)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(m => m.Data.NopolNumber, new { @class = "form-control required", placeholder = "NOPOL Number" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.NopolNumber)</div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
-                                                    @Html.EditorFor(m => m.Data.EstimationTimePickup, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "Estimation Time Pickup Date" } })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.EstimationTimePickup)</div>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
-                                                <div class="col-md-10">
-                                                    @Html.DropDownListFor(m => m.Data.Apar, new SelectList(Model.YesNo, "Value", "Text"), new { @class = "js-states Apar form-control" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.Apar)</div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
-                                                <div class="col-md-10">
-                                                    @Html.DropDownListFor(m => m.Data.Apd, new SelectList(Model.YesNo, "Value", "Text"), new { @class = "js-states Apd form-control" })
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.Apd)</div>
-                                                </div>
-                                            </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point (B. Area) <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
                                                     <select class="select2" name="data.PickupPoint" id="PickupPoint" required>
                                                         @if (!string.IsNullOrEmpty(Model.Data.PickupPoint))
                                                         {
@@ -233,50 +97,264 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point Pic <span class="text-danger">*</span></label>
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
+
                                                     <select class="select2" name="data.PickupPic" id="PickupPic" required>
                                                         @if (!string.IsNullOrEmpty(Model.Data.PickupPic))
                                                         {
                                                             <option value="@Model.Data.PickupPic" selected>@Model.Data.PickupPic - @Model.Data.PickupPicName</option>
                                                         }
                                                     </select>
-                                                    <div>@Html.ValidationMessageFor(m => m.Data.PickupPoint)</div>
+                                                    <div>@Html.ValidationMessageFor(m => m.Data.PickupPic)</div>
+
+
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
-                                                <div class="col-md-10">
-                                                    @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @Placeholder = "Add Notes", @rows = "4", @cols = "4" })
+                                                <div class="col-md-8">
+                                                    @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @Placeholder = "Add Notes", @id = "Note", @rows = "4", @cols = "4" })
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div id="GetViewForArmada">
+                                        <div class="panel-group" role="tablist" aria-multiselectable="true">
+                                            <div class="panel panel-default">
+                                                @*<div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">*@
+
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li role="presentation" class="active">
+                                                        <a href="#tab-task-armada" aria-controls="home" role="tab" data-toggle="tab">Armada</a>
+                                                    </li>
+                                                </ul>
+                                                @*<h4 class="panel-title">
+                                                        <button class="stylearmada" style="background-color:darkorange">
+                                                            Armada
+                                                        </button>
+                                                    </h4>*@
+                                                @*</div>*@
+                                                <div class="panel-collapse" id="#tab-task-armada" role="tabpanel">
+                                                    <div class="panel-body">
+                                                        <div class="col-md-12 col-sm-12 col-xs-6">
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <div style="width:70px">
+                                                                    @Html.HiddenFor(m => m.ShippingFleet.Id, new { @Id = "ShippingFleetId", @class = "form-control ", placeholder = "ShippingFleetId", })
+                                                                    <input type="text" id="IdArmada" value="@Model.ShippingFleet.Id" hidden />
+                                                                    @Html.HiddenFor(m => m.ShippingFleet.IdCipl, new { @Id = "IdCipl", @class = "form-control ", placeholder = "IdCipl" })
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-xs-12">EDI No</label>
+                                                                    <div class="col-md-8" style="margin-bottom:5px;">
+                                                                        @if (ViewBag.IsRFC == true)
+                                                                        {
+                                                                            <select class="select2 DoNoRFC" readonly="readonly" multiple="multiple" style="width:100%;" id="DoNoRFC">
+                                                                            </select>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <select class="select2 DoNo" readonly="readonly" multiple="multiple" style="width:100%;" id="DoNo">
+                                                                            </select>
+                                                                        }
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">PIC Name <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.PicName, new { @Id = "PicName", @class = "form-control ", placeholder = "PIC Name" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.PicName)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.PhoneNumber, new { @Id = "PhoneNumber", @class = "form-control ", placeholder = "Phone Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.PhoneNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card# <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.KtpNumber, new { @Id = "KtpNumber", @class = "form-control ", placeholder = "KTP Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.KtpNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License# <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.SimNumber, new { @Id = "SimNumber", @class = "form-control ", placeholder = "SIM Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.SimNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date# <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.EditorFor(m => m.ShippingFleet.SimExpiryDate, new { htmlAttributes = new { @Id = "SimExpiryDate", @class = "form-control  date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "License Expire Date" } })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.SimExpiryDate)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.StnkNumber, new { @Id = "StnkNumber", @class = "form-control ", placeholder = "STNK Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.StnkNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Bast (UE)</label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.Bast, new { @Id = "Bast", @class = "form-control ", placeholder = "Bast" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.Bast)</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.KirNumber, new { @Id = "KirNumber", @class = "form-control ", placeholder = "KIR Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.KirNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.EditorFor(m => m.ShippingFleet.KirExpire, new { htmlAttributes = new { @Id = "KirExpire", @class = "form-control  date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "KIR Expire Date" } })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.KirExpire)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.NopolNumber, new { @Id = "NopolNumber", @class = "form-control ", placeholder = "NOPOL Number" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.NopolNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP <span class="text-danger">*</span></label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.EditorFor(m => m.ShippingFleet.EstimationTimePickup, new { htmlAttributes = new { @Id = "EstimationTimePickup", @class = "form-control  date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "Estimation Time Pickup Date" } })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.EstimationTimePickup)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.DropDownListFor(m => m.ShippingFleet.Apar, new SelectList(Model.ShippingFleet.YesNo, "Value", "Text", Model.ShippingFleet.Apar), new { @Id = "Apar", @class = "Apar  form-control" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.DropDownListFor(m => m.ShippingFleet.Apd, new SelectList(Model.ShippingFleet.YesNo, "Value", "Text", Model.ShippingFleet.Apd), new { @Id = "Apd", @class = "Apd  form-control" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3 col-xs-12">DO Reference</label>
+                                                                    <div class="col-md-8">
+                                                                        @Html.TextBoxFor(m => m.ShippingFleet.DaNo, new { @class = "form-control", @id = "DaNo", placeholder = "DO Reference/ DA Number", data_role = "tagsinput", autocomplete = "off" })
+                                                                        <div>@Html.ValidationMessageFor(m => m.ShippingFleet.DaNo)</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="box-footer text-right" style="margin-top:268px">
+                                                            @*@if (ViewBag.CrudMode == "U")
+                                                                {
+                                                                    <a class="btn btn-primary stylearmada" style="background-color:darkorange" onclick="ShippingFleetItemTable()" id="add">Edit Item</a>
+                                                                }
+                                                                else
+                                                                {*@
+                                                            @*<a class="btn btn-warning" data-target="myModalItem" onclick="ShippingFleetItemTable()" id="add"><i class="fa fa-plus"></i>Add Item</a>*@
+                                                            @*}*@
+                                                            @if (ViewBag.IsApprover)
+                                                            {
+                                                                <a class=" btn btn-success" onclick="SaveArmadaByApprover()"><i class="fa fa-pencil"></i>Save</a>
+                                                            }
+                                                            else if (ViewBag.IsRFC)
+                                                            {
+                                                                <a class=" btn btn-success" onclick="SaveArmadaForRFC()"><i class="fa fa-pencil"></i>Save</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class=" btn btn-success" id="AddArmada" onclick="SavePreviousArmada()" value="Armada_"><i class="fa fa-pencil"></i>Save</a>
+                                                            }
+                                                            <a class="btn btn-default btn-outline-secondary" onclick="remove()"> Cancel </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        @if (ViewBag.IsRFC)
+                                        {
+                                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmada"></table>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="">
+                                                        <div class="fa-pull-left" style="padding-right:2px">
+                                                            <h4>Requested Change</h4>
+                                                        </div>
+                                                    </div>
+                                                    <table class="table table-bordered" id="tablearmadaForRFC" data-maintain-selected="true" data-unique-id="Id" data-checkbox="true"></table>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmada"></table>
+
+                                        }
+
+                                    </div>
+                                    <div class="col-md-12">&nbsp;</div>
                                 </div>
-                            </div>
-                            <div class="col-md-12 mt-5">
-                                <div class="toolbar" id="toolbar">
-                                    <button id="btnAddItem" type="button" class="btn btn-success btn-round"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button>
-                                    <a data-modal="myModalPlace" id="linkAddItem" class="btn btn-success btn-sm" href="/EMCS/CreateGrItem" style="display:none;"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</a>
+                                <div class="box-footer text-right">
+                                    <input type="hidden" id="Status" name="data.Status" value="Draft" />
+                                    @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
+                                    @Html.HiddenFor(m => m.Data.Id, new { @class = "Id", @Id = "Id" })
+                                    @if (ViewBag.IsApprover)
+                                    {
+                                        <div class="" role="group">
+                                            <button type="button" class="btn btn-success" id="btnApproveSave"><i class="fa fa-paper-plane"></i> Save changes & Approve</button>
+                                            <a href="/emcs/mytask" class="btn btn-primary"><i class="fa fa-times"></i> Cancel</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/emcs/Grlist" class="btn btn-default btn-outline-secondary" style="width:120px;"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Back</a>
+                                        if (ViewBag.IsRFC)
+                                        {
+                                            <button type="button" id="RFCRG" style="width: 200px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Request For Change</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" id="BtnDraft" class="btn btn-info" value="0"><i class="fa fa-save"></i>&nbsp;Save as Draft</button>
+
+                                        }
+
+                                    }
+
+                                    @{
+                                        if (ViewBag.IsOwned == true && ViewBag.IsRFC == false)
+                                        {
+                                            <button type="submit" id="BtnSubmit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                        }
+                                    }
                                 </div>
-                                <table class="table table-striped table-bordered" id="TblGoodReceive"></table>
-                            </div>
-                            <div class="text-right mt-5">
-                                <input type="hidden" id="Status" name="data.Status" value="Draft" />
-                                @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
-                                @Html.HiddenFor(m => m.Data.Id, new { @class = "Id", @Id = "Id" })
-                                <a href="~/emcs/Grlist" class="btn btn-warning btn-round"><i class="fa fa-arrow-circle-left"></i>&nbsp;Back</a>
-                                <button type="button" id="BtnDraft" class="btn btn-primary btn-round"><i class="fa fa-save"></i>&nbsp;Save as Draft</button>
-                                <button type="submit" id="BtnSubmit" class="btn btn-success btn-round"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
                             </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tab-rgbastdocuments">
-                        <div class="box">
+                        <div class="row">
                             <div class="col-xs-12 table-responsive">
                                 <div class="toolbarDocument" id="toolbarDocument">
-                                    <button type="button" class="btn btn-success btn-md btnAddItem btn-round" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> Add New</button>
+                                    <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
                                 </div>
-                                <div class="">
+                                <div class="row">
                                     <div class="col-xs-12 table-responsive">
                                         <table id="tablegrDocuments" data-toolbar=".toolbar" class="table table-bordered" data-toggle="table"></table>
                                     </div>
@@ -285,40 +363,37 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-
-
-    <div id="myModalDocument" class="modal fade " role="dialog">
+    <div id="myModalDocument" class="modal fade in" role="dialog">
         <div class="modal-dialog modal-lg" style="width:800px">
             <div class="modal-content">
-                <form id="FormDocument" role="form">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add Document</h4>
-                    </div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Document</h4>
+                </div>
+                <form id="FormDocument">
                     <div class="modal-body">
                         <div class="row" id="formeditreference">
                             <div class="col-lg-12">
                                 <div class="form-group hidden">
                                     <label class="control-label col-md-3 col-xs-12">IdDocument</label>
                                     <div class="input-group col-md-9 col-xs-12">
-                                        <input type="text" class="form-control" id="Id" name="Id">
+                                        <input type="text" class="form-control" id="IdGrDocument" name="IdGrDocument">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-xs-12">Document Date</label>
-                                    <div class="input-group col-md-10 col-xs-12">
+                                    <div class="input-group col-md-9 col-xs-12">
+                                        <span class="input-group-addon cal-doc-date"><i class="glyphicon glyphicon-calendar"></i></span>
                                         <input class="form-control date required" id="inp-doc-date" name="inp-doc-date" placeholder="Date" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
-                                        <div class="input-group-addon cal-doc-date" style="background: #00C0EF; border-color: #00ACD6;">
-                                            <i class="fa fa-calendar" style="color: #FFFFFF;"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-xs-12">Document Name</label>
-                                    <div class="col-md-10 col-xs-12">
+                                    <div class="input-group col-md-9 col-xs-12">
                                         <input type="text" class="form-control" id="DocumentName" name="DocumentName">
                                     </div>
                                 </div>
@@ -326,32 +401,63 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success btn-round btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                        <button type="button" class="btn btn-primary btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div id='myModalPlace' class='modal fade '>
+    <div id='myModalPlace' class='modal fade in'>
         <div class="modal-dialog" style="width:800px">
             <div class="modal-content">
                 <div id='myModalContent'></div>
             </div>
         </div>
     </div>
+    <div id='myModalItem' class='modal fade in'>
+        <div class="modal-dialog" style="width: 1526px;height: 220px;">
+            <div class="modal-content" style=" height: auto;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group" style="margin-bottom:40px !important;">
+                            <div>
+                                <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaitem"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="progress" class="text-center" style="display: none;">
+                        <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
+                        Wait..
+                    </span>
+                    <button type="button" class="btn btn-default" onclick="Close()" style="width:120px;" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
 
-    <div id='myModalPreview' class='modal fade '>
+                    <button type="submit" onclick="SaveItem()" class="btn btn-success" id="saveitem" style="width:120px;"><i class="fa fa-save"></i>Save</button>
+
+
+                </div>
+                @*<div class="modal-content"style=" height: 300px; width: 1637pX; MARGIN-LEFT: -391PX;">
+                        <div>
+                            <table class="table table-bordered" data-maintain-selected="true" data-unique-id="Id" id="tablearmadaitem"></table>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+    </div>
+    <div id='myModalPreview' class='modal fade in'>
         <div class="modal-dialog" style="width:800px">
             <div class="modal-content">
                 <div id='myModalPreviewContent'></div>
             </div>
         </div>
     </div>
-    <div id='myModalUploadPlace' class='modal fade '>
+    <div id='myModalUploadPlaceArmadaByApprover' class='modal fade in'>
         <div class="modal-dialog" style="width:800px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onclick="Closeuploadmodel()" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
@@ -359,7 +465,69 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentArmadaContainerByApprover">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                            <div class="input-group col-md-9 col-xs-12">
+                                <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="Closeuploadmodel()" data-dismiss="modal">Close</button>
+                </div>
+
+                <div id="template-dropzone2" class="hidden">
+                    <div id="template" class="file-row text-left" style="padding:20px;">
+                        <!-- This is used as the file preview template -->
+                        <div class="col-md-2">
+                            <div class="row">
+                                <span class="preview">
+                                    <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="size" data-dz-size></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalUploadPlaceArmadaForRFC' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="Closeuploadmodel()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentArmadaContainerForRFC">
                             </div>
                         </div>
                         <div class="form-group hidden">
@@ -372,6 +540,130 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+                <div id="template-dropzone1" class="hidden">
+                    <div id="template" class="file-row text-left" style="padding:20px;">
+                        <!-- This is used as the file preview template -->
+                        <div class="col-md-2">
+                            <div class="row">
+                                <span class="preview">
+                                    <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="size" data-dz-size></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalUploadPlaceArmada' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="Closeuploadmodel()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentArmadaContainer">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                            <div class="input-group col-md-9 col-xs-12">
+                                <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="Closeuploadmodel()" data-dismiss="modal">Close</button>
+                </div>
+
+                <div id="template-dropzone1" class="hidden">
+                    <div id="template" class="file-row text-left" style="padding:20px;">
+                        <!-- This is used as the file preview template -->
+                        <div class="col-md-2">
+                            <div class="row">
+                                <span class="preview">
+                                    <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="size" data-dz-size></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalUploadPlace' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" onclick="Closeuploadmodel()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocument">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                            <div class="input-group col-md-9 col-xs-12">
+                                <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="Closeuploadmodel()" data-dismiss="modal">Close</button>
                 </div>
 
                 <div id="template-dropzone" class="hidden">
@@ -409,7 +701,7 @@
             </div>
         </div>
     </div>
-    <div id='myModalUploadPreview' class='modal fade '>
+    <div id='myModalUploadPreview' class='modal fade in'>
         <div class="modal-dialog" style="width:800px">
             <div class="modal-content">
                 <div class="modal-header">
@@ -443,7 +735,9 @@
             </div>
         </div>
     </div>
-
+    @*<a data-modal="" href="/EMCS/UpdateArmada/1&IdGr=0" class="editArmada" style="display:none;">
+            <i class="fa fa-edit"></i> Update Item
+        </a>*@
     <a data-modal="myModalPlace" href="/EMCS/UpdateGrItem/1" class="editRecord" style="display:none;">
         <i class="fa fa-edit"></i> Update Item
     </a>
@@ -456,7 +750,6 @@
     <a href="/EMCS/DownloadGrItem/1" class="downloadFile" style="display:none;">
         <i class="fa fa-edit"></i> Download Item
     </a>
-
     @Html.HiddenFor(m => m.Data.CreateBy)
     @Html.HiddenFor(m => m.Data.CreateDate)
     @Html.HiddenFor(m => m.Data.UpdateBy)
@@ -464,49 +757,1789 @@
     @Html.HiddenFor(m => m.Data.IsDelete)
 }
 <input type="hidden" name="HideAction" id="HideAction" value="true" />
+<input type="hidden" id="DoNoText" value="true" />
+<input type="hidden" name="method" id="Method" value="0" />
+<input type="hidden" name="IdSaveChange" id="IdSaveChange" value="0" />
+<input type="hidden" name="IsRFC" id="IsRFC" value="@ViewBag.IsRFC" />
+
 @Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
 @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+@Scripts.Render("~/Content/EMCS/BootstrapTagsInput/bootstrap-tagsinput.js")
+@Scripts.Render("~/Content/EMCS/BootstrapTagsInput/typeahead.bundle.js")
 @section Scripts{
     @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
     <script>
         var $hideAction = $("#HideAction").val();
+        var _DoNoTemp = [];
+        var _ajaxBast = null;
         $(document).ready(function () {
-            debugger
-            //load_data_tablegr();
-            get_grdocumentlist();
-        });
 
+            $('#IsRFC').val("@ViewBag.IsRFC");
+            $.ajax({
+                url: '/EMCS/GetListArmada',
+                data: {
+                    IdGr: $('#IdGr').val(),
+                    Id: 0
+                },
+                success: function (data) {
+
+                    if (data.length > 0) {
+
+                        //$('#PickupPoint').attr("disabled", true);
+                        //$('#PickupPic').attr("disabled", true);
+                    }
+                }
+            })
+            $('#BtnDraft').val("1");
+            tablearmada();
+            tablearmadaForRFC();
+            get_grdocumentlist();
+            $('input#Bast').tagsinput({
+                tagClass: 'tag-input',
+                trimValue: true,
+                allowDuplicates: false,
+            });
+            $('input#DaNo').tagsinput({
+                tagClass: 'tag-input',
+                trimValue: true,
+                allowDuplicates: false,
+                typeaheadjs: {
+                    minLength: 3,
+                    name: 'data',
+                    source: function (query, process, cb) {
+                        if (query.length > 2) {
+                            return $.get(myApp.fullPath + "EMCS/GetDaNumber", {
+                                term: query
+                            }, function (data) {
+                                var response = [];
+                                $.map(data.data, function (item) {
+                                    response.push(item.text);
+                                });
+                                cb(response)
+                            });
+                        }
+                    }
+                }
+            });
+            $('#DoNo').on('change', function (e) {
+                var _DoNoNewValue = [];
+                if (_DoNoTemp.length > 0 && $('#DoNo').val()) {
+                    _DoNoNewValue = ($('#DoNo').val()).filter(_val => {
+                        return _DoNoTemp.indexOf(_val) == -1;
+                    });
+                } else {
+                    _DoNoNewValue = $('#DoNo').val();
+                }
+
+                if (_DoNoNewValue && _DoNoNewValue.length > 0) {
+                    _ajaxBast = $.ajax({
+                        type: 'POST',
+                        url: myApp.fullPath + "EMCS/GetDataBast",
+                        data: { idCipl: _DoNoNewValue.concat(['0']).join(';') },
+                        dataType: 'JSON',
+                        success: (res) => {
+                            res.data.forEach((_bast) => {
+                                $('#Bast').tagsinput('add', _bast.text);
+                            });
+                        }
+                    });
+                }
+                _DoNoTemp = $('#DoNo').val() || [];
+            });
+        });
+        var getpopup = false;
+        var DoNoText = "";
+        var popupsave = false;
+        var listciplitem = [];
+        var text = [];
+        var getid = [];
+        function Closeuploadmodel() {
+            $('#myModalUploadPlace').hide();
+            tablearmada();
+        }
+        function getIdcipl() {
+            text = $('#DoNoText').val().split(',');
+            for (var i = 0; i < text.length; i++) {
+                for (var j = 0; j < $('#DoNo > option').length; j++) {
+                    if ($('#DoNo > option')[j].innerText == text[i]) {
+
+                        getid.push($('#DoNo > option')[j].value);
+                    }
+                }
+            }
+        }
+        function remove() {
+
+            //$("#add").html($("#add").html().replace("Edit Item", "Add Item"));
+            for (var i = 0; i = $('.select2-selection__rendered .select2-selection__choice').length; i++) {
+                $('.select2-selection__choice__remove').click()
+
+            }
+            $('#IdArmada').val(null);
+            $('#DoNoText').val(null)
+            $('#PicName').val(null)
+            $('#PhoneNumber').val(null)
+            $('#KtpNumber').val(null)
+            $('#SimNumber').val(null)
+            $('#SimExpiryDate').val(null)
+            $('#StnkNumber').val(null)
+            $('#KirNumber').val(null)
+            $('#KirExpire').val(null)
+            $('#NopolNumber').val(null)
+            $('#EstimationTimePickup').val(null)
+            $('#Apar').val('False')
+            $('#Apd').val('False')
+            $('#DaNo').tagsinput('removeAll');
+            $('#Bast').tagsinput('removeAll');
+        }
+        function Close() {
+            ciplitemids = [];
+            $('#myModalItem').hide();
+        }
+        $('#PickupPic').on('change', function () {
+            if ($('#IsRFC').val() != "True") {
+                if ($('#GrNo').val() == null || $('#GrNo').val() == '') {
+                    $("#BtnDraft").val("0");
+                    $("#BtnDraft").trigger('click');
+                    $("#BtnDraft").val("1");
+                }
+                else {
+                    var objModel = {
+                        Id: $("#IdGr").val(),
+                        PickupPoint: $("#PickupPoint").val(),
+                        PickupPic: $("#PickupPic").val()
+                    }
+                    $.ajax({
+                        url: "/EMCS/UpdateGr",
+                        type: 'Post',
+                        data: objModel,
+                    })
+                }
+            }
+
+        })
+        $('#PickupPoint').on('change', function () {
+            $('#PickupPic').val(null);
+            dono = $('.DoNo').val();
+            if (dono != null && dono != undefined && dono != "") {
+                for (var i = 0; i < dono.length; i++) {
+                    $('.select2-selection__choice__remove').click()
+                }
+                $('#DoNo').val(null);
+                $('#DoNoText').val(null);
+            }
+        })
+        $(".DoNo").select2({
+            placeholder: '  Select Do No',
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "/EMCS/GetDataEdoList",
+                type: "GET",
+                data: function (params) {
+
+                        var IdCipl = $("#DoNo").val();
+                        if (IdCipl) {
+                            IdCipl = IdCipl.join(',');
+                        }
+                        var query = {
+                            Id: $("#IdGr").val(),
+                            PickupPoint: $("#PickupPoint").val(),
+                            PickupPic: $("#PickupPic").val(),
+                        }
+                        return query;
+
+                },
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    var options = [];
+                    $.map(data.data, function (obj) {
+                        var item = {};
+                        item.id = obj.Id;
+                        item.text = obj.EdoNo;
+                        options.push(item);
+                    });
+
+                    var reduced = options.reduce(function (filtered, option) {
+                        var comp = $("#DoNo").data("select2").selection.$search;
+                        if (comp != undefined) {
+                            var term = $("#DoNo").data("select2").selection.$search.val();
+                            if (option.text.toLowerCase().includes(term)) {
+                                var newVal = { id: option.id, text: option.text }
+                                filtered.push(newVal);
+                            }
+                            return filtered;
+                        } else {
+                            return reduced = [];
+                        }
+                    }, []);
+
+                    if (reduced.length > 0) {
+                        return {
+                            results: reduced
+                        };
+                    } else {
+                        return {
+                            results: options
+                        };
+                    }
+                }
+            }
+        });
+        $(".DoNoRFC").select2({
+            placeholder: '  Select Do No',
+            width: "100%",
+            tags: false,
+            ajax: {
+                url: "/EMCS/GetDataDonoListForRFC",
+                type: "GET",
+                data: function (params) {
+                    var model = {
+                        Id: $("#IdGr").val(),
+                        PickUpArea: $("#PickupPoint").val(),
+                        PickUpPic: $("#PickupPic").val(),
+                    }
+                    return model;
+                },
+
+                processResults: function (data) {
+                    // Transforms the top-level key of the response object from 'items' to 'results'
+                    var options = [];
+                    $.map(data.data, function (obj) {
+                        var item = {};
+                        item.id = obj.Id;
+                        item.text = obj.EdoNo;
+                        options.push(item);
+                    });
+
+                    var reduced = options.reduce(function (filtered, option) {
+                        var comp = $("#DoNo").data("select2").selection.$search;
+                        if (comp != undefined) {
+                            var term = $("#DoNo").data("select2").selection.$search.val();
+                            if (option.text.toLowerCase().includes(term)) {
+                                var newVal = { id: option.id, text: option.text }
+                                filtered.push(newVal);
+                            }
+                            return filtered;
+                        } else {
+                            return reduced = [];
+                        }
+                    }, []);
+
+                    if (reduced.length > 0) {
+                        return {
+                            results: reduced
+                        };
+                    } else {
+                        return {
+                            results: options
+                        };
+                    }
+                }
+            }
+        });
+        function tablearmada() {
+            $tablearmada = $('#tablearmada');
+            var columnArmada = [
+
+                {
+                    field: '',
+                    title: 'Action',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    events: operateEvents,
+                    formatter: function () {
+                        var btnEdit = "<button type='button' class='btn btn-xs editarmada btn-primary'><i class='fa fa-edit'></i></button>";
+                        var btnRemove = "<button type='button' class='btn btn-xs removearmada btn-danger'><i class='fa fa-times'></i></button>";
+                        // var btnView = "<button type='button' class='btn viewarmada btn-xs btn-default'><i class='fa fa-search'></i></button>";
+                        var btnUpload = "<button type='button' class='btn btn-xs uploadarmadadocument btn-info' data-toggle='modal' data-target='#myModalUploadPlaceArmada' ><i class='fa fa-upload'></i></button>";
+                        var elm = ["<div>", btnEdit, btnRemove, btnUpload, "</div>"];
+                        return elm.join(" ");
+                    }
+                },
+                {
+                    field: 'DoNo',
+                    title: 'Edi No.',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PicName',
+                    title: 'PIC Name',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PhoneNumber',
+                    title: 'Contact',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimExpiryDate',
+                    title: 'License Expiry Date#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'StnkNumber',
+                    title: 'No STNK',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                //{
+                //    field: 'Bast',
+                //    title: 'Bast',
+                //    halign: 'center',
+                //    align: 'center',
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //},
+                {
+                    field: 'KirNumber',
+                    title: 'KIR Number',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirExpire',
+                    title: 'KIR Expiry Date',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Bast',
+                    title: 'Bast',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'NopolNumber',
+                    title: 'Police Plate#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimNumber',
+                    title: 'SIM',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    //formatter: function (data, row, index) {
+                    //    return moment(data).format("DD MMM YYYY");
+                    //}
+                },
+                {
+                    field: 'KtpNumber',
+                    title: 'KTP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Apar',
+                    title: 'APAR',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+
+                },
+                {
+                    field: 'EstimationTimePickup',
+                    title: 'ATP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Apd',
+                    title: 'APD',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+                },
+                {
+                    field: 'DaNo',
+                    title: 'DO Reference',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                //{
+                //    field: '',
+                //    title: 'AAA',
+                //    halign: 'center',
+                //    align: 'center',
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //},
+                //{
+                //    field: '',
+                //    title: 'Attachment',
+                //    align: 'center',
+                //    valign: 'center',
+                //    halign: "center",
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //},
+                {
+                    field: 'FileName',
+                    title: 'Attachment',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    sortable: true,
+                    events: operateEventRight,
+                    formatter: function (data, row) {
+                        if (row.FileName !== "" && row.FileName !== null) {
+                            var btnDownload = "<button class='btn btn-xs btn-success downloadarmadadoc' type='button'><i class='fa fa-download'></i></button>";
+                            var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocumentarmadadoc' data-toggle='modal' data-target='#myModalUploadPreview' type='button'><i class='fa fa-file-pdf-o'></i></button>";
+                            return [btnDownload, btnPreview].join(' ');
+                        } else {
+                            return "-";
+                        }
+                    },
+                    class: 'text-nowrap'
+
+                }];
+
+            $tablearmada.bootstrapTable({
+                url: "/EMCS/GetListArmada",
+                columns: columnArmada,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+
+                    return {
+                        IdGr: $('#IdGr').val(),
+                        Id: 0,
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                },
+                success: function (data) {
+
+                }
+            });
+            $($tablearmada).bootstrapTable('refresh')
+
+
+        }
+        function deletearmada(Id, IdGr) {
+
+            $.ajax({
+                url: '/EMCS/DeleteArmada',
+                type: 'Post',
+                data: {
+                    Id: Id,
+                    IdGr: IdGr,
+                    IsRFC: $('#IsRFC').val()
+                },
+                success: function (data) {
+
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Data Delete SuccessFully'
+                    })
+
+                    remove();
+                    tablearmada();
+                    tablearmadaForRFC()
+                }
+
+            })
+        }
+        function editArmada(row) {
+            remove();
+            $.ajax({
+                url: '/EMCS/GetDoList',
+                data: {
+                    picuppoint: $("#PickupPoint").val(),
+                    picuppic: $("#PickupPic").val(),
+                    Id: row.IdGr
+                },
+                success: function (data1) {
+                    $.ajax({
+                        url: '/EMCS/UpdateArmada',
+                        data: {
+                            Id: row.Id,
+                            IdGr: 0,
+                        },
+                        success: function (data) {
+                            var donotext = [];
+                            donotext = data[0].DoNo.split(',');
+                            var listciplitem = [];
+                            for (var i = 0; i < donotext.length; i++) {
+                                for (var j = 0; j < data1.length; j++) {
+                                    if (donotext[i] == data1[j].EdoNo) {
+
+                                        listciplitem.push(data1[j])
+                                    }
+                                }
+
+                            }
+                            //$("#add").html($("#add").html().replace("Add Item", "Edit Item"));
+                            if ($('#IsRFC').val() == "True") {
+                                $("#DoNoRFC option").each(function () {
+                                    $(this).remove();
+                                });
+                                jQuery.each(listciplitem, function (index, value) {
+                                    $("#DoNoRFC").append(new Option(value.EdoNo, value.Id, false, true)).trigger("change");
+                                });
+                            }
+                            else {
+                                $("#DoNo option").each(function () {
+                                    $(this).remove();
+                                });
+                                jQuery.each(listciplitem, function (index, value) {
+                                    $("#DoNo").append(new Option(value.EdoNo, value.Id, false, true)).trigger("change");
+                                });
+                            }
+
+                            var SimExpiryDate = moment(data[0].SimExpiryDate).format("DD MMM YYYY");
+                            var KirExpire = moment(data[0].KirExpire).format("DD MMM YYYY");
+                            var EstimationTimePickup = moment(data[0].EstimationTimePickup).format("DD MMM YYYY");
+                            $('#DoNoText').val(data[0].DoNo);
+                            $('#PicName').val(data[0].PicName)
+                            $('#PhoneNumber').val(data[0].PhoneNumber)
+                            $('#KtpNumber').val(data[0].KtpNumber)
+                            $('#SimNumber').val(data[0].SimNumber)
+                            $('#SimExpiryDate').val(SimExpiryDate)
+                            $('#StnkNumber').val(data[0].StnkNumber)
+                            $('#KirNumber').val(data[0].KirNumber)
+                            $('#KirExpire').val(KirExpire)
+                            $('#NopolNumber').val(data[0].NopolNumber)
+                            $('#EstimationTimePickup').val(EstimationTimePickup)
+                            $('#IdArmada').val(data[0].Id);
+                            if (data[0].Apar == true) {
+                                $('#Apar').val('True');
+                            }
+                            else {
+                                $('#Apar').val('False');
+                            }
+                            if (data[0].Apd == true) {
+                                $('#Apd').val('True')
+                            }
+                            else {
+                                $('#Apd').val('False')
+                            }
+                            $('#DaNo').tagsinput('add', data[0].DaNo);
+                            $('#Bast').tagsinput('add', data[0].Bast);
+                            listciplitem = [];
+                        }
+                    })
+                }
+            })
+        }
+        function ShippingFleetItemTable() {
+
+            var IdCipl = "";
+            if ($('#GrNo').val() != null && $('#GrNo').val() != '') {
+                var idcipl = $('#DoNo').val();
+                if (idcipl == null && $('#IdArmada').val() != null && $('#IdArmada').val() != undefined) {
+                    getIdcipl();
+                    idcipl = getid;
+                }
+                IdCipl = idcipl.join(',');
+                if (IdCipl == "") {
+                    IdCipl = 0;
+                }
+                text = [];
+                getid = [];
+                idgr = $('#IdGr').val();
+                idShippingFleet = $('#IdArmada').val();
+                if (idShippingFleet == "" || idShippingFleet == undefined || idShippingFleet == '0') {
+                    idShippingFleet = 0;
+                    $('#Method').val(null);
+                }
+                else {
+                    $('#Method').val("Edit");
+                }
+                $('#IdArmada').val(idShippingFleet);
+                if (IdCipl != 0) {
+                    $('#IdCipl').val(IdCipl);
+
+                    $tablearmadaitem = $('#tablearmadaitem');
+
+                    var columnarmadaitem = [
+                        [
+
+                            {
+                                field: "State",
+                                title: "Select Item",
+                                rowspan: 2,
+                                events: operateEvents,
+                                formatter: function (data, row, index) {
+
+                                    if (row.IdShippingFleet > 0) {
+                                        return "<button type='button' class='btn btn-xs btn-danger removeItem' value='" + row.Id + "' title='Delete'><i class='fa fa-trash-o'></i></button>";
+                                    }
+                                    else {
+                                        return "<input type='checkbox' value='" + row.Id + "' class='checkitem' >";
+                                    }
+                                }
+                            },
+                            {
+                                field: "CiplNo",
+                                title: "No.",
+                                align: "center",
+                                halign: "center",
+                                rowspan: 2,
+                                sortable: true,
+                                formatter: runningFormatterNoPaging
+                            },
+                            {
+                                field: "Name",
+                                title: "Name",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            }, {
+                                field: "Quantity",
+                                title: "Quantity",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            }, {
+                                field: "UnitUom",
+                                title: "UOM",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true,
+                                formatter: function (value, row, index) {
+                                    return row.UnitUom;
+                                }
+                            }, {
+                                field: "PartNumber",
+                                title: "Part Number",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "Sn",
+                                title: "Sn",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "JCode",
+                                title: "J-Code",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "Ccr",
+                                title: "CCR",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "CaseNumber",
+                                title: "Case Number",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "ASNNumber",
+                                title: "ASN Number",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true
+                            },
+                            {
+                                field: "Category",
+                                title: "Type",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true,
+                            }, {
+                                field: "UnitPrice",
+                                title: "Unit Price",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true,
+                                formatter: function (value, row, index) {
+                                    return row.UnitPrice;
+                                }
+                            }, {
+                                field: "ExtendedValue",
+                                title: "Extended Value",
+                                rowspan: 2,
+                                align: 'center',
+                                sortable: true,
+                                filterControl: true,
+                                formatter: function (value, row, index) {
+                                    return row.ExtendedValue;
+                                }
+                            }, {
+                                field: "dimension",
+                                title: "Dimension (In CM)",
+                                colspan: 3,
+                                align: 'center',
+                                sortable: true,
+                                filterControl: true
+                            }, {
+                                field: "Volume",
+                                title: "Volume",
+                                colspan: 1,
+                                align: 'center',
+                                sortable: true,
+                                filterControl: true
+                            }, {
+                                field: "NetWeight",
+                                title: "Net Weight",
+                                colspan: 1,
+                                align: 'right',
+                                sortable: true,
+                                filterControl: true
+                            }, {
+                                field: "GrossWeight",
+                                title: "Gross Weight",
+                                colspan: 1,
+                                align: 'right',
+                                sortable: true,
+                                filterControl: true
+                            }],
+                        [{
+                            field: "Length",
+                            title: "Length",
+                            sortable: true,
+                            align: 'center',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.Length;
+                            }
+                        }, {
+                            field: "Width",
+                            title: "Width",
+                            sortable: true,
+                            align: 'center',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.Width;
+                            }
+                        }, {
+                            field: "Height",
+                            title: "Height",
+                            sortable: true,
+                            align: 'center',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.Height;
+                            }
+                        }, {
+                            field: "m3",
+                            title: "(m3)",
+                            sortable: true,
+                            align: 'center',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.Volume;
+                            }
+                        }, {
+                            field: "NetWeight",
+                            title: "in KGa",
+                            sortable: true,
+                            align: 'right',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.NetWeight;
+                            }
+                        }, {
+                            field: "GrossWeight",
+                            title: "in KGa",
+                            sortable: true,
+                            align: 'right',
+                            filterControl: true,
+                            formatter: function (value, row, index) {
+                                return row.GrossWeight;
+                            }
+                        }
+                        ]
+                    ];
+                    if ($('#Method').val() == "Edit") {
+                        $tablearmadaitem.bootstrapTable('showColumn', 'State');
+                    }
+                    if ($('#Method').val() == "View") {
+                        $tablearmadaitem.bootstrapTable('hideColumn', 'State');
+                    }
+                    if ($('#Method').val() == null || $('#Method').val() == "") {
+                        $tablearmadaitem.bootstrapTable('showColumn', 'State');
+                    }
+                    $tablearmadaitem.bootstrapTable({
+                        url: "/EMCS/GetCiplAvailableForShippingFleet",
+                        columns: columnarmadaitem,
+                        pagination: false,
+                        cache: false,
+                        search: false,
+                        striped: false,
+                        clickToSelect: true,
+                        reorderableColumns: true,
+                        toolbar: '.toolbararmadaitem',
+                        toolbarAlign: 'left',
+                        queryParams: function (params) {
+                            return {
+                                Method: $('#Method').val(),
+                                IdCipl: $('#IdCipl').val(),
+                                IdGr: idgr,
+                                IdShippingFleet: $('#IdArmada').val()
+                            };
+                        },
+                        onClickRow: selectRow,
+                        showColumns: false,
+                        showRefresh: false,
+                        smartDisplay: false,
+                        formatNoMatches: function () {
+                            return '<span class="noMatches">Not Data Found</span>';
+                        },
+                        success: function (data) {
+
+                        }
+                    });
+                    $($tablearmadaitem).bootstrapTable('refresh');
+                    if (getpopup == false) {
+                        $('#myModalItem').show()
+                    }
+                    else {
+                        getpopup = false
+                    }
+                }
+            }
+        }
+        function SavePreviousArmada() {
+
+            if ($('#IdArmada').val() == '' || $('#IdArmada').val() == undefined || $('#IdArmada').val() == 0) {
+
+                var dono = $('#DoNo').val();
+
+
+                if (dono == '0' && dono == null) {
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'Please Select Edo No Of Armada',
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCloseButton: true
+                    });
+                }
+                else if ($('#PicName').val() == '' || $('#PhoneNumber').val() == undefined || $('#KtpNumber').val() == '' || $('#SimNumber').val() == '' || $('#SimExpiryDate').val() == '' || $('#StnkNumber').val() == '' ||
+                    $('#KirNumber').val() == '' || $('#KirExpire').val() == '' || $('#NopolNumber').val() == '' || $('#EstimationTimePickup').val() == '')
+                //|| $('#DaNo').val() == ''
+                //|| $('#Bast').val() == ''
+
+                {
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'Please Fill All Details OF Armada',
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCloseButton: true
+                    });
+                }
+                else {
+                    var dono = $('#DoNo').val();
+                    text = [];
+                    if (dono != undefined && dono != null && dono != 0) {
+                        for (var i = 0; i < dono.length; i++) {
+                            var edono = dono[i];
+                            text.push($('#DoNo option[value="' + edono + '"]').text())
+
+
+                        }
+                        text = text.join(',');
+                    }
+                    else {
+                        text = $('#DoNoText').val();
+                    }
+                    var objModel = {
+                        IdGr: $('#IdGr').val(),
+                        IdCipl: 0,
+                        DoNo: text,
+                        PicName: $('#PicName').val(),
+                        PhoneNumber: $('#PhoneNumber').val(),
+                        KtpNumber: $('#KtpNumber').val(),
+                        SimNumber: $('#SimNumber').val(),
+                        SimExpiryDate: $('#SimExpiryDate').val(),
+                        StnkNumber: $('#StnkNumber').val(),
+                        KirNumber: $('#KirNumber').val(),
+                        KirExpire: $('#KirExpire').val(),
+                        NopolNumber: $('#NopolNumber').val(),
+                        EstimationTimePickup: $('#EstimationTimePickup').val(),
+                        Apar: $('#Apar').val(),
+                        Apd: $('#Apd').val(),
+                        DaNo: $('#DaNo').val(),
+                        Bast: $('#Bast').val()
+                    };
+                    $.ajax({
+                        //url: "/EMCS/SaveArmada?ciplitemids=" + JSON.stringify(ciplitemids),
+                        url: "/EMCS/SaveArmada/",
+                        type: 'Post',
+                        async: false,
+                        data: objModel,
+                        success: function (data) {
+
+                            popupsave == false;
+                            Swal.fire("Success", "Data Saved SuccessFully", "success");
+                            $('#IdArmada').val(null);
+                            $('#DoNoText').val(null);
+                            text = [];
+                            remove();
+                            tablearmada();
+                        },
+
+                    });
+
+
+                }
+
+            }
+            else {
+                if ($('#PicName').val() == '' || $('#PhoneNumber').val() == undefined || $('#KtpNumber').val() == '' || $('#SimNumber').val() == '' | $('#SimExpiryDate').val() == '' || $('#StnkNumber').val() == '' || $('#KirNumber').val() == '' || $('#KirExpire').val() == '' || $('#NopolNumber').val() == '' || $('#EstimationTimePickup').val() == '')
+                                  /*      $('#DaNo').val() == '' || $('#Bast').val() == ''*/ {
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'Please Fill All Details OF Armada ',
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCloseButton: true
+                    });
+                }
+                else {
+                    if ($('#IdArmada').val() != '' || $('#IdArmada').val() != undefined || $('#IdArmada').val() != 0) {
+                        var dono = $('#DoNo').val();
+                        text = [];
+                        if (dono != undefined && dono != null && dono != 0) {
+                            for (var i = 0; i < dono.length; i++) {
+                                var edono = dono[i];
+                                text.push($('#DoNo option[value="' + edono + '"]').text())
+
+                            }
+                            text = text.join(',');
+                        }
+                        else {
+                            text = $('#DoNoText').val();
+                        }
+                        var objModel = {
+                            Id: $('#IdArmada').val(),
+                            IdGr: $('#IdGr').val(),
+                            IdCipl: 0,
+                            DoNo: text,
+                            PicName: $('#PicName').val(),
+                            PhoneNumber: $('#PhoneNumber').val(),
+                            KtpNumber: $('#KtpNumber').val(),
+                            SimNumber: $('#SimNumber').val(),
+                            SimExpiryDate: $('#SimExpiryDate').val(),
+                            StnkNumber: $('#StnkNumber').val(),
+                            KirNumber: $('#KirNumber').val(),
+                            KirExpire: $('#KirExpire').val(),
+                            NopolNumber: $('#NopolNumber').val(),
+                            EstimationTimePickup: $('#EstimationTimePickup').val(),
+                            Apar: $('#Apar').val(),
+                            Apd: $('#Apd').val(),
+                            DaNo: $('#DaNo').val(),
+                            Bast: $('#Bast').val(),
+                        };
+
+                        $.ajax({
+                            url: "/EMCS/SaveArmada/",
+                            type: 'Post',
+                            async: false,
+                            data: objModel,
+                            success: function (data) {
+                                //
+                                //$.ajax({
+                                //    url: '/EMCS/DeleteRefrence',
+                                //    type: 'POST',
+                                //    data: { Id : $('#IdArmada').val() },
+                                //    success: function (data1) {
+                                //        for (var i = 0; i < dono.length; i++) {
+                                //            var edono = dono[i];
+                                //            var Text = $('#DoNo option[value="' + edono + '"]').text()
+                                //            $.ajax({
+                                //                url: '/EMCS/SaveArmadaRefrence',
+                                //                type: 'POST',
+                                //                data: {
+                                //                    Id: 0,
+                                //                    IdShippingFleet: data,
+                                //                    IdGr: $('#IdGr').val(),
+                                //                    IdCipl: dono[i],
+                                //                    DoNo: Text,
+                                //                },
+                                //                success: function (data) {
+                                //
+                                //                }
+                                //            })
+
+
+                                //        }
+                                //    }
+                                //})
+                                popupsave == false;
+                                Swal.fire({
+                                    type: 'success',
+                                    text: 'Data Saved Successfully',
+                                    title: 'Success'
+                                })
+                                $('#Pic')
+                                $('#DoNoText').val(null);
+                                $('#IdArmada').val(null);
+
+                                //$("#add").html($("#add").html().replace("Edit Item", "Add Item"));
+                                /*ciplitemids = [];*/
+                                text = [];
+                                remove();
+                                tablearmada();
+                            }
+                        })
+                    }
+
+                }
+            }
+        }
+        function SaveItem() {
+
+            if ($('#IdArmada').val() == '' || $('#IdArmada').val() == undefined || $('#IdArmada').val() == 0) {
+                var dono = $('#DoNo').val();
+
+                if (ciplitemids.length == 0) {
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'Please Select Armada Item Of Armada',
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCloseButton: true
+                    });
+                }
+                else {
+                    text = [];
+                    var dono = $('#DoNo').val();
+                    if (dono != undefined && dono != null && dono != 0) {
+                        for (var i = 0; i < dono.length; i++) {
+                            var edono = dono[i];
+                            text.push($('#DoNo option[value="' + edono + '"]').text())
+                        }
+                        text = text.join(',');
+                    }
+                    else {
+                        text = $('#DoNoText').val();
+                    }
+
+
+                    var IdCipl = dono.join(',');
+                    var objModel = {
+                        IdGr: $('#IdGr').val(),
+                        IdCipl: 0,
+                        DoNo: text,
+                        PicName: $('#PicName').val(),
+                        PhoneNumber: $('#PhoneNumber').val(),
+                        KtpNumber: $('#KtpNumber').val(),
+                        SimNumber: $('#SimNumber').val(),
+                        SimExpiryDate: $('#SimExpiryDate').val(),
+                        StnkNumber: $('#StnkNumber').val(),
+                        KirNumber: $('#KirNumber').val(),
+                        KirExpire: $('#KirExpire').val(),
+                        NopolNumber: $('#NopolNumber').val(),
+                        EstimationTimePickup: $('#EstimationTimePickup').val(),
+                        Apar: $('#Apar').val(),
+                        Apd: $('#Apd').val(),
+                        DaNo: $('#DaNo').val(),
+                    };
+                    $.ajax({
+                        url: "/EMCS/SaveArmada?ciplitemids=" + JSON.stringify(ciplitemids),
+                        type: 'Post',
+                        async: false,
+                        data: objModel,
+                        success: function (data) {
+                            Swal.fire({
+                                type: 'success',
+                                text: 'Data Saved Successfully',
+                                title: 'Success'
+                            })
+                            popupsave = true;
+                            $('#IdArmada').val(data.IdShippingFleet);
+                            ciplitemids = [];
+                            text = [];
+                            $('#myModalItem').hide();
+                            getpopup = true;
+                            ShippingFleetItemTable()
+                        },
+                        error: function (data1, error, xhr, ajaxOptions, thrownError) {
+                            console.log(data1);
+                        }
+
+                    });
+
+                }
+            }
+            else {
+                if (ciplitemids.length == 0) {
+                    $.ajax({
+                        url: "/EMCS/GetCiplItemCount?idcipl=" + "" + "&idgr=" + 0 + "&idshippingfleet=" + $('#IdArmada').val(),
+                        success: function (data) {
+                            if (data == 0) {
+                                Swal.fire({
+                                    title: 'Warning',
+                                    text: 'Please Select Armada Item Of Armada',
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    allowEscapeKey: false,
+                                    allowOutsideClick: false,
+                                    showCloseButton: true
+                                });
+
+                            }
+                            else if ($('#PicName').val() == '' || $('#PhoneNumber').val() == undefined || $('#KtpNumber').val() == '' || $('#SimNumber').val() == '' || $('#SimExpiryDate').val() == '' || $('#StnkNumber').val() == '' ||
+                                $('#KirNumber').val() == '' || $('#KirExpire').val() == '' || $('#NopolNumber').val() == '' || $('#EstimationTimePickup').val() == '' || $('#DaNo').val() == '') {
+                                Swal.fire({
+                                    title: 'Warning',
+                                    text: 'Please Fill All Details OF Armada ',
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    allowEscapeKey: false,
+                                    allowOutsideClick: false,
+                                    showCloseButton: true
+                                });
+                            }
+                            else {
+                                text = [];
+                                var dono = $('#DoNo').val();
+                                if (dono != undefined && dono != null && dono != 0) {
+                                    for (var i = 0; i < dono.length; i++) {
+                                        var edono = dono[i];
+                                        text.push($('#DoNo option[value="' + edono + '"]').text())
+
+                                    }
+                                    text = text.join(',');
+                                }
+                                else {
+                                    text = $('#DoNoText').val();
+                                }
+
+                                var objModel = {
+                                    Id: $('#IdArmada').val(),
+                                    IdGr: $('#IdGr').val(),
+                                    IdCipl: 0,
+                                    DoNo: text,
+                                    PicName: $('#PicName').val(),
+                                    PhoneNumber: $('#PhoneNumber').val(),
+                                    KtpNumber: $('#KtpNumber').val(),
+                                    SimNumber: $('#SimNumber').val(),
+                                    SimExpiryDate: $('#SimExpiryDate').val(),
+                                    StnkNumber: $('#StnkNumber').val(),
+                                    KirNumber: $('#KirNumber').val(),
+                                    KirExpire: $('#KirExpire').val(),
+                                    NopolNumber: $('#NopolNumber').val(),
+                                    EstimationTimePickup: $('#EstimationTimePickup').val(),
+                                    Apar: $('#Apar').val(),
+                                    Apd: $('#Apd').val(),
+                                    DaNo: $('#DaNo').val(),
+                                };
+
+                                $.ajax({
+                                    url: "/EMCS/SaveArmada?ciplitemids=" + JSON.stringify(ciplitemids),
+                                    type: 'Post',
+                                    async: false,
+                                    data: objModel,
+                                    success: function (data) {
+
+                                        Swal.fire({
+                                            type: 'success',
+                                            text: 'Data Saved Successfully',
+                                            title: 'Success'
+                                        })
+                                        popupsave = true;
+                                        if (data.IdShippingFleet != null && data.IdShippingFleet != 0) {
+                                            $('#IdArmada').val(data.IdShippingFleet);
+                                            $('#IdCipl').val(data.IdCipl);
+                                            $('#IdItem').val(data.Id);
+                                        }
+                                        else {
+                                            $('#IdArmada').val();
+                                            $('#IdCipl').val();
+                                            $('#IdItem').val();
+                                        }
+
+                                        ciplitemids = [];
+                                        text = [];
+                                        $('#myModalItem').hide();
+                                        getpopup = true;
+                                        ShippingFleetItemTable()
+                                    }
+                                })
+                            }
+                        }
+                    });
+                }
+                else if ($('#PicName').val() == '' || $('#PhoneNumber').val() == undefined || $('#KtpNumber').val() == '' || $('#SimNumber').val() == '' || $('#SimExpiryDate').val() == '' || $('#StnkNumber').val() == '' ||
+                    $('#KirNumber').val() == '' || $('#KirExpire').val() == '' || $('#NopolNumber').val() == '' || $('#EstimationTimePickup').val() == '' || $('#DaNo').val() == '') {
+                    i = i + 1;
+                    Swal.fire({
+                        title: 'Warning',
+                        text: 'Please Fill All Details OF Armada ',
+                        type: 'warning',
+                        showCancelButton: true,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        showCloseButton: true
+                    });
+                }
+                else {
+
+                    text = [];
+                    var dono = $('#DoNo').val();
+                    if (dono != undefined && dono != null && dono != 0) {
+                        for (var i = 0; i < dono.length; i++) {
+                            var edono = dono[i];
+                            text.push($('#DoNo option[value="' + edono + '"]').text())
+
+                        }
+                        text = text.join(',');
+                    }
+                    else {
+                        text = $('#DoNoText').val();
+                    }
+
+                    var objModel = {
+                        Id: $('#IdArmada').val(),
+                        IdGr: $('#IdGr').val(),
+                        IdCipl: 0,
+                        DoNo: text,
+                        PicName: $('#PicName').val(),
+                        PhoneNumber: $('#PhoneNumber').val(),
+                        KtpNumber: $('#KtpNumber').val(),
+                        SimNumber: $('#SimNumber').val(),
+                        SimExpiryDate: $('#SimExpiryDate').val(),
+                        StnkNumber: $('#StnkNumber').val(),
+                        KirNumber: $('#KirNumber').val(),
+                        KirExpire: $('#KirExpire').val(),
+                        NopolNumber: $('#NopolNumber').val(),
+                        EstimationTimePickup: $('#EstimationTimePickup').val(),
+                        Apar: $('#Apar').val(),
+                        Apd: $('#Apd').val(),
+                        DaNo: $('#DaNo').val(),
+                    };
+
+                    $.ajax({
+                        url: "/EMCS/SaveArmada?ciplitemids=" + JSON.stringify(ciplitemids),
+                        type: 'Post',
+                        async: false,
+                        data: objModel,
+                        success: function (data) {
+                            Swal.fire({
+                                type: 'success',
+                                text: 'Data Saved Successfully',
+                                title: 'Success'
+                            })
+                            popupsave = true;
+                            if (data.IdShippingFleet != null && data.IdShippingFleet != 0) {
+                                $('#IdArmada').val(data.IdShippingFleet);
+                                $('#IdCipl').val(data.IdCipl);
+                                $('#IdItem').val(data.Id);
+                            }
+                            else {
+                                $('#IdArmada').val();
+                                $('#IdCipl').val();
+                                $('#IdItem').val();
+                            }
+                            ciplitemids = [];
+                            text = [];
+                            $('#myModalItem').hide();
+                        }
+                    })
+
+                }
+
+
+
+            }
+
+        }
+
+    </script>
+    <script>
+        $("#RFCRG").on('click', function () {
+            Swal.fire({
+                title: 'Request this change?',
+                text: 'By approving this changes, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this request of change?',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Request!',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showCloseButton: true
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        input: 'textarea',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        inputPlaceholder: 'Please add reason for this request for change...',
+                        inputAttributes: {
+                            'aria-label': 'Please add reason for this request for change...'
+                        },
+                        showCancelButton: false
+                    }).then((result) => {
+                        if (result.value !== '') {
+                            var Notes = result.value;
+                            var Status = "Approve";
+                            var Id = 0;
+                            var formdata = { Notes: Notes, Status: Status, Id: Id };
+                            RequestForChangeRG(formdata);
+                        }
+                        else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Please add request for change reason',
+                            })
+                        }
+                    });
+                }
+                return false;
+            });
+
+        })
+        function RequestForChangeRG(formdata) {
+            var modelObj = {
+                FormType: "GoodsReceive",
+                FormId: $("#IdGr").val(),
+                FormNo: $('#GrNo').val(),
+                Reason: formdata.Notes,
+            }
+            var formdata = {
+                Id: $('#IdGr').val(),
+                Vendor: $('#Vendor').val(),
+                VendorAddress: $('#VendorAddress').val(),
+                VehicleType: $('#VehicleType').val(),
+                VehicleMerk: $('#VehicleBrand').val(),
+                PickupPoint: $('#PickupPoint').val(),
+                PickupPic: $('#PickupPic').val(),
+                Notes: $('#Note').val()
+            }
+            $.ajax({
+                url: '/EMCS/RequestForChangeRG',
+                type: 'POST',
+                data: {
+                    form: modelObj,
+                    formdata: formdata,
+
+
+                },
+                success: function (data) {
+                    Swal.fire("Success", "Request for change is successfully added", "success").then((result) => {
+                        location.href = myApp.fullPath + "EMCS/GRList";
+                    })
+                }
+            })
+        }
+        function SaveArmadaForRFC() {
+
+            var dono = $('#DoNoRFC').val();
+            if (dono == '0' && dono == null) {
+                Swal.fire({
+                    title: 'Warning',
+                    text: 'Please Select Edo No Of Armada',
+                    type: 'warning',
+                    showCancelButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showCloseButton: true
+                });
+            }
+            else if ($('#PicName').val() == '' || $('#PhoneNumber').val() == undefined || $('#KtpNumber').val() == '' || $('#SimNumber').val() == '' || $('#SimExpiryDate').val() == '' || $('#StnkNumber').val() == '' ||
+                $('#KirNumber').val() == '' || $('#KirExpire').val() == '' || $('#NopolNumber').val() == '' || $('#EstimationTimePickup').val() == '') {
+                Swal.fire({
+                    title: 'Warning',
+                    text: 'Please Fill All Details OF Armada',
+                    type: 'warning',
+                    showCancelButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    showCloseButton: true
+                });
+            }
+            else {
+                text = [];
+                if (dono != undefined && dono != null && dono != 0) {
+                    for (var i = 0; i < dono.length; i++) {
+                        var edono = dono[i];
+                        text.push($('#DoNoRFC option[value="' + edono + '"]').text())
+
+                    }
+                    text = text.join(',');
+                }
+                else {
+                    text = $('#DoNoText').val();
+                }
+                var objModel = {};
+                objModel.Id = parseInt($('#IdArmada').val()),
+                    objModel.IdGr = $('#IdGr').val(),
+                    objModel.IdCipl = parseInt(0),
+                    objModel.DoNo = text,
+                    objModel.PicName = $('#PicName').val(),
+                    objModel.PhoneNumber = $('#PhoneNumber').val(),
+                    objModel.KtpNumber = $('#KtpNumber').val(),
+                    objModel.SimNumber = $('#SimNumber').val(),
+                    objModel.SimExpiryDate = $('#SimExpiryDate').val(),
+                    objModel.StnkNumber = $('#StnkNumber').val(),
+                    objModel.KirNumber = $('#KirNumber').val(),
+                    objModel.KirExpire = $('#KirExpire').val(),
+                    objModel.NopolNumber = $('#NopolNumber').val(),
+                    objModel.EstimationTimePickup = $('#EstimationTimePickup').val(),
+                    objModel.Apar = $('#Apar').val(),
+                    objModel.Apd = $('#Apd').val(),
+                    objModel.DaNo = $('#DaNo').val(),
+                    objModel.Bast = $('#Bast').val();
+                objModel.FileName = null;
+
+                $.ajax({
+                    url: "/EMCS/SaveArmadaForRFC",
+                    type: 'Post',
+                    async: false,
+                    data: objModel,
+                    success: function (data) {
+                        popupsave == false;
+                        Swal.fire("Success", "Data Saved SuccessFully", "success");
+                        $('#IdArmada').val(null);
+                        $('#DoNoText').val(null);
+                        $('#IdSaveChange').val(null);
+                        text = [];
+                        remove();
+                        tablearmada();
+                        tablearmadaForRFC();
+                    },
+                });
+            }
+        }
+        function tablearmadaForRFC() {
+
+            $tablearmadaForRFC = $('#tablearmadaForRFC');
+            var columnArmadaForRFC = [
+
+                {
+                    field: '',
+                    title: 'Action',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    events: operateEvents,
+                    formatter: function (data, row, index) {
+                        //var btnEdit = "<button type='button' class='btn btn-xs editarmada btn-primary'><i class='fa fa-edit'></i></button>";
+                        //var btnRemove = "<button type='button' class='btn btn-xs removearmada btn-danger'><i class='fa fa-times'></i></button>";
+                        // var btnView = "<button type='button' class='btn viewarmada btn-xs btn-default'><i class='fa fa-search'></i></button>";
+                        if (row.Status == "Created") {
+                            var btnUpload = "<button type='button' class='btn btn-xs uploadarmadadocumentForRFC btn-info' value='true' data-toggle='modal' data-target='#myModalUploadPlaceArmadaForRFC' ><i class='fa fa-upload'></i></button>";
+                            var elm = ["<div>", btnUpload, "</div>"];
+                            return elm.join(" ");
+                        }
+                        else {
+                            return "-";
+                        }
+
+                    }
+                },
+                {
+                    field: 'DoNo',
+                    title: 'Edi No.',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PicName',
+                    title: 'PIC Name',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'PhoneNumber',
+                    title: 'Contact',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimExpiryDate',
+                    title: 'License Expiry Date#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'StnkNumber',
+                    title: 'No STNK',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                //{
+                //    field: 'Bast',
+                //    title: 'Bast',
+                //    halign: 'center',
+                //    align: 'center',
+                //    class: 'text-nowrap',
+                //    sortable: true,
+                //},
+                {
+                    field: 'KirNumber',
+                    title: 'KIR Number',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'KirExpire',
+                    title: 'KIR Expiry Date',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Bast',
+                    title: 'Bast',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'NopolNumber',
+                    title: 'Police Plate#',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'SimNumber',
+                    title: 'SIM',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    //formatter: function (data, row, index) {
+                    //    return moment(data).format("DD MMM YYYY");
+                    //}
+                },
+                {
+                    field: 'KtpNumber',
+                    title: 'KTP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Apar',
+                    title: 'APAR',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+
+                },
+                {
+                    field: 'EstimationTimePickup',
+                    title: 'ATP',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Apd',
+                    title: 'APD',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        if (data == false) {
+                            return "No";
+                        }
+                        else {
+                            return "Yes";
+                        }
+                    }
+                },
+                {
+                    field: 'DaNo',
+                    title: 'DO Reference',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'Status',
+                    title: 'Status',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'FileName',
+                    title: 'Attachment',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    sortable: true,
+                    events: operateEventRight,
+                    formatter: function (data, row) {
+                        if (row.FileName !== "" && row.FileName !== null && row.Status != "Deleted") {
+                            var btnDownload = "<button class='btn btn-xs btn-success downloadarmadadocForRFC' type='button'><i class='fa fa-download'></i></button>";
+                            var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocumentarmadadocForRFC' data-toggle='modal' data-target='#myModalUploadPreview' type='button'><i class='fa fa-file-pdf-o'></i></button>";
+                            return [btnDownload, btnPreview].join(' ');
+                        } else {
+                            return "-";
+                        }
+                    },
+                    class: 'text-nowrap'
+
+                }];
+
+            $tablearmadaForRFC.bootstrapTable({
+                url: "/EMCS/GetListArmadaForRFC",
+                columns: columnArmadaForRFC,
+                pagination: true,
+                pagesize: '10',
+                cache: false,
+                search: false,
+                striped: false,
+                clickToSelect: true,
+                reorderableColumns: true,
+                toolbarAlign: 'left',
+                queryParams: function (params) {
+                    return {
+                        IdGr: $('#IdGr').val(),
+                    };
+                },
+                onClickRow: selectRow,
+                showColumns: false,
+                showRefresh: false,
+                smartDisplay: false,
+                formatNoMatches: function () {
+                    return '<span class="noMatches">Not Data Found</span>';
+                },
+                success: function (data) {
+
+                }
+            });
+            $($tablearmadaForRFC).bootstrapTable('refresh');
+
+        }
     </script>
     <script src="~/Scripts.app/EMCS/dropzone.js"></script>
     @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
-    @*@Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")*@
-
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
-    @*<script src="@Url.Content("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")"></script>*@
     <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
 }
-<script>
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    //var selector = $(".tabs").find(".selector");
-    var activeItem = tabs.find('.active');
-    var activeWidth = activeItem.innerWidth();
-    $(".selector").css({
-        "left": activeItem.position.left + "px",
-        "width": activeWidth + "px"
-    });
 
-    $(".tabs").on("click", "a", function (e) {
-        e.preventDefault();
-        $('.tabs a').removeClass("active");
-        $(this).addClass('active');
-        var activeWidth = $(this).innerWidth();
-        var itemPos = $(this).position();
-        $(".selector").css({
-            "left": itemPos.left + "px",
-            "width": activeWidth + "px"
-        });
-    });
-</script>

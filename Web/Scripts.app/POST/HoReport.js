@@ -118,23 +118,7 @@ $(document).ready(function () {
                 align: 'center',
                 width: '350',
                 formatter: dateFormatter,
-<<<<<<< HEAD
-<<<<<<< HEAD
             },          
-=======
-            },
-            //{
-            //    title: 'Item Category',
-            //    field: 'Item_Category',
-            //    halign: 'center',
-            //    class: 'text-nowrap',
-            //    align: 'center',
-            //    width: '350'
-            //}, {
->>>>>>> 639d8d0 (Intial commit)
-=======
-            },          
->>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 title: 'PO Line Item',
                 field: 'PO_lineitem',
@@ -223,13 +207,6 @@ $(document).ready(function () {
                 width: '300',
 
             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
             {
                 title: 'Request Date',
                 field: 'RequestDate',
@@ -292,10 +269,6 @@ $(document).ready(function () {
                 width: '300',
                 formatter: dateFormatter,
             }, {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'GR/SA Number',
                 field: 'SA_Number',
                 halign: 'center',
@@ -314,11 +287,6 @@ $(document).ready(function () {
                 formatter: dateFormatter,
             },
             {
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'GR/SA Document Date',
                 field: 'SA_DocumentDate',
                 halign: 'center',
@@ -326,10 +294,6 @@ $(document).ready(function () {
                 align: 'left',
                 width: '110',
                 formatter: dateFormatter,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
             },
             {
                 title: 'GR/SA Amount',
@@ -340,12 +304,6 @@ $(document).ready(function () {
                 width: '110'
                 
             },{
-<<<<<<< HEAD
-=======
-            }, {
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 title: 'Cost Center',
                 field: 'CostCenter',
                 halign: 'center',

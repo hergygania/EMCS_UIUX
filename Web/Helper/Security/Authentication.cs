@@ -24,8 +24,9 @@ namespace App.Web.Helper
 				ctx.User = new CustomPrincipal(ctx.User.Identity,
 					 ui[0], ui[1], ui[2], ui[3], ui[4], ui[5], ui[6], ui[7]);
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
+				Console.WriteLine(ex);
 				ctx.Response.Cookies[defCookieName].Expires = DateTime.Now.AddMinutes(-9999);
 				DeleteCookies(ctx);
 			}

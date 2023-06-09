@@ -74,6 +74,7 @@
         [DisplayName("Actual Time Pickup")] 
         public Nullable<DateTime> ActualTimePickup { get; set; } 
 
-        public string PickupPoint { get; set; } 
+        public string PickupPoint { get; set; }
+        public string PickupPic { get; set; }
     } 
 } 

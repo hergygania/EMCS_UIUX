@@ -121,7 +121,8 @@ namespace App.Service.EMCS
                         }
                         else
                         {
-                            var rgitem = db.GoodsReceiveItem.Where(a => a.IdGr == id).ToList();
+                            //var rgitem = db.GoodsReceiveItem.Where(a => a.IdGr == id).ToList();
+                            var rgitem = db.ShippingFleetRefrence.Where(a => a.IdGr == id).ToList();
 
                             foreach (var itemrg in rgitem)
                             {
@@ -232,8 +233,19 @@ namespace App.Service.EMCS
                                 break;
                         }
 
+                        //prev
+                        //var resultdata = (from t1 in db.CargoCipls
+                        //                  join t2 in db.GoodsReceiveItem on t1.IdCipl equals t2.IdCipl
+                        //                  where newIds.Contains(t1.IdCargo)
+                        //                  select new
+                        //                  {
+                        //                      t1,
+                        //                      t2
+                        //                  }).ToList();
+
+                        //new
                         var resultdata = (from t1 in db.CargoCipls
-                                          join t2 in db.GoodsReceiveItem on t1.IdCipl equals t2.IdCipl
+                                          join t2 in db.ShippingFleetRefrence on t1.IdCipl equals t2.IdCipl
                                           where newIds.Contains(t1.IdCargo)
                                           select new
                                           {
@@ -245,7 +257,11 @@ namespace App.Service.EMCS
                     }
                     else
                     {
-                        var resultcipl = db.GoodsReceiveItem.Where(a => a.IdCipl == id && a.IsDelete == false).Select(a => new { a.IdGr }).ToList();
+                        //prev
+                        //var resultcipl = db.GoodsReceiveItem.Where(a => a.IdCipl == id && a.IsDelete == false).Select(a => new { a.IdGr }).ToList();
+
+                        //new
+                        var resultcipl = db.ShippingFleetRefrence.Where(a => a.IdCipl == id).Select(a => new { a.IdGr }).ToList();
                         foreach (var itemcipl in resultcipl)
                         {
                             newIds.Add(Convert.ToInt64(itemcipl.IdGr));
@@ -375,17 +391,8 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 //var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
                 var item = db.Database.SqlQuery<CountData>("select count(IdCargo) total from dbo.CargoItem where IdCargo =  " + idCargo + " AND isdelete = 0").FirstOrDefault();
-=======
-                var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
->>>>>>> 639d8d0 (Intial commit)
-=======
-                //var item = db.Database.SqlQuery<CountData>("select count(*) total from (select distinct IdCipl from dbo.CargoItem where IdCargo = " + idCargo + " AND isdelete = 0 ) as tb1").FirstOrDefault();
-                var item = db.Database.SqlQuery<CountData>("select count(IdCargo) total from dbo.CargoItem where IdCargo =  " + idCargo + " AND isdelete = 0").FirstOrDefault();
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
                 if (item.Total > 1)
                 {
                     return true;

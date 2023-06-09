@@ -34,6 +34,13 @@
 
         public decimal? Gross { get; set; }
 
+        public Nullable<decimal> NewLength { get; set; }
+
+        public decimal? NewWidth { get; set; }
+        public decimal? NewHeight { get; set; }
+        public decimal? NewNet { get; set; }
+        public decimal? NewGross { get; set; }
+
         public string CreateBy { get; set; }
 
         public DateTime CreateDate { get; set; }

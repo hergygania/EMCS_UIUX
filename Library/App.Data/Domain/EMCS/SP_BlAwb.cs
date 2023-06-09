@@ -19,5 +19,6 @@ namespace App.Data.Domain.EMCS
  		public string StatusViewByUser { get; set; }
         public string AjuNumber { get; set; }
         public int PendingRFC { get; set; }
+        public string RoleName { get; set; }
     }
 }

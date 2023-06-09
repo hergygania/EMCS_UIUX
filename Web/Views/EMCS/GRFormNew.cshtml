@@ -1,0 +1,428 @@
+﻿@model  App.Web.Models.EMCS.GoodReceiveModel
+@{
+    var mode = ViewBag.crudMode;
+    var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
+    ViewBag.Title = "BAST " + title;
+}
+@Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.css")
+@Styles.Render("~/Content/EMCS/Autocomplete/easy-autocomplete.themes.css")
+@Styles.Render("~/Content/EMCS/Custom.css")
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "FormGR" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab box-warning" role="tabpanel" style="min-height:555px;box-shadow:none !important;background:none;">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tab-task-rgbast" aria-controls="home" role="tab" data-toggle="tab">RG Bast</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab-rgbastdocuments" aria-controls="home" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                    </li>
+                </ul>
+                <div class="tab-content tabs-custom">
+                    <div class="tab-pane active" id="tab-task-rgbast">
+                        <div class="form form-horizontal">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">BAST Number</label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.GrNo, new { @class = "form-control", @id = "GrNo", @readonly = "readonly", placeholder = "Goods Receive Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.GrNo)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">PIC Name <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.PicName, new { @Id = "PicName", @class = "form-control required", placeholder = "PIC Name" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.PicName)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Contact <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.PhoneNumber, new { @class = "form-control required", placeholder = "Phone Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.PhoneNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ID Card# <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.KtpNumber, new { @class = "form-control required", placeholder = "KTP Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.KtpNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Driving License# <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.SimNumber, new { @class = "form-control required", placeholder = "SIM Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.SimNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Expiry Date# <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(m => m.Data.SimExpiryDate, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "License Expire Date" } })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.SimExpiryDate)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor #ID & Name <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                <select class="Vendor" name="data.Vendor" id="Vendor" required>
+                                                    @if (!string.IsNullOrEmpty(Model.Data.Vendor))
+                                                    {
+                                                        <option value="@Model.Data.Vendor" selected>@Model.Data.Vendor - @Model.Data.VendorName</option>
+                                                    }
+                                                </select>
+                                                <div>@Html.ValidationMessageFor(m => m.Data.Vendor)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vendor Address</label>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" id="VendorAddress" readonly="readonly" name="VendorAddress" placeholder="Vendor Address" rows="3" cols="3">@(Model.Data.VendorAddress != "" ? Model.Data.VendorAddress : "") </textarea>
+                                                <div>@Html.ValidationMessageFor(m => m.Data.Vendor)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Type <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.VehicleType, new { @class = "form-control required", placeholder = "Truck Type" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.VehicleType)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Vehicle Brand <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.VehicleMerk, new { @class = "form-control required", placeholder = "Truck Merk" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.VehicleMerk)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">No STNK <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.StnkNumber, new { @class = "form-control required", placeholder = "STNK Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.StnkNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Number <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.KirNumber, new { @class = "form-control required", placeholder = "KIR Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.KirNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">KIR Expiry Date <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(m => m.Data.KirExpire, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "KIR Expire Date" } })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.KirExpire)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">License Plate <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.TextBoxFor(m => m.Data.NopolNumber, new { @class = "form-control required", placeholder = "NOPOL Number" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.NopolNumber)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">ETP <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                @Html.EditorFor(m => m.Data.EstimationTimePickup, new { htmlAttributes = new { @class = "form-control required date", autocomplete = "off", @readonly = "readonly", style = "background:white;", placeholder = "Estimation Time Pickup Date" } })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.EstimationTimePickup)</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APAR</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownListFor(m => m.Data.Apar, new SelectList(Model.YesNo, "Value", "Text"), new { @class = "js-states Apar form-control" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.Apar)</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">APD</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownListFor(m => m.Data.Apd, new SelectList(Model.YesNo, "Value", "Text"), new { @class = "js-states Apd form-control" })
+                                                <div>@Html.ValidationMessageFor(m => m.Data.Apd)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point (B. Area) <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                <select class="select2" name="data.PickupPoint" id="PickupPoint" required>
+                                                    @if (!string.IsNullOrEmpty(Model.Data.PickupPoint))
+                                                    {
+                                                        <option value="@Model.Data.PickupPoint" selected>@Model.Data.PickupPoint - @Model.Data.PlantName</option>
+                                                    }
+                                                </select>
+                                                <div>@Html.ValidationMessageFor(m => m.Data.PickupPoint)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Pickup Point Pic <span class="text-danger">*</span></label>
+                                            <div class="col-md-8">
+                                                <select class="select2" name="data.PickupPic" id="PickupPic" required>
+                                                    @if (!string.IsNullOrEmpty(Model.Data.PickupPic))
+                                                    {
+                                                        <option value="@Model.Data.PickupPic" selected>@Model.Data.PickupPic - @Model.Data.PickupPicName</option>
+                                                    }
+                                                </select>
+                                                <div>@Html.ValidationMessageFor(m => m.Data.PickupPoint)</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 tex-left col-sm-12 col-xs-12 control-label" style="text-align:left;">Notes</label>
+                                            <div class="col-md-8">
+                                                @Html.TextAreaFor(m => m.Data.Notes, new { @class = "form-control", @Placeholder = "Add Notes", @rows = "4", @cols = "4" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="toolbar" id="toolbar">
+                                                <button id="btnAddItem" type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</button>
+                                                <a data-modal="myModalPlace" id="linkAddItem" class="btn btn-success btn-sm" href="/EMCS/CreateGrItem" style="display:none;"><i class="fa fa-plus-circle"></i>&nbsp;Add Item</a>
+                                            </div>
+                                            <table class="table table-striped table-bordered" id="TblGoodReceive"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer text-right">
+                                    <input type="hidden" id="Status" name="data.Status" value="Draft" />
+                                    @Html.HiddenFor(m => m.Data.Id, new { @class = "IdGr", @Id = "IdGr" })
+                                    @Html.HiddenFor(m => m.Data.Id, new { @class = "Id", @Id = "Id" })
+                                    <a href="~/emcs/Grlist" class="btn btn-default btn-outline-secondary" style="width:120px;"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Back</a>
+                                    <button type="button" id="BtnDraft" class="btn btn-info"><i class="fa fa-save"></i>&nbsp;Save as Draft</button>
+                                    @if (ViewBag.IsOwned == true)
+                                    {
+                                        <button type="submit" id="BtnSubmit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-rgbastdocuments">
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <div class="toolbarDocument" id="toolbarDocument">
+                                    <button type="button" class="btn btn-success btn-md btnAddItem" data-toggle="modal" data-target="#myModalDocument" id="documentAddButton" style="min-width:120px;" value="Add"><i class="fa fa-plus-circle"></i> ADD NEW</button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                        <table id="tablegrDocuments" data-toolbar=".toolbar" class="table table-bordered" data-toggle="table"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="myModalDocument" class="modal fade in" role="dialog">
+        <div class="modal-dialog modal-lg" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Document</h4>
+                </div>
+                <form id="FormDocument">
+                    <div class="modal-body">
+                        <div class="row" id="formeditreference">
+                            <div class="col-lg-12">
+                                <div class="form-group hidden">
+                                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                                    <div class="input-group col-md-9 col-xs-12">
+                                        <input type="text" class="form-control" id="IdGrDocument" name="IdGrDocument">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-xs-12">Document Date</label>
+                                    <div class="input-group col-md-9 col-xs-12">
+                                        <span class="input-group-addon cal-doc-date"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input class="form-control date required" id="inp-doc-date" name="inp-doc-date" placeholder="Date" style="background:white;" value="@DateTime.Now.ToString("dd MMM yyyy")">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-xs-12">Document Name</label>
+                                    <div class="input-group col-md-9 col-xs-12">
+                                        <input type="text" class="form-control" id="DocumentName" name="DocumentName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btnAddDocument" data-dismiss="modal" id="btnAddDocument" style="min-width:120px;"><i class="fa fa-pencil"></i> Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id='myModalPlace' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+    <div id='myModalPreview' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div id='myModalPreviewContent'></div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalUploadPlace' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                            <div class="input-group col-md-9 col-xs-12">
+                                <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+                <div id="template-dropzone" class="hidden">
+                    <div id="template" class="file-row text-left" style="padding:20px;">
+                        <!-- This is used as the file preview template -->
+                        <div class="col-md-2">
+                            <div class="row">
+                                <span class="preview">
+                                    <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="name" data-dz-name></p>
+                            <strong class="error text-danger" data-dz-errormessage></strong>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="size" data-dz-size></p>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <span data-dz-uploadprogress id="progressPercent"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='myModalUploadPreview' class='modal fade in'>
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">Filename</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="Filename" name="Filename">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a data-modal="myModalPlace" href="/EMCS/UpdateGrItem/1" class="editRecord" style="display:none;">
+        <i class="fa fa-edit"></i> Update Item
+    </a>
+    <a data-modal="myModalPlace" href="/EMCS/UploadGrItem/1" class="uploadRecord" style="display:none;">
+        <i class="fa fa-edit"></i> Upload Item
+    </a>
+    <a data-modal="myModalPreview" href="/EMCS/PreviewDA/1" class="PreviewFile" style="display:none;">
+        <i class="fa fa-edit"></i> Preview File Upload
+    </a>
+    <a href="/EMCS/DownloadGrItem/1" class="downloadFile" style="display:none;">
+        <i class="fa fa-edit"></i> Download Item
+    </a>
+
+    @Html.HiddenFor(m => m.Data.CreateBy)
+    @Html.HiddenFor(m => m.Data.CreateDate)
+    @Html.HiddenFor(m => m.Data.UpdateBy)
+    @Html.HiddenFor(m => m.Data.UpdateDate)
+    @Html.HiddenFor(m => m.Data.IsDelete)
+}
+<input type="hidden" name="HideAction" id="HideAction" value="true" />
+@Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
+@Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+@Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+@Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+@section Scripts{
+    @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+    <script>
+        var $hideAction = $("#HideAction").val();
+        $(document).ready(function () {
+            //load_data_tablegr();
+            get_grdocumentlist();
+        });
+
+    </script>
+    <script src="~/Scripts.app/EMCS/dropzone.js"></script>
+    @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
+    @*@Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")*@
+
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    @*<script src="@Url.Content("~/Scripts.app/EMCS/GoodsReceiveFormDocument.cshtml.js")"></script>*@
+    <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
+}
+

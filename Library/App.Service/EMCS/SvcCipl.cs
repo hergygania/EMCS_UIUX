@@ -1,4 +1,4 @@
-﻿﻿using App.Data.Caching;
+﻿using App.Data.Caching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -158,59 +158,197 @@ namespace App.Service.EMCS
                 return tb.ToList();
             }
         }
-
-        public static bool InsertCiplItem(List<CiplItemInsert> data)
+        public static Cipl CiplGetByIdForRFC(long id)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-                for (var j = 0; j < data.Count; j++)
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", id));
+                SqlParameter[] parameters = parameterList.ToArray();
+
+                // ReSharper disable once CoVariantArrayConversion
+                var data = db.DbContext.Database.SqlQuery<Cipl>("[dbo].[SP_CiplGetById_For_RFC] @id", parameters).ToList();
+
+                return data.FirstOrDefault();
+            }
+        }
+        public static bool InsertCiplItem(List<CiplItemInsert> data, string RFC, string Status)
+        {
+            try
+            {
+                if (RFC == "true")
                 {
-                    db.DbContext.Database.CommandTimeout = 600;
-                    List<SqlParameter> parameterList = new List<SqlParameter>();
-                    parameterList.Add(new SqlParameter("@IdCipl", data[j].IdCipl));
-                    parameterList.Add(new SqlParameter("@IdReference", data[j].Id));
-                    parameterList.Add(new SqlParameter("@ReferenceNo", data[j].ReferenceNo ?? ""));
-                    parameterList.Add(new SqlParameter("@IdCustomer", data[j].IdCustomer ?? ""));
-                    parameterList.Add(new SqlParameter("@Name", data[j].Name ?? ""));
-                    parameterList.Add(new SqlParameter("@Uom", data[j].UnitUom ?? ""));
-                    parameterList.Add(new SqlParameter("@PartNumber", data[j].PartNumber ?? ""));
-                    parameterList.Add(new SqlParameter("@Sn", data[j].Sn ?? ""));
-                    parameterList.Add(new SqlParameter("@JCode", data[j].JCode ?? ""));
-                    parameterList.Add(new SqlParameter("@Ccr", data[j].Ccr ?? ""));
-                    parameterList.Add(new SqlParameter("@CaseNumber", data[j].CaseNumber ?? ""));
-                    parameterList.Add(new SqlParameter("@ASNNumber", data[j].ASNNumber ?? ""));
-                    parameterList.Add(new SqlParameter("@Type", data[j].Type ?? ""));
-                    parameterList.Add(new SqlParameter("@IdNo", data[j].IdNo ?? ""));
-                    parameterList.Add(new SqlParameter("@YearMade", data[j].YearMade ?? 0));
-                    parameterList.Add(new SqlParameter("@Quantity", data[j].AvailableQuantity));
-                    parameterList.Add(new SqlParameter("@UnitPrice", data[j].UnitPrice));
-                    parameterList.Add(new SqlParameter("@ExtendedValue", data[j].Quantity * data[j].UnitPrice));
-                    parameterList.Add(new SqlParameter("@Length", data[j].Length ?? 0));
-                    parameterList.Add(new SqlParameter("@Width", data[j].Width ?? 0));
-                    parameterList.Add(new SqlParameter("@Height", data[j].Height ?? 0));
-                    parameterList.Add(new SqlParameter("@Volume", data[j].Volume ?? 0));
-                    parameterList.Add(new SqlParameter("@GrossWeight", data[j].GrossWeight ?? 0));
-                    parameterList.Add(new SqlParameter("@NetWeight", data[j].NetWeight ?? 0));
-                    parameterList.Add(new SqlParameter("@Currency", data[j].Currency ?? ""));
-                    parameterList.Add(new SqlParameter("@CoO", data[j].CoO ?? ""));
-                    parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
-                    parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
-                    parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
-                    parameterList.Add(new SqlParameter("@UpdateDate", ""));
-                    parameterList.Add(new SqlParameter("@IsDelete", false));
-                    parameterList.Add(new SqlParameter("@IdItem", data[j].IdItem));
-                    parameterList.Add(new SqlParameter("@IdParent", data[j].IdParent));
-                    parameterList.Add(new SqlParameter("@SIBNumber", data[j].SibNumber ?? ""));
-                    parameterList.Add(new SqlParameter("@WONumber", data[j].WoNumber ?? ""));
-                    parameterList.Add(new SqlParameter("@Claim", data[j].Claim ?? ""));
-                    SqlParameter[] parameters = parameterList.ToArray();
-                    // ReSharper disable once CoVariantArrayConversion
-                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplItemInsert] @IdCipl, @IdReference, @ReferenceNo, @IdCustomer, @Name, @Uom, @PartNumber, @Sn, @JCode, @Ccr, @CaseNumber, @Type, @IdNo, @YearMade, @Quantity, @UnitPrice, @ExtendedValue, @Length, @Width, @Height, @Volume, @GrossWeight, @NetWeight, @Currency, @CoO, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @IdItem, @IdParent, @SIBNumber, @WONumber, @Claim, @ASNNumber", parameters);
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        for (var j = 0; j < data.Count; j++)
+                        {
+                            db.DbContext.Database.CommandTimeout = 600;
+                            List<SqlParameter> parameterList = new List<SqlParameter>();
+                            parameterList.Add(new SqlParameter("@IdCipl", data[j].IdCipl));
+                            parameterList.Add(new SqlParameter("@IdReference", data[j].Id));
+                            parameterList.Add(new SqlParameter("@ReferenceNo", data[j].ReferenceNo ?? ""));
+                            parameterList.Add(new SqlParameter("@IdCustomer", data[j].IdCustomer ?? ""));
+                            parameterList.Add(new SqlParameter("@Name", data[j].Name ?? ""));
+                            parameterList.Add(new SqlParameter("@Uom", data[j].UnitUom ?? ""));
+                            parameterList.Add(new SqlParameter("@PartNumber", data[j].PartNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Sn", data[j].Sn ?? ""));
+                            parameterList.Add(new SqlParameter("@JCode", data[j].JCode ?? ""));
+                            parameterList.Add(new SqlParameter("@Ccr", data[j].Ccr ?? ""));
+                            parameterList.Add(new SqlParameter("@CaseNumber", data[j].CaseNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@ASNNumber", data[j].ASNNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Type", data[j].Type ?? ""));
+                            parameterList.Add(new SqlParameter("@IdNo", data[j].IdNo ?? ""));
+                            parameterList.Add(new SqlParameter("@YearMade", data[j].YearMade ?? 0));
+                            parameterList.Add(new SqlParameter("@Quantity", data[j].AvailableQuantity));
+                            parameterList.Add(new SqlParameter("@UnitPrice", data[j].UnitPrice));
+                            parameterList.Add(new SqlParameter("@ExtendedValue", data[j].Quantity * data[j].UnitPrice));
+                            parameterList.Add(new SqlParameter("@Length", data[j].Length ?? 0));
+                            parameterList.Add(new SqlParameter("@Width", data[j].Width ?? 0));
+                            parameterList.Add(new SqlParameter("@Height", data[j].Height ?? 0));
+                            parameterList.Add(new SqlParameter("@Volume", data[j].Volume ?? 0));
+                            parameterList.Add(new SqlParameter("@GrossWeight", data[j].GrossWeight ?? 0));
+                            parameterList.Add(new SqlParameter("@NetWeight", data[j].NetWeight ?? 0));
+                            parameterList.Add(new SqlParameter("@Currency", data[j].Currency ?? ""));
+                            parameterList.Add(new SqlParameter("@CoO", data[j].CoO ?? ""));
+                            parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                            parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                            parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                            parameterList.Add(new SqlParameter("@UpdateDate", ""));
+                            parameterList.Add(new SqlParameter("@IsDelete", false));
+                            parameterList.Add(new SqlParameter("@IdItem", data[j].IdItem));
+                            parameterList.Add(new SqlParameter("@IdParent", data[j].IdParent));
+                            parameterList.Add(new SqlParameter("@SIBNumber", data[j].SibNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@WONumber", data[j].WoNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Claim", data[j].Claim ?? ""));
+                            parameterList.Add(new SqlParameter("@Status", Status));
+
+                            SqlParameter[] parameters = parameterList.ToArray();
+                            // ReSharper disable once CoVariantArrayConversion
+                            db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplItemInsert_RFC] @IdCipl, @IdReference, @ReferenceNo, @IdCustomer, @Name, @Uom, @PartNumber, @Sn, @JCode, @Ccr, @CaseNumber, @Type, @IdNo, @YearMade, @Quantity, @UnitPrice, @ExtendedValue, @Length, @Width, @Height, @Volume, @GrossWeight, @NetWeight, @Currency, @CoO, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @IdItem, @IdParent, @SIBNumber, @WONumber, @Claim, @ASNNumber,@Status", parameters);
+                        }
+                        return true;
+                    }
+
                 }
-                return true;
+                else
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        for (var j = 0; j < data.Count; j++)
+                        {
+                            db.DbContext.Database.CommandTimeout = 600;
+                            List<SqlParameter> parameterList = new List<SqlParameter>();
+                            parameterList.Add(new SqlParameter("@IdCipl", data[j].IdCipl));
+                            parameterList.Add(new SqlParameter("@IdReference", data[j].Id));
+                            parameterList.Add(new SqlParameter("@ReferenceNo", data[j].ReferenceNo ?? ""));
+                            parameterList.Add(new SqlParameter("@IdCustomer", data[j].IdCustomer ?? ""));
+                            parameterList.Add(new SqlParameter("@Name", data[j].Name ?? ""));
+                            parameterList.Add(new SqlParameter("@Uom", data[j].UnitUom ?? ""));
+                            parameterList.Add(new SqlParameter("@PartNumber", data[j].PartNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Sn", data[j].Sn ?? ""));
+                            parameterList.Add(new SqlParameter("@JCode", data[j].JCode ?? ""));
+                            parameterList.Add(new SqlParameter("@Ccr", data[j].Ccr ?? ""));
+                            parameterList.Add(new SqlParameter("@CaseNumber", data[j].CaseNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@ASNNumber", data[j].ASNNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Type", data[j].Type ?? ""));
+                            parameterList.Add(new SqlParameter("@IdNo", data[j].IdNo ?? ""));
+                            parameterList.Add(new SqlParameter("@YearMade", data[j].YearMade ?? 0));
+                            parameterList.Add(new SqlParameter("@Quantity", data[j].AvailableQuantity));
+                            parameterList.Add(new SqlParameter("@UnitPrice", data[j].UnitPrice));
+                            parameterList.Add(new SqlParameter("@ExtendedValue", data[j].Quantity * data[j].UnitPrice));
+                            parameterList.Add(new SqlParameter("@Length", data[j].Length ?? 0));
+                            parameterList.Add(new SqlParameter("@Width", data[j].Width ?? 0));
+                            parameterList.Add(new SqlParameter("@Height", data[j].Height ?? 0));
+                            parameterList.Add(new SqlParameter("@Volume", data[j].Volume ?? 0));
+                            parameterList.Add(new SqlParameter("@GrossWeight", data[j].GrossWeight ?? 0));
+                            parameterList.Add(new SqlParameter("@NetWeight", data[j].NetWeight ?? 0));
+                            parameterList.Add(new SqlParameter("@Currency", data[j].Currency ?? ""));
+                            parameterList.Add(new SqlParameter("@CoO", data[j].CoO ?? ""));
+                            parameterList.Add(new SqlParameter("@CreateBy", SiteConfiguration.UserName));
+                            parameterList.Add(new SqlParameter("@CreateDate", DateTime.Now));
+                            parameterList.Add(new SqlParameter("@UpdateBy", DBNull.Value));
+                            parameterList.Add(new SqlParameter("@UpdateDate", ""));
+                            parameterList.Add(new SqlParameter("@IsDelete", false));
+                            parameterList.Add(new SqlParameter("@IdItem", data[j].IdItem));
+                            parameterList.Add(new SqlParameter("@IdParent", data[j].IdParent));
+                            parameterList.Add(new SqlParameter("@SIBNumber", data[j].SibNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@WONumber", data[j].WoNumber ?? ""));
+                            parameterList.Add(new SqlParameter("@Claim", data[j].Claim ?? ""));
+
+                            SqlParameter[] parameters = parameterList.ToArray();
+                            // ReSharper disable once CoVariantArrayConversion
+                            db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplItemInsert] @IdCipl, @IdReference, @ReferenceNo, @IdCustomer, @Name, @Uom, @PartNumber, @Sn, @JCode, @Ccr, @CaseNumber, @Type, @IdNo, @YearMade, @Quantity, @UnitPrice, @ExtendedValue, @Length, @Width, @Height, @Volume, @GrossWeight, @NetWeight, @Currency, @CoO, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @IsDelete, @IdItem, @IdParent, @SIBNumber, @WONumber, @Claim, @ASNNumber", parameters);
+                        }
+                        return true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
+        public static List<SpCiplItemList> CiplItemChange(string formId)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+
+                    parameterList.Add(new SqlParameter("@IdCipl", formId));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    // ReSharper disable once CoVariantArrayConversion
+                    var data = db.DbContext.Database.SqlQuery<SpCiplItemList>(@"[dbo].[sp_CiplItemChangeList] @IdCipl", parameters).ToList();
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        if (data[i].Status == "Created")
+                        {
+                            List<SqlParameter> createdparameter = new List<SqlParameter>();
+                            createdparameter.Add(new SqlParameter("@Id", data[i].Id));
+                            createdparameter.Add(new SqlParameter("@IdCipl", data[i].IdCipl));
+                            createdparameter.Add(new SqlParameter("@CreateDate", data[i].CreateDate));
+                            createdparameter.Add(new SqlParameter("@Status", data[i].Status));
+                            SqlParameter[] createdparameters = createdparameter.ToArray();
+                            db.DbContext.Database.ExecuteSqlCommand(@"[dbo].[sp_CiplItemChange] @Id, @IdCipl ,@Status,@CreateDate", createdparameters);
+                        }
+                        if (data[i].Status == "Updated")
+                        {
+                            List<SqlParameter> updatedparameter = new List<SqlParameter>();
+                            updatedparameter.Add(new SqlParameter("@Id", data[i].Id));
+                            updatedparameter.Add(new SqlParameter("@IdCipl", data[i].IdCipl));
+                            updatedparameter.Add(new SqlParameter("@CreateDate", data[i].CreateDate));
+                            updatedparameter.Add(new SqlParameter("@Status", data[i].Status));
+                            SqlParameter[] updatedparameters = updatedparameter.ToArray();
+                            db.DbContext.Database.ExecuteSqlCommand(@"[dbo].[sp_CiplItemChange] @Id ,@IdCipl, @Status,@CreateDate", updatedparameters);
+                        }
+                        if (data[i].Status == "Deleted")
+                        {
+                            List<SqlParameter> deletedparameter = new List<SqlParameter>();
+                            deletedparameter.Add(new SqlParameter("@Id", data[i].Id));
+                            deletedparameter.Add(new SqlParameter("@IdCipl", data[i].IdCipl));
+                            deletedparameter.Add(new SqlParameter("@CreateDate", data[i].CreateDate));
+                            deletedparameter.Add(new SqlParameter("@Status", data[i].Status));
+                            SqlParameter[] deletedparameters = deletedparameter.ToArray();
+                            db.DbContext.Database.ExecuteSqlCommand(@"[dbo].[sp_CiplItemChange] @Id ,@IdCipl ,@Status,@CreateDate", deletedparameters);
+                        }
+                    }
+
+                    return data;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
         public static bool InsertCiplDocument(List<CiplDocumentInsert> data)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -316,6 +454,18 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
+                if(cipl.ConsigneeEmail == null)
+                {
+                    cipl.ConsigneeEmail = "";
+                }
+                if (cipl.NotifyEmail == null)
+                {
+                    cipl.NotifyEmail = "";
+                }
+                if(forwader.Email == null)
+                {
+                    forwader.Email = "";
+                }
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
                 parameterList.Add(new SqlParameter("@Category", cipl.Category ?? ""));
@@ -389,10 +539,11 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
                 parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
                 parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
+                parameterList.Add(new SqlParameter("@Vendor", forwader.Vendor ?? ""));
 
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters).ToList();
+                var data = db.DbContext.Database.SqlQuery<ReturnSpInsert>(" exec [dbo].[SP_CiplInsert] @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType,@Vendor", parameters).ToList();
                 return data;
             }
         }
@@ -404,6 +555,22 @@ namespace App.Service.EMCS
             {
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
                 {
+                    if (cipl.ConsigneeEmail == null)
+                    {
+                        cipl.ConsigneeEmail = "";
+                    }
+                    if (cipl.NotifyEmail == null)
+                    {
+                        cipl.NotifyEmail = "";
+                    }
+                    if (forwader.Email == null)
+                    {
+                        forwader.Email = "";
+                    }
+                    if (cipl.SoldToEmail== null)
+                    {
+                        cipl.SoldToEmail = "";
+                    }
                     db.DbContext.Database.CommandTimeout = 600;
                     List<SqlParameter> parameterList = new List<SqlParameter>();
                     parameterList.Add(new SqlParameter("@id", cipl.Id));
@@ -478,9 +645,10 @@ namespace App.Service.EMCS
                     parameterList.Add(new SqlParameter("@Email", forwader.Email.Replace(",", ";") ?? ""));
                     parameterList.Add(new SqlParameter("@Type", forwader.Type ?? ""));
                     parameterList.Add(new SqlParameter("@ExportShipmentType", forwader.ExportShipmentType ?? ""));
+                    parameterList.Add(new SqlParameter("@Vendor", forwader.Vendor ?? ""));
                     SqlParameter[] parameters = parameterList.ToArray();
                     // ReSharper disable once CoVariantArrayConversion
-                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType", parameters);
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplUpdate] @id, @Category, @CategoriItem, @ExportType, @ExportTypeItem, @SoldConsignee, @SoldToName, @SoldToAddress, @SoldToCountry, @SoldToTelephone, @SoldToFax, @SoldToPic, @SoldToEmail, @ShipDelivery, @ConsigneeName, @ConsigneeAddress, @ConsigneeCountry, @ConsigneeTelephone, @ConsigneeFax, @ConsigneePic, @ConsigneeEmail, @NotifyName, @NotifyAddress, @NotifyCountry, @NotifyTelephone, @NotifyFax, @NotifyPic, @NotifyEmail, @ConsigneeSameSoldTo, @NotifyPartySameConsignee, @Area, @Branch, @Currency, @Rate, @PaymentTerms, @ShippingMethod, @CountryOfOrigin, @LcNoDate, @IncoTerm, @FreightPayment, @ShippingMarks, @Remarks, @SpecialInstruction, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Status, @IsDelete, @LoadingPort, @DestinationPort, @PickUpPic, @PickUpArea, @CategoryReference, @ReferenceNo, @Consolidate, @Forwader, @BranchForwarder, @Attention, @Company, @SubconCompany, @Address, @AreaForwarder, @City, @PostalCode, @Contact, @FaxNumber, @Forwading, @Email,@Type,@ExportShipmentType,@Vendor", parameters);
                     return 1;
                 }
 
@@ -498,6 +666,19 @@ namespace App.Service.EMCS
             {
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
                 {
+
+                    if (cipl.NotifyEmail == null)
+                    {
+                        cipl.NotifyEmail = "";
+                    }
+                    if (forwader.Email == null)
+                    {
+                        forwader.Email = "";
+                    }
+                    if (cipl.SoldToEmail == null)
+                    {
+                        cipl.SoldToEmail = "";
+                    }         
                     db.DbContext.Database.CommandTimeout = 600;
                     List<SqlParameter> parameterList = new List<SqlParameter>();
                     parameterList.Add(new SqlParameter("@id", cipl.Id));
@@ -551,7 +732,17 @@ namespace App.Service.EMCS
                     parameterList.Add(new SqlParameter("@IsDelete", false));
                     parameterList.Add(new SqlParameter("@LoadingPort", cipl.LoadingPort ?? ""));
                     parameterList.Add(new SqlParameter("@DestinationPort", cipl.DestinationPort ?? ""));
-                    parameterList.Add(new SqlParameter("@PickUpPic", cipl.PickUpPic ?? ""));
+                    if (cipl.PickUpPic != null)
+                    {
+                        var getdata = cipl.PickUpPic.Split('-');
+                        parameterList.Add(new SqlParameter("@PickUpPic", getdata[0] ?? ""));
+
+                    }
+                    else
+                    {
+                        parameterList.Add(new SqlParameter("@PickUpPic", cipl.PickUpPic ?? ""));
+
+                    }
                     parameterList.Add(new SqlParameter("@PickUpArea", cipl.PickUpArea ?? ""));
                     parameterList.Add(new SqlParameter("@CategoryReference", cipl.CategoryReference ?? ""));
                     parameterList.Add(new SqlParameter("@ReferenceNo", cipl.ReferenceNo ?? ""));
@@ -623,7 +814,7 @@ namespace App.Service.EMCS
             }
         }
 
-        public static long DeleteCiplById(long idCipl, string status)
+        public static long DeleteCiplById(long idCipl, string RFC, string status)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
@@ -634,14 +825,32 @@ namespace App.Service.EMCS
                 parameterList.Add(new SqlParameter("@UpdateDate", DateTime.Now));
                 parameterList.Add(new SqlParameter("@Status", status));
                 parameterList.Add(new SqlParameter("@IsDelete", true));
+                parameterList.Add(new SqlParameter("@RFC", RFC));
 
                 SqlParameter[] parameters = parameterList.ToArray();
                 // ReSharper disable once CoVariantArrayConversion
-                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplDelete] @id, @UpdateBy, @UpdateDate, @Status, @IsDelete", parameters);
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_CiplDelete] @id, @UpdateBy, @UpdateDate, @Status, @IsDelete,@RFC", parameters);
                 return 1;
             }
         }
+        public static dynamic GetCiplItemList(GridListFilter crit)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    string sql = @"select Id,[IdCipl],[IdReference],[ReferenceNo],[IdCustomer],[Name],[Uom],[PartNumber],[Sn],[JCode],[Ccr],[CaseNumber],[Type],[IdNo],[YearMade],[Quantity],[UnitPrice],[ExtendedValue],[Length],[Width],[Height],[Volume],[GrossWeight],[NetWeight],[Currency],[CoO],[CreateBy],[CreateDate],[UpdateBy],[UpdateDate],[IsDelete],[IdParent],[SIBNumber],[WONumber],[Claim],[ASNNumber],[Status] from dbo.CiplItem_Change Where IdCipl="+Convert.ToString(crit.IdCipl);
+                    var table = db.Database.SqlQuery<SpCiplItemList>(sql).ToList();
+                    return table;
+                }
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+
+        }
         public static List<Data.Domain.EMCS.MasterCustomers> GetIdCustomer()
         {
             using (var db = new Data.EmcsContext())
@@ -713,6 +922,57 @@ namespace App.Service.EMCS
 
 
                 var sql = @"[dbo].[sp_get_reference_item] @Column = '" + column + "', @ColumnValue = '" + columnValue + "', @Category = '" + category + "' ";
+                //var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(SQL + ", @isTotal=0").FirstOrDefault();
+                var data = db.Database.SqlQuery<ReferenceToCiplItem>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit= 50000").ToList();
+                if (data.Count > 0)
+                {
+                    data.ToList().ForEach(c => c.PartNumber = c.PartNumber.Replace(@":AA", string.Empty));
+                }
+                dynamic result = new ExpandoObject();
+
+                //result.total = count.total;
+                result.rows = data;
+                return result;
+            }
+        }
+
+        public static dynamic GetAllReferenceItem(GridListFilter crit, string column, string columnValue, string category)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+
+                category = category ?? "";
+                column = column ?? "";
+                columnValue = columnValue ?? "";
+                string Order = crit.Order ?? "";
+
+                crit.Sort = crit.Sort ?? "Id";
+                db.Database.CommandTimeout = 600;
+                column = column ?? "";
+                columnValue = columnValue ?? "";
+                if (category != null)
+                {
+                    //if (category.ToLower() == "old core" || category.ToLower() == "oldcore")
+                    //{
+                    //    category = "REMAN";
+                    //}
+                    category = Regex.Replace(category, @"[^0-9a-zA-Z]+", "");
+                }
+                if (column != null)
+                {
+                    column = Regex.Replace(column, @"[^0-9a-zA-Z]+", "");
+                }
+                if (columnValue != null)
+                {
+                    columnValue = Regex.Replace(columnValue, @"[^0-9a-zA-Z-, ]+", "");
+                }
+                if (Order != null)
+                {
+                    Order = Regex.Replace(Order, @"[^0-9a-zA-Z]+", "");
+                }
+
+
+                var sql = @"[dbo].[sp_get_all_reference_item] @Column = '" + column + "', @ColumnValue = '" + columnValue + "', @Category = '" + category + "' ";
                 //var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(SQL + ", @isTotal=0").FirstOrDefault();
                 var data = db.Database.SqlQuery<ReferenceToCiplItem>(sql + ", @isTotal=0, @sort='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit= 50000").ToList();
                 if (data.Count > 0)
@@ -890,13 +1150,11 @@ namespace App.Service.EMCS
                 crit.Order = "DESC";
                 db.Database.CommandTimeout = 600;
                 var sql = @"[dbo].[sp_RequestForChangeHistory]";
-                var count = db.Database.SqlQuery<CountData>(sql + " @IsTotal=0,@Approver='" + SiteConfiguration.UserName + "'").FirstOrDefault();
-                var data = db.Database.SqlQuery<Sp_RequestForChangeHistory>(sql + "@IsTotal=0, @sort='" + crit.Sort + "',  @order='" + crit.Order + "', @offset='" + crit.Offset.ToString() + "', @limit='" + crit.Limit.ToString() + "'").ToList();
+                var count = db.Database.SqlQuery<CountData>(sql + " @IsTotal=1,@Approver='" + SiteConfiguration.UserName + "'").FirstOrDefault();
+                sql = sql + "@IsTotal=0, @sort='" + crit.Sort + "',  @order='" + crit.Order + "', @offset='" + crit.Offset.ToString() + "', @limit='" + crit.Limit.ToString() + "',@Approver='" + SiteConfiguration.UserName + "'";
+                var data = db.Database.SqlQuery<Sp_RequestForChangeHistory>(sql).ToList();
 
-                dynamic result = new ExpandoObject();
-                if (count != null) result.total = count.Total;
-                result.rows = data;
-                return result;
+                return data;
             }
         }
         public static dynamic GetSpChangeHistoryReason(string idTerm, string formtype)
@@ -1136,7 +1394,7 @@ namespace App.Service.EMCS
             }
         }
         public static List<SpGetCiplAvailable> GetCiplAvailable(SpGetCiplAvailable crit)
-        {
+            {
             using (var db = new Data.EmcsContext())
             {
                 var cargoid = crit.Id;
@@ -1336,7 +1594,11 @@ namespace App.Service.EMCS
                     if (status == "Update")
                     {
                         var reference = db.Reference.Where(a => a.Id == idReference).FirstOrDefault();
-                        if (reference != null) reference.AvailableQuantity = item[j].Quantity;
+                        if (reference != null)
+                        {
+                            reference.AvailableQuantity = item[j].Quantity;
+                            reference.UnitPrice = item[j].UnitPrice;
+                        }
                         db.SaveChanges();
                     }
 

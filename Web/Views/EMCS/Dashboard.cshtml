@@ -1,912 +1,449 @@
-﻿﻿﻿@{
-  Layout = "~/Views/EMCS/_Layout.cshtml";
-  ViewBag.Title = "Dashboard";
+﻿@{
+    ViewBag.Title = "Dashboard";
 }
-@* @Styles.Render("~/Content/EMCS/Custom.css") *@
-@* @Styles.Render("~/Content/EMCS/Dashboard.css?id=" + DateTime.Now.ToString("yyyyMMddhhmmtt")) *@
+@Styles.Render("~/Content/EMCS/Custom.css")
+@Styles.Render("~/Content/EMCS/Dashboard.css?id=" + DateTime.Now.ToString("yyyyMMddhhmmtt"))
 
-<div id="dashboard-content" class="!px-8 !pt-8 !pb-2 transition-all duration-300">
-  <div class="w-full !mb-5">
-    @* <!-- Cards Summary --> *@
-    <div class="grid grid-cols-4 gap-x-5">
-      <div class="card-summary card overflow-visible">
-        <div class="flex w-full p-3 gap-x-2.5">
-          <div
-            class="icon-container bg-black bg-gradient-to-tr from-orange-300 to-amber-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-2xl leading-none flex-none">
-            <!-- <i class="uil uil-ship"></i> -->
-            <i class="fa-solid fa-plane-up"></i>
-            <!-- <svg class="w-[30px] h-[30px] text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" fill="currentColor"/>
-            </svg> -->
-              
-          </div>
-          <div class="flex-auto">
-            <div class="flex justify-between">
-              <h4 class="text-[13px] font-bold uppercase text-slate-500 dark:text-white pt-1">Export Today</h4>
-              <div class="-mr-2">
-                <button class="dropdown-toggle dropdown-caret-none text-slate-500 hover:text-slate-900 dark:text-white/70 dark:hover:text-white" type="button"
-                  data-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <div class="input-group col-lg-12 col-xs-12">
-                    <input type="text" class="form-control date" id="date1-export-type" name="dateCipl"
-                      placeholder="Start Date" autocomplete="off" />
-                  </div>
-                  <div class="input-group col-lg-12 col-xs-12">
-                    <input type="text" class="form-control date" id="date2-export-type" name="dateCipl"
-                      placeholder="End Date" autocomplete="off" />
-                  </div>
-                  <button type="submit" class="btn btn-success btn-round btn-sm ml-3" id="btn-export-type">
-                    <i class="fa fa-search"></i> Filter
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="slider-export-today" class="relative">
-              <div class="loading-spinner mt-1 absolute" role="status">
-                <div
-                  class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div class="summary-dropdown-hover" id="dropdown-export-today">
-                <div class="summary-content text-brand-black dark:text-white">
-                  <div id="summary-export-today"></div>
-                </div>
-                <ul id="ul-export-today" class="summary-hover-ul"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-summary card overflow-visible">
-        <div class="flex w-full p-3 gap-x-2.5">
-          <div
-            class="icon-container bg-black bg-gradient-to-tr from-blue-300 to-purple-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
-            <!-- <i class="uil uil-weight"></i> -->
-            <i class="fa-solid fa-weight-hanging"></i>
-          </div>
-          <div class="flex-auto">
-            <div class="flex justify-between">
-              <h4 class="text-[13px] font-bold uppercase text-slate-500 dark:text-white pt-1">Total Weight</h4>
-              <div class="-mr-2">
-                <button class="dropdown-toggle dropdown-caret-none text-slate-500 hover:text-slate-900 dark:text-white/70 dark:hover:text-white" type="button"
-                  data-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <form class="form-horizontal" id="form-net-weight">
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control date" id="date1-net-weight" name="dateCipl"
-                        placeholder="Start Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control date" id="date2-net-weight" name="dateCipl"
-                        placeholder="End Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-sm" id="btn-net-weight" style="width: 100%">
-                      <i class="fa fa-search"></i>&nbsp;Filter
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div id="slider-net-weight" class="relative">
-              <div class="loading-spinner mt-1 absolute" role="status">
-                <div
-                  class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div class="summary-dropdown-hover" id="dropdown-net-weight">
-                <div class="summary-content text-brand-black dark:text-white">
-                  <div id="summary-net-weight"></div>
-                </div>
-                <ul id="ul-net-weight" class="summary-hover-ul"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-summary card overflow-visible">
-        <div class="flex w-full p-3 gap-x-2.5">
-          <div
-            class="icon-container bg-black bg-gradient-to-tr from-red-300 to-fuchsia-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
-            <!-- <i class="uil uil-exchange-alt"></i> -->
-            <i class="fa-solid fa-chart-line"></i>
-          </div>
-          <div class="flex-auto">
-            <div class="flex justify-between">
-              <h4 class="text-[13px] font-bold uppercase text-slate-500 dark:text-white pt-1">Exchange Rate Today</h4>
-              <div class="-mr-2">
-                <button class="dropdown-toggle dropdown-caret-none text-slate-500 hover:text-slate-900 dark:text-white/70 dark:hover:text-white" type="button"
-                  data-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <form class="form-horizontal" id="form-export-value">
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control year" id="date1-export-value" name="dateCipl"
-                        placeholder="Start Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control date" id="date2-export-value" name="dateCipl"
-                        placeholder="End Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-sm" id="btn-total-export" style="width: 100%">
-                      <i class="fa fa-search"></i>&nbsp;Filter
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div id="slider-exchange-rate" class="relative">
-              <div class="loading-spinner mt-1 absolute" role="status">
-                <div
-                  class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div class="summary-dropdown-hover" id="dropdown-exchange-rate">
-                <div class="summary-content text-brand-black dark:text-white">
-                  <div id="summary-exchange-rate"></div>
-                </div>
-                <ul id="ul-exchange-rate" class="summary-hover-ul"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-summary card overflow-visible">
-        <div class="flex w-full p-3 gap-x-2.5">
-          <div
-            class="icon-container bg-black bg-gradient-to-tr from-green-300 to-lime-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
-            <!-- <i class="uil uil-receipt"></i> -->
-            <i class="fa-solid fa-dollar-sign"></i>
-          </div>
-          <div class="flex-auto">
-            <div class="flex justify-between">
-              <h4 class="text-[13px] font-bold uppercase text-slate-500 dark:text-white pt-1">Export Value</h4>
-              <div class="-mr-2">
-                <button class="dropdown-toggle dropdown-caret-none text-slate-500 hover:text-slate-900 dark:text-white/70 dark:hover:text-white" type="button"
-                  data-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                  <form class="form-horizontal" id="form-export-value">
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control year" id="date1-export-value" name="dateCipl"
-                        placeholder="Start Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <div class="input-group col-lg-12 col-xs-12">
-                      <input type="text" class="form-control date" id="date2-export-value" name="dateCipl"
-                        placeholder="End Date" autocomplete="off" />
-                      <div class="input-group-addon cal" style="background: #00c0ef; border-color: #00acd6">
-                        <i class="fa fa-calendar" style="color: #ffffff"></i>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-sm" id="btn-total-export" style="width: 100%">
-                      <i class="fa fa-search"></i>&nbsp;Filter
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div id="slider-export-value" class="relative">
-              <div class="loading-spinner mt-1 absolute" role="status">
-                <div
-                  class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div class="summary-dropdown-hover" id="dropdown-export-value">
-                <div class="summary-content text-brand-black dark:text-white">
-                  <div id="summary-export-value"></div>
-                </div>
-                <ul id="ul-export-value" class="summary-hover-ul"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="grid grid-cols-12 gap-x-5">
+<style>
+    .wrapper {
+        min-height: 100% !important;
+    }
 
-    <div class="col-span-9">
+    thead th {
+        text-align: left !important;
+    }
 
-      @* <!-- Map --> *@
-      <div id="map-card" class="card w-full bg-white relative h-[620px] pb-[80px] dark:!bg-gray-800">
-        <div id="outstanding-carousel-ticker"
-        class="absolute w-full left-0 right-0 bottom-0 z-10 bg-slate-200/80 border-t border-solid border-slate-300 !p-4 h-20 dark:bg-gray-700 dark:border-gray-600">
-          <div id="outstanding-carousel-header" class="mb-[3px] mt-[3px]">
-            <div class="grid grid-cols-6 gap-x-1">
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">CIPL</div>
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">BRANCH</div>
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">ETD</div>
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">ETA</div>
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">DEST PORT</div>
-              <div class="text-xs uppercase font-semibold text-slate-400 dark:text-white/80">STATUS</div>
-            </div>
-          </div>
-          <div id="outstanding-carousel" class="carousel vertical slide" data-ride="carousel" data-interval="15000">
-            <div class="carousel-inner">
-            </div>
-          </div>
-          @* <table id="table-outstanding" class="w-full text-sm">
-            <thead>
-            <tr>
-            <th width="20%" class="text-xs uppercase font-medium text-slate-500">CIPL</th>
-            <th width="20%" class="text-xs uppercase font-medium text-slate-500">BRANCH</th>
-            <th width="10%" class="text-xs uppercase font-medium text-slate-500">ETD</th>
-            <th width="10%" class="text-xs uppercase font-medium text-slate-500">ETA</th>
-            <th width="20%" class="text-xs uppercase font-medium text-slate-500">DEST PORT</th>
-            <th width="20%" class="text-xs uppercase font-medium text-slate-500">STATUS</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            </tr>
-            </tbody>
-            </table> *@
-        </div>        
-        <div class="h-full relative">
-          <div class="dashboardhighcharts active h-full relative">
-            <div class="absolute w-full top-0 left-0 right-0 z-10">
-              <div class="flex justify-between items-center px-3 pt-3">
-                <div id="btn-map-switch">
-                  <div class="selector"></div>
-                  <label id="btn-branch-container-map" class="switch--item active">
-                    <input type="radio" name="options" id="branch-container-map" checked> Branch
-                  </label>
-                  <label id="btn-port-container-map" class="switch--item">
-                    <input type="radio" name="options" id="port-container-map"> Port
-                  </label>
-                  <input id="map-category" type="hidden" name="map-category" value="Branch">
-                </div>
-                @* <div id="btn-map-toggle" class="btn-group-toggle" data-toggle="buttons">
-                  <label id="btn-branch-container" class="btn active">
-                  <input type="radio" name="options" id="branch-container-map" checked> Branch
-                  </label>
-                  <label id="btn-port-container" class="btn">
-                  <input type="radio" name="options" id="port-container-map"> Port
-                  </label>
-                  </div> *@
-                <div class="ml-6">
-                  <button
-                    class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 hover:bg-slate-300 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500"
-                    onclick="openFullscreen();">
-                    <i class="uil uil-expand-alt"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="w-full h-full relative">
-              <div id="map-loader" class="w-full h-full flex items-center justify-center">
-                <div role="status">
-                  <div
-                    class="[&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                    @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                  </div>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-              <div id="map-title"
-                class="absolute top-[72px] z-10 w-full text-center uppercase text-base tracking-tight font-bold text-brand-black dark:text-white"></div>
-              <div id="container-map" class="h-full w-full flex justify-center items-center"></div>
-            </div>
-          </div>
-          <div class="dashboardVideoTrakindo h-full">
-            <iframe title="Trakindo TV" id="iframe-trakindo-video" frameborder="0" allowfullscreen="true"
-              name="video_play" scrolling="no"></iframe>
-            <button id="btn-video-trakindo-close" type="button"
-              class="text-white text-2xl leading-none absolute right-4 top-4 z-20"><i
-                class="uil uil-times-circle"></i></button>
-          </div>
-          <div class="dashboardTv h-full">
-            <button id="btn-tv-close" type="button"
-              class="text-white text-2xl leading-none absolute right-4 top-4 z-20"><i
-                class="uil uil-times-circle"></i></button>
-            <iframe title="TV" id="iframe-tv" frameborder="0" allowfullscreen="true" name="video_play"
-              scrolling="no"></iframe>
-          </div>
-        </div>
-      </div>
+    thead td {
+        text-align: left !important;
+    }
 
-      @* <!-- Outstanding, Problem, Visit --> *@
-      <div class="total-cards grid grid-cols-3 gap-x-5 mt-[1.25rem]">
-        <div class="total-outstanding card">
-          <div class="flex items-center justify-between p-3">
-            <div class="mr-auto">
-              <h4 class="text-sm font-bold uppercase text-slate-500 dark:text-white pt-1">Outstanding</h4>
-              <div class="info-box-number text-lg font-semibold relative h-[28px]">
-                <div class="loading-spinner mt-1 absolute" role="status">
-                  <div
-                    class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                    @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                  </div>
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <span class="total-card-counter text-brand-black dark:text-white" data-count="0">0</span>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <i class="uil uil-invoice text-slate-300 dark:text-white/40 text-6xl leading-none"></i>
-            </div>
-          </div>    
-        </div>
-        <div class="total-problem card">
-          <div class="flex items-center justify-between p-3">
-            <div class="mr-auto">
-              <h4 class="text-sm font-bold uppercase text-slate-500 dark:text-white pt-1">Total Problem</h4>
-              <div class="info-box-number text-lg font-semibold relative h-[28px]">
-                <div class="loading-spinner mt-1 absolute" role="status">
-                  <div
-                    class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                    @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                  </div>
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <span class="total-card-counter text-brand-black dark:text-white" data-count="0">0</span>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <i class="uil uil-exclamation-triangle text-slate-300 dark:text-white/40 text-6xl leading-none"></i>
-            </div>
-          </div>
-        </div>
-        <div class="total-visit card">
-          <div class="flex items-center justify-between p-3">
-            <div class="mr-auto">
-              <h4 class="text-sm font-bold uppercase text-slate-500 dark:text-white pt-1">Total Visit</h4>
-              <div class="info-box-number text-lg font-semibold relative h-[28px]">
-                <div class="loading-spinner mt-1 absolute" role="status">
-                  <div
-                    class="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                    @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                  </div>
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <span class="total-card-counter text-brand-black dark:text-white" data-count="0">0</span>
-              </div>
-            </div>
-            <div class="ml-auto">
-              <i class="uil uil-user-location text-slate-300 dark:text-white/40 text-6xl leading-none"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+    thead th, thead td {
+        color: rgb(255, 192, 0);
+    }
 
+    .ml9 {
+        font-size: 12px;
+    }
+
+        .ml9 .letter, .ml9 .letter1, .ml9 .letter2, .ml9 .letter3, .ml9 .letter4, .ml9 .letter5, .ml9 .letter6 {
+            transform-origin: 50% 100%;
+            display: inline-block;
+            line-height: 1em;
+        }
+
+    .select2-dropdown--below {
+        z-index: 2300 !important;
+    }
+</style>
+
+<div class="row" style="margin-bottom:20px !important;">
+
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+
+        <div class="box info-box">
+            <div class="box-icon info-box-icon color-1 icon-blue" style="transform: rotate(-40deg); font-size: 35px !important;"><span>&#9992;</span></div>
+            <div class="box-content info-box-content">
+                <span class="box-text info-box-text span-title-export-today" style="display: contents;">
+                    Export Today
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-export-today" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-export-today">
+                        <ul class="dropdown-menu keep-open" id="open-export-today">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-export-type" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-export-type" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-export-type" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider-export-today">
+                    <div class="" id="array-export-today"></div>
+                    <div class="dropdown-hover" id="dropdown-export-today">
+                        <span class="info-box-number"><span class="number-export-today" style="font-size:23px;"></span> <span class="span-export-today" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-export-today"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.info-box-content -->
     </div>
 
-    <div class="col-span-3">
-
-      @* <!-- Shipment --> *@
-      <div id="shipment-card" class="card mb-6 h-[426px]">
-        <div class="!pt-4 !px-4 !pb-3">
-          <h3 class="text-sm font-bold uppercase text-slate-500 dark:text-white">Total Shipment</h3>
-        </div>
-        <div class="flex gap-x-2 !py-1 !px-4 w-full items-center border-t border-solid border-slate-200 dark:border-gray-600">
-          <div class="graph-container w-[82px] flex-none">
-            <div id="cat-parts" class="aspect-square flex items-center justify-center">
-              <div role="status">
-                <div
-                  class="[&>svg]:mr-2 [&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
+    <div class="col-md-3 col-sm-6 col-xs-12 content-dash-0" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-2 icon-green"><i class="fa fa-balance-scale"></i></span>
+            <div class="info-box-content">
+                <span class="box-text info-box-text span-title-net-weight" style="display: contents;">
+                    Total Weight
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-total-net-weight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-net-weight">
+                        <ul class="dropdown-menu keep-open" id="open-total-net-weight">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-net-weight" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-net-weight" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-net-weight" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-          </div>
-          <div class="grow">
-            <h4 class="font-bold text-brand-black dark:text-white">CAT Parts</h4>
-          </div>
-        </div>
-        <div class="flex gap-x-2 !py-1 !px-4 w-full items-center border-t border-solid border-slate-200 dark:border-gray-600">
-          <div class="graph-container w-[82px] flex-none">
-            <div id="cat-machine" class="aspect-square flex items-center justify-center">
-              <div role="status">
-                <div
-                  class="[&>svg]:mr-2 [&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-          </div>
-          <div class="grow">
-            <h4 class="font-bold text-brand-black dark:text-white">CAT Machine</h4>
-          </div>
-        </div>
-        <div class="flex gap-x-2 !py-1 !px-4 w-full items-center border-t border-solid border-slate-200 dark:border-gray-600">
-          <div class="graph-container w-[82px] flex-none">
-            <div id="cat-engine" class="aspect-square flex items-center justify-center">
-              <div role="status">
-                <div
-                  class="[&>svg]:mr-2 [&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-          </div>
-          <div class="grow">
-            <h4 class="font-bold text-brand-black dark:text-white">CAT Engine</h4>
-          </div>
-        </div>
-        <div class="flex gap-x-2 !py-1 !px-4 w-full items-center border-t border-solid border-slate-200 dark:border-gray-600">
-          <div class="graph-container w-[82px] flex-none">
-            <div id="cat-forklift" class="aspect-square flex items-center justify-center">
-              <div role="status">
-                <div
-                  class="[&>svg]:mr-2 [&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                  @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                </div>
-                <span class="sr-only">Loading...</span>
-              </div>
-            </div>
-          </div>
-          <div class="grow">
-            <h4 class="font-bold text-brand-black dark:text-white">CAT Forklift</h4>
-          </div>
-        </div>
-      </div>
-
-      <div id="graph-card" class="card transition duration-300 h-[286px]">
-        <div id="cardDataCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-          <div class="carousel-inner">
-            @* <!-- Export Cycle Steps --> *@
-            <div class="carousel-item active">
-              <div class="!pt-4 !pl-4 !pr-20 !pb-2">
-                <h3 class="text-sm font-bold uppercase text-slate-500 dark:text-white">Export Cycle Steps</h3>
-              </div>
-              <div class="!pt-4 !pb-6 !px-4 w-full min-h-[240px]">
-                <div id="cycle-steps" class="flex flex-col gap-y-4 !pt-2">
-                  <div class="loading-spinner" role="status">
-                    <div class="w-full flex items-center justify-center">
-                      <div
-                        class="[&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                        @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                      </div>
-                      <span class="sr-only">Loading...</span>
+                <div id="slider-net-weight">
+                    <div class="dropdown-hover" id="dropdown-net-weight">
+                        <span class="info-box-number"><span class="number-net-weight" style="font-size:23px;"></span> <span class="span-net-weight" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-net-weight"></ul>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-            @* <!-- Export Biggest Commodities --> *@
-            <div class="carousel-item">
-              <div class="!pt-4 !pl-4 !pr-20 !pb-2">
-                <h3 class="text-sm font-bold uppercase text-slate-500 dark:text-white">5 Biggest Commodities</h3>
-              </div>
-              <div class="w-full min-h-[240px]">
-                <div id="export-biggest-commodities" class="flex flex-col gap-y-4">
-                  <div class="loading-spinner p-4" role="status">
-                    <div class="w-full flex items-center justify-center">
-                      <div
-                        class="[&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                        @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                      </div>
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            @* <!-- Export By Category --> *@
-            <div class="carousel-item">
-              <div class="!pt-4 !pl-4 !pr-20 !pb-2">
-                <h3 class="text-sm font-bold uppercase text-slate-500 dark:text-white">Export By Category</h3>
-              </div>
-              <div class="w-full min-h-[240px]">
-                <div id="export-by-category" class="flex flex-col gap-y-4">
-                  <div class="loading-spinner p-4" role="status">
-                    <div class="w-full flex items-center justify-center">
-                      <div
-                        class="[&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                        @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                      </div>
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            @* <!-- Export Sales vs Non Sales --> *@
-            <div class="carousel-item">
-              <div class="!pt-4 !pl-4 !pr-20 !pb-2">
-                <h3 class="text-sm font-bold uppercase text-slate-500 dark:text-white">Sales vs Non Sales</h3>
-              </div>
-              <div class="w-full min-h-[240px]">
-                <div id="export-sales-vs-nonsales" class="flex flex-col gap-y-4">
-                  <div class="loading-spinner p-4" role="status">
-                    <div class="w-full flex items-center justify-center">
-                      <div
-                        class="[&>svg]:w-8 [&>svg]:h-8 [&>svg]:text-gray-200 [&>svg]:animate-spin [&>svg]:dark:text-gray-600 [&>svg]:fill-amber-400">
-                        @Html.Raw(File.ReadAllText(Server.MapPath("~/Content/Assets/img/spinner.svg")))
-                      </div>
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-control absolute right-0 top-0 !pt-3 !pb-2 !px-3 bg-white flex gap-x-1 dark:!bg-gray-800">
-            <a class="flex w-6 h-6 items-center justify-center rounded-full text-slate-600 bg-slate-200 hover:bg-slate-300"
-              href="#cardDataCarousel" role="button" data-slide="prev">
-              <span aria-hidden="true"><i class="uil uil-angle-left"></i></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="flex w-6 h-6 items-center justify-center rounded-full text-slate-600 bg-slate-200 hover:bg-slate-300"
-              href="#cardDataCarousel" role="button" data-slide="next">
-              <span aria-hidden="true"><i class="uil uil-angle-right"></i></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
+            <!-- /.info-box-content -->
         </div>
-      </div>
-
+        <!-- /.info-box -->
     </div>
 
-  </div>
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-3 icon-yellow"><i class="fa fa-line-chart"></i></span>
+            <div class="info-box-content">
+                <span class="box-text info-box-text span-title-exchange-rate" style="display: contents;">
+                    Exchange Rate Today
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-exchange-rate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-exchange-rate">
+                        <ul class="dropdown-menu keep-open" id="open-exchange-rate">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date1-exchange-rate" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;" hidden>
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-exchange-rate" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-exchange-rate" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider">
+                    <div class="dropdown-hover" id="dropdown-exchange-rate">
+                        <span class="info-box-number"><span class="number-exchange-rate" style="font-size:23px;"></span> <span class="span-exchange-rate" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-exchange-rate"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12" style="z-index: 1">
+        <div class="box info-box">
+            <span class="box-icon info-box-icon color-4 icon-red"><i class="fa fa-usd"></i></span>
+            <div class="box-content info-box-content">
+                <span class="box-text info-box-text span-title-export-value" style="display: contents;">
+                    Export Value
+                    <span class="wrap"></span>
+                </span>
+                <div class="dropdown pull-right">
+                    <i class="fa fa-filter pull-right dropdown-toggle" type="button" id="i-total-value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                    <form class="form-horizontal" id="form-export-value">
+                        <ul class="dropdown-menu keep-open" id="open-total-value">
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control year" id="date1-export-value" name="dateCipl" placeholder="Start Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <div class="input-group col-lg-12 col-xs-12">
+                                    <input type="text" class="form-control date" id="date2-export-value" name="dateCipl" placeholder="End Date" autocomplete="off">
+                                    <div class="input-group-addon cal" style="background:#00C0EF;border-color:#00ACD6;">
+                                        <i class="fa fa-calendar" style="color:#FFFFFF;"></i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                <button type="submit" class="btn btn-success btn-sm" id="btn-total-export" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                <div id="slider-export-value">
+                    <div class="dropdown-hover" id="dropdown-export-value">
+                        <span class="info-box-number"><span class="number-export-value" style="font-size:23px;"></span> <span class="span-export-value" style="font-size:12px;"></span></span>
+                        <ul class="info-box-number" id="ul-export-value"></ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-8 content-dash-1 col-sm-12 col-xs-12 pull-left">
+        <div class="box" style="height: 483px;">
+            <div class="dashboardhighcharts" style="padding-bottom: 50px; margin-bottom: 10px;">
+                <div class="box-header" style="padding: 10px;">
+
+                </div>
+                <div class="box-body" style="padding: 0px;">
+                    <div id="container-map" style="overflow: no-content !important;"></div>
+                    <div style="padding: 10px;">
+                        <div class="box-tools pull-left">
+                            <button class="btn btn-warning btn-md s-btn-active" style="z-index:0;" id="btn-branch-container-map">Branch</button>
+                            <button class="btn btn-warning btn-md" style="z-index:0;" id="btn-port-container-map">Port</button>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <div class="dropdown pull-right" style="padding: 5px 0 0 5px !important;">
+                                <i class="fa fa-filter pull-right dropdown-toggle fa-lg" type="button" id="i-total-value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:2px;"></i>
+                                <form class="form-horizontal" id="form-export-value">
+                                    <ul class="dropdown-menu keep-open" id="open-total-value">
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;" class="">
+                                            <div class="input-group col-lg-12 col-xs-12">
+                                                <select id="Area"></select>
+                                            </div>
+                                        </li>
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;width:200px;">
+                                            <div class="input-group col-lg-12 col-xs-12">
+                                                <input type="text" class="form-control" id="Category" name="dateCipl" value="Branch" disabled>
+                                            </div>
+                                        </li>
+                                        <li style="padding:5px;border-bottom:1px solid #ebe6e6;">
+                                            <button type="submit" class="btn btn-success btn-sm" id="BtnFilterDashboard" style="width:100%;"><i class="fa fa-search"></i>&nbsp;Filter</button>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="dashboardTv">
+                <iframe title="TV" style="width:100%;height:600px;text-align:center;" id="iframe-tv" frameborder="0" allowfullscreen="true" name="video_play" scrolling="no"></iframe>
+            </div>
+            <div class="dashboardTrakindoTv">
+                <iframe title="Trakindo TV" style="width:100%;height:600px;text-align:center;" id="iframe-trakindo-tv" frameborder="0" allowfullscreen="true" name="video_play" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 content-dash-2 pull-right text-center">
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Parts</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-parts"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Machine</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-machine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Engine</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-engine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-6 plr-0">
+            <div class="box box-warning" style="min-height:120px; margin-bottom: 10px;">
+                <div class="box-header" style="padding-top: 0 !important; padding-bottom: 0px;">
+                    <h4>CAT <br />Forklift</h4>
+                    <h5>Total Shipment</h5>
+                </div>
+                <div class="box-body" style="padding: 0 !important; margin-top: -8px !important">
+                    <div id="cat-forklift"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 content-dash-3 pull-right">
+        <div class="box box-warning" style="margin-bottom: 10px; padding-bottom: 5px;" id="div-export-cycle-steps">
+            <div class="box-body" style="padding-bottom: 0px;" id="slider-cycle-step">
+                <div class="dropdown-hover-hidden">
+                    <span class="info-box-number span-cycle-step">
+                        <ul class="info-box-number" id="div-progress-bar-cycle"></ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 content-dash-4 col-sm-12 col-xs-12 pull-left">
+        <div class="box" style="height:65px;">
+            <div class="box-footer">
+                <div class="btn btn-modal btn-outstanding-npe">
+                    <div style="font-size: 19px !important;" id="p-oustanding">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 content-dash-5 pull-right col-xs-12 text-center" id="counting-dashboard">
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-outstanding">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text">Outstanding</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-problem">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text" style="font-size: 12px !important">Total Problem</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-4 plr-0">
+            <div class="box total-visit">
+                <div class="box-body" style="margin-left: 0 !important; padding: 7px 10px !important">
+                    <span class="info-box-text" style="font-size: 12px !important">Hit Rate</span>
+                    <span class="info-box-number" style="font-size:13px !important;"><span class="counter" data-count="0">0</span> Visit</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-@* <!-- Breaking News --> *@
-<!-- <div class="breaking-news-ticker transition-all duration-300">
-  <button id="news-collapse" type="button"
-    class="absolute -top-6 left-2 h-6 flex items-center justify-center px-2.5 rounded-t-md bg-amber-300 text-amber-800">
-    <i class="uil uil-angle-double-down"></i>
-  </button>
-  <div id="newsTicker">
-    <ul id="ul-news"></ul>
-  </div>
-</div> -->
-
-<div
-  class="bottom-toolbar fixed bottom-0 right-0 h-[52px] w-[184px] -mr-[152px] bg-[#CBD5E1] dark:bg-gray-800 shadow rounded-l-full flex items-center justify-start z-[60] transition-all duration-500 ease-in-out hover:-mr-0 hover:shadow-lg">
-  <button class="p-[10px] text-[20px] leading-none text-brand-black dark:text-white"><i class="uil uil-angle-left"></i></button>
-  <div class="flex gap-x-2 items-center">
-    <button id="btn-video-trakindo"
-      class="btn-non-active w-10 h-10 leading-none bg-black text-white flex items-center justify-center rounded-full transition hover:bg-primary"
-      type="button"><i class="uil uil-video text-xl leading-none"></i></button>
-    <button id="btn-tv"
-      class="btn-non-active w-10 h-10 leading-none bg-black text-white flex items-center justify-center rounded-full transition hover:bg-primary"
-      type="button"><i class="uil uil-tv-retro text-xl leading-none"></i></button>
-    <button id="btn-fullscreen" onclick="openFullscreen();"
-      class="btn-non-active w-10 h-10 leading-none bg-black text-white flex items-center justify-center rounded-full transition hover:bg-primary"
-      type="button"><i class="uil uil-focus text-lg leading-none"></i></button>
-  </div>
-  @* <button id="btn-toolmenu"
-    class="text-3xl w-10 h-10 leading-none bg-black text-white flex items-center justify-center rounded-full"
-    type="button"><span class="inline-block -mt-1">+</span></button> *@
-</div>
-@* <div class="toolmenu-wrapper">
-  <ul>
-  <li>
-  <a href="#"><i class="uil uil-tv-retro"></i></a>
-  </li>
-  <li>
-  <a href="#"><i class="uil uil-video"></i></a>
-  </li>
-  <li>
-  <a href="#"><i class="uil uil-expand-arrows-alt"></i></a>
-  </li>
-  </ul>
-  </div> *@
-
-@* <div class="map-popup">
-  <div class="map-popup-inner">
-  <div class="map-popup-data">
-  <div class="map-popup-data--header">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-  d="M16.37 12.79C16.2479 12.7415 16.1174 12.7174 15.9859 12.7192C15.8545 12.7211 15.7247 12.7488 15.604 12.8008C15.4833
-  12.8528 15.374 12.9281 15.2824 13.0223C15.1908 13.1166 15.1186 13.2279 15.07 13.35C15.0214 13.4722 14.9974 13.6027
-  14.9992 13.7341C15.001 13.8655 15.0288 13.9953 15.0808 14.116C15.1328 14.2367 15.208 14.346 15.3023 14.4377C15.3965
-  14.5293 15.5079 14.6015 15.63 14.65C17.09 15.23 18 16.13 18 17C18 18.42 15.54 20 12 20C8.46 20 6 18.42 6 17C6 16.13 6.91
-  15.23 8.37 14.65C8.61665 14.5519 8.81422 14.3598 8.91924 14.116C9.02426 13.8722 9.02813 13.5967 8.93 13.35C8.83187
-  13.1034 8.63978 12.9058 8.39598 12.8008C8.15218 12.6958 7.87665 12.6919 7.63 12.79C5.36 13.69 4 15.26 4 17C4 19.8 7.51
-  22 12 22C16.49 22 20 19.8 20 17C20 15.26 18.64 13.69 16.37 12.79ZM11 9.86004V17C11 17.2653 11.1054 17.5196 11.2929
-  17.7072C11.4804 17.8947 11.7348 18 12 18C12.2652 18 12.5196 17.8947 12.7071 17.7072C12.8946 17.5196 13 17.2653 13
-  17V9.86004C13.9427 9.61665 14.7642 9.03782 15.3106 8.23204C15.857 7.42626 16.0908 6.44886 15.9681 5.48304C15.8454
-  4.51723 15.3747 3.62931 14.6442 2.98572C13.9137 2.34213 12.9736 1.98706 12 1.98706C11.0264 1.98706 10.0863 2.34213
-  9.35577 2.98572C8.62526 3.62931 8.15456 4.51723 8.03188 5.48304C7.90921 6.44886 8.14299 7.42626 8.6894 8.23204C9.23581
-  9.03782 10.0573 9.61665 11 9.86004ZM12 4.00004C12.3956 4.00004 12.7822 4.11734 13.1111 4.3371C13.44 4.55687 13.6964
-  4.86922 13.8478 5.23468C13.9991 5.60013 14.0387 6.00226 13.9616 6.39022C13.8844 6.77819 13.6939 7.13455 13.4142
-  7.41426C13.1345 7.69396 12.7781 7.88444 12.3902 7.96161C12.0022 8.03878 11.6001 7.99918 11.2346 7.8478C10.8692 7.69643
-  10.5568 7.44008 10.3371 7.11118C10.1173 6.78229 10 6.39561 10 6.00004C10 5.46961 10.2107 4.9609 10.5858 4.58583C10.9609
-  4.21076 11.4696 4.00004 12 4.00004Z"
-  fill="#73768D" />
-  </svg>
-  <h4 id="map-popup-province"></h4>
-  </div>
-  <div class="map-popup-data--content">
-  <table class="map-popup-data--table">
-  <thead>
-  <tr>
-  <th>No CIPL</th>
-  <th>PIC</th>
-  <th>BRANCH</th>
-  </tr>
-  </thead>
-  <tbody class="map-popup-data--table-data">
-  </tbody>
-  </table>
-  </div>
-  </div>
-  <div class="map-popup-image">
-  <img src="~/Images/EMCS/Dashboard/map-jakarta-raya.png" alt="image" />
-  </div>
-  <button id="map-popup-close" type="button">
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path
-  d="M8.75007 4.58328C8.52906 4.58328 8.3171 4.67108 8.16082 4.82736C8.00454 4.98364 7.91674 5.1956 7.91674
-  5.41662V6.74162L3.09174 1.90828C3.01404 1.83059 2.9218 1.76895 2.82028 1.7269C2.71876 1.68485 2.60996 1.66321 2.50007
-  1.66321C2.39019 1.66321 2.28138 1.68485 2.17987 1.7269C2.07835 1.76895 1.98611 1.83059 1.90841 1.90828C1.75149 2.0652
-  1.66333 2.27803 1.66333 2.49995C1.66333 2.72187 1.75149 2.9347 1.90841 3.09162L6.74174 7.91662H5.41674C5.19573 7.91662
-  4.98377 8.00442 4.82748 8.1607C4.6712 8.31698 4.58341 8.52894 4.58341 8.74995C4.58341 8.97097 4.6712 9.18293 4.82748
-  9.33921C4.98377 9.49549 5.19573 9.58328 5.41674 9.58328H8.75007C8.85897 9.58197 8.96656 9.55932 9.06674 9.51662C9.27036
-  9.43206 9.43218 9.27024 9.51674 9.06662C9.55944 8.96643 9.58209 8.85885 9.58341 8.74995V5.41662C9.58341 5.1956 9.49561
-  4.98364 9.33933 4.82736C9.18305 4.67108 8.97109 4.58328 8.75007 4.58328ZM18.0917 16.9083L13.2584 12.0833H14.5834C14.8044
-  12.0833 15.0164 11.9955 15.1727 11.8392C15.3289 11.6829 15.4167 11.471 15.4167 11.25C15.4167 11.0289 15.3289 10.817
-  15.1727 10.6607C15.0164 10.5044 14.8044 10.4166 14.5834 10.4166H11.2501C11.1412 10.4179 11.0336 10.4406 10.9334
-  10.4833C10.7298 10.5678 10.568 10.7297 10.4834 10.9333C10.4407 11.0335 10.4181 11.1411 10.4167 11.25V14.5833C10.4167
-  14.8043 10.5045 15.0163 10.6608 15.1725C10.8171 15.3288 11.0291 15.4166 11.2501 15.4166C11.4711 15.4166 11.683 15.3288
-  11.8393 15.1725C11.9956 15.0163 12.0834 14.8043 12.0834 14.5833V13.2583L16.9084 18.0916C16.9859 18.1697 17.078 18.2317
-  17.1796 18.274C17.2811 18.3163 17.3901 18.3381 17.5001 18.3381C17.6101 18.3381 17.719 18.3163 17.8206 18.274C17.9221
-  18.2317 18.0143 18.1697 18.0917 18.0916C18.1698 18.0141 18.2318 17.922 18.2742 17.8204C18.3165 17.7189 18.3382 17.61
-  18.3382 17.5C18.3382 17.3899 18.3165 17.281 18.2742 17.1795C18.2318 17.0779 18.1698 16.9858 18.0917 16.9083Z"
-  fill="black" />
-  </svg>
-  </button>
-  </div>
-  </div> *@
-
-<div class="map-popup">
-  <div class="map-popup-inner">
-    <div class="map-popup-data relative">
-      <div class="map-popup-data--card">
-        <div class="map-popup-data--header">
-          <div class="flex gap-1.5 items-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M16.37 12.79C16.2479 12.7415 16.1174 12.7174 15.9859 12.7192C15.8545 12.7211 15.7247 12.7488 15.604 12.8008C15.4833 12.8528 15.374 12.9281 15.2824 13.0223C15.1908 13.1166 15.1186 13.2279 15.07 13.35C15.0214 13.4722 14.9974 13.6027 14.9992 13.7341C15.001 13.8655 15.0288 13.9953 15.0808 14.116C15.1328 14.2367 15.208 14.346 15.3023 14.4377C15.3965 14.5293 15.5079 14.6015 15.63 14.65C17.09 15.23 18 16.13 18 17C18 18.42 15.54 20 12 20C8.46 20 6 18.42 6 17C6 16.13 6.91 15.23 8.37 14.65C8.61665 14.5519 8.81422 14.3598 8.91924 14.116C9.02426 13.8722 9.02813 13.5967 8.93 13.35C8.83187 13.1034 8.63978 12.9058 8.39598 12.8008C8.15218 12.6958 7.87665 12.6919 7.63 12.79C5.36 13.69 4 15.26 4 17C4 19.8 7.51 22 12 22C16.49 22 20 19.8 20 17C20 15.26 18.64 13.69 16.37 12.79ZM11 9.86004V17C11 17.2653 11.1054 17.5196 11.2929 17.7072C11.4804 17.8947 11.7348 18 12 18C12.2652 18 12.5196 17.8947 12.7071 17.7072C12.8946 17.5196 13 17.2653 13 17V9.86004C13.9427 9.61665 14.7642 9.03782 15.3106 8.23204C15.857 7.42626 16.0908 6.44886 15.9681 5.48304C15.8454 4.51723 15.3747 3.62931 14.6442 2.98572C13.9137 2.34213 12.9736 1.98706 12 1.98706C11.0264 1.98706 10.0863 2.34213 9.35577 2.98572C8.62526 3.62931 8.15456 4.51723 8.03188 5.48304C7.90921 6.44886 8.14299 7.42626 8.6894 8.23204C9.23581 9.03782 10.0573 9.61665 11 9.86004ZM12 4.00004C12.3956 4.00004 12.7822 4.11734 13.1111 4.3371C13.44 4.55687 13.6964 4.86922 13.8478 5.23468C13.9991 5.60013 14.0387 6.00226 13.9616 6.39022C13.8844 6.77819 13.6939 7.13455 13.4142 7.41426C13.1345 7.69396 12.7781 7.88444 12.3902 7.96161C12.0022 8.03878 11.6001 7.99918 11.2346 7.8478C10.8692 7.69643 10.5568 7.44008 10.3371 7.11118C10.1173 6.78229 10 6.39561 10 6.00004C10 5.46961 10.2107 4.9609 10.5858 4.58583C10.9609 4.21076 11.4696 4.00004 12 4.00004Z"
-                fill="#73768D"></path>
-            </svg>
-            <h4 id="map-popup-province">Jawa Barat</h4>
-          </div>
-          <button id="map-popup-close"
-            class="map-popup-close w-8 h-8 flex justify-center items-center rounded-full bg-white text-brand-black leading-none text-3xl"
-            type="button"><i class="uil uil-times"></i></button>
+<div class="col-md-12">
+    <section class="demo-section-box" style="background-color: #fafafa;">
+        <div class="section-container" style="z-index: 1030">
+            <div class="demo-box">
+                <!-- DEMO6 HTML STARTS HERE *-->
+                <!-- *********************** -->
+                <div class="breaking-news-ticker" id="newsTicker1">
+                    <div class="bn-label" id="jam"></div>
+                    <div class="bn-news">
+                        <ul id="ul-news"></ul>
+                    </div>
+                </div>
+                <div class="container-icon">
+                    <div class="menu-toggle">
+                        <span class="fa fa-plus"></span>
+                    </div>
+                    <div class="menu-line">
+                        <div class="btn-app btn-tv btn-non-active" title="TV NEWS">
+                            <div class="fa fa-tv" tooltip="TV"></div>
+                        </div>
+                        <div class="btn-app btn-paint btn-non-active" title="DARK MODE">
+                            <div class="fa fa-paint-brush"></div>
+                        </div>
+                        <div class="btn-app btn-menu btn-non-active" title="FULL SCREEN">
+                            <div class="fa fa-indent"></div>
+                        </div>
+                        <div class="btn-app btn-video-trakindo btn-non-active" title="TRAKINDO VIDEO">
+                            <div class="fa fa-video-camera"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- *********************** -->
+                <!-- DEMO6 HTML END HERE *** -->
+            </div>
         </div>
-        <div class="map-popup-data--content">
-          <table class="table map-popup-data--table">
-            <thead>
-              <tr>
-                <th>No CIPL</th>
-                <th>PIC</th>
-                <th>BRANCH</th>
-              </tr>
-            </thead>
-            <tbody class="map-popup-data--table-data">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div class="map-popup-image"><img src="/Images/EMCS/Dashboard/map-jawa-barat.png"></div>
-  </div>
+    </section>
 </div>
 
-<div class="map-outstanding-popup">
-  <!-- <div class="absolute top-10 left-10">
-    <div class="flex gap-x-4 items-center">
-      <a href="./" class="inline-block">
-        <img src="~/Images/trakindo_logo.jpg" class="rounded-none border-white border-2 w-32 h-auto" />
-      </a>
-      <span class="text-white text-lg font-bold">Export Monitoring</span>
-    </div>
-  </div> -->  
-  <div class="w-full flex justify-between items-end px-8 border-b border-white/20 border-solid">
-    <div class="flex gap-x-4 items-center py-4">
-      <a href="./" class="inline-block flex-none">
-        <img src="~/Images/trakindo_logo.jpg" class="rounded-none border-white border-2 w-32 h-auto" />
-      </a>
-      <span class="text-white text-lg font-bold whitespace-nowrap">Export Monitoring</span>
-    </div>
-    <div class="map-outstanding-popup--card-header">
-      <div class="flex">
-        <label for="" class="text-white text-lg inline-block py-4 px-6 border-b-2 border-white font-bold -mb-0.5">
-          <input type="radio" name="options" id="branch-outstanding-map" class="opacity-0 !invisible hidden" checked>Branch
-        </label>
-        <label for="" class="text-white text-lg inline-block py-4 px-6 -mb-0.5">
-          <input type="radio" name="options" id="port-outstanding-map" class="opacity-0 !invisible hidden">Port
-        </label>
-      </div>
-      <!-- <div id="btn-map-outstanding-switch" class="mx-auto">
-        <div class="selector"></div>
-        <label id="btn-branch-outstanding-map" class="switch--item active">
-          <input type="radio" name="options" id="branch-outstanding-map" checked> Branch
-        </label>
-        <label id="btn-port-outstanding-map" class="switch--item">
-          <input type="radio" name="options" id="port-outstanding-map"> Port
-        </label>
-        <input id="map-outstanding-category" type="hidden" name="map-outstanding-category" value="Branch">
-      </div>         -->
-    </div>
-    <button id="map-outstanding-popup--close" class="map-outstanding-popup--close z-20 my-4" type="button"><i
-      class="uil uil-times"></i></button>    
-  </div>
-  <div class="map-outstanding-popup--inner relative z-10">
-    <div class="h-full w-full flex relative items-center">
-      <div class="map-outstanding-popup--mapbg h-full w-full absolute inset-0">
-        <div id="map-popup-map" class="h-full w-full flex justify-center items-center"></div>
-      </div>
-      <div class="map-outstanding-popup--card">
-        <div class="map-outstanding-popup--card-content">
-          <table class="table map-outstanding-popup--table">
-            <thead>
-              <tr>
-                <th>No CIPL</th>
-                <th>Branch</th>
-                <th>Loading Port</th>
-                <th>Destination Port</th>
-                <th>ETD</th>
-                <th>ETA</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody class="map-outstanding-popup--table-data">
-            </tbody>
-          </table>
-        </div>
-      </div>        
-    </div>  
-  </div>
-</div>
-
-<!-- <div class="map-outstanding-popup open">
-  <div class="map-outstanding-popup--inner">
-    <div class="map-outstanding-popup--card">
-      <div class="map-outstanding-popup--card-header">
-        <div id="btn-map-outstanding-switch">
-          <div class="selector"></div>
-          <label id="btn-branch-outstanding-map" class="switch--item active">
-            <input type="radio" name="options" id="branch-outstanding-map" checked> Branch
-          </label>
-          <label id="btn-port-outstanding-map" class="switch--item">
-            <input type="radio" name="options" id="port-outstanding-map"> Port
-          </label>
-          <input id="map-outstanding-category" type="hidden" name="map-outstanding-category" value="Branch">
-        </div>
-        <button id="map-outstanding-popup--close" class="map-outstanding-popup--close" type="button"><i
-            class="uil uil-times"></i></button>
-      </div>
-      <div class="map-outstanding-popup--card-content">
-        <table class="table map-outstanding-popup--table">
-          <thead>
-            <tr>
-              <th>No CIPL</th>
-              <th>Branch</th>
-              <th>Loading Port</th>
-              <th>Destination Port</th>
-              <th>ETD</th>
-              <th>ETA</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody class="map-outstanding-popup--table-data">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 @section scripts{
-@* <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/breaking-news-ticker.min.js")"></script> *@
-<script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/jquery.jConveyorTicker.min.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/proj4.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/no-data-to-display.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-more.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/map.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/data.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/highcharts/id-all.js")"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
-@* <script src="@Url.Content("~/Scripts.app/EMCS/circliful/jquery.circliful.js")"></script> *@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/circliful/2.0.17/circliful.js"
-  integrity="sha512-+CsxiXgqKXUueZY9CEOkQY9lis7X/UlvKs3MEbfrnltNWG2gAFA4gqVSV0Vj9XSppV9t0rG5nBdVCn77NueoNQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://kit.fontawesome.com/36c929a402.js" crossorigin="anonymous"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/anime/anime.min.js")"></script>
-<script
-  src="@Url.Content("~/Scripts.app/EMCS/Dashboard.cshtml.js?id="+DateTime.Now.ToString("yyyyMMddhhmmtt"))"></script>
-<script src="@Url.Content("~/Scripts.app/EMCS/typing/jquery.typer.js")"></script>
-<script>
-  /* Get the documentElement (<html>) to display the page in fullscreen */
-var elem = document.documentElement;
+    <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/breaking-news-ticker.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/proj4.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/no-data-to-display.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-more.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/map.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/data.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/id-all.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/function.cshtml.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/circliful/jquery.circliful.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/anime/anime.min.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Dashboard.cshtml.js?id="+DateTime.Now.ToString("yyyyMMddhhmmtt"))"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/typing/jquery.typer.js")"></script>
+    <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+    <script>
+        document.addEventListener("keydown", e => {
+            if (e.key == "F11") e.preventDefault();
+        });
 
-/* View in fullscreen */
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
-  } 
+        $(document).ready(function () {
+            //var selectors = [".span-title-export-today", ".span-title-net-weight", ".span-title-exchange-rate", ".span-title-export-value"];
+            function resize_news() {
+                $(".bn-news").css("left", "120px");
+            }
+
+            setTimeout(function () {
+                resize_news();
+            }, 700)
+
+            $(document).on("resize", function () {
+                resize_news();
+            })
+        });
+
+    </script>
 }
-
-/* Close fullscreen */
-function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { /* Safari */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE11 */
-    document.msExitFullscreen();
-  }
-}
-</script>
-@* <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script> *@
-@* <script>
-  document.addEventListener("keydown", e => {
-  if (e.key == "F11") e.preventDefault();
-  });
-
-  $(document).ready(function () {
-  //var selectors = [".span-title-export-today", ".span-title-net-weight", ".span-title-exchange-rate", ".span-title-export-value";
-  function resize_news() {
-  $(".bn-news").css("left", "120px");
-  }
-
-  setTimeout(function () {
-  resize_news();
-  }, 700)
-
-  $(document).on("resize", function () {
-  resize_news();
-  })
-  });
-
-  var elem = document.getElementById("container-map");
-  function openFullscreen() {
-  if (elem.requestFullscreen) {
-  elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-  elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-  elem.msRequestFullscreen();
-  }
-  }
-  </script> *@
-}
-@* <script src="/Scripts/loadingoverlay.min.js"></script> *@

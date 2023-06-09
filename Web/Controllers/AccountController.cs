@@ -428,21 +428,11 @@ namespace App.Web.Controllers
                     pwd = builder.ToString();
                 }
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
             catch(Exception ex)
             {
                 throw ex;
                 err = true; 
             }
-<<<<<<< HEAD
-=======
-            catch { err = true; }
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
 
             if (item == null || string.IsNullOrEmpty(item.UserID) || err)
             {
@@ -458,10 +448,6 @@ namespace App.Web.Controllers
                 return 3;
             }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
             //if (hashPassword != pwd && isPortal == false)
             //{
             //    var wrong = await Service.Master.UserAcces.SetPasswordWrong(userName);
@@ -469,18 +455,6 @@ namespace App.Web.Controllers
             //}
             //else
             //{
-<<<<<<< HEAD
-=======
-            if (hashPassword != pwd && isPortal == false)
-            {
-                var wrong = await Service.Master.UserAcces.SetPasswordWrong(userName);
-                return 4;
-            }
-            else
-            {
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 26aafb4 (Changes of P1-CIPL)
                 string isAdmin = ("" + item.RoleAccess).ToLower().Contains("administrator") ? "true" : "false";
 
                 Authentication.WriteCookie(System.Web.HttpContext.Current, item.UserID, item.UserID,
@@ -494,15 +468,7 @@ namespace App.Web.Controllers
                 }
 
                 return 0;//RedirectToLocal(_url);
-<<<<<<< HEAD
-<<<<<<< HEAD
             //}
-=======
-            }
->>>>>>> 639d8d0 (Intial commit)
-=======
-            //}
->>>>>>> 26aafb4 (Changes of P1-CIPL)
         }
 
         private static string CalculatedMD5Hash(string strPassword)

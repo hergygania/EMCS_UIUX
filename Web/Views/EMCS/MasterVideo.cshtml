@@ -1,10 +1,7 @@
-﻿﻿
+﻿
 @{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Master Video";
-    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
-@Styles.Render("~/Content/EMCS/Custom.css")
 
 @using System.Web.Mvc
 <script type="text/javascript">
@@ -12,8 +9,6 @@
     var allowUpdate = "@(ViewBag.allowUpdate)";
     var allowDelete = "@(ViewBag.allowDelete)";
 </script>
-
-@Styles.Render("~/Content/EMCS/Custom.css")
 
 @{
     if (ViewBag.AllowDelete)
@@ -37,15 +32,15 @@
 </style>
 
 
-<div class="col-md-12">
-    <div class="box box-warning">
-        <div class="box-body">
-            <div class="">
+<div class="box box-warning">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="toolbar">
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/VideoCreate" id="btnCreate">
+                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/VideoCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add Video
                             </a>
                         }
@@ -73,7 +68,7 @@
 </a>
 
 
-<div id='myModalPlace' class='modal'>
+<div id='myModalPlace' class='modal fade in'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>
@@ -81,7 +76,7 @@
     </div>
 </div>
 
-<div id='myModalUploadPlace' class='modal'>
+<div id='myModalUploadPlace' class='modal fade in'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalUploadContent'>
@@ -91,7 +86,7 @@
     </div>
 </div>
 
-<div id='myModalPreviewPlace' class='modal'>
+<div id='myModalPreviewPlace' class='modal fade in'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalPreviewContent'>
@@ -107,4 +102,5 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/VideoList.cshtml.js")"></script>
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
 }
+
 

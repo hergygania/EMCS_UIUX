@@ -83,33 +83,33 @@
         }
 
         .table-custom {
-            border: 0.5px solid darkgrey !important;
+            border: 1px solid darkgrey !important;
             width: 100%;
             border-collapse: collapse;
         }
 
         .table-data {
-            border: 0.5px solid darkgrey !important;
+            border: 1px solid darkgrey !important;
             width: 100%;
             border-collapse: collapse !important;
         }
 
         .border_top {
-            border-top: 0.5px solid darkgrey !important;
+            border-top: 1px solid darkgrey !important;
         }
 
         .border_bottom {
-            border-bottom: 0.5px solid darkgrey !important;
+            border-bottom: 1px solid darkgrey !important;
         }
 
         .border_left {
             padding-left: 10px !important;
-            border-left: 0.5px solid darkgrey !important;
+            border-left: 1px solid darkgrey !important;
         }
 
         .border_right {
             padding-right: 10px !important;
-            border-right: 0.5px solid darkgrey !important;
+            border-right: 1px solid darkgrey !important;
         }
 
         .text_left {
@@ -234,7 +234,7 @@
         }
     </style>
 </head>
-<body id="header_document" style="margin:0 auto;padding-left:31px;padding-right:23px;" onload="subst()">
+<body id="header_document" style="margin:0 auto; margin-left: 8px; padding-left:31px;padding-right:23px;" onload="subst()">
     <table class='table_grid' id="InvSales0" style="width:100%;border-collapse:collapse;">
         <tr>
             <td colspan="5" style="width:65%;"></td>
@@ -244,14 +244,14 @@
             <td colspan="5">
                 <img src="../../Images/trakindo_logo.jpg" />
             </td>
-            <td style="font-size:13px;" colspan="3" class="border_left border_top border_right border_bottom text_bold">EXPORT DELIVERY INSTRUCTION</td>
+            <td style="font-size:14.4px;" colspan="3" class="border_left border_top border_right border_bottom text_bold">EXPORT DELIVERY INSTRUCTION</td>
         </tr>
         <tr>
             <td style="width:120px;">&nbsp;</td>
             <td colspan="4" class="address_document text_bold text_14" style="font-weight:900;"><b>PT. TRAKINDO UTAMA</b></td>
             <td class="border_left" style="width:50px;">Number</td>
             <td>:</td>
-            <td style="width:180px;letter-spacing:0ex;" class="border_right text_gold text_bold text_18">@Model.Data.EdoNo</td>
+            <td style="width:180px;letter-spacing:0ex;" class="border_right text_bold text_docno_big">@Model.Data.EdoNo</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -263,35 +263,17 @@
         <tr>
             <td>&nbsp;</td>
             <td colspan="4" class="address_document">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan </td>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e234e67 (CIPL CargoItem With Category)
-            <td class="border_left ">Cipl No</td>
-            <td class="">:</td>
-            <td class="border_right  text_left">@Model.Data.CiplNo</td>
+            <td class="border_left border_bottom">Cipl No</td>
+            <td class="border_bottom">:</td>
+            <td class="border_right border_bottom text_left">@Model.Data.CiplNo</td>
         </tr>
-        <tr>
+        @* <tr>
             <td>&nbsp;</td>
             <td colspan="4" class="address_document"></td>
             <td class="border_left border_bottom">Category</td>
-<<<<<<< HEAD
             <td class="border_bottom">:</td>
-            <td class="border_right border_bottom text_left" >@Model.Data.Category - @Model.Data.CategoriItem</td>
-=======
-            <td class="border_left border_bottom">Reference No</td>
-=======
-            <td class="border_left border_bottom">Cipl No</td>
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-            <td class="border_bottom">:</td>
-            <td class="border_right border_bottom text_left">@Model.Data.CiplNo</td>
->>>>>>> 639d8d0 (Intial commit)
-=======
-            <td class="border_bottom">:</td>
-            <td class="border_right border_bottom text_left" >@Model.Data.Category - @Model.Data.CategoriItem</td>
->>>>>>> e234e67 (CIPL CargoItem With Category)
-        </tr>
+            <td class="border_right border_bottom text_left">@Model.Data.Category - @Model.Data.CategoriItem</td>
+        </tr> *@
         <tr>
             <td>&nbsp;</td>
             <td colspan="4" class="address_document">INDONESIA - 12560</td>

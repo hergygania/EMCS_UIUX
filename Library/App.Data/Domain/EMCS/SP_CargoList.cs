@@ -33,6 +33,7 @@ namespace App.Data.Domain.EMCS
         public string PreparedBy { get; set; }
         public string Email { get; set; }
         public string Step { get; set; }
+        public int PendingRFC { get; set; }
         public string Status { get; set; }
         public string StatusViewByUser { get; set; }
         public string Referrence { get; set; }

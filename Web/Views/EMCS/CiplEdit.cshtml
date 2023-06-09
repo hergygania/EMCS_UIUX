@@ -1,6 +1,5 @@
-﻿﻿@{
+﻿@{
     ViewBag.Title = "Commercial Invoice Packing List Edit";
-    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
@@ -38,6 +37,18 @@
     }
 </style>
 <input type="hidden" id="idcipl" value="@ViewBag.Id" />
+@if (ViewBag.IsImexUser && ViewBag.CanRequestForChange)
+{
+
+
+    <input type="hidden" id="RequestForChangeHistoryCIPLItems" value="true" />
+
+}
+else
+{
+
+    <input type="hidden" id="RequestForChangeHistoryCIPLItems" value="false" />
+}
 @Html.Partial("~/Views/EMCS/CiplFormTemplate.cshtml")
 
 @section scripts
@@ -63,7 +74,6 @@
             var prev = $(this).data('val');
             var current = $(this).val();
             if (prev != undefined && prev != "" && current != undefined && current != "") {
-                debugger;
                 if (prev != current) {
                     if (requestForChange.filter(e => e.FieldName === this.dataset.name).length > 0) {
                         objIndex = requestForChange.findIndex((obj => obj.FieldName == this.dataset.name));

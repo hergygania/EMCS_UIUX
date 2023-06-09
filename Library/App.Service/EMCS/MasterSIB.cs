@@ -74,6 +74,7 @@ namespace App.Service.EMCS
                 tabularSheet.SetCellValue(startRow + i, 8, data[i].DlrCode);
                 tabularSheet.SetCellValue(startRow + i, 9, data[i].UnitPrice.ToString());
                 tabularSheet.SetCellValue(startRow + i, 10, data[i].Currency);
+                //tabularSheet.SetCellValue(startRow + i, 11, data[i].Quantity);
             }
             #endregion
 

@@ -18,7 +18,7 @@ var columnHistory = [
         class: 'text-nowrap',
         sortable: true,
         formatter: function (data, row, index) {
-            return moment(data).format("DD MMM YYYY hh:mm:ss");
+            return moment(data).format("DD MMM YYYY HH:mm:ss");
         }
     },
     //{

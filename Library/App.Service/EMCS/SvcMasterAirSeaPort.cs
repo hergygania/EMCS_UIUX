@@ -16,20 +16,11 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             string country = filter.Country ?? "";
             if (country != "")
             {
                 search = country;
             }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
             using (var db = new Data.EmcsContext())
             {
@@ -53,15 +44,7 @@ namespace App.Service.EMCS
         {
             string type = filter.Type ?? "SeaPort";
             string search = filter.Name ?? "";
-<<<<<<< HEAD
-<<<<<<< HEAD
           
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
-          
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             using (var db = new Data.EmcsContext())
             {
                 var data = db.MasterAirSeaPorts

@@ -256,58 +256,23 @@ $(function () {
     $('#shipmentoutbound').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/OutboundNonCKB');
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
  
-=======
-    //$('#createDR').click(function () {       
-    //    window.open(myApp.fullPath + 'DTS/DeliveryRequisitionList?c=1&b=Home', '_blank');
-    //});
->>>>>>> 639d8d0 (Intial commit)
-=======
- 
->>>>>>> 93c2efe ([U] Update from client's TFS)
     $('#createDRnew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');
     });
      
     $('#DRApprove').click(function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
         var today = ''
         localStorage.setItem("today", today);
         window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
     });
 
-=======
-        window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
-    });
-    //$('#createDI').click(function () {
-    //    window.open(myApp.fullPath + 'DTS/Home?c=1&b=Home');
-    //});
->>>>>>> 639d8d0 (Intial commit)
-=======
-        var today = ''
-        localStorage.setItem("today", today);
-        window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionListAcc');
-    });
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
     $('#createDInew').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionList');
     });
     $('#DIApprove').click(function () {
         window.location.replace(myApp.fullPath + 'DTS/DeliveryInstructionListAcc');
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    //$('#DRList').click(function () {
-    //    window.location.replace(myApp.fullPath + 'DTS/DeliveryRequisitionList');        
-    //});
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
     $('#imageDR').click(function () {
         $('#DRView').show()

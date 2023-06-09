@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 @model  App.Web.Models.EMCS.KppbcModel
 @{
     var mode = ViewBag.crudMode;
@@ -63,18 +63,18 @@
             <img src="@Url.Content("~/Content/images/wait.gif")" alt="wait" />
             Wait..
         </span>
-        <button type="button" class="btn btn-danger btn-round mr-2" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         @if (mode == "I")
         {
-            <button type="submit" class="btn btn-success btn-round"><i class="fa fa-save"></i> Save</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
         }
         else if (mode == "U")
         {
-            <button type="submit" class="btn btn-success btn-round"><i class="fa fa-save"></i> Update</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update</button>
         }
         else
         {
-            <button type="submit" class="btn btn-danger btn-round"><i class="fa fa-remove"></i> Delete</button>
+            <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Delete</button>
         }
 
     </div>
@@ -101,6 +101,7 @@
         $.validator.unobtrusive.parse("form");
     });
 </script>
+
 
 
 

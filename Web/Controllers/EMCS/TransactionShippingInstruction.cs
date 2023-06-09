@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,6 +10,7 @@ using App.Domain;
 using App.Data.Domain;
 using System.ComponentModel;
 using App.Data.Domain.EMCS;
+using App.Web.Models;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -23,6 +24,16 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            string userRoles = User.Identity.GetUserRoles();
+            //if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Imex"))
+                ViewBag.IsImexUser = true;
+            else
+                ViewBag.IsImexUser = false;
+            if (User.Identity.Name == "eko.suhartarto")
+                ViewBag.IsCKB = true;
+            else
+                ViewBag.IsCKB = false;
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -78,12 +89,62 @@ namespace App.Web.Controllers.EMCS
             ViewBag.WizardData = Service.EMCS.SvcWizard.GetWizardData("si", id);
             ViewBag.SpecialInstructionDefault = Service.EMCS.MasterParameter.GetSingleParam("SIDocumentRequired");
             PaginatorBoot.Remove("SessionTRN");
-
+            ViewBag.IsRFC = filter.Rfc;
             var detail = new CargoModel();
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(id);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
             detail.DataSi = Service.EMCS.SvcShippingInstruction.GetById(id.ToString());
             return View(detail);
+        }
+        [HttpPost]
+        public ActionResult RequestForChangeSI(RequestForChangeModel form, ShippingInstructions data)
+        {
+            try
+            {
+
+                var requestForChange = new RequestForChange();
+                var item = Service.EMCS.SvcShippingInstruction.GetById(Convert.ToString(form.FormId));
+                requestForChange.FormNo = item.SlNo;
+                requestForChange.FormType = form.FormType;
+                requestForChange.Status = form.Status;
+                requestForChange.FormId = form.FormId;
+                requestForChange.Reason = form.Reason;
+
+                var id = Service.EMCS.SvcCipl.InsertRequestChangeHistory(requestForChange);
+
+                var listRfcItems = new List<Data.Domain.RFCItem>();
+                if (item.DocumentRequired != data.DocumentRequired)
+                {
+                    var rfcItemDocumentRequired = new Data.Domain.RFCItem();
+                    rfcItemDocumentRequired.RFCID = id;
+                    rfcItemDocumentRequired.TableName = "ShippingInstructions";
+                    rfcItemDocumentRequired.LableName = "DocumentRequired";
+                    rfcItemDocumentRequired.FieldName = "DocumentRequired";
+                    rfcItemDocumentRequired.BeforeValue = item.DocumentRequired;
+                    rfcItemDocumentRequired.AfterValue = data.DocumentRequired;
+                    listRfcItems.Add(rfcItemDocumentRequired);
+                }
+                if (item.SpecialInstruction != data.SpecialInstruction)
+                {
+                    var rfcItemSpecialInstruction = new Data.Domain.RFCItem();
+                    rfcItemSpecialInstruction.RFCID = id;
+                    rfcItemSpecialInstruction.TableName = "ShippingInstructions";
+                    rfcItemSpecialInstruction.LableName = "SpecialInstruction";
+                    rfcItemSpecialInstruction.FieldName = "SpecialInstruction";
+                    rfcItemSpecialInstruction.BeforeValue = item.SpecialInstruction;
+                    rfcItemSpecialInstruction.AfterValue = data.SpecialInstruction;
+                    listRfcItems.Add(rfcItemSpecialInstruction);
+                }
+
+                Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
+
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public ActionResult ShippingInstructionForm()
@@ -108,7 +169,7 @@ namespace App.Web.Controllers.EMCS
             return View();
         }
 
-        public ActionResult ShippingInstructionView(long cargoId = 1 )
+        public ActionResult ShippingInstructionView(long cargoId = 1)
         {
 
             try
@@ -170,7 +231,7 @@ namespace App.Web.Controllers.EMCS
         {
             ViewBag.crudMode = "U";
             var item = Service.EMCS.SvcShippingInstruction.GetById(form.IdCl);
-            if(SiteConfiguration.UserName != item.CreateBy)
+            if (SiteConfiguration.UserName != item.CreateBy)
             {
                 var requestForChange = new RequestForChange();
                 requestForChange.FormNo = item.SlNo;

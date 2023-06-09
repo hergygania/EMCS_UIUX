@@ -7,19 +7,10 @@ using System.Data.SqlClient;
 using System.Security.Permissions;
 using System.IO;
 using System.Web;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 using System.Net;
 using System.Text;
 using System.Configuration;
 using App.Data.Domain.POST;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 namespace App.Service.POST
 {
@@ -102,10 +93,6 @@ namespace App.Service.POST
                 return data;
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public static List<Select2Result3> GetSelectFileNameInvoice(Int64 id)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -121,11 +108,6 @@ namespace App.Service.POST
                 return data;
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public static List<Select2Result> GetSelectDeliveryStatus(string search)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -228,10 +210,6 @@ namespace App.Service.POST
             return "";
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public static string UploadFiletoShareFolderKOFAX(HttpPostedFileBase theFile,string path,string FileNameKOFAX,string fileName, Int64 AttachmentId)
         {
             string ShareFolderKOFAX = "";            
@@ -285,11 +263,6 @@ namespace App.Service.POST
         }
 
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         [PermissionSetAttribute(SecurityAction.Demand, Name = "FullTrust")]
         public static string CreateShareFolderBupot(string rootFolder, DateTime uploadDate, string code)
         {
@@ -313,10 +286,6 @@ namespace App.Service.POST
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public static string SaveErrorUploadKOFAX(Int64 AttachmentId, string ErrorMessage)
         {
@@ -342,10 +311,5 @@ namespace App.Service.POST
             return "";
         }
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
 }

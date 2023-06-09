@@ -318,10 +318,6 @@
                 $('#NpeDate').val(null);
             }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             var npeDateSubmitToCustomOffice = $('#NpeDateSubmitToCustomOffice').val();
             if (npeDateSubmitToCustomOffice) {
                 var year = moment(npeDateSubmitToCustomOffice).format('YYYY');
@@ -336,23 +332,11 @@
                 $('#NpeDateSubmitToCustomOffice').val(null);
             }
 
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             var documentNpePeb = "@Model.Document[0].FileName";
             $('#DocumentPebNpe').attr("src", "/Upload/EMCS/NPEPEB/" + documentNpePeb);
 
             $('#DraftNpePeb').on('click', function () {
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
             $.ajax({
                 url: '/EMCS/DraftNpePeb',
                 type: 'POST',
@@ -375,17 +359,8 @@
                     DescriptionPassword: $('#NpeDescPass').val(),
                     FreightPayment: removeformatCurrency($('#NpeFreightPayment').val()),
                     InsuranceAmount: removeformatCurrency($('#NpeInsuranceAmount').val()),
-<<<<<<< HEAD
-<<<<<<< HEAD
                     Status: $(this).val(),
                     NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
-=======
-                    Status: $(this).val()
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    Status: $(this).val(),
-                    NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 },
                 cache: false,
                 async: false,
@@ -407,22 +382,10 @@
             });
         });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             $("#YesReviseBtn").on("click", function () {
 
                 var isValid = $('#FormUploadNpePeb').valid();
 
-=======
-            $("#YesReviseBtn").on("click",function() {
-                var isValid = $('#FormUploadNpePeb').valid();
->>>>>>> 639d8d0 (Intial commit)
-=======
-            $("#YesReviseBtn").on("click", function () {
-
-                var isValid = $('#FormUploadNpePeb').valid();
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 if (isValid) {
                     var status = $("#myModalProblemContent form").valid();
                     var statusName = "Revise";
@@ -440,8 +403,6 @@
                                 Npwp: $('#NpeNpwp').val(),
                                 ReceiverName: $('#NpeReceiver').val(),
                                 PassPabeanOffice: $('#NpePass').val(),
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 DHE: removeformatCurrency($('#NpeDHE').val()),
                                 PebFob: removeformatCurrency($('#NpeFob').val()),
                                 Valuta: $('#NpeValuta').val(),
@@ -457,32 +418,6 @@
                                         .val()),
                                 Status: 'Revise',
                                 NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
-=======
-                                DHE: removeformatCurrency($('#NpeDHE').val()),    
-                                PebFob: removeformatCurrency($('#NpeFob').val()), 
-=======
-                                DHE: removeformatCurrency($('#NpeDHE').val()),
-                                PebFob: removeformatCurrency($('#NpeFob').val()),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
-                                Valuta: $('#NpeValuta').val(),
-                                WarehouseLocation: $('#NpeWarehouse').val(),
-                                DocumentComplete: $("input[name='flagCompleteDoc']:checked").val(),
-                                Rate: removeformatCurrency($('#NpeRate').val()),
-                                DescriptionPassword: $('#NpeDescPass').val(),
-                                FreightPayment:
-                                    removeformatCurrency($('#NpeFreightPayment')
-                                        .val()),
-                                InsuranceAmount:
-                                    removeformatCurrency($('#NpeInsuranceAmount')
-<<<<<<< HEAD
-                                        .val()), 
-                                Status: 'Revise'
->>>>>>> 639d8d0 (Intial commit)
-=======
-                                        .val()),
-                                Status: 'Revise',
-                                NpeDateSubmitToCustomOffice: $('#NpeDateSubmitToCustomOffice').val(),
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                             },
                             cache: false,
                             async: false,
@@ -564,7 +499,7 @@
             var data = $("#myModalProblemContent form").serializeArray();
             data.push({ name: "Status", value: statusName });
             console.log(data);
-            debugger;
+            
             $.ajax({
                 url: myApp.fullPath + "EMCS/SaveProblemHistory",
                 type: "Post",

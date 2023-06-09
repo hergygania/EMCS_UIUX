@@ -164,7 +164,6 @@
             var data = $("#myModalProblemContent form").serializeArray();
             data.push({ name: "Status", value: statusName });
             console.log(data);
-            debugger;
             $.ajax({
                 url: myApp.fullPath + "EMCS/SaveProblemHistory",
                 type: "Post",

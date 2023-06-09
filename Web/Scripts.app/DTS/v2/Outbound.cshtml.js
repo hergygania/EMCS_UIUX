@@ -1350,15 +1350,7 @@ $(function () {
 
         enableLink(false);
         $.ajax({
-<<<<<<< HEAD
-<<<<<<< HEAD
             url: myApp.fullPath + "DTS/DownloadOutbound",
-=======
-            url: myApp.fullPath  + "DTS/DownloadOutbound",
->>>>>>> 639d8d0 (Intial commit)
-=======
-            url: myApp.fullPath + "DTS/DownloadOutbound",
->>>>>>> 93c2efe ([U] Update from client's TFS)
             type: 'GET',
             data: {
                 PrimaryParam: PrimaryParam,
@@ -1375,15 +1367,7 @@ $(function () {
             },
             success: function (guid) {
                 enableLink(true);
-<<<<<<< HEAD
-<<<<<<< HEAD
                 window.open(myApp.root + 'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
-=======
-                window.open(myApp.root +'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
->>>>>>> 639d8d0 (Intial commit)
-=======
-                window.open(myApp.root + 'DTS/DownloadToExcelOutbound?guid=' + guid, '_blank');
->>>>>>> 93c2efe ([U] Update from client's TFS)
             },
             cache: false
         });
@@ -1424,29 +1408,13 @@ $(function () {
 
     $.ajax({
         type: "POST",
-<<<<<<< HEAD
-<<<<<<< HEAD
         url: myApp.fullPath + 'DTS/GetMasterAction',
-=======
-        url: myApp.fullPath  + 'DTS/GetMasterAction',
->>>>>>> 639d8d0 (Intial commit)
-=======
-        url: myApp.fullPath + 'DTS/GetMasterAction',
->>>>>>> 93c2efe ([U] Update from client's TFS)
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
                 var items = [];
                 for (var x in result) {
-<<<<<<< HEAD
-<<<<<<< HEAD
                     items.push({ id: result[x].Code, text: result[x].Description1 });
-=======
-                    items.push({ id: result[x].Code, text: result[x].Description1});
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    items.push({ id: result[x].Code, text: result[x].Description1 });
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 }
                 $("#Action").select2({ placeholder: 'Select Activity', data: items });
                 $("#Action").val(null).trigger("change");
@@ -1460,15 +1428,7 @@ $(function () {
 
     $.ajax({
         type: "POST",
-<<<<<<< HEAD
-<<<<<<< HEAD
         url: myApp.fullPath + 'DTS/GetMasterStatus',
-=======
-        url: myApp.fullPath  + 'DTS/GetMasterStatus',
->>>>>>> 639d8d0 (Intial commit)
-=======
-        url: myApp.fullPath + 'DTS/GetMasterStatus',
->>>>>>> 93c2efe ([U] Update from client's TFS)
         dataType: "json",
         success: function (result) {
             if (result && result.length > 0) {
@@ -1586,8 +1546,6 @@ $(function () {
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
         if ((outboundTracking.selectedRow.Action != 'PODC' && outboundTracking.selectedRow.Action != 'PODB') && outboundTracking.selectedRow.Status == 'BAST') {
@@ -1598,24 +1556,6 @@ $(function () {
             sAlert('Warning', "Activity POD must selected BAST status ", 'warning');
             return;
         }
-=======
-=======
-
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
-        if ((outboundTracking.selectedRow.Action != 'PODC' && outboundTracking.selectedRow.Action != 'PODB') && outboundTracking.selectedRow.Status == 'BAST') {
-            sAlert('Warning', "BAST status can be selected if the Activity is POD", 'warning');
-            return;
-        }
-        if ((outboundTracking.selectedRow.Action == 'PODC' || outboundTracking.selectedRow.Action == 'PODB') && outboundTracking.selectedRow.Status != 'BAST') {
-            sAlert('Warning', "Activity POD must selected BAST status ", 'warning');
-            return;
-        }
-<<<<<<< HEAD
-       
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         if (!isAnyUpdate) {
             sAlert('Warning', "no data changed", 'warning');
             return;

@@ -8,15 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-=======
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -28,14 +20,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <TargetFrameworkProfile />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <TargetFrameworkProfile />
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -18,6 +18,8 @@ using App.Data.Domain.EMCS;
 using System.IO;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -48,14 +50,42 @@ namespace App.Web.Controllers.EMCS
 
         public JsonResult GetDataEdoList(Cipl filter)
         {
-            var idGr = Service.EMCS.SvcGoodsReceiveItem.GetGrIdByIdCipl(filter.Id);
+            //var idGr = Service.EMCS.SvcGoodsReceiveItem.GetGrIdByIdCipl(filter.Id);
+            try
+            {
+                var detailGr = InitGoodReceive(filter.Id);
+                var area = detailGr.Data.PickupPoint;
+                var pic = detailGr.Data.PickupPic;
 
-            var detailGr = InitGoodReceive(idGr);
-            var area = detailGr.Data.PickupPoint;
-            var pic = detailGr.Data.PickupPic;
+                var data = Service.EMCS.SvcCargo.GetEdoNoList(area, pic, detailGr.Data.Id);
+                return Json(new { data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
 
-            var data = Service.EMCS.SvcCargo.GetEdoNoList(area, pic);
-            return Json(new { data }, JsonRequestBehavior.AllowGet);
+                throw ex;
+            }
+
+        }
+        public JsonResult GetDataDonoListForRFC(Cipl model)
+        {
+            try
+            {
+                var data = Service.EMCS.SvcCargo.GetEdoNoList(model.PickUpArea, model.PickUpPic, model.Id);
+                return Json(new { data }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+        public JsonResult GetDoList(string picuppoint, string picuppic, long Id)
+        {
+            List<Cipl> data = new List<Cipl>();
+            data = Service.EMCS.SvcCargo.GetEdoNoList(picuppoint, picuppic, Id);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -63,16 +93,237 @@ namespace App.Web.Controllers.EMCS
         [HttpGet]
         public ActionResult CreateGrItem(GoodReceiveItemModel form)
         {
-            ViewBag.crudMode = "I";
-            var data = InitGoodReceiveItem(0);
 
-            var detailGr = InitGoodReceive(form.IdGr);
-            var area = detailGr.Data.PickupPoint;
-            var pic = detailGr.Data.PickupPic;
-            data.IdGr = form.IdGr;
+            try
+            {
+                ViewBag.crudMode = "I";
+                var data = InitGoodReceiveItem(0);
 
-            data.DoList = Service.EMCS.SvcCargo.GetEdoNoList(area, pic);
-            return PartialView("Modal.FormItemGR", data);
+                var detailGr = InitGoodReceive(form.IdGr);
+                var area = detailGr.Data.PickupPoint;
+                var pic = detailGr.Data.PickupPic;
+                data.IdGr = form.IdGr;
+
+                data.DoList = Service.EMCS.SvcCargo.GetEdoNoList(area, pic, data.IdGr);
+                GoodReceiveModel getdata = new GoodReceiveModel();
+                getdata.ItemModel = data;
+                return PartialView("Model.FormItemGR", data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public JsonResult GetListArmada(long IdGr, long Id)
+        {
+            try
+            {
+                var data = App.Service.EMCS.SvcGoodsReceiveItem.GetListArmada(Id, IdGr);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult GetDataForEdiDropDown(GoodReceiveModel objGrModel, string picupoint, string picupppic)
+        {
+
+            try
+            {
+                var PickupPoint = picupoint;
+                var PickupPic = picupppic;
+                objGrModel.ShippingFleet.DoList.Add(new SelectListItem() { Text = "Select Do No", Value = "0" });
+                objGrModel.ShippingFleet.DoList.AddRange(Service.EMCS.SvcCargo.GetEdoNoList(PickupPoint, PickupPic).ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = a.EdoNo,
+                        Value = a.Id.ToString()
+                    };
+                }));
+                objGrModel.ShippingFleet.YesNo = YesNoList();
+                return PartialView("ShippingFleetForm", objGrModel);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        [HttpPost]
+        public JsonResult SaveArmada(ShippingFleet form)
+        {
+            try
+            {
+                ApplicationTitle();
+                ViewBag.crudMode = "U";
+                SP_ShippingFleetItem data = new SP_ShippingFleetItem();
+                ShippingFleet result = new ShippingFleet();
+                if (ModelState.IsValid)
+                {
+                    result.Id = Service.EMCS.SvcGoodsReceiveItem.SaveArmada(form);
+                    List<string> DoNoList = new List<string>(form.DoNo.Split(','));
+                    if (DoNoList.Count > 0)
+                    {
+                        form.Id = result.Id;
+                        foreach (var item in DoNoList)
+                        {
+                            form.DoNo = item;
+                            Service.EMCS.SvcGoodsReceiveItem.SaveArmadaRefrence(form);
+
+                        }
+
+                    }
+                }
+
+
+                return Json(result.Id, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        [HttpPost]
+        public List<GoodsReceive> UpdateGr(long Id, string pickuppoint, string pickuppic)
+        {
+            try
+            {
+                var item = new Data.Domain.EMCS.SpGoodReceive();
+                item.Id = Id;
+                item.PickupPoint = pickuppoint;
+                item.PickupPic = pickuppic;
+                var data = Service.EMCS.SvcGoodsReceiveItem.UpdateGr(item);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public JsonResult GetCiplAvailableForShippingFleet(string Method, string IdCipl, long idgr, long idShippingFleet)
+        {
+            //List<CiplItem> data = new List<CiplItem>();
+            if (Method == "Edit")
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplAvailableForShippingFleet(IdCipl, idgr, idShippingFleet);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            else if (Method == "View")
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.CiplItemAvailableInArmada(IdCipl, idgr, idShippingFleet);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplAvailableForShippingFleet(IdCipl, idgr, idShippingFleet);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public JsonResult GetCiplIdFromDoNo(string DoNo)
+        {
+            //List<CiplItem> data = new List<CiplItem>();
+
+            var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplIdFromDoNo(DoNo);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCiplItemCount(string idcipl, long idgr, long idshippingfleet)
+        {
+            //List<CiplItem> data = new List<CiplItem>();
+
+            var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplItemCount(idcipl, idgr, idshippingfleet);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCiplItem(long idcipl)
+        {
+            try
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplItem(idcipl);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+        public JsonResult CiplItemAvailableInArmada(string Method, string IdCipl, long idgr, long idShippingFleet)
+        {
+            if (Method == "View")
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.CiplItemAvailableInArmada(IdCipl, idgr, idShippingFleet);
+                return Json(list, JsonRequestBehavior.AllowGet);
+                
+            }
+            else
+            {
+                var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplAvailableForShippingFleet(IdCipl, idgr, idShippingFleet);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+        public JsonResult GetCiplItemInShippingFleetItem(string idcipl, long idgr)
+        {
+            var list = App.Service.EMCS.SvcGoodsReceiveItem.GetCiplItemInShippingFleetItem(idcipl, idgr);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public long DeleteItem(long id, long idCiplItem)
+        {
+            App.Service.EMCS.SvcGoodsReceiveItem.DeleteItemShippingFleet(id, idCiplItem);
+            return 1;
+        }
+        [HttpPost]
+        public long DeleteArmada(long Id,bool IsRFC = false)
+        {
+            var data = Service.EMCS.SvcGoodsReceiveItem.GetListArmada(Id, 0);
+            if(data.Count != 0)
+            {
+                if(IsRFC != true)
+                {
+                    if (HttpContext.Session["IsApprover"].ToString() == "True")
+                    {
+                        var HistoryData = Service.EMCS.SvcGoodsReceiveItem.GetHistoryDataById(data[0].Id);
+                        if (HistoryData == null)
+                        {
+
+                            Service.EMCS.SvcGoodsReceiveItem.SaveArmadaHistory(data[0], "Deleted");
+                            App.Service.EMCS.SvcGoodsReceiveItem.DeleteArmada(Id);
+
+                        }
+                        else
+                        {
+                            App.Service.EMCS.SvcGoodsReceiveItem.DeleteArmada(Id);
+                        }
+                        return 0;
+                    }
+                    else
+                    {
+                        App.Service.EMCS.SvcGoodsReceiveItem.DeleteArmada(Id);
+                        return 1;
+                    }
+                }
+                else
+                {
+                     Service.EMCS.SvcGoodsReceiveItem.SaveArmadaForRFC(data[0], "Deleted");
+                }
+               
+            }
+            return 1;
+
+
         }
 
         [HttpGet]
@@ -151,15 +402,15 @@ namespace App.Web.Controllers.EMCS
 
         public FileResult DownloadGrItem(long id)
         {
-            var files = Service.EMCS.SvcGoodsReceiveItem.GetById(id);
+            var files = Service.EMCS.SvcGoodsReceiveItem.GetDocById(id);
             string fullPath = Request.MapPath("~/Upload/EMCS/Dummy/NotFound.txt");
 
             if (files != null)
             {
                 var fileData = files;
-                fullPath = Request.MapPath("~/Upload/EMCS/GR/" + files.IdGr + "/" + fileData.FileName);
+                fullPath = Request.MapPath("~/Upload/EMCS/GoodsReceive/" + files.Id + "/" + fileData.Filename);
                 var fileBytes = System.IO.File.ReadAllBytes(fullPath);
-                string fileName = fileData.FileName;
+                string fileName = fileData.Filename;
                 return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
             }
 
@@ -236,6 +487,22 @@ namespace App.Web.Controllers.EMCS
             data.DoList = Service.EMCS.SvcGoodsReceiveItem.GetEdoNoGrItemList(area, form.IdGr);
             return PartialView("Modal.FormItemGR", data);
         }
+        [HttpGet]
+        public ActionResult UpdateArmada(long Id, long IdGr)
+        {
+
+            try
+            {
+
+                var data = App.Service.EMCS.SvcGoodsReceiveItem.GetListArmada(Id, IdGr);
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
         #endregion
 
         #region Get List Item
@@ -244,6 +511,20 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcGoodsReceiveItem.GetList(crit);
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetItemGrById(GridListFilter crit)
+        {
+            var data = Service.EMCS.SvcGoodsReceiveItem.GetName(crit.Id);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCheckarmadaDetail(long Id)
+        {
+            var itemlistCount = Service.EMCS.SvcGoodsReceiveItem.GetArmadaItemList(Id);
+            var FileName = Service.EMCS.SvcGoodsReceiveItem.GetFileName(Id);
+            var itemlistingrcount = Service.EMCS.SvcGoodsReceiveItem.GetItemInGr(Id);
+            return Json(new { itemlistCount, FileName, itemlistingrcount }, JsonRequestBehavior.AllowGet);
+        }
+
+
         #endregion
     }
 }

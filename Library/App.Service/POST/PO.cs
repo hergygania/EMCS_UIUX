@@ -260,15 +260,7 @@ namespace App.Service.POST
             {
                 db.DbContext.Database.CommandTimeout = 600;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
-<<<<<<< HEAD
-<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@RequestId", requestId ));
-=======
-                parameterList.Add(new SqlParameter("@RequestId", requestId));
->>>>>>> 639d8d0 (Intial commit)
-=======
-                parameterList.Add(new SqlParameter("@RequestId", requestId ));
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 parameterList.Add(new SqlParameter("@ItemName", param.Item ?? ""));
                 parameterList.Add(new SqlParameter("@StartDateDeliveryDate", param.StartDateDeliveryDate ?? ""));
                 parameterList.Add(new SqlParameter("@EndDateDeliveryDate", param.EndDateDeliveryDate ?? ""));
@@ -453,10 +445,6 @@ namespace App.Service.POST
                 return data;
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public static List<InvoiceHardCopy_List> GetHardCopyInvoiceById(int id)
         {
             using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -483,11 +471,6 @@ namespace App.Service.POST
                 return data;
             }
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         //public static int RemovePartialListById(int Id)
         //{
         //    using (var db = new Data.RepositoryFactory(new Data.POSTContext()))
@@ -495,15 +478,7 @@ namespace App.Service.POST
         //        var data = db.DbContext.Database.SqlQuery<ItemById_LIST>(@"exec [dbo].[SP_ItemPartialById_LIST]@Id", Id).ToList();
         //        return 1;
         //    }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-     
->>>>>>> 639d8d0 (Intial commit)
-=======
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
         //}
 
         public static int RemovePartialListById(int Id)
@@ -516,10 +491,6 @@ namespace App.Service.POST
             }
             return 1;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         public static int RemoveHarcopyInvoiceById(int Id)
         {
             using (var db = new Data.POSTContext())
@@ -530,11 +501,6 @@ namespace App.Service.POST
             }
             return 1;
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
         public static ItemById_LIST GetItemPartialById(int id)
         {

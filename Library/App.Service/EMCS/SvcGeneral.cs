@@ -58,7 +58,7 @@ namespace App.Service.EMCS
                 db.Database.CommandTimeout = 600;
                 var sql = @"[dbo].[sp_get_cipl_document_list] @IdCipl = '" + crit.IdCipl + "'";
                 var data = db.Database.SqlQuery<SPGetCiplDocumentList>(sql).ToList();
-                
+
                 return data;
             }
         }
@@ -101,19 +101,75 @@ namespace App.Service.EMCS
                 return dataQuery;
             }
         }
+        public static List<Data.Domain.EMCS.MasterSubConCompany> GetSubconList(MasterSearchForm crit)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                var search = (String.IsNullOrEmpty(crit.searchName) || crit.searchName == "null") ? "" : crit.searchName;
+                var dataQuery = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.MasterSubConCompany>(@"select * from dbo.MasterSubConCompany ").ToList();
+                return dataQuery;
+            }
+        }
+        public static List<Data.Domain.EMCS.Vendor> GetVendorList(MasterSearchForm crit)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    var search = (String.IsNullOrEmpty(crit.searchName) || crit.searchName == "null") ? "" : crit.searchName;
+                    List<Vendor> dataQuery = new List<Vendor>();
+                    if (search == "")
+                    {
+                        dataQuery = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.Vendor>(@"select top(200) * from MasterVendor order by Id desc ").ToList();
+                    }
+                    else
+                    {
+                        dataQuery = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.Vendor>(@"select * from dbo.MasterVendor where Name Like '%'+IsNull('" + search + "',Name) +'%' ").ToList();
+                    }
 
+                    return dataQuery;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public static List<Data.Domain.EMCS.Vendor> GetLatestVendorList(MasterSearchForm crit)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    var search = (String.IsNullOrEmpty(crit.searchName) || crit.searchName == "null") ? "" : crit.searchName;
+                    List<Vendor> dataQuery = new List<Vendor>();
+                    dataQuery = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.Vendor>(@"select * from dbo.MasterVendor where Code Like '%'+IsNull('" + search + "',Code) +'%' ").ToList();
+
+                    return dataQuery;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public static List<MasterBranchCkb> GetSelectOption(MasterBranchCkb crit)
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-               
+
                 db.DbContext.Database.CommandTimeout = 600;
                 var search = (String.IsNullOrEmpty(crit.Name) || crit.Name == "null") ? "" : crit.Name;
                 if (search != null)
                 {
                     search = Regex.Replace(search, @"[^0-9a-zA-Z]+", "");
                 }
-            
+
 
                 var dataQuery = db.DbContext.Database.SqlQuery<MasterBranchCkb>(@"select * from dbo.MasterBranchCkb where Name like '%" + search + "%' OR Address like '%" + search + "%' OR City like '%" + search + "%'").ToList();
                 return dataQuery;
@@ -144,7 +200,29 @@ namespace App.Service.EMCS
             }
         }
 
+        public static List<StringData> GetDaNumber(string term = "")
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                var where = (term != "" ? " AND dano like '" + term + "%'" : "");
+                var sql = @"SELECT DISTINCT TOP(10) dano text FROM [PartsInformationSystem].[CKB].[TRACKING_STATUS_API] status WHERE NOT EXISTS (SELECT 1FROM GoodsReceiveItem grItem WHERE grItem.DaNo = status.dano)" + where;
+                var dataQuery = db.DbContext.Database.SqlQuery<StringData>(sql).ToList();
+                return dataQuery;
+            }
+        }
 
+        public static List<StringData> GetDataBast(string idCipl)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                var _idCipl = idCipl.Replace(';', ',');
+                db.DbContext.Database.CommandTimeout = 600;
+                var sql = @"SELECT CAST(BastNo as Varchar) text FROM BastNumber WHERE referenceNo IN (SELECT referenceNo FROM CiplItem WHERE idCipl IN (" + _idCipl + @"))";
+                var dataQuery = db.DbContext.Database.SqlQuery<StringData>(sql).ToList();
+                return dataQuery;
+            }
+        }
         public static List<SpDelegationTo> GetCurrentNextSuperior()
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))

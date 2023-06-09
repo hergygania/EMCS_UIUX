@@ -30,5 +30,8 @@ namespace App.Data.Domain.EMCS
         public string Remarks { get; set; }
         public string FilePeb { get; set; }
         public string FileBlAwb { get; set; }
+        public string PoCustomer { get; set; }
+        public string QuotationNo { get; set; }
+        public string ReferenceNo { get; set; }
     }
 }

@@ -2,19 +2,10 @@
 {
     public class SpCargoItemDetail
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public SpCargoItemDetail()
         {
 
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public long Id { get; set; }
         public long IdCipl { get; set; }
         public long IdCargo { get; set; }
@@ -30,6 +21,9 @@
         public decimal? Width { get; set; }
         public decimal? Height { get; set; }
         public decimal? NetWeight { get; set; }
+        public decimal? Gross { get; set; }
+        public decimal? Net { get; set; }
+        public bool IsDelete { get; set; }
         public string ContainerNumber { get; set; }
         public string ContainerType { get; set; }
         public string ContainerSealNumber { get; set; }

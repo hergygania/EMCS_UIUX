@@ -1,4 +1,4 @@
-﻿﻿@model  App.Web.Models.EMCS.CargoModel
+﻿@model  App.Web.Models.EMCS.CargoModel
 @{
     ViewBag.Title = "Shipping Instruction Form";
     ViewBag.Id = Model.Data.Id.ToString();
@@ -88,11 +88,11 @@
                                         </div>
                                     </div>
                                     @*<div class="form-group">
-                                    <label class="col-sm-4">Kppbc</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
-                                    </div>
-                                </div>*@
+                                            <label class="col-sm-4">Kppbc</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="notifyCl" name="notifyCl" value="@(Model.data.CodeKppbc) - @(Model.data.NameKppbc)" disabled>
+                                            </div>
+                                        </div>*@
                                 </div>
                                 <div class="col-lg-4 col-xs-12">
                                     <div class="form-group">
@@ -146,25 +146,57 @@
                                                 <textarea class="form-control" name="SiDocumentRequired" id="SiDocumentRequired" required placeholder="Document Required" rows="3" cols="3">@Model.DataSi.DocumentRequired</textarea>
                                             </div>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label class="col-sm-4">PIC For BL / AWB</label>
                                             <div class="col-sm-8">
-                                                <select class="js-example-basic-single" name="PicBlAwb" id="PicBlAwb">
-                                                    <option value="IMEX">IMEX</option>
-                                                    <option value="CKB">CKB</option>
-                                                </select>
+                                                @if (ViewBag.IsRFC == true)
+                                                {
+                                                    <select class="js-example-basic-single" name="PicBlAwb" id="PicBlAwb" disabled>
+                                                        @if (Model.DataSi.PicBlAwb == "CKB")
+                                                        {
+                                                            <option value="IMEX">IMEX</option>
+                                                            <option value="CKB" selected>CKB</option>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="IMEX" selected>IMEX</option>
+                                                            <option value="CKB">CKB</option>
+                                                        }
+
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <select class="js-example-basic-single" name="PicBlAwb" id="PicBlAwb" >
+                                                        @if (Model.DataSi.PicBlAwb == "CKB")
+                                                        {
+                                                            <option value="IMEX">IMEX</option>
+                                                            <option value="CKB" selected>CKB</option>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="IMEX" selected>IMEX</option>
+                                                            <option value="CKB">CKB</option>
+                                                        }
+
+                                                    </select>
+                                                }
+
                                             </div>
                                         </div>
                                         @*<div class="form-group">
-                                        <label class="col-sm-4">Type</label>
-                                        <div class="col-sm-8">
-                                            <select class="js-example-basic-single" name="Type" id="Type">
-                                                <option value="NonPJT">Non PJT</option>
-                                                <option value="PJT">PJT</option>
+                                                <label class="col-sm-4">Type</label>
+                                                <div class="col-sm-8">
+                                                    <select class="js-example-basic-single" name="Type" id="Type">
+                                                        <option value="NonPJT">Non PJT</option>
+                                                        <option value="PJT">PJT</option>
 
-                                            </select>
-                                        </div>
-                                    </div>*@
+                                                    </select>
+                                                </div>
+                                            </div>*@
                                     </form>
                                 </div>
                             </fieldset>
@@ -178,9 +210,27 @@
                                 <legend class="scheduler-border"></legend>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="col-sm-4">Total Packages</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control text-right" id="topackCl" name="topackCl" value="" disabled>
+                                        <label class="control-label col-lg-4 col-xs-4">Total Packages</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @if (Model.Data.TotalPackageBy == "CaseNo")
+                                            {
+                                                <div class="col-lg-6 col-xs-6">
+                                                    <input type="text" class="form-control text-right" id="TotalPackage" value="Total Package by CaseNumber" disabled>
+                                                </div>
+                                                <div class="col-lg-6 col-xs-6" style="right: 20px;">
+                                                    <input type="text" class="form-control text-right" id="getcount" disabled>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-lg-6 col-xs-6">
+                                                    <input type="text" class="form-control text-right" id="TotalPackage" value="Total Package by Item" disabled>
+                                                </div>
+                                                <div class="col-lg-6 col-xs-6" style="right: 20px;">
+                                                    <input type="text" class="form-control text-right" id="getcount" disabled>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -253,11 +303,11 @@
                                 </div>
                                 <div class="col-lg-6">
                                     @*<div class="form-group">
-                                    <label class="col-sm-4">ETA</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" id="eta" name="eta" value="@(Model.data.ETA.HasValue ? Model.data.ETA.Value.ToString("dd MMM yyyy") : "-")" disabled>
-                                    </div>
-                                </div>*@
+                                            <label class="col-sm-4">ETA</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETA.HasValue ? Model.data.ETA.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                            </div>
+                                        </div>*@
 
                                 </div>
                                 <div class="col-lg-6">
@@ -303,20 +353,29 @@
                                     </div>
                                 </div>
                                 @*<div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="col-sm-4">ETD</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" id="eta" name="eta" value="@(Model.data.ETD.HasValue ? Model.data.ETD.Value.ToString("dd MMM yyyy") : "-")" disabled>
-                                    </div>
-                                </div>
-                            </div>*@
+                                        <div class="form-group">
+                                            <label class="col-sm-4">ETD</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="eta" name="eta" value="@(Model.data.ETD.HasValue ? Model.data.ETD.Value.ToString("dd MMM yyyy") : "-")" disabled>
+                                            </div>
+                                        </div>
+                                    </div>*@
                             </fieldset>
                         </div>
                         <div class="box-footer">
                             <div class="row" style="text-align:right;">
                                 <div class="col-md-12">
-                                    <a href="~/EMCS/CargoList" class="btn btn-default" style="width:120px;"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back</a>
-                                    <button type="button" id="BtnSubmit" style="width:120px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Save</button>
+                                    <a href="~/EMCS/ShippingInstructionList" class="btn btn-default" style="width:120px;"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back</a>
+                                    @if (ViewBag.IsRFC == true)
+                                    {
+                                        <button type="button" id="RFCSI" style="width: 200px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Request For Change</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" id="BtnSubmit" style="width:120px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Save</button>
+
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -550,6 +609,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="name" value="@Model.Data.TotalPackageBy" id="TotalBy" />
 @*</div>*@
 
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
@@ -586,6 +646,17 @@
 
             dropzone();
             GetDocumentSi();
+            var IdCargo = $("#CargoID").val();
+            $.get(myApp.fullPath + "EMCS/GetTotalDataCargo?Id=" + IdCargo + "&selectvalue=" + $('#TotalBy').val(), function (resp) {
+                var data = {};
+                $.map(resp.data, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                $("#getcount").val(formatCurrency(data.totalPackage, ".", ",", 2));
+                $("#togroswegCl").val(formatCurrency(data.totalGrossWeight, ".", ",", 2));
+                $("#tonetwegCl").val(formatCurrency(data.totalNetWeight, ".", ",", 2));
+                $("#tovolumeCl").val(data.totalVolume);
+            });
         });
 
         $("#DocumentCipl").validate({
@@ -723,9 +794,7 @@
                         }
                     },
                     complete: function (file, response) {
-                        //location.reload();
                     },
-                    // Rest of the configuration equal to all dropzones
                 });
 
             });
@@ -750,7 +819,6 @@
                 $("#tovolumeCl").val(formatCurrency(data.totalVolume, ".", ",", 2));
             });
         }
-        getTotalData();
 
         var visible = false;
         if (CargoTypeName === "Full Container Load") {
@@ -928,14 +996,11 @@
                 url: "/EMCS/UpdateSI",
                 type: "POST",
                 data: data,
-                success: function (resp) {                   
+                success: function (resp) {
                     location.href = "/EMCS/CargoList";
                 }
             });
         }
-        // #endregion
-
-        // #region Btn Action Region
         $("#BtnSubmit").on("click", function () {
             var formsi = $("#FormShippingInstruction").valid();
             var document = $('#DocumentCipl').valid();
@@ -982,6 +1047,80 @@
                 }, 2000);
             }
         });
+
+        $("#RFCSI").on('click', function () {
+            Swal.fire({
+                title: 'Request this change?',
+                text: 'By approving this changes, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this request of change?',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Request!',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                showCloseButton: true
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        input: 'textarea',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        inputPlaceholder: 'Please add reason for this request for change...',
+                        inputAttributes: {
+                            'aria-label': 'Please add reason for this request for change...'
+                        },
+                        showCancelButton: false
+                    }).then((result) => {
+                        if (result.value !== '') {
+                            var Notes = result.value;
+                            var Status = "Approve";
+                            var Id = 0;
+                            var formdata = { Notes: Notes, Status: Status, Id: Id };
+                            RequestForChangeSI(formdata);
+                        }
+                        else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Please add request for change reason',
+                            })
+                        }
+                    });
+                }
+                return false;
+            });
+
+        })
+
+        function RequestForChangeSI(formdata) {
+            var modelObj = {
+                FormType: "ShippingInstruction",
+                FormId: $("#CargoID").val(),
+                Reason: formdata.Notes,
+                /*rfcList: requestForChange*/
+            }
+            var data = {
+                SpecialInstruction: $('#SpecialInstruction').val(),
+                DocumentRequired: $('#SiDocumentRequired').val(),
+                PicBlAwb: $('#PicBlAwb').val()
+            }
+            $.ajax({
+                url: '/EMCS/RequestForChangeSI',
+                type: 'POST',
+                data: {
+                    form: modelObj,
+                    data: data
+
+                },
+                success: function (data) {
+                    Swal.fire("Success", "Request for change is successfully added", "success").then((result) => {
+                        location.href = myApp.fullPath + "EMCS/ShippingInstructionList";
+                    })
+                }
+            })
+        }
+
 
 
     </script>

@@ -1,0 +1,44 @@
+﻿@*@model  App.Web.Models.EMCS.GoodReceiveModel
+
+    @Html.HiddenFor(m => m.ShippingFleet.IdGr, new { @Id = "IdGr" })
+    <div class="fancy-collapse-panel" id="Div">
+        @{
+
+
+        }
+    </div>
+
+
+
+
+
+
+    @Html.Partial("~/Views/EMCS/Modal.PreviewDocument.cshtml")
+    @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
+    @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
+    @Scripts.Render("~/Content/EMCS/Autocomplete/jquery.easy-autocomplete.js")
+    @section Scripts{
+        @Scripts.Render("~/Scripts.app/EMCS/ShippingFleet.cshtml.js")
+
+        @Scripts.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.js")
+        @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
+        <script>
+            var $hideAction = $("#HideAction").val();
+            $(document).ready(function () {
+                $("#form-item-gr").removeData("validator");
+                $('#form-item-gr').data('validator', null);
+                $("#form-item-gr").unbind('validate');
+                $("#form-item-gr").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("#form-item-gr");
+            })
+
+        </script>
+        <script src="~/Scripts.app/EMCS/dropzone.js"></script>
+        @Scripts.Render("~/Scripts.app/EMCS/GoodsReceiveForm.cshtml.js")
+
+        <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+        <script src="~/Scripts.app/EMCS/GoodsReceiveFormDocument.js"></script>
+    }*@
+
+
+

@@ -20,17 +20,17 @@ namespace App.Service.EMCS
 
         public static dynamic ExportToday(MasterSearchForm crit)
         {
-            
+
             int year = 2020;
             DateTime firstDay = new DateTime(year, 1, 1);
             DateTime searchDate1 = crit.date1 ?? firstDay;
             DateTime searchDate2 = crit.date2 ?? DateTime.Now;
             string searchCode = "";
-            if (crit.searchCode != null  )
+            if (crit.searchCode != null)
             {
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
-          
+
 
             string userarea = searchCode ?? SiteConfiguration.UserName;
 
@@ -57,12 +57,12 @@ namespace App.Service.EMCS
             DateTime firstDay = new DateTime(year, 1, 1);
             DateTime searchDate1 = crit.date1 ?? firstDay;
             DateTime searchDate2 = crit.date2 ?? DateTime.Now;
-          
-            if (crit.searchCode !=null)
+
+            if (crit.searchCode != null)
             {
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
-           
+
 
             string userarea = searchCode ?? SiteConfiguration.UserName;
 
@@ -84,10 +84,10 @@ namespace App.Service.EMCS
 
         public static dynamic TotalNetWeight(MasterSearchForm crit)
         {
-           
+
             int year = 2020;
             DateTime? firstDay = new DateTime(year, 1, 1);
-     
+
             DateTime? searchDate1 = crit.date1 ?? firstDay;
             DateTime? searchDate2 = crit.date2 ?? DateTime.Now;
             string searchCode = "";
@@ -96,7 +96,7 @@ namespace App.Service.EMCS
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
 
-            
+
 
             string userarea = searchCode ?? SiteConfiguration.UserName;
 
@@ -118,28 +118,49 @@ namespace App.Service.EMCS
             }
         }
 
-        public static List<Data.Domain.EMCS.MasterKurs> ExchangeRateToday(MasterSearchForm crit)
+        public static dynamic ExchangeRateToday(MasterSearchForm crit)
         {
-            using (var db = new Data.EmcsContext())
+            if (crit.date1 != null && crit.date2 != null)
             {
-                var data = db.MasterKurs.OrderByDescending(i => i.StartDate).Skip(0).Take(12).ToList();
-                return data;
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    var date1 = crit.date1.Value.ToString("yyyy/MM/dd");
+                    var date2 = crit.date2.Value.ToString("yyyy/MM/dd");
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@date1", date1));
+                    parameterList.Add(new SqlParameter("@date2", date2));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    var data = db.DbContext.Database.SqlQuery<App.Data.Domain.EMCS.MasterKurs>(@"exec [dbo].[Sp_DashBoard_ExchangeRate]@date1, @date2", parameters).ToList();
+                    return data;
+                }
             }
+            else
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var data = db.MasterKurs.OrderByDescending(i => i.StartDate).Skip(0).Take(12).ToList();
+                    return data;
+
+                }
+            }
+            //var data = db.MasterKurs.OrderByDescending(i => i.StartDate).Skip(0).Take(12).ToList();
+
         }
 
         public static dynamic TotalExportValue(MasterSearchForm crit)
         {
-          
+
             int year = 2020;
             DateTime firstDay = new DateTime(year, 1, 1);
             DateTime searchDate1 = crit.date1 ?? firstDay;
             DateTime searchDate2 = crit.date2 ?? DateTime.Now;
             string searchCode = "";
-            if (crit.searchCode !=null)
+            if (crit.searchCode != null)
             {
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
-            
+
             String userarea = searchCode ?? SiteConfiguration.UserName;
 
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
@@ -164,12 +185,12 @@ namespace App.Service.EMCS
             int year = DateTime.Now.Year;
             DateTime searchDate1 = new DateTime(year: 2020, month: 1, day: 1);
             DateTime searchDate2 = DateTime.Now;
-       
+
             if (crit.searchCode != null)
             {
-             searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
+                searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
-            
+
             String userarea = searchCode ?? SiteConfiguration.UserName;
 
             using (var db = new Data.RepositoryFactory(dbContext: new Data.EmcsContext()))
@@ -191,12 +212,12 @@ namespace App.Service.EMCS
         public static dynamic OutstandingBranch(MasterSearchForm crit)
         {
             string searchCode = "";
-            if (crit.searchCode !=null)
+            if (crit.searchCode != null)
             {
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }
             String userarea = "";
-            if  (searchCode=="")
+            if (searchCode == "")
             {
                 userarea = SiteConfiguration.UserName;
             }
@@ -204,7 +225,7 @@ namespace App.Service.EMCS
             SqlParameter[] parameters;
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-               
+
                 db.DbContext.Database.CommandTimeout = 600;
                 var search = (crit.searchId.Equals(0) || crit.searchId.Equals(null)) ? 1 : crit.searchId;
                 List<SqlParameter> parameterList = new List<SqlParameter>();
@@ -222,7 +243,7 @@ namespace App.Service.EMCS
         public static dynamic OutstandingPort(MasterSearchForm crit)
         {
             string searchCode = "";
-            if (crit.searchCode !=null)
+            if (crit.searchCode != null)
             {
                 searchCode = Regex.Replace(crit.searchCode, @"[^0-9a-zA-Z]+", "");
             }

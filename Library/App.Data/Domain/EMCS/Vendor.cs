@@ -20,5 +20,6 @@
         public string UpdateBy { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime? UpdateDate { get; set; }
+        public bool IsManualEntry { get; set; }
     }
 }

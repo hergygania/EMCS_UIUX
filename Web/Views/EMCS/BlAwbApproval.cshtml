@@ -36,52 +36,10 @@
                     <form id="FormUploadBlAwb">
                         <div class="modal-body">
                             <div class="col-md-6">
-                                <div class="form-group hide">
-                                    <label class="control-label col-lg-4 col-xs-4">ID</label>
-                                    <div class="input-group col-lg-8 col-xs-8">
-                                        <input type="text" class="form-control" id="CargoID" name="CargoID" value="@Model.Data.Id" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4 col-xs-4">Master BL Number</label>
-                                    <div class="input-group col-xs-8 col-lg-8">
-                                        @Html.TextBoxFor(m => m.BlAwb.Number, new { @class = "form-control", @id = "Number", @placeholder = "Bl Awb Number", @name = "Number", @readonly = true })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4 col-xs-4">Master BL Date</label>
-                                    <div class="input-group col-xs-8 col-lg-8">
-                                        @Html.TextBoxFor(m => m.BlAwb.MasterBlDate, new { @class = "form-control date", @id = "MasterBlDate", @placeholder = "Master BL Date ", @name = "MasterBlDate", @readonly = true })
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4 col-xs-4">House BL Number</label>
-                                    <div class="input-group col-xs-8 col-lg-8">
-                                        @Html.TextBoxFor(m => m.BlAwb.HouseBlNumber, new { @class = "form-control required", @id = "HouseBlNumber", @placeholder = "House BL Number", @name = "HouseBlNumber", @readonly = true })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4 col-xs-4">House BL Date</label>
-                                    <div class="input-group col-xs-8 col-lg-8">
-                                        @Html.TextBoxFor(m => m.BlAwb.HouseBlDate, new { @class = "form-control date required", @id = "HouseBlDate", @placeholder = "House BL Date", @name = "HouseBlDate", @readonly = true })
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-4 col-xs-4">Publisher</label>
-                                    <div class="input-group col-xs-8 col-lg-8">
-                                        @Html.TextBoxFor(m => m.BlAwb.Publisher, new { @class = "form-control required", @id = "Publisher", @placeholder = "Publisher", @name = "Publisher", @readonly = true })
-                                    </div>
-                                </div>
-                                <div class="form-group hide">
-                                    <label class="control-label col-lg-4 col-xs-4" id="cc_num">Description</label>
-                                    <div class="input-group col-lg-8 col-xs-8">
-                                        @Html.TextAreaFor(m => m.BlAwb.Description, new { @class = "form-control required", @id = "Description", @placeholder = "Description", @name = "Description", @readonly = true })
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                        <input type="hidden" name="idCargo" id="idCargo" value="@Model.Data.Id" />
+                                        <table id="tableBlAwbItems" data-toolbar=".toolbar" class="table table-bordered"></table>
                                     </div>
                                 </div>
                                 <div class="pull-right">
@@ -93,38 +51,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <table style="width:100%" border="0" class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="height:40px;vertical-align:middle; text-align: center;width:80%">Name</th>
-                                            <th style="height:40px;vertical-align:middle; text-align: center;width:20%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id="trCompleteDoc">
-                                            <td>
-                                                <div class="form-group div-mandatory">
-                                                    <label class="control-label" id="label-document-SK"><strong>BL / AWB Document</strong></label>
-                                                    @*<input type="text" class="do-not-ignore hide" name="UrlDocumentSK" id="url-document-SK" required />*@
-                                                    <input type="text" class="do-not-ignore hide" name="UrlDocumentDOC" id="url-document-DOC" required />
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <button class="btn btn-info btn-xs dz-clickable" id="document-DOC" type="button" data-toggle="tooltip" title="Upload!"><i class="fa fa-upload"></i></button>
-                                                <button class="btn btn-default btn-xs preview-document" id="preview-document-DOC" type="button" data-toggle="tooltip" title="View Document!"><i class="fa fa-search"></i></button>
-                                                <a href="#" class="btn btn-success btn-xs DownloadDocument" id="download-document-DOC" type="button" target="_blank" data-toggle="tooltip" title="Download!"><i class="fa fa-download"></i></a>
-                                                <div id="previews">
-                                                    <div id="template" class="template file-row dz-image-preview">
-                                                        <div>
-                                                            <p class="name" data-dz-name=""></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <iframe id="DocumentShow" title="Document Show" src="" style="width: 100%;height: 550px"></iframe>
+                                <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
                             </div>
                         </div>
                         <div class="box-footer text-right">
@@ -160,7 +87,70 @@
         </div>
     </div>
 </div>
+<div id='myModalUploadPlace' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Upload File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row text-center divUploadFile dropzone" id="FormUploadDocumentContainer">
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                        <div class="input-group col-md-9 col-xs-12">
+                            <input type="text" class="form-control" id="IdDocumentUpload" name="IdDocumentUpload">
+                            @Html.HiddenFor(m => m.BlAwb.Id, new { @class = "form-control ", @id = "BLAWBID" })
+                            @Html.HiddenFor(m => m.BlAwb.Number, new { @class = "form-control ", @id = "Number" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
 
+            <div id="template-dropzone" class="hidden">
+                <div id="template" class="file-row text-left" style="padding:20px;">
+                    <!-- This is used as the file preview template -->
+                    <div class="col-md-2">
+                        <div class="row">
+                            <span class="preview">
+                                <img alt="Data Thumbnail" style="width:65%;height:auto;" data-dz-thumbnail>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="name" data-dz-name></p>
+                        <strong class="error text-danger" data-dz-errormessage></strong>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row">
+                            <p class="size" data-dz-size></p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span data-dz-uploadprogress id="progressPercent"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @Html.Partial("Modal.FormProblem")
 
 @section scripts{
@@ -169,7 +159,7 @@
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
     @Scripts.Render("~/Scripts.app/EMCS/function.cshtml.js")
     <script src="@Url.Content("~/Scripts.app/EMCS/transaction/CargoHistory.cshtml.js")"></script>
-    <script src="@Url.Content("~/Scripts.app/EMCS/mytask/BlAwb.cshtml.js")"></script>
+    @*<script src="@Url.Content("~/Scripts.app/EMCS/mytask/BlAwb.cshtml.js")"></script>*@
     @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
     <script>
         var wizardState = "@ViewBag.WizardData.Progress";
@@ -177,19 +167,229 @@
     </script>
 
     <script>
+        var tabledata = [];
+        var $table = $('#tableBlAwbItems');
+        var $AllowDelete = true;
+        var $AllowUpdate = true;
+        Dropzone.autoDiscover = false
+        var myDropzoneDocument = new Dropzone("#FormUploadDocumentContainer", { // Make the bodyFormUpload a dropzone
+            url: "/EMCS/UploadDocumentBlAwb", // Set the url
+            thumbnailHeight: 100,
+            thumbnailWeight: 100,
+            timeout: "80000",
+            method: 'POST',
+            dictDefaultMessage: "<h4>Click this Section for Browse the Import File.</h4>",
+            acceptedFiles: '.pdf, .jpeg, .jpg, .png',
+            filesizeBase: 1024,
+            autoProcessQueue: true,
+            maxFiles: 1,
+            maxFilesize: 100, // MB
+            parallelUploads: 1,
+            previewTemplate: $("#template-dropzone").html(),
+            uploadMultiple: false
+            //previewsContainer: "#FormUploadMaterial", // Define the container to display the previews
+            //clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        });
 
+        myDropzoneDocument.on("addedfile", function (file) {
+
+            // Hookup the start button
+            $("#actions .start").on("click", function () {
+                myDropzone.enqueueFile(file);
+            });
+            $("#placeholderUpload").hide();
+        });
+
+        myDropzoneDocument.on("totaluploadprogress", function (progress) {
+
+            $("#total-progress .progress-bar").css("width", progress + "%");
+            $("#progressPercent").html(progress + "%");
+        });
+
+        myDropzoneDocument.on("sending", function (file, xhr, formData) {
+            
+            formData.append("blawbid", $("#BLAWBID").val());
+            formData.append("idCargo", $("#idCargo").val());
+            formData.append("blAwbNo", $("#Number").val());
+            formData.append("typeDoc", "DOC");
+
+            // Show the total progress bar when upload starts
+            $("#total-progress").css("opacity", 1);
+            // And disable the start button
+            $("#actions .delete").attr("disabled", "disabled");
+            $(".start").attr("disabled", "disabled");
+        });
+
+        myDropzoneDocument.on("complete", function (resp) {
+            if (resp.status === "success") {
+                $("#actions .delete").prop("disabled", false);
+                if (resp.size >= 9785 && resp.size <= 9800) {
+                    swal.fire("Upload Status", "Empty files will not be uploaded.", "error");
+                }
+                else {
+
+                    var respText = resp.xhr.response;
+                    var respData = JSON.parse(respText);
+                    console.log(respData);
+                    var type = respData.status ? "success" : "error";
+                    swal.fire("Upload Status", respData.msg, type);
+                    $table.bootstrapTable('refresh')
+                }
+            }
+        });
+
+        myDropzoneDocument.on("queuecomplete", function (progress) {
+            $("#total-progress").css("opacity", "0");
+            setTimeout(function () {
+                myDropzoneDocument.removeAllFiles(true);
+            }, 400);
+        });
+
+        $("#actions .start").on("click", function () {
+            myDropzoneDocument.enqueueFiles(myDropzoneDocument.getFilesWithStatus(Dropzone.QUEUED));
+        });
+
+        $("#actions .cancel").on("click", function () {
+            myDropzoneDocument.removeAllFiles(true);
+            $("#placeholderUpload").hide();
+        });
+        function getbyid(row) {
+            
+            $('#BLAWBID').val(row.Id);
+            $('#CargoID').val(row.IdCl);
+            $('#Number').val(row.Number);
+        }
+        $(function () {
+            var blawbcolumns = [
+                {
+                    field: 'Number',
+                    title: 'Master BL/AWB Number',
+                    halign: 'center',
+                    align: 'center',
+                    class: 'text-nowrap',
+                    sortable: true,
+                },
+                {
+                    field: 'MasterBlDate',
+                    title: 'Master Bl Date',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'HouseBlNumber',
+                    title: 'House Bl Number',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'HouseBlDate',
+                    title: 'House Bl Date',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true,
+                    formatter: function (data, row, index) {
+                        return moment(data).format("DD MMM YYYY");
+                    }
+                },
+                {
+                    field: 'Publisher',
+                    title: 'Publish',
+                    halign: 'center',
+                    align: 'left',
+                    class: 'text-nowrap',
+                    sortable: true
+                },
+                {
+                    field: 'FileName',
+                    title: 'Attachment',
+                    align: 'center',
+                    valign: 'center',
+                    halign: "center",
+                    class: 'text-nowrap',
+                    sortable: true,
+                    events: operateEventBlAWbUploaded,
+                    formatter: function (data, row) {
+                        var btnUpload = '<button type="button" class="btn btn-primary btn-xs uploadDocument" data-toggle="modal" data-target="#myModalUploadPlace" title="Upload"><i class="fa fa-upload"></i></button>';
+                        if (row.FileName !== "") {
+                            var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                            var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+                            return [btnUpload,btnDownload, btnPreview].join(' ');
+                        } else {
+                            return [btnUpload].join(' ');;
+                        }
+                    },
+                    class: 'text-nowrap'
+                }
+            ]
+
+            $table.bootstrapTable(
+                {
+                    url: "/EMCS/GetBlAwbListByCargo",
+                    columns: blawbcolumns,
+                    cache: false,
+                    pagination: true,
+                    search: false,
+                    striped: true,
+                    clickToSelect: true,
+                    reorderableColumns: true,
+                    toolbar: '.toolbar',
+                    toolbarAlign: 'left',
+                    onClickRow: selectRow,
+                    sidePagination: 'server',
+                    showColumns: true,
+                    showRefresh: true,
+                    smartDisplay: false,
+                    pageSize: '5',
+                    queryParams: function (params) {
+                        return {
+                            limit: params.limit,
+                            offset: params.offset,
+                            Cargoid: $("#idCargo").val(),
+                            sort: params.sort,
+                            order: params.order,
+                        };
+                    },
+                    responseHandler: function (resp) {
+                        var data = {};
+                        $.map(resp, function (value, key) {
+                            data[value.Key] = value.Value;
+                        });
+                        return data;
+                    },
+                    formatNoMatches: function () {
+                        return '<span class="noMatches">No Data Found</span>';
+                    },
+
+                });
+
+            /* $("#mySearch").insertBefore($("[name=refresh]"));*/
+
+        });
+       
+        window.operateEventBlAWbUploaded = {
+            'click .download': function (e, value, row) {
+                
+                location.href = "/EMCS/BlAWBDocument/" + row.Id;
+            },
+            'click .uploadDocument': function (e, value, row, index) {
+                getbyid(row);
+            },
+            'click .showDocument': function (e, value, row) {
+                document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/BLAWB/" + row.FileName;
+            }
+        };
         $("#btnApproveBlAwb").on("click", function () {
             Swal.fire({
                 title: 'Approve Confirmation',
-<<<<<<< HEAD
-<<<<<<< HEAD
                 text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
-=======
-                text: 'Do you want to continue ?',
->>>>>>> 639d8d0 (Intial commit)
-=======
-                text: 'By approving this document, you are responsible for the authenticity of the documents and data entered. Are you sure you want to process this document?',
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 type: 'question',
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
@@ -212,7 +412,7 @@
                     }).then((result) => {
                         var Notes = result.value;
                         var Status = "Approve";
-                        var Id = $('#CargoID').val();
+                        var Id = $('#idCargo').val();
                         var data = { Notes: Notes, Status: Status, Id: Id };
                         ApproveBlAwb(data);
                     });

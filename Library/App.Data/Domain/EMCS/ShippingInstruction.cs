@@ -12,6 +12,7 @@
         public string Description { get; set; }
         public string DocumentRequired { get; set; }
         public string SpecialInstruction { get; set; }
+        public string PicBlAwb { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
         public DateTime? UpdateDate { get; set; }

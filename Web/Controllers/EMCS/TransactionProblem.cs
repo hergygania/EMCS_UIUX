@@ -40,6 +40,7 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
+                
                 var dataProblem = new Data.Domain.EMCS.ProblemHistory();
                 dataProblem.ReqType = form.ReqType;
                 dataProblem.IdRequest = form.IdRequest;

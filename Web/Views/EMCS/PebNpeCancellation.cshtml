@@ -1,10 +1,9 @@
-﻿﻿@model  App.Web.Models.EMCS.PebNpeModel
+﻿@model  App.Web.Models.EMCS.PebNpeModel
 @{
     ViewBag.Title = "Approve PEB NPE";
     ViewBag.TypeReq = "NpePeb";
     ViewBag.IdReq = Model.NpePeb.IdCl;
     ViewBag.IdStep = Model.Request.IdStep;
-    Layout = "~/Views/EMCS/_Layout.cshtml";
 }
 
 @Styles.Render("~/Content/EMCS/Custom.css")
@@ -403,7 +402,6 @@
             var data = $("#myModalProblemContent form").serializeArray();
             data.push({ name: "Status", value: statusName });
             console.log(data);
-            debugger;
             $.ajax({
                 url: myApp.fullPath + "EMCS/SaveProblemHistory",
                 type: "Post",

@@ -97,6 +97,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -145,9 +146,11 @@
     <Compile Include="DTS\MasterSubDistrict.cs" />
     <Compile Include="EMCS\Dashboard.cs" />
     <Compile Include="EMCS\MasterCIPLItem.cs" />
+    <Compile Include="EMCS\MasterSubcon.cs" />
     <Compile Include="EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="EMCS\MasterVendorService.cs" />
     <Compile Include="EMCS\SvcExcelFormatter.cs" />
     <Compile Include="EMCS\MasterAreaUserCKB.cs" />
     <Compile Include="EMCS\MasterParameter.cs" />
@@ -165,14 +168,8 @@
     <Compile Include="EMCS\SvcBlAwb.cs" />
     <Compile Include="EMCS\SvcCargoItem.cs" />
     <Compile Include="EMCS\SvcDelegation.cs" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
+    <Compile Include="EMCS\SvcRPebReport.cs" />
     <Compile Include="EMCS\SvcShippingInstruction.cs" />
     <Compile Include="EMCS\SvcContainer.cs" />
     <Compile Include="EMCS\SvcGeneral.cs" />
@@ -217,14 +214,7 @@
     <Compile Include="EMCS\SvcRPTTUBranch.cs" />
     <Compile Include="EMCS\SvcRSailingEstimation.cs" />
     <Compile Include="EMCS\SvcRTaxAudit.cs" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="EMCS\SVCShippingSummary.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <Compile Include="EMCS\SVCShippingSummary.cs" />
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
     <Compile Include="EMCS\SvcTotalCipl.cs" />
     <Compile Include="EMCS\SvcUserLog.cs" />
     <Compile Include="EMCS\SvcWizard.cs" />
@@ -235,14 +225,7 @@
     <Compile Include="FreightCost\MasterModaOfConditionTruckingRateImport.cs" />
     <Compile Include="FreightCost\MasterRateImport.cs" />
     <Compile Include="FreightCost\MasterSurchargeImport.cs" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="Helper\NetworkShare.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <Compile Include="Helper\NetworkShare.cs" />
->>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="ImexVetting\ManualVetting.cs" />
     <Compile Include="ImexVetting\ReadDataManualVetting.cs" />
     <Compile Include="Imex\ChangeLogBLL.cs" />
@@ -276,14 +259,7 @@
     <Compile Include="POST\Dashboard.cs" />
     <Compile Include="POST\Ebupot.cs" />
     <Compile Include="POST\IntegrasiEproc.cs" />
-<<<<<<< HEAD
-<<<<<<< HEAD
     <Compile Include="POST\Invoice.cs" />
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-    <Compile Include="POST\Invoice.cs" />
->>>>>>> 93c2efe ([U] Update from client's TFS)
     <Compile Include="POST\MasterMappingUser.cs" />
     <Compile Include="POST\Report.cs" />
     <Compile Include="POST\QuickSearch.cs" />

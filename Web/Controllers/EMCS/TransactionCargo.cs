@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,6 +10,8 @@ using App.Data.Domain.EMCS;
 using App.Web.Models;
 using App.Data.Domain;
 using System.ComponentModel;
+using App.Domain;
+using System.Dynamic;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -23,6 +25,17 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            string userRoles = User.Identity.GetUserRoles();
+            //if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Imex"))
+                ViewBag.IsImexUser = true;
+            else
+                ViewBag.IsImexUser = false;
+            if (User.Identity.Name == "eko.suhartarto")
+                ViewBag.IsCKB = true;
+            else
+                ViewBag.IsCKB = false;
+
             PaginatorBoot.Remove("SessionTRN");
             return View();
         }
@@ -81,26 +94,28 @@ namespace App.Web.Controllers.EMCS
             ViewBag.IsApprover = false;
             ViewBag.CanRequestForChange = false;
             if (Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId))
-			ViewBag.IsOwned = true;
+                ViewBag.IsOwned = true;
             else
-            ViewBag.IsOwned = false;
+                ViewBag.IsOwned = false;
 
             if (Request.UrlReferrer != null)
             {
                 if (Request.UrlReferrer.ToString().Contains("EMCS/CargoList"))
                     ViewBag.IsApprover = false;
-                else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex")))
+                //else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex")))
+                else if (!Service.EMCS.SvcCargo.CargoHisOwned(cargoId, userId) && (userRoles.Contains("EMCSImex") || userRoles.Contains("Imex")))
                     ViewBag.IsApprover = true;
             }
 
-            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            //if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
                 ViewBag.IsImexUser = false;
 
             if (Service.EMCS.SvcCipl.CheckRequestExists(Convert.ToInt32(cargoId), "CL") > 0)
                 ViewBag.CanRequestForChange = false;
-            else if(rfc)
+            else if (rfc)
                 ViewBag.CanRequestForChange = true;
             ViewBag.crudMode = "I";
             var detail = new CargoFormModel();
@@ -124,6 +139,8 @@ namespace App.Web.Controllers.EMCS
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(filter.Cargoid);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(filter.Cargoid);
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(filter.Cargoid);
+            var total = Service.EMCS.SvcCargoItem.GetTotalPackage(filter.Cargoid, detail.Data.TotalPackageBy);
+            detail.TemplateHeader.TotalCaseNumber = Convert.ToString(total);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(filter.Cargoid);
             ViewBag.IdCipl = filter.IdCipl;
             HttpContext.Session["Cargoid"] = filter.Cargoid;
@@ -149,6 +166,8 @@ namespace App.Web.Controllers.EMCS
                 detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
                 detail.DataRequest = Service.EMCS.SvcRequestCl.GetRequestCl(id);
                 detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
+                var total = Service.EMCS.SvcCargoItem.GetTotalPackage(id, detail.Data.TotalPackageBy);
+                detail.TemplateHeader.TotalCaseNumber = Convert.ToString(total);
                 detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
                 //ViewBag.IdCipl = filter.IdCipl;
 
@@ -165,6 +184,7 @@ namespace App.Web.Controllers.EMCS
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "CargoList")]
         public JsonResult GetCargoList(GridListFilterModel filter)
         {
+            var userId = SiteConfiguration.UserName;
             var dataFilter = new Data.Domain.EMCS.GridListFilter();
             dataFilter.Limit = filter.Limit;
             dataFilter.Order = filter.Order;
@@ -173,7 +193,8 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Offset = filter.Offset;
 
             var data = Service.EMCS.SvcCargo.CargoList(dataFilter);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var Role = Service.DTS.DeliveryRequisition.GetRoleName(userId);
+            return Json(new { data, Role }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetConsigneeList(Domain.MasterSearchForm crit)
@@ -259,7 +280,6 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-
                 var Id = Service.EMCS.SvcCargo.CrudSp(item, "I");
                 if (item.Id == 0)
                     item.Id = Id;
@@ -314,7 +334,7 @@ namespace App.Web.Controllers.EMCS
 
             Service.EMCS.SvcCipl.InsertRFCItem(listRfcItems);
 
-            return Json("");
+            return Json("Success");
         }
         [HttpPost]
         public JsonResult ApproveChangeHistoryCl(string idTerm, string formId, string formtype)
@@ -322,7 +342,8 @@ namespace App.Web.Controllers.EMCS
             try
             {
                 var data = Service.EMCS.SvcCipl.GetRequestForChangeDataList(idTerm);
-                if (formtype == "Cargo") {
+                if (formtype == "Cargo")
+                {
 
                     var cargo = Service.EMCS.SvcCargo.GetCargoFormDataById(Convert.ToInt32(formId));
 
@@ -368,7 +389,7 @@ namespace App.Web.Controllers.EMCS
                                         property.SetValue(cargo, Convert.ToDecimal(historyProp.AfterValue));
                                         break;
                                     case TypeCode.Object:
-                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                        property.SetValue(cargo, Convert.ToDateTime(historyProp.AfterValue));
                                         break;
                                     default:
                                         property.SetValue(cargo, historyProp.AfterValue);
@@ -378,10 +399,39 @@ namespace App.Web.Controllers.EMCS
                             }
                         }
                     }
+                    var ItemListForChange = Service.EMCS.SvcCargo.GetCargoItemHistory(Convert.ToInt64(formId));
+                    foreach (var item in ItemListForChange)
+                    {
+                        var obj = new CargoItem();
+                        obj.Id = item.IdCargoItem;
+                        obj.IdCargo = item.IdCargo;
+                        obj.IdCipl = item.IdCipl;
+                        obj.IdCiplItem = item.IdCiplItem;
+                        obj.ContainerNumber = item.ContainerNumber;
+                        obj.ContainerSealNumber = item.ContainerSealNumber;
+                        obj.ContainerType = item.ContainerTypeId;
+                        obj.Length = item.Length;
+                        obj.Width = item.Width;
+                        obj.Net = item.Net;
+                        obj.Height = item.Height;
+                        obj.Gross = item.Gross;
+                        obj.IsDelete = item.IsDelete;
+                        if (obj.Id == 0)
+                        {
+                            Service.EMCS.SvcCargoItem.Insert(obj, obj.IdCiplItem, "", false);
+                        }
+                        else
+                        {
+                            Service.EMCS.SvcCargoItem.Update(obj, "");
+                        }
+
+                    }
 
                     Service.EMCS.SvcCargo.UpdateCargoByApprover(cargo, "I");
+                    Service.EMCS.SvcCargoItem.RemoveCargoItemChange(Convert.ToInt64(formId));
                 }
-                else if (formtype == "NpePeb") {
+                else if (formtype == "NpePeb")
+                {
 
                     var model = new PebNpeModel();
                     model.NpePeb = Service.EMCS.SvcNpePeb.GetById(Convert.ToInt32(formId));
@@ -426,7 +476,7 @@ namespace App.Web.Controllers.EMCS
                                         propertyNpePeb.SetValue(model.NpePeb, Convert.ToDecimal(historyProp.AfterValue));
                                         break;
                                     case TypeCode.Object:
-                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                                        propertyNpePeb.SetValue(model.NpePeb, Convert.ToDateTime(historyProp.AfterValue));
                                         break;
                                     default:
                                         propertyNpePeb.SetValue(model.NpePeb, historyProp.AfterValue);
@@ -435,64 +485,203 @@ namespace App.Web.Controllers.EMCS
                             }
                         }
                     }
-                   Service.EMCS.SvcNpePeb.UpdateNpePeb(model.NpePeb);
+                    Service.EMCS.SvcNpePeb.UpdateNpePeb(model.NpePeb);
                 }
                 else if (formtype == "BlAwb")
                 {
-                    var model = new BlAwbModel();
-                    model.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(Convert.ToInt32(formId));
+                    //var model = new BlAwbModel();
+                    //model.BlAwb = Service.EMCS.SvcBlAwb.GetByIdcl(Convert.ToInt32(formId));
 
-                    string[] _ignnoreParametersBlAwb = { "Id", "IdCl", "CreateDate" };
+                    //string[] _ignnoreParametersBlAwb = { "Id", "IdCl", "CreateDate" };
 
-                    var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.BlAwb));
-                    foreach (PropertyDescriptor propertyNpePeb in properties)
+                    //var properties = TypeDescriptor.GetProperties(typeof(Data.Domain.EMCS.BlAwb));
+                    //foreach (PropertyDescriptor propertyNpePeb in properties)
+                    //{
+                    //    if (!_ignnoreParametersBlAwb.Contains(propertyNpePeb.Name))
+                    //    {
+                    //        var historyProp = data.Where(x => x.FieldName == propertyNpePeb.Name).FirstOrDefault();
+                    //        if (historyProp != null)
+                    //        {
+                    //            System.TypeCode typeCode = System.Type.GetTypeCode(propertyNpePeb.PropertyType);
+                    //            switch (typeCode)
+                    //            {
+                    //                case TypeCode.Boolean:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToBoolean(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.String:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToString(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Char:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToChar(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Double:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToDouble(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Single:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToSingle(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Int32:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt32(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Int16:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt16(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.DateTime:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToDateTime(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Decimal:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, Convert.ToDecimal(historyProp.AfterValue));
+                    //                    break;
+                    //                case TypeCode.Object:
+                    //                    //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
+                    //                    break;
+                    //                default:
+                    //                    propertyNpePeb.SetValue(model.BlAwb, historyProp.AfterValue);
+                    //                    break;
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    var model = Service.EMCS.SvcBlAwb.BlAwbRFCChangeList(Convert.ToInt64(formId));
+                    foreach (var item in model)
                     {
-                        if (!_ignnoreParametersBlAwb.Contains(propertyNpePeb.Name))
+                        var obj = new BlAwb();
+                        obj.Id = item.IdBlAwb;
+                        obj.Number = item.Number;
+                        obj.MasterBlDate = item.MasterBlDate;
+                        obj.HouseBlDate = item.HouseBlDate;
+                        obj.HouseBlNumber = item.HouseBlNumber;
+                        obj.IdCl = item.IdCl;
+                        obj.FileName = item.FileName;
+                        obj.Publisher = item.Publisher;
+                        obj.UpdateBy = SiteConfiguration.UserName;
+                        obj.UpdateDate = DateTime.Now;
+                        obj.Description = item.Description;
+                        if (item.Status == "Created")
                         {
-                            var historyProp = data.Where(x => x.FieldName == propertyNpePeb.Name).FirstOrDefault();
-                            if (historyProp != null)
-                            {
-                                System.TypeCode typeCode = System.Type.GetTypeCode(propertyNpePeb.PropertyType);
-                                switch (typeCode)
-                                {
-                                    case TypeCode.Boolean:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToBoolean(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.String:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToString(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Char:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToChar(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Double:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDouble(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Single:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToSingle(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Int32:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt32(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Int16:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToInt16(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.DateTime:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDateTime(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Decimal:
-                                        propertyNpePeb.SetValue(model.BlAwb, Convert.ToDecimal(historyProp.AfterValue));
-                                        break;
-                                    case TypeCode.Object:
-                                        //property.SetValue(cipl, Convert.toobj(historyProp.AfterValue));
-                                        break;
-                                    default:
-                                        propertyNpePeb.SetValue(model.BlAwb, historyProp.AfterValue);
-                                        break;
-                                }
-                            }
+                            Service.EMCS.SvcBlAwb.InsertBlAwb(obj, "Draft");
+                        }
+                        else if(item.Status == "Updated")
+                        {
+                            Service.EMCS.SvcBlAwb.UpdateBlAwb(obj);
+                        }
+                        else
+                        {
+                            Service.EMCS.SvcBlAwb.Remove(obj.Id);
                         }
                     }
-                    Service.EMCS.SvcBlAwb.UpdateBlAwb(model.BlAwb);
+                    Service.EMCS.SvcBlAwb.RemoveRFC(Convert.ToInt64(formId));
+                    
+                }
+                else if (formtype == "ShippingInstruction")
+                {
+                    var newdata = new ShippingInstructions();
+                    foreach (var obj in data)
+                    {
+                        newdata.IdCl = formId;
+                        if (obj.FieldName == "SpecialInstruction")
+                        {
+                            newdata.SpecialInstruction = obj.AfterValue;
+                        }
+                        if (obj.FieldName == "DocumentRequired")
+                        {
+                            newdata.DocumentRequired = obj.AfterValue;
+                        }
+                    }
+
+                    Service.EMCS.SvcRequestSi.UpdateRFCChange(newdata);
+
+                }
+                else if (formtype == "GoodsReceive")
+                {
+                    var newdata = new SpGoodReceive();
+                    foreach (var obj in data)
+                    {
+                        newdata.Id = Convert.ToInt64(formId);
+                        if (obj.FieldName == "Vendor")
+                        {
+                            newdata.Vendor = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "VendorAddress")
+                        {
+                            newdata.VendorAddress = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "VehicleType")
+                        {
+                            newdata.VehicleType = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "VehicleMerk")
+                        {
+                            newdata.VehicleMerk = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "PickupPoint")
+                        {
+                            newdata.PickupPoint = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "PickupPic")
+                        {
+                            newdata.PickupPic = obj.AfterValue;
+                        }
+                        else if (obj.FieldName == "Notes")
+                        {
+                            newdata.Notes = obj.AfterValue;
+                        }
+
+
+                    }
+                    Service.EMCS.SvcGoodsReceiveItem.UpdateRFCChangeForRg(newdata);
+                    var Obj = Service.EMCS.SvcGoodsReceiveItem.GetDataByIdGrForRFC(Convert.ToInt64(formId));
+                    foreach (var item in Obj)
+                    {
+                        var obj = new ShippingFleet();
+                        obj.Id = item.IdShippingFleet;
+                        obj.IdGr = item.IdGr;
+                        obj.DoNo = item.DoNo;
+                        obj.PicName = item.PicName;
+                        obj.PhoneNumber = item.PhoneNumber;
+                        obj.KtpNumber = item.KtpNumber;
+                        obj.SimNumber = item.SimNumber;
+                        obj.NopolNumber = item.NopolNumber;
+                        obj.StnkNumber = item.StnkNumber;
+                        obj.Apar = item.Apar;
+                        obj.Apd = item.Apd;
+                        obj.Bast = item.Bast;
+                        obj.DaNo = item.DaNo;
+                        obj.EstimationTimePickup = item.EstimationTimePickup;
+                        obj.FileName = item.FileName;
+                        obj.KirExpire = item.KirExpire;
+                        obj.KirNumber = item.KirNumber;
+                        obj.SimExpiryDate = item.SimExpiryDate;
+                        if (item.Status == "Deleted")
+                        {
+                            App.Service.EMCS.SvcGoodsReceiveItem.DeleteArmada(obj.Id);
+
+                        }
+                        else
+                        {
+                            var Id = Service.EMCS.SvcGoodsReceiveItem.SaveArmada(obj);
+                            if (obj.FileName != null)
+                            {
+                                Service.EMCS.SvcGoodsReceive.UpdateFileArmadaDocument(Id, obj.FileName);
+
+                            }
+                            List<string> DoNoList = new List<string>(obj.DoNo.Split(','));
+                            if (DoNoList.Count > 0)
+                            {
+                                foreach (var item1 in DoNoList)
+                                {
+                                    obj.DoNo = item1;
+                                    Service.EMCS.SvcGoodsReceiveItem.SaveArmadaRefrence(obj);
+
+                                }
+
+                            }
+
+                        }
+                        Service.EMCS.SvcGoodsReceiveItem.DeleteArmadaChange(item.Id);
+                    }
+
+
                 }
                 Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
 
@@ -513,9 +702,9 @@ namespace App.Web.Controllers.EMCS
                 var userId = User.Identity.GetUserId();
                 //if (Service.EMCS.SvcCargo.CargoHisOwned(item.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
                 //{
-                    long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
-                    var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
-                    return JsonCRUDMessage("I", new { cargoData });
+                long id = Service.EMCS.SvcCargo.CrudSp(item, "I");
+                var cargoData = Service.EMCS.SvcCargo.GetCargoById(id);
+                return JsonCRUDMessage("I", new { cargoData });
                 //}
                 //else
                 //{
@@ -563,7 +752,11 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCargo.GetCargoListItem(filter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetCargoItemHistory(Data.Domain.EMCS.GridListFilter filter)
+        {
+            var data = Service.EMCS.SvcCargo.GetCargoItemHistory(filter.Cargoid);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetCargoListItemApproval(Data.Domain.EMCS.GridListFilter filter)
         {
             var data = Service.EMCS.SvcCargo.GetCargoListItemApproval(filter);
@@ -761,7 +954,7 @@ namespace App.Web.Controllers.EMCS
                 {
                     string gettype = "";
                     List<CargoItem> data = new List<CargoItem>();
-                    
+
                     if (cargoItem.ContainerNumber == null)
                     {
                         cargoItem.ContainerNumber = "";
@@ -771,21 +964,12 @@ namespace App.Web.Controllers.EMCS
                     {
                         data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
                     }
-                    
-                    //if (data.Count == 0)
-                    //{
-                    //    //List<CargoItem> listcargo = new List<CargoItem>();
-                    //    //for (int i = 0; i == listcargo.Count; i++)
-                    //    //{
-                    //        data[0].ContainerType = "";
-                    //    //}
-                    //}
-                        foreach (var i in data)
+                    foreach (var i in data)
                     {
                         gettype = i.ContainerType;
-                        
+
                     }
-                
+
                     ContainerFormModel a = new ContainerFormModel();
                     App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
                     if (data.Count > 0)
@@ -796,12 +980,6 @@ namespace App.Web.Controllers.EMCS
                             data[0].ContainerType = m.Description;
                         }
                     }
-                    //for(int i=0;i == data.Count; i++)
-                    //{   
-                        
-                    //    data = null;
-                       
-                    //}
 
                     return Json(data);
                 }
@@ -844,38 +1022,7 @@ namespace App.Web.Controllers.EMCS
                         data = Service.EMCS.SvcCargo.SearchContainNumber(cargoItem);
                     }
 
-                    //if (data.Count == 0)
-                    //{
-                    //    //List<CargoItem> listcargo = new List<CargoItem>();
-                    //    //for (int i = 0; i == listcargo.Count; i++)
-                    //    //{
-                    //        data[0].ContainerType = "";
-                    //    //}
-                    //}
-                    //foreach (var i in data)
-                    //{
-                    //    gettype = i.ContainerType;
-                        
 
-                    //}
-                    //data[0].ContainerType = gettype;
-
-                    //ContainerFormModel a = new ContainerFormModel();
-                    //App.Data.Domain.EMCS.MasterParameter m = new App.Data.Domain.EMCS.MasterParameter();
-                    //if (data.Count > 0)
-                    //{
-                    //    m = Service.EMCS.SvcCargo.GetCargoType(gettype);
-                    //    if (m.Description != null)
-                    //    {
-                    //        data[0].ContainerType = m.Description;
-                    //    }
-                    //}
-                    //for(int i=0;i == data.Count; i++)
-                    //{   
-
-                    //    data = null;
-
-                    //}
 
                     return Json(data);
                 }

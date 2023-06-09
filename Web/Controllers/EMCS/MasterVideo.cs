@@ -1,27 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using System.Web.Mvc;
 using App.Domain;
 using App.Web.App_Start;
-=======
-using System.Web;
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
-using System.Web.Mvc;
-using App.Domain;
-using App.Web.App_Start;
-<<<<<<< HEAD
-using System.Globalization;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Configuration;
-using System.Net;
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> d3e2e7a (Tasks from P1-CIPL , P1-CL , P!-SS , P!-SI , P1-BL/AWB & P1-PEB_NPE)
 using App.Data.Domain.EMCS;
 using App.Web.Models.EMCS;
 using System.IO;

@@ -40,20 +40,11 @@ function statusFormatter(str, index, row) {
             text = 'BOOKED';
             icon = 'fa fa-hourglass-start';
             break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         case 'request rerouted':
             color = 'warning';
             text = 'REQUEST REROUTED';
             icon = 'fa fa-hourglass-start';
             break;
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
         case 'rerouted':
             color = 'warning';
             text = 'REROUTED';
@@ -75,30 +66,14 @@ function tooltip() {
 function ActionFormatter(value, row, index) {
     var htm = [];
     htm.push('<button class="view btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></button> ');
-<<<<<<< HEAD
-<<<<<<< HEAD
     if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'request rerouted') {
-=======
-    if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'rerouted') {
->>>>>>> 639d8d0 (Intial commit)
-=======
-    if (row.Status === 'draft' || row.Status === 'revise' || row.Status === 'request rerouted') {
->>>>>>> 93c2efe ([U] Update from client's TFS)
         if (allowUpdate === "True") htm.push('<button class="edit btn btn-primary btn-xs" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit"></i></button> ');
         if (row.Status !== "complete") {
             if (allowDelete === "True") htm.push('<button class="remove btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash"></i></button> ');
         }
     }
     if (row.Status === "complete" && row.RefNoType === "STR") {
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Request Reroute"><i class="fa fa-route"></i></button> ');
-=======
-        if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Reroute"><i class="fa fa-route"></i></button> ');
->>>>>>> 639d8d0 (Intial commit)
-=======
-        if (allowUpdate === "True") htm.push('<button class="reroute btn btn-warning btn-xs" data-toggle="tooltip" data-placement="bottom" title="Request Reroute"><i class="fa fa-route"></i></button> ');
->>>>>>> 93c2efe ([U] Update from client's TFS)
     }
     return htm.join('');
 }

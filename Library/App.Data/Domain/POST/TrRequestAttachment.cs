@@ -28,22 +28,9 @@ namespace App.Data.Domain.POST
         public int? FlowProcessStatusID { get; set; }
         public bool? IsApproveTax { get; set; }
         public string rejectnote { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
         public bool? IsSendKOFAX { get; set; }
         public string FileNameKOFAX { get; set; }
     }
 
-=======
-        //public string FileNameKOFAX { get; set; }
-    }
-    
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public bool? IsSendKOFAX { get; set; }
-        public string FileNameKOFAX { get; set; }
-    }
-
->>>>>>> 93c2efe ([U] Update from client's TFS)
 
 }

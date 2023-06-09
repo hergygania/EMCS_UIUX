@@ -229,10 +229,6 @@ function newDateFormatter(dt) {
         return '-';
     }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function dateFormatterV2(dt) {
     if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
     jsonDate = dt;
@@ -259,12 +255,6 @@ function dateFormatterV2(dt) {
     formattedDate = formattedDate;// + " " + formattedTime;
     return formattedDate == undefined ? '-' : formattedDate;
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
 function dateFormatter(dt) {
     if (dt == undefined || dt == 'undefined' || dt == null || dt == 'null' || dt == '-') return '';
     jsonDate = dt;

@@ -1,32 +1,15 @@
 ﻿using System;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Web.Mvc;
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-using System.Collections.Generic;
-using System.Web.Mvc;
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
 
 namespace App.Web.Models.EMCS
 {
     public class CargoItemModel
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public CargoItemModel()
         {
             listContainerType = new List<SelectListItem>();
         }
-<<<<<<< HEAD
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public long Id { get; set; }
 
         public long IdCargo { get; set; }
@@ -53,16 +36,8 @@ namespace App.Web.Models.EMCS
 
         public Nullable<decimal> Gross { get; set; }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         public List<SelectListItem> listContainerType { get; set; }
 
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public List<SelectListItem> listContainerType { get; set; }
-
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
         public string CreateBy { get; set; }
 
         public DateTime CreateDate { get; set; }

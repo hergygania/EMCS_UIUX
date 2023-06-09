@@ -143,14 +143,7 @@ namespace App.Service.Master
         {
             using (var db = new Data.EfDbContext())
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 //var item = await db.UserAccesses.Where(c => c.UserID == userId).SingleOrDefaultAsync();
-=======
->>>>>>> 639d8d0 (Intial commit)
-=======
-                //var item = await db.UserAccesses.Where(c => c.UserID == userId).SingleOrDefaultAsync();
->>>>>>> b773f28 (intial commit for changes from himanshu and vijendra)
                 var item = await db.UserAccesses.Where(c => c.UserID == userId).SingleOrDefaultAsync();
                 if (item != null)
                 {
@@ -297,7 +290,7 @@ namespace App.Service.Master
         {
             using (var db = new Data.EfDbContext())
             {
-                var tb = db.UserAccess_Role.Where(c => c.UserID == userId).Select(s => new { s.RoleID, s.RoleMode }).ToList();
+                var tb = db.UserAccess_Role.Where(c => c.UserID == userId && c.RoleID != 1).Select(s => new { s.RoleID, s.RoleMode }).ToList();
                 var list = from c in Master.Roles.GetList()
                            from u in tb.Where(w => w.RoleID == c.RoleID)
                            select new Data.Domain.UserAccess

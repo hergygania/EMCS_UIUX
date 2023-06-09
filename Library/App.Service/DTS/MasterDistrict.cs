@@ -24,15 +24,7 @@ namespace App.Service.DTS
         /// Get List from Shipment inbound data
         /// </summary>
         /// <returns></returns>
-<<<<<<< HEAD
-<<<<<<< HEAD
         public static List<Data.Domain.MasterDistrict> GetListFilter(string keySearch,string provinsiId)
-=======
-        public static List<Data.Domain.MasterDistrict> GetListFilter(string keySearch)
->>>>>>> 639d8d0 (Intial commit)
-=======
-        public static List<Data.Domain.MasterDistrict> GetListFilter(string keySearch,string provinsiId)
->>>>>>> 93c2efe ([U] Update from client's TFS)
         {
             string key = string.Format(cacheName);
 
@@ -44,34 +36,15 @@ namespace App.Service.DTS
                 {
                     keySearch = Regex.Replace(keySearch, @"[^0-9a-zA-Z]+", "");
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 if (provinsiId != null)
                 {
                     provinsiId = Regex.Replace(provinsiId, @"[^0-9a-zA-Z]+", "");
                 }
-<<<<<<< HEAD
                 parameterList.Add(new SqlParameter("@key", keySearch == null ? "" : keySearch));
                 parameterList.Add(new SqlParameter("@provinsiId", provinsiId == null ? "" : provinsiId));
                 SqlParameter[] parameters = parameterList.ToArray();
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.MasterDistrict>
                     (@"exec [dbo].[SP_GetDistrict] @key,@provinsiId", parameters).ToList();
-=======
-                
-=======
->>>>>>> 93c2efe ([U] Update from client's TFS)
-                parameterList.Add(new SqlParameter("@key", keySearch == null ? "" : keySearch));
-                parameterList.Add(new SqlParameter("@provinsiId", provinsiId == null ? "" : provinsiId));
-                SqlParameter[] parameters = parameterList.ToArray();
-                var data = db.DbContext.Database.SqlQuery<Data.Domain.MasterDistrict>
-<<<<<<< HEAD
-                    (@"exec [dbo].[SP_GetDistrict] @key", parameters).ToList();
->>>>>>> 639d8d0 (Intial commit)
-=======
-                    (@"exec [dbo].[SP_GetDistrict] @key,@provinsiId", parameters).ToList();
->>>>>>> 93c2efe ([U] Update from client's TFS)
                 return data;
             }
         }
