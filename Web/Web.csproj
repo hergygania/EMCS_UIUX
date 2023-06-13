@@ -590,6 +590,7 @@
     <Compile Include="Models\StoreViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\WHDocumentReprintView.cs" />
+    <Compile Include="MvcMenuEMCSHelpers.cs" />
     <Compile Include="MvcMenuHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
