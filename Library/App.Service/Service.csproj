@@ -151,6 +151,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="EMCS\MasterVendorService.cs" />
+    <Compile Include="EMCS\SpGetCiplAvailableForShippingFleet.cs" />
     <Compile Include="EMCS\SvcExcelFormatter.cs" />
     <Compile Include="EMCS\MasterAreaUserCKB.cs" />
     <Compile Include="EMCS\MasterParameter.cs" />
