@@ -1,228 +1,119 @@
-﻿var $tableFormDocuments1 = $('#tableBLAWBFormDocument');
+﻿$(function () {
 
-var columnDocument = [
-    {
-        field: '',
-        title: 'Action',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true,
-        formatter: function (data, row, index) {
-            return operateFormatter({ Edit: Boolean($AllowUpdate), Delete: Boolean($AllowDelete), Data: row });
+    $('.DownloadDocument, .preview-document, #DocumentShow').hide();
+    dropzone();
+
+    $(".date").on("change", function () {
+        console.log(this);
+        var id = $(this).attr("id");
+        $("#" + id).valid();
+    })
+
+    
+
+    GetDocumentBlAwb();
+
+})
+
+$('.preview-document').on('click', function () {
+    $('#DocumentShow').attr("src", "/Upload/EMCS/BLAWB/" + $(this).val()).show();
+})
+
+function GetDocumentBlAwb() {
+    $.ajax({
+        url: '/EMCS/GetDocumentBlAwb',
+        type: 'POST',
+        data: {
+            IdRequest: $('#CargoID').val(),
         },
-        events: operateEventsBlAWb
-    },
-    {
-        field: 'Id',
-        title: 'No',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true,
-        visible: false
-    },
-    {
-        field: 'Number',
-        title: 'Number',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true,
-        visible: false
-    },
-    {
-        field: 'MasterBlDate',
-        title: 'Master Bl Date',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true,
-        formatter: function (data, row, index) {
-            return moment(data).format("DD MMM YYYY");
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            $.each(data, function (index, element) {
+                console.log(element.Tag);
+                var id_doc = $('#download-document-' + element.Tag).show();
+                var url_doc = $('#url-document-' + element.Tag).removeClass('do-not-ignore');
+                var label_doc = $('#label-document-' + element.Tag).removeClass('error');
+                var preview_doc = $('#preview-document-' + element.Tag).show();
+                download(element.FileName, id_doc, url_doc, preview_doc);
+            });
+        },
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Update Data',
+            })
         }
-    },
-    {
-        field: 'HouseBlNumber',
-        title: 'House Bl Number',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true
-    },
-    {
-        field: 'HouseBlDate',
-        title: 'House Bl Date',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true,
-        formatter: function (data, row, index) {
-            return moment(data).format("DD MMM YYYY");
-        }
-    },
-    {
-        field: 'Publisher',
-        title: 'Publish',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true
-    },
-    //{
-    //    field: 'Filename',
-    //    title: 'Attachment',
-    //    align: 'center',
-    //    valign: 'center',
-    //    halign: "center",
-    //    class: 'text-nowrap',
-    //    sortable: true,
-    //    events: operateEventRight,
-    //    formatter: function (data, row) {
-    //        if (row.Filename !== "") {
-    //            var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
-    //            var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
-    //            return [btnDownload, btnPreview].join(' ');
-    //        } else {
-    //            return "-";
-    //        }
-    //    },
-    //    class: 'text-nowrap'
-    //}
-];
+    })
+}
+function download(filename, id, url, preview) {
+    id.attr("href", "/Upload/EMCS/BLAWB/" + filename);
+    url.val(filename);
+    preview.val(filename);
+}
+function dropzone() {
+    Dropzone.autoDiscover = false;
+    var previewNode = document.querySelector(".template");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
 
-function operateFormatter(options) {
-    var btn = [];
-    btn.push('<div class="btn-group">');
-    btn.push('<button type="button" class="btn btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
-    btn.push('<button type="button" class="btn btn-primary upload" title="Upload"><i class="fa fa-upload"></i></button>');
-    btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
-    btn.push('</div>');
-    return btn.join('');
+    $('.dz-clickable').each(function () {
+        var options = $(this).attr('id').split('-');
+        var Name = options[1];
+        $(this).dropzone({
+            url: '/emcs/UploadDocumentBlAwb',
+            //paramName: Name,
+            uploadMultiple: false,
+            parallelUploads: 1,
+            clickable: true,
+            maxFiles: 1,
+            acceptedFiles: ".jpeg,.jpg,.pdf",
+            previewTemplate: previewTemplate,
+            init: function () {
+                this.on('sending', function (file, xhr, formData) {
+                    formData.append("IdCargo", $('#CargoID').val());
+                    formData.append("BlAwbNo", $('#Number').val());
+                    formData.append("TypeDoc", Name);
+                });
+                this.on("addedfile", function (file) {
+                    if (this.files.length > 1) {
+                        this.files = this.files.slice(1, 2);
+                    }
+                });
+            },
+
+            success: function (file, response) {
+                $('.dz-image-preview').remove();
+                if (file.status === "success") {
+                    Swal.fire(
+                        'Processing Document!',
+                        'Document Uploaded Successfully!',
+                        'success'
+                    );
+                    GetDocumentBlAwb();
+                } else {
+                    Swal.fire(
+                        'Processing Document!',
+                        'Error Upload!',
+                        'error'
+                    )
+                }
+            },
+            complete: function (file, response) {
+                console.log(file, response);
+                //location.reload();
+            },
+            // Rest of the configuration equal to all dropzones
+        });
+
+    });
 }
 
-operateFormatter.DEFAULTS = {
-    Add: false,
-    Edit: false,
-    Delete: false,
-    Info: false,
-    View: false,
-    History: false,
-    Preview: false,
-    Upload: false
-};
-
-window.operateEventsBlAWb = {
-    'click .edit': function (e, value, row, index) {
-        getbyid(row);
-    },
-    'click .remove': function (e, value, row, index) {
-        swal({
-            title: "Are you sure want to delete this data?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#F56954",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: true
-        }, function (isConfirm) {
-            if (isConfirm) {
-                sweetAlert.close();
-                return deleteThis(row.Id);
-            }
-        });
-    },
-};
 
 
-$(function () {
-    $tableFormDocuments1.bootstrapTable({
-        cache: false,
-        url: "/Emcs/GetBlAwbListByCargo",
-        pagination: true,
-        search: false,
-        striped: false,
-        clickToSelect: false,
-        sidePagination: 'server',
-        showColumns: false,
-        queryParams: function (params) {
-            return {
-                limit: params.limit,
-                offset: params.offset,
-                Cargoid: $("#CargoID").val(),
-                sort: params.sort,
-                order: params.order
-            };
-        },
-        searchOnEnterKey: true,
-        showRefresh: true,
-        smartDisplay: false,
-        pageSize: '10',
-        formatNoMatches: function () {
-            return '<span class="noMatches">Data Not Found</span>';
-        },
-        responseHandler: function (resp) {
-            var data = {};
-            $.map(resp, function (value, key) {
-                data[value.Key] = value.Value;
-            });
-            return data;
-        },
-        columns: columnDocument
-    });
 
-});
-window.operateEventRight = {
-    'click .download': function (e, value, row) {
-        location.href = "/EMCS/DownloadBlAWBDocument/" + row.Filename;
-    },
-    'click .showDocument': function (e, value, row) {
-        document.getElementById('framePreview').src = myApp.fullPath + "/Upload/EMCS/BLAWB/" + row.Filename;
-    }
-};
 
-window.operateEvents = {
-    'click .edit': function (e, value, row) {
-        $(".editRecord").attr("href", `/EMCS/UpdateGrItem/?Id=${row.Id}&IdGr=${row.IdGr}`).trigger("click");
-    },
-    'click .upload': function (e, value, row) {
-        $(".uploadRecord").attr("href", `/EMCS/UploadGrItem/${row.Id}`).trigger("click");
-    },
-    'click .remove': function (e, value, row) {
-        Swal.fire({
-            title: "Confirmation",
-            text: "Are you sure want to remove this data?",
-            type: "question",
-            showCancelButton: true,
-            cancelButtonColor: "#d33",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Yes, Remove!",
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            showCloseButton: true
-        }).then((result) => {
-            if (result.value) {
-                sweetAlert.close();
-                return deleteThis(row.Id);
-            }
-            return false;
-        });
-    },
-    'click .editDocument': function (e, value, row, index) {
 
-        $('#Id').val(row.Id);
-        $('#inp-doc-date').val(row.DocumentDate);
-        $('#DocumentName').val(row.DocumentName);
-    },
-    'click .removeDocument': function (e, value, row, index) {
 
-        GrDocumentDeleteById(row.Id);
-        get_grdocumentlist();
-    },
-    'click .uploadDocument': function (e, value, row, index) {
-
-        $('#IdDocumentUpload').val(row.Id);
-        //$(".uploadRecord").attr('href', '/EMCS/CiplDocumentUpload/' + row.Id).trigger('click');
-    }
-};

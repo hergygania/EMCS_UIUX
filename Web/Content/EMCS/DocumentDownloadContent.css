@@ -55,33 +55,33 @@ table tr td, th {
     }
 
 .table-custom {
-    border: 1px solid darkgrey !important;
+    border: 0.5px solid darkgrey !important;
     width: 100%;
     border-collapse: collapse;
 }
 
 .table-data {
-    border: 1px solid darkgrey !important;
+    border: 0.5px solid darkgrey !important;
     width: 100%;
     border-collapse: collapse !important;
 }
 
 .border_top {
-    border-top: 1px solid darkgrey !important;
+    border-top: 0.5px solid darkgrey !important;
 }
 
 .border_bottom {
-    border-bottom: 1px solid darkgrey !important;
+    border-bottom: 0.5px solid darkgrey !important;
 }
 
 .border_left {
     padding-left: 10px !important;
-    border-left: 1px solid darkgrey !important;
+    border-left: 0.5px solid darkgrey !important;
 }
 
 .border_right {
     padding-right: 10px !important;
-    border-right: 1px solid darkgrey !important;
+    border-right: 0.5px solid darkgrey !important;
 }
 
 .text_left {

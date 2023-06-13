@@ -329,13 +329,6 @@ var columnList = [
         class: 'text-nowrap',
         sortable: true
     }, {
-        field: 'Qty',
-        title: 'Quantity',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true
-    }, {
         field: 'CreateBy',
         title: 'Create By',
         halign: 'center',
@@ -365,6 +358,7 @@ var columnList = [
 function bindForm(dialog) {
     $('form', dialog).submit(function () {
         console.log($(this).serialize());
+        debugger;
         $('#progress').show();
         $.ajax({
             url: this.action,

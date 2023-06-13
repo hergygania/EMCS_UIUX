@@ -10,11 +10,11 @@ function ActionFormatter(value, row) {
     if (row.Status === "Draft" || row.Status === "Revise" || row.Status === "Complete") {
         // ReSharper disable once UseOfImplicitGlobalInFunctionScope
         if (allowUpdate === "True")
-            htm.push('<button class="edit btn btn-primary btn-xs"><i class="fa fa-edit"></i></button> ');
+            htm.push('<button class="edit btn btn-info btn-link btn-xs"><i class="tim-icons icon-pencil"></i></button> ');
         if (row.Status !== "complete") {
             // ReSharper disable once UseOfImplicitGlobalInFunctionScope
             if (allowDelete === "True")
-                htm.push('<button class="remove btn btn-danger btn-xs"><i class="fa fa-remove"></i></button> ');
+                htm.push('<button class="remove btn btn-danger btn-link btn-xs"><i class="tim-icons icon-simple-remove"></i></button> ');
         }
     } else {
         htm.push("-");

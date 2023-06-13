@@ -70,9 +70,9 @@ $(function () {
         $('#inp-start-date').focus();
     });
     $('#inp-start-date').focus().datepicker({
-        format: "dd/mm/yyyy",
-        viewMode: "date",
-        minViewMode: "date",
+        format: "mm/yyyy",
+        viewMode: "months",
+        minViewMode: "months",
         //autoclose: true
     }).on('changeMonth', function (e) {
     //    $('#inp-end-date').datepicker('setDate', '');
@@ -84,9 +84,9 @@ $(function () {
         $('#inp-end-date').focus();
     });
     $('#inp-end-date').focus().datepicker({
-        format: "dd/mm/yyyy",
-        viewMode: "date",
-        minViewMode: "date",
+        format: "mm/yyyy",
+        viewMode: "months",
+        minViewMode: "months",
         //autoclose: true
     }).on('changeMonth', function (e) {
         //$('#inp-start-date').datepicker('setEndDate', moment(e.date).format('MM/YYYY'));
@@ -99,7 +99,7 @@ $(function () {
             rowspan: 3,
             valign: "middle",
             align: "center",
-            class: "text-nowrap"
+            width: '200px'
         }, {
             field: "RowNumber",
             title: "NO",
@@ -113,15 +113,13 @@ $(function () {
             sortable: true,
             align: "left",
             valign: "middle"
-            },
-            {
-                field: "ReferenceNo",
-                title: "Reference No",
-                rowspan: 3,
-                sortable: true,
-                align: "left",
-                valign: "middle"
-            },{
+        }, {
+            field: "CustomerFacilityArea",
+            title: "Customer Facility Area",
+            rowspan: 3,
+            align: "center",
+            valign: "middle"
+        }, {
             title: "Commercial Invoice & Packing List <br/> (CIPL)",
             colspan: 3,
             rowspan: 2,
@@ -1389,11 +1387,11 @@ function searchDataReport() {
     var keynum ='';
     if ($('#inp-start-date').val() !== undefined && $('#inp-start-date').val() !== null && $('#inp-start-date').val() !== '') {
         var date = $('#inp-start-date').val().split('/');
-        startDate = date[2] + '-' + date[1] + '-' + date[0];
+        startDate = date[1] + '-' + date[0] + '-' + '01';
     }
     if ($('#inp-end-date').val() !== undefined && $('#inp-end-date').val() !== null && $('#inp-end-date').val() !== '') {
         var date = $('#inp-end-date').val().split('/');
-        endDate = date[2] + '-' + date[1] + '-' + date[0];
+        endDate = date[1] + '-' + date[0] + '-' + '01';
     }
     if ($('#category').val() !== undefined && $('#category').val() !== null && $('#category').val() !== '') {
         paramName = $('#category').val();
@@ -1413,11 +1411,11 @@ function exportDataReport() {
     var keynum ='';
     if ($('#inp-start-date').val() !== undefined && $('#inp-start-date').val() !== null && $('#inp-start-date').val() !== '') {
         var date = $('#inp-start-date').val().split('/');
-        startDate = date[2] + '-' + date[1] + '-' + date[0];
+        startDate = date[1] + '-' + date[0] + '-' + '01';
     }
     if ($('#inp-end-date').val() !== undefined && $('#inp-end-date').val() !== null && $('#inp-end-date').val() !== '') {
         var date = $('#inp-end-date').val().split('/');
-        endDate = date[2] + '-' + date[1] + '-' + date[0];
+        endDate = date[1] + '-' + date[0] + '-' + '01';
     }
     if ($('#category').val() !== undefined && $('#category').val() !== null && $('#category').val() !== '') {
         paramName = $('#category').val();

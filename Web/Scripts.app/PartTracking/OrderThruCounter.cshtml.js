@@ -160,6 +160,7 @@ $(function () {
             type: "POST",
             dataType: 'json',
             data: function (params) {
+                debugger
                 var queryParameters = {
                     term: params.term,
                     cust_group: $('#cust_group_no').val()

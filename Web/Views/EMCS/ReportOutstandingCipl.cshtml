@@ -1,7 +1,9 @@
 ﻿
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Report Outstanding Cipl";
 }
+@Styles.Render("~/Content/EMCS/Custom.css")
 <style>
     .tableFixHead thead {
         position: sticky;
@@ -13,13 +15,13 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-body">
-                <div class="form-horizontal toolbar">
+                <div class="">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-4 pull-right">
+                            <div class="pull-right">
                                 <div class="form-group">
-                                    <label class="col-md-3">Start Period</label>
-                                    <div class="col-md-9">
+                                    <label class="col-md-12">Start Period</label>
+                                    <div class="col-md-12">
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -32,10 +34,10 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="col-md-4 pull-right">
+                            <div class="pull-right">
                                 <div class="form-group">
-                                    <label class="col-md-3" style="text-align: left;">End Period</label>
-                                    <div class="col-md-9">
+                                    <label class="col-md-12" style="text-align: left;">End Period</label>
+                                    <div class="col-md-12">
                                         <div class="row">
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -49,10 +51,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-4 pull-right">
+                            <div class="col-md-12 pull-right">
                                 <div class="form-group text-right">
-                                    <button class="btn btn-warning" onclick="searchDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-search"></i> Show Report</button>
-                                    <button class="btn btn-warningt" onclick="exportDataReport()" style="background:#fe9d01;color:black;"><i class="fa fa-file"></i> Export To Excel</button>
+                                    <button class="btn btn-warning btn-round" onclick="searchDataReport()"><i class="fa fa-search"></i> Show Report</button>
+                                    <button class="btn btn-success btn-round" onclick="exportDataReport()"><i class="fa fa-file"></i> Export To Excel</button>
                                 </div>
                             </div>
                         </div>

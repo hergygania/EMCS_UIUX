@@ -2,49 +2,14 @@
 
 window.operateEventRight = {
     'click .download': function (e, value, row) {
-        
         e.preventDefault();
         location.href = myApp.fullPath + "/EMCS/DownloadGrItem/" + row.Id;
     },
-    'click .showDocument': function (e, value, row) {
+    'click .ShowDocument': function (e, value, row) {
         e.preventDefault();
-        
-        /*const url = `/Upload/EMCS/GoodsReceive/`+value;*/
-        document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/"+row.Id+"/" + value;
+        const url = `/Upload/EMCS/GR/${row.IdGr}/${value}`;
         // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-        /*showPreviewDocument(url);*/
-    },
-    'click .downloadarmadadoc': function (e, value, row) {
-
-        location.href = "/EMCS/DownloadArmadaDocument/" + row.Id;
-    },
-    'click .showDocumentarmadadoc': function (e, value, row) {
-        $.ajax({
-            url: '/EMCS/GetListArmada?IdGr=0&Id=' + row.Id + '',
-            success: function (data) {
-                
-                document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/"+ data[0].FileName;
-
-            }
-        })
-    },
-    'click .downloadarmadaHistory': function (e, value, row) {
-
-        location.href = "/EMCS/DownloadArmadaDocumentHistory?FileName=" + row.FileName;
-    },
-    'click .showDocumentarmadaHistory': function (e, value, row) {
-        $.ajax({
-            url: '/EMCS/GetDocumentListOfArmada?Id=' + row.Id + '&IdShippingFleet=0',
-            success: function (data) {
-                
-                document.getElementById('framePreview').src = myApp.fullPath + "Upload/EMCS/GoodsReceive/" + data[0].FileName;
-
-            }
-        })
-    },
-    'click .ViewDocumentList': function (e, value, row) {
-        
-        tableDocumentList(row.IdShippingFleet);
+        showPreviewDocument(url);
     }
 };
 
@@ -130,7 +95,6 @@ operateFormatter.DEFAULTS = {
 };
 
 window.operateEvents = {
-
     'click .edit': function (e, value, row) {
         $(".editRecord").attr('href', '/EMCS/BannerEdit/' + row.ID).trigger('click');
     },
@@ -157,10 +121,6 @@ window.operateEvents = {
             }
             return false;
         });
-    },
-    'click .viewarmada': function (e, value, row) {
-        ViewItemTable(row.Id);
-
     }
 };
 

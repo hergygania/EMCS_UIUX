@@ -1,5 +1,6 @@
 ﻿@model  App.Web.Models.EMCS.CiplModel
 @{
+    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Commercial Invoice Packing List View";
 }
 
@@ -21,8 +22,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="toolbar">
-                                    <div class="fa-pull-left" id="mySearch" style="padding-right:2px">
-                                        <input name="searchText" class="form-control" type="text" placeholder="Search..." style="height: 32px;">
+                                    <div class="fa-pull-left pb-3" id="mySearch">
+                                        <input name="searchText" class="form-control" type="text" placeholder="Search...">
                                     </div>
                                 </div>
                                 <table class="table table-bordered">

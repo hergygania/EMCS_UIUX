@@ -2,14 +2,8 @@
 $searchInput = $("#txtSearchData").val();
 
 window.operateEvents = {
-    //'click .edit': function (e, value, row, index) {
-    //    location.href = "/emcs/EditGRForm/" + row.Id;
-    //},
     'click .edit': function (e, value, row, index) {
-        if (this.value == "rfc")
-            location.href = "/emcs/EditGRForm?id=" + row.Id + "&rfc=true";
-        else
-            location.href = "/emcs/EditGRForm?id=" + row.Id;
+        location.href = "/emcs/EditGRForm/" + row.Id;
     },
     'click .preview': function (e, value, row, index) {
         location.href = "/emcs/PreviewGR/" + row.Id;
@@ -34,7 +28,7 @@ window.operateEvents = {
 };
 
 function deleteThis(id) {
-
+    debugger;
     $.ajax({
         type: "POST",
         url: myApp.root + 'EMCS/RemoveGR',
@@ -43,12 +37,11 @@ function deleteThis(id) {
         data: { Id: id },
         dataType: "json",
         success: function (d) {
+            if (d.Msg !== undefined) {
+                sAlert('Success', d.Msg, 'success');
+            }
 
-            /*if (d.Msg !== undefined) {*/
-            swal('Success', "Data Updated SuccessFully", 'success')
-            /*}*/
             $("[name=refresh]").trigger('click');
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             sAlert('Error', jqXHR.status + " " + jqXHR.statusText, "error");
@@ -58,54 +51,28 @@ function deleteThis(id) {
 };
 
 function formatterGR(data, row, index) {
-    
     var btnEdit = "";
     var btnDelete = "";
     var btnPreview = "";
     if (row.Status === "Draft" || row.Status === "Revise") {
-        btnEdit = "<button class='btn edit btn-xs btn-primary' title='Edit'><i class='fa fa-edit'></i></button>";
-        btnDelete = "<button class='btn delete btn-xs btn-danger remove' title='Delete'><i class='fa fa-times'></i></button>";
+        btnEdit = "<button class='btn edit btn-xs btn-link btn-info'><i class='tim-icons icon-pencil'></i></button>";
+        btnDelete = "<button class='btn delete btn-xs btn-link btn-danger remove'><i class='tim-icons icon-simple-remove'></i></button>";
+    } else {
+        btnPreview = "<button class='btn preview btn-xs btn-link btn-success'><i class='tim-icons icon-zoom-split'></i></button>";
     }
-    else if (row.Status === "Approve" && row.PendingRFC == 0) {
-        if (row.RoleID == 26 || row.RoleID == 15) {
-            btnEdit = "";
-        }
-        else {
-            if (Boolean($("#IsImexUser").val()) == true) {
-                btnEdit = "<button class='btn edit btn-xs btn-primary' value='rfc' title='Edit RFC'><i class='fa fa-edit'></i></button>";
-            }
-        }
-        
-        btnPreview = "<button class='btn preview btn-xs btn-default' title='Preview'><i class='fa fa-search'></i></button>";
-    }
-    else {
-        btnPreview = "<button class='btn preview btn-xs btn-default' title='Preview'><i class='fa fa-search'></i></button>";
-    }
-    return ['<div>', btnEdit, btnDelete, btnPreview, '</div>'].join(' ');
-
-       //if (options.Data.Status === 'Draft' || options.Data.Status === "Revise" || options.Data.StatusViewByUser === "Approve Revise By Imex") // (options.Data.Status === "Revise" && options.Data.StatusViewByUser !== "Pickup Goods")
-    //{ btn.push('<button type="button" class="btn btn-xs btn-primary edit"  title="Edit"><i class="fa fa-edit"></i></button>'); }
-    //else if (options.Data.StatusViewByUser !== null) {
-    //        if (Boolean($("#IsCKB").val()) == true) {
-    //             btnEdit = '<button type="button" value="rfc" class="btn btn-xs btn-primary edit"  title="Edit"><i class="fa fa-edit"></i></button>';
-    //        }
-        
-
-    //}
-    
-    
+    return ["<div>", btnEdit, btnDelete, btnPreview, "</div>"].join(" ");
 }
 
 var columnList = [
     {
-        field: '',
-        title: 'No',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        formatter: runningFormatter,
-        sortable: true
-    }, {
+    //    field: '',
+    //    title: 'No',
+    //    halign: 'center',
+    //    align: 'center',
+    //    class: 'text-nowrap',
+    //    formatter: runningFormatter,
+    //    sortable: true
+    //}, {
         field: 'Id',
         title: 'Action',
         halign: 'center',
@@ -161,20 +128,23 @@ var columnList = [
         sortable: true
     },
     {
+        field: 'SimNumber',
+        title: 'SIM Number',
+        halign: 'center',
+        align: 'left',
+        class: 'text-nowrap',
+        sortable: true
+    },
+    {
         field: 'EstimationTimePickup',
         title: 'ETP',
         halign: 'center',
         align: 'center',
         class: 'text-nowrap',
-        sortable: true,
         formatter: function (data, row, index) {
-            if (data == null) {
-                data = '/Date(1661884200000)/';
-            }
             return moment(data).format("DD MMM YYYY");
-
-        }
-
+        },
+        sortable: true
     },
     {
         field: 'Status',
@@ -233,4 +203,3 @@ $(function () {
 
     $("#mySearch").insertBefore($("[name=refresh]"));
 });
-

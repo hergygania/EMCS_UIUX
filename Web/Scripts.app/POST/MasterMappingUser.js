@@ -120,6 +120,7 @@ function initModalEditMappingUser(id) {
         var ids = parseInt(id);
         $.getJSON(`/Post/GetDataMappingUserById?id=${ids}`).then(function (res) {
             $('#id').val(res.result.ID);
+            debugger;
             $('#select2User').val(res.result.UserID).trigger('change');
             $('#select2Branch').val(res.result.NamaCabang).trigger('change');
             $('#npwp').val(res.result.NPWP);

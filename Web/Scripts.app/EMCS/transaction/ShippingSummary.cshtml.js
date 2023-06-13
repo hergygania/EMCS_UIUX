@@ -182,7 +182,7 @@ function operateFormatter(options) {
     //if (options.Delete == true && options.Data.status === 'Draft')
     //    btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
     ////if (options.Info == true)
-    btn.push('<button type="button"  class="btn btn-info info" title="Info"><i class="fa fa-search""></i></button>')
+    btn.push('<button type="button"  class="btn btn-success btn-link btn-info info" title="Info"><i class="tim-icons icon-zoom-split""></i></button>')
 
     btn.push('</div>');
 
@@ -200,6 +200,7 @@ operateFormatter.DEFAULTS = {
 
 window.operateEvents = {
     'click .info': function (e, value, row, index) {
+        debugger;
         var string = "si";
         var cargoid = row.Id;
         window.location.href = '/EMCS/ShippingSummaryView?cargoid=' + cargoid;

@@ -30,13 +30,11 @@
             $(".pdfPreview").hide();
             $("#ImgUrl").attr("src", Url);
             $("#PreviewDocument").modal("show");
-            $('#myModalUploadPreview .model').hide();
         } else if (ext === "pdf") {
             $(".imgPreview").hide();
             $(".pdfPreview").show();
             $("#DocUrl").attr("src", Url);
             $("#PreviewDocument").modal("show");
-            $('#myModalUploadPreview .model').hide();
         } else {
             location.href = downloadLink;
         }

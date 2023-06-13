@@ -9,10 +9,10 @@ function operateFormatter(options) {
     btn.push('<div class="btn-group">');
     if (options.Edit === true)
         btn.push(
-            '<button type="button" class="btn btn-sm btn-info edit" title="Edit"><i class="fa fa-edit"></i></button>');
+            '<button type="button" class="btn btn-sm btn-link btn-info edit" title="Edit"><i class="tim-icons icon-pencil"></i></button>');
     if (options.Delete === true)
         btn.push(
-            '<button type="button" class="btn btn-sm btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+            '<button type="button" class="btn btn-sm btn-link btn-danger remove" title="Delete"><i class="tim-icons icon-simple-remove"></i></button>');
     btn.push("</div>");
 
     return btn.join("");
@@ -142,6 +142,7 @@ var columnList = [
 function bindForm(dialog) {
     $("form", dialog).submit(function () {
         console.log($(this).serialize());
+        debugger;
         $("#progress").show();
         $.ajax({
             url: this.action,

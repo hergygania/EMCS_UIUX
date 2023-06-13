@@ -24,11 +24,11 @@ $(document).ready(function () {
 
 $("#form-total-export-monthly").submit(function (e) {
     e.preventDefault();
-    getExportValueMonthly($('#date1-total-export-monthly').val(), $('#TrendExportFilterExportType1').val());
+    getExportValueMonthly($('#date1-total-export-monthly').val());
 });
 $("#form-total-export-port").submit(function (e) {
     e.preventDefault();
-    getExportValuePort($('#date1-total-export-port').val(), $('#TrendExportFilterExportType2').val());
+    getExportValuePort($('#date1-total-export-port').val());
 });
 $('#btn-total-export-monthly-download').on('click', function () {
     var year = $('#date1-export-type').val();
@@ -42,39 +42,21 @@ $('#btn-total-export-port-download').on('click', function () {
 })
 
 
-function getExportValueMonthly(date1 = '', filter = '') {
+function getExportValueMonthly(date1 = '') {
     $.ajax({
         url: "/emcs/TotalExportMonthly",
         data: {
             searchCode: date1,
-            searchName: filter
         },
         async: false,
         success: function (data) {
             var categories_monthly = [];
-            var series_monthly_sales = [];
-            var series_monthly_non_sales = [];
-
-            //filter month
-            $.each(data, function (i, e) {
-                if (i == "January" || i == "February" || i == "March" || i == "April" || i == "May" || i == "June" || i == "July" ||
-                    i == "August" || i == "September" || i == "October" || i == "November" || i == "December" || i == "Total")
-                    categories_monthly.push(i);
-            });
-
-            //filter data sales
-            $.each(data, function (i, e) {
-                if (i == "JanuarySales" || i == "FebruarySales" || i == "MarchSales" || i == "AprilSales" || i == "MaySales" || i == "JuneSales" || i == "JulySales" ||
-                    i == "AugustSales" || i == "SeptemberSales" || i == "OctoberSales" || i == "NovemberSales" || i == "DecemberSales" || i == "TotalSales")
-                    series_monthly_sales.push(e);
-            });
-
-            //filter data non sales
-            $.each(data, function (i, e) {
-                if (i == "JanuaryNonSales" || i == "FebruaryNonSales" || i == "MarchNonSales" || i == "AprilNonSales" || i == "MayNonSales" || i == "JuneNonSales" || i == "JulyNonSales" ||
-                    i == "AugustNonSales" || i == "SeptemberNonSales" || i == "OctoberNonSales" || i == "NovemberNonSales" || i == "DecemberNonSales" || i == "TotalNonSales")
-                    series_monthly_non_sales.push(e);
-            });
+            var series_monthly = [];
+            $.each(data, function (i, e, n) {
+                n++;
+                categories_monthly.push(i);
+                series_monthly.push(e);
+            })
 
             var monthly = Highcharts.chart('container', {
                 chart: {
@@ -116,16 +98,9 @@ function getExportValueMonthly(date1 = '', filter = '') {
                 credits: {
                     enabled: false
                 },
-                series: [
-                    {
-                        name: "Sales",
-                        data: series_monthly_sales
-                    },
-                    {
-                        name: "Non Sales",
-                        data: series_monthly_non_sales
-                    }
-                ]
+                series: [{
+                    data: series_monthly
+                }]
             });
             monthly.reflow();
         }
@@ -133,12 +108,11 @@ function getExportValueMonthly(date1 = '', filter = '') {
    
 }
 
-function getExportValuePort(date1 = '', filter = '') {
+function getExportValuePort(date1 = '') {
     $.ajax({
         url: "/emcs/TotalExportPort",
         data: {
             searchCode: date1,
-            searchName: filter
         },
         async: false,
         success: function (data) {
@@ -150,13 +124,11 @@ function getExportValuePort(date1 = '', filter = '') {
             }
             
             var categories_port = [];
-            var series_port_sales = [];
-            var series_port_non_sales = [];
+            var series_port = [];
 
             $.each(data, function (i, e) {
                 categories_port.push(e.PortOfLoading);
-                series_port_sales.push(e.TotalSales);
-                series_port_non_sales.push(e.TotalNonSales);
+                series_port.push(e.Total);
             })
 
             var loadingPort = Highcharts.chart('container2', {
@@ -199,16 +171,9 @@ function getExportValuePort(date1 = '', filter = '') {
                 credits: {
                     enabled: false
                 },
-                series: [
-                    {
-                        name: "Sales",
-                        data: series_port_sales
-                    },
-                    {
-                        name: "Non Sales",
-                        data: series_port_non_sales
-                    }
-                ]
+                series: [{
+                    data: series_port
+                }]
             });
             loadingPort.reflow();
         }

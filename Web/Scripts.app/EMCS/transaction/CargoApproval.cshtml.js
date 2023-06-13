@@ -8,15 +8,10 @@ function getTotalData() {
     var IdCargo = $("#CargoID").val();
     $.get(myApp.fullPath + "EMCS/GetTotalDataCargo/" + IdCargo, function (resp) {
         var data = {};
-        var data1 = {};
-        $.map(resp.data, function (value, key) {
+        $.map(resp, function (value, key) {
             data[value.Key] = value.Value;
         });
-        $.map(resp.data1, function (value, key) {
-            data1[value.Key] = value.Value;
-        });
-        $("#NoItem").val(formatCurrency(data1.totalPackage, ".", ",", 2));
-        $("#CaseNo").val(formatCurrency(data.totalPackage, ".", ",", 2));
+        $("#topackCl").val(formatCurrency(data.totalPackage, ".", ",", 2));
         $("#togroswegCl").val(formatCurrency(data.totalGrossWeight, ".", ",", 2));
         $("#tonetwegCl").val(formatCurrency(data.totalNetWeight, ".", ",", 2));
         //$("#tovolumeCl").val(formatCurrency(data.totalVolume, ".", ",", 2));
@@ -61,6 +56,8 @@ function submitProblem(statusName) {
     var status = false;
     var data = $("#myModalProblemContent form").serializeArray();
     data.push({ name: "Status", value: statusName });
+    console.log(data);
+    debugger;
     $.ajax({
         url: myApp.fullPath + "EMCS/SaveProblemHistory",
         type: "Post",

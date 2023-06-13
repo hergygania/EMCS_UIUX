@@ -1,83 +1,98 @@
 ﻿var $table = $('#tbl-achievement');
 var chartSpeed;
 var Cycle = '';
-var _getChartAchievement;
 
-var columns = [
-    {
-        field: "Cycle",
-        title: "Cycle",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
-    },{
-        field: "Target",
-        title: "Target",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
-    }, {
-        field: "Actual",
-        title: "Actual (avg)",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
-    },{
-        field: "Achieved",
-        title: "Achieved",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
-    }, {
-        field: "TotalData",
-        title: "Total Data",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
-    },{
-        field: "Achievement",
-        title: "Achievement (%)",
-        sortable: true,
-        rownspan: 2,
-        align: "left",
-        class: "text-nowrap"
+window.operateEvents = {
+    'click .link': function (e, value, row, index) {
+        //console.log(value);
+        ChartAchievement(value);
+        //alert(value);
+        //window.location.href = "/emcs/UpdateCargo?CargoID=" + row.Id;
     }
-]
-
+};
 
 $(function () {
-    AchievementSearch();
+
+    var columns = [
+        {
+            field: "Cycle",
+            title: "Cycle",
+            sortable: true,
+            rownspan: 2,
+            align: "left",
+            class: "text-nowrap",
+            events: operateEvents,
+            formatter: function (data, row, index) {
+                var btn = [];
+                btn.push('<a href="#" class="link" title="Add">'+data+'</a>');
+                return btn.join(' ');
+            }
+        },{
+            field: "Target",
+            title: "Target",
+            sortable: true,
+            rownspan: 2,
+            align: "left",
+            class: "text-nowrap"
+        },{
+            field: "Actual",
+            title: "Actual (avg)",
+            sortable: true,
+            rownspan: 2,
+            align: "left",
+            class: "text-nowrap"
+        },{
+            field: "Achievement",
+            title: "Achievement (%)",
+            sortable: true,
+            rownspan: 2,
+            align: "left",
+            class: "text-nowrap"
+        }
+    ]
+
+    $table.bootstrapTable({
+        columns: columns,
+        cache: false,
+        pagination: false,
+        search: false,
+        striped: false,
+        clickToSelect: true,
+        reorderableColumns: true,
+        toolbar: '.hasniToolbar',
+        toolbarAlign: 'right',
+        onClickRow: selectRow,
+        sidePagination: 'server',
+        showColumns: false,
+        showRefresh: false,
+        smartDisplay: false,
+        pageSize: '5',
+        formatNoMatches: function () {
+            return '<span class="noMatches">-</span>';
+        },
+    });
+
+    window.pis.table({
+        objTable: $table,
+        urlSearch: '/EMCS/RAchievementListPage?StartDate=' + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + '&EndDate=' + moment($("#inp-end-date").val()).format('YYYY-MM-DD'),
+        urlPaging: '/EMCS/RAchievementPageXt?StartDate=' + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + '&EndDate=' + moment($("#inp-end-date").val()).format('YYYY-MM-DD'),
+        autoLoad: true
+    });
+    
+    ChartAchievement(Cycle);
+    
 });
 
 function ChartAchievement(Cycle) {
-    _getChartAchievement = $.ajax({
-        url: "/emcs/RAchievementListPage",
-        data: "StartDate=" + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + "&EndDate=" + moment($("#inp-end-date").val()).format('YYYY-MM-DD'),
-        async: true,
+    $.ajax({
+        url: "/emcs/getPercentageAchievement",
+        data: "StartDate=" + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + "&EndDate=" + moment($("#inp-end-date").val()).format('YYYY-MM-DD') + "&Cycle=" + Cycle,
+        async: false,
         success: function (data) {
             
             var totalAchievement = new Array();
-            var dataChart = data.Data.result.filter((c) => {
-                return c.Cycle == Cycle;
-            }) || [];
 
-            if (dataChart.length == 0) {
-                Cycle = "Summary";
-                dataChart[0] = { Achieved: 0, TotalData: 0 }
-                data.Data.result.forEach((c) => {
-                    dataChart[0].Achieved += c.Achieved;
-                    dataChart[0].TotalData += c.TotalData;
-                });
-            }
-
-            totalAchievement.push(
-                (dataChart[0].Achieved / dataChart[0].TotalData * 100)
-            );
+            totalAchievement.push(data[0].TotAchievement);
             
             var gaugeOptions = {
                 chart: {
@@ -107,11 +122,9 @@ function ChartAchievement(Cycle) {
                 // the value axis
                 yAxis: {
                     stops: [
-                        [0.1, '#DF5353'], // green
-                        [0.49, '#DF5353'], // green
+                        [0.1, '#DDDF0D'], // green
                         [0.5, '#DDDF0D'], // yellow
-                        [0.79, '#DDDF0D'], // yellow
-                        [0.8, '#55BF3B'] // red
+                        [0.9, '#55BF3B'] // red
                     ],
                     lineWidth: 1,
                     minorTickInterval: null,
@@ -150,7 +163,7 @@ function ChartAchievement(Cycle) {
                     dataLabels: {
                         format:
                             '<div style="text-align:center">' +
-                            '<span style="font-size:25px">'+ Cycle +'</span><br/>' +
+                            '<span style="font-size:25px">{y} %</span><br/>' +
                             '</div>'
                     },
                     tooltip: {
@@ -164,46 +177,15 @@ function ChartAchievement(Cycle) {
 }
 
 function AchievementSearch() {
-
-    ChartAchievement(Cycle);
-
-    $table.bootstrapTable({
-        columns: columns,
-        cache: false,
-        pagination: false,
-        search: false,
-        striped: false,
-        clickToSelect: true,
-        reorderableColumns: true,
-        toolbar: '.hasniToolbar',
-        toolbarAlign: 'right',
-        onClickRow: clickRowEvent,
-        sidePagination: 'server',
-        showColumns: false,
-        showRefresh: false,
-        smartDisplay: false,
-        pageSize: '5',
-        formatNoMatches: function () {
-            return '<span class="noMatches">-</span>';
-        },
-    });
-
-    window.pis.table({
-        objTable: $table,
-        urlSearch: '/EMCS/RAchievementListPage?StartDate=' + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + '&EndDate=' + moment($("#inp-end-date").val()).format('YYYY-MM-DD'),
-        urlPaging: '/EMCS/RAchievementPageXt?StartDate=' + moment($("#inp-start-date").val()).format('YYYY-MM-DD') + '&EndDate=' + moment($("#inp-end-date").val()).format('YYYY-MM-DD'),
-        autoLoad: true
-    });
-
+    var startdate = $('#inp-start-date').val();
+    var enddate = $('#inp-end_date').val();
+    if (startdate !== null && startdate !== '' && enddate !== null && enddate !== '') {
+        ChartAchievement();
+    }
 }
 
 function exportDataReport() {
     var startDate = $('#inp-start-date').val() === null || $('#inp-start-date').val() === '' ? '' : moment($('#inp-start-date').val()).format('YYYY-MM-DD');
     var endDate = $('#inp-end-date').val() === null || $('#inp-end-date').val() === '' ? '' : moment($('#inp-end-date').val()).format('YYYY-MM-DD');
     window.open('/EMCS/DownloadExportAchievement?StartDate=' + startDate + '&EndDate=' + endDate, '_blank');
-}
-
-function clickRowEvent(row, $element) {
-    ChartAchievement(row.Cycle);
-    return selectRow(row, $element);
 }

@@ -158,27 +158,21 @@ $(function () {
 
 
 function operateFormatter(options) {
-    var btnEdit = "";
-    var btnPreview = "";
-    
+
+    var btn = [];
+    btn.push('<div class="btn-group">');
     //if (options.Add == true)
     //    btn.push('<button type="button" class="btn btn-success new" title="Add"><i class="fa fa-plus"></i></button>')
-    if (options.Data.StatusViewByUser != null && options.Data.StatusViewByUser != '') {
-        if (options.Data.PendingRFC == 0 && (options.Data.StatusViewByUser.replace(/\s/g, '') == "Finish" || options.Data.StatusViewByUser.replace(/\s/g, '') == "Approval" || options.Data.StatusViewByUser.replace(/\s/g, '') == "WaitingforBLorAWB") && options.Data.RoleName.replace(/\s/g, '') != 'EMCSPPJK')
-            if (Boolean($("#IsImexUser").val()) == true) {
-                btnEdit = '<button type="button" class="btn btn-xs btn-primary edit" title="Edit RFC"><i class="fa fa-edit"></i></button>'
-            }
-    }
-    
+    if (options.Edit == true && options.Data.PendingRFC == 0)
+        btn.push('<button type="button" class="btn btn-xs btn-link edit" title="Edit"><i class="fa fa-edit"></i></button>');
     //if (options.Delete == true && options.Data.status === 'Draft')
     //    btn.push('<button type="button" class="btn btn-danger remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
     ////if (options.Info == true)
-    btnPreview = '<button type="button"  class="btn btn-xs btn-info info" title="Info"><i class="fa fa-search""></i></button>'
+    btn.push('<button type="button"  class="btn btn-success btn-link info" title="Info"><i class="tim-icons icon-zoom-split""></i></button>')
 
-    /*btn.push('</div>');*/
-    
-    return ['<div>', btnEdit, btnPreview, "</div>"].join(" ");
-    /*return btn.join('');*/
+    btn.push('</div>');
+
+    return btn.join('');
 }
 
 operateFormatter.DEFAULTS = {
@@ -195,7 +189,7 @@ window.operateEvents = {
         location.href = "/EMCS/BlAwbView?Id=" + parseInt(row.IdCl);
     },
     'click .edit': function (e, value, row, index) {
-        location.href = "/EMCS/RFCBlAwb?Id=" + row.IdCl + "&rfc=true";
+        location.href = "/EMCS/CreateBlAwb?Id=" + row.IdCl + "&rfc=true";
     }
 };
 
