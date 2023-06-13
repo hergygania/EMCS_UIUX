@@ -19,5 +19,7 @@
         public string Step { get; set; } 
         public string Status { get; set; } 
         public string StatusViewByUser { get; set; } 
+        public int  PendingRFC{ get; set; } 
+        public int  RoleID { get; set; } 
     } 
 } 

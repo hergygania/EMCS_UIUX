@@ -39,7 +39,7 @@ namespace App.Web.Controllers.EMCS
 
 
         [HttpPost]
-        public JsonResult CreateCargoContainer(ContainerFormModel form)
+        public JsonResult CreateCargoContainer(ContainerFormModel form,bool IsRFC = false)
         {
 
             if(form.ContainerType == null)
@@ -68,7 +68,15 @@ namespace App.Web.Controllers.EMCS
                     itm.ContainerType = form.ContainerType;
                     itm.ContainerSealNumber = form.ContainerSealNumber;
                     itm.IdCargo = form.CargoId;
-                    Service.EMCS.SvcCargoItem.Insert(itm, idx, "I");
+                    //if (IsRFC == true)
+                    //{
+                    //    Service.EMCS.SvcCargoItem.UpdateItemChange(itm, "U", 0);
+                    //}
+                    //else
+                    //{
+                        Service.EMCS.SvcCargoItem.Insert(itm, idx, "I", IsRFC);
+
+                    //}
                 }
                 return JsonCRUDMessage("I");
             }

@@ -16,9 +16,11 @@ namespace App.Data.Domain.EMCS
         public string NpeNumber { get; set; }
         public DateTime? NpeDate { get; set; }
         public string PassPabeanOffice { get; set; }
+        public int PendingRFC { get; set; }
         public string Valuta { get; set; }
         public string ClNo { get; set; }
-        public int PendingRFC { get; set; }
-		public string StatusViewByUser { get; set; }
+        public string StatusViewByUser { get; set; }
+        public string RegistrationNumber { get; set; }
+
     }
 }

@@ -8,6 +8,8 @@ namespace App.Data.Domain.EMCS
         public string PortOfLoading { get; set; }
         public string PortOfDestination { get; set; }
         public int Total { get; set; }
+        public int TotalSales { get; set; }
+        public int TotalNonSales { get; set; }
     }
 
 }

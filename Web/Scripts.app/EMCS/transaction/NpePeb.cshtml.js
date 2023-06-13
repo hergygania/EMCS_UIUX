@@ -17,12 +17,11 @@ $(function () {
             },
             events: operateEvents
         },
-        //{
-        //    field: "IdCl",
-        //    title: "IdCl",
-        //    sortable: true,
-        //    visiable: false
-        //},
+        {
+            field: "RegistrationNumber",
+            title: "No Pen.",
+            sortable: true
+        },
         {
             field: "AjuNumber",
             title: "Aju Number.",
@@ -135,21 +134,26 @@ $(function () {
 
 
 function operateFormatter(options) {
-
-    var btn = [];
-    btn.push('<div class="btn-group">');
-    if (options.Edit == true && options.Data.PendingRFC == 0)
-        btn.push('<button type="button" class="btn btn-xs btn-link edit" title="Edit"><i class="fa fa-edit"></i></button>');
-        btn.push('<button type="button"  class="btn btn-success btn-link info" title="Info"><i class="tim-icons icon-zoom-split""></i></button>')
-
-    btn.push('</div>');
-
-    return btn.join('');
+    
+    var btnEdit = "";
+    var btnPreview = "";
+    //btn.push('<div class="btn-group">');
+    if (options.Data.StatusViewByUser != null && options.Data.StatusViewByUser != '') {
+        if (options.Edit == true && options.Data.PendingRFC == 0 && (options.Data.StatusViewByUser.replace(/\s/g, '') == "WaitingforNPE&PEB" || options.Data.StatusViewByUser.replace(/\s/g, '') == "WaitingNPE&PEBapproval" || options.Data.StatusViewByUser.replace(/\s/g, '') == "WaitingapprovaldraftPEB"
+            || options.Data.StatusViewByUser.replace(/\s/g, '') == "Finish" || options.Data.StatusViewByUser.replace(/\s/g, '') == "WaitingforBLorAWB" || options.Data.StatusViewByUser.replace(/\s/g, '') == "BLorAWBneedrevision"))
+            if (Boolean($("#IsImexUser").val()) == true) {
+                btnEdit = '<button type="button" class="btn btn-xs btn-primary edit" title="Edit RFC"><i class="fa fa-edit"></i></button>'
+            }
+    }
+    btnPreview = '<button type="button" class="btn btn-xs btn-info info" title="Info"><i class="fa fa-search""></i></button>'
+    //btn.push('</div>');
+    return ['<div>', btnEdit, btnPreview, "</div>"].join(" ");
+    //return btn.join('');
 }
 
 operateFormatter.DEFAULTS = {
     Add: false,
-    Edit: false,
+    Edit: true,
     Delete: false,
     Info: false,
     View: false,
@@ -158,8 +162,9 @@ operateFormatter.DEFAULTS = {
 
 window.operateEvents = {
     'click .info': function (e, data, row, index) {
-        var page = "cargo";
-        location.href = "/EMCS/ShowNpePeb?page=" + page + "&Id=" + row.IdCl;
+        //var page = "cargo";
+        //location.href = "/EMCS/ShowNpePeb?page=" + page + "&Id=" + row.IdCl;
+        location.href = "/EMCS/ViewPebNpe?Id=" + parseInt(row.IdCl) + "&IdNpePeb=" + row.Id;
     },
     'click .edit': function (e, value, row, index) {
         location.href = "/EMCS/CreatePebNpe?Id=" + row.IdCl+"&rfc=true";

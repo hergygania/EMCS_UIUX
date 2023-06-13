@@ -24,6 +24,7 @@ namespace App.Data.Domain.EMCS
         public string DocumentRequired { get; set; }
         public string SpecialInstruction { get; set; }    
         public DateTime? UpdateDate { get; set; }
+        public int PendingRFC { get; set; }
         public string UpdateBy { get; set; }
         public string StatusViewByUser { get; set; }
         public bool IsDelete { get; set; }

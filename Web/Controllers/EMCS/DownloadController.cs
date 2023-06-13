@@ -68,6 +68,8 @@ namespace App.Web.Controllers.EMCS
             detail.Data = Service.EMCS.SvcCargo.GetCargoById(id);
             detail.DataItem = Service.EMCS.SvcCargo.GetCargoDetailData(id);
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCargoHeaderData(id);
+            var TotalPackage = Service.EMCS.SvcCargoItem.GetTotalPackage(id, detail.Data.TotalPackageBy);
+            detail.TemplateHeader.TotalCaseNumber = Convert.ToString(TotalPackage);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCargoDetailData(id);
 
             return detail;
@@ -79,91 +81,132 @@ namespace App.Web.Controllers.EMCS
             data.DetailGr = Service.EMCS.DocumentStreamGenerator.GetGrDetailData(id);
             return data;
         }
-        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null,CargoSiModel cargoSiModel = null,CargoSsModel cargoSsModel = null)
+        public FileResult DownloadUserGuide(string menuname)
         {
-            string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
+            string fullPath = Request.MapPath("~/Upload/EMCS/Dummy/NotFound.txt");
 
-            string headerContent;
-            if (typeDoc == "Invoice")
+            if (menuname != null)
             {
-                var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
-                if (qrCodeInvoiceValue == null)
-                {
-                    string strQrCodeUrlInvoice = Common.GenerateQrCode(detail.Data.Id, "downloadInvoice");
-                    qrCodeInvoiceValue = strQrCodeUrlInvoice;
-                }
-                ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
-            }
-            else if (typeDoc == "Pl")
-            {
-                var qrCodelPLValue = TempData["QrCodeUrlPL"];
-                if (qrCodelPLValue == null)
-                {
-                    string strQrCodeUrlPL = Common.GenerateQrCode(detail.Data.Id, "DownloadPl");
-                    qrCodelPLValue = strQrCodeUrlPL;
-                }
-                ViewBag.QrCodeUrlPL = qrCodelPLValue;
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
-            }
-            else if (typeDoc == "Rg")
-            {
-                var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
-                if (qrCodeUrlGRValue == null)
-                {
-                    string strQrCodeUrlGR = Common.GenerateQrCode(detail.Data.Id, "DownloadRg");
-                    qrCodeUrlGRValue = strQrCodeUrlGR;
-                }
-                ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
-            }
-            else if (typeDoc == "Cargo")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
-            }
-            else if (typeDoc == "Si")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
-            }
-            else if (typeDoc == "Ss")
-            {
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
-            }
-            else
-            {
-                var qrCodeValue = TempData["QrCodeUrlEDI"];
-                if (qrCodeValue == null)
-                {
-                    string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
-                    qrCodeValue = strQrCodeUrlEDI;
-                }
-                ViewBag.QrCodeUrlEDI = qrCodeValue;
-                headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
+                fullPath = Request.MapPath("~/DownloadUserGuide/" + menuname + ".pptx");
+                var fileBytes = System.IO.File.ReadAllBytes(fullPath);
+                string fileName = menuname + ".pptx";
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
             }
 
-            using (var sw = new StreamWriter(new FileStream(headerBlank, FileMode.Create, FileAccess.Write)))
+            return File(fullPath, "text/plain", "NotFound.txt");
+        }
+        public ActionResult GeneratePdf(CiplModel detail, string view, string typeDoc = "Invoice", GoodReceiveModel gr = null, CargoModel cargo = null, CargoSiModel cargoSiModel = null, CargoSsModel cargoSsModel = null, string menuname = null)
+        {
+            try
             {
-                sw.Write(headerContent);
-                string customSwitches = string.Format("--header-html  \"{0}\" " +
-                                                      "--page-size A4 " +
-                                                      "--dpi 96 " +
-                                                      "--print-media-type " +
-                                                      "--outline " +
-                                                      "--header-spacing \"1\"  " +
-                                                      "--header-font-size \"10\" ", headerBlank);
+                string headerBlank = Server.MapPath("~/Views/Download/CustomBlankHeader.html");//Path of PrintHeader.html File
 
-                var dataview = new ViewAsPdf(view, detail)
+                string headerContent = null;
+                if (menuname == null)
                 {
-                    IsJavaScriptDisabled = false,
-                    CustomSwitches = customSwitches,
-                    PageOrientation = Rotativa.Options.Orientation.Portrait,
-                    PageSize = Rotativa.Options.Size.A4,
-                    PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                };
+                    if (typeDoc == "Invoice")
+                    {
+                        var qrCodeInvoiceValue = TempData["QrCodeUrlInvoice"];
+                        if (qrCodeInvoiceValue == null)
+                        {
+                            string strQrCodeUrlInvoice = Common.GenerateQrCode(detail.Data.Id, "downloadInvoice");
+                            qrCodeInvoiceValue = strQrCodeUrlInvoice;
+                        }
+                        ViewBag.QrCodeUrlInvoice = qrCodeInvoiceValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInv.cshtml", detail);
+                    }
+                    else if (typeDoc == "Pl")
+                    {
+                        var qrCodelPLValue = TempData["QrCodeUrlPL"];
+                        if (qrCodelPLValue == null)
+                        {
+                            string strQrCodeUrlPL = Common.GenerateQrCode(detail.Data.Id, "DownloadPl");
+                            qrCodelPLValue = strQrCodeUrlPL;
+                        }
+                        ViewBag.QrCodeUrlPL = qrCodelPLValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplInvPl.cshtml", detail);
+                    }
+                    else if (typeDoc == "Rg")
+                    {
+                        var qrCodeUrlGRValue = TempData["QrCodeUrlGR"];
+                        if (qrCodeUrlGRValue == null)
+                        {
+                            string strQrCodeUrlGR = Common.GenerateQrCode(detail.Data.Id, "DownloadRg");
+                            qrCodeUrlGRValue = strQrCodeUrlGR;
+                        }
+                        ViewBag.QrCodeUrlGR = qrCodeUrlGRValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderRg.cshtml", gr);
+                    }
+                    else if (typeDoc == "Cargo")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCargo.cshtml", cargo);
+                    }
+                    else if (typeDoc == "Si")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSi.cshtml", cargoSiModel);
+                    }
+                    else if (typeDoc == "Ss")
+                    {
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderSs.cshtml", cargoSsModel);
+                    }
+                    else
+                    {
+                        var qrCodeValue = TempData["QrCodeUrlEDI"];
+                        if (qrCodeValue == null)
+                        {
+                            string strQrCodeUrlEDI = Common.GenerateQrCode(detail.Data.Id, "downloadedi");
+                            qrCodeValue = strQrCodeUrlEDI;
+                        }
+                        ViewBag.QrCodeUrlEDI = qrCodeValue;
+                        headerContent = RenderPartialViewToString("~/Views/Download/CustomHeaderCiplEdi.cshtml", detail);
+                    }
+                }
+                else
+                {
+                    if (menuname == "Cipl")
+                    {
+                        view = "Cipl.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Cipl.pptx", view);
+                    }
+                    else if (menuname == "Cargo")
+                    {
+                        view = "Cargo.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Cargo.pptx", view);
+                    }
+                    else if (menuname == "Rg")
+                    {
+                        view = "Rg-Bast.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/Rg-Bast.pptx", view);
+                    }
+                    else if (menuname == "PebNpe")
+                    {
+                        view = "PebNpe.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/PebNpe.pptx", view);
+                    }
+                    else if (menuname == "BlAwb")
+                    {
+                        view = "BlAwb.pptx";
+                        headerContent = RenderPartialViewToString("~/DownloadUserGuide/BlAwb.pptx", view);
+                    }
+                    else
+                    {
 
-                if (typeDoc == "Rg")
+                    }
+                }
+
+
+                using (var sw = new StreamWriter(new FileStream(headerBlank, FileMode.Create, FileAccess.Write)))
                 {
-                    dataview = new ViewAsPdf(view, gr)
+                    sw.Write(headerContent);
+                    string customSwitches = string.Format("--header-html  \"{0}\" " +
+                                                          "--page-size A4 " +
+                                                          "--dpi 96 " +
+                                                          "--print-media-type " +
+                                                          "--outline " +
+                                                          "--header-spacing \"1\"  " +
+                                                          "--header-font-size \"10\" ", headerBlank);
+
+                    var dataview = new ViewAsPdf(view, detail)
                     {
                         IsJavaScriptDisabled = false,
                         CustomSwitches = customSwitches,
@@ -171,45 +214,62 @@ namespace App.Web.Controllers.EMCS
                         PageSize = Rotativa.Options.Size.A4,
                         PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
                     };
-                }
-                else if (typeDoc == "Si")
-                {
-                    dataview = new ViewAsPdf(view, cargoSiModel)
+
+                    if (typeDoc == "Rg")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
-                }
-                else if (typeDoc == "Ss")
-                {
-                    dataview = new ViewAsPdf(view, cargoSsModel)
+                        dataview = new ViewAsPdf(view, gr)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Si")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
-                }
-                else if (typeDoc == "Cargo")
-                {
-                    dataview = new ViewAsPdf(view, cargo)
+                        dataview = new ViewAsPdf(view, cargoSiModel)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Ss")
                     {
-                        IsJavaScriptDisabled = false,
-                        CustomSwitches = customSwitches,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
-                    };
+                        dataview = new ViewAsPdf(view, cargoSsModel)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+                    else if (typeDoc == "Cargo")
+                    {
+                        dataview = new ViewAsPdf(view, cargo)
+                        {
+                            IsJavaScriptDisabled = false,
+                            CustomSwitches = customSwitches,
+                            PageOrientation = Rotativa.Options.Orientation.Portrait,
+                            PageSize = Rotativa.Options.Size.A4,
+                            PageMargins = new Rotativa.Options.Margins(55, 3, 32, 3),
+                        };
+                    }
+
+                    sw.Flush();
+                    sw.Close();
+
+                    return dataview;
                 }
 
-                sw.Flush();
-                sw.Close();
-
-                return dataview;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -243,6 +303,81 @@ namespace App.Web.Controllers.EMCS
             var detail = InitModelCipl(id);
             ViewBag.typeDocument = "INVOICE";
             string View = "DownloadInvoice";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                if (detail.Data.CategoriItem.ToLower() == "old core" || detail.Data.CategoriItem.ToLower() == "oldcore")
+                {
+                    detail.Data.CategoriItem = "REMAN";
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, View);
         }
 
@@ -251,6 +386,77 @@ namespace App.Web.Controllers.EMCS
             var detail = InitModelCipl(id);
             ViewBag.TypeDocument = "PACKING LIST";
             string View = "DownloadPl";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, View, "Pl");
         }
         //public ActionResult DownloadSi(long id)
@@ -264,12 +470,90 @@ namespace App.Web.Controllers.EMCS
         {
             var detail = InitModelCipl(id);
             ViewBag.typeDocument = "Export Delivery Instruction";
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (!referencesNo.Contains(item.Key))
+                    {
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (!empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (!empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && !referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
             return GeneratePdf(detail, "DownloadEdi", "Edi");
         }
 
         public ActionResult DownloadRg(long id)
         {
             var detail = InitModelRg(id);
+            detail.Armada = Service.EMCS.SvcGoodsReceiveItem.GetListArmada(0, id);
+            var Idcipl = Service.EMCS.SvcGoodsReceive.GetCiplByGr(id);
+            var totalvalue = Service.EMCS.SvcTotalCipl.GetById(Convert.ToInt64(Idcipl[0].Id));
+            detail.Data.TotalGrossWeight = Convert.ToString(totalvalue.TotalGrossWeight);
+            detail.Data.TotalNetWeight = Convert.ToString(totalvalue.TotalNetWeight);
+            detail.Data.TotalPackages = Convert.ToString(totalvalue.TotalPackage);
+            detail.Data.TotalVolume = Convert.ToString(totalvalue.TotalVolume);
             ViewBag.typeDocument = "Export Receipt Goods";
             return GeneratePdf(null, "DownloadRg", "Rg", detail);
         }
@@ -609,6 +893,8 @@ namespace App.Web.Controllers.EMCS
             string message = "";
             string value = "";
             string messagedesc = "";
+            int netWeight = 0;
+            int grossWeight = 0;
             try
             {
 
@@ -640,8 +926,30 @@ namespace App.Web.Controllers.EMCS
 
                         if (isDecimal(value))
                         {
-                            message = "success";
-                            messagedesc = "";
+                            if (cellNum == 18)
+                            {
+                                netWeight = Int32.Parse(sheet.GetRow(numRow).GetCell(17).StringCellValue.Replace(".", ""));
+                                grossWeight = Int32.Parse(sheet.GetRow(numRow).GetCell(18).StringCellValue.Replace(".", ""));
+                            }
+
+                            if (netWeight > 0 && grossWeight > 0)
+                            {
+                                if (netWeight > grossWeight)
+                                {
+                                    message = "failed";
+                                    messagedesc = "Net Weight Can't Bigger Than Gross Weight";
+                                }
+                                else
+                                {
+                                    message = "success";
+                                    messagedesc = "";
+                                }
+                            } else
+                            {
+                                message = "success";
+                                messagedesc = "";
+                            }
+                            
                         }
                         // It's a decimal
                         else

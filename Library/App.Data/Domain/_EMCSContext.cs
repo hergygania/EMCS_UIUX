@@ -9,7 +9,10 @@ namespace App.Data
         public EmcsContext()
             : base("name=emcsConnection")
         {
-					this.Configuration.LazyLoadingEnabled=true;
+			//this.Configuration.LazyLoadingEnabled=true;
+   //         this.Configuration.AutoDetectChangesEnabled = false;
+   //         this.ChangeTracker.DetectChanges();
+   //         this.SaveChanges();
         }
     }
 }

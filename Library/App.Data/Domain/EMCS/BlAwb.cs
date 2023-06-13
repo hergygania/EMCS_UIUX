@@ -6,6 +6,10 @@
     [Table("dbo.BlAwb")]
     public class BlAwb
     {
+        public BlAwb()
+        {
+
+        }
         public long Id { get; set; }
         public string Number { get; set; }
         public DateTime MasterBlDate { get; set; }

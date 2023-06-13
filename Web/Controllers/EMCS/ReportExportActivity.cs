@@ -20,9 +20,9 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "ExportActivity")]
-        public ActionResult GetTrendExport(int startYear, int endYear)
+        public ActionResult GetTrendExport(int startYear, int endYear, string filter)
         {
-            var data = Service.EMCS.SvcRExportActivity.TrendExportList(startYear, endYear);
+            var data = Service.EMCS.SvcRExportActivity.TrendExportList(startYear, endYear, filter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -55,9 +55,9 @@ namespace App.Web.Controllers.EMCS
         }
 
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "ExportActivity")]
-        public ActionResult DownloadTrendExport(int startYear, int endYear)
+        public ActionResult DownloadTrendExport(int startYear, int endYear, string filter)
         {
-            var data = Service.EMCS.SvcRExportActivity.TrendExportList(startYear, endYear);
+            var data = Service.EMCS.SvcRExportActivity.TrendExportList(startYear, endYear, filter);
             string fileExcel = Server.MapPath("~\\Content\\EMCS\\Templates\\TemplateActivityReport_TrendExport.xls");
             MemoryStream output = Service.EMCS.SvcRExportActivity.GetTrendExportStream(data, fileExcel);
             return File(output.ToArray(), "application/vnd.ms-excel", "TrendExport_" + DateTime.Now.ToString("ddMMyyyyhhhmmss") + ".xls");

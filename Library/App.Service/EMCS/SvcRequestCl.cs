@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
 using App.Data.Domain.EMCS;
+using System;
+using App.Domain;
 
 namespace App.Service.EMCS
 {
@@ -54,9 +56,11 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
+                db.Database.CommandTimeout = 600;
                 var username = crit.Username ?? "";
                 var tb = db.Database.SqlQuery<CountData>("[dbo].[sp_get_task_cl]@Username='" + username + "', @isTotal='1'").FirstOrDefault();
-                if (tb != null) return tb.Total;
+                if (tb != null) 
+                return tb.Total;
             }
 
             return 0;
@@ -99,25 +103,34 @@ namespace App.Service.EMCS
         #endregion
 
         #region Npe Data
-        public static List<SpRequestCl> GetNpePebList(GridListFilter filter)
+        public static List<SpRequestNpePeb> GetNpePebList(GridListFilter filter)
         {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            try
             {
-                db.DbContext.Database.CommandTimeout = 600;
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
 
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@Username", filter.Username ?? ""));
-                parameterList.Add(new SqlParameter("@isTotal", "0"));
-                parameterList.Add(new SqlParameter("@sort", "Id"));
-                parameterList.Add(new SqlParameter("@order", "ASC"));
-                parameterList.Add(new SqlParameter("@offset", filter.Offset));
-                parameterList.Add(new SqlParameter("@limit", filter.Limit));
-                SqlParameter[] parameters = parameterList.ToArray();
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@Username", filter.Username ?? ""));
+                    parameterList.Add(new SqlParameter("@isTotal", "0"));
+                    parameterList.Add(new SqlParameter("@sort", "Id"));
+                    parameterList.Add(new SqlParameter("@order", "ASC"));
+                    parameterList.Add(new SqlParameter("@offset", filter.Offset));
+                    parameterList.Add(new SqlParameter("@limit", filter.Limit));
+                    SqlParameter[] parameters = parameterList.ToArray();
 
-                // ReSharper disable once CoVariantArrayConversion
-                var data = db.DbContext.Database.SqlQuery<SpRequestCl>(@"exec [dbo].[sp_get_task_npe_peb]@Username, @isTotal, @sort, @order, @offset, @limit", parameters).ToList();
-                return data;
+                    // ReSharper disable once CoVariantArrayConversion
+                    var data = db.DbContext.Database.SqlQuery<SpRequestNpePeb>(@"exec [dbo].[sp_get_task_npe_peb]@Username, @isTotal, @sort, @order, @offset, @limit", parameters).ToList();
+                    return data;
+                }
             }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public static int GetNpePebTotalList(GridListFilter crit)
@@ -164,6 +177,26 @@ namespace App.Service.EMCS
                 var tb = db.Database.SqlQuery<CountData>("[dbo].[sp_get_task_bl]@Username='" + username + "', @isTotal='1'").FirstOrDefault();
                 if (tb != null) return tb.Total;
             }
+
+            return 0;
+        }
+        public static int GetRFCTotalList(GridListFilter crit)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var username = crit.Username ?? "";
+                    var tb = db.Database.SqlQuery<CountData>("[dbo].[sp_RequestForChangeHistory] @Approver='" + username+"',  @IsTotal='1'").FirstOrDefault();
+                    if (tb != null) return tb.Total;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
 
             return 0;
         }

@@ -376,9 +376,19 @@
                     <td rowspan="5" style="height:10px;width:65%;"></td>
                 </tr>
                 <tr>
-                    <td class="text_9 border_left" style="width:23%;">TOTAL PACKAGES</td>
-                    <td class="text_9 text_center" style="width:2%;">:</td>
-                    <td class="text_9 padding_right text_bold text_right border_right" style="width:25%;">@Model.TemplateHeader.TotalCaseNumber</td>
+                    @if (Model.Data.TotalPackageBy == "CaseNo")
+                    {
+                        <td class="text_9 border_left" style="width:23%;">TOTAL PACKAGE BY CASENUMBER</td>
+                        <td class="text_9 text_center" style="width:2%;">:</td>
+                        <td class="text_9 padding_right text_bold text_right border_right" style="width:25%;">@Model.TemplateHeader.TotalCaseNumber</td>
+                    }
+                    else
+                    {
+                        <td class="text_9 border_left" style="width:23%;">TOTAL PACKAGE BY ITEM</td>
+                        <td class="text_9 text_center" style="width:2%;">:</td>
+                        <td class="text_9 padding_right text_bold text_right border_right" style="width:25%;">@Model.TemplateHeader.TotalCaseNumber</td>
+                    }
+
                 </tr>
                 <tr>
                     <td class="text_9 border_left padding_left_10">TOTAL NET WEIGHT (KGS)</td>

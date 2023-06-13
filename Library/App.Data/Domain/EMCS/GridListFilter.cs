@@ -3,6 +3,7 @@
     public class GridListFilter
     {
         public long Id { get; set; }
+        public long IdNpePeb { get; set; }
         public long IdCipl { get; set; }
         public long IdGr { get; set; }
         public int Limit { get; set; }

@@ -24,91 +24,279 @@
             }
         }
     </script>
-    <link href="../../Content/EMCS/DocumentDownloadHeader.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
     <style>
         html body {
+            /*font-family: 'Arial Narrow', Arial, sans-serif;*/
             font-family: sans-serif;
-            font-size: 10px;
-            letter-spacing: 0.65ex;
+            font-size: 11px;
+            letter-spacing: 0.67ex;
             font-weight: 100 !important;
             line-height: 18px;
             text-rendering: optimizeSpeed;
         }
 
         table tr td, th {
+            /*font-family: 'Arial Narrow', Arial, sans-serif;*/
             font-family: sans-serif;
-            font-size: 10px;
-            letter-spacing: 0.65ex;
+            font-size: 11px;
+            letter-spacing: 0.67ex;
             line-height: 18px;
             text-rendering: optimizeSpeed;
         }
+
+        .hidden {
+            display: none;
+        }
+
+        /* TABLE */
+        .table thead tr {
+            -webkit-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            -moz-box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+            box-shadow: 0px 6px 4px -3px rgba(222,222,222,0.72);
+        }
+
+            .table thead tr th {
+                background-color: black;
+                font-weight: 600;
+                line-height: 1;
+                color: white;
+            }
+
+        .table tbody tr td {
+            line-height: 1;
+        }
+
+        .table_primary {
+            border: none;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .table-document tr td {
+            background: white;
+        }
+
+        .table-document tr td {
+            line-height: 20px;
+        }
+
+        .table-custom {
+            border: 1px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-data {
+            border: 1px solid darkgrey !important;
+            width: 100%;
+            border-collapse: collapse !important;
+        }
+
+        .border_top {
+            border-top: 1px solid darkgrey !important;
+        }
+
+        .border_bottom {
+            border-bottom: 1px solid darkgrey !important;
+        }
+
+        .border_left {
+            padding-left: 10px !important;
+            border-left: 1px solid darkgrey !important;
+        }
+
+        .border_right {
+            padding-right: 10px !important;
+            border-right: 1px solid darkgrey !important;
+        }
+
+        .text_left {
+            text-align: left !important;
+        }
+
+        .text_right {
+            text-align: right !important;
+        }
+
+        .text_center {
+            text-align: center !important;
+        }
+
+        .text_arial {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .text_bold {
+            font-weight: 800;
+        }
+
+        .tabledata_spacing {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .text_docno {
+            color: darkorange;
+        }
+
+        .text_gold {
+            color: gold;
+        }
+
+        .text_docno_big {
+            font-size: 15px;
+            color: darkorange;
+        }
+
+        .text_20 {
+            font-size: 20px !important;
+        }
+
+        .text_18 {
+            font-size: 18px !important;
+        }
+
+        .text_16 {
+            font-size: 16px !important;
+        }
+
+        .text_14 {
+            font-size: 14px !important;
+        }
+
+        .text_12 {
+            font-size: 12px !important;
+        }
+
+        .text_9 {
+            font-size: 9px !important;
+        }
+
+        .text_8 {
+            font-size: 8px !important;
+        }
+
+        .text_justify {
+            text-align: justify;
+        }
+
+        .text_italic {
+            font-style: italic;
+        }
+
+        .table-title-data {
+            color: red;
+        }
+
+        .width_50_persen {
+            width: 50%
+        }
+
+        .padding_left_10 {
+            padding-left: 10px !important;
+        }
+
+        .padding_right_10 {
+            padding-right: 10px !important;
+        }
+
+        .table-title-data div {
+            border: 0.5px solid darkgrey !important;
+            width: 200px;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .table-title-data div {
+            border-right: 1px solid #b9b4b4;
+            border-bottom: 1px solid #b9b4b4;
+            width: 200px;
+            padding-left: 14px;
+            margin-left: -10px;
+            font-weight: 700;
+            color: red;
+            margin-top: 0px;
+            line-height: 35px;
+            color: black;
+            z-index: 99999;
+        }
     </style>
 </head>
-<body id="header_document" style="margin:0 auto;padding-left:31px;padding-right:23px;" onload="subst()">
+<body id="header_document" style="margin:0 auto; margin-left: 8px; padding-left:31px;padding-right:23px;" onload="subst()">
     <table class='table_grid' id="InvSales0" style="width:100%;border-collapse:collapse;">
         <tr>
-            <td colspan="6">
+            <td colspan="5" style="width:65%;"></td>
+            <td colspan="3" style="width:35%;"></td>
+        </tr>
+        <tr>
+            <td colspan="5">
                 <img src="../../Images/trakindo_logo.jpg" />
             </td>
-            <td colspan="6" class="border_left border_top border_right border_bottom text_bold header_title" style="font-size:18px">INVOICE</td>
+            <td style="font-size:14.4px;" colspan="3" class="border_left border_top border_right border_bottom text_bold">EXPORT DELIVERY INSTRUCTION</td>
         </tr>
         <tr>
-            <td style="width:140px;">&nbsp;</td>
-            <td colspan="5" class="text_bold text_14">PT. TRAKINDO UTAMA</td>
-            <td colspan="2" class="border_left">Number</td>
+            <td style="width:120px;">&nbsp;</td>
+            <td colspan="4" class="address_document text_bold text_14" style="font-weight:900;"><b>PT. TRAKINDO UTAMA</b></td>
+            <td class="border_left" style="width:50px;">Number</td>
             <td>:</td>
-            <td colspan="3" class="border_right text_bold text_docno_big">E.2005220125HW</td>
+            <td style="width:180px;letter-spacing:0ex;" class="border_right text_bold text_docno_big"></td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="5">Gedung TMT 1, LT. 11&minus;17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
-            <td colspan="2" class="border_left">Date</td>
-            <td>:</td>
-            <td colspan="3" class="border_right">5/20/2022 14:14:00</td>
+            <td>&nbsp;</td>
+            <td colspan="4" class="address_document">Gedung TMT 1, LT. 11&minus;17 Suite 1101-1701, Jl. Cilandak KKO No. 1</td>
+            <td class="border_left">Date</td>
+            <td class="">:</td>
+            <td class="border_right border_right">4/11/2023 14:01:00</td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="5">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
-            <td colspan="2" class="border_left">Reference No</td>
-            <td>:</td>
-            <td colspan="3" class="border_right">U-00002177</td>
+            <td>&nbsp;</td>
+            <td colspan="4" class="address_document">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan </td>
+            <td class="border_left border_bottom">Cipl No</td>
+            <td class="border_bottom">:</td>
+            <td class="border_right border_bottom text_left">E.1104230792JP</td>
+        </tr>
+        
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="4" class="address_document">INDONESIA - 12560</td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class="text_right">[Page <span class="page"></span> of <span class="topage"></span> ]</td>
         </tr>
         <tr>
-            <td></td>
-            <td colspan="5">INDONESIA - 12560</td>
-            <td colspan="2" class="border_left">For</td>
-            <td>:</td>
-            <td colspan="3" class="border_right">Bandung - TU</td>
+            <td>&nbsp;</td>
+            <td colspan="3" style="width:20px;" class="address_document">Tel.</td>
+            <td class="address_document">: (62-21) 29976620</td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
         </tr>
         <tr>
-            <td></td>
-            <td>Tel.</td>
-            <td>:</td>
-            <td colspan="3">(62-21) 29976620</td>
-            <td colspan="2" class="border_left">Contact / Attn</td>
-            <td style="text-align:right;">:</td>
-            <td colspan="3" class="border_right">Ariliago</td>
+            <td>&nbsp;</td>
+            <td colspan="3" class="address_document">Fax.</td>
+            <td class="address_document">: (62-21) 29976612</td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
         </tr>
         <tr>
-            <td></td>
-            <td>Fax.</td>
-            <td>:</td>
-            <td colspan="3">(62-21) 29976612</td>
-            <td colspan="2" class="border_left ">Email Address</td>
-            <td class="" style="text-align:right;">:</td>
-            <td colspan="3" class=" border_right">ajrina.ziezie@mkindo.com</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td colspan="3"></td>
-            <td colspan="2" class="border_left border_bottom">Category</td>
-            <td class="border_bottom" style="text-align:right;">:</td>
-            <td colspan="3" class="border_bottom border_right">CATERPILLAR SPAREPARTS - PRA</td>
-        </tr>
-        <tr>
-            <td colspan="12" class="text_right">[Page <span class="page"></span> of <span class="topage"></span> ]</td>
+            <td>&nbsp;</td>
+            <td colspan="3" class="address_document"></td>
+            <td class="address_document"></td>
+            <td class=""></td>
+            <td class=""></td>
+            <td class=""></td>
         </tr>
     </table>
 </body>

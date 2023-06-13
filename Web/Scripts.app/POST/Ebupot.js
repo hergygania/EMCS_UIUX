@@ -447,7 +447,6 @@ function sendItem(url, method, data) {
     var fileUpload = $('#FileUpload').get(0);
     var files = fileUpload.files;
     if (files.length > 0) {
-        debugger
         var validext = ['pdf'];
         var ext = files[0].name.substring(files[0].name.lastIndexOf('.') + 1).toLowerCase();
         if ($.inArray(ext, validext) == -1) {

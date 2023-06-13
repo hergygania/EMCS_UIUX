@@ -30,33 +30,42 @@ namespace App.Service.EMCS
 
         public static dynamic GetListSp(Data.Domain.EMCS.GridListFilter crit)
         {
-            using (var db = new Data.EmcsContext())
+            try
             {
-                string Term = "";
-                string Order = "";
-                crit.Sort = crit.Sort ?? "CreateDate";
-                db.Database.CommandTimeout = 600;
-           
-                if (crit.Term != null)
+                using (var db = new Data.EmcsContext())
                 {
-                     Term = Regex.Replace(crit.Term, @"[^0-9a-zA-Z.]+", "");
-                }
-                if (crit.Order !=null)
-                {
-                    Order = Regex.Replace(crit.Order, @"[^0-9a-zA-Z]+", "");
-                }
-                
+                    string Term = "";
+                    string Order = "";
+                    crit.Sort = crit.Sort ?? "Id";
+                    db.Database.CommandTimeout = 600;
 
-                var sql = @"[dbo].[sp_get_gr_list] @Username='" + SiteConfiguration.UserName + "'" +
-                            ", @Search = '" + Term + "' ";
-                var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(sql + ", @isTotal=1").FirstOrDefault();
-                var data = db.Database.SqlQuery<Data.Domain.EMCS.SpGetGrList>(sql + ", @isTotal=0, @sort ='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit='" + crit.Limit + "'").ToList();
+                    if (crit.Term != null)
+                    {
+                        Term = Regex.Replace(crit.Term, @"[^0-9a-zA-Z.]+", "");
+                    }
+                    if (crit.Order != null)
+                    {
+                        Order = Regex.Replace(crit.Order, @"[^0-9a-zA-Z]+", "");
+                    }
 
-                dynamic result = new ExpandoObject();
-                if (count != null) result.total = count.Total;
-                result.rows = data;
-                return result;
+
+                    var sql = @"[dbo].[sp_get_gr_list] @Username='" + SiteConfiguration.UserName + "'" +
+                                ", @Search = '" + Term + "' ";
+                    var count = db.Database.SqlQuery<Data.Domain.EMCS.CountData>(sql + ", @isTotal=1").FirstOrDefault();
+                    var data = db.Database.SqlQuery<Data.Domain.EMCS.SpGetGrList>(sql + ", @isTotal=0, @sort ='" + crit.Sort + "', @order='" + Order + "', @offset='" + crit.Offset + "', @limit='" + crit.Limit + "'").ToList();
+
+                    dynamic result = new ExpandoObject();
+                    if (count != null) result.total = count.Total;
+                    result.rows = data;
+                    return result;
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         }
         public static bool GRHisOwned(long id, string userId)
         {
@@ -111,6 +120,56 @@ namespace App.Service.EMCS
                 return data;
             }
         }
+        public static Data.Domain.EMCS.ShippingFleet GetShippingFleet(long id)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var sql = @"[dbo].[sp_get_shippingfleet_gr] @Id='"+ id + "'";
+                    var tb = db.Database.SqlQuery<Data.Domain.EMCS.ShippingFleet>(sql).FirstOrDefault();
+                    return tb;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Data.Domain.EMCS.ShippingFleet> GetShippingFleetList(long id)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var sql = @"[dbo].[sp_get_shippingfleet_gr] @Id='" + id + "'";
+                    var tb = db.Database.SqlQuery<Data.Domain.EMCS.ShippingFleet>(sql).ToList();
+                    return tb;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Data.Domain.EMCS.ShippingFleetRefrence> GetShippingFleetReference(long id)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var sql = @"[dbo].[sp_get_shippingfleet_gr_reference] @Id='" + id + "'";
+                    var tb = db.Database.SqlQuery<Data.Domain.EMCS.ShippingFleetRefrence>(sql).ToList();
+                    return tb;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public static int Crud(Data.Domain.EMCS.GoodsReceive itm, string dml)
         {
@@ -128,6 +187,26 @@ namespace App.Service.EMCS
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
                 return db.CreateRepository<Data.Domain.EMCS.GoodsReceive>().CRUD(dml, itm);
+            }
+        }
+
+        public static int CrudShippingFleet(Data.Domain.EMCS.ShippingFleet itm, string dml)
+        {
+            CacheManager.Remove(CacheName);
+
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                return db.CreateRepository<Data.Domain.EMCS.ShippingFleet>().CRUD(dml, itm);
+            }
+        }
+
+        public static int CrudShippingFleetReference(Data.Domain.EMCS.ShippingFleetRefrence itm, string dml)
+        {
+            CacheManager.Remove(CacheName);
+
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                return db.CreateRepository<Data.Domain.EMCS.ShippingFleetRefrence>().CRUD(dml, itm);
             }
         }
 
@@ -288,7 +367,7 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
             {
-                var sql = @"select * from dbo.cipl where Id IN (select IdCipl from dbo.GoodsReceiveItem where IdGr = " + id + ")";
+                var sql = @"select * from dbo.cipl where Id IN (select TOP 1 IdCipl from dbo.ShippingFleetRefrence where IdGr = " + id + ")";
                 var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.Cipl>(sql).ToList();
                 return data;
             }
@@ -297,8 +376,6 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
-                //GoodReceiveDocument a = ewn 
-                //filter.Cargoid =
                 try
                 {
                     filter.Sort = filter.Sort ?? "Id";
@@ -378,17 +455,86 @@ namespace App.Service.EMCS
                     List<SqlParameter> parameterList = new List<SqlParameter>();
                     parameterList.Add(new SqlParameter("@Id", id));
                     parameterList.Add(new SqlParameter("@Filename", filename));
-                    parameterList.Add(new SqlParameter("@UpdateBy", SiteConfiguration.UserName));
                     SqlParameter[] parameters = parameterList.ToArray();
-                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_GrDocumentUpdateFile] @Id, @Filename, @UpdateBy", parameters);
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_GrDocumentUpdateFile] @Id, @Filename", parameters);
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
+        }
+        public static bool UpdateFileArmadaDocument(long id, string filename)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@Id", id));
+                    parameterList.Add(new SqlParameter("@Filename", filename));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_ArmadaDocumentUpdateFile] @Id, @Filename", parameters);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public static bool UpdateFileArmadaDocumentForRFC(long id, string filename,bool buttonRFC)
+        {
+            try
+            {
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@Id", id));
+                    parameterList.Add(new SqlParameter("@Filename", filename));
+                    parameterList.Add(new SqlParameter("@buttonRFC", buttonRFC));
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_ArmadaDocumentUpdateFileForRFC] @Id, @Filename,@buttonRFC", parameters);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+        public static List<ShippingFleet> ArmadaDocumentListById(long id)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+
+                try
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@id", id));
+                    SqlParameter[] parameters = parameterList.ToArray();
+
+                    var data = db.DbContext.Database.SqlQuery<ShippingFleet>("[dbo].[sp_get_armada_document] @id", parameters).ToList();
+                    return data;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            //using (var db = new Data.EmcsContext())
+            //{
+            //    var data = db.CiplD.Where(a => a.IdRequest == id && a.IsDelete == false);
+            //    return data.ToList();
+            //}
         }
         public static List<GoodReceiveDocument> GRDocumentListById(long id)
         {
@@ -401,7 +547,6 @@ namespace App.Service.EMCS
                     List<SqlParameter> parameterList = new List<SqlParameter>();
                     parameterList.Add(new SqlParameter("@id", id));
                     SqlParameter[] parameters = parameterList.ToArray();
-
                     var data = db.DbContext.Database.SqlQuery<GoodReceiveDocument>("[dbo].[sp_get_gr_document_list_byid] @id", parameters).ToList();
                     return data;
                 }
@@ -417,6 +562,82 @@ namespace App.Service.EMCS
             //    return data.ToList();
             //}
         }
+        public static dynamic UpdateGrByApprover(SpGoodReceive itm)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                try
+                {
+                    itm.UpdateBy = SiteConfiguration.UserName;
+                    itm.UpdateDate = DateTime.Now;
+                    int apar = itm.Apar == true ? 1 : 0;
+                    int apd = itm.Apd == true ? 1 : 0;
 
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+
+                    var sql = @"[dbo].[sp_insert_update_gr]
+                    @PicName='" + itm.PicName + "'," +
+                                        "@Id='" + itm.Id + "'," +
+                                        "@KtpName='" + itm.KtpNumber + "'," +
+                                        "@PhoneNumber='" + itm.PhoneNumber + "'," +
+                                        "@SimNumber='" + itm.SimNumber + "'," +
+                                        "@StnkNumber='" + itm.StnkNumber + "'," +
+                                        "@NopolNumber='" + itm.NopolNumber + "'," +
+                                        "@EstimationTimePickup='" + itm.EstimationTimePickup + "'," +
+                                        "@Notes='" + itm.Notes + "'," +
+                                        "@CreateBy='" + itm.CreateBy + "'," +
+                                        "@CreateDate='" + itm.CreateDate + "'," +
+                                        "@UpdateBy='" + itm.UpdateBy + "'," +
+                                        "@UpdateDate='" + itm.UpdateDate + "'," +
+                                        "@Vendor='" + itm.Vendor + "'," +
+                                        "@VehicleType='" + itm.VehicleType + "'," +
+                                        "@VehicleMerk='" + itm.VehicleMerk + "'," +
+                                        "@Apar='" + apar + "'," +
+                                        "@Apd='" + apd + "'," +
+                                        "@KirExpire='" + itm.KirExpire + "'," +
+                                        "@KirNumber='" + itm.KirNumber + "'," +
+                                        "@IsDelete=0, " +
+                                        "@SimExpiryDate='" + itm.SimExpiryDate + "', " +
+                                        "@ActualTimePickup='" + itm.ActualTimePickup + "', " +
+                                        "@Status='" + "Approve" + "', " +
+                                        "@PickupPoint='" + itm.PickupPoint + "'," +
+                                        "@PickupPic='" + itm.PickupPic + "'";
+
+                    db.DbContext.Database.SqlQuery<Data.Domain.EMCS.IdData>(sql).FirstOrDefault();
+                    //var data = db.DbContext.Database.SqlQuery<Data.Domain.EMCS.IdData>("[dbo].[sp_insert_update_gr] @Id, @PicName,  @KtpName, @PhoneNumber, @SimNumber, @StnkNumber, @NopolNumber, @EstimationTimePickup, @Notes, @CreateBy, @CreateDate, @UpdateBy, @UpdateDate, @Vendor, @VehicleType, @VehicleMerk, @Apar, @Apd, @KirExpire, @KirNumber, @IsDelete, @SimExpiryDate, @ActualTimePickup, @Status, @PickupPoint, @PickupPic", parameterList).FirstOrDefault();
+
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(err.Message);
+                }
+                return 1;
+            }
+
+
+        }
+        public static List<ShippingFleetDocumentHistory> GetDocumentListOfArmada(long Id,long IdShippingFleet)
+        {
+            if(Id == 0)
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var data = db.ShippingFleetDocumentHistory.Where(a => a.IdShippingFleet == IdShippingFleet).ToList();
+                    return data;
+                }
+            }
+            else
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var data = db.ShippingFleetDocumentHistory.Where(a => a.Id == Id).ToList();
+                    return data;
+                }
+            }
+            
+        }
     }
+
 }
+

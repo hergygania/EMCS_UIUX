@@ -1,10 +1,8 @@
 ﻿@{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Kantor Pelayanan & Pengawasan Bea Cukai";
 }
 
 @using System.Web.Mvc
-@Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 
 <script type="text/javascript">
@@ -42,7 +40,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-success animation-on-hover btn-round" data-modal="" href="/EMCS/KppbcCreate" id="btnCreate">
+                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/KppbcCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add Kppbc
                             </a>
                         }
@@ -61,7 +59,7 @@
     <i class="fa fa-edit"></i> Update Kpbbc
 </a>
 
-<div id='myModalPlace' class='modal'>
+<div id='myModalPlace' class='modal fade in'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>

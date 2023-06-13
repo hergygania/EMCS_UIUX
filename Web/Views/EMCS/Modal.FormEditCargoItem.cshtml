@@ -2,6 +2,7 @@
 @{
     ViewBag.crudMode = "U";
     var mode = ViewBag.crudMode;
+    var IsRFC = ViewBag.IsRFC;
     var title = mode == "I" ? "Add" : (mode == "U" ? "Update" : "Delete");
     var statusList = new List<string>();
 }
@@ -13,7 +14,7 @@
     <h4 class="modal-title" id="myModalLabel"><i class="fa @((mode == "I") ? "fa-plus-circle" : "fa-edit")"></i>&nbsp;@title Item</h4>
 </div>
 
-@using (Html.BeginForm("EditCargoItem", "Emcs", FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo", @style = " max-height: 500px;overflow-y: scroll;" }))
+@using (Html.BeginForm("EditCargoItem", "Emcs",new { IsRFC = IsRFC }, FormMethod.Post, new { name = "FormUpdateItemCargo", @id = "FormUpdateItemCargo", @style = " max-height: 500px;overflow-y: scroll;" }))
 {
 
 
@@ -37,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3">Container Type </label>
-                                <div class="input-group col-md-9" id="ContainerType">
+                                <div class="input-group col-md-9" >
                                     @Html.DropDownListFor(model => model[i].ContainerType, Model[i].listContainerType, "Select container type", new { @class = "form-control", @id = "ContainerType" })
                                 </div>
                             </div>
@@ -52,7 +53,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3">Width</label>
                                     <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Width" })
+                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "Width", placeholder = "Width" })
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -154,7 +155,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3">Width</label>
                                     <div class="input-group col-md-9">
-                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "ContainerSealNumber", placeholder = "Width" })
+                                        @Html.TextBoxFor(m => m[i].Width, new { @class = "form-control", @id = "Width", placeholder = "Width" })
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -30,10 +30,16 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
             string userRoles = User.Identity.GetUserRoles();
-            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            //if (userRoles.Contains("EMCSImex") || userRoles.Contains("Administrator") || userRoles.Contains("Imex"))
+            if (userRoles.Contains("EMCSImex") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
             else
                 ViewBag.IsImexUser = false;
+            if(User.Identity.Name == "eko.suhartarto")
+                ViewBag.IsCKB = true;
+            else
+                ViewBag.IsCKB = false;
+
 
             PaginatorBoot.Remove("SessionTRN");
             return View();
@@ -63,6 +69,7 @@ namespace App.Web.Controllers.EMCS
             ViewBag.AllowCreate = AuthorizeAcces.AllowCreated;
             ViewBag.AllowUpdate = AuthorizeAcces.AllowUpdated;
             ViewBag.AllowDelete = AuthorizeAcces.AllowDeleted;
+            ViewBag.IdCipl = id;
             ViewBag.GroupName = Service.EMCS.SvcUserLog.GetUserDetail().Group == null ? "" : Service.EMCS.SvcUserLog.GetUserDetail().Group;
             PaginatorBoot.Remove("SessionTRN");
             var userId = User.Identity.GetUserId();
@@ -125,6 +132,25 @@ namespace App.Web.Controllers.EMCS
             var detail = new CiplModel();
             detail.Data = Service.EMCS.SvcCipl.CiplGetById(id);
             detail.Forwarder = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
+            MasterSearchForm crit = new MasterSearchForm();
+            var subcon = Service.EMCS.SvcGeneral.GetSubconList(crit);
+            for (int i = 0; i < subcon.Count; i++)
+            {
+                if (subcon[i].Value == detail.Forwarder.SubconCompany)
+                {
+                    detail.Forwarder.SubconCompany = subcon[i].Name;
+                    break;
+                }
+            }
+            var vendor = Service.EMCS.SvcGeneral.GetLatestVendorList(crit);
+            for (int i = 0; i < vendor.Count; i++)
+            {
+                if (vendor[i].Code == detail.Forwarder.Vendor)
+                {
+                    detail.Forwarder.Vendor = vendor[i].Name;
+                    break;
+                }
+            }
             detail.DataItem = Service.EMCS.SvcCipl.CiplItemGetById(id);
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlHeaderData(id);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlDetailData(id);
@@ -145,6 +171,77 @@ namespace App.Web.Controllers.EMCS
             ViewBag.refs = string.Join(",", items);
             ViewBag.Currency = detail.Data.Currency;
             ViewBag.IdCust = detail.DataItem.Count != 0 ? detail.DataItem.FirstOrDefault()?.IdCustomer : "";
+
+
+            String referencesNo = "";
+            if (detail.Data.CategoriItem == "PRA")
+            {
+                foreach (var item in detail.DataItem.GroupBy(a => a.ReferenceNo))
+                {
+                    if (! referencesNo.Contains(item.Key)) { 
+                        if (referencesNo.Length > 0)
+                        {
+                            referencesNo += ",<br/>";
+                        }
+                        referencesNo += item.Key;
+                    }
+                }
+            }
+            else
+            {
+                List<string> refIds = new List<string>();
+                foreach (var item in detail.DataItem.GroupBy(a => a.IdReference))
+                {
+                    refIds.Add(item.Key.ToString());
+                }
+                var references = Service.EMCS.SvcCipl.GetAllReferenceItem(new GridListFilter(), "Id", string.Join(",", refIds), detail.Data.CategoriItem);
+                var empty = new List<string>
+                {
+                    "-", "", " "
+                };
+
+                var _counter = 0;
+                foreach (var item in references.rows)
+                {
+                    var _temp = "";
+                    if (_counter > 0 || (referencesNo.Length > 0 && referencesNo != ",<br/>"))
+                    {
+                        _temp += ",<br/>";
+                    }
+                    _counter = 0;
+                    if (! empty.Contains(item.ReferenceNo) && referencesNo.IndexOf(item.ReferenceNo) == -1)
+                    {
+                        _temp += item.ReferenceNo;
+                        _counter++;
+                    }
+
+                    if (! empty.Contains(item.QuotationNo) && referencesNo.IndexOf(item.QuotationNo) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.QuotationNo;
+                        _counter++;
+                    }
+
+                    if (! empty.Contains(item.PoCustomer) && referencesNo.IndexOf(item.PoCustomer) == -1)
+                    {
+                        if (_counter > 0)
+                        {
+                            _temp += ", ";
+                        }
+                        _temp += item.PoCustomer;
+                        _counter++;
+                    }
+
+                    if (_counter > 0 && ! referencesNo.Contains(_temp))
+                    {
+                        referencesNo += _temp;
+                    }
+                }
+            }
+            ViewBag.referencesNo = referencesNo;
 
             return View(detail);
         }
@@ -176,6 +273,23 @@ namespace App.Web.Controllers.EMCS
             var detail = new CiplModel();
             detail.Data = Service.EMCS.SvcCipl.CiplGetById(id);
             detail.Forwarder = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
+            MasterSearchForm crit = new MasterSearchForm();
+            var subcon = Service.EMCS.SvcGeneral.GetSubconList(crit);
+            for (int i = 0; i < subcon.Count; i++)
+            {
+                if (subcon[i].Value == detail.Forwarder.SubconCompany)
+                {
+                    detail.Forwarder.SubconCompany = subcon[i].Name;
+                }
+            }
+            var vendor = Service.EMCS.SvcGeneral.GetVendorList(crit);
+            for (int i = 0; i < vendor.Count; i++)
+            {
+                if (vendor[i].Code == detail.Forwarder.Vendor)
+                {
+                    detail.Forwarder.Vendor = vendor[i].Name;
+                }
+            }
             detail.DataItem = Service.EMCS.SvcCipl.CiplItemGetById(id);
             detail.TemplateHeader = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlHeaderData(id);
             detail.TemplateDetail = Service.EMCS.DocumentStreamGenerator.GetCiplInvoicePlDetailData(id);
@@ -320,6 +434,7 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.SvcCipl.GetListSpRequestForChangeDetails(dataFilter);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        
 
         public JsonResult GetListSpRequestForChangeByFormType(string idTerm, string formType, string search, int limit, int offset, string sort, string order)
         {
@@ -334,17 +449,11 @@ namespace App.Web.Controllers.EMCS
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetRequestForChangeList(string idTerm, string formType, string search, int limit, int offset, string sort, string order)
+        public JsonResult GetRequestForChangeList(GridListFilter filter)
         {
-            var dataFilter = new Data.Domain.EMCS.GridListFilter();
-            dataFilter.Sort = sort;
-            dataFilter.Order = order;
-            dataFilter.Offset = offset;
-            dataFilter.Limit = limit;
-            dataFilter.Term = idTerm;
-            dataFilter.FormType = formType;
-            var data = Service.EMCS.SvcCipl.GetRequestForChangeList(dataFilter);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var data = Service.EMCS.SvcCipl.GetRequestForChangeList(filter);
+            var total = Service.EMCS.SvcRequestCl.GetRFCTotalList(filter);
+            return Json(new { total, rows = data }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetChangeHistoryReason(string idTerm, string formtype)
@@ -474,7 +583,9 @@ namespace App.Web.Controllers.EMCS
                         }
                     }
                 }
+                Service.EMCS.SvcCipl.CiplItemChange(formId);
                 Service.EMCS.SvcCipl.ApproveRequestForChangeHistory(Convert.ToInt32(idTerm));
+
                 Service.EMCS.SvcCipl.UpdateCiplByApprover(forwader, cipl, "");
                 var userId = User.Identity.GetUserId();
                 //if (Service.EMCS.SvcCipl.CiplHisOwned(cipl.Id, userId) || User.Identity.GetUserRoles().Contains("EMCSImex"))
@@ -490,7 +601,6 @@ namespace App.Web.Controllers.EMCS
                 throw ex;
             }
         }
-
         public ActionResult CiplHistoryPageXt(long id)
         {
             Func<App.Data.Domain.EMCS.CiplListFilter, List<Data.Domain.EMCS.SpGetCiplHistory>> func = delegate (App.Data.Domain.EMCS.CiplListFilter filter)
@@ -574,7 +684,8 @@ namespace App.Web.Controllers.EMCS
             var uomtypes = Service.EMCS.MasterParameter.GetParamByGroup("UOMType");
             var incoterms = Service.EMCS.MasterIncoterms.GetList(crit);
             var packagingtype = Service.EMCS.MasterParameter.GetSelectList("PackagingType");
-
+            var subcon = Service.EMCS.SvcGeneral.GetSubconList(crit);
+            var vendor = Service.EMCS.SvcGeneral.GetVendorList(crit);
             var shippingmethod = Service.EMCS.MasterParameter.GetSelectList("ShippingMethod");
             var freightpayment = Service.EMCS.MasterParameter.GetSelectList("FreightPayment");
             var forwader = Service.EMCS.MasterParameter.GetSelectList("Forwader");
@@ -585,7 +696,7 @@ namespace App.Web.Controllers.EMCS
             var currency = Service.EMCS.SvcCipl.GetCurrencyCipl();
             var categoryreference = Service.EMCS.SvcCipl.GetCategoryReferencet("CategoryReference");
 
-            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference, type }, JsonRequestBehavior.AllowGet);
+            return Json(new { exporttype, category, categoryunit, categoryspareparts, soldconsignee, subcon, vendor, shipdelivery, incoterms, packagingtype, exportremarks, paymentterms, uomtypes, shippingmethod, freightpayment, forwader, country, branch, kurs, currency, categoryreference, type }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -607,7 +718,7 @@ namespace App.Web.Controllers.EMCS
                 var model = Service.EMCS.SvcCipl.CiplGetById(item.Data.Id);
                 var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(item.Data.Id);
 
-                var newmodel = new CiplFormModel();
+                var newmodel = new CiplFormModel();           
                 newmodel.Data = model;
                 newmodel.Forwader = forwader;
 
@@ -709,15 +820,20 @@ namespace App.Web.Controllers.EMCS
                 {
                     _errorHelper.Error("SaveChangeHistory - id found" + id.ToString());
                 }
-                var model = Service.EMCS.SvcCipl.CiplGetById(item.Data.Id);
+                var model = Service.EMCS.SvcCipl.CiplGetByIdForRFC(item.Data.Id);
                 var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(item.Data.Id);
 
                 var newmodel = new CiplFormModel();
+                //if (model != null)
+                //{
+                //    var PicUpPic = model.PickUpPic.Split('-');
+                //    model.PickUpPic = PicUpPic[0];
+                //}
                 newmodel.Data = model;
                 newmodel.Forwader = forwader;
 
                 var listRfcItems = new List<Data.Domain.RFCItem>();
-                string[] _ignnoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl" };
+                string[] _ignnoreParameters = { "Id", "CiplNo", "ClNo", "EdoNo", "IdCipl", "LcNoDate", "CreateDate", "NotifyPartySameConsignee" };
                 var properties = TypeDescriptor.GetProperties(typeof(Cipl));
                 foreach (PropertyDescriptor property in properties)
                 {
@@ -726,6 +842,13 @@ namespace App.Web.Controllers.EMCS
                         var currentValue = property.GetValue(item.Data);
                         if (currentValue != null && property.GetValue(model) != null)
                         {
+                            //Special cases
+                            #region SpecialCase
+                            if (property.Name == "Rate")
+                            {
+                                currentValue = currentValue.ToString() + ".00";
+                            }
+                            #endregion
                             if (currentValue.ToString() != property.GetValue(model).ToString())
                             {
                                 var rfcItem = new Data.Domain.RFCItem();
@@ -838,7 +961,16 @@ namespace App.Web.Controllers.EMCS
                 var model = Service.EMCS.SvcCipl.CiplGetById(id);
                 var request = Service.EMCS.SvcCipl.GetRequestCiplById(Convert.ToString(id), "");
                 var forwader = Service.EMCS.SvcCipl.CiplForwaderGetById(id);
-
+                MasterSearchForm crit = new MasterSearchForm();
+                var subcon = Service.EMCS.SvcGeneral.GetSubconList(crit);
+                for (int i = 0; i < subcon.Count; i++)
+                {
+                    if (subcon[i].Value == forwader.SubconCompany)
+                    {
+                        forwader.SubconCompany = subcon[i].Name;
+                        break;
+                    }
+                }
                 var document = Service.EMCS.SvcCipl.CiplDocumentsGetById(id);
                 var problem = Service.EMCS.SvcCipl.SP_CiplProblemHistory(id);
                 return Json(new { model, forwader, document, problem, request }, JsonRequestBehavior.AllowGet);
@@ -852,7 +984,6 @@ namespace App.Web.Controllers.EMCS
         public JsonResult CiplItemGetById(long id)
         {
             var list = Service.EMCS.SvcCipl.CiplItemGetById(id);
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
@@ -878,12 +1009,22 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-        public bool CiplItemInsert(List<Data.Domain.EMCS.CiplItemInsert> data)
+        public bool CiplItemInsert(List<Data.Domain.EMCS.CiplItemInsert> data, string RFC, string Status)
         {
-            var id = Service.EMCS.SvcCipl.InsertCiplItem(data);
+            var id = Service.EMCS.SvcCipl.InsertCiplItem(data, RFC, Status);
             return id;
         }
-
+        public JsonResult GetCiplItemChangeList(GridListFilter filter)
+        {
+            var data = Service.EMCS.SvcCipl.GetCiplItemList(filter);
+            return Json(new { rows = data }, JsonRequestBehavior.AllowGet);
+            //   return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult CiplItemList(long id)
+        {
+            var list = Service.EMCS.SvcCipl.CiplItemGetById(id);
+            return Json(new { rows = list }, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public bool CiplDocumentInsert(List<Data.Domain.EMCS.CiplDocumentInsert> data)
         {
@@ -914,16 +1055,15 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-        public long CiplItemDeleteById(long id)
+        public long CiplItemDeleteById(long id, string RFC)
         {
-            id = Service.EMCS.SvcCipl.DeleteCiplById(id, "CIPLITEMID");
+            id = Service.EMCS.SvcCipl.DeleteCiplById(id, RFC, "CIPLITEMID");
             return id;
         }
-
         [HttpPost]
-        public bool CiplItemSplitById(List<Data.Domain.EMCS.CiplItemInsert> data)
+        public bool CiplItemSplitById(List<Data.Domain.EMCS.CiplItemInsert> data, string RFC, string Status)
         {
-            bool id = Service.EMCS.SvcCipl.InsertCiplItem(data);
+            bool id = Service.EMCS.SvcCipl.InsertCiplItem(data, RFC, Status);
             return id;
         }
 
@@ -960,7 +1100,7 @@ namespace App.Web.Controllers.EMCS
         {
             try
             {
-                Service.EMCS.SvcCipl.DeleteCiplById(idCipl, "CIPLITEM");
+                Service.EMCS.SvcCipl.DeleteCiplById(idCipl, "false", "CIPLITEM");
                 return JsonCRUDMessage("Delete Success");
             }
             catch (Exception)
@@ -976,7 +1116,7 @@ namespace App.Web.Controllers.EMCS
             var userId = User.Identity.GetUserId();
             if (Service.EMCS.SvcCipl.CiplHisOwned(id, userId))
             {
-                result = Service.EMCS.SvcCipl.DeleteCiplById(id, "ALL");
+                result = Service.EMCS.SvcCipl.DeleteCiplById(id, "false", "ALL");
             }
             return result;
 
@@ -998,10 +1138,13 @@ namespace App.Web.Controllers.EMCS
             dataFilter.Sort = filter.Sort;
             dataFilter.Offset = filter.Offset;
 
-            var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var data = Service.EMCS.SvcCipl.GetReferenceItem(dataFilter, column, columnValue, category);
+            var dataJson = Json(data, JsonRequestBehavior.AllowGet);
+            dataJson.MaxJsonLength = Int32.MaxValue;
+            return dataJson;
         }
+
 
         [HttpPost]
         public JsonResult GetConsigneeName(string id, string category, string categoryReference)

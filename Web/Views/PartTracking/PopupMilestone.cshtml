@@ -227,7 +227,6 @@
                     table += '<td style="background-color:yellow;border-right:1px solid gray;">' + actual + ' ' + data.Actual_Unit + ' ' + data.Actual_Hours + ' ' + data.Actual_UnitHours + '</td>';
                 else //if (progress >= 100)
                 {
-                    debugger;
                     if (data.Benchmark_Unit == 'Hour') {//Benchmark Hours and Minutes
                         if (data.Actual_UnitHours == 'Hour' || data.Actual_UnitHours == 'Hours') {
                             if (data.Actual_Hours > data.Benchmark)

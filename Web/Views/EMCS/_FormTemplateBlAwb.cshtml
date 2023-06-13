@@ -1,0 +1,60 @@
+﻿@model  App.Web.Models.EMCS.BlAwbModel
+@{int j = 1;
+    for (int i = 0; i < Model.BlAwbList.Count; i++)
+    {
+        <h3><b>Document - @j</b></h3>
+        <div class="box box-warning">
+            <div class="form-group hide">
+                <label class="control-label col-lg-4 col-xs-4">ID</label>
+                <div class="input-group col-lg-8 col-xs-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].Id, new { @class = "form-control disabled", @id = "BLAWBID" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-xs-4">Master BL Number</label>
+                <div class="input-group col-xs-8 col-lg-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].Number, new { @class = "form-control", @id = "Number", @placeholder = "Bl Awb Number", @name = "Number" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-xs-4">Master BL Date</label>
+                <div class="input-group col-xs-8 col-lg-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].MasterBlDate, new { @class = "form-control date", @id = "MasterBlDate", @placeholder = "Master BL Date ", @name = "MasterBlDate" })
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-xs-4">House BL Number</label>
+                <div class="input-group col-xs-8 col-lg-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].HouseBlNumber, new { @class = "form-control required", @id = "HouseBlNumber", @placeholder = "House BL Number", @name = "HouseBlNumber" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-xs-4">House BL Date</label>
+                <div class="input-group col-xs-8 col-lg-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].HouseBlDate, new { @class = "form-control date required", @id = "HouseBlDate", @placeholder = "House BL Date", @name = "HouseBlDate" })
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-4 col-xs-4">Publisher</label>
+                <div class="input-group col-xs-8 col-lg-8">
+                    @Html.TextBoxFor(m => m.BlAwbList[i].Publisher, new { @class = "form-control required", @id = "Publisher", @placeholder = "Publisher", @name = "Publisher" })
+                </div>
+            </div>
+            <div class="form-group hide">
+                <label class="control-label col-lg-4 col-xs-4" id="cc_num">Description</label>
+                <div class="input-group col-lg-8 col-xs-8">
+                    @Html.TextAreaFor(m => m.BlAwbList[i].Description, new { @class = "form-control required", @id = "Description", @placeholder = "Description", @name = "Description" })
+                </div>
+            </div>
+        </div>
+        j++;
+    }
+
+}
+

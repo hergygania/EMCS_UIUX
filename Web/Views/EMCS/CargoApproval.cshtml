@@ -19,7 +19,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" da ta-toggle="tab">Cargo List</a>
+                <a style="z-index:5" href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Cargo List</a>
             </li>
             <li role="presentation">
                 <a style="z-index:4" href="#history" aria-controls="profile" role="tab" data-toggle="tab">Cargo History</a>
@@ -136,10 +136,27 @@
                                 <legend class="scheduler-border"></legend>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="col-sm-4">Total Packages</label>
-                                        <div class="col-sm-8">
-                                            @*<input type="text" class="form-control text-right" id="topackCl" name="topackCl" value="" disabled>*@
-                                            <input type="text" class="form-control text-right" id="topackCll" name="topackCll" value="@Model.TemplateHeader.TotalCaseNumber" disabled>
+                                        <label class="control-label col-lg-4 col-xs-4">Total Packages</label>
+                                        <div class="input-group col-lg-8 col-xs-8">
+                                            @if (Model.Data.TotalPackageBy == "CaseNo")
+                                            {
+                                                <div class="col-lg-6 col-xs-6">
+                                                    <input type="text" class="form-control text-right" id="TotalPackage" value="Total Package by CaseNumber" disabled>
+                                                </div>
+                                                <div class="col-lg-6 col-xs-6" style="right: 20px;">
+                                                    <input type="text" class="form-control text-right" id="getcount" disabled>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-lg-6 col-xs-6">
+                                                    <input type="text" class="form-control text-right" id="TotalPackage" value="Total Package by Item" disabled>
+                                                </div>
+                                                <div class="col-lg-6 col-xs-6" style="right: 20px;">
+                                                    <input type="text" class="form-control text-right" id="getcount" disabled>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -273,7 +290,7 @@
                                     <a href="~/EMCS/CargoList" class="btn btn-default" style="width:120px;"><i class="fa fa-chevron-circle-left"></i>&nbsp;Back</a>
                                     <button type="button" id="btnApprove" style="width:120px;" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;Approve</button>
                                     <button type="button" id="btnRevise" style="width:120px;" class="btn btn-warning"><i class="fa fa-pencil"></i>&nbsp;Need Revise</button>
-                                    <button type="button" id="BtnReject" style="width:120px;" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Reject</button>
+                                    <button type="button" id="btnReject" style="width:120px;" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Reject</button>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +320,7 @@
             <div role="tabpanel" class="tab-pane" id="documents">
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
-                        <table id="tableCargoDocuments" data-toolbar=".toolbar" class="table table-bordered"></table>
+                        <table id="tableCargoDocuments1" data-toolbar=".toolbar" class="table table-bordered"></table>
                     </div>
                 </div>
             </div>
@@ -381,8 +398,8 @@
                                 </tr>
                                 <tr><td colspan="13" style="height:20px"></td></tr>
                                 <tr>
-                                    <td colspan="6" style="height:15px" class="border_left border_top border_right border_bottom text_bold">SHIPPER'S NAME & ADDRESS</td>
-                                    <td colspan="7" class="border_right"></td>
+                                    <td colspan="13" style="height:15px" class="border_left border_top border_right border_bottom text_bold">SHIPPER'S NAME & ADDRESS</td>
+                                    <td colspan="7"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" class="border_left text_bold">PT. TRAKINDO UTAMA</td>
@@ -531,10 +548,20 @@
                                     <td colspan="13" style="height:10px"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="8"></td>
-                                    <td colspan="3">TOTAL PACKAGES</td>
-                                    <td>:</td>
-                                    <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
+                                    @if (Model.Data.TotalPackageBy == "CaseNo")
+                                    {
+                                        <td colspan="8"></td>
+                                        <td colspan="3">TOTAL PACKAGE BY CASENUMBER</td>
+                                        <td>:</td>
+                                        <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
+                                    }
+                                    else
+                                    {
+                                        <td colspan="8"></td>
+                                        <td colspan="3">TOTAL PACKAGE BY ITEM</td>
+                                        <td>:</td>
+                                        <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
+                                    }
                                 </tr>
                                 <tr>
                                     <td colspan="8"></td>
@@ -591,12 +618,12 @@
                                 <tr>
                                     <td colspan="5" style="height:15px" class="border_left">Port Of Loading</td>
                                     <td>:</td>
-                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.LoadingPort</td>
+                                    <td colspan="13" class="border_right text_bold">@Model.TemplateHeader.LoadingPort</td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" style="height:15px" class="border_left">Port Of Discharge/ Destination</td>
                                     <td>:</td>
-                                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.DestinationPort</td>
+                                    <td colspan="13" class="border_right text_bold">@Model.TemplateHeader.DestinationPort</td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" style="height:15px" class="border_left">Flight / Sailling Schedule</td>
@@ -634,6 +661,41 @@
         </div>
     </div>
 </div>
+<div id='myModalUploadPreview' class='modal fade in'>
+    <div class="modal-dialog" style="width:800px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><i class="fa fa-edit"></i>&nbsp;Preview File Document</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">IdDocument</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="IdDocument" name="IdDocument">
+                    </div>
+                </div>
+                <div class="form-group hidden">
+                    <label class="control-label col-md-3 col-xs-12">Filename</label>
+                    <div class="input-group col-md-9 col-xs-12">
+                        <input type="text" class="form-control" id="Filename" name="Filename">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <iframe title="File Name Cipl File" id="framePreview" name="framePreview" src="" style="width:100%;height:800px;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="name" value="@Model.Data.TotalPackageBy" id="TotalBy" />
 @*</div>*@
 
 @Html.Partial("Modal.FormProblem")
@@ -651,6 +713,23 @@
     if ('@Model.TemplateDetail.Count' < 25)
         spacing = ((250 / 20) - '@Model.TemplateDetail.Count') * 20;
     $('.spacing').css("height", spacing + 'px');
+    /*$tableDocuments1 = $('#tableCargoDocuments1');*/
+
+    $(document).ready(function () {
+        get_cargodocumentviewlist();
+            var IdCargo = $("#CargoID").val();
+            $.get(myApp.fullPath + "EMCS/GetTotalDataCargo?Id=" + IdCargo + "&selectvalue=" + $('#TotalBy').val(), function (resp) {
+                var data = {};
+                $.map(resp.data, function (value, key) {
+                    data[value.Key] = value.Value;
+                });
+                $("#getcount").val(formatCurrency(data.totalPackage, ".", ",", 2));
+                $("#togroswegCl").val(formatCurrency(data.totalGrossWeight, ".", ",", 2));
+                $("#tonetwegCl").val(formatCurrency(data.totalNetWeight, ".", ",", 2));
+                $("#tovolumeCl").val(data.totalVolume);
+            });
+    })
+    
 </script>
 @section scripts
 {
@@ -663,4 +742,5 @@
     @Scripts.Render("~/Scripts.app/EMCS/FormProblem.cshtml.js")
     @Scripts.Render("~/Scripts.app/EMCS/transaction/CargoApproval.cshtml.js")
     <script src="@Url.Content("~/Scripts.app/EMCS/Custom.js")"></script>
+
 }

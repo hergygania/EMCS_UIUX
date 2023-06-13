@@ -97,6 +97,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -145,9 +146,11 @@
     <Compile Include="DTS\MasterSubDistrict.cs" />
     <Compile Include="EMCS\Dashboard.cs" />
     <Compile Include="EMCS\MasterCIPLItem.cs" />
+    <Compile Include="EMCS\MasterSubcon.cs" />
     <Compile Include="EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="EMCS\MasterVendorService.cs" />
     <Compile Include="EMCS\SvcExcelFormatter.cs" />
     <Compile Include="EMCS\MasterAreaUserCKB.cs" />
     <Compile Include="EMCS\MasterParameter.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="EMCS\SvcCargoItem.cs" />
     <Compile Include="EMCS\SvcDelegation.cs" />
     <Compile Include="EMCS\SvcImexTeamChangeHistory.cs" />
+    <Compile Include="EMCS\SvcRPebReport.cs" />
     <Compile Include="EMCS\SvcShippingInstruction.cs" />
     <Compile Include="EMCS\SvcContainer.cs" />
     <Compile Include="EMCS\SvcGeneral.cs" />

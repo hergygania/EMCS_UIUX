@@ -13,6 +13,7 @@ namespace App.Data.Domain.EMCS
         public string IncoTerms { get; set; } 
         public DateTime? StuffingDateStarted { get; set; } 
         public DateTime? StuffingDateFinished { get; set; } 
+        public string TotalPackageBy { get; set; } 
         public string VesselFlight { get; set; } 
         public string ConnectingVesselFlight { get; set; } 
         public string VoyageVesselFlight { get; set; } 

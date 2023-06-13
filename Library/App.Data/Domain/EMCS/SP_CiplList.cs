@@ -21,5 +21,7 @@
         public string Status { get; set; }
 
         public string StatusViewByUser { get; set; }
+        public string RoleName { get; set; }
+
     }
 }

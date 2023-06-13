@@ -21,6 +21,9 @@
         public decimal? Width { get; set; }
         public decimal? Height { get; set; }
         public decimal? NetWeight { get; set; }
+        public decimal? Gross { get; set; }
+        public decimal? Net { get; set; }
+        public bool IsDelete { get; set; }
         public string ContainerNumber { get; set; }
         public string ContainerType { get; set; }
         public string ContainerSealNumber { get; set; }

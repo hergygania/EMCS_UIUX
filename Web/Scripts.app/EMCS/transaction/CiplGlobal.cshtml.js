@@ -17,7 +17,329 @@ var $form = $("#FormCipl");
 
 function load_data() {
     //ID
+    var partRequestChangeItem = [
+        [
+            //{
+            //    field: "action",
+            //    title: "Action",
+            //    rowspan: 2,
+            //    align: 'center',
+            //    class: "text-nowrap",
+            //    events: window.operateEvents,
+            //    formatter: function (value, row, index) {
+            //        return "<button class='btn btn-default btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='fa fa-pencil'></i></button> <button class='btn btn-danger btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='fa fa-trash'></i></button>";
+            //    }
+            //}, 
+            {
+                field: "Id",
+                title: "Id Item",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            }, {
+                field: "IdCipl",
+                title: "Id Cipl",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            },
+            //    {
+            //    field: "IdReference",
+            //    title: "Id Reference",
+            //    rowspan: 2,
+            //    align: 'center',
+            //    sortable: true
+            //},
+            {
+                field: 'ReferenceNo',
+                title: 'Reference No',
+                rowspan: 2,
+                halign: 'center',
+                align: 'center',
+                class: 'text-nowrap',
+                sortable: true,
+                visible: false
+            }, {
+                field: 'IdCustomer',
+                title: 'Id Customer',
+                rowspan: 2,
+                halign: 'center',
+                align: 'center',
+                class: 'text-nowrap',
+                sortable: true,
+                visible: false
+            }, {
+                field: "Name",
+                title: "Name",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                class: "text-nowrap"
+            }, {
+                field: "UnitUom",
+                title: "UOM",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    return row.UnitUom;
+                }
+            }, {
+                field: "CoO",
+                title: "Country Of Origin",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "PartNumber",
+                title: "Part Number",
+                rowspan: 2,
+                sortable: true,
+                align: 'center'
+            }, {
+                field: "Sn",
+                title: "SN",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "JCode",
+                title: "J-Code",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "Ccr",
+                title: "CCR",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "ASNNumber",
+                title: "ASN Number",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "CaseNumber",
+                title: "Case Number",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "Type",
+                title: "Type",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                class: 'text-nowrap',
+                filterControl: true
+            }, {
+                field: "IdNo",
+                title: "Id No",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            }, {
+                field: "YearMade",
+                title: "Year Made",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            }, {
+                field: "Quantity",
+                title: "Quantity",
+                rowspan: 2,
+                align: 'center',
+                sortable: true
+            }, {
+                field: "UnitPrice",
+                title: "Unit Price",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                filterControl: true
+            }, {
+                field: "ExtendedValue",
+                title: "Extended Value",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                filterControl: true
+            }, {
+                field: "dimension",
+                title: "Dimension (In CM)",
+                colspan: 3,
+                align: 'center',
+                sortable: true,
+                filterControl: true,
+                valign: 'middle'
+            }, {
+                field: "Volume",
+                title: "Volume",
+                colspan: 1,
+                align: 'center',
+                sortable: true,
+                filterControl: true
+            }, {
+                field: "NetWeight",
+                title: "Net Weight",
+                colspan: 1,
+                align: 'center',
+                sortable: true,
+                filterControl: true
+            }, {
+                field: "GrossWeight",
+                title: "Gross Weight",
+                colspan: 1,
+                align: 'center',
+                sortable: true,
+                filterControl: true
+            }, {
+                field: "Currency",
+                title: "Currency",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                filterControl: true,
+                visible: false
+            }, {
+                field: "IdParent",
+                title: "Id Parent",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                filterControl: true,
+                visible: false
+            }, {
+                field: "SibNumber",
+                title: "SIB Number",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            }, {
+                field: "WoNumber",
+                title: "WO Number",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            }, {
+                field: "Claim",
+                title: "Claim",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
+                visible: false
+            },
+            {
+                field: "Status",
+                title: "Status",
+                rowspan: 2,
+                align: 'center',
+                sortable: true,
 
+            }],
+        [{
+            field: "Length",
+            title: "Length",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.Length === '0.00' ? '' : row.Length : row.Length;
+            }
+        }, {
+            field: "Width",
+            title: "Width",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.Width === '0.00' ? '' : row.Width : row.Width;
+            }
+        }, {
+            field: "Height",
+            title: "Height",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.Height === '0.00' ? '' : row.Height : row.Height;
+            }
+        }, {
+            field: "Volume",
+            title: "(m3)",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.Volume === '0.000000' ? '' : row.Volume : row.Volume;
+            }
+        }, {
+            field: "NetWeight",
+            title: "in KGa",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.NetWeight === '0.00' ? '' : row.NetWeight : row.NetWeight;
+            }
+        }, {
+            field: "GrossWeight",
+            title: "in KGa",
+            sortable: true,
+            align: 'right',
+            filterControl: true,
+            formatter: function (value, row, index) {
+                var Category = GetCategoryUsed();
+                return Category === 'PRA' || Category === 'REMAN' ? row.GrossWeight === '0.00' ? '' : row.GrossWeight : row.GrossWeight;
+            }
+        }
+        ]
+    ]
+    $("#table_RequestChangeItem").bootstrapTable({
+        url: "/EMCS/GetCiplItemChangeList",
+        columns: partRequestChangeItem,
+        cache: false,
+        pagination: true,
+        search: false,
+        striped: false,
+        clickToSelect: true,
+        reorderableColumns: true,
+        queryParams: function (params) {
+            return {
+                limit: params.limit,
+                offset: params.offset,
+                IdCipl: $('#hdnIdCipl').val(),
+                sort: params.sort,
+                order: params.order
+            };
+        },
+        toolbar: ".toolbar",
+        toolbarAlign: "left",
+        onClickRow: selectRow,
+        sidePagination: "server",
+        showColumns: true,
+        showRefresh: true,
+        smartDisplay: false,
+        pageSize: "5",
+        formatNoMatches: function () {
+            return '<span class="noMatches">No task available</span>';
+        }
+    });
+    
+ 
     $('#ConsolidateCipl').select2({
         placeholder: "Please Select Consolidate"
     })
@@ -49,7 +371,7 @@ function load_data() {
     if ($('#refCipl') !== null) {
         $('.btnAddItem').prop("disabled", false);
     }
-    
+
     $('#jenisBarangCipl').on('change', function () {
         GetReferenceNo();
 
@@ -63,12 +385,12 @@ function load_data() {
         $('.tableItem, .div-idCustomerCipl').show();
 
         $("#exportCipl option[value='Non Sales - Exhibition (Temporary)']").remove();
-     
+
         if ($(this).val() === 'CATERPILLAR SPAREPARTS') { // Spareparts
             $('#divReferenceNo, .div-idCustomerCipl').show();
             $('.tableItemSpareparts, .categoryspareparts').show();
             $('#forwaderCipl').val('CKB').trigger('change.select2').prop('disabled', false);
-          
+
             //$('#forwaderAttentionCipl, #divCkbBranchCipl, #forwaderAddressCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderEmailCipl').show("slow");
             $('.forwaderAttentionCipl, .divCkbBranchCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderEmailCipl, .forwaderCompanyCipl, .forwaderForwadingCipl').show("slow");
         } else {
@@ -110,18 +432,20 @@ function load_data() {
             $("#consigneeNameCipl").val("Caterpillar S.A.R.L Singapore Branch ( Core )");
             $("#consigneeAddressCipl").val("5 Tukang Innovation Grove\nSingapore 618304");
             $("#consigneeCountryCipl").val("Attn : Chee Kwong Kwan");
+            $("#select2-consigneeCountryCipl-container").text("Singapore");
             $("#consigneeTelpCipl").val("-");
             $("#consigneeFaxCipl").val("-");
             $("#consigneePicCipl").val("Mr Chee kwong kwan");
             $("#consigneeEmailCipl").val("kwan_chee_kwong@cat.com>;Choo_Tien_Tean@cat.com");
-
             $("#notifyNameCipl").val("DHL Global Forwarding (S) Pte Ltd");
             $("#notifyAddressCipl").val("No. 1 Changi South Street 2\n4th Floor, DHL Distribution Centre\nSingapore 486760");
             $("#notifyCountryCipl").val("Singapore");
+            $("#select2-notifyCountryCipl-container").text("Singapore");
             $("#notifyTelpCipl").val("-");
             $("#notifyFaxCipl").val("-");
             $("#notifyPicCipl").val("Jing Kang");
             $("#notifyEmailCipl").val("edgsg-dgf-catofrimport@dhl.com");
+            GetDestinationPort();
 
         } else if ($(this).val() === 'PRA') {
             $("#soldConsigneeCipl").val("Consignee").trigger('change');;
@@ -129,6 +453,7 @@ function load_data() {
             $("#consigneeNameCipl").val("Caterpillar S.A.R.L Singapore Branch");
             $("#consigneeAddressCipl").val("14 Tractor road Singapore 627973");
             $("#consigneeCountryCipl").val("Singapore");
+            $("#select2-consigneeCountryCipl-container").text("Singapore");
             $("#consigneeTelpCipl").val("+65 68293195 / +65 68293192 / +65 68293018");
             $("#consigneeFaxCipl").val("+65 68200667");
             $("#consigneePicCipl").val("Nithya / Lim Beng Hwa / Jeffrey Wong (Freight management team)");
@@ -137,10 +462,12 @@ function load_data() {
             $("#notifyNameCipl").val("DHL Global Forwarding (S) Pte Ltd");
             $("#notifyAddressCipl").val("DHL Global Forwarding (S) Pte Ltd\n4th Floor, DHL Distribution Centre\nSingapore 486760");
             $("#notifyCountryCipl").val("Singapore");
+            $("#select2-notifyCountryCipl-container").text("Singapore");
             $("#notifyTelpCipl").val("+65 63186888");
             $("#notifyFaxCipl").val("+65 65429972");
             $("#notifyPicCipl").val("Import Ocean Team");
             $("#notifyEmailCipl").val("edgsg-dgf-catofrimport@dhl.com");
+            GetDestinationPort();
         } else {
             $('#exportCipl').val(null).trigger('change').prop('disabled', false);
         }
@@ -149,8 +476,7 @@ function load_data() {
     $('#exportCipl').on('change', function () {
         var selected = $(this).children("option:selected").data('data');
         $('.exportRemarks').hide();
-        if ($('#sparepartsCipl').val() != 'PRA' && $('#sparepartsCipl').val() != 'Old Core')
-        {
+        if ($('#sparepartsCipl').val() != 'PRA' && $('#sparepartsCipl').val() != 'Old Core') {
             $('.inpConsignee, .inpNotify').val(null).prop("disabled", true);
         }
         $('#refCipl, #idCustomer').val(null).trigger('change.select2').prop("disabled", true);
@@ -245,7 +571,7 @@ function load_data() {
     })
 
     $('#idCategoryReference').on('change', function () {
-        
+
         if ($(this).val() === null) {
             $('#refCipl').val(null).trigger('change.select2').prop('disabled', false);
             $('#divRefCipl').show();
@@ -276,7 +602,7 @@ function load_data() {
 
     $('#forwaderCipl').on('change', function () {
         $('#CkbBranchCipl').val(null).trigger('change');
-        $('#divCkbBranchCipl, #forwaderForwadingCipl, #forwaderAddressCipl, #forwaderAreaCipl, #forwaderCityCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderAttentionCipl, #forwaderEmailCipl').val(null);
+        $('#divCkbBranchCipl, #forwaderForwadingCipl, #forwaderAddressCipl, #forwaderAreaCipl, #forwaderCityCipl ,#forwaderVendorCipl, #forwaderPostalCodeCipl, #forwaderFaxCipl, #forwaderContactCipl, #forwaderAttentionCipl, #forwaderEmailCipl').val(null);
         $('.divCkbBranchCipl, .forwaderCompanyCipl, .forwaderForwadingCipl, .forwaderAddressCipl, .forwaderAreaCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderAttentionCipl, .forwaderEmailCipl').hide("slow");
         if ($(this).val() === 'CKB') {
             $('.divCkbBranchCipl, .forwaderCompanyCipl, .forwaderForwadingCipl, .forwaderAddressCipl, .forwaderCityCipl, .forwaderPostalCodeCipl, .forwaderFaxCipl, .forwaderContactCipl, .forwaderAttentionCipl, .forwaderEmailCipl').show("slow");
@@ -284,7 +610,7 @@ function load_data() {
             //$('').show("slow");
             $('#forwaderCompanyCipl').val("PT.Cipta Krida Bahari");
         } else if ($(this).val() === 'Non CKB'/* && $('#jenisBarangCipl').val() != 'CATERPILLAR USED EQUIPMENT'*/) {
-            $('.forwaderCompanyCipl, .forwaderAddressCipl, .forwaderContactCipl, .forwaderFaxCipl, .forwaderEmailCipl, .forwaderAttentionCipl').show("slow");
+            $('.forwaderCompanyCipl, .forwaderAddressCipl, .forwaderContactCipl, .forwaderFaxCipl, .forwaderEmailCipl, .forwaderAttentionCipl,.forwaderVendorCipl').show("slow");
             $('#forwaderCompanyCipl').val("");
 
         }
@@ -365,7 +691,7 @@ function load_data() {
         }
         GetReferenceItem();
     })
- 
+
     $('#miscAddButton').on('click', function () {
         $('.btnAddReference, .btnUpdateReference, .btnAddMisc').hide();
         $('#SnItemCipl, #CaseNumItemCipl, #ASNNumItemCipl, #CoOItemCipl, #TypeItemCipl, #YearMadeItemCipl').prop('disabled', true);
@@ -390,7 +716,6 @@ function load_data() {
             $('.btnUpdateReference').show();
         }
     })
-
     $('#idPickupArea').on('change', function () {
         $('#idPickupPic').val(null).trigger('change');
     })
@@ -407,7 +732,7 @@ function load_data() {
 
     window.operateEvents = {
         'click .EditReferenceItem': function (e, value, row, index) {
-            
+
             if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 if ($(this).val() !== 'Add') {
@@ -460,7 +785,9 @@ function load_data() {
                 $('#IdCustomerItemCipl').val(row.IdCustomer);
                 $('#TypeItemCipl').val(row.Type);
             } else {
-                CiplItemGetByIdReference(row.IdReference);
+                if (row.IdReference > 0) {
+                    CiplItemGetByIdReference(row.IdReference);
+                }
                 $('.btnAddReference, .btnUpdateReference, .btnAddMisc, #FormOldCore').hide();
                 $('#UnitCaseItemCipl').prop("disabled", true);
                 if ($(this).val() === 'Add') {
@@ -502,6 +829,9 @@ function load_data() {
                 $('#ClaimItemCipl').val(row.Claim);
                 if (row.IdParent > 0) {
                     $('#QuantityItemCipl, #UomItemCipl, #CaseNumItemCipl, #ASNNumItemCipl, #CoOItemCipl, #TypeItemCipl').prop('disabled', true);
+                    $('#UnitItemCipl').prop('disabled', false);
+                } else {
+                    $('#UnitItemCipl').prop('disabled', true);
                 }
                 //event.stopPropagation();
             }
@@ -526,7 +856,7 @@ function load_data() {
             $('#DocumentName').val(row.DocumentName);
             $('.modal-title-document').text("Update Document");
             $('.btnAddDocument').text("Update");
-            
+
         },
         'click .remove': function (e, value, row, index) {
             CiplDocumentDeleteById(row.Id);
@@ -553,7 +883,7 @@ function load_data() {
                 class: "text-nowrap",
                 events: window.operateEvents,
                 formatter: function (value, row, index) {
-                    return "<button class='btn btn-success btn-link btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='tim-icons icon-pencil'></i></button> <button class='btn btn-danger btn-link btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='tim-icons icon-simple-remove'></i></button>";
+                    return "<button class='btn btn-default btn-xs EditReferenceItem' type='button' data-toggle='modal' data-target='#ModalUpdateReference' value='Edit' title='Edit'><i class='fa fa-pencil'></i></button> <button class='btn btn-danger btn-xs DeleteReferenceItem' type='button' title='Delete'><i class='fa fa-trash'></i></button>";
                 }
             }, {
                 field: "Id",
@@ -798,7 +1128,7 @@ function load_data() {
             filterControl: true,
             formatter: function (value, row, index) {
                 var Category = GetCategoryUsed();
-                return Category === 'PRA' || Category === 'REMAN'  ? row.Volume === '0.000000' ? '' : row.Volume : row.Volume;
+                return Category === 'PRA' || Category === 'REMAN' ? row.Volume === '0.000000' ? '' : row.Volume : row.Volume;
             }
         }, {
             field: "NetWeight",
@@ -1410,66 +1740,66 @@ function load_data() {
     });
 
     var columnDocument = [
-    {
-        field: '',
-        title: 'Action',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true,
-        formatter: function (data, row, index) {
-            return operateFormatter();
+        {
+            field: '',
+            title: 'Action',
+            halign: 'center',
+            align: 'center',
+            class: 'text-nowrap',
+            sortable: true,
+            formatter: function (data, row, index) {
+                return operateFormatter();
+            },
+            events: operateEvents
         },
-        events: operateEvents
-    },
-    {
-        field: 'ID',
-        title: 'No',
-        halign: 'center',
-        align: 'center',
-        class: 'text-nowrap',
-        sortable: true,
-        visible: false
-    },
-    {
-        field: 'DocumentDate',
-        title: 'Date',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true,
-        formatter: function (data, row, index) {
-            return moment(data).format("DD MMM YYYY");
-        }
-    },
-    {
-        field: 'DocumentName',
-        title: 'Document Name',
-        halign: 'center',
-        align: 'left',
-        class: 'text-nowrap',
-        sortable: true
-    },
-    {
-        field: 'Filename',
-        title: 'Attachment',
-        align: 'center',
-        valign: 'center',
-        halign: "center",
-        class: 'text-nowrap',
-        sortable: true,
-        events: operateEventRight,
-        formatter: function (data, row) {
-            if (row.Filename !== "") {
-                var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
-                var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
-                return [btnDownload, btnPreview].join(' ');
-            } else {
-                return "-";
+        {
+            field: 'ID',
+            title: 'No',
+            halign: 'center',
+            align: 'center',
+            class: 'text-nowrap',
+            sortable: true,
+            visible: false
+        },
+        {
+            field: 'DocumentDate',
+            title: 'Date',
+            halign: 'center',
+            align: 'left',
+            class: 'text-nowrap',
+            sortable: true,
+            formatter: function (data, row, index) {
+                return moment(data).format("DD MMM YYYY");
             }
         },
-        class: 'text-nowrap'
-    }];
+        {
+            field: 'DocumentName',
+            title: 'Document Name',
+            halign: 'center',
+            align: 'left',
+            class: 'text-nowrap',
+            sortable: true
+        },
+        {
+            field: 'Filename',
+            title: 'Attachment',
+            align: 'center',
+            valign: 'center',
+            halign: "center",
+            class: 'text-nowrap',
+            sortable: true,
+            events: operateEventRight,
+            formatter: function (data, row) {
+                if (row.Filename !== "") {
+                    var btnDownload = "<button class='btn btn-xs btn-success download' type='button'><i class='fa fa-download'></i></button>";
+                    var btnPreview = "<button class='btn btn-xs btn-primary btn-outline showDocument' type='button' data-toggle='modal' data-target='#myModalUploadPreview'><i class='fa fa-file-pdf-o'></i></button>";
+                    return [btnDownload, btnPreview].join(' ');
+                } else {
+                    return "-";
+                }
+            },
+            class: 'text-nowrap'
+        }];
 
     function operateFormatter() {
         var btn = [];
@@ -1505,7 +1835,37 @@ function load_data() {
     Dropzone.autoDiscover = false;
 }
 
-
+$('#forwaderCipl').on('change', function () {
+    if ($('#forwaderCipl').val() == 'Non CKB') {
+        $(".forwaderVendorCipl").removeClass("hidden");
+    }
+    else {
+        $(".forwaderVendorCipl").addClass("hidden");
+    }
+})
+$('#forwaderVendorCipl').select2({
+    placeholder: 'Please Select Vendor',
+    ajax: {
+        url: "/emcs/GetVendorList",
+        dataType: 'json',
+        data: function (params) {
+            var query = {
+                searchName: params.term,
+            }
+            return query;
+        },
+        processResults: function (data) {
+            return {
+                results: $.map(data.data, function (item) {
+                    return {
+                        text: item.Name,
+                        id: item.Code,
+                    }
+                })
+            }
+        }
+    }
+})
 
 $('.cal-doc-date').click(function () {
     $('#inp-doc-date').focus();
@@ -1577,7 +1937,7 @@ $('#btnAddReference').on('click', function (e) {
     var UnitName = $('#NameItemCipl').valid();
     var Unit = ValidateAddReference();
     if (Unit) {
-        
+
         if ($('#idCipl').val() === null || $('#idCipl').val() === '' || $('#idCipl').val() === undefined) {
             post_insert_cipl('Draft');
         } else {
@@ -1588,6 +1948,8 @@ $('#btnAddReference').on('click', function (e) {
         get_ciplitem_by_id();
         SumReferenceItem();
         $('#ModalAddNewReference').modal('hide');
+       
+        /*$('#table_RequestChangeItem').bootstrapTable('refresh')*/
     }
     //if (UnitName) {
     //if ($('#PackagingTypeParts').valid() && $('#CaseNumberParts').valid()) {
@@ -1606,6 +1968,7 @@ $('#btnAddReference').on('click', function (e) {
 
 
 })
+
 $('#btnAddMisc').on('click', function () {
     var UnitName = $('#NameItemCipl').valid();
     if (UnitName) {
@@ -1681,6 +2044,7 @@ function ajaxInsertUpdateDocument() {
 }
 
 function ajaxInsertUpdateReference() {
+    $("#RequestForChangeHistoryCIPLItems").val()
     var json = new Array();
     var Quantity = parseInt($('#MaxQuantityItemCipl').val()) - parseInt($('#QuantityItemCipl').val());
     json.push({
@@ -1718,12 +2082,95 @@ function ajaxInsertUpdateReference() {
         WoNumber: $('#WONumberItemCipl').val(),
         Claim: $('#ClaimItemCipl').val()
     });
+    var RFC = $("#RequestForChangeHistoryCIPLItems").val();
+    if (RFC == null || RFC == '') {
+        RFC = false;
+    }
     $.ajax({
         url: '/EMCS/CiplItemInsert',
         type: 'POST',
         data: {
             data: json,
-            IdCipl: $('#idCipl').val()
+            IdCipl: $('#idCipl').val(),
+            RFC: RFC,
+            Status: 'Updated'
+        },
+        cache: false,
+        async: false,
+        success: function (data, response) {
+            var Data = new Array();
+            var Quantity = parseInt($('#MaxQuantityItemCipl').val()) - parseInt($('#QuantityItemCipl').val());
+            Data.push({
+                'Id': $('#IdReference').val(), 'Quantity': Quantity, 'UnitPrice': removeformatCurrency($('#UnitItemCipl').val()), });
+            UpdateQuantityReference(Data, 'Update');
+            Swal.fire({
+                type: 'success',
+                title: 'Success'
+                , text: 'Saved, Your Data Has Been Saved',
+            })
+            $("[name=refresh]").trigger('click');
+            $('#table_RequestChangeItem').bootstrapTable('refresh')
+        },
+        error: function (e) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Fail Update Data',
+            })
+        }
+    })
+}
+function InsertReference(Status) {
+    $("#RequestForChangeHistoryCIPLItems").val()
+    var json = new Array();
+    var Quantity = parseInt($('#MaxQuantityItemCipl').val()) - parseInt($('#QuantityItemCipl').val());
+    json.push({
+        Id: $('#IdItem').val(),
+        IdItem: $('#IdItem').val(),
+        IdCipl: $('#idCipl').val(),
+        IdReference: $('#IdReference').val(),
+        IdParent: $('#IdParentItemCipl').val(),
+        ReferenceNo: $('#ReferenceItemCipl').val(),
+        IdCustomer: $('#IdCustomerItemCipl').val(),
+        Name: $('#NameItemCipl').val(),
+        UnitUom: $('#UomItemCipl').val(),
+        PartNumber: $('#PartItemCipl').val(),
+        Sn: $('#SnItemCipl').val(),
+        JCode: $('#JcodeItemCipl').val(),
+        Ccr: $('#CcrItemCipl').val(),
+        CaseNumber: $('#CaseNumItemCipl').val(),
+        ASNNumber: $('#ASNNumItemCipl').val(),
+        CoO: $('#CoOItemCipl').val(),
+        Type: $('#TypeItemCipl').val(),
+        IdNo: $('#IdNoItemCipl').val(),
+        YearMade: $('#YearMadeItemCipl').val(),
+        Quantity: $('#QuantityItemCipl').val(),
+        UnitPrice: removeformatCurrency($('#UnitItemCipl').val()),
+        ExtendedValue: removeformatCurrency($('#ExtendedItemCipl').val()),
+        Length: removeformatCurrency($('#LengthItemCipl').val()),
+        Width: removeformatCurrency($('#WidthItemCipl').val()),
+        Height: removeformatCurrency($('#HeightItemCipl').val()),
+        Volume: removeformatCurrency($('#VolumeItemCipl').val()),
+        GrossWeight: removeformatCurrency($('#GrossItemCipl').val()),
+        NetWeight: removeformatCurrency($('#NetItemCipl').val()),
+        Currency: $('#currencyCipl').val(),
+        AvailableQuantity: parseInt($('#QuantityItemCipl').val()),
+        SibNumber: $('#SIBNumberItemCipl').val(),
+        WoNumber: $('#WONumberItemCipl').val(),
+        Claim: $('#ClaimItemCipl').val()
+    });
+    var RFC = $("#RequestForChangeHistoryCIPLItems").val();
+    if (RFC == null || RFC == '') {
+        RFC = false;
+    }
+    $.ajax({
+        url: '/EMCS/CiplItemInsert',
+        type: 'POST',
+        data: {
+            data: json,
+            IdCipl: $('#idCipl').val(),
+            RFC: RFC,
+            Status: 'Created'
         },
         cache: false,
         async: false,
@@ -2032,7 +2479,7 @@ function GetReferenceItem() {
         cache: false,
         UniqueId: "Id",
         pagination: true,
-        search: true,        
+        search: true,
         striped: false,
         clickToSelect: true,
         reorderableColumns: true,
@@ -2107,11 +2554,14 @@ function CiplDocumentDeleteById(id) {
 }
 
 function CiplItemDeleteById(id) {
+
+    var RFC = $("#RequestForChangeHistoryCIPLItems").val()
     $.ajax({
         url: '/EMCS/CiplItemDeleteById',
         type: 'POST',
         data: {
             id: id,
+            RFC: RFC
         },
         cache: false,
         async: false,
@@ -2121,6 +2571,7 @@ function CiplItemDeleteById(id) {
                 title: 'Success'
                 , text: 'Success, Your Data Has Been Delete',
             })
+            $('#table_RequestChangeItem').bootstrapTable('refresh');
         },
         error: function (e) {
             Swal.fire({
@@ -2136,7 +2587,9 @@ function CiplItemSplitById(data) {
         url: '/EMCS/CiplItemInsert',
         type: 'POST',
         data: {
-            data: data
+            data: data,
+            RFC: 'false',
+            Status: null
         },
         cache: false,
         async: false,
@@ -2168,7 +2621,7 @@ function removeSingleAttributeDuplicates(array, key) {
     }
     return result;
 }
-function removeSingleAttributeDuplicatesNew(array, key,key2) {
+function removeSingleAttributeDuplicatesNew(array, key, key2) {
     let lookup = {};
     let result = [];
     for (let i = 0; i < array.length; i++) {
@@ -2212,7 +2665,8 @@ function SumReferenceItem() {
     if (Category === 'SIB') {
         var CountJCode = 0;
         $.map(data, function (elm, idx) {
-            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
+            //CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length + removeSingleAttributeDuplicates(data, 'Type').length;
+            CountJCode = removeSingleAttributeDuplicates(data, 'JCode').length;
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2234,10 +2688,9 @@ function SumReferenceItem() {
     } else {
         var array = new Array();
         $.map(data, function (elm, idx) {
-            if (elm.Sn != "")
-            {
+            if (elm.Sn != "") {
                 array.push({ 'Name': elm.Name, 'Sn': elm.Sn });
-            }            
+            }
             SumGross = SumGross + removeformatCurrency(elm.GrossWeight);
             SumNet = SumNet + removeformatCurrency(elm.NetWeight);
             SumQuantity = SumQuantity + parseInt(elm.Quantity);
@@ -2281,7 +2734,7 @@ $("#btnAddDocument").on('click', function () {
         ajaxInsertUpdateDocument();
         get_cipldocument_by_id();
     }
-    
+
 })
 
 $("#btnUpdateReference").on('click', function () {
@@ -2323,8 +2776,9 @@ $("#btnUpdateReference").on('click', function () {
             SumReferenceItem();
         }
 
-    }
 
+    }
+    
 })
 
 $('.SumVolumenOldCore').keyup(function () {
@@ -2349,43 +2803,46 @@ $('#QuantityItemCipl, #UnitItemCipl').keyup(function () {
 })
 function GetDestinationPort() {
     var country = $("#consigneeCountryCipl").val();
-   
-        $('#destinationCipl').select2({
-            placeholder: "Select Destination Port",
-            ajax: {
-                url: "/emcs/GetPortData",
-                dataType: 'json',
-                data: function (params) {
+    if (country == null) {
+        country = $("#select2-consigneeCountryCipl-container").text();
+    }
 
-                    return {
-                        Country: country,
-                        Name: params.term
+    $('#destinationCipl').select2({
+        placeholder: "Select Destination Port",
+        ajax: {
+            url: "/emcs/GetPortData",
+            dataType: 'json',
+            data: function (params) {
 
-                    };
-                },
-                success: function (data, response) {
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data.data, function (item) {
-                            return {
-                                text: item.Text,
-                                id: item.Id
-                            }
-                        })
-                    }
+                return {
+                    Country: country,
+                    Name: params.term
+
+                };
+            },
+            success: function (data, response) {
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data.data, function (item) {
+                        return {
+                            text: item.Text,
+                            id: item.Id
+                        }
+                    })
                 }
             }
-        })
+        }
+    })
 
-    
+
 }
 function GetReferenceNo() {
     var Category = GetCategoryUsed();
     var item = {
         Category: Category,
         ReferenceNo: $('#refCipl').val()
-    } 
+    }
 
     $('#refCipl').select2({
         minimumInputLength: 4,
@@ -2463,9 +2920,9 @@ function GetReferenceNo() {
             url: "/emcs/GetLocalPortData",
             dataType: 'json',
             data: function (params) {
-               
+
                 return {
-                   
+
                     Name: params.term
 
                 };
@@ -2485,8 +2942,8 @@ function GetReferenceNo() {
         }
     })
 
-    
-    
+
+
     $('#CkbBranchCipl').select2({
         placeholder: 'Select CKB Branch',
         width: "100%",
@@ -2535,7 +2992,7 @@ function get_used_table_cipl_item() {
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
         table = $tablemisc;
     }
-    
+
     else if (($('#jenisBarangCipl').val() === 'CATERPILLAR NEW EQUIPMENT' || $('#jenisBarangCipl').val() === 'CATERPILLAR USED EQUIPMENT') && $('#idCategoryReference').val() !== 'Other') {
         table = $tableunit;
     } else if ($('#idCategoryReference').val() === 'Other') {
@@ -2811,7 +3268,7 @@ $('#btnSaveCipl').on('click', function () {
     } else {
         if ($('#noCipl').val() === null || $('#noCipl').val() === 'null' || $('#noCipl').val() === '') {
             post_insert_cipl(status);
-           
+
         } else {
             post_update_cipl(status);
             if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
@@ -2824,6 +3281,18 @@ $('#btnSaveCipl').on('click', function () {
 
 $('#btnSubmitCipl').on('click', function (event) {
     event.preventDefault();
+    var rowslength = document.getElementById('tablepartCipl').rows.length;
+    var nodata = document.getElementsByClassName('no-records-found');
+    //if nodata length is 5 this means that span with "NoRecords" its available
+    if (rowslength <= 3 && nodata.length === 5) {
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Please insert at least one CIPL Item',
+        })
+
+        return false;
+    }
     $('input[name="query"]').each(function () {
         $(this).rules('add', {
             required: true,
@@ -2950,6 +3419,7 @@ function post_insert_cipl(status) {
         },
         Forwader: {
             Forwader: $('#forwaderCipl').val(),
+            Vendor: $('#forwaderVendorCipl').val(),
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
             Branch: $('#CkbBranchCipl').val(),
@@ -2981,7 +3451,6 @@ function post_insert_cipl(status) {
             $('#noCipl').val(data[0]['No']);
             $('#dateCipl').val(moment(data[0]['Createdate']).format("DD MMM YYYY"));
             post_insert_cipl_item(data[0]['ID']);
-            $('#btnSubmitCipl').prop('disabled', false);
         },
         error: function (e) {
             Swal.fire({
@@ -2992,7 +3461,7 @@ function post_insert_cipl(status) {
         }
     });
 }
-function RequestForChangeCIPL(formdata,status) {
+function RequestForChangeCIPL(formdata, status) {
     var modelObj = {
         FormType: "CIPL",
         FormId: $('#idCipl').val(),
@@ -3083,6 +3552,7 @@ function RequestForChangeCIPL(formdata,status) {
             Company: $('#forwaderCompanyCipl').val(),
             SubconCompany: $('#forwaderForwadingCipl').val(),
             Address: $('#forwaderAddressCipl').val(),
+            Vendor: $('forwaderVendorCipl').val(),
             Area: $('#forwaderAreaCipl').val(),
             City: $('#forwaderCityCipl').val(),
             PostalCode: $('#forwaderPostalCodeCipl').val(),
@@ -3109,7 +3579,7 @@ function RequestForChangeCIPL(formdata,status) {
                 text: 'Request for change is sent for approval',
             }).then((result) => {
                 window.location.href = "/EMCS/CiplList";
-                });
+            });
         },
         error: function (e) {
             Swal.fire({
@@ -3119,7 +3589,7 @@ function RequestForChangeCIPL(formdata,status) {
             })
         }
     });
-   
+
 }
 $("#RequestForChangeHistoryCIPL").click(function () {
     Swal.fire({
@@ -3150,7 +3620,7 @@ $("#RequestForChangeHistoryCIPL").click(function () {
                     var Status = "Approve";
                     var Id = $('#RFCId').val();
                     var formdata = { Notes: Notes, Status: 0, Id: Id };
-                    RequestForChangeCIPL(formdata,0);
+                    RequestForChangeCIPL(formdata, 0);
                 }
                 else {
                     Swal.fire({
@@ -3164,10 +3634,10 @@ $("#RequestForChangeHistoryCIPL").click(function () {
         return false;
     });
 
-   
+
 });
 function post_update_cipl(status) {
-  
+
     if ($('#jenisBarangCipl').val() === 'CATERPILLAR SPAREPARTS') {
         var CategoryItem = $('#sparepartsCipl').val();
     } else if ($('#jenisBarangCipl').val() === 'MISCELLANEOUS') {
@@ -3244,6 +3714,7 @@ function post_update_cipl(status) {
             Consolidate: $('#ConsolidateCipl').val()
         },
         Forwader: {
+            Vendor: $('#forwaderVendorCipl').val(),
             Forwader: $('#forwaderCipl').val(),
             Type: $('#typeCipl').val(),
             ExportShipmentType: $('#ExportShipmentType').val(),
@@ -3273,8 +3744,7 @@ function post_update_cipl(status) {
         async: false,
         success: function (data, response) {
             var getstatus = status === 'Draft' ? ' Saved' : ' Submit';
-            if (data == 1)
-            {
+            if (data == 1) {
                 Swal.fire({
                     type: 'success',
                     title: 'Success',
@@ -3287,7 +3757,7 @@ function post_update_cipl(status) {
                     text: 'Unauthorized to update this document !',
                 })
             }
-            
+
             //post_update_cipl_item(data, status);
         },
         error: function (e) {
@@ -3333,9 +3803,10 @@ function ConvertCurrency(data) {
 
 
 function post_insert_cipl_item(id) {
+    var Status = 'Created'
     var Category = GetCategoryUsed();
     if (Category === 'MISCELLANEOUS' || $('#idCategoryReference').val() === 'Other') {
-        ajaxInsertUpdateReference();
+        InsertReference('Created');
         return false;
     } else if (Category === 'REMAN' || Category === 'PRA') {
         var reference = $tablereference.bootstrapTable('getSelections');
@@ -3344,12 +3815,15 @@ function post_insert_cipl_item(id) {
         var reference = $tablereference.bootstrapTable('getSelections');
         var data = ReferenceItemConvert(reference);
     }
+    var RFC = $("#RequestForChangeHistoryCIPLItems").val()
     $.ajax({
         url: '/EMCS/CiplItemInsert',
         type: 'POST',
         data: {
             data: data,
-            idCipl: id
+            idCipl: id,
+            RFC: RFC,
+            Status: Status
         },
         cache: false,
         async: false,
@@ -3359,6 +3833,7 @@ function post_insert_cipl_item(id) {
                 title: 'Success'
                 , text: 'Saved, Your Data Has Been Saved',
             })
+            $('#table_RequestChangeItem').bootstrapTable('refresh');
         },
         error: function (e) {
             Swal.fire({

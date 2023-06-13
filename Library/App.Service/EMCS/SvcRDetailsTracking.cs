@@ -21,20 +21,29 @@ namespace App.Service.EMCS
         public static XSSFWorkbook workbook = new XSSFWorkbook();
         public static List<SpRDetailsTracking> DetailsTrackingList_old(DetailTrackingListFilter filter)
         {
-            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            try
             {
-                db.DbContext.Database.CommandTimeout = 600;
-                List<SqlParameter> parameterList = new List<SqlParameter>();
-                parameterList.Add(new SqlParameter("@StartMonth", filter.startMonth ?? ""));
-                parameterList.Add(new SqlParameter("@EndMonth", filter.endMonth ?? ""));
-                parameterList.Add(new SqlParameter("@ParamName", filter.paramName ?? ""));
-                parameterList.Add(new SqlParameter("@ParamValue", filter.paramValue ?? ""));
-                parameterList.Add(new SqlParameter("@KeyNum", filter.keynum ?? ""));
+                using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                {
+                    db.DbContext.Database.CommandTimeout = 600;
+                    List<SqlParameter> parameterList = new List<SqlParameter>();
+                    parameterList.Add(new SqlParameter("@StartMonth", filter.startMonth ?? ""));
+                    parameterList.Add(new SqlParameter("@EndMonth", filter.endMonth ?? ""));
+                    parameterList.Add(new SqlParameter("@ParamName", filter.paramName ?? ""));
+                    parameterList.Add(new SqlParameter("@ParamValue", filter.paramValue ?? ""));
+                    parameterList.Add(new SqlParameter("@KeyNum", filter.keynum ?? ""));
 
-                SqlParameter[] parameters = parameterList.ToArray();
-                var data = db.DbContext.Database.SqlQuery<SpRDetailsTracking>(@"[dbo].[SP_RDetailsTracking] @StartMonth, @EndMonth,  @ParamName, @ParamValue, @KeyNum", parameters).ToList();
-                return data;
+                    SqlParameter[] parameters = parameterList.ToArray();
+                    var data = db.DbContext.Database.SqlQuery<SpRDetailsTracking>(@"[dbo].[SP_RDetailsTracking] @StartMonth, @EndMonth,  @ParamName, @ParamValue, @KeyNum", parameters).ToList();
+                    return data;
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public static List<SpRDetailsTracking> DetailsTrackingList(string startMonth, string endMonth, string paramName, string paramValue, string keyNum)

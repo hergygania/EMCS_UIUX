@@ -121,7 +121,8 @@ namespace App.Service.EMCS
                         }
                         else
                         {
-                            var rgitem = db.GoodsReceiveItem.Where(a => a.IdGr == id).ToList();
+                            //var rgitem = db.GoodsReceiveItem.Where(a => a.IdGr == id).ToList();
+                            var rgitem = db.ShippingFleetRefrence.Where(a => a.IdGr == id).ToList();
 
                             foreach (var itemrg in rgitem)
                             {
@@ -232,8 +233,19 @@ namespace App.Service.EMCS
                                 break;
                         }
 
+                        //prev
+                        //var resultdata = (from t1 in db.CargoCipls
+                        //                  join t2 in db.GoodsReceiveItem on t1.IdCipl equals t2.IdCipl
+                        //                  where newIds.Contains(t1.IdCargo)
+                        //                  select new
+                        //                  {
+                        //                      t1,
+                        //                      t2
+                        //                  }).ToList();
+
+                        //new
                         var resultdata = (from t1 in db.CargoCipls
-                                          join t2 in db.GoodsReceiveItem on t1.IdCipl equals t2.IdCipl
+                                          join t2 in db.ShippingFleetRefrence on t1.IdCipl equals t2.IdCipl
                                           where newIds.Contains(t1.IdCargo)
                                           select new
                                           {
@@ -245,7 +257,11 @@ namespace App.Service.EMCS
                     }
                     else
                     {
-                        var resultcipl = db.GoodsReceiveItem.Where(a => a.IdCipl == id && a.IsDelete == false).Select(a => new { a.IdGr }).ToList();
+                        //prev
+                        //var resultcipl = db.GoodsReceiveItem.Where(a => a.IdCipl == id && a.IsDelete == false).Select(a => new { a.IdGr }).ToList();
+
+                        //new
+                        var resultcipl = db.ShippingFleetRefrence.Where(a => a.IdCipl == id).Select(a => new { a.IdGr }).ToList();
                         foreach (var itemcipl in resultcipl)
                         {
                             newIds.Add(Convert.ToInt64(itemcipl.IdGr));

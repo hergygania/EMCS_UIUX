@@ -58,8 +58,10 @@
         public bool IsDelete { get; set; }
 
         public bool DraftPeb { get; set; }
+        public int? IsCancelled { get; set; }
         public string RegistrationNumber { get; set; }
-       
-         public DateTime? NpeDateSubmitToCustomOffice { get; set; }
+        public string CancelledDocument { get; set; }
+
+        public DateTime? NpeDateSubmitToCustomOffice { get; set; }
     }
 }

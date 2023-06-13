@@ -52,410 +52,411 @@
         text-align: right;
     }
 </style>
+<div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
+    <div style="padding-left:4px;padding-right:4px">
+        <table class="table-document">
+            <tr>
+                <td colspan="6">
+                    <img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" />
+                </td>
+                <td colspan="6" style="width:45%;" class="border_left border_top border_right border_bottom text_bold header_title">CARGO LIST</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="width:126px;">&nbsp;</td>
+                <td colspan="4" class="text_bold text_12">PT. TRAKINDO UTAMA</td>
+                <td colspan="2" class="border_left">Number</td>
+                <td>:</td>
+                <td colspan="3" class="border_right text_bold text_docno_big">@(Model.TemplateHeader != null ? Model.TemplateHeader.ClNo : "-")</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+                <td colspan="4">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                <td colspan="2" class="border_left">Date</td>
+                <td>:</td>
+                <td colspan="3" class="border_right text_bold">@Model.Data.UpdateDate.ToString("dd MMM yyyy")</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+                <td colspan="4">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
+                <td colspan="2" class="border_left border_bottom">Reference No</td>
+                <td class="border_bottom">:</td>
+                <td colspan="3" class="border_right border_bottom text_bold">@(Model.TemplateHeader != null ? Model.TemplateHeader.Reference : "-")</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4">INDONESIA - 12560</td>
+                <td colspan="2" class=""></td>
+                <td></td>
+                <td colspan="3" class=""></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>Tel.</td>
+                <td>:</td>
+                <td colspan="2">(62-21) 29976620</td>
+                <td colspan="2" class=""></td>
+                <td></td>
+                <td colspan="3" class=""></td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>Fax.</td>
+                <td>:</td>
+                <td colspan="2">(62-21) 29976612</td>
+                <td colspan="2" class=""></td>
+                <td class=""></td>
+                <td colspan="3" class=""></td>
+            </tr>
+        </table>
 
-<div class="box">
-<div class="row">
-    <div class="col-md-12">
-        <a class="btn btn-success btn-round" href="~/download/downloadcargo/@Model.Data.Id"><i class="fa fa-file-pdf-o"></i> Export CL</a>
-    </div>
-</div>
-    <div style="width:950px !important;border:1px solid;border-color:darkgray;padding:10px 10px 10px 10px;margin:20px auto">
-        <div style="padding-left:4px;padding-right:4px">
-            <table class="table-document">
-                <tr>
-                    <td colspan="6">
-                        <img alt="Trakindo Logo" src="~/Images/trakindo_logo.jpg" />
-                    </td>
-                    <td colspan="6" style="width:45%;" class="border_left border_top border_right border_bottom text_bold header_title">CARGO LIST</td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="width:126px;">&nbsp;</td>
-                    <td colspan="4" class="text_bold text_12">PT. TRAKINDO UTAMA</td>
-                    <td colspan="2" class="border_left">Number</td>
-                    <td>:</td>
-                    <td colspan="3" class="border_right text_bold text_docno_big">@(Model.TemplateHeader != null ? Model.TemplateHeader.ClNo : "-")</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                    <td colspan="4">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
-                    <td colspan="2" class="border_left">Date</td>
-                    <td>:</td>
-                    <td colspan="3" class="border_right text_bold">@Model.Data.CreateDate.ToString("dd MMM yyyy")</td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                    <td colspan="4">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan</td>
-                    <td colspan="2" class="border_left border_bottom">Reference No</td>
-                    <td class="border_bottom">:</td>
-                    <td colspan="3" class="border_right border_bottom text_bold">@(Model.TemplateHeader != null ? Model.TemplateHeader.Reference : "-")</td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="4">INDONESIA - 12560</td>
-                    <td colspan="2" class=""></td>
-                    <td></td>
-                    <td colspan="3" class=""></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td>Tel.</td>
-                    <td>:</td>
-                    <td colspan="2">(62-21) 29976620</td>
-                    <td colspan="2" class=""></td>
-                    <td></td>
-                    <td colspan="3" class=""></td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td>Fax.</td>
-                    <td>:</td>
-                    <td colspan="2">(62-21) 29976612</td>
-                    <td colspan="2" class=""></td>
-                    <td class=""></td>
-                    <td colspan="3" class=""></td>
-                </tr>
-            </table>
+        <table class="table-document">
+            <tr>
+                <td style="width:3%"></td>
+                <td style="width:9%"></td>
+                <td style="width:4%"></td>
+                <td style="width:8%"></td>
+                <td style="width:2%"></td>
+                <td style="width:12%"></td>
+                <td style="width:7%"></td>
+                <td style="width:8%"></td>
+                <td style="width:11%"></td>
+                <td style="width:13%"></td>
+                <td style="width:1%"></td>
+                <td style="width:10%"></td>
+                <td style="width:1%"></td>
+                <td style="width:11%"></td>
+            </tr>
+            <tr><td colspan="14" style="height:20px"></td></tr>
+            <tr>
+                <td colspan="14" style="height:15px" class="border_left border_top border_right border_bottom text_bold">SHIPPER'S NAME & ADDRESS</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
+                <td colspan="9"></td>
+            </tr>
+        </table>
 
-            <table class="table-document">
-                <tr>
-                    <td style="width:3%"></td>
-                    <td style="width:9%"></td>
-                    <td style="width:4%"></td>
-                    <td style="width:8%"></td>
-                    <td style="width:2%"></td>
-                    <td style="width:12%"></td>
-                    <td style="width:7%"></td>
-                    <td style="width:8%"></td>
-                    <td style="width:11%"></td>
-                    <td style="width:13%"></td>
-                    <td style="width:1%"></td>
-                    <td style="width:10%"></td>
-                    <td style="width:1%"></td>
-                    <td style="width:11%"></td>
-                </tr>
-                <tr><td colspan="14" style="height:20px"></td></tr>
-                <tr>
-                    <td colspan="5" style="height:15px" class="border_left border_top border_right border_bottom text_bold">SHIPPER'S NAME & ADDRESS</td>
-                    <td colspan="9" class="border_right"></td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                    <td colspan="9"></td>
-                </tr>
-            </table>
+        <table class="table-document">
+            <tr>
+                <td colspan="7" class="border_left text_bold">PT. TRAKINDO UTAMA</td>
+                <td colspan="4"></td>
+                <td colspan="3" class="border_right text_right text_bold">PREPARED BY :</td>
+            </tr>
+            <tr>
+                <td colspan="7" class="border_left">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
+                <td colspan="4"></td>
+                <td colspan="3" style="text-align:right" class="border_right text_bold">@(Model.TemplateHeader != null ? Model.TemplateHeader.UserType == "internal" ? "PT. TRAKINDO UTAMA" : "PT. Cipta Krida Bahari" : "-")</td>
+            </tr>
+            <tr>
+                <td colspan="7" class="border_left">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan </td>
+                <td colspan="4"></td>
+                <td colspan="3" class="border_right text_right">@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorName : "-")</td>
+            </tr>
+            <tr>
+                <td colspan="7" class="border_left">INDONESIA - 12560</td>
+                <td colspan="4"></td>
+                <td colspan="3" class="border_right text_right"><u>@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorEmail : "-")</u></td>
+            </tr>
+            <tr>
+                <td colspan="11" class="border_left border_bottom">Tel. (+62-21) 29976620 | Fax. (+62-21) 29976612 | www.trakindo.co.id</td>
+                <td colspan="3" class="border_bottom border_right"></td>
+            </tr>
+        </table>
+        <div>&nbsp;</div>
+        <table class="table-data">
+            <tr>
+                <td class="text_bold" colspan="4" style="width:45%;">
+                    <div class="border_title">CONSIGNEE'S NAME & ADDRESS</div>
+                </td>
+                <td class="" style="width:10%;">&nbsp;</td>
+                <td class="text_bold" colspan="4" style="width:45%;">
+                    <div class="border_title border_title_left">@((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY'S NAME & ADDRESS" : "SOLD TO'S NAME & ADDRESS")</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-top:1px solid white;" class="border_left text_bold"></td>
+                <td></td>
+                <td colspan="4" style="border-top:1px solid white;" class="border_right text_bold"></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="border_left v_top"></td>
+                <td></td>
+                <td colspan="4" class="border_right v_top"></td>
+            </tr>
+            <tr>
+                <td class="border_left v_top text_bold" colspan="4">
+                    <label class="custom single">@Model.TemplateHeader.ConsigneeName</label>
+                </td>
+                <td></td>
+                <td class="v_top border_right text_bold" colspan="4">
+                    <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToName : Model.TemplateHeader.NotifyName)</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="border_left v_top" colspan="4">
+                    <label class="custom single">@Model.TemplateHeader.ConsigneeAddress</label>
+                </td>
+                <td></td>
+                <td class="v_top border_right" colspan="4">
+                    <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToAddress : Model.TemplateHeader.NotifyAddress)</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="border_left v_top" colspan="4">
+                    <label class="custom single">@Model.TemplateHeader.ConsigneePic</label>
+                </td>
+                <td></td>
+                <td class="v_top border_right" colspan="4">
+                    <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToPic : Model.TemplateHeader.NotifyPic)</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="v_top border_left" colspan="4">
+                    <label class="custom single">@Model.TemplateHeader.ConsigneeEmail</label>
+                </td>
+                <td></td>
+                <td class="v_top border_right" colspan="4">
+                    <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToEmail : Model.TemplateHeader.NotifyEmail)</label>
+                </td>
+            </tr>
+            <tr><td colspan="9">&nbsp;</td></tr>
+        </table>
 
-            <table class="table-document">
-                <tr>
-                    <td colspan="7" class="border_left text_bold">PT. TRAKINDO UTAMA</td>
-                    <td colspan="4"></td>
-                    <td colspan="3" class="border_right text_right text_bold">PREPARED BY :</td>
-                </tr>
-                <tr>
-                    <td colspan="7" class="border_left">Gedung TMT 1, LT. 11 – 17 Suite 1101-1701,  Jl. Cilandak KKO No. 1</td>
-                    <td colspan="4"></td>
-                    <td colspan="3" style="text-align:right" class="border_right text_bold">@(Model.TemplateHeader != null ? Model.TemplateHeader.UserType == "internal" ? "PT. TRAKINDO UTAMA" : "PT. Cipta Krida Bahari" : "-")</td>
-                </tr>
-                <tr>
-                    <td colspan="7" class="border_left">Kel. Cilandak Timur, Kec. Pasar Minggu Jakarta Selatan </td>
-                    <td colspan="4"></td>
-                    <td colspan="3" class="border_right text_right">@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorName : "-")</td>
-                </tr>
-                <tr>
-                    <td colspan="7" class="border_left">INDONESIA - 12560</td>
-                    <td colspan="4"></td>
-                    <td colspan="3" class="border_right text_right"><u>@(Model.TemplateHeader != null ? Model.TemplateHeader.RequestorEmail : "-")</u></td>
-                </tr>
-                <tr>
-                    <td colspan="11" class="border_left border_bottom">Tel. (+62-21) 29976620 | Fax. (+62-21) 29976612 | www.trakindo.co.id</td>
-                    <td colspan="3" class="border_bottom border_right"></td>
-                </tr>
-            </table>
-            <div>&nbsp;</div>
-            <table class="table-data">
-                <tr>
-                    <td class="text_bold" colspan="4" style="width:45%;">
-                        <div class="border_title">CONSIGNEE'S NAME & ADDRESS</div>
-                    </td>
-                    <td class="" style="width:10%;">&nbsp;</td>
-                    <td class="text_bold" colspan="4" style="width:45%;">
-                        <div class="border_title border_title_left">@((Model.TemplateHeader.ShipDelivery == "Notify") ? "NOTIFY PARTY'S NAME & ADDRESS" : "SOLD TO'S NAME & ADDRESS")</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="border-top:1px solid white;" class="border_left text_bold"></td>
-                    <td></td>
-                    <td colspan="4" style="border-top:1px solid white;" class="border_right text_bold"></td>
-                </tr>
-                <tr>
-                    <td colspan="4" class="border_left v_top"></td>
-                    <td></td>
-                    <td colspan="4" class="border_right v_top"></td>
-                </tr>
-                <tr>
-                    <td class="border_left v_top text_bold" colspan="4">
-                        <label class="custom single">@Model.TemplateHeader.ConsigneeName</label>
-                    </td>
-                    <td></td>
-                    <td class="v_top border_right text_bold" colspan="4">
-                        <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToName : Model.TemplateHeader.NotifyName)</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="border_left v_top" colspan="4">
-                        <label class="custom single">@Model.TemplateHeader.ConsigneeAddress</label>
-                    </td>
-                    <td></td>
-                    <td class="v_top border_right" colspan="4">
-                        <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToAddress : Model.TemplateHeader.NotifyAddress)</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="border_left v_top" colspan="4">
-                        <label class="custom single">@Model.TemplateHeader.ConsigneePic</label>
-                    </td>
-                    <td></td>
-                    <td class="v_top border_right" colspan="4">
-                        <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToPic : Model.TemplateHeader.NotifyPic)</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="v_top border_left" colspan="4">
-                        <label class="custom single">@Model.TemplateHeader.ConsigneeEmail</label>
-                    </td>
-                    <td></td>
-                    <td class="v_top border_right" colspan="4">
-                        <label class="custom single">@((Model.TemplateHeader.NotifyName == "-") ? Model.TemplateHeader.SoldToEmail : Model.TemplateHeader.NotifyEmail)</label>
-                    </td>
-                </tr>
-                <tr><td colspan="9">&nbsp;</td></tr>
-            </table>
+        <div>&nbsp;</div>
+        <table class="">
+            <tr>
+                <td class="text_bold border_top border_left" colspan="4" style="width:45%;">
+                    <div class="border_title" style="border-bottom:none;">CONTAINER CONTENTS LIST</div>
+                </td>
+                <td class="" style="width:10%;">&nbsp;</td>
+                <td class="" colspan="4" style="width:45%;">&nbsp;</td>
+            </tr>
+        </table>
 
-            <div>&nbsp;</div>
-            <table class="">
-                <tr>
-                    <td class="text_bold border_top border_left" colspan="4" style="width:45%;">
-                        <div class="border_title" style="border-bottom:none;">CONTAINER CONTENTS LIST</div>
-                    </td>
-                    <td class="" style="width:10%;">&nbsp;</td>
-                    <td class="" colspan="4" style="width:45%;">&nbsp;</td>
-                </tr>
-            </table>
+        @{
+            if (Model.Data.CargoType == "FCL")
+            {
+                <table border="0" class="table-data">
+                    <thead>
+                        <tr>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:3%;height:2em">NO</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CONTAINER NUMBER</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:7%">SEAL #</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CONTAINER TYPE</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">NUMBER & KIND OF PACKAGES</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CASE NUMBER</th>
+                            <th class="text_center tabledata_spacing border_bottom" colspan="2" style="width:10%">REFERENCE</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CARGO DESCRIPTION</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">NET WEIGHT</th>
+                            <th class="text_center tabledata_spacing border_bottom border_right" rowspan="2" style="width:10%">GROSS WEIGHT</th>
+                        </tr>
+                        <tr>
+                            <th class="text_center text_bold tabledata_spacing border_bottom" style="width:10%;background-color:white">EDI Number #</th>
+                            <th class="text_center text_bold tabledata_spacing border_bottom" style="width:10%;background-color:white">IN BOUND-DA #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TemplateDetail)
+                        {
 
-            @{
-                if (Model.Data.CargoType == "FCL")
-                {
-                    <table border="0" class="table-data">
-                        <thead>
                             <tr>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:3%;height:2em">NO</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CONTAINER NUMBER</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:7%">SEAL #</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CONTAINER TYPE</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">NUMBER & KIND OF PACKAGES</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CASE NUMBER</th>
-                                <th class="text_center tabledata_spacing border_bottom" colspan="2" style="width:10%">REFERENCE</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">CARGO DESCRIPTION</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%">NET WEIGHT</th>
-                                <th class="text_center tabledata_spacing border_bottom border_right" rowspan="2" style="width:10%">GROSS WEIGHT</th>
+                                <td class="tabledata_spacing text_right">@item.ItemNo</td>
+                                <td class="tabledata_spacing">@item.ContainerNumber</td>
+                                <td class="tabledata_spacing">@item.SealNumber</td>
+                                <td class="tabledata_spacing">@item.ContainerType</td>
+                                <td class="tabledata_spacing">@item.TotalCaseNumber</td>
+                                <td class="tabledata_spacing">@item.CaseNumber</td>
+                                <td class="tabledata_spacing">@item.Do</td>
+                                <td class="tabledata_spacing">@item.InBoundDa</td>
+                                <td class="tabledata_spacing">@item.Description</td>
+                                <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
+                                <td class="tabledata_spacing text_right border_right">@item.GrossWeight</td>
                             </tr>
+                        }
+                        <tr class="spacing">
+                            <td colspan="11" class="tabledata_spacing"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table border="0" class="table-data">
+                    <thead>
+                        <tr>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:3%;height:2em;vertical-align: top;">NO</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%;vertical-align: top;">NUMBER & KIND OF PACKAGES</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:7%;vertical-align: top;">CASE NUMBER</th>
+                            <th class="text_center tabledata_spacing border_bottom" colspan="2" style="width:10%;vertical-align: top;">REFERENCE</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:15%;vertical-align: top;">CARGO DESCRIPTION</th>
+                            <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:8%;vertical-align: top;">NET WEIGHT</th>
+                            <th class="text_center tabledata_spacing border_bottom border_right" rowspan="2" style="width:8%;vertical-align: top;">GROSS WEIGHT</th>
+                        </tr>
+                        <tr>
+                            <th class="text_center tabledata_spacing border_bottom" style="width:10%;background-color:white;vertical-align: top;">EDI Number #</th>
+                            <th class="text_center tabledata_spacing border_bottom" style="width:10%;background-color:white;vertical-align: top;">IN BOUND-DA #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TemplateDetail)
+                        {
                             <tr>
-                                <th class="text_center text_bold tabledata_spacing border_bottom" style="width:10%;background-color:white">EDI Number #</th>
-                                <th class="text_center text_bold tabledata_spacing border_bottom" style="width:10%;background-color:white">IN BOUND-DA #</th>
+                                <td class="tabledata_spacing text_center">@item.ItemNo</td>
+                                <td class="tabledata_spacing text_center">@item.TotalCaseNumber</td>
+                                <td class="tabledata_spacing text_center">@item.CaseNumber</td>
+                                <td class="tabledata_spacing text_center">@item.Do</td>
+                                <td class="tabledata_spacing text_center">@item.InBoundDa</td>
+                                <td class="tabledata_spacing">@item.Description</td>
+                                <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
+                                <td class="tabledata_spacing text_right border_right">@string.Format("{0:C}", @item.GrossWeight)</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.TemplateDetail)
+                        }
+                        @{
+                            if (Model.TemplateDetail.Count <= 2)
                             {
-
-                                <tr>
-                                    <td class="tabledata_spacing text_right">@item.ItemNo</td>
-                                    <td class="tabledata_spacing">@item.ContainerNumber</td>
-                                    <td class="tabledata_spacing">@item.SealNumber</td>
-                                    <td class="tabledata_spacing">@item.ContainerType</td>
-                                    <td class="tabledata_spacing">@item.TotalCaseNumber</td>
-                                    <td class="tabledata_spacing">@item.CaseNumber</td>
-                                    <td class="tabledata_spacing">@item.Do</td>
-                                    <td class="tabledata_spacing">@item.InBoundDa</td>
-                                    <td class="tabledata_spacing">@item.Description</td>
-                                    <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
-                                    <td class="tabledata_spacing text_right border_right">@item.GrossWeight</td>
-                                </tr>
-                            }
-                            <tr class="spacing">
-                                <td colspan="11" class="tabledata_spacing"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <table border="0" class="table-data">
-                        <thead>
-                            <tr>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:3%;height:2em;vertical-align: top;">NO</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:10%;vertical-align: top;">NUMBER & KIND OF PACKAGES</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:7%;vertical-align: top;">CASE NUMBER</th>
-                                <th class="text_center tabledata_spacing border_bottom" colspan="2" style="width:10%;vertical-align: top;">REFERENCE</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:15%;vertical-align: top;">CARGO DESCRIPTION</th>
-                                <th class="text_center tabledata_spacing border_bottom" rowspan="2" style="width:8%;vertical-align: top;">NET WEIGHT</th>
-                                <th class="text_center tabledata_spacing border_bottom border_right" rowspan="2" style="width:8%;vertical-align: top;">GROSS WEIGHT</th>
-                            </tr>
-                            <tr>
-                                <th class="text_center tabledata_spacing border_bottom" style="width:10%;background-color:white;vertical-align: top;">EDI Number #</th>
-                                <th class="text_center tabledata_spacing border_bottom" style="width:10%;background-color:white;vertical-align: top;">IN BOUND-DA #</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.TemplateDetail)
-                            {
-                                <tr>
-                                    <td class="tabledata_spacing text_center">@item.ItemNo</td>
-                                    <td class="tabledata_spacing text_center">@item.TotalCaseNumber</td>
-                                    <td class="tabledata_spacing text_center">@item.CaseNumber</td>
-                                    <td class="tabledata_spacing text_center">@item.Do</td>
-                                    <td class="tabledata_spacing text_center">@item.InBoundDa</td>
-                                    <td class="tabledata_spacing">@item.Description</td>
-                                    <td class="tabledata_spacing text_right">@string.Format("{0:C}", @item.NetWeight)</td>
-                                    <td class="tabledata_spacing text_right border_right">@string.Format("{0:C}", @item.GrossWeight)</td>
-                                </tr>
-                            }
-                            @{
-                                if (Model.TemplateDetail.Count <= 2)
+                                int dummy = 5;
+                                for (int no = 1; no <= dummy; no++)
                                 {
-                                    int dummy = 5;
-                                    for (int no = 1; no <= dummy; no++)
+                                    <tr><td colspan="9" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
+                                    if (no == 5)
                                     {
-                                        <tr><td colspan="9" class="border_left border_right" style="border-top:1px solid white;">&nbsp;</td></tr>
-                                        if (no == 5)
-                                        {
-                                            <tr><td colspan="9" class="border_bottom">&nbsp;</td></tr>
-                                        }
+                                        <tr><td colspan="9" class="border_bottom">&nbsp;</td></tr>
                                     }
                                 }
                             }
-                        </tbody>
-                    </table>
-                }
+                        }
+                    </tbody>
+                </table>
             }
-            <div>&nbsp;</div>
+        }
+        <div>&nbsp;</div>
 
-            <table class="table-document">
-                <tr>
-                    <td colspan="9"></td>
-                    <td colspan="3">TOTAL PACKAGES</td>
+        <table class="table-document">
+            <tr>
+                <td colspan="9"></td>
+                @if (Model.Data.TotalPackageBy == "CaseNo")
+                {
+                    <td colspan="3">TOTAL PACKAGE BY CASENUMBER</td>
                     <td>:</td>
                     <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
-                </tr>
-                <tr>
-                    <td colspan="9"></td>
-                    <td colspan="3">TOTAL NET WEIGHT (KGS)</td>
+                }
+                else
+                {
+                    <td colspan="3">TOTAL PACKAGE BY ITEM</td>
                     <td>:</td>
-                    <td class="text_bold text_right">@Model.TemplateHeader.TotalNetWeight</td>
-                </tr>
-                <tr>
-                    <td colspan="9"></td>
-                    <td colspan="3">TOTAL GROSS WEIGHT (KGS)</td>
-                    <td>:</td>
-                    <td class="text_bold text_right">@Model.TemplateHeader.TotalGrossWeight</td>
-                </tr>
-                <tr>
-                    <td colspan="9"></td>
-                    <td colspan="3">TOTAL VOLUME (M3)</td>
-                    <td>:</td>
-                    <td class="text_bold text_right">@Model.TemplateHeader.TotalVolume</td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="height:10px"></td>
-                    <td colspan="10"></td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="height:15px" class="border_left border_top border_right text_bold">REMARKS</td>
-                    <td colspan="10"></td>
-                </tr>
-                <tr><td colspan="14" style="height:10px" class="border_left border_top border_right"></td></tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Terms of Delivery Export</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.IncoTerms</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Stuffing date (started)</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateStarted</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Stuffing date (finish)</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateFinished</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Vessel / Flight</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.VesselFlight</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Connecting Vessel</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.ConnectingVesselFlight</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Port Of Loading</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.LoadingPort</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Port Of Discharge/ Destination</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.DestinationPort</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Flight / Sailling Schedule</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.SailingSchedule</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Estimation Time of Arrival</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Eta</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Booking number</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingNumber</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Booking date</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingDate</td>
-                </tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left">Liner</td>
-                    <td>:</td>
-                    <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Liner</td>
-                </tr>
-                <tr><td colspan="14" style="height:10px" class="border_left border_bottom border_right"></td></tr>
-                <tr><td colspan="14" style="height:20px"></td></tr>
-                <tr>
-                    <td colspan="4"></td>
-                    <td colspan="10"></td>
-                </tr>
-                <tr>
-                    <td colspan="4" style="height:15px" class="border_left border_top border_right text_bold">REFERENCE</td>
-                    <td colspan="10"></td>
-                </tr>
-                <tr><td colspan="14" style="height:10px" class="border_left border_top border_right"></td></tr>
-                <tr>
-                    <td colspan="6" style="height:15px" class="border_left border_bottom">@Model.TemplateHeader.Reference</td>
-                    <td></td>
-                    <td colspan="8" class="border_right border_bottom text_bold"></td>
-                </tr>
-                <tr><td colspan="14" style="height:20px"></td></tr>
-                <tr><td colspan="14">Approved by,</td></tr>
-                <tr><td colspan="14">@Model.TemplateHeader.SignedName</td></tr>
-                <tr><td colspan="14">@Model.TemplateHeader.SignedPosition</td></tr>
-                <tr><td colspan="14" style="height:20px"></td></tr>
-                <tr><td colspan="14" class="text_footer">This is an electronic document, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.</td></tr>
-            </table>
-        </div>
+                    <td class="text_bold text_right">@Model.TemplateHeader.TotalCaseNumber</td>
+                }
+            </tr>
+            <tr>
+                <td colspan="9"></td>
+                <td colspan="3">TOTAL NET WEIGHT (KGS)</td>
+                <td>:</td>
+                <td class="text_bold text_right">@Model.TemplateHeader.TotalNetWeight</td>
+            </tr>
+            <tr>
+                <td colspan="9"></td>
+                <td colspan="3">TOTAL GROSS WEIGHT (KGS)</td>
+                <td>:</td>
+                <td class="text_bold text_right">@Model.TemplateHeader.TotalGrossWeight</td>
+            </tr>
+            <tr>
+                <td colspan="9"></td>
+                <td colspan="3">TOTAL VOLUME (M3)</td>
+                <td>:</td>
+                <td class="text_bold text_right">@Model.TemplateHeader.TotalVolume</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height:10px"></td>
+                <td colspan="10"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height:15px" class="border_left border_top border_right text_bold">REMARKS</td>
+                <td colspan="10"></td>
+            </tr>
+            <tr><td colspan="14" style="height:10px" class="border_left border_top border_right"></td></tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Terms of Delivery Export</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.IncoTerms</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Stuffing date (started)</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateStarted</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Stuffing date (finish)</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.StuffingDateFinished</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Vessel / Flight</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.VesselFlight</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Connecting Vessel</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.ConnectingVesselFlight</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Port Of Loading</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.LoadingPort</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Port Of Discharge/ Destination</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.DestinationPort</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Flight / Sailling Schedule</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.SailingSchedule</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Estimation Time of Arrival</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Eta</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Booking number</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingNumber</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Booking date</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.BookingDate</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left">Liner</td>
+                <td>:</td>
+                <td colspan="7" class="border_right text_bold">@Model.TemplateHeader.Liner</td>
+            </tr>
+            <tr><td colspan="14" style="height:10px" class="border_left border_bottom border_right"></td></tr>
+            <tr><td colspan="14" style="height:20px"></td></tr>
+            <tr>
+                <td colspan="4"></td>
+                <td colspan="10"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height:15px" class="border_left border_top border_right text_bold">REFERENCE</td>
+                <td colspan="10"></td>
+            </tr>
+            <tr><td colspan="14" style="height:10px" class="border_left border_top border_right"></td></tr>
+            <tr>
+                <td colspan="6" style="height:15px" class="border_left border_bottom">@Model.TemplateHeader.Reference</td>
+                <td></td>
+                <td colspan="8" class="border_right border_bottom text_bold"></td>
+            </tr>
+            <tr><td colspan="14" style="height:20px"></td></tr>
+            <tr><td colspan="14">Approved by,</td></tr>
+            <tr><td colspan="14">@Model.TemplateHeader.SignedName</td></tr>
+            <tr><td colspan="14">@Model.TemplateHeader.SignedPosition</td></tr>
+            <tr><td colspan="14" style="height:20px"></td></tr>
+            <tr><td colspan="14" class="text_footer">This is an electronic document, which printed and generated by computer integrated system. Required as reference for internal export document to get simple traceability. Weight & measurement are reference actual information as shown above.</td></tr>
+        </table>
     </div>
-    </div>
+</div>

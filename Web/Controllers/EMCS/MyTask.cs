@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using App.Data.Caching;
-using App.Data.Domain;
+
 using App.Domain;
-using App.Web.Models;
 using App.Web.App_Start;
-using System.Globalization;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Configuration;
-using System.Net;
 using App.Data.Domain.EMCS;
-using App.Web.Models.EMCS;
 using System.IO;
 using System.Dynamic;
-using App.Web.Helper;
+using System.Collections.Generic;
+using App.Web.Models.EMCS;
 
 namespace App.Web.Controllers.EMCS
 {
     public partial class EmcsController
     {
-        
+
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
         public ActionResult Mytask()
         {
@@ -36,9 +26,11 @@ namespace App.Web.Controllers.EMCS
 
             var filter = new GridListFilter();
             filter.Username = SiteConfiguration.UserName;
+            Session["IsApprover"] = false;
             ViewBag.IsImexUser = false;
             string userRoles = User.Identity.GetUserRoles();
-            if (userRoles.Contains("EMCSRequestor") || userRoles.Contains("Imex"))
+            if (userRoles.Contains("Imex") || userRoles.Contains("Administrator"))
+                //if (userRoles.Contains("EMCSRequestor") || userRoles.Contains("Imex"))
                 ViewBag.IsImexUser = true;
 
             if (userRoles.Contains("EMCSImex"))
@@ -50,17 +42,18 @@ namespace App.Web.Controllers.EMCS
             allCount.Cipl = Service.EMCS.SvcRequestCipl.GetTotalList(filter);
             allCount.Gr = Service.EMCS.SvcRequestGr.GetTotalList(filter);
             allCount.Cl = Service.EMCS.SvcRequestCl.GetTotalList(filter);
-            allCount.Npe =Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
+            allCount.Npe = Service.EMCS.SvcRequestCl.GetNpePebTotalList(filter);
             allCount.Si = Service.EMCS.SvcRequestCl.GetSiTotalList(filter);
             allCount.Bl = Service.EMCS.SvcRequestCl.GetBlTotalList(filter);
-            //allCount.RFC = Service.EMCS.SvcRequestCl.GetRFCTotalList();
+            allCount.RFC = Service.EMCS.SvcRequestCl.GetRFCTotalList(filter);
             return View(allCount);
         }
-        public ActionResult RequestForChangeDetail(string formtype,int id,int formid)
+        public ActionResult RequestForChangeDetail(string formtype, int id, string formNumber, int formid)
         {
             ViewBag.AppTitle = "Request For Change";
             ViewBag.FormType = formtype;
             ViewBag.RFCId = id;
+            ViewBag.FormNumber = formNumber;
             ViewBag.FormId = formid;
             return View();
         }
@@ -81,7 +74,7 @@ namespace App.Web.Controllers.EMCS
             return Json(new { total, rows = data }, JsonRequestBehavior.AllowGet);
         }
         [AuthorizeAcces(ActionType = AuthorizeAcces.IsRead, UrlMenu = "Mytask")]
-        public JsonResult RejectChangeHistory(string idterm,string reason)
+        public JsonResult RejectChangeHistory(string idterm, string reason)
         {
             string username = SiteConfiguration.UserName;
             Service.EMCS.SvcCipl.RejectRequestForChangeHistory(Convert.ToInt32(idterm), reason);

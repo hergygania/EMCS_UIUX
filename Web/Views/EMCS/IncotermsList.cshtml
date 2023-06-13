@@ -1,10 +1,8 @@
 ﻿@{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Master Incoterms";
 }
 
 @using System.Web.Mvc
-@Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
 <script type="text/javascript">
     var allowCreate = "@(ViewBag.allowCreate)";
@@ -41,7 +39,7 @@
                     @{
                         if (ViewBag.AllowCreate)
                         {
-                            <a class="btn btn-success btn-round animation-on-hover" data-modal="" href="/EMCS/IncotermsCreate" id="btnCreate">
+                            <a class="btn btn-warning" data-modal="" style="width:150px;" href="/EMCS/IncotermsCreate" id="btnCreate">
                                 <i class="fa fa-plus"></i> Add Incoterm
                             </a>
                         }
@@ -60,7 +58,7 @@
     <i class="fa fa-edit"></i> Update Incoterm
 </a>
 
-<div id='myModalPlace' class='modal'>
+<div id='myModalPlace' class='modal fade in'>
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div id='myModalContent'></div>

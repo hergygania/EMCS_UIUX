@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using App.Data.Domain.EMCS;
+using App.Domain;
 
 namespace App.Web.Controllers.EMCS
 {
@@ -36,18 +37,18 @@ namespace App.Web.Controllers.EMCS
                     if (a == null)
                     {
                         a = 0;
-                       
+
                     }
                     filter.Cargoid = Convert.ToInt32(a);
                     HttpContext.Session.Remove("Cargoid");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var a = ex.Message;
             }
             var data = Service.EMCS.SvcCargo.CargoDocumentList(filter);
-            
+
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
@@ -82,12 +83,12 @@ namespace App.Web.Controllers.EMCS
             return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        public JsonResult GetVendorList(GridListFilter crit)
-        {
-            List<Vendor> list = Service.EMCS.MasterVendor.GetList(crit);
-            return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpGet]
+        //public JsonResult GetVendorList(GridListFilter crit)
+        //{
+        //    List<Vendor> list = Service.EMCS.MasterVendor.GetList(crit);
+        //    return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
+        //}
 
         #region Begin Wizard Region
         public ActionResult ShowCipl(string page, long id)
@@ -98,7 +99,8 @@ namespace App.Web.Controllers.EMCS
                 var dataCipl = Service.EMCS.SvcWizard.GetCiplByPage1(page, id);
                 var idCipl = dataCipl.FirstOrDefault();
                 return RedirectToAction("CiplView", "Emcs", idCipl);
-            } else
+            }
+            else
             {
                 var dataCipl = Service.EMCS.SvcWizard.GetCiplByPage(page, id);
                 if (dataCipl.Count > 1)
@@ -112,10 +114,11 @@ namespace App.Web.Controllers.EMCS
                 }
                 else
                 {
-                    return View("Cipl");
+                    //return View("Cipl");
+                    return RedirectToAction("CiplView", "Emcs", new { Id = id });
                 }
             }
-            
+
         }
 
         public ActionResult ShowCargo(string page, long id)
@@ -138,21 +141,38 @@ namespace App.Web.Controllers.EMCS
             }
             else
             {
-                return RedirectToAction("");
+                if (page == "cipl")
+                {
+                    return RedirectToAction("CiplView", "Emcs", new { Id = id });
+                } else if (page == "rg")
+                {
+                    return RedirectToAction("PreviewGr", "Emcs", new { Id = id });
+                } else
+                {
+                    return RedirectToAction("");
+                }
+                
             }
         }
 
         public ActionResult ShowNpePeb(string page, long id)
         {
             var dataCargo = Service.EMCS.SvcWizard.GetCargoByPage(page, id);
+            var dataNpePeb = Service.EMCS.SvcWizard.GetNpeByPage(page, id);
             if (dataCargo.Count == 1)
             {
                 var first = dataCargo.FirstOrDefault();
 
                 var idCipl = id;
+                long idNpePeb = 0;
+
+                if (dataNpePeb.Count == 1)
+                {
+                    idNpePeb = dataNpePeb[0].Id;
+                }
 
                 if (first != null) id = first.Id;
-                return RedirectToAction("ViewPebNpe", "Emcs", new { Id = id, IdCipl = idCipl });
+                return RedirectToAction("ViewPebNpe", "Emcs", new { Id = id, IdCipl = idCipl, IdNpePeb = idNpePeb });
             }
             else
             {
@@ -168,11 +188,11 @@ namespace App.Web.Controllers.EMCS
                 var first = dataCargo.FirstOrDefault();
 
                 if (first != null) first.Id = id;
-                return RedirectToAction("BlAwbView", "Emcs", new {id });
+                return RedirectToAction("BlAwbView", "Emcs", new { id });
             }
             else if (dataCargo.Count >= 1)
             {
-                return RedirectToAction("CiplViewList", "Emcs", new {page, Id = id });
+                return RedirectToAction("CiplViewList", "Emcs", new { page, Id = id });
             }
             else
             {
@@ -225,7 +245,7 @@ namespace App.Web.Controllers.EMCS
             }
             else
             {
-                return RedirectToAction("");
+                return RedirectToAction("CiplView", "Emcs", new { Id = id });
             }
         }
         #endregion
@@ -236,6 +256,24 @@ namespace App.Web.Controllers.EMCS
             List<MasterArea> list = Service.EMCS.SvcGeneral.GetBareaList(crit);
             return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult GetSubconList(Domain.MasterSearchForm crit)
+        {   
+            List<MasterSubConCompany> list = Service.EMCS.SvcGeneral.GetSubconList(crit);
+            return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetVendorList(Domain.MasterSearchForm crit)
+        {
+            List<Vendor> list = Service.EMCS.SvcGeneral.GetVendorList(crit);
+            return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetLatestVendorList(Domain.MasterSearchForm crit)
+        {
+            List<Vendor> list = Service.EMCS.SvcGeneral.GetLatestVendorList(crit);
+            return Json(new { data = list.ToList() }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public JsonResult GetKppbcList(Domain.MasterSearchForm crit)
@@ -243,6 +281,7 @@ namespace App.Web.Controllers.EMCS
             var data = Service.EMCS.MasterKppbc.GetSelectOption(crit);
             return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpGet]
         public JsonResult GetPortData(MasterAirSeaPort crit)
@@ -270,21 +309,42 @@ namespace App.Web.Controllers.EMCS
         public JsonResult GetVehicle(string term)
         {
             var data = Service.EMCS.SvcGeneral.GetVehicleType(term);
-            return Json(new {data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult GetVehicleMerk(string term)
         {
             var data = Service.EMCS.SvcGeneral.GetVehicleMerk(term);
-            return Json(new {data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetDaNumber(string term)
+        {
+            var data = Service.EMCS.SvcGeneral.GetDaNumber(term);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetDataBast(string idCipl)
+        {
+            var data = Service.EMCS.SvcGeneral.GetDataBast(idCipl);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public JsonResult GetNextSuperior()
         {
             var data = Service.EMCS.SvcGeneral.GetCurrentNextSuperior();
-            return Json(new {data }, JsonRequestBehavior.AllowGet);
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetRoleName()
+        {
+            var username = SiteConfiguration.UserName;
+            var data = Service.DTS.DeliveryRequisition.GetRoleName(username);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

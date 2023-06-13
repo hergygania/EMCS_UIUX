@@ -1,6 +1,5 @@
 ﻿@model  App.Web.Models.EMCS.CiplModel
 @{
-    Layout = "~/Views/EMCS/_Layout.cshtml";
     ViewBag.Title = "Commercial Invoice Packing List Approve";
     ViewBag.TypeReq = "Cipl";
     ViewBag.IdReq = Model.Data.Id;
@@ -10,77 +9,45 @@
 @Styles.Render("~/Content/EMCS/Custom.css")
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
-
-<style>
-    .tabs {
-        font-size: 15px;
-        padding: 0px;
-        list-style: none;
-        background: #fff;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
-        display: inline-block;
-        border-radius: 50px;
-        position: relative;
-    }
-
-        .tabs a {
-            text-decoration: none;
-            color: #777;
-            padding: 10px 20px;
-            display: inline-block;
-            position: relative;
-            z-index: 1;
-            transition-duration: 0.6s;
-        }
-
-            .tabs a.active {
-                color: #fff;
-            }
-
-            .tabs a i {
-                margin-right: 5px;
-            }
-
-        .tabs .selector {
-            height: 100%;
-            display: inline-block;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 1;
-            border-radius: 50px;
-            transition-duration: 0.6s;
-            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            background: #05abe0;
-            background: -moz-linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
-            background: -webkit-linear-gradient(45deg, #05abe0 0%,#8200f4 100%);
-            background: linear-gradient(20deg, #fe9d01 60%,#FFD38A 83%);
-            box-shadow: 3px 5px #a8a8a8;
-        }
-</style>
 <input type="hidden" name="formType" id="formType" value="CIPL" />
-
 <div class="col-md-12">
     <div class="col-md-12">
         @Html.Partial("~/Views/EMCS/Wizard.cshtml")
     </div>
-    <div class="col-md-12 pt-3">
+    <div class="col-md-12">
         <div class="tab" role="tabpanel" style="box-shadow:none !important;background:none;">
-            <nav class="tabs">
-                <div class="selector"></div>
-
-                <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab" class="active">Detail</a>
-                <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
-                <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
-                <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
-                <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
-                <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
-                <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
-                <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
-                <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
-
-            </nav>
-            <div class="tab-content tabs-custom pt-4">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#invoice" aria-controls="home" role="tab" data-toggle="tab">Detail</a>
+                </li>
+                <li role="presentation">
+                    <a href="#history" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:9;">History</a>
+                </li>
+                <li role="presentation">
+                    <a href="#problemhistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:8;">Problem</a>
+                </li>
+                <li role="presentation">
+                    <a href="#changehistory" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">Change history</a>
+                </li>
+                <li role="presentation">
+                    <a href="#documents" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:7;">Documents</a>
+                </li>
+                <li role="presentation">
+                    <a href="#edipreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:6;">EDI Preview</a>
+                </li>
+                <li role="presentation">
+                    <a href="#inpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:5;">Invoice Preview</a>
+                </li>
+                <li role="presentation">
+                    <a href="#plpreview" aria-controls="profile" role="tab" data-toggle="tab" style="z-index:4;">PL Preview</a>
+                </li>
+                <li class="hidden" role="presentation">
+                    <a href="#uploaddoc" aria-controls="messages" role="tab" data-toggle="tab" style="z-index:3;">Upload Documents</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content tabs-custom">
                 <div role="tabpanel" class="tab-pane active" id="invoice">
                     @Html.Partial("CiplTabInvoice", Model)
                 </div>
@@ -116,12 +83,12 @@
             </div>
             <div class="row">
                 <div class="col-md-6 pull-right">
-                    <div class="form-group" style="margin-top:20px">
+                    <div class="form-group pull-right" style="margin-top:20px">
                         <div class="" role="group">
-                            <button type="button" class="btn btn-round btn-success" id="btnApprove"><i class="fa fa-paper-plane"></i> Approve</button>
-                            <button type="button" class="btn btn-round btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
-                            <button type="button" class="btn btn-round btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
-                            <a href="/emcs/mytask" class="btn btn-round btn-danger"><i class="fa fa-times"></i> Cancel</a>
+                            <button type="button" class="btn btn-success" id="btnApprove"><i class="fa fa-paper-plane"></i> Approve</button>
+                            <button type="button" class="btn btn-warning" id="btnRevise"><i class="fa fa-edit"></i> Revise</button>
+                            <button type="button" class="btn btn-danger" id="btnReject"><i class="fa fa-times"></i> Reject</button>
+                            <a href="/emcs/mytask" class="btn btn-primary"><i class="fa fa-times"></i> Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -253,7 +220,7 @@
             var data = $("#myModalProblemContent form").serializeArray();
             data.push({ name: "Status", value: statusName });
             console.log(data);
-            debugger;
+            
             $.ajax({
                 url: myApp.fullPath + "EMCS/SaveProblemHistory",
                 type: "Post",
@@ -301,27 +268,3 @@
 
     </script>
 }
-
-<script>
-    var tabs = $('.tabs');
-    var selector = $('.tabs').find('a').length;
-    //var selector = $(".tabs").find(".selector");
-    var activeItem = tabs.find('.active');
-    var activeWidth = activeItem.innerWidth();
-    $(".selector").css({
-        "left": activeItem.position.left + "px",
-        "width": activeWidth + "px"
-    });
-
-    $(".tabs").on("click", "a", function (e) {
-        e.preventDefault();
-        $('.tabs a').removeClass("active");
-        $(this).addClass('active');
-        var activeWidth = $(this).innerWidth();
-        var itemPos = $(this).position();
-        $(".selector").css({
-            "left": itemPos.left + "px",
-            "width": activeWidth + "px"
-        });
-    });
-</script>

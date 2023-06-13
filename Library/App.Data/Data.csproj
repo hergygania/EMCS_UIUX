@@ -79,15 +79,29 @@
     <Compile Include="Domain\DTS\FreightCost.cs" />
     <Compile Include="Domain\DTS\InboundEviz.cs" />
     <Compile Include="Domain\DTS\InboundEvizFilter.cs" />
+    <Compile Include="Domain\EMCS\BlAwb_Change.cs" />
+    <Compile Include="Domain\EMCS\BlAwb_History.cs" />
     <Compile Include="Domain\EMCS\CargoDocument.cs" />
+    <Compile Include="Domain\EMCS\CargoItemRFCList.cs" />
+    <Compile Include="Domain\EMCS\CargoItem_Change .cs" />
     <Compile Include="Domain\EMCS\CiplDocumentInsert.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Domain\EMCS\CiplDocumentModel.cs" />
     <Compile Include="Domain\EMCS\GoodReceiveDocument.cs" />
+    <Compile Include="Domain\EMCS\MasterSubConCompany.cs" />
     <Compile Include="Domain\EMCS\MasterSuperior.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Domain\EMCS\MasterVendorTable.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleet.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleetDocumentHistory.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleetItem.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleetRefrence.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleet_Change.cs" />
+    <Compile Include="Domain\EMCS\ShippingFleet_History.cs" />
+    <Compile Include="Domain\EMCS\SpCiplItemList_Armada.cs" />
+    <Compile Include="Domain\EMCS\SpRPebReport.cs" />
     <Compile Include="Domain\EMCS\SP_BlAwb.cs" />
     <Compile Include="Domain\EMCS\SP_getCiplChangeHistory.cs" />
     <Compile Include="Domain\EMCS\SP_getCiplDocument.cs">
@@ -101,7 +115,9 @@
     </Compile>
     <Compile Include="Domain\EMCS\SP_getListAllUser.cs" />
     <Compile Include="Domain\EMCS\Sp_NpePeb.cs" />
+    <Compile Include="Domain\EMCS\SP_RequestNpePeb.cs" />
     <Compile Include="Domain\EMCS\Sp_RequestForChangeHistory.cs" />
+    <Compile Include="Domain\EMCS\SP_ShippingFleetItem.cs" />
     <Compile Include="Domain\EMCS\SP_ShippingInstruction.cs" />
     <Compile Include="Domain\EMCS\SP_ShippingSummary.cs" />
     <Compile Include="Domain\EMCS\SP_Superior.cs">

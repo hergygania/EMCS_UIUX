@@ -86,14 +86,15 @@ namespace App.Web.Controllers.EMCS
             return data;
         }
 
-       
-        public ActionResult EditCargoitem(string cargoids)
+
+        public ActionResult EditCargoitem(string cargoids, bool IsRFC = false)
         {
             try
             {
-               var model = JsonConvert.DeserializeObject<cargoItem>(cargoids);
+                var model = JsonConvert.DeserializeObject<cargoItem>(cargoids);
                 ApplicationTitle();
                 ViewBag.crudMode = "U";
+                ViewBag.IsRFC = IsRFC;
                 var detail = InitCargoItem(model.cargoIds);
                 if (detail.Count == 1) // Single item
                     ViewBag.SingleItem = true;
@@ -117,90 +118,93 @@ namespace App.Web.Controllers.EMCS
         public class cargoItem
         {
             public List<long> cargoIds { get; set; }
-       
+
         }
         [HttpPost]
-        public JsonResult EditCargoItem(List<CargoItemModel> form)
+        public JsonResult EditCargoItem(List<CargoItemModel> modeldata, bool IsRFC = false)
         {
             try
             {
                 var updateModel = new List<SpCargoItemDetail>();
-                for (int i = 0; i < form.Count; i++)
+                if (modeldata != null)
                 {
-                    form[i].ContainerNumber = form[0].ContainerNumber;
-                    form[i].ContainerSealNumber = form[0].ContainerSealNumber;
-                    form[i].ContainerType = form[0].ContainerType;
-                }
-                foreach (var item in form)
-                {
-                    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
-                    var dataUpdate = new CargoItem();
-
-
-                    dataUpdate.Id = item.Id;
-                    dataUpdate.IdCargo = item.IdCargo;
-                    dataUpdate.ContainerNumber = item.ContainerNumber;
-                    dataUpdate.ContainerType = item.ContainerType;
-                    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
-                    dataUpdate.Length = item.Length;
-                    dataUpdate.Width = item.Width;
-                    dataUpdate.Height = item.Height;
-                    dataUpdate.Gross = item.Gross;
-                    dataUpdate.Net = item.Net;
-
-                    var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
-                    if (hasChange)
+                    for (int i = 0; i < modeldata.Count; i++)
                     {
-                        #region cek apakah perubahan untuk item yg sama sudah dilakukan
-                        var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
-                        var dml = "I";
-                        if (oldUpdate != null)
+                        modeldata[i].ContainerNumber = modeldata[0].ContainerNumber;
+                        modeldata[i].ContainerSealNumber = modeldata[0].ContainerSealNumber;
+                        modeldata[i].ContainerType = modeldata[0].ContainerType;
+                    }
+                    foreach (var item in modeldata)
+                    {
+                        var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                        var dataUpdate = new CargoItem();
+
+                        dataUpdate.IdCiplItem = obj.IdCiplItem;
+                        dataUpdate.Id = item.Id;
+                        dataUpdate.IdCargo = item.IdCargo;
+                        dataUpdate.ContainerNumber = item.ContainerNumber;
+                        dataUpdate.ContainerType = item.ContainerType;
+                        dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                        dataUpdate.Length = item.Length;
+                        dataUpdate.Width = item.Width;
+                        dataUpdate.Height = item.Height;
+                        dataUpdate.Gross = item.Gross;
+                        dataUpdate.Net = item.Net;
+
+
+                        if (modeldata.Count == 1)
                         {
-                            dml = "U";
+                            var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
+                            if (hasChange)
+                            {
+                                #region cek apakah perubahan untuk item yg sama sudah dilakukan
+                                var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
+                                var dml = "I";
+                                if (oldUpdate != null)
+                                {
+                                    dml = "U";
+                                }
+
+                                Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
+                                #endregion
+                            }
+                        }
+                        else
+                        {
+                            dataUpdate.Length = obj.Length;
+                            dataUpdate.Width = obj.Width;
+                            dataUpdate.Height = obj.Height;
+                            dataUpdate.Gross = obj.GrossWeight;
+                            dataUpdate.Net = obj.NetWeight;
+
                         }
 
-                        Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
-                        #endregion
+                        if (IsRFC == true)
+                        {
+                            var id = Service.EMCS.SvcCargoItem.GetCargoItemChangeByIdCiplItem(dataUpdate.IdCiplItem);
+
+                            if (id == null)
+                            {
+                                id = 0;
+                                Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", id);
+
+                            }
+                            else if (id.Status != "Deleted")
+                            {
+                                dataUpdate.Id = id.Id;
+                                Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", id.Id);
+
+                            }
+                        }
+                        else
+                        {
+                            Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
+
+                        }
+                        updateModel.Add(obj);
                     }
-
-                    Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
-                    updateModel.Add(obj);
                 }
-                //foreach (var item in form)
-                //{
-                //    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
-                //    var dataUpdate = new CargoItem();
 
-
-                //    dataUpdate.Id = item.Id;
-                //    dataUpdate.IdCargo = item.IdCargo;
-                //    dataUpdate.ContainerNumber = item.ContainerNumber;
-                //    dataUpdate.ContainerType = item.ContainerType;
-                //    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
-                //    dataUpdate.Length = item.Length;
-                //    dataUpdate.Width = item.Width;
-                //    dataUpdate.Height = item.Height;
-                //    dataUpdate.Gross = item.Gross;
-                //    dataUpdate.Net = item.Net;
-
-                //    var hasChange = Service.EMCS.SvcCargoItem.GetChangesData(dataUpdate, obj.IdCiplItem);
-                //    if (hasChange)
-                //    {
-                //        #region cek apakah perubahan untuk item yg sama sudah dilakukan
-                //        var oldUpdate = Service.EMCS.SvcCargoItem.IsAlreadyUpdate(obj.IdCargo, obj.IdCipl, obj.IdCiplItem);
-                //        var dml = "I";
-                //        if (oldUpdate != null)
-                //        {
-                //            dml = "U";
-                //        }
-
-                //        Service.EMCS.SvcCargoItem.SaveChangeHistory(dml, obj, dataUpdate);
-                //        #endregion
-                //    }
-
-                //    Service.EMCS.SvcCargoItem.Update(dataUpdate, "U");
-                //    updateModel.Add(obj);
-                //}
 
                 return JsonCRUDMessage("U", updateModel);
             }
@@ -318,7 +322,7 @@ namespace App.Web.Controllers.EMCS
         }
 
         [HttpPost]
-        public JsonResult InsertNoContainerItems(long cargoId, Nullable<long> containerId, string items)
+        public JsonResult InsertNoContainerItems(long cargoId, Nullable<long> containerId, string items, bool IsRFC = false,List<CargoItemModel> input = null)
         {
             // ReSharper disable once JoinDeclarationAndInitializer
             // ReSharper disable once CollectionNeverQueried.Local
@@ -326,20 +330,204 @@ namespace App.Web.Controllers.EMCS
             itemIds = new List<long>();
             try
             {
-
-                var itemList = items.Split(',');
-                if (itemList.Any())
+                if (IsRFC == true)
                 {
-                    foreach (var item in itemList)
+                    if (items == null)
                     {
-                        var itemsId = Convert.ToInt64(item);
-                        var itm = new CargoItem();
-                        itm.Id = 0;
-                        itm.IdCargo = cargoId;
-                        var itemId = Service.EMCS.SvcCargoItem.Insert(itm, itemsId, "I");
-                        itemIds.Add(itemId);
+                        foreach (var item in input)
+                        {
+                            var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                            var Status = Service.EMCS.SvcCargoItem.GetCargoItemChangeByIdCiplItem(obj.IdCiplItem);
+                            var dataUpdate = new CargoItem();
+
+                            dataUpdate.IdCiplItem = obj.IdCiplItem;
+                            dataUpdate.Id = item.Id;
+                            dataUpdate.IdCargo = item.IdCargo;
+                            dataUpdate.ContainerNumber = item.ContainerNumber;
+                            dataUpdate.ContainerType = item.ContainerType;
+                            dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                            dataUpdate.Length = item.Length;
+                            dataUpdate.Width = item.Width;
+                            dataUpdate.Height = item.Height;
+                            dataUpdate.Gross = item.Gross;
+                            dataUpdate.Net = item.Net;
+                            if (Status != null)
+                            {
+                                if (Status.Status != "Deleted")
+                                {
+                                    Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+                                }
+                                else
+                                {
+                                    return JsonMessage("This Record Is Deleted", 1, "");
+                                }
+                            }
+                            else
+                            {
+                                Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+
+                            }
+                        }
                     }
+                    else
+                    {
+                        if(input != null)
+                        {
+                            if (input.Count > 1)
+                            {
+                                for (int i = 0; i < input.Count; i++)
+                                {
+                                    input[i].ContainerNumber = input[0].ContainerNumber;
+                                    input[i].ContainerSealNumber = input[0].ContainerSealNumber;
+                                    input[i].ContainerType = input[0].ContainerType;
+
+                                }
+                                foreach (var item in input)
+                                {
+                                    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                                    var Status = Service.EMCS.SvcCargoItem.GetCargoItemChangeByIdCiplItem(obj.IdCiplItem);
+                                    var dataUpdate = new CargoItem();
+
+                                    dataUpdate.IdCiplItem = obj.IdCiplItem;
+                                    dataUpdate.Id = item.Id;
+                                    dataUpdate.IdCargo = item.IdCargo;
+                                    dataUpdate.ContainerNumber = item.ContainerNumber;
+                                    dataUpdate.ContainerType = item.ContainerType;
+                                    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                                    dataUpdate.Length = obj.Length;
+                                    dataUpdate.Width = obj.Width;
+                                    dataUpdate.Height = obj.Height;
+                                    dataUpdate.Gross = obj.Gross;
+                                    dataUpdate.Net = obj.Net;
+                                    if (Status != null)
+                                    {
+                                        if (Status.Status != "Deleted")
+                                        {
+                                            Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+                                        }
+                                        else
+                                        {
+                                            return JsonMessage("This Record Is Deleted", 1, "");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in input)
+                                {
+                                    var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                                    var Status = Service.EMCS.SvcCargoItem.GetCargoItemChangeByIdCiplItem(obj.IdCiplItem);
+                                    var dataUpdate = new CargoItem();
+
+                                    dataUpdate.IdCiplItem = obj.IdCiplItem;
+                                    dataUpdate.Id = item.Id;
+                                    dataUpdate.IdCargo = item.IdCargo;
+                                    dataUpdate.ContainerNumber = item.ContainerNumber;
+                                    dataUpdate.ContainerType = item.ContainerType;
+                                    dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                                    dataUpdate.Length = item.Length;
+                                    dataUpdate.Width = item.Width;
+                                    dataUpdate.Height = item.Height;
+                                    dataUpdate.Gross = item.Gross;
+                                    dataUpdate.Net = item.Net;
+                                    if (Status != null)
+                                    {
+                                        if (Status.Status != "Deleted")
+                                        {
+                                            Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+                                        }
+                                        else
+                                        {
+                                            return JsonMessage("This Record Is Deleted", 1, "");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var itemList = items.Split(',');
+                            if (itemList.Any())
+                            {
+                                foreach (var item in itemList)
+                                {
+                                    var itemsId = Convert.ToInt64(item);
+                                    var data = Service.EMCS.SvcCipl.GetCiplItemById(itemsId);
+                                    var itm = new CargoItem();
+                                    itm.Id = 0;
+                                    itm.IdCargo = cargoId;
+                                    var dataUpdate = new CargoItem();
+
+                                    dataUpdate.IdCiplItem = data.Id;
+                                    dataUpdate.Id = 0;
+                                    dataUpdate.IdCargo = cargoId;
+                                    dataUpdate.Length = data.Length;
+                                    dataUpdate.Width = data.Width;
+                                    dataUpdate.Height = data.Height;
+                                    dataUpdate.Gross = data.GrossWeight;
+                                    dataUpdate.Net = data.NetWeight;
+                                    Service.EMCS.SvcCargoItem.UpdateItemChange(dataUpdate, "U", 0);
+                                    //var itemId = Service.EMCS.SvcCargoItem.Insert(itm, itemsId, "I", false);
+                                }
+                            }
+                        }
+                        
+                    }
+                   
                 }
+                else
+                {
+                    if (items == null)
+                    {
+                        foreach (var item in input)
+                        {
+                            var obj = Service.EMCS.SvcCargoItem.GetDataById(item.Id);
+                            var dataUpdate = new CargoItem();
+
+                            dataUpdate.IdCiplItem = obj.IdCiplItem;
+                            dataUpdate.Id = item.Id;
+                            dataUpdate.IdCargo = item.IdCargo;
+                            dataUpdate.ContainerNumber = item.ContainerNumber;
+                            dataUpdate.ContainerType = item.ContainerType;
+                            dataUpdate.ContainerSealNumber = item.ContainerSealNumber;
+                            dataUpdate.Length = item.Length;
+                            dataUpdate.Width = item.Width;
+                            dataUpdate.Height = item.Height;
+                            dataUpdate.Gross = item.Gross;
+                            dataUpdate.Net = item.Net;
+                            Service.EMCS.SvcCargoItem.Insert(dataUpdate,dataUpdate.Id, "I", false);
+                        }
+                    }
+                    else
+                    {
+                        var itemList = items.Split(',');
+                        if (itemList.Any())
+                        {
+                            foreach (var item in itemList)
+                            {
+                                var itemsId = Convert.ToInt64(item);
+                                var itm = new CargoItem();
+                                itm.Id = 0;
+                                itm.IdCargo = cargoId;
+                                var itemId = Service.EMCS.SvcCargoItem.Insert(itm, itemsId, "I", false);
+                                itemIds.Add(itemId);
+                            }
+                        }
+                    }
+                        
+                }
+
                 return JsonCRUDMessage("I");
             }
             catch (Exception err)
@@ -360,7 +548,7 @@ namespace App.Web.Controllers.EMCS
 
                 var itm = new CargoItem();
                 itm.Id = 0;
-                var itemId = Service.EMCS.SvcCargoItem.Insert(itm, itemsId, "I");
+                var itemId = Service.EMCS.SvcCargoItem.Insert(itm, itemsId, "I", false);
                 itemIds.Add(itemId);
             }
             return false;
@@ -393,16 +581,42 @@ namespace App.Web.Controllers.EMCS
         //}
         public JsonResult GetTotalDataCargo(long id, string selectvalue)
         {
-            var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id,selectvalue);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            if (selectvalue == "CaseNo")
+            {
+                var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id, "CaseNo");
+                return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id, "NoItem");
+                return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+
+
+            }
         }
-        public JsonResult DeleteCargoItem(long id)
+        //public JsonResult GetTotalDataCargoByItem(long id)
+        //{
+        //    var data = Service.EMCS.SvcCargoItem.GetTotalDataCargo(id, "NoItem");
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+        public JsonResult DeleteCargoItem(long id, bool IsRFC)
         {
             try
             {
-                var data = Service.EMCS.SvcCargoItem.GetDataById(id);
-                Service.EMCS.SvcCargoItem.Remove(id);
-                return JsonCRUDMessage("U", data);
+                if (IsRFC == true)
+                {
+                    var data = Service.EMCS.SvcCargoItem.GetItemById(id);
+                    Service.EMCS.SvcCargoItem.DeleteItemChange(data, "U", id);
+                    return JsonCRUDMessage("U", data);
+                }
+                else
+                {
+                    var data = Service.EMCS.SvcCargoItem.GetDataById(id);
+                    Service.EMCS.SvcCargoItem.Remove(id);
+                    return JsonCRUDMessage("U", data);
+                }
+
             }
             catch (Exception err)
             {

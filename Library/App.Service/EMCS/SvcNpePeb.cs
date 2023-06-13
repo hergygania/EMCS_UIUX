@@ -23,11 +23,51 @@ namespace App.Service.EMCS
         {
             using (var db = new Data.EmcsContext())
             {
-                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false).FirstOrDefault();
+                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false && a.IsCancelled != 2).FirstOrDefault();
                 return data;
             }
         }
+        public static List<Data.Domain.EMCS.NpePeb> GetDataByIdForList(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.NpePebs.Where(a => a.IdCl == id && a.IsDelete == false && a.IsCancelled != 2).ToList();
+                return data;
+            }
+        }
+        public static Data.Domain.EMCS.NpePeb GetByIdNpePeb(long id)
+        {
+            using (var db = new Data.EmcsContext())
+            {
+                var data = db.NpePebs.Where(a => a.Id == id && a.IsDelete == false && a.IsCancelled != 2).FirstOrDefault();
+                return data;
+            }
+        }
+        public static List<Data.Domain.UserAccess_Role> GetListUserRoles(string userId)
+        {
+            using (var db = new Data.EfDbContext())
+            {
+                var tb = db.UserAccess_Role.Where(c => c.UserID == userId).ToList();
+                return tb;
+            }
+        }
+        public static Data.Domain.EMCS.RequestCl GetStatusById(long id)
+        {
+            try
+            {
+                using (var db = new Data.EmcsContext())
+                {
+                    var IdCl = Convert.ToString(id);
+                    var requestCl = db.RequestCl.Where(a => a.IdCl == IdCl && a.IsDelete == false).FirstOrDefault();
+                    return requestCl;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
         public static dynamic NpePebList(GridListFilter crit)
         {
             try
@@ -184,14 +224,110 @@ namespace App.Service.EMCS
                 using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
                 {
                     db.DbContext.Database.CommandTimeout = 600;
-                    var status = item.Status ?? "";
+                    var status = item.Status;
                     var actionBy = SiteConfiguration.UserName;
                     var comment = item.Notes ?? "";
-                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "'");
+                    db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_cl @IdCl=" + itm.IdCl + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "'");
                     return 1;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static long CancelNpePeb(Data.Domain.EMCS.NpePeb itm, Data.Domain.EMCS.CiplApprove item, string dml)
+        {
+            try
+            {
+                if (itm.IsCancelled == null)
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "CancelRequest" + "', @Notes='" + comment + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+                if (itm.IsCancelled == 0)
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "CancelApproval" + "', @Notes='" + "" + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+
+                else
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + itm.Id + ", @Username='" + actionBy + "', @NewStatus='" + "Cancel" + "', @Notes='" + comment + "', @IsCancelled='" + 4 + "'");
+                        return 1;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        public static long CancelAllNpePeb(Data.Domain.EMCS.NpePeb itm, Data.Domain.EMCS.CiplApprove item, string dml)
+        {
+            try
+            {
+                if (item.Status == "CancelRequest")
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+                else if (item.Status == "CancelApproval")
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+                else
+                {
+                    using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+                    {
+                        db.DbContext.Database.CommandTimeout = 600;
+                        var status = item.Status ?? "";
+                        var actionBy = SiteConfiguration.UserName;
+                        var comment = item.Notes ?? "";
+                        db.DbContext.Database.ExecuteSqlCommand("exec sp_update_request_pebcancel @IdCl=" + item.Id + ", @Username='" + actionBy + "', @NewStatus='" + status + "', @Notes='" + comment + "', @IsCancelled='" + 3 + "'");
+                        return 1;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
             {
                 return 0;
             }
@@ -273,6 +409,21 @@ namespace App.Service.EMCS
                 }
 
                 return result;
+            }
+        }
+        public static long InsertCancelledDocument(long id, string fileName)
+        {
+            using (var db = new Data.RepositoryFactory(new Data.EmcsContext()))
+            {
+                db.DbContext.Database.CommandTimeout = 600;
+                List<SqlParameter> parameterList = new List<SqlParameter>();
+                parameterList.Add(new SqlParameter("@id", id));
+                parameterList.Add(new SqlParameter("@FileName", fileName));
+
+                SqlParameter[] parameters = parameterList.ToArray();
+                // ReSharper disable once CoVariantArrayConversion
+                db.DbContext.Database.ExecuteSqlCommand(@" exec [dbo].[SP_InsertDocumentCancelled] @id, @FileName", parameters);
+                return 1;
             }
         }
 
