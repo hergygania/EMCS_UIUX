@@ -2939,6 +2939,7 @@ a:hover {
   line-height: 1.25rem;
   font-weight: 500;
   line-height: 1.375;
+  text-align: left;
 }
 
 #sidebar-menu .nav-link--level-0:hover .nav-link-wrap,  #sidebar-menu .nav-link--level-1:hover .nav-link-wrap,  #sidebar-menu .nav-collapse:hover .nav-link-wrap {
