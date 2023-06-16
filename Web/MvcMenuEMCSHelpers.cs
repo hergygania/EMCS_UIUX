@@ -170,7 +170,10 @@ namespace App.Web
                 {
                     sb.AppendLine("<div class=\"nav-link-wrap\">");
                     sb.AppendLine("<i style=\"color: #666d7d; padding-right: 15px;\" class=\"uil " + menu.icon + "\"></i><span class=\"nav-label\">" + menu.Name + "</span>");
+<<<<<<< HEAD
                     sb.AppendLine("</div>");
+=======
+>>>>>>> cfd35badf37a2208f5855c22042cd90d017c16cc
                     sb.AppendLine("</a>");
                 }
                 else
