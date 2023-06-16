@@ -1,4 +1,4 @@
-﻿﻿using App.Data.Caching;
+﻿﻿﻿﻿using App.Data.Caching;
 using App.Data.Domain.Extensions;
 using System;
 using System.Collections.Generic;
@@ -95,11 +95,14 @@ namespace App.Web
 
             if (appUrl == "/")
                 appUrl = "";
+            string url = HttpContext.Current.Request.Url.AbsoluteUri;
+            Uri url1 = new Uri(url);
+            string host = url1.GetLeftPart(UriPartial.Authority);
 
             if (!request.Url.Authority.Contains("localhost"))
             {
 
-                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, "staging.mkindo.com:5183", appUrl);
+                baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, host, appUrl);
             }
             else
             {
@@ -109,28 +112,76 @@ namespace App.Web
 
             foreach (var menu in Menus)
             {
+
+                //prev
+                //if (menu.Name == "Home")
+                //    sb.AppendLine("<li class=\"\">");
+                //else
+                //    sb.AppendLine("<li>");
+
+                //sb.AppendLine("<a class=\"\" " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
+                //    : (menu.URL.Trim().Substring(0, 1) != "/" && menu.URL.Trim().Substring(0, 1) != @"\")
+                //    ? "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"
+                //    : "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"));
+
+                //if (menu.children.Count() <= 0)
+                //{
+                //    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p class=\"\" style=\"color: #666d7d;\">" + menu.Name + "</p>");
+                //    sb.AppendLine("</a>");
+                //}
+                //else
+                //{
+                //    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"\" aria-expanded=\"false\">");
+                //    sb.AppendLine("<i style=\"color: #666d7d;\" class=\" " + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
+                //    sb.AppendLine("</a>");
+                //    sb.AppendLine("<div class=\"\" id=\"menu" + menu.ID + "\">");
+                //    sb.AppendLine("<ul class=\"y-2 flex flex-col space-y-2\">");
+                //    CreateHTMLMenu(menu.children, sClass, 1);
+                //    sb.AppendLine("</ul>");
+                //}
+                //sb.AppendLine("</li>");
+                //sb.AppendLine("</li>");
+
+                //new for UI/UX
                 if (menu.Name == "Home")
-                    sb.AppendLine("<li class=\"\">");
+                    sb.AppendLine("<li class=\"hidden\">");
                 else
                     sb.AppendLine("<li>");
 
-                sb.AppendLine("<a class=\"\" " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
-                    : (menu.URL.Trim().Substring(0, 1) != "/" && menu.URL.Trim().Substring(0, 1) != @"\")
-                    ? "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"
-                    : "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"));
+                if (menu.URL != "#")
+                {
+                    if (process == 1)
+                    {
+                        sb.AppendLine("<a class=\"nav-link--level-1\" " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
+                        : (menu.URL.Trim().Substring(0, 1) != "/" && menu.URL.Trim().Substring(0, 1) != @"\")
+                        ? "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"
+                        : "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"));
+                    } else
+                    {
+                        sb.AppendLine("<a class=\"nav-link--level-0\" " + Convert.ToString((string.IsNullOrEmpty(menu.URL)) ? ">"
+                        : (menu.URL.Trim().Substring(0, 1) != "/" && menu.URL.Trim().Substring(0, 1) != @"\")
+                        ? "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"
+                        : "href='" + baseUrl + "/" + menu.URL.Replace(@"\", "/") + "'>"));
+                    }
+                    
+                }
 
                 if (menu.children.Count() <= 0)
                 {
-                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p class=\"\" style=\"color: #666d7d;\">" + menu.Name + "</p>");
+                    sb.AppendLine("<div class=\"nav-link-wrap\">");
+                    sb.AppendLine("<i style=\"color: #666d7d; padding-right: 15px;\" class=\"uil " + menu.icon + "\"></i><span class=\"nav-label\">" + menu.Name + "</span>");
+                    sb.AppendLine("</div>");
                     sb.AppendLine("</a>");
                 }
                 else
                 {
-                    sb.AppendLine("<a data-toggle=\"collapse\" href=\"#menu" + menu.ID + "\" class=\"\" aria-expanded=\"false\">");
-                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"" + menu.icon + "\"></i><p style=\"color: #666d7d;\">" + menu.Name + "</p>");
-                    sb.AppendLine("</a>");
-                    sb.AppendLine("<div class=\"\" id=\"menu" + menu.ID + "\">");
-                    sb.AppendLine("<ul class=\"\">");
+                    sb.AppendLine("<button class=\"nav-collapse nav-collapse--active\" type=\"button\">");
+                    sb.AppendLine("<div class=\"nav-link-wrap\">");
+                    sb.AppendLine("<i style=\"color: #666d7d;\" class=\"uil " + menu.icon + "\"></i><span class=\"nav-label\">" + menu.Name + "</span>");
+                    sb.AppendLine("</div>");
+                    sb.AppendLine("</button>");
+                    sb.AppendLine("<div class=\"nav-collapse--child\" id=\"menu" + menu.ID + "\">");
+                    sb.AppendLine("<ul class=\"py-2 flex flex-col space-y-1\">");
                     CreateHTMLMenu(menu.children, sClass, 1);
                     sb.AppendLine("</ul>");
                 }

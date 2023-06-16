@@ -12,13 +12,13 @@
       <div class="card-summary card overflow-visible">
         <div class="flex w-full p-3 gap-x-2.5">
           <div
-            class="icon-container bg-black bg-gradient-to-tr from-orange-300 to-amber-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-2xl leading-none flex-none">
+            class="icon-container icon-blue w-14 h-14 flex items-center justify-center rounded-full text-white text-[28px] leading-none flex-none">
             <!-- <i class="uil uil-ship"></i> -->
-            <i class="fa-solid fa-plane-up"></i>
+            @* <i class="fa-solid fa-plane-up"></i> *@
             <!-- <svg class="w-[30px] h-[30px] text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.56 3.91C21.15 4.5 21.15 5.45 20.56 6.03L16.67 9.92L18.79 19.11L17.38 20.53L13.5 13.1L9.6 17L9.96 19.47L8.89 20.53L7.13 17.35L3.94 15.58L5 14.5L7.5 14.87L11.37 11L3.94 7.09L5.36 5.68L14.55 7.8L18.44 3.91C19 3.33 20 3.33 20.56 3.91Z" fill="currentColor"/>
             </svg> -->
-              
+            <i class="fa fa-plane" aria-hidden="true"></i>                
           </div>
           <div class="flex-auto">
             <div class="flex justify-between">
@@ -62,9 +62,10 @@
       <div class="card-summary card overflow-visible">
         <div class="flex w-full p-3 gap-x-2.5">
           <div
-            class="icon-container bg-black bg-gradient-to-tr from-blue-300 to-purple-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
+            class="icon-container icon-green w-14 h-14 flex items-center justify-center rounded-full text-white text-[26px] leading-none flex-none">
             <!-- <i class="uil uil-weight"></i> -->
-            <i class="fa-solid fa-weight-hanging"></i>
+            @* <i class="fa-regular fa-scale-balanced"></i> *@
+            <i class="fa fa-balance-scale" aria-hidden="true"></i>
           </div>
           <div class="flex-auto">
             <div class="flex justify-between">
@@ -116,9 +117,10 @@
       <div class="card-summary card overflow-visible">
         <div class="flex w-full p-3 gap-x-2.5">
           <div
-            class="icon-container bg-black bg-gradient-to-tr from-red-300 to-fuchsia-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
+            class="icon-container icon-yellow w-14 h-14 flex items-center justify-center rounded-full text-white text-[26px] leading-none flex-none">
             <!-- <i class="uil uil-exchange-alt"></i> -->
-            <i class="fa-solid fa-chart-line"></i>
+            @* <i class="fa-solid fa-chart-line"></i> *@
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
           </div>
           <div class="flex-auto">
             <div class="flex justify-between">
@@ -170,9 +172,10 @@
       <div class="card-summary card overflow-visible">
         <div class="flex w-full p-3 gap-x-2.5">
           <div
-            class="icon-container bg-black bg-gradient-to-tr from-green-300 to-lime-300 w-14 h-14 flex items-center justify-center rounded-full text-white text-3xl leading-none flex-none">
+            class="icon-container icon-red w-14 h-14 flex items-center justify-center rounded-full text-white text-[26px] leading-none flex-none">
             <!-- <i class="uil uil-receipt"></i> -->
-            <i class="fa-solid fa-dollar-sign"></i>
+            @* <i class="fa-solid fa-dollar-sign"></i> *@
+            <i class="fa fa-usd" aria-hidden="true"></i>
           </div>
           <div class="flex-auto">
             <div class="flex justify-between">
@@ -763,7 +766,8 @@
       </div>
       <div class="map-outstanding-popup--card">
         <div class="map-outstanding-popup--card-content">
-          <table class="table map-outstanding-popup--table">
+          
+          @* <table class="table map-outstanding-popup--table">
             <thead>
               <tr>
                 <th>No CIPL</th>
@@ -777,7 +781,7 @@
             </thead>
             <tbody class="map-outstanding-popup--table-data">
             </tbody>
-          </table>
+          </table> *@
         </div>
       </div>        
     </div>  
@@ -824,7 +828,7 @@
 
 @section scripts{
 @* <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/breaking-news-ticker.min.js")"></script> *@
-<script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/jquery.jConveyorTicker.min.js")"></script>
+@* <script src="@Url.Content("~/Scripts.app/EMCS/breaking-news/jquery.jConveyorTicker.min.js")"></script> *@
 <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/proj4.js")"></script>
 <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highchart.js")"></script>
 <script src="@Url.Content("~/Scripts.app/EMCS/highcharts/highcharts-3d.js")"></script>
@@ -838,7 +842,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/circliful/2.0.17/circliful.js"
   integrity="sha512-+CsxiXgqKXUueZY9CEOkQY9lis7X/UlvKs3MEbfrnltNWG2gAFA4gqVSV0Vj9XSppV9t0rG5nBdVCn77NueoNQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://kit.fontawesome.com/36c929a402.js" crossorigin="anonymous"></script>
 <script src="@Url.Content("~/Scripts.app/EMCS/anime/anime.min.js")"></script>
 <script
   src="@Url.Content("~/Scripts.app/EMCS/Dashboard.cshtml.js?id="+DateTime.Now.ToString("yyyyMMddhhmmtt"))"></script>

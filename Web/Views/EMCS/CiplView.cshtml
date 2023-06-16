@@ -11,7 +11,7 @@
 }
 
 
-@Styles.Render("~/Content/EMCS/Custom.css")
+@* @Styles.Render("~/Content/EMCS/Custom.css") *@
 @Styles.Render("~/Content/EMCS/Wizard/WizardPoint.css")
 @Styles.Render("~/Content/EMCS/dropzone.css")
 @Styles.Render("~/Content/EMCS/SweetAlert/sweetalert2.min.css")
@@ -228,6 +228,8 @@
     </div>
 </div>
 
+@Scripts.Render("~/bundles/extention", "~/bundles/bootstrap", "~/bundles/jqueryval")
+
 @section scripts
 {
     <script>
@@ -346,28 +348,56 @@
             }
         });
     </script>
+    @* <script>
+        var tabs = $(".tabs");
+        var selector = $(".tabs").find("a").length;
+        //var selector = $(".tabs").find(".selector");
+        var activeItem = tabs.find(".active");
+        var activeWidth = activeItem.innerWidth();
+        $(".selector").css({
+            left: activeItem.position.left + "px",
+            width: activeWidth + "px",
+        });
+
+        $(".tabs").on("click", "a", function (e) {
+            e.preventDefault();
+            $(".tabs a").removeClass("active");
+            $(this).addClass("active");
+            var activeWidth = $(this).innerWidth();
+            var itemPos = $(this).position();
+            $(".selector").css({
+            left: itemPos.left + "px",
+            width: activeWidth + "px",
+            });
+        });
+    </script> *@
+
+    <script>
+        $(function () {
+            setTimeout(function () {
+            var tabs = $('.tabsNav');
+            //var selector = $('.tabsNav').find('a').length;
+            //var selector = $(".tabs").find(".selector");
+            var activeItem = tabs.find('.active');
+            var activeWidth = activeItem.outerWidth();
+            $(".selector").css({
+                "left": activeItem.position.left + "px",
+                "width": activeWidth + "px"
+            });
+
+            $(".tabsNav").on("click", "a", function (e) {
+                e.preventDefault();
+                $('.tabsNav a').removeClass("active");
+                $(this).addClass('active');
+                var activeWidth = $(this).outerWidth();
+                var itemPos = $(this).position();
+                $(".selector").css({
+                "left": itemPos.left + "px",
+                "width": activeWidth + "px"
+                });
+            });
+            }, 500);
+        });
+    </script>
+
 }
-
-<script>
-  var tabs = $(".tabs");
-  var selector = $(".tabs").find("a").length;
-  //var selector = $(".tabs").find(".selector");
-  var activeItem = tabs.find(".active");
-  var activeWidth = activeItem.innerWidth();
-  $(".selector").css({
-    left: activeItem.position.left + "px",
-    width: activeWidth + "px",
-  });
-
-  $(".tabs").on("click", "a", function (e) {
-    e.preventDefault();
-    $(".tabs a").removeClass("active");
-    $(this).addClass("active");
-    var activeWidth = $(this).innerWidth();
-    var itemPos = $(this).position();
-    $(".selector").css({
-      left: itemPos.left + "px",
-      width: activeWidth + "px",
-    });
-  });
-</script>

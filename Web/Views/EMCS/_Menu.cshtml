@@ -1,12 +1,9 @@
-﻿@using App.Web @*@{ bool isAdmin = false; bool isMaster = false; try { isAdmin =
-  User.IsInRole("Administrator"); isMaster = User.IsInRole("Master"); } catch { }
-  }*@
+﻿@using App.Web @*@{ bool isAdmin = false; bool isMaster = false; try { isAdmin = User.IsInRole("Administrator"); isMaster =
+User.IsInRole("Master"); } catch { } }*@
 
 <ul id="sidebar-menu">
-  @{
-    MvcMenuEMCSHelpers obj = new MvcMenuEMCSHelpers(); 
-  } @*
-    @obj.Menu("treeview") *@
+  @* @{ MvcMenuEMCSHelpers obj = new MvcMenuEMCSHelpers(); } @obj.Menu("treeview") *@ @*<li id="logout"> <a href="javascript:void(0);"
+  onclick="return loadingPage('/sign-out')"><i class="fa fa-sign-out"></i><span>Log Off</span></a> </li>*@
 
   <li>
     <a href="/EMCS/Dashboard" class="nav-link--level-0">
@@ -308,12 +305,7 @@
       </ul>
     </div>
   </li>
-  @* <li>
-    <a href="/EMCS/Notification" class="nav-link--level-0">
-    <div class="nav-link-wrap">
-    <i class="uil uil-bell"></i>
-    <span class="nav-label">Notification</span>
-    </div>
-    </a>
-    </li> *@
+  @* <li> <a href="/EMCS/Notification" class="nav-link--level-0"> <div class="nav-link-wrap"> <i class="uil uil-bell"></i> <span
+  class="nav-label">Notification</span> </div> </a> </li> *@
 </ul>
+

@@ -30,8 +30,8 @@
       }
     }
     .selector {
-      @apply absolute left-0 -top-1 h-full rounded-full transition-all duration-500 ease-in-out;
-      background: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%);
+      @apply absolute left-0 -top-1 h-full rounded-full transition-all duration-500 ease-in-out bg-primary;
+      /* background: linear-gradient(20deg, #fe9d01 60%, #ffd38a 83%); */
       box-shadow: 4px 4px 2px 0 rgba(0, 0, 0, 0.25);
     }
   }

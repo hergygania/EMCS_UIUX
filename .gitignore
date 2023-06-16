@@ -382,3 +382,7 @@ Web/bin/App.Service.dll
 Web/bin/WindowService.Console.exe
 Web/bin/WindowService.exe
 Web/bin/WindowService.Library.dll
+Web/bin/App.Data.dll
+Web/MvcMenuEMCSHelpers-orig.cs
+Web/MvcMenuHelpers-orig.cs
+Web/Views/EMCS/CiplTabEditPreview-orig.cshtml

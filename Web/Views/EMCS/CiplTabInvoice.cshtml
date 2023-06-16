@@ -1,5 +1,5 @@
 ﻿<div class="card mb-8">
-    <div class="p-0">
+    <div class="p-0 text-sm">
         <div class="flex gap-x-10 p-6">
             <div class="w-1/2">
                 <div class="row">
@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <label class="control-label col-lg-4 hidden-xs">&nbsp;</label>
                             <div class="col-lg-8 col-xs-8">
-                                <div class="exportRemarks mt-4">
+                                <div class="exportRemarks">
                                     <input type="text" class="form-control" readonly name="exportremarksCipl" value="@Model.Data.ExportTypeItem" />
                                 </div>
 
@@ -128,43 +128,43 @@
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Name</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesNameCipl" name="salesNameCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToName) ? Model.Data.SoldToName : "-")" placeholder="Consignee Name" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesNameCipl" name="salesNameCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToName) ? Model.Data.SoldToName : "-")" placeholder="Consignee Name" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Address</label>
                     <div class="col-lg-8 col-xs-8">
-                        <textarea type="text" rows="5" cols="5" class="form-control mt-4 inpPartsSales" id="salesAddressCipl" name="salesAddressCipl" placeholder="Address" disabled>@(!string.IsNullOrEmpty(Model.Data.SoldToAddress) ? Model.Data.SoldToAddress : "-")</textarea>
+                        <textarea type="text" rows="5" cols="5" class="form-control inpPartsSales" id="salesAddressCipl" name="salesAddressCipl" placeholder="Address" disabled>@(!string.IsNullOrEmpty(Model.Data.SoldToAddress) ? Model.Data.SoldToAddress : "-")</textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Country</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesCountryCipl" name="salesCountryCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToCountry) ? Model.Data.SoldToCountry : "-")" placeholder="Country" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesCountryCipl" name="salesCountryCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToCountry) ? Model.Data.SoldToCountry : "-")" placeholder="Country" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Telephone</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesTelpCipl" name="salesTelpCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToTelephone) ? Model.Data.SoldToTelephone : "-")" placeholder="Telephone" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesTelpCipl" name="salesTelpCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToTelephone) ? Model.Data.SoldToTelephone : "-")" placeholder="Telephone" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Fax</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesFaxCipl" name="salesFaxCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToFax) ? Model.Data.SoldToFax : "-")" placeholder="Fax" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesFaxCipl" name="salesFaxCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToFax) ? Model.Data.SoldToFax : "-")" placeholder="Fax" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">PIC</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesPicCipl" name="salesPicCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToPic) ? Model.Data.SoldToPic : "-")" placeholder="PIC" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesPicCipl" name="salesPicCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToPic) ? Model.Data.SoldToPic : "-")" placeholder="PIC" disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Email</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" class="form-control mt-4 inpPartsSales" id="salesEmailCipl" name="salesEmailCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToEmail) ? Model.Data.SoldToEmail : "-")" placeholder="Email" disabled>
+                        <input type="text" class="form-control inpPartsSales" id="salesEmailCipl" name="salesEmailCipl" value="@(!string.IsNullOrEmpty(Model.Data.SoldToEmail) ? Model.Data.SoldToEmail : "-")" placeholder="Email" disabled>
                     </div>
                 </div>
             </div>
@@ -177,53 +177,63 @@
                 {
                     <label class="control-label col-lg-4 col-xs-4">@((Model.Data.ShipDelivery == "Notify") ? "NOTIFY PARTY" : (Model.Data.ShipDelivery == "Ship To / Delivery To") ? "SHIP TO / DELIVERY TO" : "SOLD TO")</label>
                 }
-                <div class="form-group mt-4 hidden">
-                    <div id="div-radio-consignee" class="btn-group btn-group-justified">
+                <div class="form-group hidden">
+                    <div class="input-group">
+                        <div id="div-radio-consignee" class="btn-toggle">
+                            <span class="btn btn-active btn-sm notactive-consignee consigneeSameCipl"
+                              data-toggle="consigneechange" data-value="L" data-active="btn-active"
+                              data-notactive-notify="btn-default">Same As Sold To</span>
+                            <span class="btn btn-default btn-sm notactive-consignee consigneeDifferentCipl"
+                              data-toggle="consigneechange" data-value="D" data-active="btn-active"
+                              data-notactive-notify="btn-default">Different</span>
+                          </div>
+                    @* <div id="div-radio-consignee" class="btn-group btn-group-justified">
                         <span class="btn btn-default btn-sm notactive-consignee consigneeSameCipl" data-toggle="consigneechange" data-value="L" data-active="btn-success" data-notactive-consignee="btn-default">Same As Sold To</span>
                         <span class="btn btn-default btn-sm notactive-consignee consigneeDifferentCipl" data-toggle="consigneechange" data-value="D" data-active="btn-info" data-notactive-consignee="btn-default">Different</span>
-                    </div>
+                    </div> *@
                     <input type="hidden" name="ConsigneeSameSoldTo" id="ConsigneeSameSoldTo">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Name</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeNameCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToName : Model.Data.NotifyName)" name="consigneeNameCipl" placeholder="Consignee Name">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneeNameCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToName : Model.Data.NotifyName)" name="consigneeNameCipl" placeholder="Consignee Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Address</label>
                     <div class="col-lg-8 col-xs-8">
-                        <textarea type="text" rows="5" cols="5" disabled class="form-control mt-4 inpPartsSales" id="consigneeAddressCipl" name="consigneeAddressCipl">@((Model.Data.NotifyName == "-") ? Model.Data.SoldToAddress : Model.Data.NotifyAddress)</textarea>
+                        <textarea type="text" rows="5" cols="5" disabled class="form-control inpPartsSales" id="consigneeAddressCipl" name="consigneeAddressCipl">@((Model.Data.NotifyName == "-") ? Model.Data.SoldToAddress : Model.Data.NotifyAddress)</textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Country</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeCountryCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToCountry : Model.Data.NotifyCountry)" name="consigneeCountryCipl" placeholder="Country">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneeCountryCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToCountry : Model.Data.NotifyCountry)" name="consigneeCountryCipl" placeholder="Country">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Telephone</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeTelpCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToTelephone : Model.Data.NotifyTelephone)" name="consigneeTelpCipl" placeholder="Telephone">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneeTelpCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToTelephone : Model.Data.NotifyTelephone)" name="consigneeTelpCipl" placeholder="Telephone">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Fax</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeFaxCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToFax : Model.Data.NotifyFax)" name="consigneeFaxCipl" placeholder="Fax">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneeFaxCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToFax : Model.Data.NotifyFax)" name="consigneeFaxCipl" placeholder="Fax">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">PIC</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneePicCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToPic : Model.Data.NotifyPic)" name="consigneePicCipl" placeholder="PIC">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneePicCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToPic : Model.Data.NotifyPic)" name="consigneePicCipl" placeholder="PIC">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-4 col-xs-4">Email</label>
                     <div class="col-lg-8 col-xs-8">
-                        <input type="text" disabled class="form-control mt-4 inpPartsSales" id="consigneeEmailCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToEmail : Model.Data.NotifyEmail)" name="consigneeEmailCipl" placeholder="Email">
+                        <input type="text" disabled class="form-control inpPartsSales" id="consigneeEmailCipl" value="@((Model.Data.NotifyName == "-") ? Model.Data.SoldToEmail : Model.Data.NotifyEmail)" name="consigneeEmailCipl" placeholder="Email">
                     </div>
                 </div>
             </div>         
